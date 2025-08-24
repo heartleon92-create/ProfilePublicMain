@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Profile Template Marketplace</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --success: #38b000;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f9fafb;
+            color: var(--dark);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .logo i {
+            margin-right: 8px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--dark);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        nav a:hover {
+            color: var(--primary);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .language-toggle {
+            display: flex;
+            align-items: center;
+            background: var(--light);
+            border-radius: 50px;
+            padding: 4px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .language-option {
+            padding: 6px 12px;
+            border-radius: 50px;
+            z-index: 2;
+            font-size: 0.9rem;
+        }
+
+        .language-active {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            font-weight: 600;
+        }
+
+        .user-dropdown {
+            position: relative;
+        }
+
+        .user-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--light);
+            border: none;
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .user-btn:hover {
+            background: #e9ecef;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 4px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--dark);
+            border-radius: 2px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            padding: 60px 0 40px;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            margin-bottom: 16px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+
+        /* Service Section */
+        .service-section {
+            background: linear-gradient(135deg, #f5f7ff 0%, #e9ecef 100%);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            margin: 40px auto;
+            max-width: 1000px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .service-container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .service-content {
+            flex: 1;
+        }
+
+        .service-image {
+            flex: 1;
+            text-align: center;
+        }
+
+        .service-image img {
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        .service-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+
+        .service-features {
+            list-style: none;
+            margin: 20px 0;
+        }
+
+        .service-features li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .service-features i {
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        .service-cta {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 15px;
+            transition: var(--transition);
+        }
+
+        .service-cta:hover {
+            background: #2563eb;
+            transform: translateY(-2px);
+        }
+
+        /* Filter Section */
+        .filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 50px;
+            padding: 8px 16px;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            padding: 4px 8px;
+            width: 180px;
+        }
+
+        /* Template Grid */
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 24px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+
+        .template-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .template-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            position: relative;
+        }
+
+        .price-tag {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--primary);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .template-img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .card-body {
+            padding: 16px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #e6f7ff;
+            color: var(--primary);
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            margin-bottom: 12px;
+        }
+
+        .template-title {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .template-desc {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .card-footer {
+            padding: 0 16px 16px;
+        }
+
+        .btn-primary {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        /* Bonus Materials */
+        .bonus-section {
+            margin-bottom: 60px;
+        }
+
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .bonus-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .bonus-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .bonus-img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .free-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--success);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .bonus-body {
+            padding: 16px;
+        }
+
+        .bonus-title {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+        }
+
+        .footer-col h4 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .footer-col h4::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 30px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col a:hover {
+            color: white;
+            padding-left: 4px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 16px;
+            margin-top: 20px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-icons a:hover {
+            background: var(--primary);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .templates-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+            
+            .bonus-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .service-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .hamburger {
+                display: flex;
+            }
+            
+            .templates-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            
+            .bonus-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .service-section {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .header-actions .language-toggle {
+                display: none;
+            }
+            
+            .templates-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .bonus-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .search-box input {
+                width: 100%;
+            }
+            
+            .service-section {
+                padding: 20px 15px;
+            }
+            
+            .service-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header / Navigation -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fab fa-github"></i>
+                <span class="english">ProfileCraft</span>
+                <span class="myanmar" style="display: none">ProfileCraft</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="english">Home</a><a href="#" class="myanmar" style="display: none">ပင်မစာမျက်နှာ</a></li>
+                    <li><a href="#" class="english">Templates</a><a href="#" class="myanmar" style="display: none">တမ်းပလိတ်များ</a></li>
+                    <li><a href="#" class="english">Pricing</a><a href="#" class="myanmar" style="display: none">စျေးနှုန်း</a></li>
+                    <li><a href="#" class="english">About</a><a href="#" class="myanmar" style="display: none">အကြောင်း</a></li>
+                    <li><a href="#" class="english">Contact</a><a href="#" class="myanmar" style="display: none">ဆက်သွယ်ရန်</a></li>
+                </ul>
+            </nav>
+            
+            <div class="header-actions">
+                <div class="language-toggle" id="languageToggle">
+                    <div class="language-option language-active english">EN 🇬🇧</div>
+                    <div class="language-option myanmar">MY 🇲🇲</div>
+                </div>
+                
+                <div class="user-dropdown">
+                    <button class="user-btn">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="english">Login</span>
+                        <span class="myanmar" style="display: none">အကောင့်ဝင်ရန်</span>
+                    </button>
+                </div>
+                
+                <button class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1 class="english">Craft Your Perfect GitHub Profile</h1>
+            <h1 class="myanmar" style="display: none">သင့် GitHub ပရိုဖိုင်ကို အဆင်ပြေစွာ ပြုလုပ်ပါ</h1>
+            
+            <p class="english">Browse our collection of beautiful, responsive GitHub profile templates and make your profile stand out.</p>
+            <p class="myanmar" style="display: none">လှပပြီး တုံ့ပြန်နိုင်သော GitHub ပရိုဖိုင်တမ်းပလိတ်များကို ရှာဖွေကြည့်ရှုကာ သင့်ပရိုဖိုင်ကို ပိုမိုကောင်းမွန်အောင် ပြုလုပ်ပါ။</p>
+        </div>
+    </section>
+    
+    <!-- Service Section -->
+    <section class="service-section">
+        <div class="container">
+            <div class="service-container">
+                <div class="service-content">
+                    <h2 class="service-title english">Full Service GitHub Profile Creation</h2>
+                    <h2 class="service-title myanmar" style="display: none">GitHub ပရိုဖိုင်ဝန်ဆောင်မှု</h2>
+                    
+                    <p class="english">I create and deploy customized GitHub profiles based on your preferences. No need to buy expensive domains - I use GitHub to host your profile, making it affordable for everyone!</p>
+                    <p class="myanmar" style="display: none">ကျွန်ုပ်သည် သင့်အကြိုက်နှင့်ကိုက်ညီသော GitHub ပရိုဖိုင်များကို ဖန်တီးပေးပါသည်။ စျေးကြီးဒိုမိန်းများ ဝယ်ယူရန် မလိုအပ်ပါ - GitHub ကိုအသုံးပြု၍ ပရိုဖိုင်များကို လူတိုင်းအဆင်ပြေစွာ ဝင်ရောက်နိုင်အောင် ပြုလုပ်ပေးပါသည်။</p>
+                    
+                    <ul class="service-features">
+                        <li class="english"><i class="fas fa-check-circle"></i> Custom design based on your preferences</li>
+                        <li class="myanmar" style="display: none"><i class="fas fa-check-circle"></i> သင့်အကြိုက်နှင့်ကိုက်ညီသော ဒီဇိုင်းများ</li>
+                        
+                        <li class="english"><i class="fas fa-check-circle"></i> Full deployment on GitHub</li>
+                        <li class="myanmar" style="display: none"><i class="fas fa-check-circle"></i> GitHub တွင် အပြည့်အဝတင်ပေးခြင်း</li>
+                        
+                        <li class="english"><i class="fas fa-check-circle"></i> No expensive domain costs</li>
+                        <li class="myanmar" style="display: none"><i class="fas fa-check-circle"></i> စျေးကြီးဒိုမိန်းကုန်ကျစရိတ်များ မလိုအပ်ပါ</li>
+                        
+                        <li class="english"><i class="fas fa-check-circle"></i> Affordable for everyone</li>
+                        <li class="myanmar" style="display: none"><i class="fas fa-check-circle"></i> လူတိုင်းဝယ်ယူနိုင်သော စျေးနှုန်း</li>
+                    </ul>
+                    
+                    <a href="#" class="service-cta english">Get Your Custom Profile</a>
+                    <a href="#" class="service-cta myanmar" style="display: none">စိတ်ကြိုက်ပရိုဖိုင်ရယူရန်</a>
+                </div>
+                
+                <div class="service-image">
+                    <img src="image/Black and Teal Modern Web Developer Presentation.png" alt="GitHub Profile Service">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <button class="filter-btn active english">All Templates</button>
+                <button class="filter-btn active myanmar" style="display: none">တမ်းပလိတ်အားလုံး</button>
+                
+                <button class="filter-btn english">Popular</button>
+                <button class="filter-btn myanmar" style="display: none">လူကြိုက်များ</button>
+                
+                <button class="filter-btn english">New</button>
+                <button class="filter-btn myanmar" style="display: none">အသစ်</button>
+                
+                <button class="filter-btn english">Free</button>
+                <button class="filter-btn myanmar" style="display: none">အခမဲ့</button>
+            </div>
+            
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search templates..." class="english">
+                <input type="text" placeholder="တမ်းပလိတ်များ ရှာရန်..." class="myanmar" style="display: none">
+            </div>
+        </div>
+        
+        <!-- Templates Grid -->
+        <h2 class="section-title english">Profile Templates</h2>
+        <h2 class="section-title myanmar" style="display: none">ပရိုဖိုင်တမ်းပလိတ်များ</h2>
+        
+        <div class="templates-grid">
+            <!-- Template Card 1 -->
+            <div class="template-card">
+                <div class="card-header">
+                    <div class="price-tag">5,000 MMK</div>
+                    <img src="https://placehold.co/600x400/3a86ff/white?text=Modern+Profile" alt="Template" class="template-img">
+                </div>
+                <div class="card-body">
+                    <span class="status-badge english">Public on GitHub</span>
+                    <span class="status-badge myanmar" style="display: none">GitHub တွင် အများသုံး</span>
+                    <h3 class="template-title english">Modern Developer</h3>
+                    <h3 class="template-title myanmar" style="display: none">ခေတ်မီ Developer</h3>
+                    <p class="template-desc english">Clean, modern design with skill progress bars</p>
+                    <p class="template-desc myanmar" style="display: none">ကျွမ်းကျင်မှု တိုးတက်မှုများနှင့် ခေတ်မီသော ဒီဇိုင်း</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn-primary english">Customize</a>
+                    <a href="#" class="btn-primary myanmar" style="display: none">စိတ်ကြိုက်ပြင်ရန်</a>
+                </div>
+            </div>
+            
+            <!-- Template Card 2 -->
+            <div class="template-card">
+                <div class="card-header">
+                    <div class="price-tag">7,500 MMK</div>
+                    <img src="https://placehold.co/600x400/8338ec/white?text=Minimalist+Design" alt="Template" class="template-img">
+                </div>
+                <div class="card-body">
+                    <span class="status-badge english">Public on GitHub</span>
+                    <span class="status-badge myanmar" style="display: none">GitHub တွင် အများသုံး</span>
+                    <h3 class="template-title english">Minimalist Pro</h3>
+                    <h3 class="template-title myanmar" style="display: none">Minimalist Pro</h3>
+                    <p class="template-desc english">Elegant and minimal design with focus on content</p>
+                    <p class="template-desc myanmar" style="display: none">အကြောင်းအရာကို အာရုံစိုက်သည့် ခန့်ညားသော ဒီဇိုင်း</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn-primary english">Customize</a>
+                    <a href="#" class="btn-primary myanmar" style="display: none">စိတ်ကြိုက်ပြင်ရန်</a>
+                </div>
+            </div>
+            
+            <!-- Template Card 3 -->
+            <div class="template-card">
+                <div class="card-header">
+                    <div class="price-tag">6,200 MMK</div>
+                    <img src="https://placehold.co/600x400/ff006e/white?text=Creative+Portfolio" alt="Template" class="template-img">
+                </div>
+                <div class="card-body">
+                    <span class="status-badge english">Public on GitHub</span>
+                    <span class="status-badge myanmar" style="display: none">GitHub တွင် အများသုံး</span>
+                    <h3 class="template-title english">Creative Portfolio</h3>
+                    <h3 class="template-title myanmar" style="display: none">ဖန်တီးနိုင်သော Portfolio</h3>
+                    <p class="template-desc english">Showcase your projects in a creative way</p>
+                    <p class="template-desc myanmar" style="display: none">သင့်ပရောဂျက်များကို ဖန်တီးနိုင်သောနည်းဖြင့် ပြသပါ</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn-primary english">Customize</a>
+                    <a href="#" class="btn-primary myanmar" style="display: none">စိတ်ကြိုက်ပြင်ရန်</a>
+                </div>
+            </div>
+            
+            <!-- Template Card 4 -->
+            <div class="template-card">
+                <div class="card-header">
+                    <div class="price-tag">4,500 MMK</div>
+                    <img src="https://placehold.co/600x400/38b000/white?text=Dark+Theme" alt="Template" class="template-img">
+                </div>
+                <div class="card-body">
+                    <span class="status-badge english">Public on GitHub</span>
+                    <span class="status-badge myanmar" style="display: none">GitHub တွင် အများသုံး</span>
+                    <h3 class="template-title english">Dark Theme</h3>
+                    <h3 class="template-title myanmar" style="display: none">အနက်နောက်ခံ</h3>
+                    <p class="template-desc english">Elegant dark theme with neon accents</p>
+                    <p class="template-desc myanmar" style="display: none">နီယွန်အရောင်များဖြင့် ခန့်ညားသော အနက်နောက်ခံ</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn-primary english">Customize</a>
+                    <a href="#" class="btn-primary myanmar" style="display: none">စိတ်ကြိုက်ပြင်ရန်</a>
+                </div>
+            </div>
+            
+            <!-- Template Card 5 -->
+            <div class="template-card">
+                <div class="card-header">
+                    <div class="price-tag">8,000 MMK</div>
+                    <img src="https://placehold.co/600x400/ff9e00/white?text=Professional+CV" alt="Template" class="template-img">
+                </div>
+                <div class="card-body">
+                    <span class="status-badge english">Public on GitHub</span>
+                    <span class="status-badge myanmar" style="display: none">GitHub တွင် အများသုံး</span>
+                    <h3 class="template-title english">Professional CV</h3>
+                    <h3 class="template-title myanmar" style="display: none">Professional CV</h3>
+                    <p class="template-desc english">CV-style layout for showcasing experience</p>
+                    <p class="template-desc myanmar" style="display: none">အတွေ့အကြုံများပြသရန် CV-style စီစဉ်မှု</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn-primary english">Customize</a>
+                    <a href="#" class="btn-primary myanmar" style="display: none">စိတ်ကြိုက်ပြင်ရန်</a>
+                </div>
+            </div>
+            
+            <!-- Template Card 6 -->
+            <div class="template-card">
+                <div class="card-header">
+                    <div class="price-tag">3,800 MMK</div>
+                    <img src="https://placehold.co/600x400/4361ee/white?text=Animated+Design" alt="Template" class="template-img">
+                </div>
+                <div class="card-body">
+                    <span class="status-badge english">Public on GitHub</span>
+                    <span class="status-badge myanmar" style="display: none">GitHub တွင် အများသုံး</span>
+                    <h3 class="template-title english">Animated Design</h3>
+                    <h3 class="template-title myanmar" style="display: none">Animated Design</h3>
+                    <p class="template-desc english">Subtle animations to make your profile stand out</p>
+                    <p class="template-desc myanmar" style="display: none">သင့်ပရိုဖိုင်ကို ပိုမိုထင်ရှားစေရန် သိမ်မွေ့သော animation များ</p>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn-primary english">Customize</a>
+                    <a href="#" class="btn-primary myanmar" style="display: none">စိတ်ကြိုက်ပြင်ရန်</a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Bonus Materials -->
+        <div class="bonus-section">
+            <h2 class="section-title english">Free Gifts with Your Profile</h2>
+            <h2 class="section-title myanmar" style="display: none">သင့်ပရိုဖိုင်နှင့်အတူ အခမဲ့လက်ဆောင်များ</h2>
+            
+            <div class="bonus-grid">
+                <!-- Bonus Card 1 -->
+                <div class="bonus-card">
+                    <div class="card-header">
+                        <div class="free-badge english">Free</div>
+                        <div class="free-badge myanmar" style="display: none">အခမဲ့</div>
+                        <img src="https://placehold.co/600x400/3a86ff/white?text=CV+Template" alt="Bonus" class="bonus-img">
+                    </div>
+                    <div class="bonus-body">
+                        <h3 class="bonus-title english">Professional CV Template</h3>
+                        <h3 class="bonus-title myanmar" style="display: none">Professional CV Template</h3>
+                    </div>
+                </div>
+                
+                <!-- Bonus Card 2 -->
+                <div class="bonus-card">
+                    <div class="card-header">
+                        <div class="free-badge english">Free</div>
+                        <div class="free-badge myanmar" style="display: none">အခမဲ့</div>
+                        <img src="https://placehold.co/600x400/8338ec/white?text=Portfolio+Guide" alt="Bonus" class="bonus-img">
+                    </div>
+                    <div class="bonus-body">
+                        <h3 class="bonus-title english">Portfolio Building Guide</h3>
+                        <h3 class="bonus-title myanmar" style="display: none">Portfolio Building Guide</h3>
+                    </div>
+                </div>
+                
+                <!-- Bonus Card 3 -->
+                <div class="bonus-card">
+                    <div class="card-header">
+                        <div class="free-badge english">Free</div>
+                        <div class="free-badge myanmar" style="display: none">အခမဲ့</div>
+                        <img src="https://placehold.co/600x400/ff006e/white?text=Git+Cheat+Sheet" alt="Bonus" class="bonus-img">
+                    </div>
+                    <div class="bonus-body">
+                        <h3 class="bonus-title english">Git Command Cheat Sheet</h3>
+                        <h3 class="bonus-title myanmar" style="display: none">Git Command Cheat Sheet</h3>
+                    </div>
+                </div>
+                
+                <!-- Bonus Card 4 -->
+                <div class="bonus-card">
+                    <div class="card-header">
+                        <div class="free-badge english">Free</div>
+                        <div class="free-badge myanmar" style="display: none">အခမဲ့</div>
+                        <img src="https://placehold.co/600x400/38b000/white?text=Interview+Prep" alt="Bonus" class="bonus-img">
+                    </div>
+                    <div class="bonus-body">
+                        <h3 class="bonus-title english">Technical Interview Prep</h3>
+                        <h3 class="bonus-title myanmar" style="display: none">Technical Interview Prep</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h4 class="english">ProfileCraft</h4>
+                    <h4 class="myanmar" style="display: none">ProfileCraft</h4>
+                    <p class="english">Create stunning GitHub profiles that showcase your skills and projects.</p>
+                    <p class="myanmar" style="display: none">သင့်ကျွမ်းကျင်မှုများနှင့် ပရောဂျက်များကို ပြသသည့် GitHub ပရိုဖိုင်များကို ဖန်တီးပါ။</p>
+                    
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="english">Quick Links</h4>
+                    <h4 class="myanmar" style="display: none">အမြန်ဝင်ရောက်ရန်</h4>
+                    <ul>
+                        <li><a href="#" class="english">Home</a><a href="#" class="myanmar" style="display: none">ပင်မစာမျက်နှာ</a></li>
+                        <li><a href="#" class="english">Templates</a><a href="#" class="myanmar" style="display: none">တမ်းပလိတ်များ</a></li>
+                        <li><a href="#" class="english">Pricing</a><a href="#" class="myanmar" style="display: none">စျေးနှုန်း</a></li>
+                        <li><a href="#" class="english">About Us</a><a href="#" class="myanmar" style="display: none">ကျွန်ုပ်တို့အကြောင်း</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="english">Support</h4>
+                    <h4 class="myanmar" style="display: none">အကူအညီ</h4>
+                    <ul>
+                        <li><a href="#" class="english">FAQ</a><a href="#" class="myanmar" style="display: none">အမေးများသောမေးခွန်းများ</a></li>
+                        <li><a href="#" class="english">Contact Us</a><a href="#" class="myanmar" style="display: none">ဆက်သွယ်ရန်</a></li>
+                        <li><a href="#" class="english">Privacy Policy</a><a href="#" class="myanmar" style="display: none">ကိုယ်ရေးကာကွယ်မှု</a></li>
+                        <li><a href="#" class="english">Terms of Service</a><a href="#" class="myanmar" style="display: none">ဝန်ဆောင်မှုစည်းမျဉ်းများ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="english">Newsletter</h4>
+                    <h4 class="myanmar" style="display: none">သတင်းလွှာ</h4>
+                    <p class="english">Subscribe to get updates on new templates and features.</p>
+                    <p class="myanmar" style="display: none">တမ်းပလိတ်အသစ်များနှင့် အင်္ဂါရပ်များအကြောင်း အပ်ဒိတ်များရယူရန် စာရင်းသွင်းပါ။</p>
+                    
+                    <form>
+                        <input type="email" placeholder="Your email" class="english" style="width: 100%; padding: 10px; margin-bottom: 10px; border-radius: var(--border-radius); border: none;">
+                        <input type="email" placeholder="သင့်အီးမေးလ်" class="myanmar" style="display: none; width: 100%; padding: 10px; margin-bottom: 10px; border-radius: var(--border-radius); border: none;">
+                        <button type="submit" class="btn-primary english">Subscribe</button>
+                        <button type="submit" class="btn-primary myanmar" style="display: none">စာရင်းသွင်းရန်</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p class="english">© 2023 ProfileCraft. All rights reserved.</p>
+                <p class="myanmar" style="display: none">© 2023 ProfileCraft. သက်ဆိုင်ရာအခွင့်အရေးများ အားလုံးရှိသည်။</p>
+                
+                <div class="language-toggle" id="footerLanguageToggle" style="margin-top: 15px; display: inline-flex;">
+                    <div class="language-option language-active english">EN 🇬🇧</div>
+                    <div class="language-option myanmar">MY 🇲🇲</div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language Toggle Functionality
+        document.querySelectorAll('#languageToggle, #footerLanguageToggle').forEach(toggle => {
+            toggle.addEventListener('click', function() {
+                const englishElements = document.querySelectorAll('.english');
+                const myanmarElements = document.querySelectorAll('.myanmar');
+                
+                if (englishElements[0].style.display === 'none') {
+                    // Switch to English
+                    englishElements.forEach(el => el.style.display = '');
+                    myanmarElements.forEach(el => el.style.display = 'none');
+                    
+                    document.querySelectorAll('.language-option').forEach(opt => {
+                        opt.classList.remove('language-active');
+                    });
+                    document.querySelectorAll('#languageToggle .language-option:first-child, #footerLanguageToggle .language-option:first-child').forEach(opt => {
+                        opt.classList.add('language-active');
+                    });
+                } else {
+                    // Switch to Myanmar
+                    englishElements.forEach(el => el.style.display = 'none');
+                    myanmarElements.forEach(el => el.style.display = '');
+                    
+                    document.querySelectorAll('.language-option').forEach(opt => {
+                        opt.classList.remove('language-active');
+                    });
+                    document.querySelectorAll('#languageToggle .language-option:last-child, #footerLanguageToggle .language-option:last-child').forEach(opt => {
+                        opt.classList.add('language-active');
+                    });
+                }
+            });
+        });
+        
+        // Mobile Menu Toggle
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            const nav = document.querySelector('nav ul');
+            if (nav.style.display === 'flex') {
+                nav.style.display = 'none';
+            } else {
+                nav.style.display = 'flex';
+                nav.style.flexDirection = 'column';
+                nav.style.position = 'absolute';
+                nav.style.top = '100%';
+                nav.style.left = '0';
+                nav.style.right = '0';
+                nav.style.background = 'white';
+                nav.style.padding = '20px';
+                nav.style.gap = '15px';
+                nav.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+            }
+        });
+    </script>
+</body>
+</html>
