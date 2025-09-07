@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .header-banner {
+            height: 120px;
+            background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%);
+            position: relative;
+        }
+        
+        .profile-image-container {
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 4px solid white;
+            background-color: #dbeafe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #60a5fa;
+            font-size: 40px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .profile-content {
+            padding: 60px 30px 30px;
+            text-align: center;
+        }
+        
+        .teacher-name {
+            font-weight: 700;
+            font-size: 24px;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .teacher-title {
+            color: #64748b;
+            margin-bottom: 24px;
+            font-size: 16px;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 28px;
+        }
+        
+        .stat {
+            background-color: #f1f5f9;
+            padding: 15px 10px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat:hover {
+            background-color: #e0f2fe;
+            transform: scale(1.03);
+        }
+        
+        .stat-icon {
+            color: #60a5fa;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .stat-number {
+            font-weight: 700;
+            font-size: 18px;
+            color: #1e40af;
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #64748b;
+        }
+        
+        .view-classes-btn {
+            display: inline-block;
+            background-color: #60a5fa;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(100, 149, 237, 0.2);
+        }
+        
+        .view-classes-btn:hover {
+            background-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(100, 149, 237, 0.3);
+        }
+        
+        @media (max-width: 480px) {
+            .profile-content {
+                padding: 60px 20px 25px;
+            }
+            
+            .stats-container {
+                gap: 10px;
+            }
+            
+            .stat {
+                padding: 12px 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <div class="header-banner">
+            <div class="profile-image-container">
+                <div class="profile-image">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-content">
+            <h1 class="teacher-name">Daw Hnin Yu</h1>
+            <p class="teacher-title">Mathematics Teacher, High School</p>
+            
+            <div class="stats-container">
+                <div class="stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Classes Taught</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </div>
+                    <div class="stat-number">142</div>
+                    <div class="stat-label">Students</div>
+                </div>
+            </div>
+            
+            <a href="#" class="view-classes-btn">
+                <i class="fas fa-chalkboard-teacher"></i> View Classes
+            </a>
+        </div>
+    </div>
+</body>
+</html>

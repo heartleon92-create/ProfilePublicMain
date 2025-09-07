@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile View Tracker</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+        
+        header {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 15px 30px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6e8efb;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        nav a:hover, nav a.active {
+            background: #6e8efb;
+            color: white;
+        }
+        
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            flex-grow: 1;
+        }
+        
+        .panel {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            padding: 30px;
+        }
+        
+        .profile-card {
+            text-align: center;
+        }
+        
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #6e8efb;
+            margin: 0 auto 20px;
+        }
+        
+        .profile-name {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .profile-title {
+            color: #777;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 25px 0;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #6e8efb;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #777;
+        }
+        
+        .view-counter {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .counter-title {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .counter-display {
+            font-size: 72px;
+            font-weight: bold;
+            color: #a777e3;
+            text-align: center;
+            margin: 20px 0;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .admin-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+        
+        .admin-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #6e8efb;
+        }
+        
+        .admin-data {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .admin-data span {
+            font-weight: 600;
+            color: #6e8efb;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #6e8efb;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-5px);
+            background: #a777e3;
+        }
+        
+        .chart-container {
+            margin-top: 30px;
+            height: 200px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding: 20px;
+            border-radius: 15px;
+            background: #f8f9fa;
+        }
+        
+        .chart-bar {
+            width: 40px;
+            background: linear-gradient(to top, #6e8efb, #a777e3);
+            border-radius: 5px 5px 0 0;
+            position: relative;
+            transition: height 0.5s ease;
+        }
+        
+        .chart-label {
+            position: absolute;
+            bottom: -25px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .view-history {
+            margin-top: 30px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .view-item {
+            padding: 10px 15px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .view-item:last-child {
+            border-bottom: none;
+        }
+        
+        @media (max-width: 900px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                text-align: center;
+                gap: 15px;
+            }
+            
+            nav ul {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">ProfileTracker</div>
+        <nav>
+            <ul>
+                <li><a href="#" class="active" id="profileLink">Profile</a></li>
+                <li><a href="#" id="adminLink">Admin Dashboard</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <div class="panel profile-card">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=500&q=80" alt="Profile" class="profile-img">
+            <h1 class="profile-name">Alex Johnson</h1>
+            <p class="profile-title">Web Developer & UI Designer</p>
+            
+            <div class="profile-stats">
+                <div class="stat">
+                    <div class="stat-number">127</div>
+                    <div class="stat-label">Posts</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">894</div>
+                    <div class="stat-label">Followers</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">327</div>
+                    <div class="stat-label">Following</div>
+                </div>
+            </div>
+            
+            <div class="social-icons">
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+        
+        <div class="panel view-counter">
+            <h2 class="counter-title">Profile Views</h2>
+            <div class="counter-display" id="viewCount">0</div>
+            
+            <div class="admin-section">
+                <h3>Admin Dashboard</h3>
+                <div class="admin-data">
+                    <div>Total Views:</div>
+                    <div><span id="totalViews">0</span></div>
+                </div>
+                <div class="admin-data">
+                    <div>Unique Visitors:</div>
+                    <div><span id="uniqueVisitors">0</span></div>
+                </div>
+                <div class="admin-data">
+                    <div>Views Today:</div>
+                    <div><span id="viewsToday">0</span></div>
+                </div>
+                
+                <div class="chart-container" id="viewsChart">
+                    <!-- Chart bars will be generated by JavaScript -->
+                </div>
+                
+                <div class="view-history">
+                    <h3>Recent Views</h3>
+                    <div id="viewHistory">
+                        <!-- View history will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data storage functions (simulating a database with localStorage)
+        function getProfileData() {
+            const data = localStorage.getItem('profileData');
+            return data ? JSON.parse(data) : {
+                totalViews: 0,
+                uniqueVisitors: 0,
+                viewsToday: 0,
+                viewHistory: [],
+                dailyViews: [0, 0, 0, 0, 0, 0, 0] // Last 7 days
+            };
+        }
+        
+        function saveProfileData(data) {
+            localStorage.setItem('profileData', JSON.stringify(data));
+        }
+        
+        // Update view count
+        function updateViewCount() {
+            const data = getProfileData();
+            
+            // Check if user has visited before
+            const visitorId = localStorage.getItem('visitorId');
+            if (!visitorId) {
+                // New unique visitor
+                const newVisitorId = 'visitor_' + Math.floor(Math.random() * 1000000);
+                localStorage.setItem('visitorId', newVisitorId);
+                data.uniqueVisitors++;
+            }
+            
+            // Update view counts
+            data.totalViews++;
+            
+            // Check if today is a new day
+            const today = new Date().toDateString();
+            const lastViewDate = localStorage.getItem('lastViewDate');
+            
+            if (lastViewDate !== today) {
+                localStorage.setItem('lastViewDate', today);
+                
+                // Shift daily views array
+                data.dailyViews.push(0);
+                if (data.dailyViews.length > 7) {
+                    data.dailyViews.shift();
+                }
+            }
+            
+            // Update today's views
+            data.viewsToday = data.dailyViews[data.dailyViews.length - 1] + 1;
+            data.dailyViews[data.dailyViews.length - 1] = data.viewsToday;
+            
+            // Add to view history
+            const now = new Date();
+            data.viewHistory.unshift({
+                time: now.toLocaleTimeString(),
+                date: now.toLocaleDateString()
+            });
+            
+            // Keep only last 10 views in history
+            if (data.viewHistory.length > 10) {
+                data.viewHistory.pop();
+            }
+            
+            // Save updated data
+            saveProfileData(data);
+            
+            // Update UI
+            updateViewUI(data);
+            
+            return data;
+        }
+        
+        // Update the UI with view data
+        function updateViewUI(data) {
+            document.getElementById('viewCount').textContent = data.totalViews;
+            document.getElementById('totalViews').textContent = data.totalViews;
+            document.getElementById('uniqueVisitors').textContent = data.uniqueVisitors;
+            document.getElementById('viewsToday').textContent = data.viewsToday;
+            
+            // Update chart
+            updateChart(data.dailyViews);
+            
+            // Update view history
+            updateViewHistory(data.viewHistory);
+        }
+        
+        // Update the chart
+        function updateChart(dailyViews) {
+            const chartContainer = document.getElementById('viewsChart');
+            chartContainer.innerHTML = '';
+            
+            const maxViews = Math.max(...dailyViews);
+            const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+            const today = new Date().getDay();
+            
+            dailyViews.forEach((views, index) => {
+                const dayIndex = (today - (dailyViews.length - 1 - index) + 7) % 7;
+                const dayName = days[dayIndex];
+                
+                const height = maxViews > 0 ? (views / maxViews) * 150 : 10;
+                
+                const bar = document.createElement('div');
+                bar.className = 'chart-bar';
+                bar.style.height = `${height}px`;
+                
+                const label = document.createElement('div');
+                label.className = 'chart-label';
+                label.textContent = `${dayName} (${views})`;
+                
+                bar.appendChild(label);
+                chartContainer.appendChild(bar);
+            });
+        }
+        
+        // Update view history
+        function updateViewHistory(history) {
+            const historyContainer = document.getElementById('viewHistory');
+            historyContainer.innerHTML = '';
+            
+            if (history.length === 0) {
+                historyContainer.innerHTML = '<div class="view-item">No views yet</div>';
+                return;
+            }
+            
+            history.forEach(item => {
+                const viewItem = document.createElement('div');
+                viewItem.className = 'view-item';
+                viewItem.innerHTML = `
+                    <div>${item.date}</div>
+                    <div>${item.time}</div>
+                `;
+                historyContainer.appendChild(viewItem);
+            });
+        }
+        
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Update view count when page loads
+            const data = updateViewCount();
+            
+            // Set up navigation
+            document.getElementById('profileLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('profileLink').classList.add('active');
+                document.getElementById('adminLink').classList.remove('active');
+                // In a real app, this would navigate to the profile page
+            });
+            
+            document.getElementById('adminLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('adminLink').classList.add('active');
+                document.getElementById('profileLink').classList.remove('active');
+                // In a real app, this would navigate to the admin page
+                // For this demo, we're already showing admin data
+            });
+        });
+    </script>
+</body>
+</html>

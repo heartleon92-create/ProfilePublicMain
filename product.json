@@ -1,0 +1,31 @@
+{
+  "profiles": [
+    { "id": "ATZ-B01", "name": "Aung Min", "career": "Student", "category": "Basic", "status": "Basic", "price": 15000, "discountPrice": null, "popular": true, "image": "img/basic1.png" },
+    { "id": "ATZ-B02", "name": "Su Su", "career": "Freelancer", "category": "Basic", "status": "Basic", "price": 18000, "discountPrice": null, "popular": false, "image": "img/basic2.png" },
+    { "id": "ATZ-B03", "name": "Zaw Zaw", "career": "Office Worker", "category": "Basic", "status": "Basic", "price": 17000, "discountPrice": null, "popular": true, "image": "img/basic3.png" },
+    { "id": "ATZ-B04", "name": "Mya Mya", "career": "Teacher", "category": "Basic", "status": "Basic", "price": 16000, "discountPrice": null, "popular": false, "image": "img/basic4.png" },
+    { "id": "ATZ-B05", "name": "Hnin Ei", "career": "Doctor Intern", "category": "Basic", "status": "Basic", "price": 19000, "discountPrice": null, "popular": true, "image": "img/basic5.png" },
+    { "id": "ATZ-B06", "name": "Kyaw Kyaw", "career": "Photographer", "category": "Basic", "status": "Basic", "price": 20000, "discountPrice": null, "popular": false, "image": "img/basic6.png" },
+    
+    { "id": "ATZ-S01", "name": "Moe Moe", "career": "Engineer", "category": "Standard", "status": "Standard", "price": 35000, "discountPrice": null, "popular": true, "image": "img/standard1.png" },
+    { "id": "ATZ-S02", "name": "Hla Hla", "career": "Lawyer", "category": "Standard", "status": "Standard", "price": 37000, "discountPrice": null, "popular": false, "image": "img/standard2.png" },
+    { "id": "ATZ-S03", "name": "Nyi Nyi", "career": "Chef", "category": "Standard", "status": "Standard", "price": 36000, "discountPrice": null, "popular": true, "image": "img/standard3.png" },
+    { "id": "ATZ-S04", "name": "Ei Mon", "career": "Startup Founder", "category": "Standard", "status": "Standard", "price": 40000, "discountPrice": 35000, "popular": true, "image": "img/standard4.png" },
+    { "id": "ATZ-S05", "name": "Aye Aye", "career": "Programmer", "category": "Standard", "status": "Standard", "price": 38000, "discountPrice": null, "popular": false, "image": "img/standard5.png" },
+    { "id": "ATZ-S06", "name": "Than Than", "career": "Journalist", "category": "Standard", "status": "Standard", "price": 39000, "discountPrice": null, "popular": false, "image": "img/standard6.png" },
+    { "id": "ATZ-S07", "name": "Pyae Sone", "career": "Consultant", "category": "Standard", "status": "Standard", "price": 42000, "discountPrice": null, "popular": true, "image": "img/standard7.png" },
+    { "id": "ATZ-S08", "name": "Nandar", "career": "Fashion Blogger", "category": "Standard", "status": "Standard", "price": 41000, "discountPrice": null, "popular": false, "image": "img/standard8.png" },
+    { "id": "ATZ-S09", "name": "Lin Lin", "career": "Architect", "category": "Standard", "status": "Standard", "price": 45000, "discountPrice": null, "popular": true, "image": "img/standard9.png" },
+    
+    { "id": "ATZ-P01", "name": "Khant Zaw", "career": "Doctor", "category": "Premium", "status": "Premium", "price": 85000, "discountPrice": 78000, "popular": true, "image": "img/premium1.png" },
+    { "id": "ATZ-P02", "name": "Ei Ei", "career": "Musician", "category": "Premium", "status": "Premium", "price": 88000, "discountPrice": null, "popular": true, "image": "img/premium2.png" },
+    { "id": "ATZ-P03", "name": "Thet Htar", "career": "Startup Founder", "category": "Premium", "status": "Premium", "price": 95000, "discountPrice": 90000, "popular": false, "image": "img/premium3.png" },
+    { "id": "ATZ-P04", "name": "Myint Myint", "career": "CEO", "category": "Premium", "status": "Premium", "price": 100000, "discountPrice": 92000, "popular": true, "image": "img/premium4.png" },
+    { "id": "ATZ-P05", "name": "Phyo Wai", "career": "Photographer", "category": "Premium", "status": "Premium", "price": 87000, "discountPrice": null, "popular": false, "image": "img/premium5.png" },
+    { "id": "ATZ-P06", "name": "Thandar", "career": "Doctor Specialist", "category": "Premium", "status": "Premium", "price": 93000, "discountPrice": null, "popular": true, "image": "img/premium6.png" },
+    { "id": "ATZ-P07", "name": "Wai Yan", "career": "Investor", "category": "Premium", "status": "Premium", "price": 120000, "discountPrice": 110000, "popular": false, "image": "img/premium7.png" },
+    { "id": "ATZ-P08", "name": "Thuzar", "career": "Actress", "category": "Premium", "status": "Premium", "price": 95000, "discountPrice": null, "popular": true, "image": "img/premium8.png" },
+    { "id": "ATZ-P09", "name": "Su Hlaing", "career": "Fashion Designer", "category": "Premium", "status": "Premium", "price": 90000, "discountPrice": 82000, "popular": true, "image": "img/premium9.png" },
+    { "id": "ATZ-P10", "name": "Ko Ko", "career": "Pilot", "category": "Premium", "status": "Premium", "price": 130000, "discountPrice": null, "popular": false, "image": "img/premium10.png" }
+  ]
+}

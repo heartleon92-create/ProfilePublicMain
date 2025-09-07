@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATZ-B02 | Profile Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .logo {
+            color: #4CAF50;
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .logo i {
+            font-size: 28px;
+        }
+        
+        header h1 {
+            font-size: 18px;
+            font-weight: 500;
+            color: #777;
+            margin-top: 5px;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #4CAF50;
+            margin: 0 auto 20px;
+            background: #f1f1f1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .profile-picture i {
+            font-size: 50px;
+            color: #4CAF50;
+        }
+        
+        .profile-info h2 {
+            font-size: 24px;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .profile-info .title {
+            color: #4CAF50;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .profile-info .bio {
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat {
+            background: #f8f9fa;
+            padding: 15px 10px;
+            border-radius: 12px;
+        }
+        
+        .stat-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .footer-links a {
+            color: #777;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #4CAF50;
+        }
+        
+        @media (max-width: 480px) {
+            .profile-card {
+                padding: 20px;
+            }
+            
+            .profile-picture {
+                width: 100px;
+                height: 100px;
+            }
+            
+            .stats {
+                gap: 10px;
+            }
+            
+            .stat {
+                padding: 12px 8px;
+            }
+            
+            .stat-value {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-leaf"></i>
+                <span>ATZ-B02</span>
+            </div>
+            <h1>My Profile</h1>
+        </header>
+        
+        <div class="profile-card">
+            <div class="profile-picture">
+                <i class="fas fa-user"></i>
+            </div>
+            
+            <div class="profile-info">
+                <h2>Alex Johnson</h2>
+                <p class="title">Computer Science Student</p>
+                <p class="bio">Passionate about coding, design, and building solutions that make a difference.</p>
+            </div>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-value">258</div>
+                    <div class="stat-label">Followers</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-value">47</div>
+                    <div class="stat-label">Posts</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-value">129</div>
+                    <div class="stat-label">Following</div>
+                </div>
+            </div>
+            
+            <button class="cta-button">View More</button>
+        </div>
+        
+        <footer>
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Contact</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Simple hover effect for the CTA button
+        document.querySelector('.cta-button').addEventListener('mouseenter', function() {
+            this.style.boxShadow = '0 0 15px rgba(76, 175, 80, 0.5)';
+            this.style.transform = 'translateY(-2px)';
+        });
+        
+        document.querySelector('.cta-button').addEventListener('mouseleave', function() {
+            this.style.boxShadow = 'none';
+            this.style.transform = 'translateY(0)';
+        });
+    </script>
+</body>
+</html>

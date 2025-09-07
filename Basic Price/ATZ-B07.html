@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Profile Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 340px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+        
+        .banner {
+            background-color: #a8d5ff;
+            height: 90px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .laptop-icon {
+            color: #6a9bd8;
+            font-size: 36px;
+        }
+        
+        .profile-content {
+            padding: 0 25px 25px;
+            text-align: center;
+        }
+        
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #c2e6ff 0%, #a8d5ff 100%);
+            margin: -50px auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #6a9bd8;
+            font-size: 40px;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .freelancer-name {
+            font-weight: 700;
+            font-size: 22px;
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+        
+        .freelancer-title {
+            color: #718096;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat {
+            background-color: #f8fafc;
+            padding: 15px 5px;
+            border-radius: 10px;
+            border: 1px solid #edf2f7;
+        }
+        
+        .stat-number {
+            font-weight: 700;
+            font-size: 18px;
+            color: #4a90e2;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #718096;
+            font-weight: 500;
+        }
+        
+        .rating {
+            color: #fbbf24;
+            margin-top: 3px;
+        }
+        
+        .hire-btn {
+            display: inline-block;
+            background-color: #a8d5ff;
+            color: #2d3748;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .hire-btn:hover {
+            background-color: #4a90e2;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <div class="banner">
+            <div class="laptop-icon">
+                <i class="fas fa-laptop"></i>
+            </div>
+        </div>
+        
+        <div class="profile-content">
+            <div class="profile-image">
+                <i class="fas fa-user"></i>
+            </div>
+            
+            <h2 class="freelancer-name">Ma Su Hnin</h2>
+            <p class="freelancer-title">Freelance Graphic Designer</p>
+            
+            <div class="stats-container">
+                <div class="stat">
+                    <div class="stat-number">24</div>
+                    <div class="stat-label">Clients</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-number">47</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-number">4.9</div>
+                    <div class="stat-label">
+                        <div>Rating</div>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="hire-btn">
+                <i class="fas fa-paper-plane"></i> Hire Me
+            </button>
+        </div>
+    </div>
+</body>
+</html>

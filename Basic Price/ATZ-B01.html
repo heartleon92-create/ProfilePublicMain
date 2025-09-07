@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATZ-B01 Minimal Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f9f9f9;
+            color: #555;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        /* Container */
+        .container {
+            max-width: 480px;
+            margin: 0 auto;
+            width: 100%;
+        }
+        
+        /* Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            margin-bottom: 10px;
+        }
+        
+        .logo {
+            font-weight: 600;
+            font-size: 1.5rem;
+            color: #333;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 20px;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: #777;
+            font-weight: 400;
+            transition: color 0.2s ease;
+            font-size: 0.95rem;
+        }
+        
+        nav a:hover {
+            color: #FF6B81;
+        }
+        
+        /* Profile card */
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-picture {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            border: 3px solid #f0f0f0;
+        }
+        
+        .profile-name {
+            font-size: 1.7rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        .profile-role {
+            color: #777;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+        
+        .profile-bio {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+        
+        .cta-button {
+            background-color: #FF6B81;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        .cta-button:hover {
+            background-color: #e55a6e;
+        }
+        
+        /* Stats section */
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            border-top: 1px solid #f0f0f0;
+            padding-top: 25px;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            color: #777;
+            margin-top: auto;
+        }
+        
+        footer a {
+            color: #777;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.2s ease;
+            font-size: 0.9rem;
+        }
+        
+        footer a:hover {
+            color: #FF6B81;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 500px) {
+            header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 15px;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 10px;
+            }
+            
+            .profile-card {
+                padding: 25px 20px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">ATZ Profile</div>
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <div class="profile-card">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="Profile Picture" class="profile-picture">
+            <h1 class="profile-name">Alex Morgan</h1>
+            <p class="profile-role">Computer Science Student</p>
+            <p class="profile-bio">Passionate about coding, design, and creating innovative solutions.</p>
+            <button class="cta-button">View Profile</button>
+            
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">248</div>
+                    <div class="stat-label">Followers</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">37</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">129</div>
+                    <div class="stat-label">Following</div>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <a href="#">About</a> | <a href="#">Contact</a>
+            <p style="margin-top: 10px;">© 2023 ATZ Profile</p>
+        </footer>
+    </div>
+</body>
+</html>

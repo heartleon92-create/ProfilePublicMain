@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer Profile Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 380px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .banner {
+            background-color: #1a2b47;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .scales-icon {
+            color: rgba(255, 255, 255, 0.15);
+            font-size: 80px;
+            position: absolute;
+        }
+        
+        .profile-content {
+            padding: 0 25px 25px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .profile-image {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e6d3a3 0%, #d4af37 100%);
+            margin: -55px auto 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-size: 40px;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        }
+        
+        .lawyer-name {
+            font-weight: 700;
+            font-size: 22px;
+            color: #1a2b47;
+            margin-bottom: 5px;
+        }
+        
+        .lawyer-title {
+            color: #d4af37;
+            margin-bottom: 20px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .stat {
+            background-color: #f8f9fa;
+            padding: 15px 5px;
+            border-radius: 8px;
+            border: 1px solid #edf2f7;
+        }
+        
+        .stat-number {
+            font-weight: 700;
+            font-size: 18px;
+            color: #1a2b47;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #718096;
+            font-weight: 500;
+        }
+        
+        .bio {
+            color: #4a5568;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px 0;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background-color: #d4af37;
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: #bf9b30;
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+        
+        .btn-secondary {
+            background-color: white;
+            color: #1a2b47;
+            border: 2px solid #1a2b47;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #f8f9fa;
+            box-shadow: 0 0 15px rgba(26, 43, 71, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <div class="banner">
+            <div class="scales-icon">
+                <i class="fas fa-balance-scale"></i>
+            </div>
+        </div>
+        
+        <div class="profile-content">
+            <div class="profile-image">
+                <i class="fas fa-user-tie"></i>
+            </div>
+            
+            <h2 class="lawyer-name">Daw Nandar Win</h2>
+            <p class="lawyer-title">Corporate Lawyer</p>
+            
+            <div class="stats-container">
+                <div class="stat">
+                    <div class="stat-number">142</div>
+                    <div class="stat-label">Cases Won</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-number">89</div>
+                    <div class="stat-label">Clients</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Years Practice</div>
+                </div>
+            </div>
+            
+            <p class="bio">Specialized in corporate law with expertise in mergers & acquisitions, compliance, and international business regulations.</p>
+            
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">
+                    <i class="fas fa-briefcase"></i> Hire Lawyer
+                </a>
+                <a href="#" class="btn btn-secondary">
+                    <i class="fas fa-envelope"></i> Contact
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

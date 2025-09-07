@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Athlete Profile Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .profile-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .banner {
+            height: 180px;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200"><defs><linearGradient id="track" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" style="stop-color:%23d32f2f;stop-opacity:1" /><stop offset="100%" style="stop-color:%23b71c1c;stop-opacity:1" /></linearGradient></defs><rect width="400" height="200" fill="url(%23track)" /><path d="M0,100 L400,100" stroke="%23ffffff" stroke-width="2" stroke-dasharray="10,10" /><path d="M50,70 L350,70" stroke="%23ffd600" stroke-width="3" /><path d="M50,130 L350,130" stroke="%23ffd600" stroke-width="3" /></svg>');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .profile-image-container {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #d32f2f 0%, #b71c1c 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+            border: 4px solid #ffffff;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 32px;
+            height: 32px;
+            background-color: #ffd600;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            border: 2px solid #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .profile-content {
+            padding: 70px 25px 25px;
+            text-align: center;
+        }
+        
+        .athlete-name {
+            font-weight: 800;
+            font-size: 26px;
+            color: #212121;
+            margin-bottom: 5px;
+        }
+        
+        .athlete-title {
+            color: #d32f2f;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        
+        .bio {
+            color: #424242;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat {
+            flex: 1;
+            min-width: 80px;
+            background-color: #f5f5f5;
+            padding: 15px 10px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .stat-number {
+            font-weight: 800;
+            font-size: 20px;
+            color: #d32f2f;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #757575;
+            font-weight: 500;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 12px 0;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: #d32f2f;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #b71c1c;
+        }
+        
+        .btn-secondary {
+            background-color: #ffd600;
+            color: #212121;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #ffc400;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 480px) {
+            .banner {
+                height: 150px;
+            }
+            
+            .profile-image {
+                width: 100px;
+                height: 100px;
+                font-size: 35px;
+            }
+            
+            .profile-content {
+                padding: 60px 20px 20px;
+            }
+            
+            .athlete-name {
+                font-size: 22px;
+            }
+            
+            .stats-container {
+                flex-direction: column;
+            }
+            
+            .stat {
+                min-width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 12px 15px;
+                text-align: left;
+            }
+            
+            .stat-content {
+                display: flex;
+                flex-direction: column;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <div class="banner">
+            <div class="profile-image-container">
+                <div class="profile-image">
+                    <i class="fas fa-running"></i>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-medal"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-content">
+            <h2 class="athlete-name">Nyi Nyi Htut</h2>
+            <p class="athlete-title">Marathon Runner</p>
+            
+            <p class="bio">National marathon champion with 5 international medals. Specializing in long-distance running since 2015.</p>
+            
+            <div class="stats-container">
+                <div class="stat">
+                    <div class="stat-number">42</div>
+                    <div class="stat-label">Competitions</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Wins</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-number">5.7K</div>
+                    <div class="stat-label">Followers</div>
+                </div>
+            </div>
+            
+            <div class="cta-buttons">
+                <button class="btn btn-primary">
+                    <i class="fas fa-plus"></i> Follow
+                </button>
+                <button class="btn btn-secondary">
+                    <i class="fas fa-hand-holding-usd"></i> Sponsor
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

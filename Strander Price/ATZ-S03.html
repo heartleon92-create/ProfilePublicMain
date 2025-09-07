@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATZ-S03 Teacher Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #0D47A1;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-text {
+            font-family: 'Merriweather', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav li {
+            margin-left: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding-bottom: 5px;
+            position: relative;
+        }
+        
+        nav a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover:after {
+            width: 100%;
+        }
+        
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        
+        /* Profile Section */
+        .profile-section {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .profile-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .profile-img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #0D47A1;
+            margin: 0 auto 1.5rem;
+        }
+        
+        .profile-name {
+            font-family: 'Merriweather', serif;
+            color: #0D47A1;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-subject {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+        }
+        
+        .profile-bio {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Teaching Info */
+        .teaching-info {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            opacity: 0;
+            animation: slideUp 1s ease 0.3s forwards;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-title {
+            font-family: 'Merriweather', serif;
+            color: #0D47A1;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e0e0e0;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 8px;
+            background: #f9f9f9;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #0D47A1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .subjects-list, .classes-list {
+            margin-bottom: 2rem;
+        }
+        
+        .info-list {
+            list-style: none;
+        }
+        
+        .info-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+        
+        .info-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .info-list i {
+            color: #0D47A1;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .cta-btn {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .consult-btn {
+            background: #0D47A1;
+            color: white;
+        }
+        
+        .courses-btn {
+            background: white;
+            color: #0D47A1;
+            border: 2px solid #0D47A1;
+        }
+        
+        .cta-btn:after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            bottom: 0;
+            left: -100%;
+            background: currentColor;
+            transition: left 0.3s ease;
+        }
+        
+        .cta-btn:hover:after {
+            left: 0;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Contact Links */
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #0D47A1;
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+        
+        .contact-link:hover {
+            transform: translateY(-5px);
+            background: #08367d;
+            box-shadow: 0 5px 15px rgba(13, 71, 161, 0.3);
+        }
+        
+        /* Footer */
+        footer {
+            background: #0D47A1;
+            color: white;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        .footer-school {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-school-name {
+            font-family: 'Merriweather', serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: #aaccff;
+            text-decoration: underline;
+        }
+        
+        .copyright {
+            grid-column: 1 / -1;
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .profile-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                padding: 1rem;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            nav li {
+                margin: 0 1rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-text {
+                font-size: 1.5rem;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav li {
+                margin: 0.5rem 0;
+            }
+            
+            .profile-img {
+                width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo">
+            <i class="fas fa-graduation-cap fa-2x"></i>
+            <div class="logo-text">ATZ Academy</div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Profile</a></li>
+                <li><a href="#">Classes</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Profile Section -->
+        <section class="profile-section">
+            <div class="profile-card">
+                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Dr. Sarah Williams" class="profile-img">
+                <h1 class="profile-name">Dr. Sarah Williams</h1>
+                <p class="profile-subject">Mathematics Professor</p>
+                <p class="profile-bio">Dedicated educator with a passion for making complex mathematical concepts accessible and engaging for all students. PhD in Applied Mathematics from Stanford University.</p>
+                
+                <div class="contact-links">
+                    <a href="mailto:s.williams@atzacademy.edu" class="contact-link">
+                        <i class="fas fa-envelope"></i>
+                    </a>
+                    <a href="#" class="contact-link">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="#" class="contact-link">
+                        <i class="fas fa-globe"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="teaching-info">
+                <h2 class="section-title">Teaching Information</h2>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Years Experience</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">6</div>
+                        <div class="stat-label">Subjects</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Classes Handled</div>
+                    </div>
+                </div>
+                
+                <div class="subjects-list">
+                    <h3 class="section-title">Subjects</h3>
+                    <ul class="info-list">
+                        <li><i class="fas fa-calculator"></i> Calculus I & II</li>
+                        <li><i class="fas fa-chart-line"></i> Linear Algebra</li>
+                        <li><i class="fas fa-project-diagram"></i> Discrete Mathematics</li>
+                        <li><i class="fas fa-infinity"></i> Differential Equations</li>
+                    </ul>
+                </div>
+                
+                <div class="classes-list">
+                    <h3 class="section-title">Current Classes</h3>
+                    <ul class="info-list">
+                        <li><i class="fas fa-graduation-cap"></i> Advanced Calculus - Mon/Wed 9:00 AM</li>
+                        <li><i class="fas fa-graduation-cap"></i> Linear Algebra - Tue/Thu 11:00 AM</li>
+                        <li><i class="fas fa-graduation-cap"></i> Mathematics Fundamentals - Mon/Wed/Fri 2:00 PM</li>
+                    </ul>
+                </div>
+                
+                <div class="cta-buttons">
+                    <button class="cta-btn consult-btn">Book Consultation</button>
+                    <button class="cta-btn courses-btn">View Courses</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-school">
+                <div class="footer-school-name">ATZ Academy of Excellence</div>
+                <p>Shaping minds for a better future since 1985</p>
+            </div>
+            
+            <div class="footer-links">
+                <a href="#">About Us</a>
+                <a href="#">Academic Programs</a>
+                <a href="#">Admissions</a>
+                <a href="#">Campus Life</a>
+                <a href="#">News & Events</a>
+                <a href="#">Contact</a>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 ATZ Academy of Excellence. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple animation for the CTA buttons
+        document.querySelectorAll('.cta-btn').forEach(button => {
+            button.addEventListener('mouseenter', function(e) {
+                this.style.transform = 'translateY(-3px)';
+                this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
+            });
+            
+            button.addEventListener('mouseleave', function(e) {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+        
+        // Add interaction to stat cards
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

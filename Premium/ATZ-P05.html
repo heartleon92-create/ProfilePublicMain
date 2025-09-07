@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATZ-P05 - Premium Doctor Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f7ff;
+            color: #2c3e50;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #e8f4ff 0%, #c2e0ff 100%);
+            padding: 80px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cpath fill='%23c2e0ff' fill-opacity='0.2' d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z'%3E%3C/path%3E%3C/svg%3E");
+            opacity: 0.5;
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .profile-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .profile-frame {
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            border: 6px solid #ffd700;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            position: relative;
+        }
+        
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e0f0ff 0%, #a0c8ff 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a73e8;
+            font-size: 80px;
+        }
+        
+        .profile-info {
+            flex: 1;
+            padding-left: 40px;
+        }
+        
+        .doctor-name {
+            font-weight: 700;
+            font-size: 42px;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+        
+        .doctor-title {
+            color: #1a73e8;
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+        
+        .hospital {
+            display: flex;
+            align-items: center;
+            color: #64748b;
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+        
+        .hospital i {
+            margin-right: 10px;
+            color: #1a73e8;
+        }
+        
+        /* Stats Section */
+        .stats {
+            padding: 60px 0;
+            background: white;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e1efff 100%);
+            padding: 30px 20px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: #1a73e8;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin: 0 auto 20px;
+        }
+        
+        .stat-number {
+            font-weight: 800;
+            font-size: 36px;
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 16px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        /* Bio Section */
+        .bio {
+            padding: 80px 0;
+            background: #f8fafc;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #1a365d;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: #ffd700;
+            border-radius: 2px;
+        }
+        
+        .bio-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #4a5568;
+        }
+        
+        .expertise-list {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .expertise-item {
+            background: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            font-weight: 600;
+            color: #1a73e8;
+            display: flex;
+            align-items: center;
+        }
+        
+        .expertise-item i {
+            margin-right: 8px;
+            color: #ffd700;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 80px 0;
+            background: white;
+            position: relative;
+        }
+        
+        .testimonial-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            height: 300px;
+            overflow: hidden;
+        }
+        
+        .testimonial-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            padding: 30px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            transform: translateX(100%);
+        }
+        
+        .testimonial-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .testimonial-slide.prev {
+            transform: translateX(-100%);
+        }
+        
+        .testimonial-text {
+            font-size: 18px;
+            font-style: italic;
+            line-height: 1.8;
+            color: #4a5568;
+            margin-bottom: 20px;
+            position: relative;
+            padding: 0 30px;
+        }
+        
+        .testimonial-text::before,
+        .testimonial-text::after {
+            content: "";
+            font-size: 60px;
+            color: #ffd700;
+            opacity: 0.3;
+            position: absolute;
+        }
+        
+        .testimonial-text::before {
+            top: -20px;
+            left: 0;
+        }
+        
+        .testimonial-text::after {
+            content: "";
+            bottom: -40px;
+            right: 0;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #e0f0ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #1a73e8;
+            font-size: 20px;
+            margin-right: 15px;
+        }
+        
+        .author-info h4 {
+            font-weight: 700;
+            color: #1a365d;
+            margin-bottom: 5px;
+        }
+        
+        .author-info p {
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .testimonial-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        
+        .dot {
+            width: 12px;
+            height: 12px;
+            background: #cbd5e0;
+            border-radius: 50%;
+            margin: 0 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .dot.active {
+            background: #1a73e8;
+        }
+        
+        /* CTA Button */
+        .cta-button {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
+        }
+        
+        .book-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1a73e8 0%, #0d47a1 100%);
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(26, 115, 232, 0.4);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .book-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 25px rgba(26, 115, 232, 0.5);
+        }
+        
+        .book-btn span {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: #ff6b6b;
+            color: white;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .book-btn i {
+            font-size: 24px;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-info {
+                padding-left: 0;
+                margin-top: 40px;
+            }
+            
+            .hospital {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .doctor-name {
+                font-size: 32px;
+            }
+            
+            .doctor-title {
+                font-size: 18px;
+            }
+            
+            .testimonial-container {
+                height: 380px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                padding: 60px 0 80px;
+            }
+            
+            .profile-frame {
+                width: 180px;
+                height: 180px;
+            }
+            
+            .profile-image {
+                width: 160px;
+                height: 160px;
+                font-size: 60px;
+            }
+            
+            .doctor-name {
+                font-size: 28px;
+            }
+            
+            .expertise-item {
+                padding: 10px 20px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="profile-container">
+                <div class="profile-frame">
+                    <div class="profile-image">
+                        <i class="fas fa-user-md"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-info">
+                <h1 class="doctor-name">Dr. Aye Chan Kyaw</h1>
+                <p class="doctor-title">Senior Cardiologist</p>
+                <div class="hospital">
+                    <i class="fas fa-hospital"></i>
+                    <span>Yangon General Hospital</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-user-injured"></i>
+                    </div>
+                    <div class="stat-number">2,500+</div>
+                    <div class="stat-label">Patients Treated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-medical"></i>
+                    </div>
+                    <div class="stat-number">47</div>
+                    <div class="stat-label">Research Papers</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Medical Awards</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bio Section -->
+    <section class="bio">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Dr. Kyaw</h2>
+            </div>
+            <div class="bio-content">
+                <p>With over 15 years of experience in cardiology, Dr. Aye Chan Kyaw is renowned for his expertise in interventional cardiology and minimally invasive heart procedures. He is dedicated to providing compassionate care and utilizing the latest advancements in cardiac medicine.</p>
+                
+                <div class="expertise-list">
+                    <div class="expertise-item">
+                        <i class="fas fa-heartbeat"></i> Interventional Cardiology
+                    </div>
+                    <div class="expertise-item">
+                        <i class="fas fa-heart"></i> Cardiac Catheterization
+                    </div>
+                    <div class="expertise-item">
+                        <i class="fas fa-stethoscope"></i> Preventive Cardiology
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Patient Testimonials</h2>
+            </div>
+            
+            <div class="testimonial-container">
+                <div class="testimonial-slide active">
+                    <p class="testimonial-text">Dr. Kyaw saved my life with his timely diagnosis and expert treatment. His compassionate approach made me feel cared for throughout my recovery. I couldn't have asked for a better cardiologist.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>U Hla Myint</h4>
+                            <p>Patient since 2019</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-slide">
+                    <p class="testimonial-text">The care I received from Dr. Kyaw was exceptional. He took the time to explain everything in detail and answered all my questions. His expertise is matched only by his kindness.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Daw Khin Mar</h4>
+                            <p>Patient since 2020</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-slide">
+                    <p class="testimonial-text">As a fellow healthcare professional, I can confidently say that Dr. Kyaw is one of the best cardiologists in the country. His surgical precision and patient care are unparalleled.</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Dr. Mya Mya</h4>
+                            <p>Medical Colleague</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Button -->
+    <div class="cta-button">
+        <a href="#" class="book-btn">
+            <i class="fas fa-calendar-check"></i>
+            <span>Now</span>
+        </a>
+    </div>
+
+    <script>
+        // Testimonial Carousel
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.testimonial-slide');
+            const dots = document.querySelectorAll('.dot');
+            let currentSlide = 0;
+            
+            function showSlide(n) {
+                slides.forEach(slide => slide.classList.remove('active', 'prev'));
+                dots.forEach(dot => dot.classList.remove('active'));
+                
+                slides[n].classList.add('active');
+                dots[n].classList.add('active');
+                currentSlide = n;
+            }
+            
+            dots.forEach(dot => {
+                dot.addEventListener('click', function() {
+                    const slideIndex = parseInt(this.getAttribute('data-slide'));
+                    showSlide(slideIndex);
+                });
+            });
+            
+            // Auto-advance slides
+            setInterval(() => {
+                currentSlide = (currentSlide + 1) % slides.length;
+                showSlide(currentSlide);
+            }, 5000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATZ-S06 - Graphic Designer Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            color: #334155;
+            line-height: 1.6;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .designer-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+        
+        .designer-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .banner {
+            height: 140px;
+            background: linear-gradient(135deg, #8B5FBF 0%, #C06C84 100%);
+            position: relative;
+        }
+        
+        .profile-container {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .profile-frame {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 5px solid white;
+            background: linear-gradient(135deg, #8B5FBF 0%, #C06C84 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .profile-content {
+            padding: 80px 30px 30px;
+            text-align: center;
+        }
+        
+        .designer-name {
+            font-weight: 800;
+            font-size: 26px;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .designer-title {
+            color: #64748b;
+            margin-bottom: 24px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .portfolio-section {
+            margin-bottom: 28px;
+        }
+        
+        .section-title {
+            text-align: left;
+            font-size: 18px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+        
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
+        
+        .portfolio-item {
+            height: 90px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .portfolio-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .portfolio-item:hover .portfolio-img {
+            transform: scale(1.1);
+        }
+        
+        .portfolio-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(139, 95, 191, 0.7) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .portfolio-item:hover::after {
+            opacity: 1;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 28px;
+        }
+        
+        .stat {
+            background-color: #f8fafc;
+            padding: 15px 10px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat:hover {
+            background-color: #f1f5f9;
+            transform: translateY(-3px);
+        }
+        
+        .stat-icon {
+            color: #8B5FBF;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+        
+        .stat-number {
+            font-weight: 800;
+            font-size: 20px;
+            color: #1e293b;
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        
+        .hire-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #8B5FBF 0%, #C06C84 100%);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 12px rgba(139, 95, 191, 0.25);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .hire-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(139, 95, 191, 0.4);
+        }
+        
+        @media (max-width: 480px) {
+            .profile-content {
+                padding: 80px 20px 25px;
+            }
+            
+            .stats-container {
+                gap: 10px;
+            }
+            
+            .stat {
+                padding: 12px 8px;
+            }
+            
+            .portfolio-grid {
+                gap: 8px;
+            }
+            
+            .portfolio-item {
+                height: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="designer-card">
+        <div class="banner">
+            <div class="profile-container">
+                <div class="profile-frame">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-content">
+            <h1 class="designer-name">Myo Thant</h1>
+            <p class="designer-title">Creative Designer</p>
+            
+            <div class="portfolio-section">
+                <h3 class="section-title">Portfolio Preview</h3>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <div class="portfolio-img" style="background: linear-gradient(45deg, #FF9A9E 0%, #FAD0C4 100%);"></div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-img" style="background: linear-gradient(45deg, #A18CD1 0%, #FBC2EB 100%);"></div>
+                    </div>
+                    <div class="portfolio-item">
+                        <div class="portfolio-img" style="background: linear-gradient(45deg, #FFECD2 0%, #FCB69F 100%);"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="stats-container">
+                <div class="stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <div class="stat-number">127</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <div class="stat-number">64</div>
+                    <div class="stat-label">Clients</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-number">9</div>
+                    <div class="stat-label">Awards</div>
+                </div>
+            </div>
+            
+            <button class="hire-btn">
+                <i class="fas fa-paper-plane"></i> Hire Me
+            </button>
+        </div>
+    </div>
+</body>
+</html>

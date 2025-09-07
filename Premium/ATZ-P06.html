@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Chef Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Playfair Display', Georgia, serif;
+        }
+        
+        body {
+            background-color: #0f0f0f;
+            color: #f5f5f5;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 80vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23a52a2a" opacity="0.3"/><path d="M30,30 Q50,10 70,30 T90,50 T70,70 T30,70 T10,50 T30,30" fill="%23daa520" opacity="0.2"/></svg>');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            animation: fadeIn 1.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .profile-frame {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 5px solid #daa520;
+            background: #000;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 25px rgba(218, 165, 32, 0.5);
+            overflow: hidden;
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 25px rgba(218, 165, 32, 0.5); }
+            50% { box-shadow: 0 0 35px rgba(218, 165, 32, 0.8); }
+            100% { box-shadow: 0 0 25px rgba(218, 165, 32, 0.5); }
+        }
+        
+        .profile-image {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #daa520 0%, #a52a2a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-size: 70px;
+        }
+        
+        .chef-name {
+            font-weight: 700;
+            font-size: 48px;
+            color: #fff;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .chef-title {
+            color: #daa520;
+            font-size: 22px;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        
+        /* Stats Section */
+        .stats {
+            padding: 80px 0;
+            background-color: #1a1a1a;
+        }
+        
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .stat-card {
+            background: linear-gradient(145deg, #1f1f1f, #171717);
+            padding: 40px 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid #333;
+            transition: transform 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            width: 70px;
+            height: 70px;
+            background: #daa520;
+            color: #000;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin: 0 auto 20px;
+        }
+        
+        .stat-number {
+            font-weight: 700;
+            font-size: 42px;
+            color: #daa520;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 18px;
+            color: #ccc;
+            font-weight: 500;
+        }
+        
+        /* Portfolio Section */
+        .portfolio {
+            padding: 80px 0;
+            background-color: #0f0f0f;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #daa520;
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: #a52a2a;
+            border-radius: 2px;
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        
+        .gallery-item {
+            height: 280px;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+        
+        /* Bio Section */
+        .bio {
+            padding: 80px 0;
+            background-color: #1a1a1a;
+        }
+        
+        .bio-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            font-size: 18px;
+            line-height: 1.8;
+            color: #ccc;
+        }
+        
+        .bio-content p {
+            margin-bottom: 25px;
+        }
+        
+        .culinary-style {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .style-item {
+            background: #0f0f0f;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #daa520;
+            display: flex;
+            align-items: center;
+            border: 1px solid #333;
+        }
+        
+        .style-item i {
+            margin-right: 8px;
+            color: #a52a2a;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 80px 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23a52a2a" opacity="0.2"/><circle cx="50" cy="50" r="40" fill="%23daa520" opacity="0.1"/></svg>');
+            background-size: cover;
+            background-position: center;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            color: #daa520;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            font-size: 18px;
+            color: #ccc;
+        }
+        
+        .book-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #daa520 0%, #a52a2a 100%);
+            color: #000;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(218, 165, 32, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .book-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(218, 165, 32, 0.6);
+            color: #000;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery-item {
+                height: 250px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .chef-name {
+                font-size: 36px;
+            }
+            
+            .chef-title {
+                font-size: 18px;
+            }
+            
+            .profile-frame {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .profile-image {
+                width: 130px;
+                height: 130px;
+                font-size: 50px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero {
+                height: 70vh;
+            }
+            
+            .culinary-style {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .style-item {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="profile-frame">
+                <div class="profile-image">
+                    <i class="fas fa-chef-hat"></i>
+                </div>
+            </div>
+            <h1 class="chef-name">Chef Kyaw Zin Htet</h1>
+            <p class="chef-title">Executive Chef – Yangon Fine Dining</p>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Restaurants</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-number">23</div>
+                    <div class="stat-label">Signature Dishes</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <div class="stat-number">14</div>
+                    <div class="stat-label">Culinary Awards</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section class="portfolio">
+        <div class="container">
+            <div class="section-title">
+                <h2>Signature Creations</h2>
+            </div>
+            
+            <div class="gallery">
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background: linear-gradient(45deg, #8B4513 0%, #CD853F 100%);"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background: linear-gradient(45deg, #A52A2A 0%, #DC143C 100%);"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background: linear-gradient(45deg, #DAA520 0%, #F4A460 100%);"></div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-img" style="background: linear-gradient(45deg, #2F4F4F 0%, #696969 100%);"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bio Section -->
+    <section class="bio">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Chef Kyaw</h2>
+            </div>
+            
+            <div class="bio-content">
+                <p>With over 15 years of culinary excellence, Chef Kyaw Zin Htet brings a unique fusion of traditional Burmese flavors with modern French techniques. His innovative approach to Southeast Asian cuisine has earned him international recognition.</p>
+                
+                <p>Trained in Paris and Tokyo, Chef Kyaw believes in using only the freshest local ingredients to create memorable dining experiences that engage all the senses.</p>
+                
+                <div class="culinary-style">
+                    <div class="style-item">
+                        <i class="fas fa-seedling"></i> Farm-to-Table
+                    </div>
+                    <div class="style-item">
+                        <i class="fas fa-globe-asia"></i> Fusion Cuisine
+                    </div>
+                    <div class="style-item">
+                        <i class="fas fa-mortar-pestle"></i> Traditional Techniques
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Experience Culinary Excellence</h2>
+            <p>Elevate your next event with Chef Kyaw's exceptional catering services, featuring custom menus tailored to your preferences.</p>
+            <a href="#" class="book-btn">
+                <i class="fas fa-calendar-check"></i> Book Catering
+            </a>
+        </div>
+    </section>
+
+    <script>
+        // Simple animation for elements when they come into view
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.stat-card, .gallery-item, .style-item');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = 1;
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(el => {
+                el.style.opacity = 0;
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

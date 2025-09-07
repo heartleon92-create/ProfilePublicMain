@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATZ-B04 Employee Profile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #F5F5F5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 480px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            background-color: #4CAF50;
+            border-radius: 8px;
+            margin-right: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        h1 {
+            font-size: 22px;
+            font-weight: 500;
+            color: #333;
+        }
+        
+        /* Profile Card Styles */
+        .profile-card {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #4CAF50;
+            margin: 0 auto 20px;
+            background-color: #e9f5e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4CAF50;
+            font-size: 40px;
+        }
+        
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #222;
+        }
+        
+        .job-role {
+            color: #4CAF50;
+            font-weight: 500;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .department {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .contact-info {
+            text-align: left;
+            background-color: #f9f9f9;
+            padding: 18px;
+            border-radius: 8px;
+            margin: 25px 0;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .icon {
+            width: 20px;
+            margin-right: 12px;
+            color: #4CAF50;
+        }
+        
+        .download-btn {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: 500;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .download-btn:hover {
+            background-color: #3e9c41;
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.5);
+            transform: translateY(-2px);
+        }
+        
+        .download-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Footer Styles */
+        footer {
+            text-align: center;
+            color: #666;
+            font-size: 14px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">ATZ</div>
+            <h1>Employee Profile</h1>
+        </header>
+        
+        <main>
+            <div class="profile-card">
+                <div class="profile-photo">
+                    <!-- Placeholder for profile photo -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                
+                <h2>Sarah Johnson</h2>
+                <p class="job-role">Administrative Assistant</p>
+                <p class="department">Operations Department</p>
+                
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        <span>sarah.johnson@company.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                        </svg>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                </div>
+                
+                <button class="download-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    Download CV
+                </button>
+            </div>
+        </main>
+        
+        <footer>
+            <p>© 2023 Company Name. All rights reserved.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photographer Profile Card</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .profile-card {
+            background: #2c2c2c;
+            border-radius: 16px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 450px;
+            overflow: hidden;
+            color: #ffffff;
+        }
+        
+        .banner {
+            height: 180px;
+            background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="200" viewBox="0 0 400 200"><defs><radialGradient id="grad" cx="50%" cy="50%" r="50%" fx="50%" fy="50%"><stop offset="0%" style="stop-color:%23333;stop-opacity:1" /><stop offset="100%" style="stop-color:%23222;stop-opacity:1" /></radialGradient></defs><rect width="400" height="200" fill="url(%23grad)" /><circle cx="320" cy="50" r="30" fill="%23daa520" opacity="0.3" /><circle cx="100" cy="30" r="20" fill="%23daa520" opacity="0.2" /><circle cx="250" cy="150" r="40" fill="%23daa520" opacity="0.25" /></svg>');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .profile-image-container {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2c2c2c 0%, #4a4a4a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #daa520;
+            font-size: 40px;
+            border: 4px solid #daa520;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        
+        .profile-content {
+            padding: 70px 25px 25px;
+            text-align: center;
+        }
+        
+        .photographer-name {
+            font-weight: 700;
+            font-size: 26px;
+            color: #ffffff;
+            margin-bottom: 5px;
+        }
+        
+        .photographer-title {
+            color: #daa520;
+            margin-bottom: 15px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .bio {
+            color: #cccccc;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 25px;
+            padding: 0 10px;
+        }
+        
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .stat {
+            flex: 1;
+            min-width: 80px;
+            background-color: #3a3a3a;
+            padding: 15px 10px;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #444444;
+        }
+        
+        .stat-number {
+            font-weight: 700;
+            font-size: 20px;
+            color: #daa520;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #aaaaaa;
+            font-weight: 500;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .btn {
+            padding: 16px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: #daa520;
+            color: #2c2c2c;
+        }
+        
+        .btn-primary:hover {
+            background-color: #c6951c;
+        }
+        
+        .btn-secondary {
+            background-color: transparent;
+            color: #daa520;
+            border: 2px solid #daa520;
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(218, 165, 32, 0.1);
+        }
+        
+        /* Responsive adjustments */
+        @media (min-width: 480px) {
+            .banner {
+                height: 200px;
+            }
+            
+            .cta-buttons {
+                flex-direction: row;
+            }
+        }
+        
+        @media (max-width: 350px) {
+            .stats-container {
+                flex-direction: column;
+            }
+            
+            .stat {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="profile-card">
+        <div class="banner">
+            <div class="profile-image-container">
+                <div class="profile-image">
+                    <i class="fas fa-camera"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="profile-content">
+            <h2 class="photographer-name">Ko Kaung Myat</h2>
+            <p class="photographer-title">Wedding & Portrait Photographer</p>
+            
+            <p class="bio">Specializing in natural light photography with a documentary approach to capture authentic moments.</p>
+            
+            <div class="stats-container">
+                <div class="stat">
+                    <div class="stat-number">142</div>
+                    <div class="stat-label">Projects</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-number">89</div>
+                    <div class="stat-label">Clients</div>
+                </div>
+                
+                <div class="stat">
+                    <div class="stat-number">3.5K</div>
+                    <div class="stat-label">Followers</div>
+                </div>
+            </div>
+            
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">
+                    <i class="fas fa-images"></i> View Portfolio
+                </a>
+                <a href="#" class="btn btn-secondary">
+                    <i class="fas fa-envelope"></i> Hire Me
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
