@@ -30,6 +30,8 @@
             background-color: var(--bg-light);
             line-height: 1.6;
             padding-bottom: 80px;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         /* Header Styles */
@@ -41,10 +43,9 @@
             top: 0;
             z-index: 100;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
+            width: 100%;
         }
 
         .header-main {
@@ -52,6 +53,7 @@
             align-items: center;
             gap: 1rem;
             flex: 1;
+            min-width: 0;
         }
 
         .logo {
@@ -64,7 +66,7 @@
         .search-container {
             position: relative;
             flex: 1;
-            max-width: 400px;
+            min-width: 0;
             display: none;
         }
 
@@ -99,12 +101,15 @@
         .header-controls {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: flex-end;
         }
 
         .category-tags {
             display: none;
             gap: 0.5rem;
+            flex-wrap: wrap;
         }
 
         .category-tags.active {
@@ -225,12 +230,16 @@
         /* Main Content */
         main {
             padding: 1.5rem 1rem;
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
         }
 
         .profiles-grid {
             display: grid;
             grid-template-columns: 1fr;
             gap: 1.5rem;
+            width: 100%;
         }
 
         /* Profile Card */
@@ -243,6 +252,7 @@
             animation: fadeIn 0.5s ease-out forwards;
             opacity: 0;
             transform: translateY(20px);
+            width: 100%;
         }
 
         @keyframes fadeIn {
@@ -261,6 +271,7 @@
             height: 200px;
             overflow: hidden;
             position: relative;
+            width: 100%;
         }
 
         .card-image img {
@@ -335,6 +346,7 @@
             align-items: center;
             gap: 0.5rem;
             margin-bottom: 1.25rem;
+            flex-wrap: wrap;
         }
 
         .current-price {
@@ -407,6 +419,8 @@
             padding: 2rem;
             transform: translateY(100%);
             transition: transform 0.3s ease-out;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .modal-overlay.active .modal-content {
@@ -482,48 +496,6 @@
             transform: scale(1.02);
             box-shadow: 0 4px 12px rgba(108, 92, 231, 0.25);
         }
-  .career-filter {
-            margin-bottom: 1.5rem;
-        }
-
-        .career-filter select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .modal-button {
-            flex: 1;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .apply-filters {
-            background: linear-gradient(135deg, #4fbec9, #6c5ce7);
-            color: white;
-        }
-
-        .reset-filters {
-            background: #f1f2f6;
-            color: var(--text-dark);
-        }
-
-        .modal-button:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
-
 
         /* Myanmar Font */
         @font-face {
@@ -537,6 +509,78 @@
         }
 
         /* Responsive Styles */
+        @media (max-width: 767px) {
+            header {
+                padding: 0.75rem;
+                gap: 0.75rem;
+            }
+            
+            .header-main {
+                order: 1;
+                width: 100%;
+            }
+            
+            .header-controls {
+                order: 3;
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .category-tags {
+                order: 2;
+                width: 100%;
+                margin-top: 0.5rem;
+                overflow-x: auto;
+                padding-bottom: 0.25rem;
+                justify-content: flex-start;
+            }
+            
+            .logo {
+                font-size: 1.25rem;
+            }
+            
+            .search-container.active {
+                width: 100%;
+            }
+            
+            .language-btn span {
+                display: none;
+            }
+            
+            .filter-btn span {
+                display: none;
+            }
+            
+            .category-tag {
+                font-size: 0.7rem;
+                padding: 0.35rem 0.7rem;
+            }
+            
+            main {
+                padding: 1rem;
+            }
+            
+            .profiles-grid {
+                gap: 1rem;
+            }
+            
+            .card-image {
+                height: 180px;
+            }
+            
+            .profile-name {
+                font-size: 1.1rem;
+            }
+            
+            .profile-career {
+                font-size: 0.9rem;
+            }
+            
+            .current-price {
+                font-size: 1rem;
+            }
+        }
+
         @media (min-width: 768px) {
             header {
                 padding: 1rem 2rem;
@@ -584,42 +628,21 @@
             }
             
             .header-controls {
-                gap: 1.5rem;
+                gap: 1rem;
             }
         }
 
-        @media (max-width: 767px) {
-            .header-main {
-                flex: 1 1 100%;
-                order: 1;
-            }
-            
+        @media (max-width: 400px) {
             .header-controls {
-                flex: 1;
-                justify-content: flex-end;
-                order: 2;
+                gap: 0.25rem;
             }
             
-            .category-tags {
-                order: 3;
-                flex: 1 1 100%;
-                margin-top: 0.5rem;
-                overflow-x: auto;
-                padding-bottom: 0.25rem;
+            .language-btn, .filter-btn {
+                padding: 0.5rem;
             }
             
-            .category-tags::-webkit-scrollbar {
-                height: 4px;
-            }
-            
-            .category-tags::-webkit-scrollbar-track {
-                background: #f1f1f1;
-                border-radius: 10px;
-            }
-            
-            .category-tags::-webkit-scrollbar-thumb {
-                background: #c1c1c1;
-                border-radius: 10px;
+            .language-btn i:last-child, .filter-btn i:last-child {
+                display: none;
             }
         }
     </style>
@@ -684,23 +707,7 @@
                 <button class="filter-option standard-option" data-category="Standard" data-en="Standard" data-my="စံ">Standard</button>
                 <button class="filter-option premium-option" data-category="Premium" data-en="Premium" data-my="အဆင့်မြင့်">Premium</button>
             </div>
-            <div class="career-filter">
-                <label for="careerSelect" data-en="Filter by Career:" data-my="အလုပ်အကိုင်ဖြင့် စစ်ထုတ်ရန်:">Filter by Career:</label>
-                <select id="careerSelect">
-                    <option value="all" data-en="All Careers" data-my="အလုပ်အကိုင်အားလုံး">All Careers</option>
-                    <option value="Graphic Designer" data-en="Graphic Designer" data-my="ဂရပ်ဖစ်ဒီဇိုင်နာ">Graphic Designer</option>
-                    <option value="Software Engineer" data-en="Software Engineer" data-my="ဆော့ဖ်ဝဲအင်ဂျင်နီယာ">Software Engineer</option>
-                    <option value="Fashion Designer" data-en="Fashion Designer" data-my="ဖက်ရှင်ဒီဇိုင်နာ">Fashion Designer</option>
-                    <option value="Photographer" data-en="Photographer" data-my="ဓာတ်ပုံဆရာ">Photographer</option>
-                    <option value="Marketing Manager" data-en="Marketing Manager" data-my="စျေးကွက်ကိုင်ဆောင်မှူး">Marketing Manager</option>
-                    <option value="Art Director" data-en="Art Director" data-my="အနုပညာညွှန်ကြားရေးမှူး">Art Director</option>
-                </select>
-            </div>
-
-<div class="modal-actions">
-                <button class="modal-button apply-filters" id="applyFilters" data-en="Apply Filters" data-my="စစ်ထုတ်မှုများ အသုံးပြုရန်">Apply Filters</button>
-                <button class="modal-button reset-filters" id="resetFilters" data-en="Reset" data-my="ပြန်လည်သတ်မှတ်ရန်">Reset</button>
-            </div>
+            <button class="apply-filters" id="applyFilters" data-en="Apply Filters" data-my="စစ်ထုတ်မှုများ အသုံးပြုရန်">Apply Filters</button>
         </div>
     </div>
 
