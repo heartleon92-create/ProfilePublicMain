@@ -1193,6 +1193,31 @@
             }).format(amount);
         }
 
+// After rendering all cards
+function initPreviewButtons() {
+  document.querySelectorAll(".preview-button").forEach(btn => {
+    btn.addEventListener("click", (e) => {
+      const card = e.target.closest(".profile-card");
+      const profileId = card.querySelector(".profile-name").textContent; // e.g., ATZ-B01
+      const category = card.dataset.category; // Basic, Standard, Premium
+
+      let url = "";
+
+      if (category === "Basic") {
+        url = `https://heartleon92-create.github.io/ProfilePublicMain/Basic%20Price/${profileId}.html`;
+      } else if (category === "Standard") {
+        url = `https://heartleon92-create.github.io/ProfilePublicMain/Strander%20Price/${profileId}.html`;
+      } else if (category === "Premium") {
+        url = `https://heartleon92-create.github.io/ProfilePublicMain/Premium/${profileId}.html`;
+      }
+
+      if (url) {
+        window.open(url, "_blank"); // Open in new tab
+      }
+    });
+  });
+}
+
         // Function to create profile card HTML
         function createProfileCard(profile) {
             const hasDiscount = profile.discountPrice !== null;
@@ -1287,6 +1312,7 @@
             
             // Add event listeners to the new buttons
             addCardEventListeners();
+            initPreviewButtons();
         }
 
         // Function to add event listeners to card buttons
