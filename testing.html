@@ -250,7 +250,7 @@
         }
 
         .card-image {
-            height: 300px;
+            height: 200px;
             overflow: hidden;
             position: relative;
             width: 100%;
@@ -350,114 +350,26 @@
             font-size: 0.75rem;
             font-weight: 600;
         }
-       .card-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 1.5rem;
-}
 
-.cta-button {
-    flex: 1;
-    padding: 0.85rem 1.25rem;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    position: relative;
-    overflow: hidden;
-    font-size: 0.95rem;
-}
+        .cta-button {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #4fbec9, #6c5ce7);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            text-decoration: none;
+        }
 
-.cta-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-}
-
-.cta-button:hover::before {
-    left: 100%;
-}
-
-.cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
-
-.cta-button:active {
-    transform: translateY(0);
-}
-
-.buy-button {
-    background: linear-gradient(135deg, #6366F1, #8B5CF6);
-    color: white;
-    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
-}
-
-.buy-button:hover {
-    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
-}
-
-.preview-button {
-    background: linear-gradient(135deg, #10B981, #059669);
-    color: white;
-    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
-}
-
-.preview-button:hover {
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
-}
-
-/* Optional: Add icons to buttons */
-.buy-button::after {
-    content: "→";
-    font-weight: bold;
-    transition: transform 0.3s ease;
-}
-
-.buy-button:hover::after {
-    transform: translateX(3px);
-}
-
-.preview-button::before {
-    content: "👁";
-    font-size: 1.1em;
-}
-
-/* Responsive adjustments */
-@media (max-width: 480px) {
-    .card-actions {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .cta-button {
-        width: 100%;
-        padding: 0.75rem 1rem;
-    }
-}
-
-/* Animation for button click */
-@keyframes buttonClick {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.95); }
-    100% { transform: scale(1); }
-}
-
-.cta-button:active {
-    animation: buttonClick 0.2s ease;
-}
+        .cta-button:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.25);
+        }
 
         /* Filter Modal */
         .modal-overlay {
@@ -550,45 +462,21 @@
             background-color: var(--premium-color);
         }
 
-  
-                .career-filter {
-            margin-bottom: 1.5rem;
-        }
-
-        .career-filter select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: 'Inter', sans-serif;
-        }
-           .modal-actions {
-            display: flex;
-            gap: 0.75rem;
-        }
-         .modal-actions {
-            display: flex;
-            gap: 0.75rem;
-        }
-
-        .modal-button {
-            flex: 1;
+        .apply-filters {
             padding: 0.75rem;
             border: none;
             border-radius: 50px;
+            background: linear-gradient(135deg, #4fbec9, #6c5ce7);
+            color: white;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            width: 100%;
         }
 
-        .apply-filters {
-            background: linear-gradient(135deg, #4fbec9, #6c5ce7);
-            color: white;
-        }
-
-        .reset-filters {
-            background: #f1f2f6;
-            color: var(--text-dark);
+        .apply-filters:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 12px rgba(108, 92, 231, 0.25);
         }
 
         /* Myanmar Font */
@@ -641,7 +529,9 @@
                 display: none;
             }
             
-        
+            .filter-btn span {
+                display: none;
+            }
             
             .category-tag {
                 font-size: 0.7rem;
@@ -657,7 +547,7 @@
             }
             
             .card-image {
-                height: 300px;
+                height: 180px;
             }
             
             .profile-name {
@@ -798,355 +688,88 @@
                 <button class="filter-option standard-option" data-category="Standard" data-en="Standard" data-my="စံ">Standard</button>
                 <button class="filter-option premium-option" data-category="Premium" data-en="Premium" data-my="အဆင့်မြင့်">Premium</button>
             </div>
-             <div class="career-filter">
-                <label for="careerSelect" data-en="Filter by Career:" data-my="အလုပ်အကိုင်ဖြင့် စစ်ထုတ်ရန်:">Filter by Career:</label>
-                <select id="careerSelect">
-                    <option value="all" data-en="All Careers" data-my="အလုပ်အကိုင်အားလုံး">All Careers</option>
-                    <option value="Graphic Designer" data-en="Graphic Designer" data-my="ဂရပ်ဖစ်ဒီဇိုင်နာ">Graphic Designer</option>
-                    <option value="Software Engineer" data-en="Software Engineer" data-my="ဆော့ဖ်ဝဲအင်ဂျင်နီယာ">Software Engineer</option>
-                    <option value="Fashion Designer" data-en="Fashion Designer" data-my="ဖက်ရှင်ဒီဇိုင်နာ">Fashion Designer</option>
-                    <option value="Photographer" data-en="Photographer" data-my="ဓာတ်ပုံဆရာ">Photographer</option>
-                    <option value="Marketing Manager" data-en="Marketing Manager" data-my="စျေးကွက်ကိုင်ဆောင်မှူး">Marketing Manager</option>
-                    <option value="Art Director" data-en="Art Director" data-my="အနုပညာညွှန်ကြားရေးမှူး">Art Director</option>
-                </select>
-            </div>
-  <div class="modal-actions">
-                <button class="modal-button apply-filters" id="applyFilters" data-en="Apply Filters" data-my="စစ်ထုတ်မှုများ အသုံးပြုရန်">Apply Filters</button>
-                <button class="modal-button reset-filters" id="resetFilters" data-en="Reset" data-my="ပြန်လည်သတ်မှတ်ရန်">Reset</button>
-            </div>        </div>
+            <button class="apply-filters" id="applyFilters" data-en="Apply Filters" data-my="စစ်ထုတ်မှုများ အသုံးပြုရန်">Apply Filters</button>
+        </div>
     </div>
 
     <script>
         // Sample JSON data
-       const profilesData = {
-  "profiles": [
-    {
-      "id": "ATZ-B01",
-      "name": "Aung Min",
-      "career": "Graphic Designer",
-      "careerMy": "ဂရပ်ဖစ်ဒီဇိုင်နာ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 18000,
-      "discountPrice": null,
-      "popular": true,
-      "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B02",
-      "name": "Kyaw Zin",
-      "career": "Photographer",
-      "careerMy": "ဓာတ်ပုံဆရာ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 15000,
-      "discountPrice": 12000,
-      "popular": false,
-      "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1000&q=80",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B03",
-      "name": "Su Mon",
-      "career": "Student",
-      "careerMy": "ကျောင်းသူ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 12000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1000&q=80",
-      "isNew": true,
-      "isFree": true
-    },
-    {
-      "id": "ATZ-B04",
-      "name": "Zaw Zaw",
-      "career": "Office Worker",
-      "careerMy": "ရုံးဝန်ထမ်း",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 20000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B05",
-      "name": "Hnin Ei",
-      "career": "Teacher",
-      "careerMy": "ဆရာမ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 17000,
-      "discountPrice": 15000,
-      "popular": true,
-      "image": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B06",
-      "name": "Mya Thandar",
-      "career": "Doctor",
-      "careerMy": "ဆရာဝန်",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 25000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "https://images.unsplash.com/photo-1582750433449-648ed127bb54?auto=format&fit=crop&w=1000&q=80",
-      "isNew": true,
-      "isFree": false
-    },
-
-    {
-      "id": "ATZ-S01",
-      "name": "Su Su",
-      "career": "Software Engineer",
-      "careerMy": "ဆော့ဖ်ဝဲအင်ဂျင်နီယာ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 40000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S02",
-      "name": "Hlaing Htay",
-      "career": "Marketing Manager",
-      "careerMy": "စျေးကွက်ကိုင်ဆောင်မှူး",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 45000,
-      "discountPrice": null,
-      "popular": true,
-      "image": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": true
-    },
-    {
-      "id": "ATZ-S03",
-      "name": "Min Ko",
-      "career": "Engineer",
-      "careerMy": "အင်ဂျင်နီယာ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 42000,
-      "discountPrice": 39000,
-      "popular": true,
-      "image": "https://images.unsplash.com/photo-1544723795-3fb6469f5b39?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S04",
-      "name": "Aye Aye",
-      "career": "Freelancer",
-      "careerMy": "Freelancer",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 38000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1000&q=80",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S05",
-      "name": "Ko Ko",
-      "career": "Startup Founder",
-      "careerMy": "စတားတပ်ဖောင်ဒါ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 47000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S06",
-      "name": "Thidar",
-      "career": "Lawyer",
-      "careerMy": "ရှေ့နေ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 46000,
-      "discountPrice": 43000,
-      "popular": false,
-      "image": "https://images.unsplash.com/photo-1598387846115-f08f1a2b1f5c?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S07",
-      "name": "Kyaw Htet",
-      "career": "Chef",
-      "careerMy": "အစားအစာပြင်ဆင်သူ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 40000,
-      "discountPrice": 36000,
-      "popular": true,
-      "image": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": false
-    },
-    
-    {
-      "id": "ATZ-P01",
-      "name": "Su Hlaing",
-      "career": "Fashion Designer",
-      "careerMy": "ဖက်ရှင်ဒီဇိုင်နာ",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 90000,
-      "discountPrice": 82000,
-      "popular": true,
-      "image": "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P02",
-      "name": "Myat Noe",
-      "career": "Art Director",
-      "careerMy": "အနုပညာညွှန်ကြားရေးမှူး",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 95000,
-      "discountPrice": 85000,
-      "popular": true,
-      "image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P03",
-      "name": "Nandar",
-      "career": "Musician",
-      "careerMy": "ဂီတသမား",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 88000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?auto=format&fit=crop&w=1000&q=80",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P04",
-      "name": "Thura",
-      "career": "Business Consultant",
-      "careerMy": "လုပ်ငန်းအကြံပေး",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 99000,
-      "discountPrice": 92000,
-      "popular": true,
-      "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P05",
-      "name": "Moe Moe",
-      "career": "Content Creator",
-      "careerMy": "မီဒီယာဖန်တီးသူ",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 87000,
-      "discountPrice": 83000,
-      "popular": false,
-      "image": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1000&q=80",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P06",
-      "name": "Thet Htar",
-      "career": "Data Scientist",
-      "careerMy": "ဒေတာပညာရှင်",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 93000,
-      "discountPrice": null,
-      "popular": true,
-      "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P07",
-      "name": "Aung Kyaw",
-      "career": "Startup Mentor",
-      "careerMy": "စတားတပ်အကြံပေး",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 89000,
-      "discountPrice": 85000,
-      "popular": false,
-      "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1000&q=80",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P08",
-      "name": "Thant Zin",
-      "career": "CEO",
-      "careerMy": "အမှုဆောင်အရာရှိချုပ်",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 100000,
-      "discountPrice": 95000,
-      "popular": true,
-      "image": "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P09",
-      "name": "Ei Mon",
-      "career": "Digital Marketer",
-      "careerMy": "ဒစ်ဂျစ်တယ်စျေးကွက်ရှာဖွေသူ",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 86000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1000&q=80",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P10",
-      "name": "Khin Zar",
-      "career": "UX/UI Designer",
-      "careerMy": "အသုံးပြုသူအတွေ့အကြုံဒီဇိုင်နာ",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 94000,
-      "discountPrice": 88000,
-      "popular": true,
-      "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=80",
-      "isNew": false,
-      "isFree": false
-    }
-  ]
-};
-
+        const profilesData = {
+            "profiles": [
+                {
+                    "id": "ATZ-B01",
+                    "name": "Aung Min",
+                    "career": "Graphic Designer",
+                    "careerMy": "ဂရပ်ဖစ်ဒီဇိုင်နာ",
+                    "category": "Basic",
+                    "status": "Basic",
+                    "price": 18000,
+                    "discountPrice": null,
+                    "popular": true,
+                    "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+                },
+                {
+                    "id": "ATZ-S05",
+                    "name": "Su Su",
+                    "career": "Software Engineer",
+                    "careerMy": "ဆော့ဖ်ဝဲအင်ဂျင်နီယာ",
+                    "category": "Standard",
+                    "status": "Standard",
+                    "price": 40000,
+                    "discountPrice": null,
+                    "popular": false,
+                    "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+                },
+                {
+                    "id": "ATZ-P09",
+                    "name": "Su Hlaing",
+                    "career": "Fashion Designer",
+                    "careerMy": "ဖက်ရှင်ဒီဇိုင်နာ",
+                    "category": "Premium",
+                    "status": "Premium",
+                    "price": 90000,
+                    "discountPrice": 82000,
+                    "popular": true,
+                    "image": "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+                },
+                {
+                    "id": "ATZ-B02",
+                    "name": "Kyaw Zin",
+                    "career": "Photographer",
+                    "careerMy": "ဓာတ်ပုံဆရာ",
+                    "category": "Basic",
+                    "status": "Basic",
+                    "price": 15000,
+                    "discountPrice": 12000,
+                    "popular": false,
+                    "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+                },
+                {
+                    "id": "ATZ-S06",
+                    "name": "Hlaing Htay",
+                    "career": "Marketing Manager",
+                    "careerMy": "စျေး ကွက်ကိုင်ဆောင်မှူး",
+                    "category": "Standard",
+                    "status": "Standard",
+                    "price": 45000,
+                    "discountPrice": null,
+                    "popular": true,
+                    "image": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+                },
+                {
+                    "id": "ATZ-P10",
+                    "name": "Myat Noe",
+                    "career": "Art Director",
+                    "careerMy": "အနုပညာညွှန်ကြားရေးမှူး",
+                    "category": "Premium",
+                    "status": "Premium",
+                    "price": 95000,
+                    "discountPrice": 85000,
+                    "popular": true,
+                    "image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1000&q=80"
+                }
+            ]
+        };
 
         // DOM Elements
         const profilesGrid = document.getElementById('profilesGrid');
@@ -1154,31 +777,16 @@
         const filterModal = document.getElementById('filterModal');
         const closeModal = document.getElementById('closeModal');
         const applyFilters = document.getElementById('applyFilters');
-        const resetFilters = document.getElementById('resetFilters');
         const filterOptions = document.querySelectorAll('.filter-option');
         const languageBtn = document.querySelector('.language-btn');
         const languageOptions = document.querySelector('.language-options');
         const categoryTags = document.querySelectorAll('.category-tag');
         const searchBox = document.querySelector('.search-box');
-        const careerSelect = document.getElementById('careerSelect');
-        const previewModal = document.getElementById('previewModal');
-        const closePreviewModal = document.getElementById('closePreviewModal');
-        const previewImage = document.getElementById('previewImage');
-        const buyFromPreview = document.getElementById('buyFromPreview');
-        const paymentModal = document.getElementById('paymentModal');
-        const closePaymentModal = document.getElementById('closePaymentModal');
-        const paymentForm = document.getElementById('paymentForm');
-        const totalAmount = document.getElementById('totalAmount');
-        const successModal = document.getElementById('successModal');
-        const closeSuccessModal = document.getElementById('closeSuccessModal');
         const currentLanguageElement = document.getElementById('current-language');
 
         // Current filter state and language
         let currentFilter = 'all';
-        let currentCareerFilter = 'all';
         let currentLanguage = 'en';
-        let currentSearchQuery = '';
-        let currentTagFilter = 'all';
 
         // Function to format currency
         function formatCurrency(amount) {
@@ -1196,23 +804,20 @@
         function createProfileCard(profile) {
             const hasDiscount = profile.discountPrice !== null;
             const careerText = currentLanguage === 'my' && profile.careerMy ? profile.careerMy : profile.career;
-            const buyText = currentLanguage === 'my' ? 'ဝယ်ယူရန်' : 'Buy';
-            const previewText = currentLanguage === 'my' ? 'စစ်ဆေးကြည့်ရန်' : 'Live Preview';
+            const viewDesignText = currentLanguage === 'my' ? 'ဒီဇိုင်းကြည့်ရန်' : 'View Design';
             const saveText = currentLanguage === 'my' ? 'သက်သာငွေ' : 'Save';
             
             return `
-                <div class="profile-card" data-category="${profile.category}" data-career="${profile.career}" data-popular="${profile.popular}" data-new="${profile.isNew}" data-free="${profile.isFree}">
+                <div class="profile-card" data-category="${profile.category}">
                     <div class="card-image">
                         <img src="${profile.image}" alt="${profile.name}" loading="lazy">
                         <div class="badges">
                             <span class="category-badge ${profile.category.toLowerCase()}-badge" data-en="${profile.category}" data-my="${profile.category === 'Basic' ? 'အခြေခံ' : profile.category === 'Standard' ? 'စံ' : 'အဆင့်မြင့်'}">${currentLanguage === 'my' ? (profile.category === 'Basic' ? 'အခြေခံ' : profile.category === 'Standard' ? 'စံ' : 'အဆင့်မြင့်') : profile.category}</span>
                             ${profile.popular ? `<span class="popular-badge" data-en="Popular" data-my="လူကြိုက်များ">⭐ ${currentLanguage === 'my' ? 'လူကြိုက်များ' : 'Popular'}</span>` : ''}
-                            ${profile.isNew ? `<span class="popular-badge" data-en="New" data-my="အသစ်" style="background-color: #00cec9;">${currentLanguage === 'my' ? 'အသစ်' : 'New'}</span>` : ''}
-                            ${profile.isFree ? `<span class="popular-badge" data-en="Free" data-my="အခမဲ့" style="background-color: #00b894;">${currentLanguage === 'my' ? 'အခမဲ့' : 'Free'}</span>` : ''}
                         </div>
                     </div>
                     <div class="card-content">
-                        <h3 class="profile-name">${profile.id}</h3>
+                        <h3 class="profile-name">${profile.name}</h3>
                         <p class="profile-career">${careerText}</p>
                         <div class="price-container">
                             ${hasDiscount ? 
@@ -1222,55 +827,19 @@
                                 `<span class="current-price">${formatCurrency(profile.price)}</span>`
                             }
                         </div>
-                        <div class="card-actions">
-                            <button class="cta-button buy-button" data-profile-id="${profile.id}" data-profile-name="${profile.name}" data-profile-price="${hasDiscount ? profile.discountPrice : profile.price}">${buyText}</button>
-                            <button class="cta-button preview-button" data-profile-image="${profile.image}">${previewText}</button>
-                        </div>
+                        <a href="#" class="cta-button">${viewDesignText}</a>
                     </div>
                 </div>
             `;
         }
 
-        // Function to filter and render profile cards
-        function renderProfiles() {
+        // Function to render profile cards
+        function renderProfiles(filter = 'all') {
             profilesGrid.innerHTML = '';
             
-            let filteredProfiles = profilesData.profiles.filter(profile => {
-                // Category filter
-                if (currentFilter !== 'all' && profile.category !== currentFilter) {
-                    return false;
-                }
-                
-                // Career filter
-                if (currentCareerFilter !== 'all' && profile.career !== currentCareerFilter) {
-                    return false;
-                }
-                
-                // Tag filter
-                if (currentTagFilter === 'popular' && !profile.popular) {
-                    return false;
-                }
-                if (currentTagFilter === 'new' && !profile.isNew) {
-                    return false;
-                }
-                if (currentTagFilter === 'free' && !profile.isFree) {
-                    return false;
-                }
-                
-                // Search filter
-                if (currentSearchQuery) {
-                    const searchTerm = currentSearchQuery.toLowerCase();
-                    const nameMatch = profile.name.toLowerCase().includes(searchTerm);
-                    const careerMatch = profile.career.toLowerCase().includes(searchTerm);
-                    const careerMyMatch = profile.careerMy && profile.careerMy.toLowerCase().includes(searchTerm);
-                    
-                    if (!nameMatch && !careerMatch && !careerMyMatch) {
-                        return false;
-                    }
-                }
-                
-                return true;
-            });
+            const filteredProfiles = filter === 'all' 
+                ? profilesData.profiles 
+                : profilesData.profiles.filter(profile => profile.category === filter);
             
             filteredProfiles.forEach((profile, index) => {
                 const cardHTML = createProfileCard(profile);
@@ -1283,37 +852,6 @@
                 
                 profilesGrid.appendChild(card);
             });
-            
-            // Add event listeners to the new buttons
-            addCardEventListeners();
-        }
-
-        // Function to add event listeners to card buttons
-        function addCardEventListeners() {
-            // Buy buttons
-            document.querySelectorAll('.buy-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const profileId = this.getAttribute('data-profile-id');
-                    const profileName = this.getAttribute('data-profile-name');
-                    const profilePrice = this.getAttribute('data-profile-price');
-                    
-                    document.getElementById('selectedProfileId').value = profileId;
-                    document.getElementById('selectedProfileName').value = profileName;
-                    document.getElementById('selectedProfilePrice').value = profilePrice;
-                    totalAmount.textContent = Number(profilePrice).toLocaleString('en-US');
-                    
-                    paymentModal.classList.add('active');
-                });
-            });
-            
-            // Preview buttons
-            document.querySelectorAll('.preview-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const imageUrl = this.getAttribute('data-profile-image');
-                    previewImage.src = imageUrl;
-                    previewModal.classList.add('active');
-                });
-            });
         }
 
         // Function to change language
@@ -1324,8 +862,6 @@
             document.querySelectorAll('[data-en], [data-my]').forEach(element => {
                 if (element.tagName === 'INPUT' && element.placeholder) {
                     element.placeholder = element.getAttribute(`data-${lang}-placeholder`) || element.getAttribute('data-en-placeholder');
-                } else if (element.tagName === 'OPTION') {
-                    element.textContent = element.getAttribute(`data-${lang}`) || element.getAttribute('data-en');
                 } else {
                     element.textContent = element.getAttribute(`data-${lang}`) || element.getAttribute('data-en');
                 }
@@ -1342,7 +878,7 @@
             }
             
             // Re-render profiles with new language
-            renderProfiles();
+            renderProfiles(currentFilter);
         }
 
         // Function to initialize event listeners
@@ -1357,6 +893,13 @@
                 filterModal.classList.remove('active');
             });
 
+            // Click outside modal to close
+            filterModal.addEventListener('click', (e) => {
+                if (e.target === filterModal) {
+                    filterModal.classList.remove('active');
+                }
+            });
+
             // Filter option clicks
             filterOptions.forEach(option => {
                 option.addEventListener('click', () => {
@@ -1368,19 +911,8 @@
 
             // Apply filters button
             applyFilters.addEventListener('click', () => {
-                currentCareerFilter = careerSelect.value;
-                renderProfiles();
+                renderProfiles(currentFilter);
                 filterModal.classList.remove('active');
-            });
-
-            // Reset filters button
-            resetFilters.addEventListener('click', () => {
-                filterOptions.forEach(opt => opt.classList.remove('active'));
-                document.querySelector('[data-category="all"]').classList.add('active');
-                currentFilter = 'all';
-                careerSelect.value = 'all';
-                currentCareerFilter = 'all';
-                renderProfiles();
             });
 
             // Language switcher
@@ -1409,33 +941,12 @@
                 tag.addEventListener('click', () => {
                     categoryTags.forEach(t => t.classList.remove('active'));
                     tag.classList.add('active');
-                    currentTagFilter = tag.getAttribute('data-category');
-                    renderProfiles();
+                    // Here you would implement the actual filtering by tag
                 });
             });
 
-            // Search box
-         
-
-            // Career select
-            careerSelect.addEventListener('change', () => {
-                currentCareerFilter = careerSelect.value;
-                renderProfiles();
-            });
-
-          
-            // Success modal close
-           
-
-            // Close modals when clicking outside
-            document.querySelectorAll('.modal-overlay').forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.classList.remove('active');
-                    }
-                });
-            });
-              searchBox.addEventListener('input', () => {
+            // Search functionality
+            searchBox.addEventListener('input', () => {
                 const searchTerm = searchBox.value.toLowerCase();
                 const filteredProfiles = profilesData.profiles.filter(profile => 
                     profile.name.toLowerCase().includes(searchTerm) || 
