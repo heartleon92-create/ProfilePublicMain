@@ -1161,13 +1161,14 @@
             });
             
             // Telegram button interaction
-            const telegramButton = document.getElementById('telegramButton');
-            if (telegramButton) {
-                telegramButton.addEventListener('click', function() {
-                    alert('Opening Telegram to send your information...');
-                    // In a real implementation, this would open Telegram with a pre-filled message
-                });
-            }
+            document.addEventListener("DOMContentLoaded", () => {
+    const telegramButton = document.getElementById("telegramButton");
+    if (telegramButton) {
+      telegramButton.addEventListener("click", () => {
+        window.open("https://t.me/Kamadoshinjiroo", "_blank");
+      });
+    }
+  });
         });
         document.addEventListener("DOMContentLoaded", () => {
     const profileId = localStorage.getItem("selectedProfileId");
