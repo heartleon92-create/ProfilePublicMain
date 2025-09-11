@@ -1154,21 +1154,21 @@
                 step.style.animationDelay = `${index * 0.1}s`;
             });
             
+            
             // Add animation delay to payment cards
             const payments = document.querySelectorAll('.payment-card');
             payments.forEach((card, index) => {
                 card.style.animationDelay = `${index * 0.15}s`;
             });
+              const telegramButton = document.getElementById("telegramButton");
+    if (telegramButton) {
+        telegramButton.addEventListener("click", () => {
+            window.open("https://t.me/Kamadoshinjiroo", "_blank");
+        });
+    }
             
             // Telegram button interaction
-            document.addEventListener("DOMContentLoaded", () => {
-    const telegramButton = document.getElementById("telegramButton");
-    if (telegramButton) {
-      telegramButton.addEventListener("click", () => {
-        window.open("https://t.me/Kamadoshinjiroo", "_blank");
-      });
-    }
-  });
+           
         });
         document.addEventListener("DOMContentLoaded", () => {
     const profileId = localStorage.getItem("selectedProfileId");
