@@ -908,101 +908,129 @@
 
     {
       "id": "ATZ-S01",
-      "name": "Su Su",
-      "career": "Software Engineer",
-      "careerMy": "ဆော့ဖ်ဝဲအင်ဂျင်နီယာ",
+      "name": "Aung Aung",
+      "career": "Senior UI/UX Designer",
+      "careerMy": "UI/UX ဒီဇိုင်နာ",
       "category": "Standard",
       "status": "Standard",
       "price": 40000,
       "discountPrice": null,
       "popular": false,
-      "image": "img/basic-7.png",
+      "image": "img/ATZ-S01.png",
       "isNew": true,
       "isFree": false
     },
     {
       "id": "ATZ-S02",
-      "name": "Hlaing Htay",
-      "career": "Marketing Manager",
-      "careerMy": "စျေးကွက်ကိုင်ဆောင်မှူး",
+      "name": "Sarah Johnson",
+      "career": "Frontend Developer & UI Designer",
+      "careerMy": "Frontend Developer & UI Designer",
       "category": "Standard",
       "status": "Standard",
       "price": 45000,
       "discountPrice": null,
       "popular": true,
-      "image": "img/basic-9.png",
+      "image": "img/ATZ-S02.png",
       "isNew": false,
       "isFree": true
     },
     {
       "id": "ATZ-S03",
-      "name": "Min Ko",
-      "career": "Engineer",
-      "careerMy": "အင်ဂျင်နီယာ",
+      "name": "Dr. Sarah Williams",
+      "career": "Mathematics Professor",
+      "careerMy": "သင်္ချာပါမောက္ခ",
       "category": "Standard",
       "status": "Standard",
       "price": 42000,
       "discountPrice": 39000,
       "popular": true,
-      "image": "img/basic-10.png",
+      "image": "img/ATZ-S03.png",
       "isNew": false,
       "isFree": false
     },
     {
       "id": "ATZ-S04",
-      "name": "Aye Aye",
-      "career": "Freelancer",
-      "careerMy": "Freelancer",
+      "name": "Alex Johnson",
+      "career": "Senior UI/UX Designer",
+      "careerMy": "Senior UI/UX ဒီဇိုင်နာ",
       "category": "Standard",
       "status": "Standard",
       "price": 38000,
       "discountPrice": null,
       "popular": false,
-      "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1000&q=80",
+      "image": "img/ATZ-S04.png",
       "isNew": true,
       "isFree": false
     },
     {
       "id": "ATZ-S05",
-      "name": "Ko Ko",
-      "career": "Startup Founder",
-      "careerMy": "စတားတပ်ဖောင်ဒါ",
+      "name": "Michael Johnson",
+      "career": "Operations Supervisor",
+      "careerMy": "Operations Supervisor",
       "category": "Standard",
       "status": "Standard",
       "price": 47000,
       "discountPrice": null,
       "popular": false,
-      "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80",
+      "image": "img/ATZ-S05.png",
       "isNew": true,
       "isFree": false
     },
     {
       "id": "ATZ-S06",
-      "name": "Thidar",
-      "career": "Lawyer",
-      "careerMy": "ရှေ့နေ",
+      "name": "Myo Thant",
+      "career": "Creative Designer",
+      "careerMy": "Creative Designer",
       "category": "Standard",
       "status": "Standard",
       "price": 46000,
       "discountPrice": 43000,
       "popular": false,
-      "image": "https://images.unsplash.com/photo-1598387846115-f08f1a2b1f5c?auto=format&fit=crop&w=1000&q=80",
+      "image": "img/ATZ-S06.png",
       "isNew": false,
       "isFree": false
     },
     {
       "id": "ATZ-S07",
-      "name": "Kyaw Htet",
-      "career": "Chef",
-      "careerMy": "အစားအစာပြင်ဆင်သူ",
+      "name": "Daw Nandar Win",
+      "career": "Corporate Lawyer",
+      "careerMy": "Corporateရှေ့နေ",
       "category": "Standard",
       "status": "Standard",
       "price": 40000,
       "discountPrice": 36000,
       "popular": true,
-      "image": "https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1000&q=80",
+      "image": "img/ATZ-S07.png",
       "isNew": false,
       "isFree": false
+    },
+     {
+      "id": "ATZ-S09",
+      "name": "Ko Thura Aung",
+      "career": "Acoustic Guitarist",
+      "careerMy": "Acoustic ဂစ်တာသမား",
+      "category": "Standard",
+      "status": "Standard",
+      "price": 40000,
+      "discountPrice": null,
+      "popular": false,
+      "image": "img/ATZ-S09.png",
+      "isNew": true,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-S10",
+      "name": "Nyi Nyi Htut",
+      "career": "Marathon Runner",
+      "careerMy": "မာရသွန်အပြေးသမား",
+      "category": "Standard",
+      "status": "Standard",
+      "price": 45000,
+      "discountPrice": null,
+      "popular": true,
+      "image": "img/ATZ-S10.png",
+      "isNew": false,
+      "isFree": true
     },
     
     {
@@ -1257,6 +1285,20 @@ function initPreviewButtons() {
             `;
         }
 
+        document.addEventListener("DOMContentLoaded", () => {
+    document.querySelectorAll(".buy-button").forEach(button => {
+      button.addEventListener("click", () => {
+        const profileId = button.getAttribute("data-profile-id");
+        
+        // Save the profile ID to localStorage
+        localStorage.setItem("selectedProfileId", profileId);
+        
+        // Redirect to details page
+        window.location.href = "details.html";
+      });
+    });
+  });
+
         // Function to filter and render profile cards
         function renderProfiles() {
             profilesGrid.innerHTML = '';
@@ -1318,21 +1360,13 @@ function initPreviewButtons() {
         // Function to add event listeners to card buttons
         function addCardEventListeners() {
             // Buy buttons
-            document.querySelectorAll('.buy-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const profileId = this.getAttribute('data-profile-id');
-                    const profileName = this.getAttribute('data-profile-name');
-                    const profilePrice = this.getAttribute('data-profile-price');
-                    
-                    document.getElementById('selectedProfileId').value = profileId;
-                    document.getElementById('selectedProfileName').value = profileName;
-                    document.getElementById('selectedProfilePrice').value = profilePrice;
-                    totalAmount.textContent = Number(profilePrice).toLocaleString('en-US');
-                    
-                    paymentModal.classList.add('active');
-                });
-            });
-            
+             document.querySelectorAll('.buy-button').forEach(button => {
+    button.addEventListener('click', () => {
+      const profileId = button.getAttribute('data-profile-id');
+      localStorage.setItem('selectedProfileId', profileId);
+      window.location.href = "details.html";
+    });
+  });
             // Preview buttons
             document.querySelectorAll('.preview-button').forEach(button => {
                 button.addEventListener('click', function() {

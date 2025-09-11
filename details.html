@@ -3,23 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile Details - ProfileCraft</title>
+    <title>Profile & Payment Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #6366f1;
-            --primary-light: #818cf8;
-            --secondary-color: #10b981;
-            --accent-color: #f59e0b;
-            --text-dark: #1f2937;
-            --text-light: #6b7280;
-            --bg-light: #f9fafb;
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --teal: #4cc9f0;
+            --purple: #7209b7;
+            --light: #f8f9fa;
+            --lighter: #ffffff;
             --card-bg: #ffffff;
-            --gradient: linear-gradient(135deg, #6366f1 0%, #818cf8 100%);
-            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --border-radius: 16px;
-            --transition: all 0.3s ease;
+            --text: #2d3748;
+            --text-secondary: #718096;
+            --border: #e2e8f0;
+            --gradient: linear-gradient(135deg, var(--primary), var(--purple));
+            --gradient-2: linear-gradient(135deg, var(--teal), var(--primary));
+            --gradient-3: linear-gradient(135deg, var(--accent), var(--purple));
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
         * {
@@ -30,226 +35,59 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            color: var(--text-dark);
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e7eb 100%);
             line-height: 1.6;
-            padding-bottom: 2rem;
-            min-height: 100vh;
+            color: var(--text);
+            background: var(--light);
+            padding: 2rem 1rem;
         }
 
         .container {
-            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1rem;
         }
 
-        /* Header Styles */
-        header {
-            background: var(--gradient);
-            box-shadow: var(--shadow);
-            padding: 1rem;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
         }
 
         .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .back-button {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.5rem 1.25rem;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: var(--transition);
-            backdrop-filter: blur(10px);
-        }
-
-        .back-button:hover {
-            background-color: rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* Main Content */
-        main {
-            padding: 2rem 0;
-        }
-
-        .section {
-            background-color: var(--card-bg);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-            padding: 1.75rem;
-            margin-bottom: 2rem;
-            transition: var(--transition);
-            border: 1px solid rgba(255, 255, 255, 0.8);
-        }
-
-        .section:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .section-title {
-            font-size: 1.35rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            color: var(--text-dark);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding-bottom: 0.75rem;
-            border-bottom: 2px solid #f3f4f6;
-        }
-
-        .section-title i {
-            color: var(--primary-color);
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Profile Detail Section */
-        .profile-detail {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-        }
-
-        .profile-image {
-            width: 100%;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            position: relative;
-            min-height: 400px;
-        }
-
-        .profile-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .profile-badge {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            padding: 0.5rem 1rem;
-            background: var(--gradient);
-            color: white;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.875rem;
-            box-shadow: var(--shadow);
-        }
-
-        .profile-info {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .profile-name {
-            font-size: 1.75rem;
+            font-size: 2.5rem;
             font-weight: 700;
             background: var(--gradient);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+            margin-bottom: 0.5rem;
         }
 
-        .profile-career {
-            color: var(--text-light);
-            font-size: 1.15rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .profile-career i {
-            color: var(--primary-light);
-        }
-
-        .profile-pricing {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin: 1rem 0;
-            padding: 1rem;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border-radius: var(--border-radius);
-        }
-
-        .current-price {
-            font-size: 1.75rem;
-            font-weight: 700;
-            color: var(--primary-color);
-        }
-
-        .original-price {
-            text-decoration: line-through;
-            color: var(--text-light);
+        .tagline {
+            color: var(--text-secondary);
             font-size: 1.1rem;
+            margin-bottom: 2rem;
         }
 
-        .discount-badge {
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 0.35rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 600;
-        }
-
-        .profile-description {
-            color: var(--text-light);
-            line-height: 1.7;
-            padding: 1rem;
-            background-color: #f8fafc;
-            border-radius: var(--border-radius);
-            border-left: 4px solid var(--primary-color);
-        }
-
-        /* Payment Options */
-        .payment-options {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.25rem;
-        }
-
-        .payment-card {
-            border: 1px solid #e5e7eb;
-            border-radius: var(--border-radius);
-            padding: 1.5rem;
+        /* Card Styles */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
             transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            background: white;
-            position: relative;
+            border: 1px solid var(--border);
             overflow: hidden;
+            position: relative;
         }
 
-        .payment-card::before {
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .card::before {
             content: '';
             position: absolute;
             top: 0;
@@ -259,280 +97,429 @@
             background: var(--gradient);
         }
 
-        .payment-card:hover {
-            border-color: var(--primary-light);
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .section-title i {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.8rem;
+        }
+
+        /* Profile Section */
+        .profile-detail {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .profile-image {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            border-radius: 50%;
+            padding: 5px;
+            background: var(--gradient);
+            box-shadow: 0 0 25px rgba(67, 97, 238, 0.2);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid var(--lighter);
+        }
+
+        .profile-badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background: var(--gradient-3);
+            color: var(--lighter);
+            padding: 0.35rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(247, 37, 133, 0.2);
+        }
+
+        .profile-info {
+            text-align: center;
+        }
+
+        .profile-name {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .profile-career {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .profile-pricing {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .current-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .original-price {
+            font-size: 1.4rem;
+            text-decoration: line-through;
+            color: var(--text-secondary);
+        }
+
+        .discount-badge {
+            background: var(--gradient-3);
+            color: var(--lighter);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(247, 37, 133, 0.2);
+        }
+
+        /* Single Thumbnail Display */
+        .thumbnail-display {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .thumbnail-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .thumbnail-container {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+        }
+
+        .thumbnail-container:hover {
             transform: translateY(-5px);
-            box-shadow: var(--shadow);
+            box-shadow: var(--card-shadow-hover);
+        }
+
+        .thumbnail-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .thumbnail-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            padding: 1.5rem;
+            color: white;
+            text-align: left;
+        }
+
+        .thumbnail-overlay h3 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .thumbnail-overlay p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Payment Options */
+        .payment-options {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+        }
+
+        .payment-card {
+            border-radius: 16px;
+            padding: 1.8rem;
+            background: var(--lighter);
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .payment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(67, 97, 238, 0.05), rgba(58, 12, 163, 0.05));
+            z-index: 0;
+        }
+
+        .payment-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: var(--card-shadow-hover);
         }
 
         .payment-header {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            z-index: 1;
         }
 
         .payment-icon {
-            font-size: 1.75rem;
             width: 50px;
             height: 50px;
+            border-radius: 12px;
+            background: var(--gradient);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-        }
-
-        .kpay .payment-icon {
-            background: linear-gradient(135deg, #6930C3 0%, #8338ec 100%);
-            color: white;
-        }
-
-        .cbpay .payment-icon {
-            background: linear-gradient(135deg, #00A896 0%, #06d6a0 100%);
-            color: white;
-        }
-
-        .wavepay .payment-icon {
-            background: linear-gradient(135deg, #0077B6 0%, #118ab2 100%);
-            color: white;
+            color: var(--lighter);
+            font-size: 1.5rem;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
         }
 
         .payment-name {
-            font-weight: 600;
-            font-size: 1.25rem;
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--text);
         }
 
         .payment-description {
-            color: var(--text-light);
-            font-size: 0.95rem;
+            color: var(--text-secondary);
             line-height: 1.6;
-            padding: 0.75rem;
-            background-color: #f8fafc;
-            border-radius: 8px;
-        }
-
-        /* User Data Form */
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.75rem;
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-group label i {
-            color: var(--primary-color);
-        }
-
-        .form-group input, .form-group select {
-            width: 100%;
-            padding: 0.875rem 1.25rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 10px;
-            font-family: inherit;
-            font-size: 1rem;
-            transition: var(--transition);
-            background: #f8fafc;
-        }
-
-        .form-group input:focus, .form-group select:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
-            background: white;
-        }
-
-        .telegram-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            width: 100%;
-            padding: 1rem 1.5rem;
-            background: linear-gradient(135deg, #0088cc 0%, #00a2ff 100%);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            margin-top: 1rem;
-            box-shadow: var(--shadow);
-        }
-
-        .telegram-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 20px -5px rgba(0, 136, 204, 0.3);
-        }
-
-        .form-instructions {
-            margin-top: 1.5rem;
-            padding: 1.25rem;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
-            border-radius: 12px;
-            border-left: 4px solid var(--primary-color);
-        }
-
-        .instructions-title {
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: var(--primary-color);
-        }
-
-        .instructions-text {
-            font-size: 0.95rem;
-            color: var(--text-light);
-            line-height: 1.7;
-        }
-
-        /* Process Explanation */
-        .process-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
             position: relative;
-            margin-left: 1.5rem;
-            padding-left: 2rem;
+            z-index: 1;
         }
 
-        .process-steps::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
-            border-radius: 3px;
+        /* Process Steps */
+        .process-steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            position: relative;
         }
 
         .process-step {
             position: relative;
+            padding: 2rem 1.5rem 1.5rem 5rem;
+            background: var(--lighter);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+            box-shadow: var(--card-shadow);
+        }
+
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--card-shadow-hover);
         }
 
         .step-number {
             position: absolute;
-            left: -2.5rem;
-            top: 0;
-            width: 2.25rem;
-            height: 2.25rem;
-            background: var(--gradient);
-            color: white;
+            left: 1.5rem;
+            top: 1.5rem;
+            width: 3rem;
+            height: 3rem;
             border-radius: 50%;
+            background: var(--gradient);
+            color: var(--lighter);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-weight: 600;
-            box-shadow: var(--shadow);
+            font-weight: 700;
+            font-size: 1.3rem;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
         }
 
         .step-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
             font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
         }
 
         .step-description {
-            color: var(--text-light);
-            font-size: 0.95rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Form Elements */
+        .telegram-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--gradient);
+            color: var(--lighter);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 1.5rem 0;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        }
+
+        .telegram-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .form-instructions {
+            background: rgba(58, 12, 163, 0.05);
+            border-radius: 16px;
+            padding: 1.8rem;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border);
+        }
+
+        .instructions-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .instructions-text {
+            color: var(--text-secondary);
             line-height: 1.6;
         }
 
         /* Footer */
         footer {
-            background: var(--gradient);
-            color: white;
-            padding: 2.5rem 1rem;
-            margin-top: 3rem;
+            background: var(--lighter);
+            border-radius: 16px;
+            padding: 2.5rem;
+            margin-top: 4rem;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border);
         }
 
         .footer-content {
             display: flex;
             flex-direction: column;
             gap: 2rem;
+            text-align: center;
         }
 
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
+            flex-wrap: wrap;
         }
 
         .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
+            color: var(--text-secondary);
             text-decoration: none;
             transition: var(--transition);
+            font-weight: 500;
         }
 
         .footer-links a:hover {
-            color: white;
+            color: var(--primary);
+            text-decoration: none;
         }
 
         .social-icons {
             display: flex;
             justify-content: center;
-            gap: 1.25rem;
+            gap: 1.2rem;
         }
 
         .social-icons a {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: var(--lighter);
             transition: var(--transition);
-            backdrop-filter: blur(10px);
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
         }
 
         .social-icons a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
         }
 
         .copyright {
-            text-align: center;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
         }
 
-        /* Responsive Styles */
-        @media (min-width: 640px) {
-            .payment-options {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
+        /* Responsive Design */
         @media (min-width: 768px) {
-            .container {
-                padding: 0 2rem;
-            }
-            
-            .section {
-                padding: 2.25rem;
+            body {
+                padding: 3rem 2rem;
             }
             
             .profile-detail {
                 flex-direction: row;
-            }
-            
-            .profile-image {
-                flex: 1;
+                text-align: left;
+                align-items: center;
             }
             
             .profile-info {
+                text-align: left;
                 flex: 1;
+            }
+            
+            .profile-pricing {
+                justify-content: flex-start;
+            }
+            
+            .profile-career {
+                justify-content: flex-start;
             }
             
             .payment-options {
@@ -540,76 +527,103 @@
             }
             
             .process-steps {
-                margin-left: 2.5rem;
-                padding-left: 2.5rem;
+                grid-template-columns: repeat(2, 1fr);
             }
             
             .footer-content {
                 flex-direction: row;
                 justify-content: space-between;
                 align-items: center;
-            }
-            
-            .footer-links, .social-icons {
-                justify-content: flex-start;
+                text-align: left;
             }
         }
 
         @media (min-width: 1024px) {
-            .profile-detail {
-                gap: 2.5rem;
+            .process-steps {
+                grid-template-columns: repeat(3, 1fr);
             }
             
-            .profile-image {
-                flex: 1;
+            .process-step:nth-child(4) {
+                grid-column: 1 / 2;
+                grid-row: 2 / 3;
             }
             
-            .profile-info {
-                flex: 1.25;
+            .process-step:nth-child(5) {
+                grid-column: 2 / 3;
+                grid-row: 2 / 3;
             }
+        }
+
+        /* Animation Enhancements */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card, .header {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .profile-image {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--light);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gradient);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-palette"></i>
-                    <span>ProfileCraft</span>
-                </div>
-                <a href="profileService.html" class="back-button">
-                    <i class="fas fa-arrow-left"></i>
-                    <span>Back to Home</span>
-                </a>
-            </div>
-        </div>
-    </header>
+    <div class="header">
+        <div class="logo">ProfileCraft</div>
+        <div class="tagline">Premium Profile Design & Development</div>
+    </div>
 
     <main class="container">
         <!-- Profile Design Detail Section -->
+        
+
+        <!-- Single Thumbnail Section -->
         <section class="section">
-            <div class="profile-detail">
-                <div class="profile-image">
-                    <img src="img/ATZ-P01.png" alt="Profile Design">
-                    <div class="profile-badge">Premium</div>
-                </div>
-                <div class="profile-info">
-                    <h1 class="profile-name">Aung Min</h1>
-                    <p class="profile-career">
-                        <i class="fas fa-briefcase"></i>
-                        Graphic Designer
-                    </p>
-                    
-                    <div class="profile-pricing">
-                        <span class="current-price">82,000 MMK</span>
-                        <span class="original-price">90,000 MMK</span>
-                        <span class="discount-badge">Save 9%</span>
+            <div class="card">
+                <h2 class="thumbnail-title">Profile Design Example</h2>
+                <div class="thumbnail-display">
+                    <div class="thumbnail-container">
+                        <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Design Example">
+                        <div class="profile-info">
+                        <h1 class="profile-name">Aung Min</h1>
+                        <p class="profile-career">
+                            <i class="fas fa-briefcase"></i>
+                            Graphic Designer
+                        </p>
+                        
+                        <div class="profile-pricing">
+                            <span class="current-price">82,000 MMK</span>
+                            <span class="original-price">90,000 MMK</span>
+                            <span class="discount-badge">Save 9%</span>
+                        </div>
                     </div>
-                    
-                    <!-- <p class="profile-description">
-                        This premium profile features a modern design with animated elements, custom color scheme, and dedicated support for customization. Perfect for graphic designers looking to showcase their work professionally.
-                    </p> -->  <section class="section">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Process Explanation Section -->
+        <section class="section">
             <h2 class="section-title">
                 <i class="fas fa-list-ol"></i>
                 <span>How It Works / လုပ်ငန်းစဉ်</span>
@@ -667,63 +681,30 @@
                 </div>
             </div>
         </section>
-                      <section class="section">
+
+        <!-- User Data Form Section -->
+        <section class="section">
             <h2 class="section-title">
                 <i class="fas fa-user-edit"></i>
                 <span>Your Information / သင့်အချက်အလက်</span>
             </h2>
             
-            <!-- <form id="userDataForm">
-                <div class="form-group">
-                    <label for="fullName">
-                        <i class="fas fa-user"></i>
-                        Full Name / အမည်အပြည့်အစုံ
-                    </label>
-                    <input type="text" id="fullName" placeholder="Enter your full name" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="career">
-                        <i class="fas fa-briefcase"></i>
-                        Career / အလုပ်အကိုင်
-                    </label>
-                    <select id="career" required>
-                        <option value="">Select your career</option>
-                        <option value="Graphic Designer">Graphic Designer</option>
-                        <option value="Software Developer">Software Developer</option>
-                        <option value="Doctor">Doctor</option>
-                        <option value="Student">Student</option>
-                        <option value="Marketing Manager">Marketing Manager</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="selectedProfile">
-                        <i class="fas fa-palette"></i>
-                        Selected Profile / ရွေးချယ်ထားသော Profile
-                    </label>
-                    <input type="text" id="selectedProfile" value="Aung Min - Premium" readonly>
-                </div> -->
-                
+            <div class="card">
                 <button type="button" class="telegram-button" id="telegramButton">
                     <i class="fab fa-telegram"></i>
                     Send Data via Telegram
                 </button>
-            </form>
-            
-            <div class="form-instructions">
-                <p class="instructions-title">
-                    <i class="fas fa-info-circle"></i>
-                    Instructions / ညွှန်ကြားချက်များ
-                </p>
-                <p class="instructions-text">
-                    EN: Click the button to send your information directly to our Telegram. We will confirm, deploy your profile on GitHub, and send you a public link before payment.
-                    <br><br>
-                    MM: Telegram ကိုနှိပ်ပြီး သင့်အမည်၊ အလုပ်အကိုင်နဲ့ Profile အချက်အလက်တွေ မျှဝေပါ။ ကျွန်တော်တို့က အတည်ပြုပြီး GitHub link ပေးပါမည်။ အဲဒီနောက် ငွေချေပါမည်။
-                </p>
-            </div>
-        </section>
+                
+                <div class="form-instructions">
+                    <p class="instructions-title">
+                        <i class="fas fa-info-circle"></i>
+                        Instructions / ညွှန်ကြားချက်များ
+                    </p>
+                    <p class="instructions-text">
+                        EN: Click the button to send your information directly to our Telegram. We will confirm, deploy your profile on GitHub, and send you a public link before payment.
+                        <br><br>
+                        MM: Telegram ကိုနှိပ်ပြီး သင့်အမည်၊ အလုပ်အကိုင်နဲ့ Profile အချက်အလက်တွေ မျှဝေပါ။ ကျွန်တော်တို့က အတည်ပြုပြီး GitHub link ပေးပါမည်။ အဲဒီနောက် ငွေချေပါမည်။
+                    </p>
                 </div>
             </div>
         </section>
@@ -760,7 +741,7 @@
                     <p class="payment-description">
                         You will pay after receiving your customized GitHub profile link.
                         <br><br>
-                        GitHub profile အပြီး customize လုပ်ပြီး link ပေးသွားမည်။ အဲဒီအချိန်မှာပဲ ငွေချေပါမည်။
+                        GitHub profile အပြီး customize လုပ်ပြီး link ပေးသွား�မည်။ အဲဒီအချိန်မှာပဲ ငွေချေပါမည်။
                     </p>
                 </div>
                 
@@ -779,12 +760,6 @@
                 </div>
             </div>
         </section>
-
-        <!-- User Data Form Section -->
-    
-
-        <!-- Process Explanation Section -->
-      
     </main>
 
     <footer>
@@ -810,31 +785,414 @@
     </footer>
 
     <script>
+
+  const profilesData = {
+  "profiles": [
+    {
+      "id": "ATZ-B01",
+      "name": "Aung Min",
+      "career": "Graphic Designer",
+      "careerMy": "ဂရပ်ဖစ်ဒီဇိုင်နာ",
+      "category": "Basic",
+      "status": "Basic",
+      "price": 18000,
+      "discountPrice": null,
+      "popular": true,
+      "image": "img/basic-1.png",
+      "isNew": false,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-B02",
+      "name": "Kyaw Zin",
+      "career": "Photographer",
+      "careerMy": "ဓာတ်ပုံဆရာ",
+      "category": "Basic",
+      "status": "Basic",
+      "price": 15000,
+      "discountPrice": 12000,
+      "popular": false,
+      "image": "img/basic-2.png",
+      "isNew": true,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-B03",
+      "name": "Su Mon",
+      "career": "Student",
+      "careerMy": "ကျောင်းသူ",
+      "category": "Basic",
+      "status": "Basic",
+      "price": 12000,
+      "discountPrice": null,
+      "popular": false,
+      "image": "img/basic-3.png",
+      "isNew": true,
+      "isFree": true
+    },
+    {
+      "id": "ATZ-B04",
+      "name": "Zaw Zaw",
+      "career": "Office Worker",
+      "careerMy": "ရုံးဝန်ထမ်း",
+      "category": "Basic",
+      "status": "Basic",
+      "price": 20000,
+      "discountPrice": null,
+      "popular": false,
+      "image": "img/basic-4.png",
+      "isNew": false,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-B05",
+      "name": "Hnin Ei",
+      "career": "Teacher",
+      "careerMy": "ဆရာမ",
+      "category": "Basic",
+      "status": "Basic",
+      "price": 17000,
+      "discountPrice": 15000,
+      "popular": true,
+      "image": "img/basic-5.png",
+      "isNew": false,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-B06",
+      "name": "Mya Thandar",
+      "career": "Doctor",
+      "careerMy": "ဆရာဝန်",
+      "category": "Basic",
+      "status": "Basic",
+      "price": 25000,
+      "discountPrice": null,
+      "popular": false,
+      "image": "img/basic-6.png",
+      "isNew": true,
+      "isFree": false
+    },
+
+    {
+      "id": "ATZ-S01",
+      "name": "Aung Aung",
+      "career": "Senior UI/UX Designer",
+      "careerMy": "UI/UX ဒီဇိုင်နာ",
+      "category": "Standard",
+      "status": "Standard",
+      "price": 40000,
+      "discountPrice": null,
+      "popular": false,
+      "image": "img/ATZ-S01.png",
+      "isNew": true,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-S02",
+      "name": "Sarah Johnson",
+      "career": "Frontend Developer & UI Designer",
+      "careerMy": "Frontend Developer & UI Designer",
+      "category": "Standard",
+      "status": "Standard",
+      "price": 45000,
+      "discountPrice": null,
+      "popular": true,
+      "image": "img/ATZ-S02.png",
+      "isNew": false,
+      "isFree": true
+    },
+    {
+      "id": "ATZ-S03",
+      "name": "Dr. Sarah Williams",
+      "career": "Mathematics Professor",
+      "careerMy": "သင်္ချာပါမောက္ခ",
+      "category": "Standard",
+      "status": "Standard",
+      "price": 42000,
+      "discountPrice": 39000,
+      "popular": true,
+      "image": "img/ATZ-S03.png",
+      "isNew": false,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-S04",
+      "name": "Alex Johnson",
+      "career": "Senior UI/UX Designer",
+      "careerMy": "Senior UI/UX ဒီဇိုင်နာ",
+      "category": "Standard",
+      "status": "Standard",
+      "price": 38000,
+      "discountPrice": null,
+      "popular": false,
+      "image": "img/ATZ-S04.png",
+      "isNew": true,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-S05",
+      "name": "Michael Johnson",
+      "career": "Operations Supervisor",
+      "careerMy": "Operations Supervisor",
+      "category": "Standard",
+      "status": "Standard",
+      "price": 47000,
+      "discountPrice": null,
+      "popular": false,
+      "image": "img/ATZ-S05.png",
+      "isNew": true,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-S06",
+      "name": "Myo Thant",
+      "career": "Creative Designer",
+      "careerMy": "Creative Designer",
+      "category": "Standard",
+      "status": "Standard",
+      "price": 46000,
+      "discountPrice": 43000,
+      "popular": false,
+      "image": "img/ATZ-S06.png",
+      "isNew": false,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-S07",
+      "name": "Daw Nandar Win",
+      "career": "Corporate Lawyer",
+      "careerMy": "Corporateရှေ့နေ",
+      "category": "Standard",
+      "status": "Standard",
+      "price": 40000,
+      "discountPrice": 36000,
+      "popular": true,
+      "image": "img/ATZ-S07.png",
+      "isNew": false,
+      "isFree": false
+    },
+     {
+      "id": "ATZ-S09",
+      "name": "Ko Thura Aung",
+      "career": "Acoustic Guitarist",
+      "careerMy": "Acoustic ဂစ်တာသမား",
+      "category": "Standard",
+      "status": "Standard",
+      "price": 40000,
+      "discountPrice": null,
+      "popular": false,
+      "image": "img/ATZ-S09.png",
+      "isNew": true,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-S10",
+      "name": "Nyi Nyi Htut",
+      "career": "Marathon Runner",
+      "careerMy": "မာရသွန်အပြေးသမား",
+      "category": "Standard",
+      "status": "Standard",
+      "price": 45000,
+      "discountPrice": null,
+      "popular": true,
+      "image": "img/ATZ-S10.png",
+      "isNew": false,
+      "isFree": true
+    },
+    
+    {
+      "id": "ATZ-P01",
+      "name": "Su Hlaing",
+      "career": "Fashion Designer",
+      "careerMy": "ဖက်ရှင်ဒီဇိုင်နာ",
+      "category": "Premium",
+      "status": "Premium",
+      "price": 90000,
+      "discountPrice": 82000,
+      "popular": true,
+      "image": "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?auto=format&fit=crop&w=1000&q=80",
+      "isNew": false,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-P02",
+      "name": "Myat Noe",
+      "career": "Art Director",
+      "careerMy": "အနုပညာညွှန်ကြားရေးမှူး",
+      "category": "Premium",
+      "status": "Premium",
+      "price": 95000,
+      "discountPrice": 85000,
+      "popular": true,
+      "image": "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1000&q=80",
+      "isNew": false,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-P03",
+      "name": "Nandar",
+      "career": "Musician",
+      "careerMy": "ဂီတသမား",
+      "category": "Premium",
+      "status": "Premium",
+      "price": 88000,
+      "discountPrice": null,
+      "popular": false,
+      "image": "https://images.unsplash.com/photo-1507874457470-272b3c8d8ee2?auto=format&fit=crop&w=1000&q=80",
+      "isNew": true,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-P04",
+      "name": "Thura",
+      "career": "Business Consultant",
+      "careerMy": "လုပ်ငန်းအကြံပေး",
+      "category": "Premium",
+      "status": "Premium",
+      "price": 99000,
+      "discountPrice": 92000,
+      "popular": true,
+      "image": "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=1000&q=80",
+      "isNew": false,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-P05",
+      "name": "Moe Moe",
+      "career": "Content Creator",
+      "careerMy": "မီဒီယာဖန်တီးသူ",
+      "category": "Premium",
+      "status": "Premium",
+      "price": 87000,
+      "discountPrice": 83000,
+      "popular": false,
+      "image": "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=1000&q=80",
+      "isNew": true,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-P06",
+      "name": "Thet Htar",
+      "career": "Data Scientist",
+      "careerMy": "ဒေတာပညာရှင်",
+      "category": "Premium",
+      "status": "Premium",
+      "price": 93000,
+      "discountPrice": null,
+      "popular": true,
+      "image": "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=1000&q=80",
+      "isNew": false,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-P07",
+      "name": "Aung Kyaw",
+      "career": "Startup Mentor",
+      "careerMy": "စတားတပ်အကြံပေး",
+      "category": "Premium",
+      "status": "Premium",
+      "price": 89000,
+      "discountPrice": 85000,
+      "popular": false,
+      "image": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=1000&q=80",
+      "isNew": true,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-P08",
+      "name": "Thant Zin",
+      "career": "CEO",
+      "careerMy": "အမှုဆောင်အရာရှိချုပ်",
+      "category": "Premium",
+      "status": "Premium",
+      "price": 100000,
+      "discountPrice": 95000,
+      "popular": true,
+      "image": "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?auto=format&fit=crop&w=1000&q=80",
+      "isNew": false,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-P09",
+      "name": "Ei Mon",
+      "career": "Digital Marketer",
+      "careerMy": "ဒစ်ဂျစ်တယ်စျေးကွက်ရှာဖွေသူ",
+      "category": "Premium",
+      "status": "Premium",
+      "price": 86000,
+      "discountPrice": null,
+      "popular": false,
+      "image": "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1000&q=80",
+      "isNew": true,
+      "isFree": false
+    },
+    {
+      "id": "ATZ-P10",
+      "name": "Khin Zar",
+      "career": "UX/UI Designer",
+      "careerMy": "အသုံးပြုသူအတွေ့အကြုံဒီဇိုင်နာ",
+      "category": "Premium",
+      "status": "Premium",
+      "price": 94000,
+      "discountPrice": 88000,
+      "popular": true,
+      "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=80",
+      "isNew": false,
+      "isFree": false
+    }
+  ]
+};
+
+
+
+
+        // Simple animation for page elements
         document.addEventListener('DOMContentLoaded', function() {
-            const telegramButton = document.getElementById('telegramButton');
-            
-            telegramButton.addEventListener('click', function() {
-                const fullName = document.getElementById('fullName').value;
-                const career = document.getElementById('career').value;
-                const selectedProfile = document.getElementById('selectedProfile').value;
-                
-                if (!fullName || !career) {
-                    alert('Please fill in all required fields.');
-                    return;
-                }
-                
-                // Create Telegram deep link with a more detailed message
-                const message = `ProfileCraft Order Request:%0A%0AName: ${fullName}%0ACareer: ${career}%0ASelected Profile: ${selectedProfile}%0A%0AHello! I would like to purchase this profile. Please customize it for me and send the GitHub link for payment.`;
-                const telegramUrl = `https://t.me/ProfileCraftAdmin?text=${message}`;
-                
-                // Open Telegram
-                window.open(telegramUrl, '_blank');
-                
-                // Clear the form
-                document.getElementById('fullName').value = '';
-                document.getElementById('career').value = '';
+            // Add animation delay to process steps
+            const steps = document.querySelectorAll('.process-step');
+            steps.forEach((step, index) => {
+                step.style.animationDelay = `${index * 0.1}s`;
             });
+            
+            // Add animation delay to payment cards
+            const payments = document.querySelectorAll('.payment-card');
+            payments.forEach((card, index) => {
+                card.style.animationDelay = `${index * 0.15}s`;
+            });
+            
+            // Telegram button interaction
+            const telegramButton = document.getElementById('telegramButton');
+            if (telegramButton) {
+                telegramButton.addEventListener('click', function() {
+                    alert('Opening Telegram to send your information...');
+                    // In a real implementation, this would open Telegram with a pre-filled message
+                });
+            }
         });
+        document.addEventListener("DOMContentLoaded", () => {
+    const profileId = localStorage.getItem("selectedProfileId");
+    if (!profileId) return;
+
+    // Find the profile by ID
+    const profile = profilesData.profiles.find(p => p.id === profileId);
+    if (!profile) return;
+
+    // Fill content
+    document.querySelector(".thumbnail-container img").src = profile.image;
+    document.querySelector(".profile-name").textContent = profile.name;
+    document.querySelector(".profile-career").innerHTML = `<i class="fas fa-briefcase"></i> ${profile.career}`;
+
+    const pricing = document.querySelector(".profile-pricing");
+    if (profile.discountPrice) {
+      pricing.innerHTML = `
+        <span class="current-price">${profile.discountPrice.toLocaleString()} MMK</span>
+        <span class="original-price">${profile.price.toLocaleString()} MMK</span>
+        <span class="discount-badge">Save ${Math.round(((profile.price - profile.discountPrice) / profile.price) * 100)}%</span>
+      `;
+    } else {
+      pricing.innerHTML = `<span class="current-price">${profile.price.toLocaleString()} MMK</span>`;
+    }
+  });
     </script>
 </body>
 </html>
