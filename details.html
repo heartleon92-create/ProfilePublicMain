@@ -454,6 +454,100 @@
             gap: 2rem;
             flex-wrap: wrap;
         }
+        /* Thumbnail Gallery Styles */
+.thumbnail-gallery-wrapper {
+  margin-top: 1.5rem;
+  position: relative;
+  display: none; /* Hidden by default, shown via JS if needed */
+}
+
+.thumbnail-gallery-scroll {
+  overflow-x: auto;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  cursor: grab;
+  padding: 0.5rem 0;
+}
+
+.thumbnail-gallery-scroll::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.thumbnail-gallery-scroll:active {
+  cursor: grabbing;
+}
+
+.thumbnail-gallery {
+  display: inline-flex;
+  gap: 0.8rem;
+  padding: 0 1rem;
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+.thumbnail-item {
+  flex: 0 0 auto;
+  width: 80px;
+  height: 80px;
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.thumbnail-item:hover {
+  transform: scale(1.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.thumbnail-item.active {
+  border-color: #4361ee;
+}
+
+.thumbnail-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.thumbnail-item:hover img {
+  opacity: 0.9;
+}
+
+/* Main image transition */
+.main-image {
+  transition: opacity 0.4s ease;
+}
+
+/* Tablet and larger screens */
+@media (min-width: 768px) {
+  .thumbnail-gallery {
+    justify-content: center;
+    padding: 0;
+  }
+  
+  .thumbnail-item {
+    width: 90px;
+    height: 90px;
+  }
+  
+  .thumbnail-gallery-scroll {
+    overflow-x: visible;
+    cursor: default;
+  }
+}
+
+/* Desktop enhancements */
+@media (min-width: 1024px) {
+  .thumbnail-item {
+    width: 100px;
+    height: 100px;
+  }
+}
 
         .footer-links a {
             color: var(--text-secondary);
@@ -585,6 +679,7 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary);
         }
+        
     </style>
 </head>
 <body>
@@ -603,21 +698,51 @@
                 <h2 class="thumbnail-title">Profile Design Example</h2>
                 <div class="thumbnail-display">
                     <div class="thumbnail-container">
-                        <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1074&q=80" alt="Design Example">
-                        <div class="profile-info">
+                    <img class="main-image" src="img/ATZ-P01.png" alt="Design Example">
+                    <div class="profile-info">
                         <h1 class="profile-name">Aung Min</h1>
-                        <p class="profile-career">
-                            <i class="fas fa-briefcase"></i>
-                            Graphic Designer
-                        </p>
-                        
+                        <p class="profile-career"><i class="fas fa-briefcase"></i> Graphic Designer</p>
                         <div class="profile-pricing">
-                            <span class="current-price">82,000 MMK</span>
-                            <span class="original-price">90,000 MMK</span>
-                            <span class="discount-badge">Save 9%</span>
+                        <span class="current-price">82,000 MMK</span>
+                        <span class="original-price">90,000 MMK</span>
+                        <span class="discount-badge">Save 9%</span>
                         </div>
+                 </div>
+  
+  <!-- Add this thumbnail gallery section -->
+<div class="thumbnail-gallery-wrapper" style="display:none;">
+  <div class="thumbnail-gallery-scroll">
+    <div class="thumbnail-gallery"></div>
+  </div>
+</div>
+
+</div>
                     </div>
-                    </div>
+                </div>
+            </div>
+        </section>
+         <section class="section">
+            <h2 class="section-title">
+                <i class="fas fa-user-edit"></i>
+                <span>Your Information / သင့်အချက်အလက်</span>
+            </h2>
+            
+            <div class="card">
+                <button type="button" class="telegram-button" id="telegramButton">
+                    <i class="fab fa-telegram"></i>
+                    Send Data via Telegram
+                </button>
+                
+                <div class="form-instructions">
+                    <p class="instructions-title">
+                        <i class="fas fa-info-circle"></i>
+                        Instructions / ညွှန်ကြားချက်များ
+                    </p>
+                    <p class="instructions-text">
+                        EN: Click the button to send your information directly to our Telegram. We will confirm, deploy your profile on GitHub, and send you a public link before payment.
+                        <br><br>
+                        MM: Telegram ကိုနှိပ်ပြီး သင့်အမည်၊ အလုပ်အကိုင်နဲ့ Profile အချက်အလက်တွေ မျှဝေပါ။ ကျွန်တော်တို့က အတည်ပြုပြီး GitHub link ပေးပါမည်။ အဲဒီနောက် ငွေချေပါမည်။
+                    </p>
                 </div>
             </div>
         </section>
@@ -683,31 +808,7 @@
         </section>
 
         <!-- User Data Form Section -->
-        <section class="section">
-            <h2 class="section-title">
-                <i class="fas fa-user-edit"></i>
-                <span>Your Information / သင့်အချက်အလက်</span>
-            </h2>
-            
-            <div class="card">
-                <button type="button" class="telegram-button" id="telegramButton">
-                    <i class="fab fa-telegram"></i>
-                    Send Data via Telegram
-                </button>
-                
-                <div class="form-instructions">
-                    <p class="instructions-title">
-                        <i class="fas fa-info-circle"></i>
-                        Instructions / ညွှန်ကြားချက်များ
-                    </p>
-                    <p class="instructions-text">
-                        EN: Click the button to send your information directly to our Telegram. We will confirm, deploy your profile on GitHub, and send you a public link before payment.
-                        <br><br>
-                        MM: Telegram ကိုနှိပ်ပြီး သင့်အမည်၊ အလုပ်အကိုင်နဲ့ Profile အချက်အလက်တွေ မျှဝေပါ။ ကျွန်တော်တို့က အတည်ပြုပြီး GitHub link ပေးပါမည်။ အဲဒီနောက် ငွေချေပါမည်။
-                    </p>
-                </div>
-            </div>
-        </section>
+       
 
         <!-- Payment Options Section -->
         <section class="section">
@@ -789,19 +890,24 @@
  const profilesData = {
   "profiles": [
     {
-      "id": "ATZ-B01",
-      "name": "Aung Min",
-      "career": "Graphic Designer",
-      "careerMy": "ဂရပ်ဖစ်ဒီဇိုင်နာ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 18000,
-      "discountPrice": null,
-      "popular": true,
-      "image": "img/basic-1.png",
-      "isNew": false,
-      "isFree": false
-    },
+"id": "ATZ-B01",
+          "name": "Aung Min",
+          "career": "Graphic Designer",
+          "careerMy": "ဂရပ်ဖစ်ဒီဇိုင်နာ",
+          "category": "Basic",
+          "status": "Basic",
+          "price": 18000,
+          "discountPrice": null,
+          "popular": true,
+          "image": "img/basic-1.png",
+              "thumbnails": [
+            "img/ATZ-P09-thumb-1.png" ,
+            "img/ATZ-P09-thumb-2.png",
+        ],
+          "isNew": false,
+          "isFree": false
+        }
+      ,
     {
       "id": "ATZ-B02",
       "name": "Kyaw Zin",
@@ -999,7 +1105,7 @@
       "isNew": false,
       "isFree": true
     },
-    
+     
     {
       "id": "ATZ-P01",
       "name": "Su Hlaing",
@@ -1011,6 +1117,11 @@
       "discountPrice": 82000,
       "popular": true,
       "image": "img/ATZ-P01.png",
+        "thumbnails": [
+            "img/ATZ-P01-thumb-1.png" ,
+            "img/ATZ-P01-thumb-2.png",
+            "img/ATZ-P01-thumb-3.png"
+        ],
       "isNew": false,
       "isFree": false
     },
@@ -1025,6 +1136,13 @@
       "discountPrice": 85000,
       "popular": true,
       "image": "img/ATZ-P02.png",
+          "thumbnails": [
+             "img/ATZ-P02-thumb-1.png" ,
+            "img/ATZ-P02-thumb-2.png",
+            "img/ATZ-P02-thumb-3.png",
+            "img/ATZ-P02-thumb-4.png"
+        ],
+
       "isNew": false,
       "isFree": false
     },
@@ -1039,6 +1157,13 @@
       "discountPrice": null,
       "popular": false,
       "image": "img/ATZ-P03.png",
+       "thumbnails": [
+            "img/ATZ-P03-thumb-1.png" ,
+            "img/ATZ-P03-thumb-2.png",
+            "img/ATZ-P03-thumb-3.png",
+            "img/ATZ-P04-thumb-3.png"
+        ],
+
       "isNew": true,
       "isFree": false
     },
@@ -1067,6 +1192,10 @@
       "discountPrice": 83000,
       "popular": false,
       "image": "img/ATZ-P05.png",
+       "thumbnails": [
+            "img/ATZ-P05-thumb-1.png" ,
+            "img/ATZ-P05-thumb-2.png",
+        ],
       "isNew": true,
       "isFree": false
     },
@@ -1081,6 +1210,10 @@
       "discountPrice": null,
       "popular": true,
       "image": "img/ATZ-P06.png",
+       "thumbnails": [
+            "img/ATZ-P06-thumb-1.png" ,
+            "img/ATZ-P06-thumb-2.png",
+        ],
       "isNew": false,
       "isFree": false
     },
@@ -1095,6 +1228,10 @@
       "discountPrice": 85000,
       "popular": false,
       "image": "img/ATZ-P07.png",
+       "thumbnails": [
+            "img/ATZ-P07-thumb-1.png" ,
+            "img/ATZ-P07-thumb-2.png",
+        ],
       "isNew": true,
       "isFree": false
     },
@@ -1109,6 +1246,10 @@
       "discountPrice": 95000,
       "popular": true,
       "image": "img/ATZ-P08.png",
+       "thumbnails": [
+            "img/ATZ-P08-thumb-1.png" ,
+            "img/ATZ-P08-thumb-2.png",
+        ],
       "isNew": false,
       "isFree": false
     },
@@ -1123,6 +1264,10 @@
       "discountPrice": null,
       "popular": false,
       "image": "img/ATZ-P09.png",
+       "thumbnails": [
+            "img/ATZ-P09-thumb-1.png" ,
+            "img/ATZ-P09-thumb-2.png",
+        ],
       "isNew": true,
       "isFree": false
     },
@@ -1137,6 +1282,10 @@
       "discountPrice": 88000,
       "popular": true,
       "image": "img/ATZ-P10.png",
+       "thumbnails": [
+            "img/ATZ-P10-thumb-1.png" ,
+            "img/ATZ-P10-thumb-2.png",
+        ],
       "isNew": false,
       "isFree": false
     }
@@ -1193,6 +1342,156 @@
       pricing.innerHTML = `<span class="current-price">${profile.price.toLocaleString()} MMK</span>`;
     }
   });
+
+ function initThumbnailGallery(thumbnailsData) {
+      // Check if we have at least 2 thumbnails
+      if (!thumbnailsData || thumbnailsData.length < 2) {
+        return; // Don't show gallery if less than 2 images
+      }
+      
+      const galleryContainer = document.querySelector('.thumbnail-gallery');
+      const mainImage = document.querySelector('.main-image');
+      const galleryWrapper = document.querySelector('.thumbnail-gallery-wrapper');
+      
+      // Clear any existing thumbnails
+      galleryContainer.innerHTML = '';
+      
+      // Show the gallery wrapper
+      galleryWrapper.style.display = 'block';
+      
+      // Create thumbnail elements
+      thumbnailsData.forEach((src, index) => {
+        const thumbnailItem = document.createElement('div');
+        thumbnailItem.className = 'thumbnail-item';
+        if (index === 0) {
+          thumbnailItem.classList.add('active');
+        }
+        
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = `Thumbnail ${index + 1}`;
+        img.loading = 'lazy';
+        
+        thumbnailItem.appendChild(img);
+        galleryContainer.appendChild(thumbnailItem);
+        
+        // Add click event to switch main image
+        thumbnailItem.addEventListener('click', function() {
+          // Remove active class from all thumbnails
+          document.querySelectorAll('.thumbnail-item').forEach(item => {
+            item.classList.remove('active');
+          });
+          
+          // Add active class to clicked thumbnail
+          this.classList.add('active');
+          
+          // Smooth transition for main image
+          mainImage.style.opacity = '0';
+          
+          setTimeout(() => {
+            mainImage.src = src;
+            mainImage.style.opacity = '1';
+          }, 400);
+        });
+      });
+      
+      // Add touch/swipe functionality for mobile
+      let touchStartX = 0;
+      let touchScrollLeft = 0;
+      const galleryScroll = document.querySelector('.thumbnail-gallery-scroll');
+      
+      galleryScroll.addEventListener('touchstart', function(e) {
+        touchStartX = e.touches[0].clientX;
+        touchScrollLeft = galleryScroll.scrollLeft;
+        this.style.cursor = 'grabbing';
+        this.style.scrollBehavior = 'auto';
+      });
+      
+      galleryScroll.addEventListener('touchmove', function(e) {
+        if (!touchStartX) return;
+        
+        const touchX = e.touches[0].clientX;
+        const walk = (touchX - touchStartX) * 2; // Scroll-fastness
+        galleryScroll.scrollLeft = touchScrollLeft - walk;
+      });
+      
+      galleryScroll.addEventListener('touchend', function() {
+        touchStartX = 0;
+        this.style.cursor = 'grab';
+        this.style.scrollBehavior = 'smooth';
+      });
+    }
+
+    // Initialize the gallery when page loads
+   document.addEventListener('DOMContentLoaded', function () {
+  const selectedProfileId = localStorage.getItem('selectedProfileId');
+
+  if (!selectedProfileId) {
+    console.error("No profile ID found in localStorage");
+    return;
+  }
+
+  // Find the profile with that ID
+  const profile = profilesData.profiles.find(p => p.id === selectedProfileId);
+
+  if (!profile) {
+    console.error("Profile not found for ID:", selectedProfileId);
+    return;
+  }
+
+  // Fill main details
+  document.querySelector('.main-image').src = profile.image;
+  document.querySelector('.profile-name').textContent = profile.name;
+  document.querySelector('.profile-career').innerHTML = `<i class="fas fa-briefcase"></i> ${profile.career}`;
+
+  const currentPriceEl = document.querySelector('.current-price');
+  const originalPriceEl = document.querySelector('.original-price');
+  const discountBadgeEl = document.querySelector('.discount-badge');
+
+  currentPriceEl.textContent = profile.price.toLocaleString() + " MMK";
+
+  if (profile.discountPrice) {
+    originalPriceEl.textContent = profile.discountPrice.toLocaleString() + " MMK";
+    discountBadgeEl.textContent = `Save ${Math.round(((profile.price - profile.discountPrice) / profile.price) * 100)}%`;
+  } else {
+    originalPriceEl.style.display = 'none';
+    discountBadgeEl.style.display = 'none';
+  }
+// Add touch/swipe functionality for mobile
+const galleryScroll = document.querySelector('.thumbnail-gallery-scroll');
+if (galleryScroll) {
+  let touchStartX = 0;
+  let touchScrollLeft = 0;
+
+  galleryScroll.addEventListener('touchstart', function (e) {
+    touchStartX = e.touches[0].clientX;
+    touchScrollLeft = galleryScroll.scrollLeft;
+    this.style.cursor = 'grabbing';
+    this.style.scrollBehavior = 'auto';
+  });
+
+  galleryScroll.addEventListener('touchmove', function (e) {
+    if (!touchStartX) return;
+    const touchX = e.touches[0].clientX;
+    const walk = (touchX - touchStartX) * 2; // Scroll-fastness
+    galleryScroll.scrollLeft = touchScrollLeft - walk;
+  });
+
+  galleryScroll.addEventListener('touchend', function () {
+    touchStartX = 0;
+    this.style.cursor = 'grab';
+    this.style.scrollBehavior = 'smooth';
+  });
+}
+
+  // Initialize thumbnails gallery
+  initThumbnailGallery(profile.thumbnails);
+});
+
+// Example usage - call this when a profile is selected
+// loadProfileDetails("ATZ-B01");
+// Usage example - call this function with your thumbnails array
+// initThumbnailGallery(["img1.png", "img2.png", "img3.png"]);
     </script>
 </body>
 </html>
