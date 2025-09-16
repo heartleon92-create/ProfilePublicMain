@@ -265,6 +265,56 @@
         }
 
         /* Payment Options */
+        
+
+        .section {
+            margin: 2rem 0;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .section-title i {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-size: 1.8rem;
+        }
+
+        /* Notice Banner */
+        .payment-notice {
+            background: linear-gradient(135deg, #ffd166, #ffb74d);
+            color: #7d6608;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            box-shadow: 0 4px 10px rgba(255, 179, 0, 0.2);
+            border-left: 4px solid #f1c40f;
+            animation: pulse 2s infinite;
+        }
+
+        .payment-notice i {
+            font-size: 1.5rem;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        /* Payment Options */
         .payment-options {
             display: grid;
             grid-template-columns: 1fr;
@@ -280,6 +330,7 @@
             border: 1px solid var(--border);
             position: relative;
             overflow: hidden;
+            cursor: pointer;
         }
 
         .payment-card::before {
@@ -294,8 +345,13 @@
         }
 
         .payment-card:hover {
-            transform: translateY(-8px) scale(1.02);
+            transform: translateY(-5px);
             box-shadow: var(--card-shadow-hover);
+        }
+
+        .payment-card.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
         }
 
         .payment-header {
@@ -331,8 +387,87 @@
             line-height: 1.6;
             position: relative;
             z-index: 1;
+            margin-bottom: 1rem;
         }
 
+        /* Account Info */
+        .account-info {
+            background: rgba(67, 97, 238, 0.08);
+            border-radius: 12px;
+            padding: 1.2rem;
+            margin-top: 1rem;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+            border-left: 3px solid var(--primary);
+        }
+
+        .account-info.active {
+            display: block;
+        }
+
+        .account-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .account-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .account-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .account-detail i {
+            color: var(--primary);
+            width: 20px;
+        }
+
+        .copy-btn {
+            margin-top: 0.75rem;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .copy-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .payment-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .payment-options {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
         /* Process Steps */
         .process-steps {
             display: grid;
@@ -616,10 +751,7 @@
                 justify-content: flex-start;
             }
             
-            .payment-options {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
+        
             .process-steps {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -748,77 +880,20 @@
         </section>
 
         <!-- Process Explanation Section -->
-        <section class="section">
-            <h2 class="section-title">
-                <i class="fas fa-list-ol"></i>
-                <span>How It Works / လုပ်ငန်းစဉ်</span>
-            </h2>
-            
-            <div class="process-steps">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <h3 class="step-title">Send Data via Telegram / Telegram မှတစ်ဆင့် အချက်အလက်များပေးပို့ပါ</h3>
-                    <p class="step-description">
-                        Share your information through our Telegram bot for initial processing.
-                        <br><br>
-                        ကျွန်ုပ်တို့၏ Telegram bot မှတစ်ဆင့် သင့်အချက်အလက်များကို အကြိုတင်ပြင်ဆင်မှုအတွက် မျှဝေပါ။
-                    </p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <h3 class="step-title">Admin Confirms & Customizes / စီမံခန့်ခွဲသူ အတည်ပြုပြီး စိတ်ကြိုက်ပြင်ဆင်ပေးခြင်း</h3>
-                    <p class="step-description">
-                        We'll confirm your details and customize your profile based on your information.
-                        <br><br>
-                        ကျွန်ုပ်တို့သည် သင့်အသေးစိတ်အချက်အလက်များကို အတည်ပြုပြီး သင့်အချက်အလက်များအပေါ် အခြေခံ၍ သင့်ပရိုဖိုင်ကို စိတ်ကြိုက်ပြင်ဆင်ပေးပါမည်။
-                    </p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <h3 class="step-title">GitHub Link Sent to You / GitHub Link ကို သင့်ထံပေးပို့ခြင်း</h3>
-                    <p class="step-description">
-                        Once customized, we'll deploy your profile and send you the public GitHub link.
-                        <br><br>
-                        စိတ်ကြိုက်ပြင်ဆင်ပြီးသည်နှင့် ကျွန်ုပ်တို့သည် သင့်ပရိုဖိုင်ကို တင်ပြီး သင့်ထံသို့ အများသုံး GitHub link ကို ပေးပို့ပါမည်။
-                    </p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <h3 class="step-title">You Make Payment / ငွေချေခြင်း</h3>
-                    <p class="step-description">
-                        After receiving the link, you can pay via your preferred payment method.
-                        <br><br>
-                        Link ကိုလက်ခံရရှိပြီးနောက် သင်နှစ်သက်ရာ ငွေချေနည်းလမ်းဖြင့် ငွေချေနိုင်ပါသည်။
-                    </p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">5</div>
-                    <h3 class="step-title">Profile Goes Live / ပရိုဖိုင် အသက်ဝင်ခြင်း</h3>
-                    <p class="step-description">
-                        Once payment is confirmed, your profile will be fully active and live.
-                        <br><br>
-                        ငွေချေမှုအတည်ပြုပြီးသည်နှင့် သင့်ပရိုဖိုင်သည် အပြည့်အဝ အသက်ဝင်ပြီး တိုက်ရိုက်ထုတ်လွှင့်မည်ဖြစ်သည်။
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- User Data Form Section -->
-       
-
-        <!-- Payment Options Section -->
-        <section class="section">
+        <section <section class="section">
             <h2 class="section-title">
                 <i class="fas fa-credit-card"></i>
                 <span>Choose Your Payment Method / ငွေပေးချေနိုင် သော Payment များ</span>
             </h2>
             
+            <!-- Notice Banner -->
+            <div class="payment-notice">
+                <i class="fas fa-exclamation-circle"></i>
+                <div>GitHub profile အပြီး customize လုပ်ပြီး link ပေးသွားမည်။ အဲဒီအချိန်မှာပဲ ငွေချေပါမည်။</div>
+            </div>
+            
             <div class="payment-options">
-                <div class="payment-card kpay">
+                <div class="payment-card kpay" data-method="kpay">
                     <div class="payment-header">
                         <div class="payment-icon">
                             <i class="fab fa-apple-pay"></i>
@@ -830,9 +905,34 @@
                         <br><br>
                         GitHub profile အပြီး customize လုပ်ပြီး link ပေးသွားမည်။ အဲဒီအချိန်မှာပဲ ငွေချေပါမည်။
                     </p>
+                    
+                    <!-- Account Information (Hidden by default) -->
+                    <div class="account-info" id="kpay-info">
+                        <div class="account-title">
+                            <i class="fas fa-wallet"></i>
+                            <span>KPay Account Details</span>
+                        </div>
+                        <div class="account-details">
+                            <div class="account-detail">
+                                <i class="fas fa-user"></i>
+                                <span>Name: John Doe</span>
+                            </div>
+                            <div class="account-detail">
+                                <i class="fas fa-phone"></i>
+                                <span>Phone: 09 123 456 789</span>
+                            </div>
+                            <div class="account-detail">
+                                <i class="fas fa-id-card"></i>
+                                <span>Account: 1234567890</span>
+                            </div>
+                        </div>
+                        <button class="copy-btn" data-account="09 123 456 789">
+                            <i class="fas fa-copy"></i> Copy Phone Number
+                        </button>
+                    </div>
                 </div>
                 
-                <div class="payment-card cbpay">
+                <div class="payment-card cbpay" data-method="cbpay">
                     <div class="payment-header">
                         <div class="payment-icon">
                             <i class="fas fa-mobile-alt"></i>
@@ -842,11 +942,36 @@
                     <p class="payment-description">
                         You will pay after receiving your customized GitHub profile link.
                         <br><br>
-                        GitHub profile အပြီး customize လုပ်ပြီး link ပေးသွား�မည်။ အဲဒီအချိန်မှာပဲ ငွေချေပါမည်။
+                        GitHub profile အပြီး customize လုပ်ပြီး link ပေးသွား မည်။ အဲဒီအချိန်မှာပဲ ငွေချေပါမည်။
                     </p>
+                    
+                    <!-- Account Information (Hidden by default) -->
+                    <div class="account-info" id="cbpay-info">
+                        <div class="account-title">
+                            <i class="fas fa-wallet"></i>
+                            <span>CB Pay Account Details</span>
+                        </div>
+                        <div class="account-details">
+                            <div class="account-detail">
+                                <i class="fas fa-user"></i>
+                                <span>Name: John Doe</span>
+                            </div>
+                            <div class="account-detail">
+                                <i class="fas fa-phone"></i>
+                                <span>Phone: 09 987 654 321</span>
+                            </div>
+                            <div class="account-detail">
+                                <i class="fas fa-id-card"></i>
+                                <span>Account: 0987654321</span>
+                            </div>
+                        </div>
+                        <button class="copy-btn" data-account="09 987 654 321">
+                            <i class="fas fa-copy"></i> Copy Phone Number
+                        </button>
+                    </div>
                 </div>
                 
-                <div class="payment-card wavepay">
+                <div class="payment-card wavepay" data-method="wavepay">
                     <div class="payment-header">
                         <div class="payment-icon">
                             <i class="fas fa-wave-square"></i>
@@ -858,9 +983,36 @@
                         <br><br>
                         GitHub profile အပြီး customize လုပ်ပြီး link ပေးသွားမည်။ အဲဒီအချိန်မှာပဲ ငွေချေပါမည်။
                     </p>
+                    
+                    <!-- Account Information (Hidden by default) -->
+                    <div class="account-info" id="wavepay-info">
+                        <div class="account-title">
+                            <i class="fas fa-wallet"></i>
+                            <span>WavePay Account Details</span>
+                        </div>
+                        <div class="account-details">
+                            <div class="account-detail">
+                                <i class="fas fa-user"></i>
+                                <span>Name: John Doe</span>
+                            </div>
+                            <div class="account-detail">
+                                <i class="fas fa-phone"></i>
+                                <span>Phone: 09 555 123 456</span>
+                            </div>
+                            <div class="account-detail">
+                                <i class="fas fa-id-card"></i>
+                                <span>Account: 5551234567</span>
+                            </div>
+                        </div>
+                        <button class="copy-btn" data-account="09 555 123 456">
+                            <i class="fas fa-copy"></i> Copy Phone Number
+                        </button>
+                    </div>
                 </div>
             </div>
         </section>
+
+               
     </main>
 
     <footer>
@@ -879,7 +1031,7 @@
                 </div>
                 
                 <div class="copyright">
-                    &copy; 2023 ProfileCraft. All rights reserved.
+                    &copy; 2025 ProfileCraft. All rights reserved.
                 </div>
             </div>
         </div>
@@ -1492,6 +1644,125 @@ if (galleryScroll) {
 // loadProfileDetails("ATZ-B01");
 // Usage example - call this function with your thumbnails array
 // initThumbnailGallery(["img1.png", "img2.png", "img3.png"]);
+(function () {
+  // Robust copy helper with Clipboard API + execCommand fallback
+  function copyToClipboard(text) {
+    if (!text) return Promise.reject('No text to copy');
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text);
+    }
+    return new Promise((resolve, reject) => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.left = '-9999px';
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      try {
+        const ok = document.execCommand('copy');
+        document.body.removeChild(ta);
+        if (ok) resolve();
+        else reject('execCommand failed');
+      } catch (err) {
+        document.body.removeChild(ta);
+        reject(err);
+      }
+    });
+  }
+
+  // Small toast notification (created on demand)
+  function showToast(message, timeout = 1700) {
+    let toast = document.getElementById('copy-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'copy-toast';
+      toast.setAttribute('role', 'status');
+      toast.setAttribute('aria-live', 'polite');
+      toast.style.cssText =
+        'position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:10px 14px;border-radius:8px;background:rgba(0,0,0,0.82);color:#fff;font-weight:600;z-index:9999;opacity:0;transition:opacity .18s ease;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = message;
+    requestAnimationFrame(() => (toast.style.opacity = '1'));
+    clearTimeout(toast._hideTimer);
+    toast._hideTimer = setTimeout(() => {
+      toast.style.opacity = '0';
+      // remove after fade for cleanliness
+      setTimeout(() => {
+        if (toast.parentNode) toast.parentNode.removeChild(toast);
+      }, 220);
+    }, timeout);
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    // handle card clicks (show account info)
+    const paymentCards = document.querySelectorAll('.payment-card[data-method]');
+    const accountInfos = document.querySelectorAll('.account-info');
+
+    paymentCards.forEach((card) => {
+      card.addEventListener('click', function () {
+        const method = this.dataset.method;
+        paymentCards.forEach((c) => c.classList.remove('active'));
+        accountInfos.forEach((i) => i.classList.remove('active'));
+        this.classList.add('active');
+        const accountInfo = document.getElementById(`${method}-info`);
+        if (accountInfo) accountInfo.classList.add('active');
+      });
+    });
+
+    // Use event delegation for copy buttons so it works if content is dynamic
+    document.body.addEventListener('click', function (e) {
+      const btn = e.target.closest('.copy-btn');
+      if (!btn) return;
+      e.stopPropagation(); // don't fire the card click
+
+      // Prefer data-account attribute. If not available, gather the visible account details.
+      let textToCopy = (btn.dataset && btn.dataset.account) || btn.getAttribute('data-account') || '';
+      if (!textToCopy) {
+        const container = btn.closest('.account-info') || btn.parentElement;
+        if (container) {
+          const spans = Array.from(container.querySelectorAll('.account-detail span'));
+          if (spans.length) textToCopy = spans.map(s => s.textContent.trim()).join(' | ');
+        }
+      }
+
+      if (!textToCopy) {
+        showToast('Nothing to copy');
+        return;
+      }
+
+      const originalHTML = btn.innerHTML;
+      btn.disabled = true;
+
+      copyToClipboard(textToCopy)
+        .then(() => {
+          btn.innerHTML = '<i class="fas fa-check"></i> Copied';
+          showToast('Copied to clipboard');
+        })
+        .catch(() => {
+          btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Copy failed';
+          showToast('Copy failed — please copy manually');
+        })
+        .finally(() => {
+          setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.disabled = false;
+          }, 1600);
+        });
+    });
+
+    // Optional: hide payment-notice after 10s (same behaviour as your old code)
+    const notice = document.querySelector('.payment-notice');
+    if (notice) {
+      setTimeout(() => {
+        notice.style.transition = 'opacity .6s ease';
+        notice.style.opacity = '0';
+        setTimeout(() => (notice.style.display = 'none'), 600);
+      }, 10000);
+    }
+  });
+})();
     </script>
 </body>
 </html>
