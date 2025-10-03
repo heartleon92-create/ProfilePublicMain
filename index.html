@@ -753,7 +753,7 @@
                 <div class="category-tag active" data-en="All Template" data-my="အားလုံး">All Template</div>
                 <div class="category-tag" data-en="Popular" data-my="လူကြိုက်များ">Popular</div>
                 <div class="category-tag" data-en="New" data-my="အသစ်">New</div>
-                <div class="category-tag" data-en="Free" data-my="အခမဲ့">Free</div>
+                <!-- <div class="category-tag" data-en="Free" data-my="အခမဲ့">Free</div> -->
             </div>
             
             <div class="language-switcher">
@@ -1571,6 +1571,188 @@ function initPreviewButtons() {
 
         // Run initialization when DOM is loaded
         document.addEventListener('DOMContentLoaded', init);
+        // Category Filter Functionality for Tags
+function initCategoryTags() {
+    const categoryTags = document.querySelectorAll('.category-tag');
+    
+    // Add click event listeners to category tags
+    categoryTags.forEach(tag => {
+        tag.addEventListener('click', function() {
+            // Remove active class from all tags
+            categoryTags.forEach(t => t.classList.remove('active'));
+            
+            // Add active class to clicked tag
+            this.classList.add('active');
+            
+            // Get the category from data attributes
+            const category = this.getAttribute('data-en').toLowerCase();
+            
+            // Update current tag filter
+            currentTagFilter = category;
+            
+            // Re-render profiles with new filter
+            renderProfiles();
+        });
+    });
+}
+
+// Update your renderProfiles function to include tag filtering
+function renderProfiles() {
+    profilesGrid.innerHTML = '';
+    
+    let filteredProfiles = profilesData.profiles.filter(profile => {
+        // Category filter
+        if (currentFilter !== 'all' && profile.category !== currentFilter) {
+            return false;
+        }
+        
+        // Career filter
+        if (currentCareerFilter !== 'all' && profile.career !== currentCareerFilter) {
+            return false;
+        }
+        
+        // Tag filter - FIXED VERSION
+        if (currentTagFilter === 'popular' && !profile.popular) {
+            return false;
+        }
+        if (currentTagFilter === 'new' && !profile.isNew) {
+            return false;
+        }
+        if (currentTagFilter === 'free' && !profile.isFree) {
+            return false;
+        }
+        // For "all template", no additional filtering needed
+        
+        // Search filter
+        if (currentSearchQuery) {
+            const searchTerm = currentSearchQuery.toLowerCase();
+            const nameMatch = profile.name.toLowerCase().includes(searchTerm);
+            const careerMatch = profile.career.toLowerCase().includes(searchTerm);
+            const careerMyMatch = profile.careerMy && profile.careerMy.toLowerCase().includes(searchTerm);
+            
+            if (!nameMatch && !careerMatch && !careerMyMatch) {
+                return false;
+            }
+        }
+        
+        return true;
+    });
+    
+    // Show message if no profiles found
+    if (filteredProfiles.length === 0) {
+        const noResultsMessage = currentLanguage === 'my' ? 
+            'ရလဒ်မတွေ့ပါ' : 'No results found';
+        profilesGrid.innerHTML = `<div class="no-results">${noResultsMessage}</div>`;
+        return;
+    }
+    
+    filteredProfiles.forEach((profile, index) => {
+        const cardHTML = createProfileCard(profile);
+        const cardElement = document.createElement('div');
+        cardElement.innerHTML = cardHTML;
+        
+        // Add staggered animation delay
+        const card = cardElement.firstElementChild;
+        card.style.animationDelay = `${index * 0.1}s`;
+        
+        profilesGrid.appendChild(card);
+    });
+    
+    // Add event listeners to the new buttons
+    addCardEventListeners();
+    initPreviewButtons();
+}
+
+// Update your initEventListeners function - REMOVE the existing category tag code
+function initEventListeners() {
+    // Filter button click
+    filterBtn.addEventListener('click', () => {
+        filterModal.classList.add('active');
+    });
+
+    // Close modal button
+    closeModal.addEventListener('click', () => {
+        filterModal.classList.remove('active');
+    });
+
+    // Filter option clicks
+    filterOptions.forEach(option => {
+        option.addEventListener('click', () => {
+            filterOptions.forEach(opt => opt.classList.remove('active'));
+            option.classList.add('active');
+            currentFilter = option.dataset.category;
+        });
+    });
+
+    // Apply filters button
+    applyFilters.addEventListener('click', () => {
+        currentCareerFilter = careerSelect.value;
+        renderProfiles();
+        filterModal.classList.remove('active');
+    });
+
+    // Reset filters button
+    resetFilters.addEventListener('click', () => {
+        filterOptions.forEach(opt => opt.classList.remove('active'));
+        document.querySelector('[data-category="all"]').classList.add('active');
+        currentFilter = 'all';
+        careerSelect.value = 'all';
+        currentCareerFilter = 'all';
+        renderProfiles();
+    });
+
+    // Language switcher
+    languageBtn.addEventListener('click', () => {
+        languageOptions.classList.toggle('active');
+    });
+
+    // Language option clicks
+    document.querySelectorAll('.language-option').forEach(option => {
+        option.addEventListener('click', () => {
+            const lang = option.dataset.lang;
+            changeLanguage(lang);
+            languageOptions.classList.remove('active');
+        });
+    });
+
+    // Close language options when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!languageBtn.contains(e.target) && !languageOptions.contains(e.target)) {
+            languageOptions.classList.remove('active');
+        }
+    });
+
+    // Initialize category tags - ADD THIS LINE
+    initCategoryTags();
+
+    // Search box
+    searchBox.addEventListener('input', () => {
+        currentSearchQuery = searchBox.value;
+        renderProfiles();
+    });
+
+    // Career select
+    careerSelect.addEventListener('change', () => {
+        currentCareerFilter = careerSelect.value;
+        renderProfiles();
+    });
+
+    // Close modals when clicking outside
+    document.querySelectorAll('.modal-overlay').forEach(modal => {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+    });
+}
+
+// Update your init function
+function init() {
+    renderProfiles();
+    initEventListeners();
+    initCategoryTags(); // Ensure category tags are initialized
+}
     </script>
 </body>
 </html>
