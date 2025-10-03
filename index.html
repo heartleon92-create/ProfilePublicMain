@@ -55,13 +55,22 @@
             flex: 1;
             min-width: 0;
         }
+/* For text logos */
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    white-space: nowrap;
+}
 
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-dark);
-            white-space: nowrap;
-        }
+/* For image logos */
+/* Target logo image inside logo-container */
+.logo-container img {
+    max-height: 50px;  /* controls header height */
+    width: auto;       /* keep proportion */
+    display: block;
+}
+
 
         .search-container {
             position: relative;
@@ -629,10 +638,7 @@
                 justify-content: flex-start;
             }
             
-            .logo {
-                font-size: 1.25rem;
-            }
-            
+        
             .search-container {
                 width: 100%;
             }
@@ -741,7 +747,10 @@
 <body>
     <header>
         <div class="header-main">
-            <div class="logo" data-en="ProfileCraft" data-my="ProfileCraft">ProfileCraft</div>
+          <div class="logo-container">
+    <img src="img/logoCrop.png" alt="Logo">
+</div>
+
             <div class="search-container">
                 <i class="fas fa-search search-icon"></i>
                 <input type="text" class="search-box" placeholder="Search profiles..." data-en-placeholder="Search profiles..." data-my-placeholder="ပရိုဖိုင်များ ရှာဖွေရန်...">
