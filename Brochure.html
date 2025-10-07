@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProfileCraft Brochure</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4fbec9;
+            --primary-light: rgba(79, 190, 201, 0.1);
+            --primary-medium: rgba(79, 190, 201, 0.3);
+            --primary-dark: #3a8d96;
+            --accent: #ff9f43;
+            --accent-light: rgba(255, 159, 67, 0.1);
+            --text-dark: #333;
+            --text-light: #777;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            --radius: 10px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Watermark background */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><text x="50%" y="50%" font-family="Arial" font-size="14" fill="rgba(79,190,201,0.05)" text-anchor="middle" dominant-baseline="middle">ProfileCraft</text></svg>');
+            background-repeat: repeat;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header Styles */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .header-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .discount-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: var(--primary-light);
+            border-radius: var(--radius);
+        }
+
+        .discount-btn {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .discount-btn:hover {
+            background: #e88c2a;
+            transform: translateY(-2px);
+        }
+
+        .discount-btn.active {
+            background: #2ecc71;
+        }
+
+        .public-fee {
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Preview Section */
+        .preview-section {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            display: none;
+        }
+
+        .preview-section.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .brochure-card {
+            background: linear-gradient(135deg, var(--white) 0%, var(--bg-light) 100%);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid #e1e5e9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brochure-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #e1e5e9;
+        }
+
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .card-logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .detail-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.3rem;
+        }
+
+        .detail-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .calculation-section {
+            background: var(--bg-light);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .calculation-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #e1e5e9;
+        }
+
+        .calculation-row:last-child {
+            border-bottom: none;
+        }
+
+        .calculation-row.highlight {
+            background: var(--accent-light);
+            margin: 0 -1rem;
+            padding: 0.7rem 1rem;
+            border-radius: 5px;
+            font-weight: 600;
+        }
+
+        .calculation-row.total {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+            background: var(--primary-light);
+            margin: 0 -1rem;
+            padding: 1rem;
+            border-radius: 5px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            padding: 1.2rem 2rem;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .share-btn {
+            background: var(--primary);
+            color: white;
+        }
+
+        .share-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(79, 190, 201, 0.3);
+        }
+
+        .save-btn {
+            background: var(--accent);
+            color: white;
+        }
+
+        .save-btn:hover {
+            background: #e88c2a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 159, 67, 0.3);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                flex-direction: column;
+                text-align: center;
+                gap: 0.5rem;
+            }
+            
+            .header-title {
+                font-size: 1.8rem;
+            }
+            
+            .form-section, .preview-section {
+                padding: 1.5rem;
+            }
+            
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-title {
+                font-size: 1.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.3rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .discount-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <div class="header">
+            <img src="img/logoCrop.png" alt="ProfileCraft Logo" class="logo">
+            <h1 class="header-title">ProfileCraft Brochure</h1>
+        </div>
+
+        <!-- Form Section -->
+        <div class="form-section">
+            <h2 class="section-title"><i class="fas fa-edit"></i> Customer Information</h2>
+            
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="customer-id">Customer ID</label>
+                    <input type="text" id="customer-id" class="input-field" placeholder="Enter customer ID">
+                </div>
+                
+                <div class="form-group">
+                    <label for="customer-name">Customer Name</label>
+                    <input type="text" id="customer-name" class="input-field" placeholder="Enter customer name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="profile-price">Profile Page Price (MMK)</label>
+                    <input type="number" id="profile-price" class="input-field" placeholder="Enter price in MMK" min="0">
+                </div>
+            </div>
+            
+            <div class="discount-section">
+                <button class="discount-btn" id="discount-btn">
+                    <i class="fas fa-tag"></i> Apply First-time 10% Discount
+                </button>
+                <span class="discount-note">Click to apply discount for first-time customers</span>
+            </div>
+            
+            <div class="form-group">
+                <label>Public Fee</label>
+                <div class="public-fee">5,000 MMK</div>
+            </div>
+            
+            <button class="submit-btn" id="submit-btn">
+                <i class="fas fa-file-alt"></i> Generate Brochure Preview
+            </button>
+        </div>
+
+        <!-- Preview Section -->
+        <div class="preview-section" id="preview-section">
+            <h2 class="section-title"><i class="fas fa-eye"></i> Brochure Preview</h2>
+            
+            <div class="brochure-card" id="brochure-card">
+                <div class="card-header">
+                    <h3 class="card-title">ProfileCraft Service</h3>
+                    <img src="img/logoCrop.png" alt="ProfileCraft Logo" class="card-logo">
+                </div>
+                
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Customer ID</span>
+                        <span class="detail-value" id="preview-id">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Customer Name</span>
+                        <span class="detail-value" id="preview-name">-</span>
+                    </div>
+                    
+                    <div class="detail-item">
+                        <span class="detail-label">Profile Page Price</span>
+                        <span class="detail-value" id="preview-price">- MMK</span>
+                    </div>
+                </div>
+                
+                <div class="calculation-section">
+                    <div class="calculation-row">
+                        <span>Profile Page Price:</span>
+                        <span id="calc-price">0 MMK</span>
+                    </div>
+                    
+                    <div class="calculation-row">
+                        <span>Public Fee:</span>
+                        <span>5,000 MMK</span>
+                    </div>
+                    
+                    <div class="calculation-row highlight" id="discount-row">
+                        <span>Discount (10%):</span>
+                        <span id="discount-amount">0 MMK</span>
+                    </div>
+                    
+                    <div class="calculation-row total">
+                        <span>Final Total:</span>
+                        <span id="final-total">5,000 MMK</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="action-btn share-btn" id="share-btn">
+                    <i class="fas fa-share-alt"></i> Share Brochure
+                </button>
+                
+                <button class="action-btn save-btn" id="save-btn">
+                    <i class="fas fa-download"></i> Save as PDF/Image
+                </button>
+            </div>
+        </div>
+    </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Get DOM elements
+    const customerIdInput = document.getElementById('customer-id');
+    const customerNameInput = document.getElementById('customer-name');
+    const profilePriceInput = document.getElementById('profile-price');
+    const discountBtn = document.getElementById('discount-btn');
+    const submitBtn = document.getElementById('submit-btn');
+    const previewSection = document.getElementById('preview-section');
+    const shareBtn = document.getElementById('share-btn');
+    const saveBtn = document.getElementById('save-btn');
+    
+    // Preview elements
+    const previewId = document.getElementById('preview-id');
+    const previewName = document.getElementById('preview-name');
+    const previewPrice = document.getElementById('preview-price');
+    const calcPrice = document.getElementById('calc-price');
+    const discountAmount = document.getElementById('discount-amount');
+    const discountRow = document.getElementById('discount-row');
+    const finalTotal = document.getElementById('final-total');
+    const brochureCard = document.getElementById('brochure-card');
+    
+    // Discount state
+    let discountApplied = false;
+    let currentBrochureData = null;
+    
+    // Apply discount button
+    discountBtn.addEventListener('click', function() {
+        discountApplied = !discountApplied;
+        
+        if (discountApplied) {
+            discountBtn.classList.add('active');
+            discountBtn.innerHTML = '<i class="fas fa-check"></i> Discount Applied (10%)';
+        } else {
+            discountBtn.classList.remove('active');
+            discountBtn.innerHTML = '<i class="fas fa-tag"></i> Apply First-time 10% Discount';
+        }
+    });
+    
+    // Submit form
+    submitBtn.addEventListener('click', function() {
+        // Validate inputs
+        if (!customerIdInput.value || !customerNameInput.value || !profilePriceInput.value) {
+            alert('Please fill in all required fields');
+            return;
+        }
+        
+        // Get values
+        const id = customerIdInput.value;
+        const name = customerNameInput.value;
+        const price = parseInt(profilePriceInput.value);
+        const publicFee = 5000;
+        
+        // Calculate discount and total
+        const discount = discountApplied ? price * 0.1 : 0;
+        const subtotal = price + publicFee;
+        const total = subtotal - discount;
+        
+        // Format numbers with commas
+        const formatNumber = num => num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        
+        // Update preview
+        previewId.textContent = id;
+        previewName.textContent = name;
+        previewPrice.textContent = `${formatNumber(price)} MMK`;
+        calcPrice.textContent = `${formatNumber(price)} MMK`;
+        discountAmount.textContent = `-${formatNumber(discount)} MMK`;
+        finalTotal.textContent = `${formatNumber(total)} MMK`;
+        
+        // Show/hide discount row
+        if (discountApplied) {
+            discountRow.style.display = 'flex';
+        } else {
+            discountRow.style.display = 'none';
+        }
+        
+        // Add watermark background to brochure card
+        addWatermarkToBrochure();
+        
+        // Store current brochure data for sharing
+        currentBrochureData = {
+            id: id,
+            name: name,
+            price: price,
+            discount: discount,
+            total: total,
+            discountApplied: discountApplied
+        };
+        
+        // Show preview section
+        previewSection.classList.add('active');
+        
+        // Scroll to preview
+        previewSection.scrollIntoView({ behavior: 'smooth' });
+    });
+    
+    // Function to add watermark background to brochure
+    function addWatermarkToBrochure() {
+        // Remove existing watermark if any
+        const existingWatermark = brochureCard.querySelector('.watermark-bg');
+        if (existingWatermark) {
+            existingWatermark.remove();
+        }
+        
+        // Create watermark container
+        const watermark = document.createElement('div');
+        watermark.className = 'watermark-bg';
+        watermark.style.cssText = `
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('img/logoCrop.png');
+            background-repeat: repeat;
+            background-size: 200px auto;
+            opacity: 0.07;
+            pointer-events: none;
+            z-index: 0;
+        `;
+        
+        // Add watermark to brochure card
+        brochureCard.style.position = 'relative';
+        brochureCard.appendChild(watermark);
+        
+        // Ensure content stays above watermark
+        const cardContent = brochureCard.querySelector('.card-header');
+        const detailsGrid = brochureCard.querySelector('.details-grid');
+        const calculationSection = brochureCard.querySelector('.calculation-section');
+        
+        if (cardContent) cardContent.style.position = 'relative';
+        if (detailsGrid) detailsGrid.style.position = 'relative';
+        if (calculationSection) calculationSection.style.position = 'relative';
+    }
+    
+    // Share button functionality
+    shareBtn.addEventListener('click', function() {
+        if (!currentBrochureData) {
+            alert('Please generate a brochure first');
+            return;
+        }
+        
+        // Create shareable text
+        const shareText = `ProfileCraft Brochure\n` +
+                         `Customer: ${currentBrochureData.name} (ID: ${currentBrochureData.id})\n` +
+                         `Profile Price: ${currentBrochureData.price.toLocaleString()} MMK\n` +
+                         `Public Fee: 5,000 MMK\n` +
+                         `${currentBrochureData.discountApplied ? `Discount: -${currentBrochureData.discount.toLocaleString()} MMK\n` : ''}` +
+                         `Final Total: ${currentBrochureData.total.toLocaleString()} MMK\n\n` +
+                         `Generated by ProfileCraft`;
+        
+        // Check if Web Share API is available
+        if (navigator.share) {
+            navigator.share({
+                title: 'ProfileCraft Brochure',
+                text: shareText,
+                url: window.location.href
+            })
+            .then(() => console.log('Successful share'))
+            .catch((error) => {
+                console.log('Error sharing:', error);
+                fallbackShare(shareText);
+            });
+        } else {
+            fallbackShare(shareText);
+        }
+    });
+    
+    // Fallback share method
+    function fallbackShare(shareText) {
+        // Copy to clipboard
+        navigator.clipboard.writeText(shareText).then(() => {
+            // Show success message
+            const originalText = shareBtn.innerHTML;
+            shareBtn.innerHTML = '<i class="fas fa-check"></i> Copied to Clipboard!';
+            shareBtn.style.background = '#2ecc71';
+            
+            setTimeout(() => {
+                shareBtn.innerHTML = originalText;
+                shareBtn.style.background = '';
+            }, 2000);
+        }).catch(() => {
+            // If clipboard fails, show text in alert
+            alert('Share this information:\n\n' + shareText);
+        });
+    }
+    
+    // Save button functionality
+    saveBtn.addEventListener('click', function() {
+        if (!currentBrochureData) {
+            alert('Please generate a brochure first');
+            return;
+        }
+        
+        // Show saving indicator
+        const originalText = saveBtn.innerHTML;
+        saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+        saveBtn.disabled = true;
+        
+        // Ensure watermark is applied before capturing
+        addWatermarkToBrochure();
+        
+        // Use html2canvas to capture the brochure card as image
+        if (typeof html2canvas !== 'undefined') {
+            html2canvas(brochureCard, {
+                scale: 2,
+                useCORS: true,
+                logging: false,
+                backgroundColor: '#ffffff',
+                allowTaint: true,
+                onclone: function(clonedDoc) {
+                    // Ensure watermark is also in the cloned document
+                    const clonedBrochure = clonedDoc.getElementById('brochure-card');
+                    if (clonedBrochure) {
+                        const clonedWatermark = clonedDoc.createElement('div');
+                        clonedWatermark.style.cssText = `
+                            position: absolute;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background-image: url('img/logoCrop.png');
+                            background-repeat: repeat;
+                            background-size: 200px auto;
+                            opacity: 0.07;
+                            pointer-events: none;
+                            z-index: 0;
+                        `;
+                        clonedBrochure.style.position = 'relative';
+                        clonedBrochure.appendChild(clonedWatermark);
+                    }
+                }
+            }).then(canvas => {
+                // Convert canvas to blob
+                canvas.toBlob(blob => {
+                    // Create download link
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `ProfileCraft_Brochure_${currentBrochureData.id}_${Date.now()}.png`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    // Reset button
+                    saveBtn.innerHTML = originalText;
+                    saveBtn.disabled = false;
+                    
+                    // Show success message
+                    showNotification('Brochure saved as image successfully!', 'success');
+                });
+            }).catch(error => {
+                console.error('Error generating image:', error);
+                saveAsPDFFallback();
+            });
+        } else {
+            // Fallback to PDF generation
+            saveAsPDFFallback();
+        }
+    });
+    
+    // PDF fallback function with watermark
+    function saveAsPDFFallback() {
+        const { jsPDF } = window.jspdf;
+        
+        // Create PDF document
+        const doc = new jsPDF();
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        
+        // Add background color
+        doc.setFillColor(248, 249, 250);
+        doc.rect(0, 0, pageWidth, pageHeight, 'F');
+        
+        // Note: For actual logo watermark in PDF, you would need to add the logo image
+        // This is a simplified version without the actual image watermark
+        
+        // Add header with gradient effect
+        doc.setFillColor(79, 190, 201);
+        doc.rect(0, 0, pageWidth, 15, 'F');
+        
+        // Add title
+        doc.setFontSize(20);
+        doc.setTextColor(79, 190, 201);
+        doc.text('ProfileCraft Brochure', pageWidth / 2, 30, { align: 'center' });
+        
+        // Add customer details
+        doc.setFontSize(12);
+        doc.setTextColor(51, 51, 51);
+        
+        let yPosition = 60;
+        doc.text(`Customer ID: ${currentBrochureData.id}`, 20, yPosition);
+        yPosition += 15;
+        doc.text(`Customer Name: ${currentBrochureData.name}`, 20, yPosition);
+        yPosition += 15;
+        doc.text(`Profile Page Price: ${currentBrochureData.price.toLocaleString()} MMK`, 20, yPosition);
+        yPosition += 15;
+        doc.text(`Public Fee: 5,000 MMK`, 20, yPosition);
+        
+        if (currentBrochureData.discountApplied) {
+            yPosition += 15;
+            doc.text(`Discount (10%): -${currentBrochureData.discount.toLocaleString()} MMK`, 20, yPosition);
+        }
+        
+        // Add total
+        yPosition += 20;
+        doc.setFontSize(14);
+        doc.setFont(undefined, 'bold');
+        doc.text(`Final Total: ${currentBrochureData.total.toLocaleString()} MMK`, 20, yPosition);
+        
+        // Add footer
+        doc.setFontSize(10);
+        doc.setTextColor(119, 119, 119);
+        doc.text('Generated by ProfileCraft - Professional Profile Services', pageWidth / 2, pageHeight - 10, { align: 'center' });
+        
+        // Save PDF
+        doc.save(`ProfileCraft_Brochure_${currentBrochureData.id}.pdf`);
+        
+        // Reset button
+        const originalText = '<i class="fas fa-download"></i> Save as PDF/Image';
+        saveBtn.innerHTML = originalText;
+        saveBtn.disabled = false;
+        
+        showNotification('Brochure saved as PDF successfully!', 'success');
+    }
+    
+    // Utility function to show notifications
+    function showNotification(message, type = 'info') {
+        // Create notification element
+        const notification = document.createElement('div');
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: ${type === 'success' ? '#2ecc71' : '#3498db'};
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            font-weight: 500;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        `;
+        notification.textContent = message;
+        
+        document.body.appendChild(notification);
+        
+        // Animate in
+        setTimeout(() => {
+            notification.style.transform = 'translateX(0)';
+        }, 100);
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            notification.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 3000);
+    }
+    
+    // Add CSS for spinner if not already present
+    if (!document.querySelector('#spinner-styles')) {
+        const spinnerStyles = document.createElement('style');
+        spinnerStyles.id = 'spinner-styles';
+        spinnerStyles.textContent = `
+            .fa-spinner {
+                animation: spin 1s linear infinite;
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
+            /* Ensure content stays above watermark */
+            .brochure-card > *:not(.watermark-bg) {
+                position: relative;
+                z-index: 1;
+            }
+        `;
+        document.head.appendChild(spinnerStyles);
+    }
+});
+</script>
+<!-- For image capture functionality -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<!-- For PDF generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</body>
+</html>
