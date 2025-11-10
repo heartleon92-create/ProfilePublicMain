@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tr. Alice - English & Myanmar Bilingual Teacher</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --pastel-blue: #E3F0FF;
+            --pastel-pink: #F8FAFF;
+            --gold: #FFD700;
+            --royal-blue: #4169E1;
+            --success: #4cc9f0;
+            --warning: #f8961e;
+            --info: #4895ef;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            background-color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.4);
+        }
+        
+        .btn-accent {
+            background: linear-gradient(to right, var(--accent), #b5179e);
+            color: white;
+            box-shadow: 0 4px 15px rgba(247, 37, 133, 0.3);
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(247, 37, 133, 0.4);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 30px;
+        }
+        
+        nav ul li a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary);
+        }
+        
+        .language-toggle {
+            display: flex;
+            align-items: center;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 50px;
+            padding: 5px;
+            margin-left: 20px;
+        }
+        
+        .lang-btn {
+            padding: 8px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            background: transparent;
+        }
+        
+        .lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--dark);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 160px 0 100px;
+            background: linear-gradient(135deg, var(--pastel-pink), var(--pastel-blue));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero:before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: rgba(67, 97, 238, 0.05);
+            top: -150px;
+            right: -150px;
+        }
+        
+        .hero:after {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(247, 37, 133, 0.05);
+            bottom: -100px;
+            left: -100px;
+        }
+        
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .hero-text {
+            flex: 1;
+            padding-right: 40px;
+            z-index: 2;
+        }
+        
+        .hero-text h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .hero-text h2 {
+            font-size: 22px;
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+        
+        .hero-text p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 600px;
+            color: #555;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            z-index: 2;
+        }
+        
+        .hero-image img {
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 8px solid white;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Biography Section */
+        .biography {
+            background-color: white;
+        }
+        
+        .bio-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .language-switcher {
+            display: flex;
+            margin-bottom: 30px;
+            background: rgba(67, 97, 238, 0.1);
+            border-radius: 50px;
+            padding: 5px;
+        }
+        
+        .lang-option {
+            padding: 10px 25px;
+            border-radius: 50px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .lang-option.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .bio-content {
+            max-width: 800px;
+            text-align: center;
+        }
+        
+        .bio-text {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+        
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            margin-top: 40px;
+            position: relative;
+        }
+        
+        .timeline:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+        
+        .timeline-item {
+            display: flex;
+            width: 100%;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            justify-content: flex-start;
+            padding-right: 50%;
+        }
+        
+        .timeline-item:nth-child(even) {
+            justify-content: flex-end;
+            padding-left: 50%;
+        }
+        
+        .timeline-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            width: 90%;
+            position: relative;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .timeline-content:before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--primary);
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content:before {
+            right: -38px;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content:before {
+            left: -38px;
+        }
+        
+        .timeline-year {
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+        
+        /* Qualifications Section */
+        .qualifications {
+            background: linear-gradient(135deg, #f5f7fa, #e4e8f0);
+        }
+        
+        .badges-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .badge {
+            background: white;
+            border-radius: 15px;
+            padding: 25px 20px;
+            text-align: center;
+            width: 180px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .badge:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .badge i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .badge h4 {
+            font-size: 16px;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .badge p {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* Classes Section */
+        .classes {
+            background-color: white;
+        }
+        
+        .classes-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .class-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+        
+        .class-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .class-header {
+            padding: 20px;
+            color: white;
+            position: relative;
+        }
+        
+        .class-1 .class-header {
+            background: linear-gradient(135deg, var(--royal-blue), #6a5af9);
+        }
+        
+        .class-2 .class-header {
+            background: linear-gradient(135deg, var(--info), #4cc9f0);
+        }
+        
+        .class-3 .class-header {
+            background: linear-gradient(135deg, var(--accent), #b5179e);
+        }
+        
+        .class-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .class-body {
+            padding: 25px;
+        }
+        
+        .class-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .class-feature i {
+            width: 30px;
+            color: var(--primary);
+            margin-right: 10px;
+        }
+        
+        .class-note {
+            background: rgba(67, 97, 238, 0.1);
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-size: 14px;
+        }
+        
+        .class-footer {
+            padding: 0 25px 25px;
+        }
+        
+        .ribbon {
+            position: absolute;
+            top: 20px;
+            left: -30px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 30px;
+            transform: rotate(-45deg);
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Free Class Section */
+        .free-class {
+            background: linear-gradient(135deg, #ffafcc, #ffc8dd);
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .free-class:before {
+            content: '';
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            top: -100px;
+            left: -100px;
+        }
+        
+        .free-class:after {
+            content: '';
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            bottom: -75px;
+            right: -75px;
+        }
+        
+        .free-class-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .free-class h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .free-class p {
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .free-icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .free-icon {
+            background: rgba(255, 255, 255, 0.2);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--accent);
+        }
+        
+        .footer-col p {
+            margin-bottom: 20px;
+            color: #aaa;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .contact-info {
+            list-style: none;
+        }
+        
+        .contact-info li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .contact-info i {
+            margin-right: 10px;
+            color: var(--accent);
+            width: 20px;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .footer-language {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .classes-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .timeline:before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                justify-content: flex-start !important;
+                padding-right: 0 !important;
+                padding-left: 80px !important;
+            }
+            
+            .timeline-content:before {
+                left: -38px !important;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 20px;
+            }
+            
+            nav ul {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background-color: white;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                z-index: 100;
+            }
+            
+            nav ul.show {
+                display: flex;
+            }
+            
+            nav ul li {
+                margin: 15px 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .language-toggle {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+            
+            .hero-content {
+                flex-direction: column-reverse;
+                text-align: center;
+            }
+            
+            .hero-text {
+                padding-right: 0;
+                margin-top: 40px;
+            }
+            
+            .hero-text p {
+                margin: 0 auto 30px;
+            }
+            
+            .classes-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .free-icons {
+                flex-wrap: wrap;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 32px;
+            }
+            
+            .hero-text h2 {
+                font-size: 18px;
+            }
+            
+            .hero-image img {
+                width: 280px;
+                height: 280px;
+            }
+            
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .free-class h2 {
+                font-size: 28px;
+            }
+            
+            .free-class p {
+                font-size: 18px;
+            }
+        }
+        
+        /* Language-specific styles */
+        .lang-en {
+            display: block;
+        }
+        
+        .lang-mm {
+            display: none;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .language-mm .lang-en {
+            display: none;
+        }
+        
+        .language-mm .lang-mm {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">Tr.<span>Alice</span></div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#biography">About</a></li>
+                    <li><a href="#qualifications">Qualifications</a></li>
+                    <li><a href="#classes">Courses</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li>
+                        <div class="language-toggle">
+                            <button class="lang-btn active" data-lang="en">EN 🇬🇧</button>
+                            <button class="lang-btn" data-lang="mm">MM 🇲🇲</button>
+                        </div>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <div class="hero-text glass-card">
+                <h1 class="lang-en">Tr. Shwe Yee Thet Paing (Tr. Alice)</h1>
+                <h1 class="lang-mm">Tr. Shwe Yee Thet Paing (Tr. Alice)</h1>
+                
+                <h2 class="lang-en">ESL & English Communication Trainer</h2>
+                <h2 class="lang-mm">အင်္ဂလိပ်ဘာသာ သင်တန်းဆရာမ</h2>
+                
+                <p class="lang-en">BA. English | Diploma in TESOL (TQUK) | Certified TKT (British Council)</p>
+                <p class="lang-mm">BA. English | Diploma in TESOL (TQUK) | TKT (British Council) | Jolly Phonic</p>
+                
+                <p class="lang-en">Passionate about helping learners speak English confidently and naturally.</p>
+                <p class="lang-mm">လေ့လာသူတွေကို အင်္ဂလိပ်လို သဘာဝကျစွာ ပြောနိုင်အောင် လေ့ကျင့်ပေးနေသူ။</p>
+                
+                <a href="#classes" class="btn btn-primary lang-en">View My Classes</a>
+                <a href="#classes" class="btn btn-primary lang-mm">သင်တန်းများ ကြည့်ရန်</a>
+            </div>
+            <div class="hero-image">
+                <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=761&q=80" alt="Tr. Alice">
+            </div>
+        </div>
+    </section>
+
+    <!-- Biography Section -->
+    <section class="biography" id="biography">
+        <div class="container bio-container">
+            <div class="section-title">
+                <h2 class="lang-en">My Teaching Journey</h2>
+                <h2 class="lang-mm">ကျွန်မရဲ့ သင်ကြားရေး ခရီးလမ်း</h2>
+            </div>
+            
+            <div class="language-switcher">
+                <div class="lang-option active" data-lang="en">English</div>
+                <div class="lang-option" data-lang="mm">Myanmar</div>
+            </div>
+            
+            <div class="bio-content">
+                <div class="bio-text lang-en">
+                    <p>Tr. Alice started her teaching career in 2017 with COC charity education group, and joined NELC as an assistant pre-school teacher in 2018.</p>
+                    <p>She was promoted to Main teacher in early 2020 and continued to work at NELC until 2023.</p>
+                    <p>She worked as an English subject teacher at Concept X International school from 2023–2024 April.</p>
+                    <p>She is currently working as an ESL teacher at a government school in Thailand.</p>
+                    <p>As a first step in teaching, she also teaches a Free Speaking Class for children every Sunday evening.</p>
+                </div>
+                
+                <div class="bio-text lang-mm">
+                    <p>Tr. Alice ရဲ့ teaching career ကို 2017 မှာ COC charity education group ကနေ စတင်ခဲ့ပီး၊ 2018 မှာ assistant pre-school teacher အနေနဲ့ NELC မှာ ဝင်ရောက်လုပ်ကိုင်ခဲ့ပါတယ်။</p>
+                    <p>2020 နှစ်စမှာ Main teacher အနေနဲ့ promotion ရပြီး၊ 2023 အထိ NELC မှာ ဆက်လက်လုပ်ကိုင်ခဲ့ပါတယ်။</p>
+                    <p>Concept X International school မှာ English subject teacher အနေနဲ့ 2023-2024 April အထိ တာဝန်ထမ်းဆောင်ခဲ့ပါတယ်။</p>
+                    <p>လက်ရှိမှာတော့ ထိုင်းနိုင်ငံရှိ Government school တစ်ခုမှာ ESL teacher အနေနဲ့ လုပ်ကိုင်လျက်ရှိပါတယ်။</p>
+                    <p>တီချယ်ရဲ့ ပထမဆုံးခြေလှမ်းအနေနဲ့ Sunday ညနေတိုင်း Free Speaking Class သင်ကြားပေးနေပါတယ်။</p>
+                </div>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2017</div>
+                            <p class="lang-en">Started teaching career with COC charity education group</p>
+                            <p class="lang-mm">COC charity education group နှင့် သင်ကြားရေး လုပ်ငန်းစတင်</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2018</div>
+                            <p class="lang-en">Joined NELC as assistant pre-school teacher</p>
+                            <p class="lang-mm">NELC တွင် အကူ pre-school ဆရာအဖြစ် ဝင်ရောက်လုပ်ကိုင်</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2020</div>
+                            <p class="lang-en">Promoted to Main teacher at NELC</p>
+                            <p class="lang-mm">NELC တွင် ပင်မဆရာအဖြစ် ရာထူးတိုးမြှင့်ခံရ</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">2023-2024</div>
+                            <p class="lang-en">English subject teacher at Concept X International school</p>
+                            <p class="lang-mm">Concept X International school တွင် အင်္ဂလိပ်ဘာသာရပ် ဆရာအဖြစ် တာဝန်ထမ်းဆောင်</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-year">Present</div>
+                            <p class="lang-en">ESL teacher at a government school in Thailand</p>
+                            <p class="lang-mm">ထိုင်းနိုင်ငံရှိ အစိုးရကျောင်းတွင် ESL ဆရာအဖြစ် တာဝန်ထမ်းဆောင်</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Qualifications Section -->
+    <section class="qualifications" id="qualifications">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="lang-en">My Qualifications</h2>
+                <h2 class="lang-mm">ကျွန်မရဲ့ အရည်အချင်းများ</h2>
+            </div>
+            
+            <div class="badges-container">
+                <div class="badge">
+                    <i class="fas fa-graduation-cap"></i>
+                    <h4>BA. English</h4>
+                    <p class="lang-en">Bachelor's Degree</p>
+                    <p class="lang-mm">ဘွဲ့လွန်တန်း</p>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-award"></i>
+                    <h4>TESOL Diploma</h4>
+                    <p class="lang-en">TQUK Certified</p>
+                    <p class="lang-mm">TQUK မှအသိအမှတ်ပြု</p>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-certificate"></i>
+                    <h4>TKT Certificate</h4>
+                    <p class="lang-en">British Council</p>
+                    <p class="lang-mm">ဗြိတိသျှကောင်စီ</p>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-book"></i>
+                    <h4>Jolly Phonics</h4>
+                    <p class="lang-en">Certification</p>
+                    <p class="lang-mm">အသိအမှတ်ပြုလက်မှတ်</p>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-brain"></i>
+                    <h4>Child Psychology</h4>
+                    <p class="lang-en">Executive Diploma</p>
+                    <p class="lang-mm">အမှုဆောင်ဒီပလိုမာ</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Classes Section -->
+    <section class="classes" id="classes">
+        <div class="container">
+            <div class="section-title">
+                <h2 class="lang-en">Now Open for Enrollment</h2>
+                <h2 class="lang-mm">လက်ရှိ စာရင်းသွင်းနေပါပြီ</h2>
+            </div>
+            
+            <div class="classes-container">
+                <div class="class-card class-1">
+                    <div class="ribbon lang-en">Free this month</div>
+                    <div class="ribbon lang-mm">ဒီလအတွက် အခမဲ့</div>
+                    
+                    <div class="class-header">
+                        <h3>💎 English Online Class</h3>
+                        <p class="lang-en">Trainer: Tr. Alice</p>
+                        <p class="lang-mm">သင်ကြားပေးသူ - Tr. Alice</p>
+                        <div class="class-badge lang-en">Open for Enrollment</div>
+                        <div class="class-badge lang-mm">စာရင်းသွင်းနိုင်ပါပြီ</div>
+                    </div>
+                    
+                    <div class="class-body">
+                        <div class="class-feature">
+                            <i class="far fa-calendar-alt"></i>
+                            <div>
+                                <p class="lang-en"><strong>Start Date:</strong> 3 Nov 2025</p>
+                                <p class="lang-mm"><strong>စတင်မည့်ရက်:</strong> ၃ နိုဝင်ဘာ ၂၀၂၅</p>
+                            </div>
+                        </div>
+                        <div class="class-feature">
+                            <i class="far fa-clock"></i>
+                            <div>
+                                <p class="lang-en"><strong>Schedule:</strong> Mon & Tue · 7:30 PM – 9:00 PM</p>
+                                <p class="lang-mm"><strong>သင်တန်းချိန်:</strong> တနင်္လာ နှင့် အင်္ဂါ · ၇:၃၀ ညနေ – ၉:၀၀ ည</p>
+                            </div>
+                        </div>
+                        <div class="class-feature">
+                            <i class="fas fa-coins"></i>
+                            <div>
+                                <p class="lang-en"><strong>Fee:</strong> 50,000 MMK/month</p>
+                                <p class="lang-mm"><strong>သင်တန်းကြေး:</strong> ၅၀,၀၀၀ ကျပ်/လ</p>
+                            </div>
+                        </div>
+                        
+                        <div class="class-note lang-en">
+                            <strong>Note:</strong> This class is free of charge for November.
+                        </div>
+                        <div class="class-note lang-mm">
+                            <strong>မှတ်ချက်:</strong> နိုဝင်ဘာလအတွက် ဤသင်တန်းသည် အခမဲ့ဖြစ်ပါသည်။
+                        </div>
+                    </div>
+                    
+                    <div class="class-footer">
+                        <a href="#" class="btn btn-primary btn-block lang-en">Join Now</a>
+                        <a href="#" class="btn btn-primary btn-block lang-mm">ယခုပဲ ဝင်ရောက်ရန်</a>
+                    </div>
+                </div>
+                
+                <div class="class-card class-2">
+                    <div class="class-header">
+                        <h3>💬 Starter Class</h3>
+                        <div class="class-badge lang-en">Beginner Level</div>
+                        <div class="class-badge lang-mm">စတင်သူများအတွက်</div>
+                    </div>
+                    
+                    <div class="class-body">
+                        <div class="class-feature">
+                            <i class="far fa-calendar-alt"></i>
+                            <div>
+                                <p class="lang-en"><strong>Start Date:</strong> 8 Nov 2025</p>
+                                <p class="lang-mm"><strong>စတင်မည့်ရက်:</strong> ၈ နိုဝင်ဘာ ၂၀၂၅</p>
+                            </div>
+                        </div>
+                        <div class="class-feature">
+                            <i class="far fa-clock"></i>
+                            <div>
+                                <p class="lang-en"><strong>Schedule:</strong> Sat & Sun · 1:00 PM – 2:30 PM</p>
+                                <p class="lang-mm"><strong>သင်တန်းချိန်:</strong> စနေ နှင့် တနင်္ဂနွေ · ၁:၀၀ နေ့လည် – ၂:၃၀ နေ့လည်</p>
+                            </div>
+                        </div>
+                        <div class="class-feature">
+                            <i class="fas fa-coins"></i>
+                            <div>
+                                <p class="lang-en"><strong>Fee:</strong> 30,000 MMK/month</p>
+                                <p class="lang-mm"><strong>သင်တန်းကြေး:</strong> ၃၀,၀၀၀ ကျပ်/လ</p>
+                            </div>
+                        </div>
+                        
+                        <div class="class-note lang-en">
+                            <strong>Note:</strong> Installment plan available
+                        </div>
+                        <div class="class-note lang-mm">
+                            <strong>မှတ်ချက်:</strong> ကျပ်ငွေ အရစ်ကျ ပေးသွင်းနိုင်ပါသည်
+                        </div>
+                    </div>
+                    
+                    <div class="class-footer">
+                        <a href="#" class="btn btn-primary btn-block lang-en">Enroll</a>
+                        <a href="#" class="btn btn-primary btn-block lang-mm">စာရင်းသွင်းရန်</a>
+                    </div>
+                </div>
+                
+                <div class="class-card class-3">
+                    <div class="ribbon lang-en">Free this month</div>
+                    <div class="ribbon lang-mm">ဒီလအတွက် အခမဲ့</div>
+                    
+                    <div class="class-header">
+                        <h3>🚀 Mover Class</h3>
+                        <div class="class-badge lang-en">Intermediate Level</div>
+                        <div class="class-badge lang-mm">အလယ်အလတ်အဆင့်</div>
+                    </div>
+                    
+                    <div class="class-body">
+                        <div class="class-feature">
+                            <i class="far fa-calendar-alt"></i>
+                            <div>
+                                <p class="lang-en"><strong>Start Date:</strong> 3 Nov 2025</p>
+                                <p class="lang-mm"><strong>စတင်မည့်ရက်:</strong> ၃ နိုဝင်ဘာ ၂၀၂၅</p>
+                            </div>
+                        </div>
+                        <div class="class-feature">
+                            <i class="far fa-clock"></i>
+                            <div>
+                                <p class="lang-en"><strong>Schedule:</strong> Mon & Tue · 6:00 PM – 7:30 PM</p>
+                                <p class="lang-mm"><strong>သင်တန်းချိန်:</strong> တနင်္လာ နှင့် အင်္ဂါ · ၆:၀၀ ညနေ – ၇:၃၀ ညနေ</p>
+                            </div>
+                        </div>
+                        <div class="class-feature">
+                            <i class="fas fa-coins"></i>
+                            <div>
+                                <p class="lang-en"><strong>Fee:</strong> 40,000 MMK/month</p>
+                                <p class="lang-mm"><strong>သင်တန်းကြေး:</strong> ၄၀,၀၀၀ ကျပ်/လ</p>
+                            </div>
+                        </div>
+                        
+                        <div class="class-note lang-en">
+                            <strong>Note:</strong> Free of charge for November
+                        </div>
+                        <div class="class-note lang-mm">
+                            <strong>မှတ်ချက်:</strong> နိုဝင်ဘာလအတွက် အခမဲ့ဖြစ်ပါသည်
+                        </div>
+                    </div>
+                    
+                    <div class="class-footer">
+                        <a href="#" class="btn btn-primary btn-block lang-en">Register Now</a>
+                        <a href="#" class="btn btn-primary btn-block lang-mm">ယခုပဲ မှတ်ပုံတင်ရန်</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Free Class Section -->
+    <section class="free-class">
+        <div class="container">
+            <div class="free-class-content">
+                <div class="free-icons">
+                    <div class="free-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <div class="free-icon">
+                        <i class="fas fa-child"></i>
+                    </div>
+                    <div class="free-icon">
+                        <i class="fas fa-gift"></i>
+                    </div>
+                </div>
+                
+                <h2 class="lang-en">🎁 Every Sunday Evening — Free Speaking Class for Children</h2>
+                <h2 class="lang-mm">🎁 တနင်္ဂနွေညနေ တိုင်း — ကလေးများအတွက် အခမဲ့ စကားပြောသင်တန်း</h2>
+                
+                <p class="lang-en">Join our weekly free speaking class designed especially for children to practice English in a fun, interactive environment.</p>
+                <p class="lang-mm">ကလေးများ အင်္ဂလိပ်စကားကို ပျော်ရွှင်စရာကောင်းပြီး တက်ကြွသော ပတ်ဝန်းကျင်တွင် လေ့ကျင့်နိုင်ရန် ရည်ရွယ်ထားသော အပတ်စဉ် အခမဲ့ စကားပြောသင်တန်းသို့ ဝင်ရောက်လေ့လာပါ။</p>
+                
+                <a href="#" class="btn btn-accent lang-en">Register Free</a>
+                <a href="#" class="btn btn-accent lang-mm">အခမဲ့ မှတ်ပုံတင်ရန်</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Tr. Alice</h3>
+                    <p class="lang-en">Professional English teacher with years of experience helping students achieve fluency.</p>
+                    <p class="lang-mm">ကျောင်းသားများ အင်္ဂလိပ်စကားကျွမ်းကျင်စွာ ပြောဆိုနိုင်ရန် နှစ်ပေါင်းများစွာ အတွေ့အကြုံရှိပြီး သင်ကြားပေးနေသော ပညာရှင်ဆရာမ။</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-telegram"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3 class="lang-en">Quick Links</h3>
+                    <h3 class="lang-mm">အမြန်သွားရန်</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home" class="lang-en">Home</a><a href="#home" class="lang-mm">ပင်မစာမျက်နှာ</a></li>
+                        <li><a href="#biography" class="lang-en">About</a><a href="#biography" class="lang-mm">ကျွန်မအကြောင်း</a></li>
+                        <li><a href="#qualifications" class="lang-en">Qualifications</a><a href="#qualifications" class="lang-mm">အရည်အချင်းများ</a></li>
+                        <li><a href="#classes" class="lang-en">Courses</a><a href="#classes" class="lang-mm">သင်တန်းများ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="lang-en">Classes</h3>
+                    <h3 class="lang-mm">သင်တန်းများ</h3>
+                    <ul class="footer-links">
+                        <li><a href="#" class="lang-en">English Online Class</a><a href="#" class="lang-mm">အွန်လိုင်း အင်္ဂလိပ်စာ သင်တန်း</a></li>
+                        <li><a href="#" class="lang-en">Starter Class</a><a href="#" class="lang-mm">စတင်သူများအတွက် သင်တန်း</a></li>
+                        <li><a href="#" class="lang-en">Mover Class</a><a href="#" class="lang-mm">အဆင့်မြှင့်သင်တန်း</a></li>
+                        <li><a href="#" class="lang-en">Free Speaking Class</a><a href="#" class="lang-mm">အခမဲ့ စကားပြောသင်တန်း</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3 class="lang-en">Contact Info</h3>
+                    <h3 class="lang-mm">ဆက်သွယ်ရန်</h3>
+                    <ul class="contact-info">
+                        <li><i class="fas fa-envelope"></i> <span>contact@tralice.com</span></li>
+                        <li><i class="fab fa-facebook"></i> <span class="lang-en">Tr. Alice English</span><span class="lang-mm">Tr. Alice အင်္ဂလိပ်စာ</span></li>
+                        <li><i class="fab fa-telegram"></i> <span class="lang-en">@TrAliceEnglish</span><span class="lang-mm">@TrAliceအင်္ဂလိပ်စာ</span></li>
+                        <li><i class="fas fa-phone"></i> <span class="lang-en">+95 9 123 456 789</span><span class="lang-mm">၀၉ ၁၂၃ ၄၅၆ ၇၈၉</span></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-language">
+                <div class="language-toggle">
+                    <button class="lang-btn active" data-lang="en">EN 🇬🇧</button>
+                    <button class="lang-btn" data-lang="mm">MM 🇲🇲</button>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p class="lang-en">Copyright © 2025 Tr. Alice English Online. All rights reserved.</p>
+                <p class="lang-mm">မူပိုင်ခွင့် © ၂၀၂၅ Tr. Alice အွန်လိုင်း အင်္ဂလိပ်စာ။ သက်ဆိုင်ရာ ခွင့်ပြုချက်အားလုံး လိုက်နာပါသည်။</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language Toggle Functionality
+        document.querySelectorAll('.lang-btn, .lang-option').forEach(button => {
+            button.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                
+                // Update active state for language buttons
+                document.querySelectorAll('.lang-btn, .lang-option').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                this.classList.add('active');
+                
+                // Toggle language classes on body
+                document.body.classList.remove('language-en', 'language-mm');
+                document.body.classList.add(`language-${lang}`);
+            });
+        });
+
+        // Mobile Menu Toggle
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('nav ul').classList.toggle('show');
+        });
+
+        // Smooth Scrolling for Navigation Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.querySelector('nav ul').classList.remove('show');
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe elements for animation
+        document.querySelectorAll('.badge, .class-card, .timeline-item').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
