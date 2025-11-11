@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaTech - Innovation. Speed. Style.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .glow-on-hover:hover {
+            box-shadow: 0 0 15px rgba(34, 211, 238, 0.4);
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            transform: translateY(20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .modal-open .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #3b82f6;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .theme-light {
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        .theme-dark {
+            background-color: #0f172a;
+            color: #f1f5f9;
+        }
+        .comparison-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        .comparison-table th, .comparison-table td {
+            border: 1px solid #334155;
+            padding: 12px;
+            text-align: left;
+        }
+        .comparison-table th {
+            background-color: #1e293b;
+        }
+    </style>
+</head>
+<body class="theme-dark">
+    <!-- Sticky Header -->
+    <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-700">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <h1 class="text-2xl font-bold text-cyan-400 tracking-wide">NOVATECH</h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="text-white/90 hover:text-cyan-400 transition-colors uppercase tracking-wide text-sm font-semibold">Home</a>
+                <a href="#" class="text-white/90 hover:text-cyan-400 transition-colors uppercase tracking-wide text-sm font-semibold">Products</a>
+                <a href="#" class="text-white/90 hover:text-cyan-400 transition-colors uppercase tracking-wide text-sm font-semibold">Deals</a>
+                <a href="#" class="text-white/90 hover:text-cyan-400 transition-colors uppercase tracking-wide text-sm font-semibold">Support</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button id="theme-toggle" class="p-2 text-white/70 hover:text-cyan-400 transition-colors">
+                    <i class="fas fa-moon text-lg"></i>
+                </button>
+                <button id="compare-btn" class="p-2 text-white/70 hover:text-cyan-400 transition-colors relative">
+                    <i class="fas fa-balance-scale text-lg"></i>
+                    <span id="compare-count" class="absolute -top-1 -right-1 bg-blue-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center hidden">0</span>
+                </button>
+                <button id="cart-btn" class="p-2 text-white/70 hover:text-cyan-400 transition-colors relative">
+                    <i class="fas fa-shopping-bag text-lg"></i>
+                    <span id="cart-count" class="cart-count hidden">0</span>
+                </button>
+                <button class="md:hidden p-2 text-white/70">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-slate-900 to-blue-900 py-16 md:py-24 overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-cyan-500/10 to-transparent"></div>
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
+            <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 uppercase tracking-wide">Innovation. Speed. Style.</h2>
+                <p class="text-lg text-cyan-200 mb-8 max-w-lg">Experience the future with NovaTech's cutting-edge electronics. Performance redefined.</p>
+                <button class="bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-3 rounded-lg font-semibold transition-all duration-300 glow-on-hover uppercase tracking-wide">Shop the Latest</button>
+            </div>
+            <div class="md:w-1/2 flex justify-center fade-in">
+                <div class="relative">
+                    <div class="w-80 h-80 bg-gradient-to-br from-cyan-500/20 to-blue-500/20 rounded-2xl flex items-center justify-center shadow-2xl backdrop-blur-sm border border-cyan-500/30">
+                        <img src="https://cdn.pixabay.com/photo/2014/08/05/10/27/iphone-410311_1280.jpg" alt="Latest Smartphone" class="w-64 h-64 object-contain">
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 bg-slate-800 p-4 rounded-xl shadow-lg border border-slate-700">
+                        <p class="text-sm font-semibold text-white">New Release</p>
+                        <p class="text-xs text-cyan-300">Quantum X Pro</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Tabs -->
+    <section class="py-12 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-10 text-white fade-in">Featured Products</h2>
+            <div class="flex justify-center space-x-2 md:space-x-4 mb-12 overflow-x-auto pb-2">
+                <button class="category-tab px-4 py-2 rounded-lg bg-cyan-500 text-white font-semibold transition-colors uppercase tracking-wide text-sm" data-category="all">All Products</button>
+                <button class="category-tab px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white/90 font-semibold transition-colors uppercase tracking-wide text-sm" data-category="smartphones">Smartphones</button>
+                <button class="category-tab px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white/90 font-semibold transition-colors uppercase tracking-wide text-sm" data-category="laptops">Laptops</button>
+                <button class="category-tab px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white/90 font-semibold transition-colors uppercase tracking-wide text-sm" data-category="accessories">Accessories</button>
+                <button class="category-tab px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white/90 font-semibold transition-colors uppercase tracking-wide text-sm" data-category="audio">Audio</button>
+            </div>
+
+            <!-- Featured Products Grid -->
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Compare Section -->
+    <section class="py-16 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-4 text-white fade-in">Compare Products</h2>
+            <p class="text-center text-slate-400 mb-10 max-w-2xl mx-auto">Select two products to compare specifications and features side by side.</p>
+            
+            <div class="max-w-4xl mx-auto bg-slate-800 rounded-xl p-6 border border-slate-700">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="compare-product bg-slate-700 rounded-lg p-4 min-h-[200px] flex flex-col items-center justify-center">
+                        <div id="compare-product-1" class="text-center">
+                            <i class="fas fa-mobile-alt text-4xl text-slate-500 mb-4"></i>
+                            <p class="text-slate-400">Select first product</p>
+                        </div>
+                    </div>
+                    <div class="compare-product bg-slate-700 rounded-lg p-4 min-h-[200px] flex flex-col items-center justify-center">
+                        <div id="compare-product-2" class="text-center">
+                            <i class="fas fa-laptop text-4xl text-slate-500 mb-4"></i>
+                            <p class="text-slate-400">Select second product</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-center">
+                    <button id="compare-action-btn" class="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-lg font-semibold transition-all duration-300 glow-on-hover uppercase tracking-wide disabled:opacity-50 disabled:cursor-not-allowed" disabled>Compare Products</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-slate-800">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center fade-in">
+                <h2 class="text-3xl font-bold mb-6 text-white">Our Tech Philosophy</h2>
+                <p class="text-lg text-slate-300 mb-6">At NovaTech, we believe technology should enhance human potential, not replace it. Our mission is to create electronics that seamlessly integrate into your life, empowering you to achieve more with less effort.</p>
+                <p class="text-lg text-slate-300 mb-8">We focus on three core principles: <span class="text-cyan-400 font-semibold">innovation</span> through continuous R&D, <span class="text-cyan-400 font-semibold">performance</span> that exceeds expectations, and <span class="text-cyan-400 font-semibold">sustainability</span> through responsible manufacturing.</p>
+                <button class="border-2 border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-white px-6 py-3 rounded-lg font-semibold transition-colors uppercase tracking-wide">Learn More</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 text-white py-12 border-t border-slate-700">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-cyan-400 mb-4 tracking-wide">NOVATECH</h3>
+                    <p class="text-slate-400">Pushing the boundaries of technology to create a better future.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 uppercase tracking-wide">Products</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors">Smartphones</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors">Laptops</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors">Tablets</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors">Accessories</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 uppercase tracking-wide">Support</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors">Shipping Info</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors">Returns</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 uppercase tracking-wide">Connect</h4>
+                    <p class="text-slate-400 mb-4">Stay updated with the latest tech news and releases.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors"><i class="fab fa-facebook text-xl"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="#" class="text-slate-400 hover:text-cyan-400 transition-colors"><i class="fab fa-youtube text-xl"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-slate-700 mt-8 pt-8 text-center text-slate-400">
+                <p>&copy; 2023 NovaTech Electronics. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-overlay">
+        <div class="modal-content bg-slate-800 rounded-xl shadow-2xl max-w-4xl w-full mx-4 overflow-hidden border border-slate-700">
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 p-8 flex items-center justify-center bg-slate-900">
+                    <img id="modal-image" src="" alt="Product" class="w-full max-w-xs rounded-lg">
+                </div>
+                <div class="md:w-1/2 p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 id="modal-title" class="text-2xl font-bold text-white"></h3>
+                        <button id="close-modal" class="text-slate-400 hover:text-white">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <p id="modal-category" class="text-cyan-400 font-semibold mb-2 uppercase tracking-wide"></p>
+                    <p id="modal-price" class="text-2xl font-bold text-white mb-4"></p>
+                    <p id="modal-description" class="text-slate-300 mb-6"></p>
+                    <div class="mb-6">
+                        <h4 class="text-white font-semibold mb-2">Key Features:</h4>
+                        <ul id="modal-features" class="text-slate-300 list-disc list-inside space-y-1">
+                            <!-- Features will be added dynamically -->
+                        </ul>
+                    </div>
+                    <div class="flex space-x-4 mb-6">
+                        <div>
+                            <label class="block text-slate-300 mb-2">Quantity</label>
+                            <div class="flex border border-slate-600 rounded-lg">
+                                <button class="px-3 py-2 border-r border-slate-600 text-slate-300 hover:bg-slate-700">-</button>
+                                <input type="number" value="1" min="1" class="w-12 text-center border-none bg-slate-800 text-white">
+                                <button class="px-3 py-2 border-l border-slate-600 text-slate-300 hover:bg-slate-700">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button id="modal-add-to-cart" class="bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-3 rounded-lg font-semibold flex-1 transition-colors glow-on-hover">Add to Cart</button>
+                        <button id="modal-compare" class="border border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-white px-4 py-3 rounded-lg transition-colors">
+                            <i class="fas fa-balance-scale"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Compare Modal -->
+    <div id="compare-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-overlay">
+        <div class="modal-content bg-slate-800 rounded-xl shadow-2xl max-w-6xl w-full mx-4 overflow-hidden border border-slate-700 max-h-[90vh] overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold text-white">Product Comparison</h3>
+                    <button id="close-compare-modal" class="text-slate-400 hover:text-white">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                <div id="comparison-content" class="bg-slate-900 rounded-lg p-6">
+                    <!-- Comparison content will be dynamically loaded here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mini Cart -->
+    <div id="mini-cart" class="fixed right-0 top-0 h-full w-80 bg-slate-800 shadow-2xl z-50 transform translate-x-full transition-transform duration-300 border-l border-slate-700">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-white">Your Cart</h3>
+                <button id="close-cart" class="text-slate-400 hover:text-white">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="cart-items" class="flex-1 overflow-y-auto mb-4">
+                <!-- Cart items will be dynamically loaded here -->
+            </div>
+            <div class="border-t border-slate-700 pt-4">
+                <div class="flex justify-between mb-4">
+                    <span class="font-semibold text-white">Total:</span>
+                    <span id="cart-total" class="font-bold text-cyan-400">$0.00</span>
+                </div>
+                <button class="bg-cyan-500 hover:bg-cyan-600 text-white w-full py-3 rounded-lg font-semibold transition-colors glow-on-hover">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top" class="fixed bottom-6 right-6 bg-cyan-500 hover:bg-cyan-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 transform translate-y-10 glow-on-hover">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Product data
+        const products = [
+            {
+                id: 1,
+                name: "Quantum X Pro",
+                category: "smartphones",
+                price: 999.00,
+                originalPrice: 1199.00,
+                image: "https://cdn.pixabay.com/photo/2014/08/05/10/27/iphone-410311_1280.jpg",
+                description: "The ultimate smartphone with revolutionary camera technology and all-day battery life.",
+                features: ["6.7\" Super Retina XDR display", "A16 Bionic chip", "48MP Main camera", "Up to 29 hours video playback", "5G capable"],
+                specs: {
+                    display: "6.7 inches",
+                    processor: "A16 Bionic",
+                    storage: "128GB/256GB/512GB",
+                    camera: "48MP + 12MP + 12MP",
+                    battery: "4323 mAh"
+                }
+            },
+            {
+                id: 2,
+                name: "NovaBook Pro",
+                category: "laptops",
+                price: 1499.00,
+                originalPrice: 1699.00,
+                image: "https://cdn.pixabay.com/photo/2014/05/02/21/49/laptop-336373_1280.jpg",
+                description: "Professional laptop with stunning Retina display and powerful M2 chip.",
+                features: ["16-inch Retina display", "M2 Pro chip", "16GB unified memory", "1TB SSD storage", "Up to 22 hours battery"],
+                specs: {
+                    display: "16 inches",
+                    processor: "M2 Pro",
+                    memory: "16GB",
+                    storage: "1TB SSD",
+                    battery: "Up to 22 hours"
+                }
+            },
+            {
+                id: 3,
+                name: "Zenith Wireless Earbuds",
+                category: "audio",
+                price: 199.00,
+                originalPrice: 249.00,
+                image: "https://cdn.pixabay.com/photo/2020/09/09/06/58/headphones-5555703_1280.png",
+                description: "Premium wireless earbuds with active noise cancellation and spatial audio.",
+                features: ["Active Noise Cancellation", "Spatial Audio", "Up to 30 hours battery", "Sweat and water resistant", "Wireless charging case"],
+                specs: {
+                    battery: "Up to 30 hours",
+                    connectivity: "Bluetooth 5.3",
+                    features: "ANC, Spatial Audio",
+                    waterResistance: "IPX4",
+                    charging: "Wireless"
+                }
+            },
+            {
+                id: 4,
+                name: "Fusion Smartwatch",
+                category: "accessories",
+                price: 349.00,
+                originalPrice: 399.00,
+                image: "https://cdn.pixabay.com/photo/2015/06/25/17/21/smart-watch-821557_1280.jpg",
+                description: "Advanced health monitoring and fitness tracking in a sleek design.",
+                features: ["Always-On Retina display", "Blood oxygen sensor", "ECG app", "Water resistant 50m", "GPS + Cellular"],
+                specs: {
+                    display: "Always-On Retina",
+                    health: "ECG, Blood Oxygen",
+                    waterResistance: "50 meters",
+                    connectivity: "GPS + Cellular",
+                    battery: "Up to 18 hours"
+                }
+            },
+            {
+                id: 5,
+                name: "Photon Gaming Laptop",
+                category: "laptops",
+                price: 1899.00,
+                originalPrice: 2199.00,
+                image: "https://cdn.pixabay.com/photo/2018/05/25/17/52/laptop-3429964_1280.jpg",
+                description: "High-performance gaming laptop with RTX graphics and high refresh rate display.",
+                features: ["15.6\" 240Hz display", "Intel i9 processor", "RTX 4070 graphics", "32GB DDR5 RAM", "1TB NVMe SSD"],
+                specs: {
+                    display: "15.6 inches, 240Hz",
+                    processor: "Intel i9",
+                    graphics: "RTX 4070",
+                    memory: "32GB DDR5",
+                    storage: "1TB NVMe SSD"
+                }
+            },
+            {
+                id: 6,
+                name: "Aura Wireless Speaker",
+                category: "audio",
+                price: 129.00,
+                originalPrice: 159.00,
+                image: "https://cdn.pixabay.com/photo/2017/01/06/19/15/soap-bubble-1958650_1280.jpg",
+                description: "360-degree sound with deep bass and party-proof durability.",
+                features: ["360-degree sound", "IP67 water and dust resistant", "Up to 12 hours battery", "PartyBoost stereo pairing", "Built-in power bank"],
+                specs: {
+                    battery: "Up to 12 hours",
+                    waterResistance: "IP67",
+                    connectivity: "Bluetooth 5.0",
+                    features: "360 sound, Power bank",
+                    weight: "0.9 kg"
+                }
+            },
+            {
+                id: 7,
+                name: "Velocity Pro Mouse",
+                category: "accessories",
+                price: 79.00,
+                originalPrice: 99.00,
+                image: "https://cdn.pixabay.com/photo/2013/07/13/11/43/mouse-158323_1280.png",
+                description: "Ergonomic gaming mouse with customizable RGB lighting and precision sensor.",
+                features: ["25,600 DPI sensor", "8 programmable buttons", "RGB lighting", "1ms response time", "Lightweight design"],
+                specs: {
+                    dpi: "25,600",
+                    buttons: "8 programmable",
+                    response: "1ms",
+                    lighting: "RGB",
+                    weight: "69g"
+                }
+            },
+            {
+                id: 8,
+                name: "Nexus Tablet Pro",
+                category: "accessories",
+                price: 749.00,
+                originalPrice: 899.00,
+                image: "https://cdn.pixabay.com/photo/2014/09/27/14/13/tablet-463169_1280.jpg",
+                description: "Versatile tablet with powerful performance and stunning Liquid Retina display.",
+                features: ["12.9\" Liquid Retina XDR", "M2 chip", "5G capable", "Face ID", "All-day battery life"],
+                specs: {
+                    display: "12.9 inches",
+                    processor: "M2",
+                    connectivity: "5G",
+                    security: "Face ID",
+                    battery: "All-day"
+                }
+            }
+        ];
+
+        // Initialize cart and compare from localStorage
+        let cart = JSON.parse(localStorage.getItem('novatech_cart')) || [];
+        let compareItems = JSON.parse(localStorage.getItem('novatech_compare')) || [];
+        let isDarkTheme = localStorage.getItem('novatech_theme') !== 'light';
+
+        // DOM elements
+        const productsGrid = document.getElementById('products-grid');
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const cartBtn = document.getElementById('cart-btn');
+        const cartCount = document.getElementById('cart-count');
+        const miniCart = document.getElementById('mini-cart');
+        const closeCart = document.getElementById('close-cart');
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const productModal = document.getElementById('product-modal');
+        const closeModal = document.getElementById('close-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalTitle = document.getElementById('modal-title');
+        const modalCategory = document.getElementById('modal-category');
+        const modalPrice = document.getElementById('modal-price');
+        const modalDescription = document.getElementById('modal-description');
+        const modalFeatures = document.getElementById('modal-features');
+        const modalAddToCart = document.getElementById('modal-add-to-cart');
+        const modalCompare = document.getElementById('modal-compare');
+        const compareBtn = document.getElementById('compare-btn');
+        const compareCount = document.getElementById('compare-count');
+        const compareProduct1 = document.getElementById('compare-product-1');
+        const compareProduct2 = document.getElementById('compare-product-2');
+        const compareActionBtn = document.getElementById('compare-action-btn');
+        const compareModal = document.getElementById('compare-modal');
+        const closeCompareModal = document.getElementById('close-compare-modal');
+        const comparisonContent = document.getElementById('comparison-content');
+        const themeToggle = document.getElementById('theme-toggle');
+        const scrollTopBtn = document.getElementById('scroll-top');
+
+        // Current product for modal
+        let currentProduct = null;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial theme
+            toggleTheme(isDarkTheme);
+            
+            // Load products
+            filterProducts('all');
+            
+            // Update cart and compare counts
+            updateCartCount();
+            updateCompareCount();
+            
+            // Set up scroll animations
+            setupScrollAnimations();
+            
+            // Set up event listeners
+            setupEventListeners();
+        });
+
+        // Function 1: Filter products by category
+        function filterProducts(category) {
+            productsGrid.innerHTML = '';
+            
+            const filteredProducts = category === 'all' 
+                ? products 
+                : products.filter(product => product.category === category);
+            
+            filteredProducts.forEach(product => {
+                const discount = product.originalPrice ? calculateDiscount(product.originalPrice, product.price) : 0;
+                
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card bg-slate-800 rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-cyan-500/20 border border-slate-700 glow-on-hover fade-in';
+                productCard.innerHTML = `
+                    <div class="relative overflow-hidden">
+                        <img src="${product.image}" alt="${product.name}" class="product-image w-full h-48 object-cover transition-transform duration-500">
+                        ${discount > 0 ? `<span class="absolute top-3 left-3 bg-red-500 text-white px-2 py-1 rounded text-xs font-semibold">${discount}% OFF</span>` : ''}
+                        <button class="absolute top-3 right-3 bg-slate-900/80 p-2 rounded-full shadow-md compare-btn text-slate-300 hover:text-cyan-400" data-id="${product.id}">
+                            <i class="fas fa-balance-scale"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-cyan-400 text-xs font-semibold uppercase tracking-wide mb-1">${product.category}</p>
+                        <h3 class="text-lg font-bold text-white mb-2">${product.name}</h3>
+                        <p class="text-slate-400 text-sm mb-4">${product.description.substring(0, 60)}...</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <span class="text-xl font-bold text-white">$${product.price.toFixed(2)}</span>
+                                ${product.originalPrice ? `<span class="text-slate-500 line-through text-sm">$${product.originalPrice.toFixed(2)}</span>` : ''}
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="view-product bg-slate-700 hover:bg-slate-600 text-slate-300 p-2 rounded-full transition-colors" data-id="${product.id}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="add-to-cart bg-cyan-500 hover:bg-cyan-600 text-white p-2 rounded-full transition-colors" data-id="${product.id}">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                productsGrid.appendChild(productCard);
+            });
+            
+            // Make fade-in elements visible after a short delay
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    el.classList.add('visible');
+                });
+            }, 100);
+        }
+
+        // Function 2: Add to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            // Update localStorage
+            localStorage.setItem('novatech_cart', JSON.stringify(cart));
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Show notification
+            showNotification('Added to cart');
+            
+            // If mini-cart is open, update it
+            if (!miniCart.classList.contains('translate-x-full')) {
+                updateMiniCart();
+            }
+        }
+
+        // Function 3: Compare products
+        function compareProducts(id1, id2) {
+            const product1 = products.find(p => p.id === id1);
+            const product2 = products.find(p => p.id === id2);
+            
+            if (!product1 || !product2) return;
+            
+            // Create comparison table
+            comparisonContent.innerHTML = `
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <img src="${product1.image}" alt="${product1.name}" class="w-40 h-40 object-contain mx-auto mb-4">
+                        <h4 class="text-xl font-bold text-white mb-2">${product1.name}</h4>
+                        <p class="text-cyan-400 font-semibold">$${product1.price.toFixed(2)}</p>
+                    </div>
+                    <div class="md:col-span-2">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th class="text-white">Specification</th>
+                                    <th class="text-white">${product1.name}</th>
+                                    <th class="text-white">${product2.name}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${Object.keys(product1.specs).map(key => `
+                                    <tr>
+                                        <td class="text-slate-300 font-semibold capitalize">${key.replace(/([A-Z])/g, ' $1')}</td>
+                                        <td class="text-slate-300">${product1.specs[key]}</td>
+                                        <td class="text-slate-300">${product2.specs[key] || 'N/A'}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            
+            // Show comparison modal
+            compareModal.classList.remove('hidden');
+            setTimeout(() => {
+                compareModal.classList.add('modal-open');
+            }, 10);
+        }
+
+        // Function 4: Toggle theme
+        function toggleTheme(forceDark = null) {
+            if (forceDark !== null) {
+                isDarkTheme = forceDark;
+            } else {
+                isDarkTheme = !isDarkTheme;
+            }
+            
+            if (isDarkTheme) {
+                document.body.classList.remove('theme-light');
+                document.body.classList.add('theme-dark');
+                themeToggle.innerHTML = '<i class="fas fa-moon text-lg"></i>';
+                localStorage.setItem('novatech_theme', 'dark');
+            } else {
+                document.body.classList.remove('theme-dark');
+                document.body.classList.add('theme-light');
+                themeToggle.innerHTML = '<i class="fas fa-sun text-lg"></i>';
+                localStorage.setItem('novatech_theme', 'light');
+            }
+        }
+
+        // Optional: Calculate discount percentage
+        function calculateDiscount(originalPrice, salePrice) {
+            return Math.round(((originalPrice - salePrice) / originalPrice) * 100);
+        }
+
+        // Update cart count in header
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            if (totalItems > 0) {
+                cartCount.textContent = totalItems;
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+        }
+
+        // Update compare count in header
+        function updateCompareCount() {
+            const totalItems = compareItems.length;
+            
+            if (totalItems > 0) {
+                compareCount.textContent = totalItems;
+                compareCount.classList.remove('hidden');
+            } else {
+                compareCount.classList.add('hidden');
+            }
+            
+            // Update compare section
+            updateCompareSection();
+        }
+
+        // Update compare section with selected products
+        function updateCompareSection() {
+            compareProduct1.innerHTML = '';
+            compareProduct2.innerHTML = '';
+            
+            if (compareItems.length > 0) {
+                const product1 = products.find(p => p.id === compareItems[0]);
+                if (product1) {
+                    compareProduct1.innerHTML = `
+                        <img src="${product1.image}" alt="${product1.name}" class="w-24 h-24 object-contain mx-auto mb-2">
+                        <h4 class="text-white font-semibold text-sm">${product1.name}</h4>
+                        <button class="remove-compare mt-2 text-xs text-red-400 hover:text-red-300" data-id="${product1.id}">Remove</button>
+                    `;
+                }
+                
+                if (compareItems.length > 1) {
+                    const product2 = products.find(p => p.id === compareItems[1]);
+                    if (product2) {
+                        compareProduct2.innerHTML = `
+                            <img src="${product2.image}" alt="${product2.name}" class="w-24 h-24 object-contain mx-auto mb-2">
+                            <h4 class="text-white font-semibold text-sm">${product2.name}</h4>
+                            <button class="remove-compare mt-2 text-xs text-red-400 hover:text-red-300" data-id="${product2.id}">Remove</button>
+                        `;
+                    }
+                } else {
+                    compareProduct2.innerHTML = `
+                        <i class="fas fa-laptop text-4xl text-slate-500 mb-4"></i>
+                        <p class="text-slate-400">Select second product</p>
+                    `;
+                }
+                
+                compareActionBtn.disabled = compareItems.length < 2;
+            } else {
+                compareProduct1.innerHTML = `
+                    <i class="fas fa-mobile-alt text-4xl text-slate-500 mb-4"></i>
+                    <p class="text-slate-400">Select first product</p>
+                `;
+                compareProduct2.innerHTML = `
+                    <i class="fas fa-laptop text-4xl text-slate-500 mb-4"></i>
+                    <p class="text-slate-400">Select second product</p>
+                `;
+                compareActionBtn.disabled = true;
+            }
+        }
+
+        // Update mini cart content
+        function updateMiniCart() {
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-slate-400 text-center py-8">Your cart is empty</p>';
+                cartTotal.textContent = '$0.00';
+                return;
+            }
+            
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-center py-4 border-b border-slate-700';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg">
+                    <div class="ml-4 flex-1">
+                        <h4 class="font-semibold text-white text-sm">${item.name}</h4>
+                        <p class="text-slate-400 text-xs">$${item.price.toFixed(2)} × ${item.quantity}</p>
+                    </div>
+                    <button class="remove-from-cart text-slate-400 hover:text-red-400 ml-2" data-id="${item.id}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-from-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    removeFromCart(id);
+                });
+            });
+        }
+
+        // Remove item from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('novatech_cart', JSON.stringify(cart));
+            updateCartCount();
+            updateMiniCart();
+            showNotification('Removed from cart');
+        }
+
+        // Add product to compare
+        function addToCompare(productId) {
+            if (compareItems.includes(productId)) {
+                // Remove from compare
+                compareItems = compareItems.filter(id => id !== productId);
+                showNotification('Removed from comparison');
+            } else if (compareItems.length < 2) {
+                // Add to compare
+                compareItems.push(productId);
+                showNotification('Added to comparison');
+            } else {
+                showNotification('Comparison limit reached (2 products)');
+                return;
+            }
+            
+            localStorage.setItem('novatech_compare', JSON.stringify(compareItems));
+            updateCompareCount();
+        }
+
+        // Show product modal
+        function showProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            currentProduct = product;
+            
+            modalImage.src = product.image;
+            modalTitle.textContent = product.name;
+            modalCategory.textContent = product.category;
+            
+            if (product.originalPrice) {
+                const discount = calculateDiscount(product.originalPrice, product.price);
+                modalPrice.innerHTML = `$${product.price.toFixed(2)} <span class="text-slate-400 line-through text-lg ml-2">$${product.originalPrice.toFixed(2)}</span> <span class="text-red-400 text-sm ml-2">${discount}% OFF</span>`;
+            } else {
+                modalPrice.textContent = `$${product.price.toFixed(2)}`;
+            }
+            
+            modalDescription.textContent = product.description;
+            
+            // Add features
+            modalFeatures.innerHTML = '';
+            product.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.textContent = feature;
+                li.className = 'text-slate-300';
+                modalFeatures.appendChild(li);
+            });
+            
+            productModal.classList.remove('hidden');
+            setTimeout(() => {
+                productModal.classList.add('modal-open');
+            }, 10);
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-cyan-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Setup scroll animations
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Category tabs
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    categoryTabs.forEach(t => {
+                        t.classList.remove('bg-cyan-500', 'text-white');
+                        t.classList.add('bg-slate-700', 'text-white/90');
+                    });
+                    this.classList.remove('bg-slate-700', 'text-white/90');
+                    this.classList.add('bg-cyan-500', 'text-white');
+                    
+                    // Filter products
+                    const category = this.getAttribute('data-category');
+                    filterProducts(category);
+                });
+            });
+            
+            // Cart button
+            cartBtn.addEventListener('click', function() {
+                updateMiniCart();
+                miniCart.classList.remove('translate-x-full');
+            });
+            
+            // Close cart
+            closeCart.addEventListener('click', function() {
+                miniCart.classList.add('translate-x-full');
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                productModal.classList.remove('modal-open');
+                setTimeout(() => {
+                    productModal.classList.add('hidden');
+                }, 300);
+            });
+            
+            // Modal add to cart
+            modalAddToCart.addEventListener('click', function() {
+                if (currentProduct) {
+                    addToCart(currentProduct.id);
+                }
+            });
+            
+            // Modal compare
+            modalCompare.addEventListener('click', function() {
+                if (currentProduct) {
+                    addToCompare(currentProduct.id);
+                    updateCompareCount();
+                }
+            });
+            
+            // Compare button
+            compareBtn.addEventListener('click', function() {
+                if (compareItems.length > 0) {
+                    updateCompareSection();
+                }
+            });
+            
+            // Compare action button
+            compareActionBtn.addEventListener('click', function() {
+                if (compareItems.length >= 2) {
+                    compareProducts(compareItems[0], compareItems[1]);
+                }
+            });
+            
+            // Close compare modal
+            closeCompareModal.addEventListener('click', function() {
+                compareModal.classList.remove('modal-open');
+                setTimeout(() => {
+                    compareModal.classList.add('hidden');
+                }, 300);
+            });
+            
+            // Theme toggle
+            themeToggle.addEventListener('click', function() {
+                toggleTheme();
+            });
+            
+            // Scroll to top
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Show/hide scroll to top button
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.remove('opacity-0', 'translate-y-10');
+                    scrollTopBtn.classList.add('opacity-100', 'translate-y-0');
+                } else {
+                    scrollTopBtn.classList.remove('opacity-100', 'translate-y-0');
+                    scrollTopBtn.classList.add('opacity-0', 'translate-y-10');
+                }
+            });
+            
+            // Event delegation for dynamic elements
+            document.addEventListener('click', function(e) {
+                // Compare buttons
+                if (e.target.closest('.compare-btn')) {
+                    const button = e.target.closest('.compare-btn');
+                    const productId = parseInt(button.getAttribute('data-id'));
+                    addToCompare(productId);
+                }
+                
+                // Remove compare buttons
+                if (e.target.closest('.remove-compare')) {
+                    const button = e.target.closest('.remove-compare');
+                    const productId = parseInt(button.getAttribute('data-id'));
+                    addToCompare(productId); // Toggle removal
+                }
+                
+                // Add to cart buttons
+                if (e.target.closest('.add-to-cart')) {
+                    const button = e.target.closest('.add-to-cart');
+                    const productId = parseInt(button.getAttribute('data-id'));
+                    addToCart(productId);
+                }
+                
+                // View product buttons
+                if (e.target.closest('.view-product')) {
+                    const button = e.target.closest('.view-product');
+                    const productId = parseInt(button.getAttribute('data-id'));
+                    showProductModal(productId);
+                }
+            });
+        }
+    </script>
+</body>
+</html>

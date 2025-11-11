@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumé Beauty - Glow Naturally</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .modal-open .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #f43f5e;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body class="bg-pink-50 text-gray-700">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <h1 class="text-2xl font-bold text-rose-400">Lumé Beauty</h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="hover:text-rose-400 transition-colors">Home</a>
+                <a href="#" class="hover:text-rose-400 transition-colors">Shop</a>
+                <a href="#" class="hover:text-rose-400 transition-colors">Collections</a>
+                <a href="#" class="hover:text-rose-400 transition-colors">About</a>
+                <a href="#" class="hover:text-rose-400 transition-colors">Contact</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <button id="wishlist-btn" class="relative p-2 hover:text-rose-400 transition-colors">
+                    <i class="far fa-heart text-xl"></i>
+                </button>
+                <button id="cart-btn" class="relative p-2 hover:text-rose-400 transition-colors">
+                    <i class="fas fa-shopping-bag text-xl"></i>
+                    <span id="cart-count" class="cart-count hidden">0</span>
+                </button>
+                <button class="md:hidden p-2">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-pink-100 to-rose-50 py-16 md:py-24">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">Glow Naturally with <span class="text-rose-400">Lumé Beauty</span></h2>
+                <p class="text-lg text-gray-600 mb-8">Discover our collection of clean, sustainable beauty products that enhance your natural radiance.</p>
+                <button class="bg-rose-400 hover:bg-rose-500 text-white px-8 py-3 rounded-full font-semibold transition-colors shadow-lg">Explore Products</button>
+            </div>
+            <div class="md:w-1/2 flex justify-center fade-in">
+                <div class="relative">
+                    <div class="w-80 h-80 bg-gradient-to-br from-rose-200 to-pink-300 rounded-full flex items-center justify-center shadow-xl">
+                        <img src="https://cdn.pixabay.com/photo/2021/06/28/09/30/woman-6371130_1280.jpg" alt="Model with natural makeup" class="w-72 h-72 object-cover rounded-full">
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 bg-white p-4 rounded-2xl shadow-lg">
+                        <p class="text-sm font-semibold">New Collection</p>
+                        <p class="text-xs text-gray-500">Radiant Skin Serum</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Tabs -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-10 fade-in">Our Collections</h2>
+            <div class="flex justify-center space-x-2 md:space-x-8 mb-12 overflow-x-auto pb-2">
+                <button class="category-tab px-4 py-2 rounded-full bg-rose-400 text-white font-semibold transition-colors" data-category="all">All Products</button>
+                <button class="category-tab px-4 py-2 rounded-full bg-gray-100 hover:bg-rose-100 text-gray-700 font-semibold transition-colors" data-category="skincare">Skincare</button>
+                <button class="category-tab px-4 py-2 rounded-full bg-gray-100 hover:bg-rose-100 text-gray-700 font-semibold transition-colors" data-category="makeup">Makeup</button>
+                <button class="category-tab px-4 py-2 rounded-full bg-gray-100 hover:bg-rose-100 text-gray-700 font-semibold transition-colors" data-category="fragrance">Fragrance</button>
+            </div>
+
+            <!-- Featured Products Grid -->
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-gradient-to-b from-white to-pink-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 fade-in">What Our Customers Say</h2>
+            <div class="max-w-4xl mx-auto">
+                <div id="testimonials-carousel" class="relative overflow-hidden">
+                    <div class="carousel-inner flex transition-transform duration-500 ease-in-out">
+                        <!-- Testimonials will be dynamically loaded here -->
+                    </div>
+                    <button id="prev-testimonial" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg hover:bg-rose-50 transition-colors">
+                        <i class="fas fa-chevron-left text-rose-400"></i>
+                    </button>
+                    <button id="next-testimonial" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-white p-3 rounded-full shadow-lg hover:bg-rose-50 transition-colors">
+                        <i class="fas fa-chevron-right text-rose-400"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-pink-100 rounded-2xl h-64 flex items-center justify-center overflow-hidden">
+                            <img src="https://cdn.pixabay.com/photo/2020/04/07/17/29/girl-5013068_1280.jpg" alt="Natural ingredients" class="w-full h-full object-cover">
+                        </div>
+                        <div class="bg-rose-100 rounded-2xl h-64 flex items-center justify-center overflow-hidden mt-8">
+                            <img src="https://cdn.pixabay.com/photo/2021/11/04/05/33/dahlia-6767454_1280.jpg" alt="Flower extract" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 md:pl-12 fade-in">
+                    <h2 class="text-3xl font-bold mb-6">Our Story</h2>
+                    <p class="text-gray-600 mb-4">Lumé Beauty was born from a passion for clean, effective beauty products that celebrate your natural radiance. Our founder, a skincare enthusiast with sensitive skin, struggled to find products that were both gentle and effective.</p>
+                    <p class="text-gray-600 mb-6">After years of research and development, we created a line of products that harness the power of natural ingredients without compromising on performance. Every product is cruelty-free, sustainably sourced, and packaged in eco-friendly materials.</p>
+                    <button class="border-2 border-rose-400 text-rose-400 hover:bg-rose-400 hover:text-white px-6 py-2 rounded-full font-semibold transition-colors">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-rose-400 mb-4">Lumé Beauty</h3>
+                    <p class="text-gray-400">Glow naturally with our clean, sustainable beauty products.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Shop</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">About Us</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Customer Care</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Shipping & Returns</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe to get special offers and beauty tips.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg w-full text-gray-800">
+                        <button class="bg-rose-400 hover:bg-rose-500 px-4 py-2 rounded-r-lg transition-colors">Subscribe</button>
+                    </div>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-tiktok"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 Lumé Beauty. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-overlay">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl max-w-4xl w-full mx-4 overflow-hidden">
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 p-8 flex items-center justify-center bg-pink-50">
+                    <img id="modal-image" src="" alt="Product" class="w-full max-w-xs rounded-lg">
+                </div>
+                <div class="md:w-1/2 p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 id="modal-title" class="text-2xl font-bold"></h3>
+                        <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <p id="modal-category" class="text-rose-400 font-semibold mb-2"></p>
+                    <p id="modal-price" class="text-2xl font-bold text-gray-800 mb-4"></p>
+                    <p id="modal-description" class="text-gray-600 mb-6"></p>
+                    <div class="flex space-x-4 mb-6">
+                        <div>
+                            <label class="block text-gray-700 mb-2">Quantity</label>
+                            <div class="flex border rounded-lg">
+                                <button class="px-3 py-2 border-r">-</button>
+                                <input type="number" value="1" min="1" class="w-12 text-center border-none">
+                                <button class="px-3 py-2 border-l">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button id="modal-add-to-cart" class="bg-rose-400 hover:bg-rose-500 text-white px-6 py-3 rounded-lg font-semibold flex-1 transition-colors">Add to Cart</button>
+                        <button id="modal-wishlist" class="border border-rose-400 text-rose-400 hover:bg-rose-50 px-4 py-3 rounded-lg transition-colors">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mini Cart -->
+    <div id="mini-cart" class="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">Your Cart</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="cart-items" class="flex-1 overflow-y-auto mb-4">
+                <!-- Cart items will be dynamically loaded here -->
+            </div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between mb-4">
+                    <span class="font-semibold">Total:</span>
+                    <span id="cart-total" class="font-bold">$0.00</span>
+                </div>
+                <button class="bg-rose-400 hover:bg-rose-500 text-white w-full py-3 rounded-lg font-semibold transition-colors">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top" class="fixed bottom-6 right-6 bg-rose-400 hover:bg-rose-500 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 transform translate-y-10">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Product data
+        const products = [
+            {
+                id: 1,
+                name: "Radiant Glow Serum",
+                category: "skincare",
+                price: 42.00,
+                image: "https://cdn.pixabay.com/photo/2021/06/25/17/56/serum-6364651_1280.jpg",
+                description: "A lightweight serum that brightens and evens skin tone with vitamin C and botanical extracts."
+            },
+            {
+                id: 2,
+                name: "Hydrating Face Cream",
+                category: "skincare",
+                price: 38.00,
+                image: "https://cdn.pixabay.com/photo/2021/06/25/17/56/cream-6364652_1280.jpg",
+                description: "Deeply moisturizing cream with hyaluronic acid and shea butter for all-day hydration."
+            },
+            {
+                id: 3,
+                name: "Luminous Foundation",
+                category: "makeup",
+                price: 34.00,
+                image: "https://cdn.pixabay.com/photo/2021/06/25/17/56/makeup-6364653_1280.jpg",
+                description: "Buildable coverage foundation with a natural, dewy finish that lasts all day."
+            },
+            {
+                id: 4,
+                name: "Velvet Lipstick",
+                category: "makeup",
+                price: 24.00,
+                image: "https://cdn.pixabay.com/photo/2021/06/25/17/56/lipstick-6364654_1280.jpg",
+                description: "Creamy, highly pigmented lipstick with a velvety matte finish in 12 shades."
+            },
+            {
+                id: 5,
+                name: "Bloom Eau de Parfum",
+                category: "fragrance",
+                price: 68.00,
+                image: "https://cdn.pixabay.com/photo/2021/06/25/17/56/perfume-6364655_1280.jpg",
+                description: "A delicate floral fragrance with notes of jasmine, rose, and sandalwood."
+            },
+            {
+                id: 6,
+                name: "Gentle Cleansing Oil",
+                category: "skincare",
+                price: 28.00,
+                image: "https://cdn.pixabay.com/photo/2021/06/25/17/56/oil-6364656_1280.jpg",
+                description: "A nourishing oil cleanser that effectively removes makeup without stripping skin."
+            },
+            {
+                id: 7,
+                name: "Satin Blush",
+                category: "makeup",
+                price: 22.00,
+                image: "https://cdn.pixabay.com/photo/2021/06/25/17/56/blush-6364657_1280.jpg",
+                description: "Silky powder blush that gives a natural, flushed look with buildable color."
+            },
+            {
+                id: 8,
+                name: "Citrus Zest Body Mist",
+                category: "fragrance",
+                price: 18.00,
+                image: "https://cdn.pixabay.com/photo/2021/06/25/17/56/mist-6364658_1280.jpg",
+                description: "A refreshing, energizing body mist with notes of bergamot, lemon, and grapefruit."
+            }
+        ];
+
+        // Testimonials data
+        const testimonials = [
+            {
+                name: "Sophia R.",
+                text: "The Radiant Glow Serum has completely transformed my skin! I've never received so many compliments.",
+                rating: 5
+            },
+            {
+                name: "Isabella M.",
+                text: "Finally found a foundation that doesn't break me out and looks natural all day. Lumé is a game-changer!",
+                rating: 5
+            },
+            {
+                name: "Emma L.",
+                text: "The Bloom perfume is my new signature scent. It's feminine but not overpowering. Love it!",
+                rating: 4
+            },
+            {
+                name: "Olivia T.",
+                text: "As someone with sensitive skin, I'm so happy to have found Lumé. All their products are gentle yet effective.",
+                rating: 5
+            }
+        ];
+
+        // Initialize cart and wishlist from localStorage
+        let cart = JSON.parse(localStorage.getItem('lume_cart')) || [];
+        let wishlist = JSON.parse(localStorage.getItem('lume_wishlist')) || [];
+
+        // DOM elements
+        const productsGrid = document.getElementById('products-grid');
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const cartBtn = document.getElementById('cart-btn');
+        const cartCount = document.getElementById('cart-count');
+        const miniCart = document.getElementById('mini-cart');
+        const closeCart = document.getElementById('close-cart');
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const productModal = document.getElementById('product-modal');
+        const closeModal = document.getElementById('close-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalTitle = document.getElementById('modal-title');
+        const modalCategory = document.getElementById('modal-category');
+        const modalPrice = document.getElementById('modal-price');
+        const modalDescription = document.getElementById('modal-description');
+        const modalAddToCart = document.getElementById('modal-add-to-cart');
+        const modalWishlist = document.getElementById('modal-wishlist');
+        const testimonialsCarousel = document.querySelector('.carousel-inner');
+        const prevTestimonial = document.getElementById('prev-testimonial');
+        const nextTestimonial = document.getElementById('next-testimonial');
+        const scrollTopBtn = document.getElementById('scroll-top');
+        const wishlistBtn = document.getElementById('wishlist-btn');
+
+        // Current product for modal
+        let currentProduct = null;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load products
+            filterProducts('all');
+            
+            // Load testimonials
+            loadTestimonials();
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Set up scroll animations
+            setupScrollAnimations();
+            
+            // Set up event listeners
+            setupEventListeners();
+        });
+
+        // Function 1: Filter products by category
+        function filterProducts(category) {
+            productsGrid.innerHTML = '';
+            
+            const filteredProducts = category === 'all' 
+                ? products 
+                : products.filter(product => product.category === category);
+            
+            filteredProducts.forEach(product => {
+                const isInWishlist = wishlist.includes(product.id);
+                
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl fade-in';
+                productCard.innerHTML = `
+                    <div class="relative overflow-hidden">
+                        <img src="${product.image}" alt="${product.name}" class="product-image w-full h-64 object-cover transition-transform duration-500">
+                        <button class="absolute top-3 right-3 bg-white p-2 rounded-full shadow-md wishlist-btn ${isInWishlist ? 'text-rose-400' : 'text-gray-400'}" data-id="${product.id}">
+                            <i class="${isInWishlist ? 'fas' : 'far'} fa-heart"></i>
+                        </button>
+                    </div>
+                    <div class="p-4">
+                        <p class="text-rose-400 text-sm font-semibold uppercase tracking-wide">${product.category}</p>
+                        <h3 class="text-lg font-bold mb-2">${product.name}</h3>
+                        <p class="text-gray-500 text-sm mb-4">${product.description.substring(0, 60)}...</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold">$${product.price.toFixed(2)}</span>
+                            <div class="flex space-x-2">
+                                <button class="view-product bg-gray-100 hover:bg-gray-200 text-gray-700 p-2 rounded-full transition-colors" data-id="${product.id}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="add-to-cart bg-rose-400 hover:bg-rose-500 text-white p-2 rounded-full transition-colors" data-id="${product.id}">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                productsGrid.appendChild(productCard);
+            });
+            
+            // Make fade-in elements visible after a short delay
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    el.classList.add('visible');
+                });
+            }, 100);
+        }
+
+        // Function 2: Add to wishlist
+        function addToWishlist(productId) {
+            const index = wishlist.indexOf(productId);
+            
+            if (index === -1) {
+                // Add to wishlist
+                wishlist.push(productId);
+                document.querySelector(`.wishlist-btn[data-id="${productId}"]`).innerHTML = '<i class="fas fa-heart text-rose-400"></i>';
+            } else {
+                // Remove from wishlist
+                wishlist.splice(index, 1);
+                document.querySelector(`.wishlist-btn[data-id="${productId}"]`).innerHTML = '<i class="far fa-heart text-gray-400"></i>';
+            }
+            
+            // Update localStorage
+            localStorage.setItem('lume_wishlist', JSON.stringify(wishlist));
+            
+            // Show notification
+            showNotification(index === -1 ? 'Added to wishlist' : 'Removed from wishlist');
+        }
+
+        // Function 3: Add to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            // Update localStorage
+            localStorage.setItem('lume_cart', JSON.stringify(cart));
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Show notification
+            showNotification('Added to cart');
+            
+            // If mini-cart is open, update it
+            if (!miniCart.classList.contains('translate-x-full')) {
+                updateMiniCart();
+            }
+        }
+
+        // Function 4: Show product modal
+        function showProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            currentProduct = product;
+            
+            modalImage.src = product.image;
+            modalTitle.textContent = product.name;
+            modalCategory.textContent = product.category;
+            modalPrice.textContent = `$${product.price.toFixed(2)}`;
+            modalDescription.textContent = product.description;
+            
+            // Check if product is in wishlist
+            const isInWishlist = wishlist.includes(product.id);
+            modalWishlist.innerHTML = isInWishlist ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+            
+            productModal.classList.remove('hidden');
+            setTimeout(() => {
+                productModal.classList.add('modal-open');
+            }, 10);
+        }
+
+        // Update cart count in header
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            if (totalItems > 0) {
+                cartCount.textContent = totalItems;
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+        }
+
+        // Update mini cart content
+        function updateMiniCart() {
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-500 text-center py-8">Your cart is empty</p>';
+                cartTotal.textContent = '$0.00';
+                return;
+            }
+            
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-center py-4 border-b';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg">
+                    <div class="ml-4 flex-1">
+                        <h4 class="font-semibold">${item.name}</h4>
+                        <p class="text-gray-500">$${item.price.toFixed(2)} × ${item.quantity}</p>
+                    </div>
+                    <button class="remove-from-cart text-gray-400 hover:text-rose-400 ml-2" data-id="${item.id}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-from-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    removeFromCart(id);
+                });
+            });
+        }
+
+        // Remove item from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('lume_cart', JSON.stringify(cart));
+            updateCartCount();
+            updateMiniCart();
+            showNotification('Removed from cart');
+        }
+
+        // Load testimonials
+        function loadTestimonials() {
+            testimonialsCarousel.innerHTML = '';
+            
+            testimonials.forEach((testimonial, index) => {
+                const stars = '★'.repeat(testimonial.rating) + '☆'.repeat(5 - testimonial.rating);
+                
+                const testimonialEl = document.createElement('div');
+                testimonialEl.className = 'w-full flex-shrink-0 px-4';
+                testimonialEl.innerHTML = `
+                    <div class="bg-white p-8 rounded-2xl shadow-lg text-center">
+                        <div class="text-rose-400 text-xl mb-4">${stars}</div>
+                        <p class="text-gray-600 italic mb-6">"${testimonial.text}"</p>
+                        <p class="font-semibold">${testimonial.name}</p>
+                    </div>
+                `;
+                
+                testimonialsCarousel.appendChild(testimonialEl);
+            });
+            
+            // Set initial position
+            testimonialsCarousel.style.transform = 'translateX(0)';
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-rose-400 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Setup scroll animations
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Category tabs
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    categoryTabs.forEach(t => {
+                        t.classList.remove('bg-rose-400', 'text-white');
+                        t.classList.add('bg-gray-100', 'text-gray-700');
+                    });
+                    this.classList.remove('bg-gray-100', 'text-gray-700');
+                    this.classList.add('bg-rose-400', 'text-white');
+                    
+                    // Filter products
+                    const category = this.getAttribute('data-category');
+                    filterProducts(category);
+                });
+            });
+            
+            // Cart button
+            cartBtn.addEventListener('click', function() {
+                updateMiniCart();
+                miniCart.classList.remove('translate-x-full');
+            });
+            
+            // Close cart
+            closeCart.addEventListener('click', function() {
+                miniCart.classList.add('translate-x-full');
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                productModal.classList.remove('modal-open');
+                setTimeout(() => {
+                    productModal.classList.add('hidden');
+                }, 300);
+            });
+            
+            // Modal add to cart
+            modalAddToCart.addEventListener('click', function() {
+                if (currentProduct) {
+                    addToCart(currentProduct.id);
+                }
+            });
+            
+            // Modal wishlist
+            modalWishlist.addEventListener('click', function() {
+                if (currentProduct) {
+                    addToWishlist(currentProduct.id);
+                    
+                    // Update button icon
+                    const isInWishlist = wishlist.includes(currentProduct.id);
+                    this.innerHTML = isInWishlist ? '<i class="fas fa-heart"></i>' : '<i class="far fa-heart"></i>';
+                }
+            });
+            
+            // Testimonial navigation
+            let testimonialIndex = 0;
+            
+            nextTestimonial.addEventListener('click', function() {
+                testimonialIndex = (testimonialIndex + 1) % testimonials.length;
+                testimonialsCarousel.style.transform = `translateX(-${testimonialIndex * 100}%)`;
+            });
+            
+            prevTestimonial.addEventListener('click', function() {
+                testimonialIndex = testimonialIndex === 0 ? testimonials.length - 1 : testimonialIndex - 1;
+                testimonialsCarousel.style.transform = `translateX(-${testimonialIndex * 100}%)`;
+            });
+            
+            // Scroll to top
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Show/hide scroll to top button
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.remove('opacity-0', 'translate-y-10');
+                    scrollTopBtn.classList.add('opacity-100', 'translate-y-0');
+                } else {
+                    scrollTopBtn.classList.remove('opacity-100', 'translate-y-0');
+                    scrollTopBtn.classList.add('opacity-0', 'translate-y-10');
+                }
+            });
+            
+            // Wishlist button
+            wishlistBtn.addEventListener('click', function() {
+                showNotification('Wishlist feature coming soon!');
+            });
+            
+            // Event delegation for dynamic elements
+            document.addEventListener('click', function(e) {
+                // Wishlist buttons
+                if (e.target.closest('.wishlist-btn')) {
+                    const button = e.target.closest('.wishlist-btn');
+                    const productId = parseInt(button.getAttribute('data-id'));
+                    addToWishlist(productId);
+                }
+                
+                // Add to cart buttons
+                if (e.target.closest('.add-to-cart')) {
+                    const button = e.target.closest('.add-to-cart');
+                    const productId = parseInt(button.getAttribute('data-id'));
+                    addToCart(productId);
+                }
+                
+                // View product buttons
+                if (e.target.closest('.view-product')) {
+                    const button = e.target.closest('.view-product');
+                    const productId = parseInt(button.getAttribute('data-id'));
+                    showProductModal(productId);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
