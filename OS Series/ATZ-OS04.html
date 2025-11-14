@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CasaHaven - Design Your Space. Live in Comfort.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .modal-open .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #d97706;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .theme-light {
+            background-color: #fefefe;
+            color: #1c1917;
+        }
+        .theme-dark {
+            background-color: #292524;
+            color: #fafaf9;
+        }
+        .language-myanmar {
+            font-family: 'Padauk', 'Myanmar Text', sans-serif;
+        }
+    </style>
+</head>
+<body class="theme-light bg-amber-50">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <h1 class="text-2xl font-serif font-bold text-amber-600">CasaHaven</h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-800 hover:text-amber-600 transition-colors font-medium" data-key="navHome">Home</a>
+                <a href="#" class="text-gray-800 hover:text-amber-600 transition-colors font-medium" data-key="navShop">Shop</a>
+                <a href="#" class="text-gray-800 hover:text-amber-600 transition-colors font-medium" data-key="navAbout">About</a>
+                <a href="#" class="text-gray-800 hover:text-amber-600 transition-colors font-medium" data-key="navContact">Contact</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div class="flex border border-gray-300 rounded-lg overflow-hidden">
+                    <button id="lang-en" class="lang-btn px-3 py-1 bg-amber-500 text-white text-sm font-medium">EN</button>
+                    <button id="lang-mm" class="lang-btn px-3 py-1 bg-white text-gray-700 text-sm font-medium">MM</button>
+                </div>
+                <button id="theme-toggle" class="p-2 text-gray-700 hover:text-amber-600 transition-colors">
+                    <i class="fas fa-moon text-lg"></i>
+                </button>
+                <button id="cart-btn" class="p-2 text-gray-700 hover:text-amber-600 transition-colors relative">
+                    <i class="fas fa-shopping-bag text-lg"></i>
+                    <span id="cart-count" class="cart-count hidden">0</span>
+                </button>
+                <button class="md:hidden p-2 text-gray-700">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-amber-100 to-amber-50 py-16 md:py-24 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg')] bg-cover bg-center opacity-20"></div>
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
+            <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                <h2 class="text-4xl md:text-5xl font-serif font-bold text-gray-800 mb-4" data-key="heroTag">Design Your Space. Live in Comfort.</h2>
+                <p class="text-lg text-gray-600 mb-8" data-key="heroDesc">Discover furniture and decor that transforms your house into a home. Quality craftsmanship meets modern design.</p>
+                <button class="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors shadow-lg" data-key="shopNow">Shop Now</button>
+            </div>
+            <div class="md:w-1/2 flex justify-center fade-in">
+                <div class="relative">
+                    <div class="w-80 h-80 bg-gradient-to-br from-amber-200 to-amber-100 rounded-2xl flex items-center justify-center shadow-xl overflow-hidden">
+                        <img src="https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg" alt="Cozy living room" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 bg-white p-4 rounded-xl shadow-lg">
+                        <p class="text-sm font-semibold text-gray-800" data-key="newCollection">New Collection</p>
+                        <p class="text-xs text-amber-600" data-key="autumnSale">Autumn Sale - 20% Off</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Room Category Tabs -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-serif font-bold text-center mb-10 text-gray-800 fade-in" data-key="featuredProducts">Featured Products</h2>
+            <div class="flex justify-center space-x-2 md:space-x-4 mb-12 overflow-x-auto pb-2">
+                <button class="category-tab px-4 py-2 rounded-xl bg-amber-500 text-white font-semibold transition-colors" data-category="all" data-key="allProducts">All Products</button>
+                <button class="category-tab px-4 py-2 rounded-xl bg-gray-100 hover:bg-amber-100 text-gray-700 font-semibold transition-colors" data-category="living-room" data-key="livingRoom">Living Room</button>
+                <button class="category-tab px-4 py-2 rounded-xl bg-gray-100 hover:bg-amber-100 text-gray-700 font-semibold transition-colors" data-category="bedroom" data-key="bedroom">Bedroom</button>
+                <button class="category-tab px-4 py-2 rounded-xl bg-gray-100 hover:bg-amber-100 text-gray-700 font-semibold transition-colors" data-category="kitchen" data-key="kitchen">Kitchen</button>
+                <button class="category-tab px-4 py-2 rounded-xl bg-gray-100 hover:bg-amber-100 text-gray-700 font-semibold transition-colors" data-category="decor" data-key="decor">Decor</button>
+            </div>
+
+            <!-- Featured Products Grid -->
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Products will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-amber-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-amber-100 rounded-2xl h-64 flex items-center justify-center overflow-hidden">
+                            <img src="https://cdn.pixabay.com/photo/2016/11/19/17/25/furniture-1840463_1280.jpg" alt="Natural materials" class="w-full h-full object-cover">
+                        </div>
+                        <div class="bg-amber-200 rounded-2xl h-64 flex items-center justify-center overflow-hidden mt-8">
+                            <img src="https://cdn.pixabay.com/photo/2016/11/30/08/48/bedroom-1872196_1280.jpg" alt="Cozy bedroom" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 md:pl-12 fade-in">
+                    <h2 class="text-3xl font-serif font-bold mb-6 text-gray-800" data-key="aboutTitle">Our Story</h2>
+                    <p class="text-gray-600 mb-4" data-key="aboutDesc1">CasaHaven was founded with a simple mission: to help people create homes that are both beautiful and functional. We believe that everyone deserves to live in a space that reflects their personality and brings them comfort.</p>
+                    <p class="text-gray-600 mb-6" data-key="aboutDesc2">Our collections are carefully curated from sustainable sources, focusing on natural materials and timeless designs that will last for years to come. Each piece is crafted with attention to detail and a commitment to quality.</p>
+                    <button class="border-2 border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white px-6 py-2 rounded-xl font-semibold transition-colors" data-key="learnMore">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-serif font-bold text-amber-400 mb-4">CasaHaven</h3>
+                    <p class="text-gray-400" data-key="footerDesc">Creating beautiful spaces for everyday living.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-key="quickLinks">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors" data-key="navHome">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors" data-key="navShop">Shop</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors" data-key="navAbout">About</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors" data-key="navContact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-key="customerCare">Customer Care</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors" data-key="shippingInfo">Shipping & Returns</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors" data-key="faq">FAQ</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors" data-key="privacyPolicy">Privacy Policy</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-amber-400 transition-colors" data-key="termsService">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-key="newsletter">Newsletter</h4>
+                    <p class="text-gray-400 mb-4" data-key="newsletterDesc">Subscribe for design tips and special offers.</p>
+                    <div class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 rounded-l-lg w-full text-gray-800" data-key="emailPlaceholder">
+                        <button class="bg-amber-500 hover:bg-amber-600 px-4 py-2 rounded-r-lg transition-colors" data-key="subscribe">Subscribe</button>
+                    </div>
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-pinterest"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-amber-400 transition-colors"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p data-key="copyright">&copy; 2023 CasaHaven. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div id="product-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-overlay">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl max-w-4xl w-full mx-4 overflow-hidden">
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 p-8 flex items-center justify-center bg-amber-50">
+                    <img id="modal-image" src="" alt="Product" class="w-full max-w-xs rounded-lg">
+                </div>
+                <div class="md:w-1/2 p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 id="modal-title" class="text-2xl font-serif font-bold text-gray-800"></h3>
+                        <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <p id="modal-category" class="text-amber-600 font-semibold mb-2"></p>
+                    <p id="modal-price" class="text-2xl font-bold text-gray-800 mb-4"></p>
+                    <p id="modal-description" class="text-gray-600 mb-6"></p>
+                    <div class="mb-6">
+                        <h4 class="text-gray-800 font-semibold mb-2" data-key="productFeatures">Product Features:</h4>
+                        <ul id="modal-features" class="text-gray-600 list-disc list-inside space-y-1">
+                            <!-- Features will be added dynamically -->
+                        </ul>
+                    </div>
+                    <div class="flex space-x-4 mb-6">
+                        <div>
+                            <label class="block text-gray-700 mb-2" data-key="quantity">Quantity</label>
+                            <div class="flex border rounded-lg">
+                                <button class="px-3 py-2 border-r text-gray-700 hover:bg-gray-100">-</button>
+                                <input type="number" value="1" min="1" class="w-12 text-center border-none">
+                                <button class="px-3 py-2 border-l text-gray-700 hover:bg-gray-100">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button id="modal-add-to-cart" class="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-lg font-semibold flex-1 transition-colors" data-key="addToCart">Add to Cart</button>
+                        <button class="border border-amber-500 text-amber-500 hover:bg-amber-50 px-4 py-3 rounded-lg transition-colors">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mini Cart -->
+    <div id="mini-cart" class="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800" data-key="yourCart">Your Cart</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="cart-items" class="flex-1 overflow-y-auto mb-4">
+                <!-- Cart items will be dynamically loaded here -->
+            </div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between mb-4">
+                    <span class="font-semibold text-gray-800" data-key="total">Total:</span>
+                    <span id="cart-total" class="font-bold text-amber-600">$0.00</span>
+                </div>
+                <button class="bg-amber-500 hover:bg-amber-600 text-white w-full py-3 rounded-lg font-semibold transition-colors" data-key="checkout">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top" class="fixed bottom-6 right-6 bg-amber-500 hover:bg-amber-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 transform translate-y-10">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Translation data
+        const translations = {
+            en: {
+                // Navigation
+                navHome: "Home",
+                navShop: "Shop",
+                navAbout: "About",
+                navContact: "Contact",
+                
+                // Hero Section
+                heroTag: "Design Your Space. Live in Comfort.",
+                heroDesc: "Discover furniture and decor that transforms your house into a home. Quality craftsmanship meets modern design.",
+                shopNow: "Shop Now",
+                newCollection: "New Collection",
+                autumnSale: "Autumn Sale - 20% Off",
+                
+                // Products Section
+                featuredProducts: "Featured Products",
+                allProducts: "All Products",
+                livingRoom: "Living Room",
+                bedroom: "Bedroom",
+                kitchen: "Kitchen",
+                decor: "Decor",
+                
+                // About Section
+                aboutTitle: "Our Story",
+                aboutDesc1: "CasaHaven was founded with a simple mission: to help people create homes that are both beautiful and functional. We believe that everyone deserves to live in a space that reflects their personality and brings them comfort.",
+                aboutDesc2: "Our collections are carefully curated from sustainable sources, focusing on natural materials and timeless designs that will last for years to come. Each piece is crafted with attention to detail and a commitment to quality.",
+                learnMore: "Learn More",
+                
+                // Footer
+                footerDesc: "Creating beautiful spaces for everyday living.",
+                quickLinks: "Quick Links",
+                customerCare: "Customer Care",
+                shippingInfo: "Shipping & Returns",
+                faq: "FAQ",
+                privacyPolicy: "Privacy Policy",
+                termsService: "Terms of Service",
+                newsletter: "Newsletter",
+                newsletterDesc: "Subscribe for design tips and special offers.",
+                emailPlaceholder: "Your email",
+                subscribe: "Subscribe",
+                copyright: "© 2023 CasaHaven. All rights reserved.",
+                
+                // Product Modal
+                productFeatures: "Product Features:",
+                quantity: "Quantity",
+                addToCart: "Add to Cart",
+                
+                // Cart
+                yourCart: "Your Cart",
+                total: "Total:",
+                checkout: "Checkout",
+                
+                // Notifications
+                addedToCart: "Added to cart",
+                removedFromCart: "Removed from cart"
+            },
+            mm: {
+                // Navigation
+                navHome: "ပင်မစာမျက်နှာ",
+                navShop: "ဈေးဝယ်ရန်",
+                navAbout: "ကျွန်ုပ်တို့အကြောင်း",
+                navContact: "ဆက်သွယ်ရန်",
+                
+                // Hero Section
+                heroTag: "မိမိအခန်းကို အဆင်ပြေသော ပုံစံဖြင့် တည်ဆောက်ပါ။",
+                heroDesc: "သင့်အိမ်ကို နေထိုင်ချင်စဖွယ် အိမ်တစ်အိမ်အဖြစ် ပြောင်းလဲပေးမယ့် ပရိဘောဂနှင့် အလှဆင်ပစ္စည်းများကို ရှာဖွေလိုက်ပါ။ အရည်အသွေးပြည့် လက်မှုပညာနှင့် ခေတ်မီဒီဇိုင်းများ။",
+                shopNow: "အခုဝယ်မယ်",
+                newCollection: "ပစ္စည်းအသစ်များ",
+                autumnSale: "ဆောင်းရာသီအရောင်း - ၂၀% လျှော့ဈေး",
+                
+                // Products Section
+                featuredProducts: "အထူးပစ္စည်းများ",
+                allProducts: "ပစ္စည်းအားလုံး",
+                livingRoom: "ဧည့်ခန်း",
+                bedroom: "အိပ်ခန်း",
+                kitchen: "မီးဖိုချောင်",
+                decor: "အလှဆင်ပစ္စည်းများ",
+                
+                // About Section
+                aboutTitle: "ကျွန်ုပ်တို့၏ ဇာတ်လမ်း",
+                aboutDesc1: "CasaHaven ကို ရိုးရှင်းသော ရည်ရွယ်ချက်ဖြင့် တည်ထောင်ခဲ့သည် - လူတိုင်းအတွက် လှပပြီး အသုံးဝင်သော အိမ်များကို ဖန်တီးပေးရန်။ လူတိုင်းသည် မိမိ၏ ပင်ကိုယ်စရိုက်ကို ထင်ဟပ်စေပြီး သက်တောင့်သက်သာရှိသော နေရာတွင် နေထိုင်ထိုက်သည်ဟု ကျွန်ုပ်တို့ယုံကြည်ပါသည်။",
+                aboutDesc2: "ကျွန်ုပ်တို့၏ ပစ္စည်းများကို ရေရှည်တည်တံ့သော အရင်းအမြစ်များမှ ဂရုတစိုက် ရွေးချယ်ထားပြီး သဘာဝပစ္စည်းများနှင့် ကာလရှည်ကြာ အသုံးပြုနိုင်သော ဒီဇိုင်းများကို အဓိကထားသည်။ ပစ္စည်းတစ်ခုစီကို အသေးစိတ်ဂရုစိုက်မှုနှင့် အရည်အသွေးအာမခံချက်ဖြင့် ပြုလုပ်ထားသည်။",
+                learnMore: "ဆက်လက်ဖတ်ရန်",
+                
+                // Footer
+                footerDesc: "နေ့စဉ်ဘဝအတွက် လှပသောနေရာများကို ဖန်တီးပေးခြင်း။",
+                quickLinks: "အမြန်သွားရန်",
+                customerCare: "ဖောက်သည်ဝန်ဆောင်မှု",
+                shippingInfo: "ပို့ဆောင်ရေးနှင့် ပြန်လည်ပို့ဆောင်ရေး",
+                faq: "မေးလေ့ရှိသောမေးခွန်းများ",
+                privacyPolicy: "ကိုယ်ရေးကိုယ်တာမူဝါဒ",
+                termsService: "ဝန်ဆောင်မှုစည်းမျဉ်းများ",
+                newsletter: "သတင်းလွှာ",
+                newsletterDesc: "ဒီဇိုင်းအကြံပြုချက်များနှင့် အထူးအရောင်းအချို့အတွက် စာရင်းသွင်းပါ။",
+                emailPlaceholder: "သင့်အီးမေးလ်",
+                subscribe: "စာရင်းသွင်းမည်",
+                copyright: "© ၂၀၂၃ CasaHaven. မူပိုင်ခွင့်အားလုံးရှိသည်။",
+                
+                // Product Modal
+                productFeatures: "ထုတ်ကုန်၏ အင်္ဂါရပ်များ:",
+                quantity: "အရေအတွက်",
+                addToCart: "စျေးခြင်းထဲထည့်မည်",
+                
+                // Cart
+                yourCart: "သင့်စျေးခြင်းထု",
+                total: "စုစုပေါင်း:",
+                checkout: "ငွေရှင်းမည်",
+                
+                // Notifications
+                addedToCart: "စျေးခြင်းထဲသို့ ထည့်သွင်းပြီးပါပြီ",
+                removedFromCart: "စျေးခြင်းထဲမှ ဖယ်ရှားပြီးပါပြီ"
+            }
+        };
+
+        // Product data
+        const products = [
+            {
+                id: 1,
+                name: "Modern Sofa Set",
+                category: "living-room",
+                price: 899.00,
+                image: "https://cdn.pixabay.com/photo/2017/08/27/10/16/interior-2685521_1280.jpg",
+                description: "A comfortable and stylish 3-seater sofa with premium fabric and wooden legs.",
+                features: ["Premium fabric upholstery", "Solid wood frame", "High-density foam cushions", "Easy to clean", "Modern minimalist design"]
+            },
+            {
+                id: 2,
+                name: "Queen Size Bed",
+                category: "bedroom",
+                price: 650.00,
+                image: "https://cdn.pixabay.com/photo/2016/11/19/13/06/bed-1839183_1280.jpg",
+                description: "Elegant queen size bed with built-in storage and comfortable headboard.",
+                features: ["Solid wood construction", "Built-in storage drawers", "Upholstered headboard", "Easy assembly", "Modern design"]
+            },
+            {
+                id: 3,
+                name: "Dining Table Set",
+                category: "kitchen",
+                price: 750.00,
+                image: "https://cdn.pixabay.com/photo/2016/11/19/17/25/furniture-1840463_1280.jpg",
+                description: "6-seater dining table with matching chairs, perfect for family meals.",
+                features: ["Solid oak tabletop", "Upholstered chairs", "Seats 6 people", "Scratch-resistant surface", "Easy to clean"]
+            },
+            {
+                id: 4,
+                name: "Decorative Wall Art",
+                category: "decor",
+                price: 89.00,
+                image: "https://cdn.pixabay.com/photo/2017/08/03/15/38/architecture-2576906_1280.jpg",
+                description: "Set of 3 abstract canvas prints to add character to any room.",
+                features: ["High-quality canvas", "Ready to hang", "Fade-resistant ink", "Set of 3 pieces", "Modern abstract design"]
+            },
+            {
+                id: 5,
+                name: "Coffee Table",
+                category: "living-room",
+                price: 199.00,
+                image: "https://cdn.pixabay.com/photo/2016/11/19/17/25/furniture-1840463_1280.jpg",
+                description: "Minimalist coffee table with storage shelf and durable glass top.",
+                features: ["Tempered glass top", "Metal frame", "Lower storage shelf", "Easy to assemble", "Modern industrial design"]
+            },
+            {
+                id: 6,
+                name: "Nightstand",
+                category: "bedroom",
+                price: 129.00,
+                image: "https://cdn.pixabay.com/photo/2017/08/03/15/38/architecture-2576906_1280.jpg",
+                description: "Compact nightstand with drawer and open shelf for bedroom essentials.",
+                features: ["Solid wood construction", "One drawer + open shelf", "Smooth drawer glides", "Easy assembly", "Compact design"]
+            },
+            {
+                id: 7,
+                name: "Kitchen Storage Rack",
+                category: "kitchen",
+                price: 79.00,
+                image: "https://cdn.pixabay.com/photo/2017/08/03/15/38/architecture-2576906_1280.jpg",
+                description: "Multi-tier storage rack for organizing kitchen utensils and pantry items.",
+                features: ["Sturdy metal construction", "4 adjustable shelves", "Easy to assemble", "Rust-resistant", "Space-saving design"]
+            },
+            {
+                id: 8,
+                name: "Ceramic Vase Set",
+                category: "decor",
+                price: 45.00,
+                image: "https://cdn.pixabay.com/photo/2016/11/19/13/06/bed-1839183_1280.jpg",
+                description: "Set of 3 handcrafted ceramic vases in complementary sizes and colors.",
+                features: ["Handcrafted ceramic", "Set of 3 vases", "Natural earth tones", "Food-safe glaze", "Artisanal quality"]
+            }
+        ];
+
+        // Initialize cart and language from localStorage
+        let cart = JSON.parse(localStorage.getItem('casahaven_cart')) || [];
+        let currentLanguage = localStorage.getItem('casahaven_language') || 'en';
+        let isDarkTheme = localStorage.getItem('casahaven_theme') === 'dark';
+
+        // DOM elements
+        const productsGrid = document.getElementById('products-grid');
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const cartBtn = document.getElementById('cart-btn');
+        const cartCount = document.getElementById('cart-count');
+        const miniCart = document.getElementById('mini-cart');
+        const closeCart = document.getElementById('close-cart');
+        const cartItems = document.getElementById('cart-items');
+        const cartTotal = document.getElementById('cart-total');
+        const productModal = document.getElementById('product-modal');
+        const closeModal = document.getElementById('close-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalTitle = document.getElementById('modal-title');
+        const modalCategory = document.getElementById('modal-category');
+        const modalPrice = document.getElementById('modal-price');
+        const modalDescription = document.getElementById('modal-description');
+        const modalFeatures = document.getElementById('modal-features');
+        const modalAddToCart = document.getElementById('modal-add-to-cart');
+        const langEnBtn = document.getElementById('lang-en');
+        const langMmBtn = document.getElementById('lang-mm');
+        const themeToggle = document.getElementById('theme-toggle');
+        const scrollTopBtn = document.getElementById('scroll-top');
+
+        // Current product for modal
+        let currentProduct = null;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial language
+            switchLanguage(currentLanguage);
+            
+            // Set initial theme
+            if (isDarkTheme) {
+                toggleTheme();
+            }
+            
+            // Load products
+            filterProducts('all');
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Set up scroll animations
+            setupScrollAnimations();
+            
+            // Set up event listeners
+            setupEventListeners();
+        });
+
+        // Function 1: Filter products by category
+        function filterProducts(category) {
+            productsGrid.innerHTML = '';
+            
+            const filteredProducts = category === 'all' 
+                ? products 
+                : products.filter(product => product.category === category);
+            
+            filteredProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'product-card bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl fade-in';
+                productCard.innerHTML = `
+                    <div class="relative overflow-hidden">
+                        <img src="${product.image}" alt="${product.name}" class="product-image w-full h-48 object-cover transition-transform duration-500">
+                    </div>
+                    <div class="p-4">
+                        <p class="text-amber-600 text-sm font-semibold uppercase tracking-wide mb-1">${product.category.replace('-', ' ')}</p>
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">${product.name}</h3>
+                        <p class="text-gray-500 text-sm mb-4">${product.description.substring(0, 60)}...</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold text-gray-800">$${product.price.toFixed(2)}</span>
+                            <div class="flex space-x-2">
+                                <button class="view-product bg-gray-100 hover:bg-gray-200 text-gray-700 p-2 rounded-full transition-colors" data-id="${product.id}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="add-to-cart bg-amber-500 hover:bg-amber-600 text-white p-2 rounded-full transition-colors" data-id="${product.id}">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                productsGrid.appendChild(productCard);
+            });
+            
+            // Make fade-in elements visible after a short delay
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    el.classList.add('visible');
+                });
+            }, 100);
+        }
+
+        // Function 2: Add to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    quantity: 1
+                });
+            }
+            
+            // Update localStorage
+            localStorage.setItem('casahaven_cart', JSON.stringify(cart));
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Show notification
+            showNotification(translations[currentLanguage].addedToCart);
+            
+            // If mini-cart is open, update it
+            if (!miniCart.classList.contains('translate-x-full')) {
+                updateMiniCart();
+            }
+        }
+
+        // Function 3: Show product modal
+        function showProductModal(productId) {
+            const product = products.find(p => p.id === productId);
+            currentProduct = product;
+            
+            modalImage.src = product.image;
+            modalTitle.textContent = product.name;
+            modalCategory.textContent = product.category.replace('-', ' ');
+            modalPrice.textContent = `$${product.price.toFixed(2)}`;
+            modalDescription.textContent = product.description;
+            
+            // Add features
+            modalFeatures.innerHTML = '';
+            product.features.forEach(feature => {
+                const li = document.createElement('li');
+                li.textContent = feature;
+                li.className = 'text-gray-600';
+                modalFeatures.appendChild(li);
+            });
+            
+            productModal.classList.remove('hidden');
+            setTimeout(() => {
+                productModal.classList.add('modal-open');
+            }, 10);
+        }
+
+        // Function 4: Toggle theme
+        function toggleTheme() {
+            isDarkTheme = !isDarkTheme;
+            
+            if (isDarkTheme) {
+                document.body.classList.remove('theme-light');
+                document.body.classList.add('theme-dark');
+                document.body.classList.remove('bg-amber-50');
+                document.body.classList.add('bg-amber-900');
+                themeToggle.innerHTML = '<i class="fas fa-sun text-lg"></i>';
+                localStorage.setItem('casahaven_theme', 'dark');
+            } else {
+                document.body.classList.remove('theme-dark');
+                document.body.classList.add('theme-light');
+                document.body.classList.remove('bg-amber-900');
+                document.body.classList.add('bg-amber-50');
+                themeToggle.innerHTML = '<i class="fas fa-moon text-lg"></i>';
+                localStorage.setItem('casahaven_theme', 'light');
+            }
+        }
+
+        // Function 5: Switch language
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('casahaven_language', lang);
+            
+            // Update language buttons
+            if (lang === 'en') {
+                langEnBtn.classList.add('bg-amber-500', 'text-white');
+                langEnBtn.classList.remove('bg-white', 'text-gray-700');
+                langMmBtn.classList.add('bg-white', 'text-gray-700');
+                langMmBtn.classList.remove('bg-amber-500', 'text-white');
+                document.body.classList.remove('language-myanmar');
+            } else {
+                langMmBtn.classList.add('bg-amber-500', 'text-white');
+                langMmBtn.classList.remove('bg-white', 'text-gray-700');
+                langEnBtn.classList.add('bg-white', 'text-gray-700');
+                langEnBtn.classList.remove('bg-amber-500', 'text-white');
+                document.body.classList.add('language-myanmar');
+            }
+            
+            // Update all elements with data-key attributes
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        // Update cart count in header
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            if (totalItems > 0) {
+                cartCount.textContent = totalItems;
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+        }
+
+        // Update mini cart content
+        function updateMiniCart() {
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = `<p class="text-gray-500 text-center py-8">${translations[currentLanguage].yourCart} ${translations[currentLanguage].isEmpty || 'is empty'}</p>`;
+                cartTotal.textContent = '$0.00';
+                return;
+            }
+            
+            let total = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-center py-4 border-b';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg">
+                    <div class="ml-4 flex-1">
+                        <h4 class="font-semibold text-gray-800">${item.name}</h4>
+                        <p class="text-gray-500">$${item.price.toFixed(2)} × ${item.quantity}</p>
+                    </div>
+                    <button class="remove-from-cart text-gray-400 hover:text-red-500 ml-2" data-id="${item.id}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                cartItems.appendChild(cartItem);
+            });
+            
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-from-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    removeFromCart(id);
+                });
+            });
+        }
+
+        // Remove item from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('casahaven_cart', JSON.stringify(cart));
+            updateCartCount();
+            updateMiniCart();
+            showNotification(translations[currentLanguage].removedFromCart);
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-amber-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Setup scroll animations
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Category tabs
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    categoryTabs.forEach(t => {
+                        t.classList.remove('bg-amber-500', 'text-white');
+                        t.classList.add('bg-gray-100', 'text-gray-700');
+                    });
+                    this.classList.remove('bg-gray-100', 'text-gray-700');
+                    this.classList.add('bg-amber-500', 'text-white');
+                    
+                    // Filter products
+                    const category = this.getAttribute('data-category');
+                    filterProducts(category);
+                });
+            });
+            
+            // Cart button
+            cartBtn.addEventListener('click', function() {
+                updateMiniCart();
+                miniCart.classList.remove('translate-x-full');
+            });
+            
+            // Close cart
+            closeCart.addEventListener('click', function() {
+                miniCart.classList.add('translate-x-full');
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                productModal.classList.remove('modal-open');
+                setTimeout(() => {
+                    productModal.classList.add('hidden');
+                }, 300);
+            });
+            
+            // Modal add to cart
+            modalAddToCart.addEventListener('click', function() {
+                if (currentProduct) {
+                    addToCart(currentProduct.id);
+                }
+            });
+            
+            // Language buttons
+            langEnBtn.addEventListener('click', function() {
+                switchLanguage('en');
+            });
+            
+            langMmBtn.addEventListener('click', function() {
+                switchLanguage('mm');
+            });
+            
+            // Theme toggle
+            themeToggle.addEventListener('click', function() {
+                toggleTheme();
+            });
+            
+            // Scroll to top
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Show/hide scroll to top button
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.remove('opacity-0', 'translate-y-10');
+                    scrollTopBtn.classList.add('opacity-100', 'translate-y-0');
+                } else {
+                    scrollTopBtn.classList.remove('opacity-100', 'translate-y-0');
+                    scrollTopBtn.classList.add('opacity-0', 'translate-y-10');
+                }
+            });
+            
+            // Event delegation for dynamic elements
+            document.addEventListener('click', function(e) {
+                // Add to cart buttons
+                if (e.target.closest('.add-to-cart')) {
+                    const button = e.target.closest('.add-to-cart');
+                    const productId = parseInt(button.getAttribute('data-id'));
+                    addToCart(productId);
+                }
+                
+                // View product buttons
+                if (e.target.closest('.view-product')) {
+                    const button = e.target.closest('.view-product');
+                    const productId = parseInt(button.getAttribute('data-id'));
+                    showProductModal(productId);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
