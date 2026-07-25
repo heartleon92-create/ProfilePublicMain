@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foodify - Fresh. Fast. Delicious.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .food-card:hover .food-image {
+            transform: scale(1.05);
+        }
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        .modal-content {
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .modal-open .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ef4444;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+        .language-myanmar {
+            font-family: 'Padauk', 'Myanmar Text', sans-serif;
+        }
+        .category-tab.active {
+            border-bottom: 2px solid #ef4444;
+            color: #ef4444;
+        }
+        .promo-badge {
+            background: linear-gradient(135deg, #ef4444, #fb923c);
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="flex items-center">
+                <h1 class="text-2xl font-bold text-red-500">Foodify</h1>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#" class="text-gray-800 hover:text-red-500 transition-colors font-medium" data-key="navHome">Home</a>
+                <a href="#" class="text-gray-800 hover:text-red-500 transition-colors font-medium" data-key="navMenu">Menu</a>
+                <a href="#" class="text-gray-800 hover:text-red-500 transition-colors font-medium" data-key="navAbout">About</a>
+                <a href="#" class="text-gray-800 hover:text-red-500 transition-colors font-medium" data-key="navContact">Contact</a>
+            </nav>
+            <div class="flex items-center space-x-4">
+                <div class="flex border border-gray-300 rounded-lg overflow-hidden">
+                    <button id="lang-en" class="lang-btn px-3 py-1 bg-red-500 text-white text-sm font-medium">EN</button>
+                    <button id="lang-mm" class="lang-btn px-3 py-1 bg-white text-gray-700 text-sm font-medium">MM</button>
+                </div>
+                <button id="cart-btn" class="p-2 text-gray-700 hover:text-red-500 transition-colors relative">
+                    <i class="fas fa-shopping-bag text-lg"></i>
+                    <span id="cart-count" class="cart-count hidden">0</span>
+                </button>
+                <button class="md:hidden p-2 text-gray-700">
+                    <i class="fas fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-r from-red-500 to-orange-500 py-16 md:py-24 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-4.0.3&auto=format&fit=crop&w=1280&q=80')] bg-cover bg-center opacity-20"></div>
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center relative z-10">
+            <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4" data-key="hero">Fresh. Fast. Delicious.</h2>
+                <p class="text-lg text-white/90 mb-8" data-key="heroDesc">Experience the best flavors delivered right to your door. Quality ingredients, expert preparation, and fast delivery.</p>
+                <button class="bg-white hover:bg-gray-100 text-red-500 px-8 py-3 rounded-xl font-bold transition-colors shadow-lg" data-key="orderNow">Order Now</button>
+            </div>
+            <div class="md:w-1/2 flex justify-center fade-in">
+                <div class="relative">
+                    <div class="w-80 h-80 bg-gradient-to-br from-white/20 to-white/10 rounded-2xl flex items-center justify-center shadow-xl overflow-hidden backdrop-blur-sm border border-white/30">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Delicious food" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-4 -right-4 bg-white p-4 rounded-xl shadow-lg">
+                        <p class="text-sm font-semibold text-gray-800" data-key="deliveryTime">Delivery in 30 mins</p>
+                        <p class="text-xs text-red-500" data-key="freeDelivery">Free delivery over $15</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Category Tabs -->
+    <section class="py-12 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-10 text-gray-800 fade-in" data-key="ourMenu">Our Menu</h2>
+            <div class="flex justify-center space-x-2 md:space-x-8 mb-12 overflow-x-auto pb-2">
+                <button class="category-tab px-4 py-2 font-bold transition-colors active" data-category="popular" data-key="popular">Popular</button>
+                <button class="category-tab px-4 py-2 font-bold transition-colors" data-category="burger" data-key="burger">Burger</button>
+                <button class="category-tab px-4 py-2 font-bold transition-colors" data-category="pizza" data-key="pizza">Pizza</button>
+                <button class="category-tab px-4 py-2 font-bold transition-colors" data-category="drinks" data-key="drinks">Drinks</button>
+                <button class="category-tab px-4 py-2 font-bold transition-colors" data-category="bento" data-key="bento">Bento</button>
+                <button class="category-tab px-4 py-2 font-bold transition-colors" data-category="dessert" data-key="dessert">Dessert</button>
+            </div>
+
+            <!-- Menu Items Grid -->
+            <div id="menu-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                <!-- Menu items will be dynamically loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Promotion Section -->
+    <section class="py-16 bg-gradient-to-r from-red-50 to-orange-50">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-10 text-gray-800 fade-in" data-key="promo">Special Deals</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden fade-in relative">
+                    <div class="absolute top-4 right-4 promo-badge text-white px-3 py-1 rounded-full text-sm font-bold">HOT</div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2" data-key="promo1Title">Buy 2 Get 1 Free</h3>
+                        <p class="text-gray-600 mb-4" data-key="promo1Desc">On all burger combos. Limited time only.</p>
+                        <button class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors" data-key="orderNow">Order Now</button>
+                    </div>
+                </div>
+                <div class="bg-white rounded-2xl shadow-lg overflow-hidden fade-in relative">
+                    <div class="absolute top-4 right-4 promo-badge text-white px-3 py-1 rounded-full text-sm font-bold">NEW</div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2" data-key="promo2Title">Lunch Set Special 10% OFF</h3>
+                        <p class="text-gray-600 mb-4" data-key="promo2Desc">Available from 11AM to 2PM daily.</p>
+                        <button class="bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors" data-key="orderNow">Order Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 fade-in">
+                    <div class="bg-gray-100 rounded-2xl h-80 flex items-center justify-center overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Our kitchen" class="w-full h-full object-cover">
+                    </div>
+                </div>
+                <div class="md:w-1/2 md:pl-12 fade-in">
+                    <h2 class="text-3xl font-bold mb-6 text-gray-800" data-key="about">About Our Kitchen</h2>
+                    <p class="text-gray-600 mb-4" data-key="aboutDesc1">At Foodify, we believe that great food starts with the finest ingredients. Our chefs carefully craft each dish with passion and attention to detail, ensuring every bite is a memorable experience.</p>
+                    <p class="text-gray-600 mb-6" data-key="aboutDesc2">We source our ingredients from local farmers and trusted suppliers, maintaining the highest standards of quality and freshness. Our kitchen follows strict hygiene protocols to ensure your food is safe and delicious.</p>
+                    <div class="flex space-x-4">
+                        <div class="text-center">
+                            <div class="bg-red-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-clock text-red-500 text-xl"></i>
+                            </div>
+                            <p class="text-sm font-semibold" data-key="fastDelivery">Fast Delivery</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-red-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-leaf text-red-500 text-xl"></i>
+                            </div>
+                            <p class="text-sm font-semibold" data-key="freshIngredients">Fresh Ingredients</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-red-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-utensils text-red-500 text-xl"></i>
+                            </div>
+                            <p class="text-sm font-semibold" data-key="expertChefs">Expert Chefs</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold text-red-400 mb-4">Foodify</h3>
+                    <p class="text-gray-400" data-key="footerDesc">Delivering delicious meals right to your doorstep.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-key="quickLinks">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-red-400 transition-colors" data-key="navHome">Home</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-400 transition-colors" data-key="navMenu">Menu</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-400 transition-colors" data-key="navAbout">About</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-red-400 transition-colors" data-key="navContact">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-key="deliveryInfo">Delivery Info</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li data-key="deliveryHours">Hours: 9AM - 10PM</li>
+                        <li data-key="deliveryAreas">Delivery Areas: City Wide</li>
+                        <li data-key="minOrder">Min. Order: $10</li>
+                        <li data-key="deliveryFee">Delivery Fee: $2.99</li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4" data-key="contactUs">Contact Us</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><i class="fas fa-phone mr-2"></i> +95 9 123 456 789</li>
+                        <li><i class="fas fa-envelope mr-2"></i> hello@foodify.com</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> Yangon, Myanmar</li>
+                    </ul>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-red-400 transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-400 transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-red-400 transition-colors"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
+                <p data-key="copyright">&copy; 2023 Foodify. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Food Modal -->
+    <div id="food-modal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-overlay">
+        <div class="modal-content bg-white rounded-2xl shadow-2xl max-w-4xl w-full mx-4 overflow-hidden">
+            <div class="flex flex-col md:flex-row">
+                <div class="md:w-1/2 p-8 flex items-center justify-center bg-gray-100">
+                    <img id="modal-image" src="" alt="Food item" class="w-full max-w-xs rounded-lg">
+                </div>
+                <div class="md:w-1/2 p-8">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 id="modal-title" class="text-2xl font-bold text-gray-800"></h3>
+                        <button id="close-modal" class="text-gray-500 hover:text-gray-700">
+                            <i class="fas fa-times text-xl"></i>
+                        </button>
+                    </div>
+                    <div id="modal-tags" class="flex flex-wrap gap-2 mb-4">
+                        <!-- Tags will be added dynamically -->
+                    </div>
+                    <p id="modal-price" class="text-2xl font-bold text-red-500 mb-4"></p>
+                    <p id="modal-description" class="text-gray-600 mb-6"></p>
+                    <div class="mb-6">
+                        <h4 class="text-gray-800 font-semibold mb-2" data-key="ingredients">Ingredients:</h4>
+                        <ul id="modal-ingredients" class="text-gray-600 list-disc list-inside space-y-1">
+                            <!-- Ingredients will be added dynamically -->
+                        </ul>
+                    </div>
+                    <div class="flex space-x-4 mb-6">
+                        <div>
+                            <label class="block text-gray-700 mb-2" data-key="quantity">Quantity</label>
+                            <div class="flex border rounded-lg">
+                                <button class="px-3 py-2 border-r text-gray-700 hover:bg-gray-100">-</button>
+                                <input type="number" value="1" min="1" class="w-12 text-center border-none">
+                                <button class="px-3 py-2 border-l text-gray-700 hover:bg-gray-100">+</button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 mb-2" data-key="spiceLevel">Spice Level</label>
+                            <select class="border rounded-lg px-3 py-2 w-full">
+                                <option value="mild" data-key="mild">Mild</option>
+                                <option value="medium" data-key="medium">Medium</option>
+                                <option value="spicy" data-key="spicy">Spicy</option>
+                                <option value="extra-spicy" data-key="extraSpicy">Extra Spicy</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex space-x-4">
+                        <button id="modal-add-to-cart" class="bg-red-500 hover:bg-red-600 text-white px-6 py-3 rounded-lg font-semibold flex-1 transition-colors" data-key="addToCart">Add to Cart</button>
+                        <button class="border border-red-500 text-red-500 hover:bg-red-50 px-4 py-3 rounded-lg transition-colors">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mini Cart -->
+    <div id="mini-cart" class="fixed right-0 top-0 h-full w-80 bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300">
+        <div class="p-6 h-full flex flex-col">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-gray-800" data-key="yourCart">Your Cart</h3>
+                <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div id="cart-items" class="flex-1 overflow-y-auto mb-4">
+                <!-- Cart items will be dynamically loaded here -->
+            </div>
+            <div class="border-t pt-4">
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-600" data-key="subtotal">Subtotal:</span>
+                    <span id="cart-subtotal" class="font-semibold">$0.00</span>
+                </div>
+                <div class="flex justify-between mb-2">
+                    <span class="text-gray-600" data-key="deliveryFee">Delivery Fee:</span>
+                    <span id="delivery-fee" class="font-semibold">$2.99</span>
+                </div>
+                <div class="flex justify-between mb-4 font-bold">
+                    <span class="text-gray-800" data-key="total">Total:</span>
+                    <span id="cart-total" class="text-red-500">$2.99</span>
+                </div>
+                <button class="bg-red-500 hover:bg-red-600 text-white w-full py-3 rounded-lg font-semibold transition-colors" data-key="checkout">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button id="scroll-top" class="fixed bottom-6 right-6 bg-red-500 hover:bg-red-600 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 transform translate-y-10">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <script>
+        // Translation data
+        const translations = {
+            en: {
+                // Navigation
+                navHome: "Home",
+                navMenu: "Menu",
+                navAbout: "About",
+                navContact: "Contact",
+                
+                // Hero Section
+                hero: "Fresh. Fast. Delicious.",
+                heroDesc: "Experience the best flavors delivered right to your door. Quality ingredients, expert preparation, and fast delivery.",
+                orderNow: "Order Now",
+                deliveryTime: "Delivery in 30 mins",
+                freeDelivery: "Free delivery over $15",
+                
+                // Menu Section
+                ourMenu: "Our Menu",
+                popular: "Popular",
+                burger: "Burger",
+                pizza: "Pizza",
+                drinks: "Drinks",
+                bento: "Bento",
+                dessert: "Dessert",
+                addToCart: "Add to Cart",
+                
+                // Tags
+                spicy: "Spicy",
+                vegan: "Vegan",
+                bestseller: "Bestseller",
+                new: "New",
+                
+                // Promo Section
+                promo: "Special Deals",
+                promo1Title: "Buy 2 Get 1 Free",
+                promo1Desc: "On all burger combos. Limited time only.",
+                promo2Title: "Lunch Set Special 10% OFF",
+                promo2Desc: "Available from 11AM to 2PM daily.",
+                
+                // About Section
+                about: "About Our Kitchen",
+                aboutDesc1: "At Foodify, we believe that great food starts with the finest ingredients. Our chefs carefully craft each dish with passion and attention to detail, ensuring every bite is a memorable experience.",
+                aboutDesc2: "We source our ingredients from local farmers and trusted suppliers, maintaining the highest standards of quality and freshness. Our kitchen follows strict hygiene protocols to ensure your food is safe and delicious.",
+                fastDelivery: "Fast Delivery",
+                freshIngredients: "Fresh Ingredients",
+                expertChefs: "Expert Chefs",
+                
+                // Footer
+                footerDesc: "Delivering delicious meals right to your doorstep.",
+                quickLinks: "Quick Links",
+                deliveryInfo: "Delivery Info",
+                deliveryHours: "Hours: 9AM - 10PM",
+                deliveryAreas: "Delivery Areas: City Wide",
+                minOrder: "Min. Order: $10",
+                deliveryFee: "Delivery Fee: $2.99",
+                contactUs: "Contact Us",
+                copyright: "© 2023 Foodify. All rights reserved.",
+                
+                // Food Modal
+                ingredients: "Ingredients:",
+                quantity: "Quantity",
+                spiceLevel: "Spice Level",
+                mild: "Mild",
+                medium: "Medium",
+                spicy: "Spicy",
+                extraSpicy: "Extra Spicy",
+                
+                // Cart
+                yourCart: "Your Cart",
+                subtotal: "Subtotal:",
+                total: "Total:",
+                checkout: "Checkout",
+                
+                // Notifications
+                addedToCart: "Added to cart",
+                removedFromCart: "Removed from cart"
+            },
+            mm: {
+                // Navigation
+                navHome: "ပင်မစာမျက်နှာ",
+                navMenu: "မီနူး",
+                navAbout: "ကျွန်ုပ်တို့အကြောင်း",
+                navContact: "ဆက်သွယ်ရန်",
+                
+                // Hero Section
+                hero: "သန့်သန့်ရှင်းရှင်း၊ မြန်မြန်ဆန်ဆန်၊ ဝင်စားဖွယ်ကောင်းပါတယ်။",
+                heroDesc: "သင့်အိမ်အထိ အရသာအကောင်းဆုံးအစားအစာများ ပို့ဆောင်ပေးပါတယ်။ အရည်အသွေးမြင့် ပါဝင်ပစ္စည်းများ၊ ကျွမ်းကျင်သော ချက်ပြုတ်မှုနှင့် မြန်ဆန်သော ပို့ဆောင်ရေး။",
+                orderNow: "အခုမှာမယ်",
+                deliveryTime: "မိနစ် ၃၀ အတွင်း ပို့မည်",
+                freeDelivery: "$15 ကျော်ဝယ်ပါက အခမဲ့ပို့ဆောင်ပေးမည်",
+                
+                // Menu Section
+                ourMenu: "ကျွန်ုပ်တို့၏ မီနူး",
+                popular: "လူကြိုက်များ",
+                burger: "ဘာဂါ",
+                pizza: "ပီဇာ",
+                drinks: "အချိုရည်များ",
+                bento: "ဘန်တို",
+                dessert: "အချိုပွဲ",
+                addToCart: "ထည့်မယ်",
+                
+                // Tags
+                spicy: "စပ်သော",
+                vegan: "သက်သတ်လွတ်",
+                bestseller: "အရောင်းရဆုံး",
+                new: "အသစ်",
+                
+                // Promo Section
+                promo: "အထူးအစီအစဉ်များ",
+                promo1Title: "၂ ဝယ် ၁ အလကား",
+                promo1Desc: "ဘာဂါကွန်ဘိုအားလုံးအတွက်။ အချိန်ကန့်သတ်ချက်ဖြင့်။",
+                promo2Title: "နေ့လည်စာအထူး ၁၀% လျှော့ဈေး",
+                promo2Desc: "နေ့လည် ၁၁နာရီမှ ၂နာရီအထိ ရရှိနိုင်ပါသည်။",
+                
+                // About Section
+                about: "ကျွန်ုပ်တို့ မီးဖိုချောင်",
+                aboutDesc1: "Foodify တွင် ကျွန်ုပ်တို့သည် ကောင်းမွန်သောအစားအစာသည် အရည်အသွေးအမြင့်ဆုံးပါဝင်ပစ္စည်းများမှ စတင်သည်ဟု ယုံကြည်ပါသည်။ ကျွန်ုပ်တို့၏စားဖိုမှူးများသည် စိတ်အားထက်သန်မှုနှင့် အသေးစိတ်ဂရုစိုက်မှုဖြင့် ဟင်းလျာတစ်ခုစီကို ဂရုတစိုက်ပြင်ဆင်ပြီး မြည်းစမ်းသမျှတိုင်း မမေ့နိုင်သောအတွေ့အကြုံဖြစ်စေရန် သေချာစေပါသည်။",
+                aboutDesc2: "ကျွန်ုပ်တို့သည် ပါဝင်ပစ္စည်းများကို ဒေသခံလယ်သမားများနှင့် ယုံကြည်ရသောပေးသွင်းသူများထံမှ ရယူပြီး အရည်အသွေးနှင့် လတ်ဆတ်မှုအတွက် အမြင့်ဆုံးစံနှုန်းများကို ထိန်းသိမ်းထားသည်။ သင့်အစားအစာသည် ဘေးကင်းပြီး အရသာရှိစေရန်အတွက် ကျွန်ုပ်တို့၏မီးဖိုချောင်သည် တင်းကျပ်သော ကျန်းမာရေးစည်းမျဉ်းများကို လိုက်နာသည်။",
+                fastDelivery: "မြန်ဆန်သောပို့ဆောင်ရေး",
+                freshIngredients: "လတ်ဆတ်သောပါဝင်ပစ္စည်းများ",
+                expertChefs: "ကျွမ်းကျင်သောစားဖိုမှူးများ",
+                
+                // Footer
+                footerDesc: "သင့်အိမ်အထိ အရသာရှိသောအစားအစာများ ပို့ဆောင်ပေးခြင်း။",
+                quickLinks: "အမြန်သွားရန်",
+                deliveryInfo: "ပို့ဆောင်ရေးအချက်အလက်",
+                deliveryHours: "အချိန်: မနက် ၉နာရီ - ည ၁၀နာရီ",
+                deliveryAreas: "ပို့ဆောင်သည့်နေရာ: မြို့တစ်ဝှမ်းလုံး",
+                minOrder: "အနည်းဆုံးအမှာယူမှု: $10",
+                deliveryFee: "ပို့ဆောင်ခ: $2.99",
+                contactUs: "ဆက်သွယ်ရန်",
+                copyright: "© ၂၀၂၃ Foodify. မူပိုင်ခွင့်အားလုံးရှိသည်။",
+                
+                // Food Modal
+                ingredients: "ပါဝင်ပစ္စည်းများ:",
+                quantity: "အရေအတွက်",
+                spiceLevel: "စပ်အဆင့်",
+                mild: "အနည်းငယ်စပ်",
+                medium: "အလယ်အလတ်စပ်",
+                spicy: "စပ်",
+                extraSpicy: "အလွန်စပ်",
+                
+                // Cart
+                yourCart: "သင့်စျေးခြင်းထု",
+                subtotal: "ကြားဖြတ်ပေါင်း:",
+                total: "စုစုပေါင်း:",
+                checkout: "ငွေရှင်းမည်",
+                
+                // Notifications
+                addedToCart: "စျေးခြင်းထဲသို့ ထည့်သွင်းပြီးပါပြီ",
+                removedFromCart: "စျေးခြင်းထဲမှ ဖယ်ရှားပြီးပါပြီ"
+            }
+        };
+
+        // Menu data
+        const menuItems = [
+            {
+                id: 1,
+                name: "Classic Cheeseburger",
+                category: "burger",
+                price: 8.99,
+                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Juicy beef patty with melted cheese, fresh lettuce, tomato, and our special sauce.",
+                ingredients: ["Beef patty", "Cheddar cheese", "Lettuce", "Tomato", "Onion", "Special sauce", "Sesame bun"],
+                tags: ["bestseller"]
+            },
+            {
+                id: 2,
+                name: "Pepperoni Pizza",
+                category: "pizza",
+                price: 12.99,
+                image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Classic pizza with mozzarella cheese and generous pepperoni toppings.",
+                ingredients: ["Pizza dough", "Tomato sauce", "Mozzarella cheese", "Pepperoni", "Oregano"],
+                tags: ["bestseller", "spicy"]
+            },
+            {
+                id: 3,
+                name: "Chicken Bento Box",
+                category: "bento",
+                price: 10.99,
+                image: "https://images.unsplash.com/photo-1569058242253-92a9c755a0ec?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Grilled chicken with rice, vegetables, and a side of miso soup.",
+                ingredients: ["Grilled chicken", "Steamed rice", "Mixed vegetables", "Miso soup", "Pickled ginger"],
+                tags: ["new"]
+            },
+            {
+                id: 4,
+                name: "Fresh Orange Juice",
+                category: "drinks",
+                price: 3.99,
+                image: "https://images.unsplash.com/photo-1621506289937-a8e4df240d0b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Freshly squeezed orange juice, packed with vitamins and natural sweetness.",
+                ingredients: ["Fresh oranges"],
+                tags: ["vegan"]
+            },
+            {
+                id: 5,
+                name: "Chocolate Brownie",
+                category: "dessert",
+                price: 4.99,
+                image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Rich, fudgy chocolate brownie with a soft center and crisp edges.",
+                ingredients: ["Dark chocolate", "Butter", "Sugar", "Eggs", "Flour", "Walnuts"],
+                tags: ["bestseller"]
+            },
+            {
+                id: 6,
+                name: "Spicy Chicken Burger",
+                category: "burger",
+                price: 9.99,
+                image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Crispy chicken fillet with spicy mayo, lettuce, and pickles.",
+                ingredients: ["Chicken fillet", "Spicy mayo", "Lettuce", "Pickles", "Brioche bun"],
+                tags: ["spicy", "new"]
+            },
+            {
+                id: 7,
+                name: "Vegetable Pizza",
+                category: "pizza",
+                price: 11.99,
+                image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Fresh vegetables on a thin crust with mozzarella cheese.",
+                ingredients: ["Pizza dough", "Tomato sauce", "Mozzarella cheese", "Bell peppers", "Mushrooms", "Olives", "Onions"],
+                tags: ["vegan"]
+            },
+            {
+                id: 8,
+                name: "Iced Coffee",
+                category: "drinks",
+                price: 3.49,
+                image: "https://images.unsplash.com/photo-1461023058943-07fcbe16d735?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                description: "Chilled coffee with milk and a hint of sweetness.",
+                ingredients: ["Coffee", "Milk", "Ice", "Sugar syrup"],
+                tags: []
+            }
+        ];
+
+        // Initialize cart and language from localStorage
+        let cart = JSON.parse(localStorage.getItem('foodify_cart')) || [];
+        let currentLanguage = localStorage.getItem('foodify_language') || 'en';
+
+        // DOM elements
+        const menuGrid = document.getElementById('menu-grid');
+        const categoryTabs = document.querySelectorAll('.category-tab');
+        const cartBtn = document.getElementById('cart-btn');
+        const cartCount = document.getElementById('cart-count');
+        const miniCart = document.getElementById('mini-cart');
+        const closeCart = document.getElementById('close-cart');
+        const cartItems = document.getElementById('cart-items');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const deliveryFee = document.getElementById('delivery-fee');
+        const cartTotal = document.getElementById('cart-total');
+        const foodModal = document.getElementById('food-modal');
+        const closeModal = document.getElementById('close-modal');
+        const modalImage = document.getElementById('modal-image');
+        const modalTitle = document.getElementById('modal-title');
+        const modalTags = document.getElementById('modal-tags');
+        const modalPrice = document.getElementById('modal-price');
+        const modalDescription = document.getElementById('modal-description');
+        const modalIngredients = document.getElementById('modal-ingredients');
+        const modalAddToCart = document.getElementById('modal-add-to-cart');
+        const langEnBtn = document.getElementById('lang-en');
+        const langMmBtn = document.getElementById('lang-mm');
+        const scrollTopBtn = document.getElementById('scroll-top');
+
+        // Current food item for modal
+        let currentFoodItem = null;
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial language
+            switchLanguage(currentLanguage);
+            
+            // Load menu items
+            filterMenu('popular');
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Calculate initial total
+            calculateTotal();
+            
+            // Set up scroll animations
+            setupScrollAnimations();
+            
+            // Set up event listeners
+            setupEventListeners();
+        });
+
+        // Function 1: Filter menu by category
+        function filterMenu(category) {
+            menuGrid.innerHTML = '';
+            
+            let filteredItems;
+            if (category === 'popular') {
+                // Show items with 'bestseller' tag
+                filteredItems = menuItems.filter(item => item.tags.includes('bestseller'));
+            } else {
+                filteredItems = menuItems.filter(item => item.category === category);
+            }
+            
+            // If no items in popular, show all items
+            if (category === 'popular' && filteredItems.length === 0) {
+                filteredItems = menuItems.slice(0, 4);
+            }
+            
+            filteredItems.forEach(item => {
+                const foodCard = document.createElement('div');
+                foodCard.className = 'food-card bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl fade-in';
+                foodCard.innerHTML = `
+                    <div class="relative overflow-hidden">
+                        <img src="${item.image}" alt="${item.name}" class="food-image w-full h-48 object-cover transition-transform duration-500">
+                        ${item.tags.length > 0 ? `
+                            <div class="absolute top-3 left-3 flex flex-wrap gap-1">
+                                ${item.tags.map(tag => `
+                                    <span class="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold" data-key="${tag}">${translations[currentLanguage][tag]}</span>
+                                `).join('')}
+                            </div>
+                        ` : ''}
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">${item.name}</h3>
+                        <p class="text-gray-500 text-sm mb-4">${item.description.substring(0, 60)}...</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold text-red-500">$${item.price.toFixed(2)}</span>
+                            <div class="flex space-x-2">
+                                <button class="view-food bg-gray-100 hover:bg-gray-200 text-gray-700 p-2 rounded-full transition-colors" data-id="${item.id}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="add-to-cart bg-red-500 hover:bg-red-600 text-white p-2 rounded-full transition-colors" data-id="${item.id}">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                menuGrid.appendChild(foodCard);
+            });
+            
+            // Make fade-in elements visible after a short delay
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in').forEach(el => {
+                    el.classList.add('visible');
+                });
+            }, 100);
+        }
+
+        // Function 2: Add to cart
+        function addToCart(itemId) {
+            const item = menuItems.find(i => i.id === itemId);
+            const existingItem = cart.find(cartItem => cartItem.id === itemId);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    image: item.image,
+                    quantity: 1
+                });
+            }
+            
+            // Update localStorage
+            localStorage.setItem('foodify_cart', JSON.stringify(cart));
+            
+            // Update cart count
+            updateCartCount();
+            
+            // Calculate new total
+            calculateTotal();
+            
+            // Show notification
+            showNotification(translations[currentLanguage].addedToCart);
+            
+            // If mini-cart is open, update it
+            if (!miniCart.classList.contains('translate-x-full')) {
+                updateMiniCart();
+            }
+        }
+
+        // Function 3: Open food modal
+        function openFoodModal(itemId) {
+            const item = menuItems.find(i => i.id === itemId);
+            currentFoodItem = item;
+            
+            modalImage.src = item.image;
+            modalTitle.textContent = item.name;
+            modalPrice.textContent = `$${item.price.toFixed(2)}`;
+            modalDescription.textContent = item.description;
+            
+            // Add tags
+            modalTags.innerHTML = '';
+            item.tags.forEach(tag => {
+                const tagSpan = document.createElement('span');
+                tagSpan.className = 'bg-red-500 text-white px-2 py-1 rounded-full text-xs font-semibold';
+                tagSpan.textContent = translations[currentLanguage][tag];
+                modalTags.appendChild(tagSpan);
+            });
+            
+            // Add ingredients
+            modalIngredients.innerHTML = '';
+            item.ingredients.forEach(ingredient => {
+                const li = document.createElement('li');
+                li.textContent = ingredient;
+                li.className = 'text-gray-600';
+                modalIngredients.appendChild(li);
+            });
+            
+            foodModal.classList.remove('hidden');
+            setTimeout(() => {
+                foodModal.classList.add('modal-open');
+            }, 10);
+        }
+
+        // Function 4: Switch language
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            localStorage.setItem('foodify_language', lang);
+            
+            // Update language buttons
+            if (lang === 'en') {
+                langEnBtn.classList.add('bg-red-500', 'text-white');
+                langEnBtn.classList.remove('bg-white', 'text-gray-700');
+                langMmBtn.classList.add('bg-white', 'text-gray-700');
+                langMmBtn.classList.remove('bg-red-500', 'text-white');
+                document.body.classList.remove('language-myanmar');
+            } else {
+                langMmBtn.classList.add('bg-red-500', 'text-white');
+                langMmBtn.classList.remove('bg-white', 'text-gray-700');
+                langEnBtn.classList.add('bg-white', 'text-gray-700');
+                langEnBtn.classList.remove('bg-red-500', 'text-white');
+                document.body.classList.add('language-myanmar');
+            }
+            
+            // Update all elements with data-key attributes
+            document.querySelectorAll('[data-key]').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Update tags in menu items
+            document.querySelectorAll('[data-key].bg-red-500').forEach(element => {
+                const key = element.getAttribute('data-key');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+        }
+
+        // Function 5: Calculate total
+        function calculateTotal() {
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const delivery = 2.99;
+            const total = subtotal + delivery;
+            
+            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Function 6: Apply delivery fee
+        function applyDeliveryFee(location) {
+            // In a real app, this would calculate based on location
+            // For demo purposes, we'll use a fixed fee
+            const fee = 2.99;
+            deliveryFee.textContent = `$${fee.toFixed(2)}`;
+            calculateTotal();
+            return fee;
+        }
+
+        // Update cart count in header
+        function updateCartCount() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            if (totalItems > 0) {
+                cartCount.textContent = totalItems;
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+        }
+
+        // Update mini cart content
+        function updateMiniCart() {
+            cartItems.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = `<p class="text-gray-500 text-center py-8">${translations[currentLanguage].yourCart} is empty</p>`;
+                return;
+            }
+            
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-center py-4 border-b';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg">
+                    <div class="ml-4 flex-1">
+                        <h4 class="font-semibold text-gray-800">${item.name}</h4>
+                        <p class="text-gray-500">$${item.price.toFixed(2)} × ${item.quantity}</p>
+                    </div>
+                    <button class="remove-from-cart text-gray-400 hover:text-red-500 ml-2" data-id="${item.id}">
+                        <i class="fas fa-times"></i>
+                    </button>
+                `;
+                
+                cartItems.appendChild(cartItem);
+            });
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-from-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const id = parseInt(this.getAttribute('data-id'));
+                    removeFromCart(id);
+                });
+            });
+        }
+
+        // Remove item from cart
+        function removeFromCart(itemId) {
+            cart = cart.filter(item => item.id !== itemId);
+            localStorage.setItem('foodify_cart', JSON.stringify(cart));
+            updateCartCount();
+            updateMiniCart();
+            calculateTotal();
+            showNotification(translations[currentLanguage].removedFromCart);
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 transform translate-x-full transition-transform duration-300';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Animate in
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 10);
+            
+            // Animate out and remove
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Setup scroll animations
+        function setupScrollAnimations() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Category tabs
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Update active tab
+                    categoryTabs.forEach(t => {
+                        t.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Filter menu
+                    const category = this.getAttribute('data-category');
+                    filterMenu(category);
+                });
+            });
+            
+            // Cart button
+            cartBtn.addEventListener('click', function() {
+                updateMiniCart();
+                miniCart.classList.remove('translate-x-full');
+            });
+            
+            // Close cart
+            closeCart.addEventListener('click', function() {
+                miniCart.classList.add('translate-x-full');
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                foodModal.classList.remove('modal-open');
+                setTimeout(() => {
+                    foodModal.classList.add('hidden');
+                }, 300);
+            });
+            
+            // Modal add to cart
+            modalAddToCart.addEventListener('click', function() {
+                if (currentFoodItem) {
+                    addToCart(currentFoodItem.id);
+                }
+            });
+            
+            // Language buttons
+            langEnBtn.addEventListener('click', function() {
+                switchLanguage('en');
+            });
+            
+            langMmBtn.addEventListener('click', function() {
+                switchLanguage('mm');
+            });
+            
+            // Scroll to top
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Show/hide scroll to top button
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollTopBtn.classList.remove('opacity-0', 'translate-y-10');
+                    scrollTopBtn.classList.add('opacity-100', 'translate-y-0');
+                } else {
+                    scrollTopBtn.classList.remove('opacity-100', 'translate-y-0');
+                    scrollTopBtn.classList.add('opacity-0', 'translate-y-10');
+                }
+            });
+            
+            // Event delegation for dynamic elements
+            document.addEventListener('click', function(e) {
+                // Add to cart buttons
+                if (e.target.closest('.add-to-cart')) {
+                    const button = e.target.closest('.add-to-cart');
+                    const itemId = parseInt(button.getAttribute('data-id'));
+                    addToCart(itemId);
+                }
+                
+                // View food buttons
+                if (e.target.closest('.view-food')) {
+                    const button = e.target.closest('.view-food');
+                    const itemId = parseInt(button.getAttribute('data-id'));
+                    openFoodModal(itemId);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
