@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProfileCraft - Premium Profile Templates</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ProfileCraft – Premium Profile Templates</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
+        /* ── root variables ── */
         :root {
             --basic-color: #4fbec9;
             --standard-color: #ff9f43;
@@ -34,7 +35,7 @@
             overflow-x: hidden;
         }
 
-        /* Header Styles */
+        /* ── header ── */
         header {
             background-color: white;
             box-shadow: var(--shadow);
@@ -55,22 +56,12 @@
             flex: 1;
             min-width: 0;
         }
-/* For text logos */
-.logo {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--text-dark);
-    white-space: nowrap;
-}
 
-/* For image logos */
-/* Target logo image inside logo-container */
-.logo-container img {
-    max-height: 50px;  /* controls header height */
-    width: auto;       /* keep proportion */
-    display: block;
-}
-
+        .logo-container img {
+            max-height: 50px;
+            width: auto;
+            display: block;
+        }
 
         .search-container {
             position: relative;
@@ -132,7 +123,8 @@
             white-space: nowrap;
         }
 
-        .category-tag:hover, .category-tag.active {
+        .category-tag:hover,
+        .category-tag.active {
             background-color: var(--basic-color);
             color: white;
         }
@@ -214,11 +206,7 @@
             background-color: #dfe4ea;
         }
 
-        .mobile-search-btn {
-            display: none;
-        }
-
-        /* Main Content */
+        /* ── main / grid ── */
         main {
             padding: 1.5rem 1rem;
             width: 100%;
@@ -233,7 +221,7 @@
             width: 100%;
         }
 
-        /* Profile Card */
+        /* ── profile card ── */
         .profile-card {
             background: white;
             border-radius: 12px;
@@ -297,17 +285,14 @@
             background-color: var(--basic-color);
             color: white;
         }
-
         .standard-badge {
             background-color: var(--standard-color);
             color: white;
         }
-
         .premium-badge {
             background-color: var(--premium-color);
             color: var(--text-dark);
         }
-
         .popular-badge {
             background-color: #ff6b6b;
             color: white;
@@ -344,13 +329,11 @@
             font-weight: 700;
             font-size: 1.1rem;
         }
-
         .original-price {
             text-decoration: line-through;
             color: var(--text-light);
             font-size: 0.9rem;
         }
-
         .discount-badge {
             background-color: #ff6b6b;
             color: white;
@@ -359,116 +342,105 @@
             font-size: 0.75rem;
             font-weight: 600;
         }
-       .card-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 1.5rem;
-}
 
-.cta-button {
-    flex: 1;
-    padding: 0.85rem 1.25rem;
-    border: none;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-align: center;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    position: relative;
-    overflow: hidden;
-    font-size: 0.95rem;
-}
+        .card-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 1.5rem;
+        }
 
-.cta-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-    transition: left 0.5s ease;
-}
+        .cta-button {
+            flex: 1;
+            padding: 0.85rem 1.25rem;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            font-size: 0.95rem;
+        }
 
-.cta-button:hover::before {
-    left: 100%;
-}
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
 
-.cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-}
+        .cta-button:hover::before {
+            left: 100%;
+        }
 
-.cta-button:active {
-    transform: translateY(0);
-}
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
 
-.buy-button {
-    background: linear-gradient(135deg, #6366F1, #8B5CF6);
-    color: white;
-    box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
-}
+        .cta-button:active {
+            transform: translateY(0);
+            animation: buttonClick 0.2s ease;
+        }
 
-.buy-button:hover {
-    box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
-}
+        @keyframes buttonClick {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(0.95);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
 
-.preview-button {
-    background: linear-gradient(135deg, #10B981, #059669);
-    color: white;
-    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
-}
+        .buy-button {
+            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            color: white;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+        }
 
-.preview-button:hover {
-    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
-}
+        .buy-button:hover {
+            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+        }
 
-/* Optional: Add icons to buttons */
-.buy-button::after {
-    content: "→";
-    font-weight: bold;
-    transition: transform 0.3s ease;
-}
+        .buy-button::after {
+            content: "→";
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
 
-.buy-button:hover::after {
-    transform: translateX(3px);
-}
+        .buy-button:hover::after {
+            transform: translateX(3px);
+        }
 
-.preview-button::before {
-    content: "👁";
-    font-size: 1.1em;
-}
+        .preview-button {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+        }
 
-/* Responsive adjustments */
-@media (max-width: 480px) {
-    .card-actions {
-        flex-direction: column;
-        gap: 10px;
-    }
-    
-    .cta-button {
-        width: 100%;
-        padding: 0.75rem 1rem;
-    }
-}
+        .preview-button:hover {
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+        }
 
-/* Animation for button click */
-@keyframes buttonClick {
-    0% { transform: scale(1); }
-    50% { transform: scale(0.95); }
-    100% { transform: scale(1); }
-}
+        .preview-button::before {
+            content: "👁";
+            font-size: 1.1em;
+        }
 
-.cta-button:active {
-    animation: buttonClick 0.2s ease;
-}
-
-        /* Filter Modal */
+        /* ── filter modal ── */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -524,13 +496,47 @@
             font-size: 1.5rem;
             cursor: pointer;
             color: var(--text-light);
+            transition: var(--transition);
         }
 
+        .close-modal:hover {
+            color: var(--text-dark);
+            transform: rotate(90deg);
+        }
+
+        /* ── purpose tabs ── */
+        .purpose-tabs {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .purpose-tab {
+            padding: 0.5rem 1.25rem;
+            border-radius: 50px;
+            border: 2px solid #dfe6e9;
+            background: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .purpose-tab:hover,
+        .purpose-tab.active {
+            border-color: var(--basic-color);
+            background-color: var(--basic-color);
+            color: white;
+        }
+
+        /* ── tier filters ── */
         .filter-options {
             display: flex;
             flex-wrap: wrap;
             gap: 0.75rem;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .filter-option {
@@ -541,27 +547,44 @@
             font-weight: 500;
             cursor: pointer;
             transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
         }
 
-        .filter-option:hover, .filter-option.active {
+        .filter-option:hover,
+        .filter-option.active {
             border-color: var(--basic-color);
             background-color: var(--basic-color);
             color: white;
         }
 
-        .standard-option.active, .standard-option:hover {
+        .filter-option.basic-option:hover,
+        .filter-option.basic-option.active {
+            border-color: var(--basic-color);
+            background-color: var(--basic-color);
+        }
+
+        .filter-option.standard-option:hover,
+        .filter-option.standard-option.active {
             border-color: var(--standard-color);
             background-color: var(--standard-color);
         }
 
-        .premium-option.active, .premium-option:hover {
+        .filter-option.premium-option:hover,
+        .filter-option.premium-option.active {
             border-color: var(--premium-color);
             background-color: var(--premium-color);
+            color: var(--text-dark);
         }
 
-  
-                .career-filter {
+        .career-filter {
             margin-bottom: 1.5rem;
+        }
+
+        .career-filter label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 0.4rem;
         }
 
         .career-filter select {
@@ -570,12 +593,18 @@
             border: 1px solid #ddd;
             border-radius: 8px;
             font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            background-color: white;
+            transition: var(--transition);
         }
-           .modal-actions {
-            display: flex;
-            gap: 0.75rem;
+
+        .career-filter select:focus {
+            outline: none;
+            border-color: var(--basic-color);
+            box-shadow: 0 0 0 2px rgba(79, 190, 201, 0.2);
         }
-         .modal-actions {
+
+        .modal-actions {
             display: flex;
             gap: 0.75rem;
         }
@@ -588,6 +617,8 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
         }
 
         .apply-filters {
@@ -595,12 +626,33 @@
             color: white;
         }
 
+        .apply-filters:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(79, 190, 201, 0.3);
+        }
+
         .reset-filters {
             background: #f1f2f6;
             color: var(--text-dark);
         }
 
-        /* Myanmar Font */
+        .reset-filters:hover {
+            background: #dfe4ea;
+        }
+
+        /* ── no results ── */
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem 1rem;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            background: white;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        /* ── myanmar font ── */
         @font-face {
             font-family: 'MyanmarFont';
             src: local('Myanmar Text'), local('Padauk'), local('Noto Sans Myanmar');
@@ -611,24 +663,21 @@
             font-family: 'MyanmarFont', 'Inter', sans-serif;
         }
 
-        /* Responsive Styles */
+        /* ── responsive ── */
         @media (max-width: 767px) {
             header {
                 padding: 0.75rem;
                 gap: 0.75rem;
             }
-            
             .header-main {
                 order: 1;
                 width: 100%;
             }
-            
             .header-controls {
                 order: 3;
                 width: 100%;
                 justify-content: space-between;
             }
-            
             .category-tags {
                 order: 2;
                 width: 100%;
@@ -637,52 +686,46 @@
                 padding-bottom: 0.25rem;
                 justify-content: flex-start;
             }
-            
-        
             .search-container {
                 width: 100%;
             }
-            
             .language-btn span {
                 display: none;
             }
-            
-        
-            
             .category-tag {
                 font-size: 0.7rem;
                 padding: 0.35rem 0.7rem;
             }
-            
             main {
                 padding: 1rem;
             }
-            
             .profiles-grid {
                 gap: 1rem;
             }
-            
             .card-image {
                 height: 300px;
             }
-            
             .profile-name {
                 font-size: 1.1rem;
             }
-            
             .profile-career {
                 font-size: 0.9rem;
             }
-            
             .current-price {
                 font-size: 1rem;
             }
-            
-            /* Fix language options positioning on mobile */
             .language-options {
                 right: auto;
                 left: 0;
                 width: 100%;
+            }
+            .card-actions {
+                flex-direction: column;
+                gap: 10px;
+            }
+            .cta-button {
+                width: 100%;
+                padding: 0.75rem 1rem;
             }
         }
 
@@ -690,30 +733,24 @@
             header {
                 padding: 1rem 2rem;
             }
-            
             .category-tags {
                 display: flex;
             }
-            
             main {
                 padding: 2rem;
             }
-            
             .profiles-grid {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 2rem;
             }
-            
             .modal-overlay {
                 align-items: center;
             }
-            
             .modal-content {
-                width: 400px;
+                width: 480px;
                 border-radius: 12px;
                 transform: scale(0.9) translateY(20px);
             }
-            
             .modal-overlay.active .modal-content {
                 transform: scale(1) translateY(0);
             }
@@ -723,7 +760,6 @@
             .profiles-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
-            
             .header-controls {
                 gap: 1rem;
             }
@@ -733,38 +769,37 @@
             .header-controls {
                 gap: 0.25rem;
             }
-            
-            .language-btn, .filter-btn {
+            .language-btn,
+            .filter-btn {
                 padding: 0.5rem;
             }
-            
-            .language-btn i:last-child, .filter-btn i:last-child {
+            .language-btn i:last-child,
+            .filter-btn i:last-child {
                 display: none;
             }
         }
     </style>
 </head>
 <body>
+
     <header>
         <div class="header-main">
-          <div class="logo-container">
-    <img src="img/logoCrop.png" alt="Logo">
-</div>
-
+            <div class="logo-container">
+                <img src="img/logoCrop.png" alt="Logo" />
+            </div>
             <div class="search-container">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" class="search-box" placeholder="Search profiles..." data-en-placeholder="Search profiles..." data-my-placeholder="ပရိုဖိုင်များ ရှာဖွေရန်...">
+                <input type="text" class="search-box" placeholder="Search profiles..." data-en-placeholder="Search profiles..." data-my-placeholder="ပရိုဖိုင်များ ရှာဖွေရန်..." />
             </div>
         </div>
-        
+
         <div class="header-controls">
             <div class="category-tags active">
-                <div class="category-tag active" data-en="All Template" data-my="အားလုံး">All Template</div>
-                <div class="category-tag" data-en="Popular" data-my="လူကြိုက်များ">Popular</div>
-                <div class="category-tag" data-en="New" data-my="အသစ်">New</div>
-                <!-- <div class="category-tag" data-en="Free" data-my="အခမဲ့">Free</div> -->
+                <div class="category-tag active" data-category="all" data-en="All Template" data-my="အားလုံး">All Template</div>
+                <div class="category-tag" data-category="popular" data-en="Popular" data-my="လူကြိုက်များ">Popular</div>
+                <div class="category-tag" data-category="new" data-en="New" data-my="အသစ်">New</div>
             </div>
-            
+
             <div class="language-switcher">
                 <button class="language-btn">
                     <i class="fas fa-globe"></i>
@@ -776,11 +811,7 @@
                     <button class="language-option" data-lang="my">Myanmar</button>
                 </div>
             </div>
-            
-            <button class="mobile-search-btn">
-                <i class="fas fa-search"></i>
-            </button>
-            
+
             <button class="filter-btn" id="filterBtn" data-en="Filter" data-my="စစ်ထုတ်ရန်">
                 <i class="fas fa-filter"></i>
                 <span>Filter</span>
@@ -789,25 +820,34 @@
     </header>
 
     <main>
-        <div class="profiles-grid" id="profilesGrid">
-            <!-- Profile cards will be dynamically inserted here -->
-        </div>
+        <div class="profiles-grid" id="profilesGrid"></div>
     </main>
 
-    <!-- Filter Modal -->
+    <!-- ─── FILTER MODAL ─── -->
     <div class="modal-overlay" id="filterModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title" data-en="Filter Profiles" data-my="ပရိုဖိုင်များ စစ်ထုတ်ရန်">Filter Profiles</h2>
+                <h2 class="modal-title" data-en="Filter Templates" data-my="ပုံစံများ စစ်ထုတ်ရန်">Filter Templates</h2>
                 <button class="close-modal" id="closeModal">&times;</button>
             </div>
-            <div class="filter-options">
-                <button class="filter-option active" data-category="all" data-en="All" data-my="အားလုံး">All</button>
-                <button class="filter-option basic-option" data-category="Basic" data-en="Basic" data-my="အခြေခံ">Basic</button>
-                <button class="filter-option standard-option" data-category="Standard" data-en="Standard" data-my="စံ">Standard</button>
-                <button class="filter-option premium-option" data-category="Premium" data-en="Premium" data-my="အဆင့်မြင့်">Premium</button>
+
+            <!-- Purpose Tabs -->
+            <div class="purpose-tabs" id="purposeTabs">
+                <button class="purpose-tab active" data-purpose="all" data-en="All Purpose" data-my="ရည်ရွယ်ချက်အားလုံး">All Purpose</button>
+                <button class="purpose-tab" data-purpose="business" data-en="Business &amp; Shop" data-my="စီးပွားရေးနှင့်ဆိုင်">Business &amp; Shop</button>
+                <button class="purpose-tab" data-purpose="personal_booking" data-en="Profile &amp; Booking" data-my="ကိုယ်ရေးနှင့်ကြိုတင်မှာ">Profile &amp; Booking</button>
             </div>
-             <div class="career-filter">
+
+            <!-- Tier Filters -->
+            <div class="filter-options" id="tierFilters">
+                <button class="filter-option active" data-tier="all" data-en="All Tiers" data-my="အဆင့်အားလုံး">All Tiers</button>
+                <button class="filter-option basic-option" data-tier="Basic" data-en="Basic" data-my="အခြေခံ">Basic</button>
+                <button class="filter-option standard-option" data-tier="Standard" data-en="Standard" data-my="စံ">Standard</button>
+                <button class="filter-option premium-option" data-tier="Premium" data-en="Premium" data-my="အဆင့်မြင့်">Premium</button>
+            </div>
+
+            <!-- Career Filter -->
+            <div class="career-filter">
                 <label for="careerSelect" data-en="Filter by Career:" data-my="အလုပ်အကိုင်ဖြင့် စစ်ထုတ်ရန်:">Filter by Career:</label>
                 <select id="careerSelect">
                     <option value="all" data-en="All Careers" data-my="အလုပ်အကိုင်အားလုံး">All Careers</option>
@@ -817,1022 +857,541 @@
                     <option value="Photographer" data-en="Photographer" data-my="ဓာတ်ပုံဆရာ">Photographer</option>
                     <option value="Marketing Manager" data-en="Marketing Manager" data-my="စျေးကွက်ကိုင်ဆောင်မှူး">Marketing Manager</option>
                     <option value="Art Director" data-en="Art Director" data-my="အနုပညာညွှန်ကြားရေးမှူး">Art Director</option>
+                    <option value="Senior UI/UX Designer" data-en="Senior UI/UX Designer" data-my="အကြီးတန်း UI/UX ဒီဇိုင်နာ">Senior UI/UX Designer</option>
+                    <option value="Frontend Developer & UI Designer" data-en="Frontend Developer & UI Designer" data-my="Frontend Developer & UI Designer">Frontend Developer & UI Designer</option>
+                    <option value="Mathematics Professor" data-en="Mathematics Professor" data-my="သင်္ချာပါမောက္ခ">Mathematics Professor</option>
+                    <option value="Creative Director & UI/UX Designer" data-en="Creative Director & UI/UX Designer" data-my="Creative Director & UI/UX Designer">Creative Director & UI/UX Designer</option>
+                    <option value="HR & Office Management Executive" data-en="HR & Office Management Executive" data-my="HR & Office Management Executive">HR & Office Management Executive</option>
+                    <option value="Senior Cardiologist" data-en="Senior Cardiologist" data-my="အကြီးတန်းနှလုံးအထူးကု">Senior Cardiologist</option>
+                    <option value="Executive Chef" data-en="Executive Chef" data-my="Executive Chef">Executive Chef</option>
+                    <option value="Founder & CEO" data-en="Founder & CEO" data-my="Founder & CEO">Founder & CEO</option>
+                    <option value="High School Teacher" data-en="High School Teacher" data-my="အထက်တန်းပြဆရာ">High School Teacher</option>
+                    <option value="Creative Fashion Designer" data-en="Creative Fashion Designer" data-my="ဖန်တီးမှု ဖက်ရှင်ဒီဇိုင်နာ">Creative Fashion Designer</option>
+                    <option value="Tech Startup Founder" data-en="Tech Startup Founder" data-my="Tech Startup Founder">Tech Startup Founder</option>
+                    <option value="Acoustic Guitarist" data-en="Acoustic Guitarist" data-my="Acoustic ဂစ်တာသမား">Acoustic Guitarist</option>
+                    <option value="Wedding & Portrait Photographer" data-en="Wedding & Portrait Photographer" data-my="မင်္ဂလာဆောင်နှင့် Portrait ဓာတ်ပုံဆရာ">Wedding & Portrait Photographer</option>
+                    <option value="Marathon Runner" data-en="Marathon Runner" data-my="မာရသွန်အပြေးသမား">Marathon Runner</option>
+                    <option value="Corporate Lawyer" data-en="Corporate Lawyer" data-my="Corporateရှေ့နေ">Corporate Lawyer</option>
+                    <option value="Operations Supervisor" data-en="Operations Supervisor" data-my="Operations Supervisor">Operations Supervisor</option>
+                    <option value="Creative Designer" data-en="Creative Designer" data-my="Creative Designer">Creative Designer</option>
+                    <option value="Doctor" data-en="Doctor" data-my="ဆရာဝန်">Doctor</option>
+                    <option value="Teacher" data-en="Teacher" data-my="ဆရာမ">Teacher</option>
+                    <option value="Office Worker" data-en="Office Worker" data-my="ရုံးဝန်ထမ်း">Office Worker</option>
+                    <option value="Student" data-en="Student" data-my="ကျောင်းသူ">Student</option>
+                    <option value="Freelance Graphic Designer" data-en="Freelance Graphic Designer" data-my="Freelance Graphic Designer">Freelance Graphic Designer</option>
+                    <option value="Local Bakery Owner" data-en="Local Bakery Owner" data-my="ပြည်တွင်းမုန့်တိုက်ပိုင်ရှင်">Local Bakery Owner</option>
+                    <option value="Auto Mechanic" data-en="Auto Mechanic" data-my="စက်ပြင်">Auto Mechanic</option>
                 </select>
             </div>
-  <div class="modal-actions">
+
+            <div class="modal-actions">
                 <button class="modal-button apply-filters" id="applyFilters" data-en="Apply Filters" data-my="စစ်ထုတ်မှုများ အသုံးပြုရန်">Apply Filters</button>
                 <button class="modal-button reset-filters" id="resetFilters" data-en="Reset" data-my="ပြန်လည်သတ်မှတ်ရန်">Reset</button>
-            </div>        </div>
+            </div>
+        </div>
     </div>
 
-    <script>
-        // Sample JSON data
-        
-       const profilesData = {
-  "profiles": [
-    {
-      "id": "ATZ-B01",
-      "name": "Aung Min",
-      "career": "Graphic Designer",
-      "careerMy": "ဂရပ်ဖစ်ဒီဇိုင်နာ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 18000,
-      "discountPrice": null,
-      "popular": true,
-      "image": "img/basic-1.png",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B02",
-      "name": "Kyaw Zin",
-      "career": "Photographer",
-      "careerMy": "ဓာတ်ပုံဆရာ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 15000,
-      "discountPrice": 12000,
-      "popular": false,
-      "image": "img/basic-2.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B03",
-      "name": "Su Mon",
-      "career": "Student",
-      "careerMy": "ကျောင်းသူ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 12000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-3.png",
-      "isNew": true,
-      "isFree": true
-    },
-    {
-      "id": "ATZ-B04",
-      "name": "Zaw Zaw",
-      "career": "Office Worker",
-      "careerMy": "ရုံးဝန်ထမ်း",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 20000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-4.png",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B05",
-      "name": "Hnin Ei",
-      "career": "Teacher",
-      "careerMy": "ဆရာမ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 17000,
-      "discountPrice": 15000,
-      "popular": true,
-      "image": "img/basic-5.png",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B06",
-      "name": "Mya Thandar",
-      "career": "Doctor",
-      "careerMy": "ဆရာဝန်",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 25000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-6.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B07",
-      "name": "Ma Su Hnin",
-      "career": "Freelance Graphic Desingner",
-      "careerMy": "Freelance Graphic Desinger",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 27000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-7.png",
-      "isNew": false,
-      "isFree": false
-    },{
-      "id": "ATZ-B08",
-      "name": "DR. Aye Chan",
-      "career": "Doctor",
-      "careerMy": "ဆရာဝန်",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 25000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-8.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B09",
-      "name": "U Min Htwe",
-      "career": "Local Bakery Owner",
-      "careerMy": "ပြည်တွင်းမုန့်တိုက်ပိုင်ရှင်",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 25000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-10.png",
-      "isNew": false,
-      "isFree": false
-    },
+   <script>
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 1.  STATE
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    {
-      "id": "ATZ-B10",
-      "name": "Ko Than Zaw",
-      "career": "Auto Mechanic",
-      "careerMy": "စက်ပြင်",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 25000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-10.png",
-      "isNew": true,
-      "isFree": false
-    },
+    let profilesData = null; // Will hold fetched data
+    let isLoading = true;
 
-    {
-      "id": "ATZ-S01",
-      "name": "Aung Aung",
-      "career": "Senior UI/UX Designer",
-      "careerMy": "UI/UX ဒီဇိုင်နာ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 40000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-S01.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S02",
-      "name": "Sarah Johnson",
-      "career": "Frontend Developer & UI Designer",
-      "careerMy": "Frontend Developer & UI Designer",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 45000,
-      "discountPrice": null,
-      "popular": true,
-      "image": "img/ATZ-S02.png",
-      "isNew": false,
-      "isFree": true
-    },
-    {
-      "id": "ATZ-S03",
-      "name": "Dr. Sarah Williams",
-      "career": "Mathematics Professor",
-      "careerMy": "သင်္ချာပါမောက္ခ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 42000,
-      "discountPrice": 39000,
-      "popular": true,
-      "image": "img/ATZ-S03.png",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S04",
-      "name": "Alex Johnson",
-      "career": "Senior UI/UX Designer",
-      "careerMy": "Senior UI/UX ဒီဇိုင်နာ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 38000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-S04.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S05",
-      "name": "Michael Johnson",
-      "career": "Operations Supervisor",
-      "careerMy": "Operations Supervisor",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 47000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-S05.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S06",
-      "name": "Myo Thant",
-      "career": "Creative Designer",
-      "careerMy": "Creative Designer",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 46000,
-      "discountPrice": 43000,
-      "popular": false,
-      "image": "img/ATZ-S06.png",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S07",
-      "name": "Daw Nandar Win",
-      "career": "Corporate Lawyer",
-      "careerMy": "Corporateရှေ့နေ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 40000,
-      "discountPrice": 36000,
-      "popular": true,
-      "image": "img/ATZ-S07.png",
-      "isNew": false,
-      "isFree": false
-    },
-     {
-      "id": "ATZ-S08",
-      "name": "Ko Thura Aung",
-      "career": "Acoustic Guitarist",
-      "careerMy": "Acoustic ဂစ်တာသမား",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 40000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-S09.png",
-      "isNew": true,
-      "isFree": false
-    },
-        {
-      "id": "ATZ-S09",
-      "name": "Ko Kaung Myat",
-      "career": "Wedding & Portrait Photographer",
-      "careerMy": "မင်္ဂလာဆောင်နှင့် Portrait ဓာတ်ပုံဆရာ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 40000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-S09.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
+    // Filter state
+    let selectedPurpose = 'all';
+    let selectedTier = 'all';
+    let selectedCareer = 'all';
+    let currentLanguage = 'en';
+    let currentSearchQuery = '';
+    let currentTagFilter = 'all';
 
-      "id": "ATZ-S10",
-      "name": "Nyi Nyi Htut",
-      "career": "Marathon Runner",
-      "careerMy": "မာရသွန်အပြေးသမား",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 45000,
-      "discountPrice": null,
-      "popular": true,
-      "image": "img/ATZ-S10.png",
-      "isNew": false,
-      "isFree": true
-    },
-    
-    {
-      "id": "ATZ-P01",
-      "name": "Zaw Zaw",
-      "career": "Senior UI/UX Designer & Developer",
-      "careerMy": "Senior UI/UX Designer & Developer",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 90000,
-      "discountPrice": 82000,
-      "popular": true,
-      "image": "img/ATZ-P01.png",
-        "thumbnails": [
-            "img/ATZ-P01-thumb-1.png" ,
-            "img/ATZ-P01-thumb-2.png",
-            "img/ATZ-P01-thumb-3.png"
-        ],
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P02",
-      "name": "Alexandra Williams",
-      "career": "Creative Director & UI/UX Designer",
-      "careerMy": "Creative Director & UI/UX Designer",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 95000,
-      "discountPrice": 85000,
-      "popular": true,
-      "image": "img/ATZ-P02.png",
-          "thumbnails": [
-             "img/ATZ-P02-thumb-1.png" ,
-            "img/ATZ-P02-thumb-2.png",
-            "img/ATZ-P02-thumb-3.png",
-            "img/ATZ-P02-thumb-4.png"
-        ],
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 2.  DOM REFS
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P03",
-      "name": "DR.Srah Williams",
-      "career": "Mathematics Professor",
-      "careerMy": "သင်္ချာပါမောက္ခ",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 88000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-P03.png",
-       "thumbnails": [
-            "img/ATZ-P03-thumb-1.png" ,
-            "img/ATZ-P03-thumb-2.png",
-            "img/ATZ-P03-thumb-3.png",
-            "img/ATZ-P04-thumb-3.png"
-        ],
+    const grid = document.getElementById('profilesGrid');
+    const filterBtn = document.getElementById('filterBtn');
+    const modal = document.getElementById('filterModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const applyBtn = document.getElementById('applyFilters');
+    const resetBtn = document.getElementById('resetFilters');
 
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P04",
-      "name": "Emily Robertson ",
-      "career": "HR & Office Management Executive",
-      "careerMy": "HR & Office Management Executive",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 99000,
-      "discountPrice": 92000,
-      "popular": true,
-      "image": "img/ATZ-P04.png",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P05",
-      "name": "DR. Aye Chan Kyaw",
-      "career": "Senior Cardiologist",
-      "careerMy": "အကြီးတန်းနှလုံးအထူးကု",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 87000,
-      "discountPrice": 83000,
-      "popular": false,
-      "image": "img/ATZ-P05.png",
-       "thumbnails": [
-            "img/ATZ-P05-thumb-1.png" ,
-            "img/ATZ-P05-thumb-2.png",
-        ],
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P06",
-      "name": "Chef Kyaw Zin Htet",
-      "career": "Excutive Chet - Yangon Fine Dining",
-      "careerMy": "Executive Chef - Yangon Fine Dining",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 93000,
-      "discountPrice": null,
-      "popular": true,
-      "image": "img/ATZ-P06.png",
-       "thumbnails": [
-            "img/ATZ-P06-thumb-1.png" ,
-            "img/ATZ-P06-thumb-2.png",
-            "img/ATZ-P06-thumb-3.png"
-        ],
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P07",
-      "name": "Ko Nyi Nyi Tun",
-      "career": "Founder & CEO - TechWave",
-      "careerMy": "Founder & CEO - TeachWave",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 89000,
-      "discountPrice": 85000,
-      "popular": false,
-      "image": "img/ATZ-P07.png",
-       "thumbnails": [
-            "img/ATZ-P07-thumb-1.png" ,
-            "img/ATZ-P07-thumb-2.png",
-        ],
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P08",
-      "name": "Daw May Thin",
-      "career": "High School Teacher (Mathamatics)",
-      "careerMy": "အထက်တန်းပြဆရာ(သင်္ချာ)၊",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 100000,
-      "discountPrice": 95000,
-      "popular": true,
-      "image": "img/ATZ-P08.png",
-       "thumbnails": [
-            "img/ATZ-P08-thumb-1.png" ,
-            "img/ATZ-P08-thumb-2.png",
-        ],
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P09",
-      "name": "Su Hlaing",
-      "career": "Creative Fashion Desinger",
-      "careerMy": "ဖန်တီးမှု ဖက်ရှင်ဒီဇိုင်နာ",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 86000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-P09.png",
-       "thumbnails": [
-            "img/ATZ-P09-thumb-1.png" ,
-            "img/ATZ-P09-thumb-2.png",
-        ],
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P10",
-      "name": "Aung Kyaw Moe",
-      "career": "Teach Startup Founder",
-      "careerMy": "Teach Startup Founder",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 94000,
-      "discountPrice": 88000,
-      "popular": true,
-      "image": "img/ATZ-P10.png",
-       "thumbnails": [
-            "img/ATZ-P10-thumb-1.png" ,
-            "img/ATZ-P10-thumb-2.png",
-        ],
-      "isNew": false,
-      "isFree": false
-    }
-  ]
-};
+    const purposeTabs = document.querySelectorAll('.purpose-tab');
+    const tierOptions = document.querySelectorAll('.filter-option');
+    const careerSelect = document.getElementById('careerSelect');
 
+    const langBtn = document.querySelector('.language-btn');
+    const langOptions = document.querySelector('.language-options');
+    const langOpts = document.querySelectorAll('.language-option');
+    const currentLangSpan = document.getElementById('current-language');
 
-        // DOM Elements
-        const profilesGrid = document.getElementById('profilesGrid');
-        const filterBtn = document.getElementById('filterBtn');
-        const filterModal = document.getElementById('filterModal');
-        const closeModal = document.getElementById('closeModal');
-        const applyFilters = document.getElementById('applyFilters');
-        const resetFilters = document.getElementById('resetFilters');
-        const filterOptions = document.querySelectorAll('.filter-option');
-        const languageBtn = document.querySelector('.language-btn');
-        const languageOptions = document.querySelector('.language-options');
-        const categoryTags = document.querySelectorAll('.category-tag');
-        const searchBox = document.querySelector('.search-box');
-        const careerSelect = document.getElementById('careerSelect');
-        const previewModal = document.getElementById('previewModal');
-        const closePreviewModal = document.getElementById('closePreviewModal');
-        const previewImage = document.getElementById('previewImage');
-        const buyFromPreview = document.getElementById('buyFromPreview');
-        const paymentModal = document.getElementById('paymentModal');
-        const closePaymentModal = document.getElementById('closePaymentModal');
-        const paymentForm = document.getElementById('paymentForm');
-        const totalAmount = document.getElementById('totalAmount');
-        const successModal = document.getElementById('successModal');
-        const closeSuccessModal = document.getElementById('closeSuccessModal');
-        const currentLanguageElement = document.getElementById('current-language');
+    const searchBox = document.querySelector('.search-box');
+    const categoryTags = document.querySelectorAll('.category-tag');
 
-        // Current filter state and language
-        let currentFilter = 'all';
-        let currentCareerFilter = 'all';
-        let currentLanguage = 'en';
-        let currentSearchQuery = '';
-        let currentTagFilter = 'all';
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 3.  HELPERS
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-        // Function to format currency
-        function formatCurrency(amount) {
-            if (currentLanguage === 'my') {
-                return amount.toLocaleString('en-US') + ' ကျပ်';
-            }
-            return new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'MMK',
-                minimumFractionDigits: 0
-            }).format(amount);
+    function formatCurrency(amount) {
+        if (currentLanguage === 'my') {
+            return amount.toLocaleString('en-US') + ' ကျပ်';
         }
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'MMK',
+            minimumFractionDigits: 0
+        }).format(amount);
+    }
 
-// After rendering all cards
-function initPreviewButtons() {
-  document.querySelectorAll(".preview-button").forEach(btn => {
-    btn.addEventListener("click", (e) => {
-      const card = e.target.closest(".profile-card");
-      const profileId = card.querySelector(".profile-name").textContent; // e.g., ATZ-B01
-      const category = card.dataset.category; // Basic, Standard, Premium
+    function getLangText(el, fallback) {
+        const key = currentLanguage === 'my' ? 'data-my' : 'data-en';
+        return el.getAttribute(key) || fallback || el.textContent;
+    }
 
-      let url = "";
+    function showLoadingState() {
+        grid.innerHTML = `
+            <div class="no-results" style="grid-column:1/-1;text-align:center;padding:3rem 1rem;font-size:1.2rem;color:var(--text-light);background:white;border-radius:12px;box-shadow:var(--shadow);">
+                <i class="fas fa-spinner fa-spin" style="font-size:2rem;display:block;margin-bottom:1rem;color:var(--basic-color);"></i>
+                ${currentLanguage === 'my' ? 'ဒေတာများ ယူဆောင်လာနေသည်...' : 'Loading templates...'}
+            </div>
+        `;
+    }
 
-      if (category === "Basic") {
-        url = `https://heartleon92-create.github.io/ProfilePublicMain/Basic%20Price/${profileId}.html`;
-      } else if (category === "Standard") {
-        url = `https://heartleon92-create.github.io/ProfilePublicMain/Strander%20Price/${profileId}.html`;
-      } else if (category === "Premium") {
-        url = `https://heartleon92-create.github.io/ProfilePublicMain/Premium/${profileId}.html`;
-      }
+    function showErrorState(message) {
+        grid.innerHTML = `
+            <div class="no-results" style="grid-column:1/-1;text-align:center;padding:3rem 1rem;font-size:1.2rem;color:#e74c3c;background:white;border-radius:12px;box-shadow:var(--shadow);">
+                <i class="fas fa-exclamation-triangle" style="font-size:2rem;display:block;margin-bottom:1rem;color:#e74c3c;"></i>
+                ${message || (currentLanguage === 'my' ? 'ဒေတာများ ရယူရာတွင် အမှားအယွင်းရှိသည်။' : 'Failed to load templates.')}
+                <br><small style="font-weight:400;color:var(--text-light);">${currentLanguage === 'my' ? 'ကျေးဇူးပြု၍ စာမျက်နှာကို ပြန်လည်စတင်ပါ။' : 'Please refresh the page.'}</small>
+            </div>
+        `;
+    }
 
-      if (url) {
-        window.open(url, "_blank"); // Open in new tab
-      }
-    });
-  });
-}
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 4.  FETCH DATA
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-        // Function to create profile card HTML
-        function createProfileCard(profile) {
-            const hasDiscount = profile.discountPrice !== null;
-            const careerText = currentLanguage === 'my' && profile.careerMy ? profile.careerMy : profile.career;
-            const buyText = currentLanguage === 'my' ? 'ဝယ်ယူရန်' : 'Buy';
-            const previewText = currentLanguage === 'my' ? 'စစ်ဆေးကြည့်ရန်' : 'Live Preview';
-            const saveText = currentLanguage === 'my' ? 'သက်သာငွေ' : 'Save';
-            
-            return `
-                <div class="profile-card" data-category="${profile.category}" data-career="${profile.career}" data-popular="${profile.popular}" data-new="${profile.isNew}" data-free="${profile.isFree}">
-                    <div class="card-image">
-                        <img src="${profile.image}" alt="${profile.name}" loading="lazy">
-                        <div class="badges">
-                            <span class="category-badge ${profile.category.toLowerCase()}-badge" data-en="${profile.category}" data-my="${profile.category === 'Basic' ? 'အခြေခံ' : profile.category === 'Standard' ? 'စံ' : 'အဆင့်မြင့်'}">${currentLanguage === 'my' ? (profile.category === 'Basic' ? 'အခြေခံ' : profile.category === 'Standard' ? 'စံ' : 'အဆင့်မြင့်') : profile.category}</span>
-                            ${profile.popular ? `<span class="popular-badge" data-en="Popular" data-my="လူကြိုက်များ">⭐ ${currentLanguage === 'my' ? 'လူကြိုက်များ' : 'Popular'}</span>` : ''}
-                            ${profile.isNew ? `<span class="popular-badge" data-en="New" data-my="အသစ်" style="background-color: #00cec9;">${currentLanguage === 'my' ? 'အသစ်' : 'New'}</span>` : ''}
-                            ${profile.isFree ? `<span class="popular-badge" data-en="Free" data-my="အခမဲ့" style="background-color: #00b894;">${currentLanguage === 'my' ? 'အခမဲ့' : 'Free'}</span>` : ''}
-                        </div>
-                    </div>
-                    <div class="card-content">
-                        <h3 class="profile-name">${profile.id}</h3>
-                        <p class="profile-career">${careerText}</p>
-                        <div class="price-container">
-                            ${hasDiscount ? 
-                                `<span class="original-price">${formatCurrency(profile.price)}</span>
-                                 <span class="current-price">${formatCurrency(profile.discountPrice)}</span>
-                                 <span class="discount-badge">${saveText} ${Math.round((profile.price - profile.discountPrice) / profile.price * 100)}%</span>` :
-                                `<span class="current-price">${formatCurrency(profile.price)}</span>`
-                            }
-                        </div>
-                        <div class="card-actions">
-                            <button class="cta-button buy-button" data-profile-id="${profile.id}" data-profile-name="${profile.name}" data-profile-price="${hasDiscount ? profile.discountPrice : profile.price}">${buyText}</button>
-                            <button class="cta-button preview-button" data-profile-image="${profile.image}">${previewText}</button>
-                        </div>
+    async function fetchProfilesData() {
+        const jsonPath = './json/product.json'; // relative to index.html
+
+        try {
+            const response = await fetch(jsonPath);
+
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status} – ${response.statusText}`);
+            }
+
+            const data = await response.json();
+
+            if (!data || !data.profiles || !Array.isArray(data.profiles)) {
+                throw new Error('Invalid data structure: missing "profiles" array.');
+            }
+
+            profilesData = data;
+            isLoading = false;
+            return data;
+
+        } catch (error) {
+            console.error('[ProfileCraft] Failed to fetch product.json:', error);
+            isLoading = false;
+            profilesData = null;
+            showErrorState(
+                currentLanguage === 'my'
+                    ? 'ဒေတာများ ရယူရာတွင် အမှားအယွင်းရှိသည်။'
+                    : 'Failed to load template data.'
+            );
+            throw error;
+        }
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 5.  RENDER CARDS
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function createProfileCard(profile) {
+        const hasDiscount = profile.discountPrice !== null;
+        const careerText = currentLanguage === 'my' && profile.careerMy ? profile.careerMy : profile.career;
+        const buyText = currentLanguage === 'my' ? 'ဝယ်ယူရန်' : 'Buy';
+        const previewText = currentLanguage === 'my' ? 'စစ်ဆေးကြည့်ရန်' : 'Live Preview';
+        const saveText = currentLanguage === 'my' ? 'သက်သာငွေ' : 'Save';
+
+        const tierLabel = currentLanguage === 'my'
+            ? (profile.category === 'Basic' ? 'အခြေခံ' : profile.category === 'Standard' ? 'စံ' : 'အဆင့်မြင့်')
+            : profile.category;
+
+        return `
+            <div class="profile-card"
+                 data-purpose="${profile.purpose || 'business'}"
+                 data-tier="${profile.category}"
+                 data-career="${profile.career}"
+                 data-id="${profile.id}"
+                 data-popular="${profile.popular}"
+                 data-new="${profile.isNew}"
+                 data-free="${profile.isFree}">
+                <div class="card-image">
+                    <img src="${profile.image}" alt="${profile.name}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Crect fill=%22%23f1f2f6%22 width=%22300%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-family=%22Inter,sans-serif%22 font-size=%2216%22%3ENo Image%3C/text%3E%3C/svg%3E'">
+                    <div class="badges">
+                        <span class="category-badge ${profile.category.toLowerCase()}-badge">${tierLabel}</span>
+                        ${profile.popular ? `<span class="popular-badge">⭐ ${currentLanguage === 'my' ? 'လူကြိုက်များ' : 'Popular'}</span>` : ''}
+                        ${profile.isNew ? `<span class="popular-badge" style="background-color:#00cec9;">${currentLanguage === 'my' ? 'အသစ်' : 'New'}</span>` : ''}
+                        ${profile.isFree ? `<span class="popular-badge" style="background-color:#00b894;">${currentLanguage === 'my' ? 'အခမဲ့' : 'Free'}</span>` : ''}
                     </div>
                 </div>
-            `;
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-    document.querySelectorAll(".buy-button").forEach(button => {
-      button.addEventListener("click", () => {
-        const profileId = button.getAttribute("data-profile-id");
-        
-        // Save the profile ID to localStorage
-        localStorage.setItem("selectedProfileId", profileId);
-        
-        // Redirect to details page
-        window.location.href = "details.html";
-      });
-    });
-  });
-
-        // Function to filter and render profile cards
-        function renderProfiles() {
-            profilesGrid.innerHTML = '';
-            
-            let filteredProfiles = profilesData.profiles.filter(profile => {
-                // Category filter
-                if (currentFilter !== 'all' && profile.category !== currentFilter) {
-                    return false;
-                }
-                
-                // Career filter
-                if (currentCareerFilter !== 'all' && profile.career !== currentCareerFilter) {
-                    return false;
-                }
-                
-                // Tag filter
-                if (currentTagFilter === 'popular' && !profile.popular) {
-                    return false;
-                }
-                if (currentTagFilter === 'new' && !profile.isNew) {
-                    return false;
-                }
-                if (currentTagFilter === 'free' && !profile.isFree) {
-                    return false;
-                }
-                
-                // Search filter
-                if (currentSearchQuery) {
-                    const searchTerm = currentSearchQuery.toLowerCase();
-                    const nameMatch = profile.name.toLowerCase().includes(searchTerm);
-                    const careerMatch = profile.career.toLowerCase().includes(searchTerm);
-                    const careerMyMatch = profile.careerMy && profile.careerMy.toLowerCase().includes(searchTerm);
-                    
-                    if (!nameMatch && !careerMatch && !careerMyMatch) {
-                        return false;
-                    }
-                }
-                
-                return true;
-            });
-            
-            filteredProfiles.forEach((profile, index) => {
-                const cardHTML = createProfileCard(profile);
-                const cardElement = document.createElement('div');
-                cardElement.innerHTML = cardHTML;
-                
-                // Add staggered animation delay
-                const card = cardElement.firstElementChild;
-                card.style.animationDelay = `${index * 0.1}s`;
-                
-                profilesGrid.appendChild(card);
-            });
-            
-            // Add event listeners to the new buttons
-            addCardEventListeners();
-            initPreviewButtons();
-        }
-
-        // Function to add event listeners to card buttons
-        function addCardEventListeners() {
-            // Buy buttons
-             document.querySelectorAll('.buy-button').forEach(button => {
-    button.addEventListener('click', () => {
-      const profileId = button.getAttribute('data-profile-id');
-      localStorage.setItem('selectedProfileId', profileId);
-      window.location.href = "details.html";
-    });
-  });
-            // Preview buttons
-            document.querySelectorAll('.preview-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const imageUrl = this.getAttribute('data-profile-image');
-                    previewImage.src = imageUrl;
-                    previewModal.classList.add('active');
-                });
-            });
-        }
-
-        // Function to change language
-        function changeLanguage(lang) {
-            currentLanguage = lang;
-            
-            // Update UI elements based on language
-            document.querySelectorAll('[data-en], [data-my]').forEach(element => {
-                if (element.tagName === 'INPUT' && element.placeholder) {
-                    element.placeholder = element.getAttribute(`data-${lang}-placeholder`) || element.getAttribute('data-en-placeholder');
-                } else if (element.tagName === 'OPTION') {
-                    element.textContent = element.getAttribute(`data-${lang}`) || element.getAttribute('data-en');
-                } else {
-                    element.textContent = element.getAttribute(`data-${lang}`) || element.getAttribute('data-en');
-                }
-            });
-            
-            // Update current language text
-            currentLanguageElement.textContent = lang === 'en' ? 'English' : 'Myanmar';
-            
-            // Update body class for font changes
-            if (lang === 'my') {
-                document.body.classList.add('myanmar');
-            } else {
-                document.body.classList.remove('myanmar');
-            }
-            
-            // Re-render profiles with new language
-            renderProfiles();
-        }
-
-        // Function to initialize event listeners
-        function initEventListeners() {
-            // Filter button click
-            filterBtn.addEventListener('click', () => {
-                filterModal.classList.add('active');
-            });
-
-            // Close modal button
-            closeModal.addEventListener('click', () => {
-                filterModal.classList.remove('active');
-            });
-
-            // Filter option clicks
-            filterOptions.forEach(option => {
-                option.addEventListener('click', () => {
-                    filterOptions.forEach(opt => opt.classList.remove('active'));
-                    option.classList.add('active');
-                    currentFilter = option.dataset.category;
-                });
-            });
-
-            // Apply filters button
-            applyFilters.addEventListener('click', () => {
-                currentCareerFilter = careerSelect.value;
-                renderProfiles();
-                filterModal.classList.remove('active');
-            });
-
-            // Reset filters button
-            resetFilters.addEventListener('click', () => {
-                filterOptions.forEach(opt => opt.classList.remove('active'));
-                document.querySelector('[data-category="all"]').classList.add('active');
-                currentFilter = 'all';
-                careerSelect.value = 'all';
-                currentCareerFilter = 'all';
-                renderProfiles();
-            });
-
-            // Language switcher
-            languageBtn.addEventListener('click', () => {
-                languageOptions.classList.toggle('active');
-            });
-
-            // Language option clicks
-            document.querySelectorAll('.language-option').forEach(option => {
-                option.addEventListener('click', () => {
-                    const lang = option.dataset.lang;
-                    changeLanguage(lang);
-                    languageOptions.classList.remove('active');
-                });
-            });
-
-            // Close language options when clicking outside
-            document.addEventListener('click', (e) => {
-                if (!languageBtn.contains(e.target) && !languageOptions.contains(e.target)) {
-                    languageOptions.classList.remove('active');
-                }
-            });
-
-            // Category tags
-            categoryTags.forEach(tag => {
-                tag.addEventListener('click', () => {
-                    categoryTags.forEach(t => t.classList.remove('active'));
-                    tag.classList.add('active');
-                    currentTagFilter = tag.getAttribute('data-category');
-                    renderProfiles();
-                });
-            });
-
-            // Search box
-         
-
-            // Career select
-            careerSelect.addEventListener('change', () => {
-                currentCareerFilter = careerSelect.value;
-                renderProfiles();
-            });
-
-          
-            // Success modal close
-           
-
-            // Close modals when clicking outside
-            document.querySelectorAll('.modal-overlay').forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.classList.remove('active');
-                    }
-                });
-            });
-              searchBox.addEventListener('input', () => {
-                const searchTerm = searchBox.value.toLowerCase();
-                const filteredProfiles = profilesData.profiles.filter(profile => 
-                    profile.name.toLowerCase().includes(searchTerm) || 
-                    profile.career.toLowerCase().includes(searchTerm) ||
-                    (profile.careerMy && profile.careerMy.toLowerCase().includes(searchTerm))
-                );
-                
-                profilesGrid.innerHTML = '';
-                filteredProfiles.forEach((profile, index) => {
-                    const cardHTML = createProfileCard(profile);
-                    const cardElement = document.createElement('div');
-                    cardElement.innerHTML = cardHTML;
-                    
-                    // Add staggered animation delay
-                    const card = cardElement.firstElementChild;
-                    card.style.animationDelay = `${index * 0.1}s`;
-                    
-                    profilesGrid.appendChild(card);
-                });
-            });
-        }
-
-        // Initialize the page
-        function init() {
-            renderProfiles();
-            initEventListeners();
-        }
-
-        // Run initialization when DOM is loaded
-        document.addEventListener('DOMContentLoaded', init);
-        // Category Filter Functionality for Tags
-function initCategoryTags() {
-    const categoryTags = document.querySelectorAll('.category-tag');
-    
-    // Add click event listeners to category tags
-    categoryTags.forEach(tag => {
-        tag.addEventListener('click', function() {
-            // Remove active class from all tags
-            categoryTags.forEach(t => t.classList.remove('active'));
-            
-            // Add active class to clicked tag
-            this.classList.add('active');
-            
-            // Get the category from data attributes
-            const category = this.getAttribute('data-en').toLowerCase();
-            
-            // Update current tag filter
-            currentTagFilter = category;
-            
-            // Re-render profiles with new filter
-            renderProfiles();
-        });
-    });
-}
-
-// Update your renderProfiles function to include tag filtering
-function renderProfiles() {
-    profilesGrid.innerHTML = '';
-    
-    let filteredProfiles = profilesData.profiles.filter(profile => {
-        // Category filter
-        if (currentFilter !== 'all' && profile.category !== currentFilter) {
-            return false;
-        }
-        
-        // Career filter
-        if (currentCareerFilter !== 'all' && profile.career !== currentCareerFilter) {
-            return false;
-        }
-        
-        // Tag filter - FIXED VERSION
-        if (currentTagFilter === 'popular' && !profile.popular) {
-            return false;
-        }
-        if (currentTagFilter === 'new' && !profile.isNew) {
-            return false;
-        }
-        if (currentTagFilter === 'free' && !profile.isFree) {
-            return false;
-        }
-        // For "all template", no additional filtering needed
-        
-        // Search filter
-        if (currentSearchQuery) {
-            const searchTerm = currentSearchQuery.toLowerCase();
-            const nameMatch = profile.name.toLowerCase().includes(searchTerm);
-            const careerMatch = profile.career.toLowerCase().includes(searchTerm);
-            const careerMyMatch = profile.careerMy && profile.careerMy.toLowerCase().includes(searchTerm);
-            
-            if (!nameMatch && !careerMatch && !careerMyMatch) {
-                return false;
-            }
-        }
-        
-        return true;
-    });
-    
-    // Show message if no profiles found
-    if (filteredProfiles.length === 0) {
-        const noResultsMessage = currentLanguage === 'my' ? 
-            'ရလဒ်မတွေ့ပါ' : 'No results found';
-        profilesGrid.innerHTML = `<div class="no-results">${noResultsMessage}</div>`;
-        return;
+                <div class="card-content">
+                    <h3 class="profile-name">${profile.id}</h3>
+                    <p class="profile-career">${careerText}</p>
+                    <div class="price-container">
+                        ${hasDiscount
+                            ? `<span class="original-price">${formatCurrency(profile.price)}</span>
+                               <span class="current-price">${formatCurrency(profile.discountPrice)}</span>
+                               <span class="discount-badge">${saveText} ${Math.round((profile.price - profile.discountPrice) / profile.price * 100)}%</span>`
+                            : `<span class="current-price">${formatCurrency(profile.price)}</span>`
+                        }
+                    </div>
+                    <div class="card-actions">
+                        <button class="cta-button buy-button"
+                                data-id="${profile.id}"
+                                data-purpose="${profile.purpose || 'business'}"
+                                data-tier="${profile.category}"
+                                data-name="${profile.name}">${buyText}</button>
+                        <button class="cta-button preview-button"
+                                data-image="${profile.image}">${previewText}</button>
+                    </div>
+                </div>
+            </div>
+        `;
     }
-    
-    filteredProfiles.forEach((profile, index) => {
-        const cardHTML = createProfileCard(profile);
-        const cardElement = document.createElement('div');
-        cardElement.innerHTML = cardHTML;
-        
-        // Add staggered animation delay
-        const card = cardElement.firstElementChild;
-        card.style.animationDelay = `${index * 0.1}s`;
-        
-        profilesGrid.appendChild(card);
-    });
-    
-    // Add event listeners to the new buttons
-    addCardEventListeners();
-    initPreviewButtons();
-}
 
-// Update your initEventListeners function - REMOVE the existing category tag code
-function initEventListeners() {
-    // Filter button click
-    filterBtn.addEventListener('click', () => {
-        filterModal.classList.add('active');
-    });
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 6.  FILTER ENGINE
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    // Close modal button
-    closeModal.addEventListener('click', () => {
-        filterModal.classList.remove('active');
-    });
-
-    // Filter option clicks
-    filterOptions.forEach(option => {
-        option.addEventListener('click', () => {
-            filterOptions.forEach(opt => opt.classList.remove('active'));
-            option.classList.add('active');
-            currentFilter = option.dataset.category;
-        });
-    });
-
-    // Apply filters button
-    applyFilters.addEventListener('click', () => {
-        currentCareerFilter = careerSelect.value;
-        renderProfiles();
-        filterModal.classList.remove('active');
-    });
-
-    // Reset filters button
-    resetFilters.addEventListener('click', () => {
-        filterOptions.forEach(opt => opt.classList.remove('active'));
-        document.querySelector('[data-category="all"]').classList.add('active');
-        currentFilter = 'all';
-        careerSelect.value = 'all';
-        currentCareerFilter = 'all';
-        renderProfiles();
-    });
-
-    // Language switcher
-    languageBtn.addEventListener('click', () => {
-        languageOptions.classList.toggle('active');
-    });
-
-    // Language option clicks
-    document.querySelectorAll('.language-option').forEach(option => {
-        option.addEventListener('click', () => {
-            const lang = option.dataset.lang;
-            changeLanguage(lang);
-            languageOptions.classList.remove('active');
-        });
-    });
-
-    // Close language options when clicking outside
-    document.addEventListener('click', (e) => {
-        if (!languageBtn.contains(e.target) && !languageOptions.contains(e.target)) {
-            languageOptions.classList.remove('active');
+    function filterAndRender() {
+        // Guard: if data isn't loaded yet, show loading
+        if (isLoading || !profilesData) {
+            if (!isLoading && !profilesData) {
+                showErrorState(currentLanguage === 'my' ? 'ဒေတာများ မရရှိနိုင်ပါ။' : 'Data unavailable.');
+            } else {
+                showLoadingState();
+            }
+            return;
         }
-    });
 
-    // Initialize category tags - ADD THIS LINE
-    initCategoryTags();
+        const filtered = profilesData.profiles.filter(profile => {
+            // — purpose —
+            if (selectedPurpose !== 'all' && profile.purpose !== selectedPurpose) return false;
 
-    // Search box
-    searchBox.addEventListener('input', () => {
-        currentSearchQuery = searchBox.value;
-        renderProfiles();
-    });
+            // — tier —
+            if (selectedTier !== 'all' && profile.category !== selectedTier) return false;
 
-    // Career select
-    careerSelect.addEventListener('change', () => {
-        currentCareerFilter = careerSelect.value;
-        renderProfiles();
-    });
+            // — career —
+            if (selectedCareer !== 'all' && profile.career !== selectedCareer) return false;
 
-    // Close modals when clicking outside
-    document.querySelectorAll('.modal-overlay').forEach(modal => {
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.classList.remove('active');
+            // — tag (popular / new / free) —
+            if (currentTagFilter === 'popular' && !profile.popular) return false;
+            if (currentTagFilter === 'new' && !profile.isNew) return false;
+            if (currentTagFilter === 'free' && !profile.isFree) return false;
+
+            // — search —
+            if (currentSearchQuery) {
+                const q = currentSearchQuery.toLowerCase();
+                const nameMatch = profile.name.toLowerCase().includes(q);
+                const careerMatch = profile.career.toLowerCase().includes(q);
+                const careerMyMatch = profile.careerMy && profile.careerMy.toLowerCase().includes(q);
+                if (!nameMatch && !careerMatch && !careerMyMatch) return false;
+            }
+
+            return true;
+        });
+
+        grid.innerHTML = '';
+
+        if (filtered.length === 0) {
+            const msg = currentLanguage === 'my' ? 'ရလဒ်မတွေ့ပါ' : 'No results found';
+            grid.innerHTML = `<div class="no-results">${msg}</div>`;
+            return;
+        }
+
+        filtered.forEach((profile, i) => {
+            const html = createProfileCard(profile);
+            const wrapper = document.createElement('div');
+            wrapper.innerHTML = html;
+            const card = wrapper.firstElementChild;
+            card.style.animationDelay = `${i * 0.08}s`;
+            grid.appendChild(card);
+        });
+
+        bindCardEvents();
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 7.  CARD EVENTS
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function bindCardEvents() {
+        document.querySelectorAll('.buy-button').forEach(btn => {
+            btn.removeEventListener('click', handleBuy);
+            btn.addEventListener('click', handleBuy);
+        });
+
+        document.querySelectorAll('.preview-button').forEach(btn => {
+            btn.removeEventListener('click', handlePreview);
+            btn.addEventListener('click', handlePreview);
+        });
+    }
+
+    function handleBuy(e) {
+        const btn = e.currentTarget;
+        const card = btn.closest('.profile-card');
+        if (!card) return;
+
+        const info = {
+            id: card.dataset.id || btn.dataset.id,
+            purpose: card.dataset.purpose || btn.dataset.purpose || 'business',
+            tier: card.dataset.tier || btn.dataset.tier,
+            name: btn.dataset.name || '',
+        };
+
+        localStorage.setItem('selected_template_info', JSON.stringify(info));
+        window.location.href = 'details.html';
+    }
+
+    function handlePreview(e) {
+        const btn = e.currentTarget;
+        const imgUrl = btn.dataset.image;
+        if (imgUrl) {
+            window.open(imgUrl, '_blank');
+        }
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 8.  MODAL CONTROLS
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function openModal() {
+        modal.classList.add('active');
+        syncModalUI();
+    }
+
+    function closeModal() {
+        modal.classList.remove('active');
+    }
+
+    function syncModalUI() {
+        purposeTabs.forEach(tab => {
+            tab.classList.toggle('active', tab.dataset.purpose === selectedPurpose);
+        });
+        tierOptions.forEach(opt => {
+            opt.classList.toggle('active', opt.dataset.tier === selectedTier);
+        });
+        careerSelect.value = selectedCareer;
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 9.  APPLY / RESET
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function applyFilters() {
+        const activePurpose = document.querySelector('.purpose-tab.active');
+        selectedPurpose = activePurpose ? activePurpose.dataset.purpose : 'all';
+
+        const activeTier = document.querySelector('.filter-option.active');
+        selectedTier = activeTier ? activeTier.dataset.tier : 'all';
+
+        selectedCareer = careerSelect.value;
+
+        filterAndRender();
+        closeModal();
+    }
+
+    function resetFilters() {
+        purposeTabs.forEach(tab => tab.classList.remove('active'));
+        document.querySelector('.purpose-tab[data-purpose="all"]')?.classList.add('active');
+
+        tierOptions.forEach(opt => opt.classList.remove('active'));
+        document.querySelector('.filter-option[data-tier="all"]')?.classList.add('active');
+
+        careerSelect.value = 'all';
+
+        selectedPurpose = 'all';
+        selectedTier = 'all';
+        selectedCareer = 'all';
+
+        filterAndRender();
+        closeModal();
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 10. LANGUAGE
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function setLanguage(lang) {
+        currentLanguage = lang;
+        currentLangSpan.textContent = lang === 'en' ? 'English' : 'Myanmar';
+
+        if (lang === 'my') {
+            document.body.classList.add('myanmar');
+        } else {
+            document.body.classList.remove('myanmar');
+        }
+
+        // Placeholders
+        document.querySelectorAll('[data-en-placeholder]').forEach(el => {
+            if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                el.placeholder = el.getAttribute(`data-${lang}-placeholder`) || el.getAttribute('data-en-placeholder');
             }
         });
-    });
-}
 
-// Update your init function
-function init() {
-    renderProfiles();
-    initEventListeners();
-    initCategoryTags(); // Ensure category tags are initialized
-}
-    </script>
+        // Generic data-en/data-my elements (skip tabs/options handled below)
+        document.querySelectorAll('[data-en][data-my]:not(.purpose-tab):not(.filter-option)').forEach(el => {
+            const txt = el.getAttribute(`data-${lang}`);
+            if (txt) el.textContent = txt;
+        });
+
+        // Purpose tabs
+        purposeTabs.forEach(tab => {
+            const txt = tab.getAttribute(`data-${lang}`);
+            if (txt) tab.textContent = txt;
+        });
+
+        // Tier options
+        tierOptions.forEach(opt => {
+            const txt = opt.getAttribute(`data-${lang}`);
+            if (txt) opt.textContent = txt;
+        });
+
+        // Career options
+        careerSelect.querySelectorAll('option').forEach(opt => {
+            const txt = opt.getAttribute(`data-${lang}`);
+            if (txt) opt.textContent = txt;
+        });
+
+        // Category tags
+        categoryTags.forEach(tag => {
+            const txt = tag.getAttribute(`data-${lang}`);
+            if (txt) tag.textContent = txt;
+        });
+
+        // Filter button
+        const filterSpan = filterBtn.querySelector('span');
+        if (filterSpan) {
+            const txt = filterBtn.getAttribute(`data-${lang}`);
+            if (txt) filterSpan.textContent = txt;
+        }
+
+        filterAndRender();
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 11. CATEGORY TAGS (top bar)
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function initCategoryTags() {
+        categoryTags.forEach(tag => {
+            tag.addEventListener('click', function() {
+                categoryTags.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                currentTagFilter = this.dataset.category || 'all';
+                filterAndRender();
+            });
+        });
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 12. INITIALIZATION
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    async function initApp() {
+        // Show loading state immediately
+        showLoadingState();
+
+        // Set up event listeners (they will work once data is loaded)
+        setupEventListeners();
+
+        try {
+            // Fetch data
+            await fetchProfilesData();
+
+            // If fetch succeeded, render
+            if (profilesData && profilesData.profiles) {
+                filterAndRender();
+            } else {
+                showErrorState(currentLanguage === 'my' ? 'ဒေတာများ ဗလာဖြစ်နေသည်။' : 'Data is empty.');
+            }
+        } catch (error) {
+            // Error already handled in fetchProfilesData, but just in case
+            if (!grid.querySelector('.no-results')) {
+                showErrorState(currentLanguage === 'my' ? 'ဒေတာများ ရယူရာတွင် အမှားအယွင်းရှိသည်။' : 'Failed to load templates.');
+            }
+        }
+    }
+
+    function setupEventListeners() {
+        // Modal open
+        filterBtn.addEventListener('click', openModal);
+
+        // Modal close
+        closeModalBtn.addEventListener('click', closeModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeModal();
+        });
+
+        // Purpose tabs
+        purposeTabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                purposeTabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Tier options
+        tierOptions.forEach(opt => {
+            opt.addEventListener('click', function() {
+                tierOptions.forEach(o => o.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Apply / Reset
+        applyBtn.addEventListener('click', applyFilters);
+        resetBtn.addEventListener('click', resetFilters);
+
+        // Language
+        langBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langOptions.classList.toggle('active');
+        });
+        document.addEventListener('click', () => langOptions.classList.remove('active'));
+
+        langOpts.forEach(opt => {
+            opt.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const lang = this.dataset.lang;
+                setLanguage(lang);
+                langOptions.classList.remove('active');
+            });
+        });
+
+        // Search
+        searchBox.addEventListener('input', function() {
+            currentSearchQuery = this.value;
+            filterAndRender();
+        });
+
+        // Category tags
+        initCategoryTags();
+
+        // Career select — apply on change (optional: you can also keep it via Apply button)
+        // We'll let Apply button handle it, but we also update state on change for consistency
+        careerSelect.addEventListener('change', function() {
+            // state will be read when Apply is clicked
+        });
+    }
+
+    // ─── Boot ───
+    document.addEventListener('DOMContentLoaded', initApp);
+</script>
 </body>
 </html>
