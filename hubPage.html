@@ -10,34 +10,20 @@
     </script>
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-    <!-- Google Fonts: Pyidaungsu for Myanmar, Inter for English -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Pyidaungsu&display=swap" rel="stylesheet" />
 
     <style>
         /* ── Base theme & typography ── */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Inter', 'Pyidaungsu', system-ui, -apple-system, sans-serif;
             transition: background 0.3s ease, color 0.2s ease;
             background: #f8fafc;
             color: #0f172a;
         }
-        body.dark {
-            background: #0b1120;
-            color: #e2e8f0;
-        }
-
-        /* ── Pyidaungsu fallback for Myanmar text ── */
-        .myanmar-text {
-            font-family: 'Pyidaungsu', 'Inter', system-ui, sans-serif;
-        }
+        body.dark { background: #0b1120; color: #e2e8f0; }
 
         /* ── Smooth card hover ── */
         .pillar-row {
@@ -55,11 +41,8 @@
             transform: translateY(-4px);
             box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.10);
         }
-        .dark .pillar-row:hover {
-            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
-        }
+        .dark .pillar-row:hover { box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4); }
 
-        /* ── Visual mockups ── */
         .ui-grid-item {
             background: rgba(255, 255, 255, 0.6);
             border: 1px solid rgba(0, 0, 0, 0.04);
@@ -81,12 +64,8 @@
             cursor: default;
             flex-shrink: 0;
         }
-        .dark .toggle-track {
-            background: #475569;
-        }
-        .toggle-track.active {
-            background: #4361ee;
-        }
+        .dark .toggle-track { background: #475569; }
+        .toggle-track.active { background: #4361ee; }
         .toggle-thumb {
             width: 18px;
             height: 18px;
@@ -98,9 +77,7 @@
             transition: 0.2s;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
         }
-        .toggle-track.active .toggle-thumb {
-            left: 23px;
-        }
+        .toggle-track.active .toggle-thumb { left: 23px; }
 
         .badge-pill {
             background: #fef9c3;
@@ -174,18 +151,14 @@
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
         }
 
-        /* ── Click-to-copy interaction ── */
+        /* ── Click-to-copy ── */
         .copy-trigger {
             cursor: pointer;
             transition: 0.2s;
             position: relative;
         }
-        .copy-trigger:hover {
-            color: #4361ee;
-        }
-        .dark .copy-trigger:hover {
-            color: #818cf8;
-        }
+        .copy-trigger:hover { color: #4361ee; }
+        .dark .copy-trigger:hover { color: #818cf8; }
         .copy-trigger .copy-badge {
             position: absolute;
             right: -64px;
@@ -206,9 +179,7 @@
             background: #818cf8;
             color: #0b1120;
         }
-        .copy-trigger .copy-badge.show {
-            opacity: 1;
-        }
+        .copy-trigger .copy-badge.show { opacity: 1; }
 
         /* ── Social icon ring ── */
         .social-ring {
@@ -274,9 +245,7 @@
             border-color: #334155;
             color: #94a3b8;
         }
-        .nav-toggle:hover {
-            background: rgba(67, 97, 238, 0.08);
-        }
+        .nav-toggle:hover { background: rgba(67, 97, 238, 0.08); }
 
         /* ── Language toggle ── */
         .lang-btn {
@@ -290,9 +259,7 @@
             background: transparent;
             color: #64748b;
         }
-        .lang-btn:hover {
-            background: rgba(67, 97, 238, 0.08);
-        }
+        .lang-btn:hover { background: rgba(67, 97, 238, 0.08); }
         .lang-btn.active {
             background: #4361ee;
             color: #fff;
@@ -300,83 +267,49 @@
         .dark .lang-btn {
             color: #94a3b8;
         }
-        .dark .lang-btn:hover {
-            background: rgba(129, 140, 248, 0.1);
-        }
+        .dark .lang-btn:hover { background: rgba(129, 140, 248, 0.1); }
         .dark .lang-btn.active {
             background: #818cf8;
             color: #0b1120;
         }
 
         /* ── scrollbar ── */
-        ::-webkit-scrollbar {
-            width: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-        .dark ::-webkit-scrollbar-track {
-            background: #0f172a;
-        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb {
             background: #4361ee;
             border-radius: 12px;
         }
 
-        /* ── Mobile touch targets ── */
-        .touch-target {
-            min-height: 44px;
-            min-width: 44px;
-        }
+        .touch-target { min-height: 44px; min-width: 44px; }
 
         /* ── Engine core pulse ── */
         .engine-core {
             animation: corePulse 3s ease-in-out infinite;
         }
         @keyframes corePulse {
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.25);
-            }
-            50% {
-                box-shadow: 0 0 0 18px rgba(67, 97, 238, 0.05);
-            }
+            0%, 100% { box-shadow: 0 0 0 0 rgba(67, 97, 238, 0.25); }
+            50% { box-shadow: 0 0 0 18px rgba(67, 97, 238, 0.05); }
         }
 
         .flow-path {
             stroke-dasharray: 8 6;
             animation: dashFlow 1.8s linear infinite;
         }
-        @keyframes dashFlow {
-            to {
-                stroke-dashoffset: -14;
-            }
-        }
+        @keyframes dashFlow { to { stroke-dashoffset: -14; } }
+
         .glow-dot {
             animation: pulseGlow 1.6s ease-in-out infinite;
         }
-        .glow-dot:nth-child(2) {
-            animation-delay: 0.4s;
-        }
-        .glow-dot:nth-child(3) {
-            animation-delay: 0.8s;
-        }
-        .glow-dot:nth-child(4) {
-            animation-delay: 1.2s;
-        }
+        .glow-dot:nth-child(2) { animation-delay: 0.4s; }
+        .glow-dot:nth-child(3) { animation-delay: 0.8s; }
+        .glow-dot:nth-child(4) { animation-delay: 1.2s; }
         @keyframes pulseGlow {
-            0%,
-            100% {
-                opacity: 0.2;
-                transform: scale(0.8);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.2);
-            }
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
 
-        /* ── Alternating row helper ── */
         .row-visual {
             background: rgba(255, 255, 255, 0.4);
             border-radius: 20px;
@@ -389,54 +322,29 @@
             border-color: rgba(30, 41, 59, 0.6);
         }
 
-        /* responsive tweaks */
         @media (max-width: 1023px) {
-            .pillar-row {
-                border-radius: 20px;
-                padding: 1.5rem !important;
-            }
-            .row-visual {
-                padding: 1rem;
-            }
-            .contact-card {
-                padding: 1.25rem 1.5rem;
-            }
+            .pillar-row { border-radius: 20px; padding: 1.5rem !important; }
+            .row-visual { padding: 1rem; }
+            .contact-card { padding: 1.25rem 1.5rem; }
         }
         @media (max-width: 639px) {
-            .pillar-row {
-                padding: 1.25rem !important;
-                border-radius: 16px;
-            }
-            .row-visual {
-                padding: 0.75rem;
-            }
-            .social-ring {
-                width: 48px;
-                height: 48px;
-                font-size: 1.1rem;
-            }
-            .contact-card {
-                padding: 1rem 1.25rem;
-            }
-            .copy-trigger .copy-badge {
-                right: -56px;
-                font-size: 0.5rem;
-                padding: 1px 8px;
-            }
+            .pillar-row { padding: 1.25rem !important; border-radius: 16px; }
+            .row-visual { padding: 0.75rem; }
+            .social-ring { width: 48px; height: 48px; font-size: 1.1rem; }
+            .contact-card { padding: 1rem 1.25rem; }
+            .copy-trigger .copy-badge { right: -56px; font-size: 0.5rem; padding: 1px 8px; }
+            .nav-menu-desktop { display: none !important; }
+            .nav-menu-mobile { display: flex !important; }
+        }
+        @media (min-width: 640px) {
+            .nav-menu-mobile { display: none !important; }
+            .nav-menu-desktop { display: flex !important; }
         }
 
-        /* ── Production contrast safety: force inherit on all text nodes ── */
-        .contrast-safe {
-            color: inherit !important;
-        }
-        .contrast-safe-light {
-            color: #0f172a !important;
-        }
-        .dark .contrast-safe-light {
-            color: #e2e8f0 !important;
-        }
+        .contrast-safe { color: inherit !important; }
+        .contrast-safe-light { color: #0f172a !important; }
+        .dark .contrast-safe-light { color: #e2e8f0 !important; }
 
-        /* ── Parent wrapper override ── */
         .section-wrapper {
             background-color: #ffffff;
             color: #0f172a;
@@ -445,69 +353,248 @@
             background-color: #0f172a;
             color: #e2e8f0;
         }
+
+        /* ── Logo sizing ── */
+        .logo-img {
+            height: 44px;
+            width: auto;
+            max-height: 48px;
+            object-fit: contain;
+        }
+        @media (max-width: 639px) {
+            .logo-img { height: 36px; }
+        }
+
+        /* ── Nav link styles ── */
+        .nav-link {
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding: 0.5rem 0.75rem;
+            border-radius: 8px;
+            transition: 0.2s;
+            color: #475569;
+            text-decoration: none;
+        }
+        .dark .nav-link { color: #94a3b8; }
+        .nav-link:hover {
+            background: rgba(67, 97, 238, 0.08);
+            color: #4361ee;
+        }
+        .dark .nav-link:hover {
+            background: rgba(129, 140, 248, 0.1);
+            color: #818cf8;
+        }
+        .nav-link.active {
+            background: rgba(67, 97, 238, 0.12);
+            color: #4361ee;
+        }
+        .dark .nav-link.active {
+            background: rgba(129, 140, 248, 0.15);
+            color: #818cf8;
+        }
+
+        /* ── Mobile menu ── */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 40;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.3s;
+        }
+        .mobile-menu-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .mobile-menu-panel {
+            position: fixed;
+            top: 0;
+            right: -280px;
+            width: 260px;
+            height: 100%;
+            background: #ffffff;
+            z-index: 50;
+            transition: 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+            padding: 2rem 1.5rem;
+            box-shadow: -8px 0 30px rgba(0,0,0,0.08);
+            overflow-y: auto;
+        }
+        .dark .mobile-menu-panel {
+            background: #0f172a;
+        }
+        .mobile-menu-panel.open {
+            right: 0;
+        }
+        .mobile-menu-panel .nav-link {
+            display: block;
+            padding: 0.75rem 0;
+            font-size: 1.05rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .dark .mobile-menu-panel .nav-link {
+            border-bottom-color: #1e293b;
+        }
+        .mobile-menu-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.25rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #475569;
+        }
+        .dark .mobile-menu-close { color: #94a3b8; }
+
+        /* ── Section title gradient override ── */
+        .title-gradient {
+            background: linear-gradient(135deg, #1e293b 0%, #4361ee 50%, #7209b7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .dark .title-gradient {
+            background: linear-gradient(135deg, #e2e8f0 0%, #818cf8 50%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ── Body text contrast ── */
+        .body-text {
+            color: #1e293b;
+        }
+        .dark .body-text {
+            color: #e2e8f0;
+        }
+        .body-text-muted {
+            color: #475569;
+        }
+        .dark .body-text-muted {
+            color: #94a3b8;
+        }
+        
+ .btn-primary i {
+            font-size: 1rem;
+        }
+
+        .btn-order {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 0.9rem 2.2rem;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.05rem;
+            background: #f97316;
+            color: #fff;
+            border: none;
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.35);
+            transition: 0.25s ease;
+            text-decoration: none;
+            cursor: pointer;
+            animation: orderPulse 2.2s ease-in-out infinite;
+        }
+        .btn-order:hover {
+            background: #ea580c;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(249, 115, 22, 0.45);
+        }
+        .dark .btn-order {
+            background: #fb923c;
+            color: #0b1120;
+            box-shadow: 0 4px 20px rgba(251, 146, 60, 0.3);
+        }
+        .dark .btn-order:hover {
+            background: #f97316;
+            box-shadow: 0 8px 32px rgba(251, 146, 60, 0.4);
+        }
     </style>
 </head>
 <body>
 
     <!-- ════════════════════════════════════════════════ -->
-    <!--  NAVBAR  (Logo + Language + Theme)             -->
+    <!--  NAVBAR                                        -->
     <!-- ════════════════════════════════════════════════ -->
     <header class="sticky top-0 z-50 bg-white/80 dark:bg-slate-950/80 backdrop-blur-lg border-b border-slate-200/60 dark:border-slate-800/60 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16 md:h-20">
-                <!-- Logo -->
-                <a href="#" class="flex items-center gap-3 flex-shrink-0">
-                    <img src="img/logoCrop.png"
-                    alt="ProfileCraft Logo"
-                    class="h-8 w-auto object-contain block dark:hidden" />
-                    <img src="img/logoCrop.png"
-                    alt="ProfileCraft Logo"
-                    class="h-8 w-auto object-contain hidden dark:block" />
+
+                <a href="index.html" class="flex items-center gap-3 flex-shrink-0">
+                    <img src="img/logoCrop.png" alt="ProfileCraft Logo" class="logo-img block dark:hidden" />
+                    <img src="img/logoCrop.png" alt="ProfileCraft Logo" class="logo-img hidden dark:block" />
                 </a>
 
-                <!-- Right controls -->
+                <nav class="nav-menu-desktop items-center gap-1 ml-6 hidden sm:flex">
+                    <a href="index.html" class="nav-link active">Home</a>
+                     <a href="package.html" class="nav-link ">Package</a>
+                    <a href="#catalog" class="nav-link">Services</a>
+                    <a href="#portfolio" class="nav-link">Portfolio</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
+
                 <div class="flex items-center gap-3 sm:gap-4">
-                    <!-- Language toggle -->
                     <div class="flex items-center gap-1 bg-slate-100/70 dark:bg-slate-800/70 rounded-full p-1 border border-slate-200/60 dark:border-slate-700/60">
                         <button id="langMmBtn" class="lang-btn active touch-target" data-lang="mm">မြန်မာ</button>
                         <button id="langEnBtn" class="lang-btn touch-target" data-lang="en">English</button>
                     </div>
 
-                    <!-- Dark mode toggle -->
                     <button id="themeToggle" class="nav-toggle touch-target" aria-label="Toggle theme">
                         <i id="themeIcon" class="fas fa-moon text-lg"></i>
+                    </button>
+
+                    <button id="mobileMenuBtn" class="nav-toggle touch-target sm:hidden" aria-label="Menu">
+                        <i class="fas fa-bars text-lg"></i>
                     </button>
                 </div>
             </div>
         </div>
     </header>
 
+    <!-- Mobile Menu -->
+    <div id="mobileOverlay" class="mobile-menu-overlay"></div>
+    <div id="mobilePanel" class="mobile-menu-panel">
+        <div id="mobileClose" class="mobile-menu-close">&times;</div>
+        <div class="mt-8 flex flex-col gap-1">
+            <a href="index.html" class="nav-link active">Home</a>
+            <a href="#catalog" class="nav-link">Services</a>
+            <a href="#portfolio" class="nav-link">Portfolio</a>
+            <a href="#about" class="nav-link">About</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+        <div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700">
+            <p class="text-xs text-slate-400 dark:text-slate-500">ProfileCraft &copy; 2026</p>
+        </div>
+    </div>
+
     <!-- ════════════════════════════════════════════════ -->
     <!--  HERO SECTION                                  -->
     <!-- ════════════════════════════════════════════════ -->
-    <section id="hero" class="relative overflow-hidden pt-8 pb-12 md:pt-16 md:pb-20 section-wrapper">
+    <section id="home" class="relative overflow-hidden pt-8 pb-12 md:pt-16 md:pb-20 section-wrapper">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
 
-                <!-- Left Column: Copy -->
                 <div class="order-2 lg:order-1 text-center lg:text-left">
-                    <h1 id="heroTitle" class="p-[20px] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight hero-gradient contrast-safe">
-                        သင့်လုပ်ငန်းကို အလိုအလျောက်Systemဖြင့် အသက်သွင်းပါ
+                    <h1 id="heroTitle" class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight title-gradient contrast-safe">
+                        သင့်လုပ်ငန်းလက္ခဏာကို အလိုအလျောက်စနစ်ဖြင့် အသက်သွင်းပါ
                     </h1>
-                    <p id="heroSub" class="mt-4 text-base sm:text-lg text-slate-700 dark:text-slate-300 max-w-2xl lg:max-w-none leading-relaxed font-medium contrast-safe" style="color: #334155;">
+                    <p id="heroSub" class="mt-4 text-base sm:text-lg body-text max-w-2xl lg:max-w-none leading-relaxed font-medium">
                         လှပသော UI Layout များ၊ စမတ်ကျသော JavaScript စနစ်များနှင့် အခမဲ့ Cloud Hosting ပါဝင်သော Full-Stack ဝန်ဆောင်မှု။
                     </p>
-                    <div class="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4">
-                        <a href="#catalog" class="btn-primary touch-target">
-                            <i class="fas fa-th-large"></i>
-                            <span id="btnChoose">Layout ရွေးချယ်ရန်</span>
+                     <div class="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-4 hero-buttons">
+                        <a href="package.html" class="btn-order touch-target">
+                            <i class="fas fa-cart-plus"></i>
+                            <span>စတင်မှာယူရန် / Start Order</span>
                         </a>
                         <a href="#contact" class="btn-outline touch-target">
                             <i class="fas fa-paper-plane"></i>
-                            <span id="btnContact">ဆက်သွယ်ရန်</span>
+                            <span>ဆက်သွယ်ရန် / Contact</span>
                         </a>
                     </div>
-                    <div class="mt-6 flex items-center gap-3 text-sm text-slate-600 dark:text-slate-400 contrast-safe">
+                    <div class="mt-6 flex items-center gap-3 text-sm body-text-muted">
                         <span class="flex items-center gap-1"><i class="fas fa-check-circle text-emerald-500"></i> 30+ Layouts</span>
                         <span class="w-px h-4 bg-slate-300 dark:bg-slate-700"></span>
                         <span class="flex items-center gap-1"><i class="fas fa-code text-indigo-500"></i> Smart Logic</span>
@@ -516,7 +603,7 @@
                     </div>
                 </div>
 
-                <!-- Right Column: Visual Flow Engine (SVG) -->
+                <!-- Visual Flow Engine -->
                 <div class="order-1 lg:order-2 relative flex items-center justify-center">
                     <div class="relative w-full max-w-md mx-auto aspect-square">
                         <svg viewBox="0 0 400 400" class="w-full h-full" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -533,19 +620,13 @@
                             <circle cx="60" cy="192" r="5" fill="#4cc9f0" class="glow-dot" style="animation-delay:0.3s" />
                             <circle cx="110" cy="182" r="5" fill="#4cc9f0" class="glow-dot" style="animation-delay:0.7s" />
                             <foreignObject x="18" y="24" width="110" height="40">
-                                <div xmlns="http://www.w3.org/1999/xhtml" class="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 leading-tight">
-                                    Calendar<br />Scheduling
-                                </div>
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 leading-tight">Calendar<br />Scheduling</div>
                             </foreignObject>
                             <foreignObject x="18" y="290" width="110" height="44">
-                                <div xmlns="http://www.w3.org/1999/xhtml" class="text-[10px] font-semibold text-purple-600 dark:text-purple-400 leading-tight">
-                                    Business Data<br />Databases
-                                </div>
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="text-[10px] font-semibold text-purple-600 dark:text-purple-400 leading-tight">Business Data<br />Databases</div>
                             </foreignObject>
                             <foreignObject x="10" y="148" width="100" height="40">
-                                <div xmlns="http://www.w3.org/1999/xhtml" class="text-[10px] font-semibold text-cyan-600 dark:text-cyan-400 leading-tight">
-                                    Design<br />Templates
-                                </div>
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="text-[10px] font-semibold text-cyan-600 dark:text-cyan-400 leading-tight">Design<br />Templates</div>
                             </foreignObject>
                             <circle cx="220" cy="200" r="64" fill="rgba(67,97,238,0.06)" stroke="#4361ee" stroke-width="1.5" stroke-dasharray="6 6" class="engine-core" />
                             <circle cx="220" cy="200" r="48" fill="rgba(67,97,238,0.1)" stroke="#4361ee" stroke-width="2" />
@@ -566,14 +647,10 @@
                             <circle cx="300" cy="210" r="4" fill="#4361ee" opacity="0.4" class="glow-dot" style="animation-delay:0.6s" />
                             <circle cx="280" cy="270" r="4" fill="#4361ee" opacity="0.4" class="glow-dot" style="animation-delay:1.0s" />
                             <foreignObject x="260" y="100" width="100" height="32">
-                                <div xmlns="http://www.w3.org/1999/xhtml" class="text-[10px] bg-indigo-100/80 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded-full px-3 py-1 text-center backdrop-blur-sm border border-indigo-200/40 dark:border-indigo-700/40">
-                                    ⚡ Live Sync
-                                </div>
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="text-[10px] bg-indigo-100/80 dark:bg-indigo-900/50 text-indigo-700 dark:text-indigo-300 rounded-full px-3 py-1 text-center backdrop-blur-sm border border-indigo-200/40 dark:border-indigo-700/40">⚡ Live Sync</div>
                             </foreignObject>
                             <foreignObject x="260" y="290" width="100" height="32">
-                                <div xmlns="http://www.w3.org/1999/xhtml" class="text-[10px] bg-purple-100/80 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full px-3 py-1 text-center backdrop-blur-sm border border-purple-200/40 dark:border-purple-700/40">
-                                    🚀 Zero-Cost
-                                </div>
+                                <div xmlns="http://www.w3.org/1999/xhtml" class="text-[10px] bg-purple-100/80 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 rounded-full px-3 py-1 text-center backdrop-blur-sm border border-purple-200/40 dark:border-purple-700/40">🚀 Zero-Cost</div>
                             </foreignObject>
                         </svg>
                     </div>
@@ -583,21 +660,48 @@
     </section>
 
     <!-- ════════════════════════════════════════════════ -->
-    <!--  CORE ARCHITECTURE SECTION (Vertical Rows)     -->
+    <!--  ABOUT SECTION (#about)                        -->
+    <!-- ════════════════════════════════════════════════ -->
+    <section id="about" class="py-12 md:py-20 bg-slate-50/60 dark:bg-slate-900/40 border-t border-slate-200/60 dark:border-slate-800/60 section-wrapper">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span class="inline-block text-xs font-semibold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase bg-indigo-50 dark:bg-indigo-950/40 px-4 py-1.5 rounded-full border border-indigo-100 dark:border-indigo-800/40">
+                <i class="fas fa-info-circle mr-1.5"></i> <span id="aboutBadge">About Us</span>
+            </span>
+            <h2 id="aboutTitle" class="p-[15px] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight title-gradient contrast-safe">
+                ကျွန်ုပ်တို့အကြောင်း
+            </h2>
+            <p id="aboutDesc" class="mt-4 text-base sm:text-lg md:text-xl body-text max-w-3xl mx-auto leading-relaxed font-medium">
+                ProfileCraft is a design &amp; development studio specializing in modular, high-converting digital identities. We blend premium UI, smart JavaScript logic, and zero-cost cloud hosting to deliver complete solutions for businesses, professionals, and creators.
+            </p>
+            <div class="mt-6 flex flex-wrap justify-center gap-4 text-sm body-text-muted">
+                <span class="flex items-center gap-1.5"><i class="fas fa-check-circle text-emerald-500"></i> 30+ Layouts</span>
+                <span class="flex items-center gap-1.5"><i class="fas fa-code text-indigo-500"></i> Smart Modules</span>
+                <span class="flex items-center gap-1.5"><i class="fas fa-cloud text-cyan-500"></i> Free Hosting</span>
+                <span class="flex items-center gap-1.5"><i class="fas fa-headset text-purple-500"></i> 24/7 Support</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!--  PORTFOLIO SECTION (#portfolio)                -->
+    <!-- ════════════════════════════════════════════════ -->
+
+
+    <!-- ════════════════════════════════════════════════ -->
+    <!--  CORE ARCHITECTURE (Services)                  -->
     <!-- ════════════════════════════════════════════════ -->
     <section id="catalog" class="py-12 md:py-20 bg-slate-50/60 dark:bg-slate-900/40 border-t border-slate-200/60 dark:border-slate-800/60 section-wrapper">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <!-- Section header -->
             <div class="text-center max-w-3xl mx-auto mb-14">
                 <span class="inline-block text-xs font-semibold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase bg-indigo-50 dark:bg-indigo-950/40 px-4 py-1.5 rounded-full border border-indigo-100 dark:border-indigo-800/40">
                     <i class="fas fa-cubes mr-1.5"></i> Core Architecture
                 </span>
-              <h2 id="pillarHeading" class="p-[15px] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight hero-gradient contrast-safe">
-    ကျွန်ုပ်တို့၏ ဝန်ဆောင်မှုများ
-</h2>
+                <h2 id="pillarHeading" class="p-[15px] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight title-gradient contrast-safe">
+                    ကျွန်ုပ်တို့၏ ဝန်ဆောင်မှု မဏ္ဍိုင်များ
+                </h2>
             </div>
 
-            <!-- ─── ROW 1: Premium UI & OS Series ─── -->
+            <!-- ROW 1 -->
             <div class="pillar-row p-6 md:p-10 mb-10 md:mb-14">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     <div class="order-2 lg:order-1">
@@ -633,7 +737,7 @@
                             Premium UI &amp; OS Series Layouts <br class="hidden sm:block" />
                             <span class="text-indigo-600 dark:text-indigo-400 text-base sm:text-lg font-medium contrast-safe">(လှပသော မျက်နှာစာများနှင့် လုပ်ငန်းသုံးစနစ်များ)</span>
                         </h3>
-                        <p id="pillar1Desc" class="mt-3 text-base sm:text-lg md:text-xl tracking-tight text-slate-700 dark:text-slate-300 font-medium leading-relaxed contrast-safe" style="color: #334155;">
+                        <p id="pillar1Desc" class="mt-3 text-base sm:text-lg md:text-xl tracking-tight body-text font-medium leading-relaxed">
                             ဘယ်လုပ်ငန်းအမျိုးအစားမဆို လိုက်ဖက်မည့် စိတ်ကြိုက်ပြင်ဆင်နိုင်သော မျက်နှာစာ Layout ၃၀ ကျော်။ သာမန် profile များသာမက လုပ်ငန်းရှင်များအတွက် သီးသန့်ထုတ်လုပ်ထားသည့် ခိုင်မာတောင့်တင်းသော OS Series (Business Management &amp; Corporate Interfaces) တွေလည်း ရှိပါသည်။
                         </p>
                         <div class="mt-4 flex flex-wrap gap-3">
@@ -648,53 +752,33 @@
                 </div>
             </div>
 
-            <!-- ─── ROW 2: Smart Functional Logic ─── -->
+            <!-- ROW 2 -->
             <div class="pillar-row p-6 md:p-10 mb-10 md:mb-14">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     <div class="order-2 lg:order-1">
                         <div class="row-visual">
                             <div class="space-y-3">
-                               <!-- Booking System Toggle Block -->
-<div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 mb-2">
-    <span class="text-sm font-extrabold text-black dark:text-white flex items-center">
-        <i class="far fa-calendar-alt mr-2 text-indigo-600 dark:text-indigo-400 text-base"></i>
-        Booking System
-    </span>
-    <div class="toggle-track active">
-        <div class="toggle-thumb"></div>
-    </div>
-</div>
-
-<!-- Schedule Widget Toggle Block -->
-<div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800/60 mb-2">
-    <span class="text-sm font-extrabold text-black dark:text-white flex items-center">
-        <i class="far fa-clock mr-2 text-purple-600 dark:text-purple-400 text-base"></i>
-        Schedule Widget
-    </span>
-    <div class="toggle-track">
-        <div class="toggle-thumb"></div>
-    </div>
-</div>
-
-<!-- Calculator Toggle Block -->
-<div class="flex items-center justify-between p-2.5 rounded-lg bg-slate-100 dark:bg-slate-800/60">
-    <span class="text-sm font-extrabold text-black dark:text-white flex items-center">
-        <i class="fas fa-calculator mr-2 text-cyan-600 dark:text-cyan-400 text-base"></i>
-        Calculator
-    </span>
-    <div class="toggle-track active">
-        <div class="toggle-thumb"></div>
-    </div>
-</div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium body-text"><i class="far fa-calendar-alt mr-2 text-indigo-400"></i>Booking System</span>
+                                    <div class="toggle-track active"><div class="toggle-thumb"></div></div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium body-text"><i class="far fa-clock mr-2 text-purple-400"></i>Schedule Widget</span>
+                                    <div class="toggle-track"><div class="toggle-thumb"></div></div>
+                                </div>
+                                <div class="flex items-center justify-between">
+                                    <span class="text-sm font-medium body-text"><i class="fas fa-calculator mr-2 text-cyan-400"></i>Calculator</span>
+                                    <div class="toggle-track active"><div class="toggle-thumb"></div></div>
+                                </div>
                             </div>
-                            <div class="mt-3 grid grid-cols-7 gap-0.5 text-xs text-center text-slate-600 dark:text-slate-400 bg-white/50 dark:bg-slate-800/30 rounded-xl p-2 border border-slate-200/40 dark:border-slate-700/40">
-                                <span class="font-semibold text-slate-500 dark:text-slate-500">M</span>
-                                <span class="font-semibold text-slate-500 dark:text-slate-500">T</span>
-                                <span class="font-semibold text-slate-500 dark:text-slate-500">W</span>
-                                <span class="font-semibold text-slate-500 dark:text-slate-500">T</span>
-                                <span class="font-semibold text-slate-500 dark:text-slate-500">F</span>
-                                <span class="font-semibold text-slate-500 dark:text-slate-500">S</span>
-                                <span class="font-semibold text-slate-500 dark:text-slate-500">S</span>
+                            <div class="mt-3 grid grid-cols-7 gap-0.5 text-xs text-center body-text bg-white/50 dark:bg-slate-800/30 rounded-xl p-2 border border-slate-200/40 dark:border-slate-700/40">
+                                <span class="font-semibold body-text-muted">M</span>
+                                <span class="font-semibold body-text-muted">T</span>
+                                <span class="font-semibold body-text-muted">W</span>
+                                <span class="font-semibold body-text-muted">T</span>
+                                <span class="font-semibold body-text-muted">F</span>
+                                <span class="font-semibold body-text-muted">S</span>
+                                <span class="font-semibold body-text-muted">S</span>
                                 <span>1</span><span>2</span><span class="bg-indigo-100 dark:bg-indigo-900/50 rounded-full font-medium text-indigo-700 dark:text-indigo-300">3</span>
                                 <span>4</span><span>5</span><span>6</span><span>7</span>
                                 <span>8</span><span>9</span><span>10</span><span class="bg-indigo-600 text-white rounded-full font-medium">11</span>
@@ -711,7 +795,7 @@
                             Smart Functional Logic <br class="hidden sm:block" />
                             <span class="text-indigo-600 dark:text-indigo-400 text-base sm:text-lg font-medium contrast-safe">(စမတ်ကျသော စနစ်များ)</span>
                         </h3>
-                        <p id="pillar2Desc" class="mt-3 text-base sm:text-lg md:text-xl text-slate-700 dark:text-slate-300 font-medium leading-relaxed contrast-safe" style="color: #334155;">
+                        <p id="pillar2Desc" class="mt-3 text-base sm:text-lg md:text-xl body-text font-medium leading-relaxed">
                             ရိုးရိုး Static စာမျက်နှာများကို JavaScript dynamic modules များဖြင့် အသက်သွင်းခြင်း။ Appointment Booking Systems (ရက်ချိန်းယူခြင်း)၊ စာသင်ချိန် Schedules၊ Dynamic Forms နှင့် Real-time Calculators စသည့် စနစ်များကို မိမိစိတ်ကြိုက် UI ထဲသို့ Plug‑and‑Play စနစ်ဖြင့် တွဲဖက်ပေါင်းစပ်နိုင်သည်။
                         </p>
                         <div class="mt-4 flex flex-wrap gap-3">
@@ -726,29 +810,28 @@
                 </div>
             </div>
 
-            <!-- ─── ROW 3: Cloud Database Sync & Zero-Cost Hosting ─── -->
+            <!-- ROW 3 -->
             <div class="pillar-row p-6 md:p-10">
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
                     <div class="order-2 lg:order-1">
                         <div class="row-visual">
                             <div class="flex items-center justify-between gap-2 bg-white/50 dark:bg-slate-800/30 rounded-xl p-3 border border-slate-200/40 dark:border-slate-700/40">
-                               <div class="flex items-center gap-2">
-    <span class="text-2xl text-cyan-600 dark:text-cyan-400"><i class="fas fa-database"></i></span>
-    <span class="text-sm font-bold text-slate-900 dark:text-slate-100">Supabase</span>
-</div>
-
-<!-- Firebase Block -->
-<div class="flex items-center gap-2">
-    <span class="text-2xl text-indigo-600 dark:text-indigo-400"><i class="fas fa-cloud"></i></span>
-    <span class="text-sm font-bold text-slate-900 dark:text-slate-100">Firebase</span>
-</div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-2xl text-cyan-500"><i class="fas fa-database"></i></span>
+                                    <span class="text-sm font-medium body-text">Supabase</span>
+                                </div>
+                                <span class="text-slate-300 dark:text-slate-600"><i class="fas fa-arrows-alt-h"></i></span>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-2xl text-indigo-500"><i class="fas fa-cloud"></i></span>
+                                    <span class="text-sm font-medium body-text">Firebase</span>
+                                </div>
                             </div>
                             <div class="mt-3 flex flex-wrap justify-center gap-3">
                                 <span class="badge-pill"><i class="fas fa-check-circle mr-1"></i> Zero‑Cost Hosting Setup</span>
                             </div>
-                         <div class="mt-2 flex items-center justify-center gap-2 text-xs font-semibold text-slate-900 dark:text-slate-200 bg-slate-200/80 dark:bg-slate-800/40 rounded-lg py-1.5 px-3">
-    <i class="fas fa-server text-indigo-600 dark:text-indigo-400"></i> Fully Managed Infrastructure
-</div>
+                            <div class="mt-2 flex items-center justify-center gap-2 text-xs body-text-muted bg-white/40 dark:bg-slate-800/20 rounded-lg py-1.5 px-3">
+                                <i class="fas fa-server"></i> Fully Managed Infrastructure
+                            </div>
                             <div class="mt-3 flex flex-wrap justify-center gap-2">
                                 <span class="badge-indigo"><i class="fas fa-chart-line mr-1"></i> Business Data Databases</span>
                                 <span class="badge-cyan"><i class="fas fa-rocket mr-1"></i> 🚀 Zero‑Cost</span>
@@ -760,7 +843,7 @@
                             Cloud Database Sync &amp; Zero‑Cost Hosting <br class="hidden sm:block" />
                             <span class="text-indigo-600 dark:text-indigo-400 text-base sm:text-lg font-medium contrast-safe">(ဆာဗာနှင့် အခမဲ့တင်ပေးခြင်း)</span>
                         </h3>
-                        <p id="pillar3Desc" class="mt-3 text-base sm:text-lg md:text-xl text-slate-700 dark:text-slate-300 font-medium leading-relaxed contrast-safe" style="color: #334155;">
+                        <p id="pillar3Desc" class="mt-3 text-base sm:text-lg md:text-xl body-text font-medium leading-relaxed">
                             လုပ်ငန်းရှင်များနှင့် ဆရာဝန်များအတွက် ကိုယ်ပိုင် Admin Dashboard ပါဝင်မည်ဖြစ်ပြီး Data များကို Cloud DB (Supabase/Firebase) ပေါ်တွင် စနစ်တကျ လုံခြုံစွာ သိမ်းဆည်းပေးသည်။ Fully Managed Hosting အနေဖြင့် အတိုင်းအတာတစ်ခုအထိ (တအားမကြီးမားတဲ့) Management App တွေအတွက် တစ်ခါတည်း အခမဲ့ (Zero‑Cost Hosting) သတ်မှတ်ပေးထားခြင်းကြောင့် လစဉ်ဆာဗာကြေး ထပ်ပေးရန် လုံးဝမလိုပါ။
                         </p>
                         <div class="mt-4 flex flex-wrap gap-3">
@@ -778,364 +861,347 @@
     </section>
 
     <!-- ════════════════════════════════════════════════ -->
-    <!--  CONTACT DIRECTORY MODULE (#contact)            -->
-    <!--  No form – pure click-to-copy + direct links   -->
+    <!--  CONTACT SECTION (#contact)                     -->
     <!-- ════════════════════════════════════════════════ -->
     <section id="contact" class="py-16 md:py-24 section-wrapper">
         <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-14">
                 <span class="inline-block text-xs font-semibold tracking-widest text-indigo-600 dark:text-indigo-400 uppercase bg-indigo-50 dark:bg-indigo-950/40 px-4 py-1.5 rounded-full border border-indigo-100 dark:border-indigo-800/40">
-                    <i class="fas fa-address-card mr-1.5"></i> Connect
+                    <i class="fas fa-address-card mr-1.5"></i> <span id="contactBadge">Connect</span>
                 </span>
-                <h2 id="contactHeading" class="mt-3 text-2xl sm:text-3xl md:text-4xl font-bold text-slate-900 dark:text-white contrast-safe">
+                <h2 id="contactHeading" class="p-[15px] text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight tracking-tight title-gradient contrast-safe">
                     ဆက်သွယ်ရန်
                 </h2>
-                <p id="contactSub" class="mt-2 text-slate-600 dark:text-slate-400 text-sm sm:text-base font-medium contrast-safe" style="color: #475569;">
+                <p id="contactSub" class="mt-2 body-text-muted text-sm sm:text-base font-medium">
                     အောက်ပါလိပ်စာများမှတစ်ဆင့် ကျွန်ုပ်တို့ကို အမြန်ဆက်သွယ်ပါ။
                 </p>
             </div>
 
-            <!-- Contact Cards Grid -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
-
-                <!-- ─── Gmail (Click-to-Copy) ─── -->
+                <!-- Gmail -->
                 <div class="contact-card flex items-center gap-4">
                     <span class="w-11 h-11 rounded-full bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 flex items-center justify-center text-lg flex-shrink-0">
                         <i class="fas fa-envelope"></i>
                     </span>
                     <div class="flex-1 min-w-0">
-                        <p class="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">Gmail</p>
+                        <p class="text-xs font-medium body-text-muted uppercase tracking-wider">Gmail</p>
                         <div class="copy-trigger group relative inline-flex items-center gap-2" data-copy="profilecraft@gmail.com">
-                            <span class="text-sm sm:text-base font-medium text-slate-700 dark:text-slate-300 transition-colors contrast-safe" style="color: #334155;">
-                                profilecraft@gmail.com
-                            </span>
-                            <span class="copy-badge text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white dark:bg-indigo-500 dark:text-slate-950">
-                                Copied!
-                            </span>
-                            <i class="fas fa-copy text-xs text-slate-400 dark:text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            <span class="text-sm sm:text-base font-medium body-text transition-colors">profilecraft@gmail.com</span>
+                            <span class="copy-badge text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white dark:bg-indigo-500 dark:text-slate-950">Copied!</span>
+                            <i class="fas fa-copy text-xs body-text-muted opacity-0 group-hover:opacity-100 transition-opacity"></i>
                         </div>
                     </div>
                 </div>
 
-                <!-- ─── Telegram (Click-to-Copy) ─── -->
+                <!-- Telegram -->
                 <div class="contact-card flex items-center gap-4">
                     <span class="w-11 h-11 rounded-full bg-cyan-50 dark:bg-cyan-950/50 text-cyan-600 dark:text-cyan-400 flex items-center justify-center text-lg flex-shrink-0">
                         <i class="fab fa-telegram-plane"></i>
                     </span>
                     <div class="flex-1 min-w-0">
-                        <p class="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">Telegram</p>
+                        <p class="text-xs font-medium body-text-muted uppercase tracking-wider">Telegram</p>
                         <div class="copy-trigger group relative inline-flex items-center gap-2" data-copy="@ProfileCraftHub">
-                            <span class="text-sm sm:text-base font-medium text-slate-700 dark:text-slate-300 transition-colors contrast-safe" style="color: #334155;">
-                                @ProfileCraftHub
-                            </span>
-                            <span class="copy-badge text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white dark:bg-indigo-500 dark:text-slate-950">
-                                Copied!
-                            </span>
-                            <i class="fas fa-copy text-xs text-slate-400 dark:text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            <span class="text-sm sm:text-base font-medium body-text transition-colors">@ProfileCraftHub</span>
+                            <span class="copy-badge text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white dark:bg-indigo-500 dark:text-slate-950">Copied!</span>
+                            <i class="fas fa-copy text-xs body-text-muted opacity-0 group-hover:opacity-100 transition-opacity"></i>
                         </div>
                     </div>
                 </div>
 
-                <!-- ─── Phone (Click-to-Copy) ─── -->
+                <!-- Phone -->
                 <div class="contact-card flex items-center gap-4">
                     <span class="w-11 h-11 rounded-full bg-emerald-50 dark:bg-emerald-950/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-lg flex-shrink-0">
                         <i class="fas fa-phone"></i>
                     </span>
                     <div class="flex-1 min-w-0">
-                        <p class="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">Phone</p>
+                        <p class="text-xs font-medium body-text-muted uppercase tracking-wider">Phone</p>
                         <div class="copy-trigger group relative inline-flex items-center gap-2" data-copy="+95 9 123 456 789">
-                            <span class="text-sm sm:text-base font-medium text-slate-700 dark:text-slate-300 transition-colors contrast-safe" style="color: #334155;">
-                                +95 9 123 456 789
-                            </span>
-                            <span class="copy-badge text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white dark:bg-indigo-500 dark:text-slate-950">
-                                Copied!
-                            </span>
-                            <i class="fas fa-copy text-xs text-slate-400 dark:text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            <span class="text-sm sm:text-base font-medium body-text transition-colors">+95 9 123 456 789</span>
+                            <span class="copy-badge text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white dark:bg-indigo-500 dark:text-slate-950">Copied!</span>
+                            <i class="fas fa-copy text-xs body-text-muted opacity-0 group-hover:opacity-100 transition-opacity"></i>
                         </div>
                     </div>
                 </div>
 
-                <!-- ─── Website (Click-to-Copy) ─── -->
+                <!-- Website -->
                 <div class="contact-card flex items-center gap-4">
                     <span class="w-11 h-11 rounded-full bg-purple-50 dark:bg-purple-950/50 text-purple-600 dark:text-purple-400 flex items-center justify-center text-lg flex-shrink-0">
                         <i class="fas fa-globe"></i>
                     </span>
                     <div class="flex-1 min-w-0">
-                        <p class="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider">Website</p>
+                        <p class="text-xs font-medium body-text-muted uppercase tracking-wider">Website</p>
                         <div class="copy-trigger group relative inline-flex items-center gap-2" data-copy="profilecraft.com">
-                            <span class="text-sm sm:text-base font-medium text-slate-700 dark:text-slate-300 transition-colors contrast-safe" style="color: #334155;">
-                                profilecraft.com
-                            </span>
-                            <span class="copy-badge text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white dark:bg-indigo-500 dark:text-slate-950">
-                                Copied!
-                            </span>
-                            <i class="fas fa-copy text-xs text-slate-400 dark:text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity"></i>
+                            <span class="text-sm sm:text-base font-medium body-text transition-colors">profilecraft.com</span>
+                            <span class="copy-badge text-[10px] font-semibold px-2.5 py-0.5 rounded-full bg-indigo-600 text-white dark:bg-indigo-500 dark:text-slate-950">Copied!</span>
+                            <i class="fas fa-copy text-xs body-text-muted opacity-0 group-hover:opacity-100 transition-opacity"></i>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- ─── Social Icon Matrix (Direct Redirects) ─── -->
+            <!-- Social Icons -->
             <div class="mt-10 text-center">
-                <p class="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-5">
+                <p class="text-xs font-medium body-text-muted uppercase tracking-wider mb-5">
                     <i class="fas fa-share-alt mr-1.5"></i> Follow &amp; Connect
                 </p>
                 <div class="flex flex-wrap items-center justify-center gap-3.5">
-                    <!-- Facebook -->
-                    <a href="https://facebook.com/profilecraft" target="_blank" rel="noopener noreferrer"
-                    class="social-ring touch-target hover:text-[#1877f2] hover:border-[#1877f2] dark:hover:text-[#1877f2] dark:hover:border-[#1877f2]"
-                    aria-label="Facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <!-- Messenger -->
-                <a href="https://m.me/profilecraft" target="_blank" rel="noopener noreferrer"
-                class="social-ring touch-target hover:text-[#00b2ff] hover:border-[#00b2ff] dark:hover:text-[#00b2ff] dark:hover:border-[#00b2ff]"
-                aria-label="Messenger">
-                <i class="fab fa-facebook-messenger"></i>
-            </a>
-            <!-- Telegram (direct) -->
-            <a href="https://t.me/ProfileCraftHub" target="_blank" rel="noopener noreferrer"
-            class="social-ring touch-target hover:text-[#26a5e4] hover:border-[#26a5e4] dark:hover:text-[#26a5e4] dark:hover:border-[#26a5e4]"
-            aria-label="Telegram">
-            <i class="fab fa-telegram-plane"></i>
-        </a>
-        <!-- Viber -->
-        <a href="viber://chat?number=959123456789" target="_blank" rel="noopener noreferrer"
-        class="social-ring touch-target hover:text-[#7360f2] hover:border-[#7360f2] dark:hover:text-[#7360f2] dark:hover:border-[#7360f2]"
-        aria-label="Viber">
-        <i class="fab fa-viber"></i>
-    </a>
-    <!-- LinkedIn -->
-    <a href="https://linkedin.com/company/profilecraft" target="_blank" rel="noopener noreferrer"
-    class="social-ring touch-target hover:text-[#0a66c2] hover:border-[#0a66c2] dark:hover:text-[#0a66c2] dark:hover:border-[#0a66c2]"
-    aria-label="LinkedIn">
-    <i class="fab fa-linkedin-in"></i>
-</a>
-<!-- YouTube -->
-<a href="https://youtube.com/@profilecraft" target="_blank" rel="noopener noreferrer"
-class="social-ring touch-target hover:text-[#ff0000] hover:border-[#ff0000] dark:hover:text-[#ff0000] dark:hover:border-[#ff0000]"
-aria-label="YouTube">
-<i class="fab fa-youtube"></i>
-</a>
-</div>
-</div>
+                    <a href="https://facebook.com/profilecraft" target="_blank" rel="noopener noreferrer" class="social-ring touch-target hover:text-[#1877f2] hover:border-[#1877f2] dark:hover:text-[#1877f2] dark:hover:border-[#1877f2]" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://m.me/profilecraft" target="_blank" rel="noopener noreferrer" class="social-ring touch-target hover:text-[#00b2ff] hover:border-[#00b2ff] dark:hover:text-[#00b2ff] dark:hover:border-[#00b2ff]" aria-label="Messenger"><i class="fab fa-facebook-messenger"></i></a>
+                    <a href="https://t.me/ProfileCraftHub" target="_blank" rel="noopener noreferrer" class="social-ring touch-target hover:text-[#26a5e4] hover:border-[#26a5e4] dark:hover:text-[#26a5e4] dark:hover:border-[#26a5e4]" aria-label="Telegram"><i class="fab fa-telegram-plane"></i></a>
+                    <a href="viber://chat?number=959123456789" target="_blank" rel="noopener noreferrer" class="social-ring touch-target hover:text-[#7360f2] hover:border-[#7360f2] dark:hover:text-[#7360f2] dark:hover:border-[#7360f2]" aria-label="Viber"><i class="fab fa-viber"></i></a>
+                    <a href="https://linkedin.com/company/profilecraft" target="_blank" rel="noopener noreferrer" class="social-ring touch-target hover:text-[#0a66c2] hover:border-[#0a66c2] dark:hover:text-[#0a66c2] dark:hover:border-[#0a66c2]" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="https://youtube.com/@profilecraft" target="_blank" rel="noopener noreferrer" class="social-ring touch-target hover:text-[#ff0000] hover:border-[#ff0000] dark:hover:text-[#ff0000] dark:hover:border-[#ff0000]" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <p class="mt-8 text-center text-xs body-text-muted">
+                <i class="fas fa-mouse-pointer mr-1"></i> Gmail, Telegram, Phone &amp; Website — click to copy &middot; Social icons — open in new tab
+            </p>
+        </div>
+    </section>
 
-<!-- small note -->
-<p class="mt-8 text-center text-xs text-slate-400 dark:text-slate-500 contrast-safe">
-    <i class="fas fa-mouse-pointer mr-1"></i> Gmail, Telegram, Phone &amp; Website — click to copy &middot; Social icons — open in new tab
-</p>
-</div>
-</section>
-
-<!-- ════════════════════════════════════════════════ -->
-<!--  FOOTER                                        -->
-<!-- ════════════════════════════════════════════════ -->
-<footer class="border-t border-slate-200/70 dark:border-slate-800/70 bg-white/60 dark:bg-slate-950/60 backdrop-blur-sm section-wrapper">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-        <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-slate-500 dark:text-slate-400">
-            <span class="contrast-safe">
-                &copy; <span id="footerYear">2026</span> ProfileCraft. All rights reserved.
-            </span>
-            <div class="flex items-center gap-6">
-                <a href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors touch-target flex items-center gap-1.5 contrast-safe">
-                    <i class="fab fa-facebook-f text-sm"></i> <span class="hidden sm:inline">Facebook</span>
-                </a>
-                <a href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors touch-target flex items-center gap-1.5 contrast-safe">
-                    <i class="fab fa-telegram-plane text-sm"></i> <span class="hidden sm:inline">Telegram</span>
-                </a>
-                <a href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors touch-target flex items-center gap-1.5 contrast-safe">
-                    <i class="fab fa-instagram text-sm"></i> <span class="hidden sm:inline">Instagram</span>
-                </a>
-                <a href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors touch-target flex items-center gap-1.5 contrast-safe">
-                    <i class="fab fa-github text-sm"></i> <span class="hidden sm:inline">GitHub</span>
-                </a>
+    <!-- ════════════════════════════════════════════════ -->
+    <!--  FOOTER                                        -->
+    <!-- ════════════════════════════════════════════════ -->
+    <footer class="border-t border-slate-200/70 dark:border-slate-800/70 bg-white/60 dark:bg-slate-950/60 backdrop-blur-sm section-wrapper">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm body-text-muted">
+                <span>
+                    &copy; <span id="footerYear">2026</span> ProfileCraft. All rights reserved.
+                </span>
+                <div class="flex items-center gap-6">
+                    <a href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors touch-target flex items-center gap-1.5 body-text-muted">
+                        <i class="fab fa-facebook-f text-sm"></i> <span class="hidden sm:inline">Facebook</span>
+                    </a>
+                    <a href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors touch-target flex items-center gap-1.5 body-text-muted">
+                        <i class="fab fa-telegram-plane text-sm"></i> <span class="hidden sm:inline">Telegram</span>
+                    </a>
+                    <a href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors touch-target flex items-center gap-1.5 body-text-muted">
+                        <i class="fab fa-instagram text-sm"></i> <span class="hidden sm:inline">Instagram</span>
+                    </a>
+                    <a href="#" class="hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors touch-target flex items-center gap-1.5 body-text-muted">
+                        <i class="fab fa-github text-sm"></i> <span class="hidden sm:inline">GitHub</span>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-</footer>
+    </footer>
 
-<!-- ════════════════════════════════════════════════ -->
-<!--  JAVASCRIPT : Translation, Theme, Copy Logic   -->
-<!-- ════════════════════════════════════════════════ -->
-<script>
-    (function() {
-        'use strict';
+    <!-- ════════════════════════════════════════════════ -->
+    <!--  JAVASCRIPT                                    -->
+    <!-- ════════════════════════════════════════════════ -->
+    <script>
+        (function() {
+            'use strict';
 
-        // ── Translations ──
-        const translations = {
-            mm: {
-                heroTitle: "သင့်လုပ်ငန်းကိုအလိုအလျောက် Systemဖြင့် အသက်သွင်းပါ",
-                heroSub: "လှပသော UI Layout များ၊ စမတ်ကျသော JavaScript စနစ်များနှင့် အခမဲ့ Cloud Hosting ပါဝင်သော Full-Stack ဝန်ဆောင်မှု။",
-                btnChoose: "Layout ရွေးချယ်ရန်",
-                btnContact: "ဆက်သွယ်ရန်",
-                pillarHeading: "ကျွန်ုပ်တို့၏ ဝန်ဆောင်မှုများ",
-                pillar1Title: "Premium UI & OS Series Layouts",
-                pillar1Desc: "ဘယ်လုပ်ငန်းအမျိုးအစားမဆို လိုက်ဖက်မည့် စိတ်ကြိုက်ပြင်ဆင်နိုင်သော မျက်နှာစာ Layout ၃၀ ကျော်။ သာမန် profile များသာမက လုပ်ငန်းရှင်များအတွက် သီးသန့်ထုတ်လုပ်ထားသည့် ခိုင်မာတောင့်တင်းသော OS Series (Business Management & Corporate Interfaces) တွေလည်း ရှိပါသည်။",
-                pillar2Title: "Smart Functional Logic",
-                pillar2Desc: "ရိုးရိုး Static စာမျက်နှာများကို JavaScript dynamic modules များဖြင့် အသက်သွင်းခြင်း။ Appointment Booking Systems (ရက်ချိန်းယူခြင်း)၊ စာသင်ချိန် Schedules၊ Dynamic Forms နှင့် Real-time Calculators စသည့် စနစ်များကို မိမိစိတ်ကြိုက် UI ထဲသို့ Plug‑and‑Play စနစ်ဖြင့် တွဲဖက်ပေါင်းစပ်နိုင်သည်။",
-                pillar3Title: "Cloud Database Sync & Zero‑Cost Hosting",
-                pillar3Desc: "လုပ်ငန်းရှင်များနှင့် ဆရာဝန်များအတွက် ကိုယ်ပိုင် Admin Dashboard ပါဝင်မည်ဖြစ်ပြီး Data များကို Cloud DB (Supabase/Firebase) ပေါ်တွင် စနစ်တကျ လုံခြုံစွာ သိမ်းဆည်းပေးသည်။ Fully Managed Hosting အနေဖြင့် အတိုင်းအတာတစ်ခုအထိ (တအားမကြီးမားတဲ့) Management App တွေအတွက် တစ်ခါတည်း အခမဲ့ (Zero‑Cost Hosting) သတ်မှတ်ပေးထားခြင်းကြောင့် လစဉ်ဆာဗာကြေး ထပ်ပေးရန် လုံးဝမလိုပါ။",
-                contactHeading: "ဆက်သွယ်ရန်",
-                contactSub: "အောက်ပါလိပ်စာများမှတစ်ဆင့် ကျွန်ုပ်တို့ကို အမြန်ဆက်သွယ်ပါ။"
-            },
-            en: {
-                heroTitle: "Turn Your Identity Into An Interactive System",
-                heroSub: "Premium UI layouts bundled with interactive smart logic and completely free enterprise cloud hosting workflows.",
-                btnChoose: "Start Choosing",
-                btnContact: "Contact Us",
-                pillarHeading: "Our Service Pillars",
-                pillar1Title: "Premium UI & OS Series Layouts",
-                pillar1Desc: "Over 30+ customizable, responsive frontend layouts tailored for any industry, alongside our robust OS Series designed specifically for business management and corporate interfaces.",
-                pillar2Title: "Smart Functional Logic",
-                pillar2Desc: "Bring static screens to life with dynamic JavaScript modules. Seamlessly integrate Appointment Booking Systems, live academic schedules, dynamic forms, and real-time calculators into your favorite UI via a plug-and-play architecture.",
-                pillar3Title: "Cloud Database Sync & Zero‑Cost Hosting",
-                pillar3Desc: "Access your private Admin Dashboard with data safely synchronized on secure cloud databases (Supabase/Firebase). Enjoy a fully managed infrastructure where light-to-medium management apps get lifetime zero-cost hosting—saving you from unpredictable monthly server overheads.",
-                contactHeading: "Contact Us",
-                contactSub: "Reach out to us through any of the channels below."
-            }
-        };
-
-        // ── DOM refs ──
-        const langMmBtn = document.getElementById('langMmBtn');
-        const langEnBtn = document.getElementById('langEnBtn');
-        const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const html = document.documentElement;
-
-        const t = (id) => document.getElementById(id);
-        const heroTitle = t('heroTitle');
-        const heroSub = t('heroSub');
-        const btnChoose = t('btnChoose');
-        const btnContact = t('btnContact');
-        const pillarHeading = t('pillarHeading');
-        const pillar1Title = t('pillar1Title');
-        const pillar1Desc = t('pillar1Desc');
-        const pillar2Title = t('pillar2Title');
-        const pillar2Desc = t('pillar2Desc');
-        const pillar3Title = t('pillar3Title');
-        const pillar3Desc = t('pillar3Desc');
-        const contactHeading = t('contactHeading');
-        const contactSub = t('contactSub');
-
-        let currentLang = 'mm';
-
-        // ── Apply language: ONLY updates textContent, never touches classes ──
-        function applyLanguage(lang) {
-            currentLang = lang;
-            const dict = translations[lang];
-
-            // Text-only updates — preserve all Tailwind classes
-            heroTitle.textContent = dict.heroTitle;
-            heroSub.textContent = dict.heroSub;
-            btnChoose.textContent = dict.btnChoose;
-            btnContact.textContent = dict.btnContact;
-            pillarHeading.textContent = dict.pillarHeading;
-            pillar1Title.textContent = dict.pillar1Title;
-            pillar1Desc.textContent = dict.pillar1Desc;
-            pillar2Title.textContent = dict.pillar2Title;
-            pillar2Desc.textContent = dict.pillar2Desc;
-            pillar3Title.textContent = dict.pillar3Title;
-            pillar3Desc.textContent = dict.pillar3Desc;
-            contactHeading.textContent = dict.contactHeading;
-            contactSub.textContent = dict.contactSub;
-
-            // Toggle active class on language buttons
-            langMmBtn.classList.toggle('active', lang === 'mm');
-            langEnBtn.classList.toggle('active', lang === 'en');
-            html.lang = lang === 'mm' ? 'my' : 'en';
-        }
-
-        langMmBtn.addEventListener('click', () => {
-            if (currentLang === 'mm') return;
-            applyLanguage('mm');
-            localStorage.setItem('profilecraft-lang', 'mm');
-        });
-        langEnBtn.addEventListener('click', () => {
-            if (currentLang === 'en') return;
-            applyLanguage('en');
-            localStorage.setItem('profilecraft-lang', 'en');
-        });
-
-        // ── Theme ──
-        function setTheme(theme) {
-            if (theme === 'dark') {
-                document.body.classList.add('dark');
-                html.setAttribute('data-theme', 'dark');
-                themeIcon.className = 'fas fa-sun text-lg';
-                localStorage.setItem('profilecraft-theme', 'dark');
-            } else {
-                document.body.classList.remove('dark');
-                html.setAttribute('data-theme', 'light');
-                themeIcon.className = 'fas fa-moon text-lg';
-                localStorage.setItem('profilecraft-theme', 'light');
-            }
-        }
-
-        function toggleTheme() {
-            const isDark = document.body.classList.contains('dark');
-            setTheme(isDark ? 'light' : 'dark');
-        }
-
-        themeToggle.addEventListener('click', toggleTheme);
-
-        const savedLang = localStorage.getItem('profilecraft-lang') || 'mm';
-        const savedTheme = localStorage.getItem('profilecraft-theme') || 'light';
-        applyLanguage(savedLang);
-        setTheme(savedTheme);
-
-        document.getElementById('footerYear').textContent = new Date().getFullYear();
-
-        // ── Click-to-Copy Logic ──
-        const copyTriggers = document.querySelectorAll('.copy-trigger');
-
-        copyTriggers.forEach(trigger => {
-            trigger.addEventListener('click', function(e) {
-                const textToCopy = this.dataset.copy || this.querySelector('span')?.textContent?.trim() ||
-                    '';
-                if (!textToCopy) return;
-
-                if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(textToCopy).then(() => {
-                        showCopyBadge(this);
-                    }).catch(() => {
-                        fallbackCopy(textToCopy, this);
-                    });
-                } else {
-                    fallbackCopy(textToCopy, this);
+            // ── Translations ──
+            const translations = {
+                mm: {
+                    heroTitle: "သင့်လုပ်ငန်းလက္ခဏာကို အလိုအလျောက်စနစ်ဖြင့် အသက်သွင်းပါ",
+                    heroSub: "လှပသော UI Layout များ၊ စမတ်ကျသော JavaScript စနစ်များနှင့် အခမဲ့ Cloud Hosting ပါဝင်သော Full-Stack ဝန်ဆောင်မှု။",
+                    btnChoose: "Layout ရွေးချယ်ရန်",
+                    btnContact: "ဆက်သွယ်ရန်",
+                    pillarHeading: "ကျွန်ုပ်တို့၏ ဝန်ဆောင်မှု မဏ္ဍိုင်များ",
+                    pillar1Title: "Premium UI & OS Series Layouts",
+                    pillar1Desc: "ဘယ်လုပ်ငန်းအမျိုးအစားမဆို လိုက်ဖက်မည့် စိတ်ကြိုက်ပြင်ဆင်နိုင်သော မျက်နှာစာ Layout ၃၀ ကျော်။ သာမန် profile များသာမက လုပ်ငန်းရှင်များအတွက် သီးသန့်ထုတ်လုပ်ထားသည့် ခိုင်မာတောင့်တင်းသော OS Series (Business Management & Corporate Interfaces) တွေလည်း ရှိပါသည်။",
+                    pillar2Title: "Smart Functional Logic",
+                    pillar2Desc: "ရိုးရိုး Static စာမျက်နှာများကို JavaScript dynamic modules များဖြင့် အသက်သွင်းခြင်း။ Appointment Booking Systems (ရက်ချိန်းယူခြင်း)၊ စာသင်ချိန် Schedules၊ Dynamic Forms နှင့် Real-time Calculators စသည့် စနစ်များကို မိမိစိတ်ကြိုက် UI ထဲသို့ Plug‑and‑Play စနစ်ဖြင့် တွဲဖက်ပေါင်းစပ်နိုင်သည်။",
+                    pillar3Title: "Cloud Database Sync & Zero‑Cost Hosting",
+                    pillar3Desc: "လုပ်ငန်းရှင်များနှင့် ဆရာဝန်များအတွက် ကိုယ်ပိုင် Admin Dashboard ပါဝင်မည်ဖြစ်ပြီး Data များကို Cloud DB (Supabase/Firebase) ပေါ်တွင် စနစ်တကျ လုံခြုံစွာ သိမ်းဆည်းပေးသည်။ Fully Managed Hosting အနေဖြင့် အတိုင်းအတာတစ်ခုအထိ (တအားမကြီးမားတဲ့) Management App တွေအတွက် တစ်ခါတည်း အခမဲ့ (Zero‑Cost Hosting) သတ်မှတ်ပေးထားခြင်းကြောင့် လစဉ်ဆာဗာကြေး ထပ်ပေးရန် လုံးဝမလိုပါ။",
+                    contactHeading: "ဆက်သွယ်ရန်",
+                    contactSub: "အောက်ပါလိပ်စာများမှတစ်ဆင့် ကျွန်ုပ်တို့ကို အမြန်ဆက်သွယ်ပါ။",
+                    aboutBadge: "About Us",
+                    aboutTitle: "ကျွန်ုပ်တို့အကြောင်း",
+                    aboutDesc: "ProfileCraft သည် စီးပွားရေးလုပ်ငန်းရှင်များ၊ ပညာရှင်များနှင့် ဖန်တီးရှင်များအတွက် ခေတ်မီဆန်းသစ်သော ဒစ်ဂျစ်တယ် အထောက်အထားများကို အထူးပြုသည့် ဒီဇိုင်းနှင့် ဖွံ့ဖြိုးရေး စတူဒီယိုတစ်ခုဖြစ်သည်။ ကျွန်ုပ်တို့သည် အဆင့်မြင့် UI၊ စမတ်ကျသော JavaScript ယုတ္တိဗေဒနှင့် ကုန်ကျစရိတ်မဲ့ cloud hosting ကို ပေါင်းစပ်ကာ ဖြေရှင်းချက်အပြည့်အစုံကို ပေးအပ်ပါသည်။",
+                    portfolioBadge: "Portfolio",
+                    portfolioTitle: "ကျွန်ုပ်တို့၏ လက်ရာများ",
+                    portfolioSub: "ကျွန်ုပ်တို့၏ ဖောက်သည်များအတွက် တည်ဆောက်ပေးထားသော ပရိုဖိုင်များနှင့် စနစ်များ၏ အနုစိတ်မြင်ကွင်း။",
+                    contactBadge: "Connect"
+                },
+                en: {
+                    heroTitle: "Turn Your Identity Into An Interactive System",
+                    heroSub: "Premium UI layouts bundled with interactive smart logic and completely free enterprise cloud hosting workflows.",
+                    btnChoose: "Start Choosing",
+                    btnContact: "Contact Us",
+                    pillarHeading: "Our Service Pillars",
+                    pillar1Title: "Premium UI & OS Series Layouts",
+                    pillar1Desc: "Over 30+ customizable, responsive frontend layouts tailored for any industry, alongside our robust OS Series designed specifically for business management and corporate interfaces.",
+                    pillar2Title: "Smart Functional Logic",
+                    pillar2Desc: "Bring static screens to life with dynamic JavaScript modules. Seamlessly integrate Appointment Booking Systems, live academic schedules, dynamic forms, and real-time calculators into your favorite UI via a plug-and-play architecture.",
+                    pillar3Title: "Cloud Database Sync & Zero‑Cost Hosting",
+                    pillar3Desc: "Access your private Admin Dashboard with data safely synchronized on secure cloud databases (Supabase/Firebase). Enjoy a fully managed infrastructure where light-to-medium management apps get lifetime zero-cost hosting—saving you from unpredictable monthly server overheads.",
+                    contactHeading: "Contact Us",
+                    contactSub: "Reach out to us through any of the channels below.",
+                    aboutBadge: "About Us",
+                    aboutTitle: "About Us",
+                    aboutDesc: "ProfileCraft is a design & development studio specializing in modular, high-converting digital identities. We blend premium UI, smart JavaScript logic, and zero-cost cloud hosting to deliver complete solutions for businesses, professionals, and creators.",
+                    portfolioBadge: "Portfolio",
+                    portfolioTitle: "Our Recent Work",
+                    portfolioSub: "A glimpse of the profiles and systems we've built for our clients.",
+                    contactBadge: "Connect"
                 }
-            });
-        });
+            };
 
-        function fallbackCopy(text, element) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            textarea.style.position = 'fixed';
-            textarea.style.left = '-9999px';
-            textarea.style.top = '-9999px';
-            document.body.appendChild(textarea);
-            textarea.focus();
-            textarea.select();
-            try {
-                document.execCommand('copy');
-                showCopyBadge(element);
-            } catch (err) {
-                console.warn('Copy failed');
+            // ── DOM refs ──
+            const langMmBtn = document.getElementById('langMmBtn');
+            const langEnBtn = document.getElementById('langEnBtn');
+            const themeToggle = document.getElementById('themeToggle');
+            const themeIcon = document.getElementById('themeIcon');
+            const html = document.documentElement;
+
+            const t = (id) => document.getElementById(id);
+            const heroTitle = t('heroTitle');
+            const heroSub = t('heroSub');
+            const btnChoose = t('btnChoose');
+            const btnContact = t('btnContact');
+            const pillarHeading = t('pillarHeading');
+            const pillar1Title = t('pillar1Title');
+            const pillar1Desc = t('pillar1Desc');
+            const pillar2Title = t('pillar2Title');
+            const pillar2Desc = t('pillar2Desc');
+            const pillar3Title = t('pillar3Title');
+            const pillar3Desc = t('pillar3Desc');
+            const contactHeading = t('contactHeading');
+            const contactSub = t('contactSub');
+            const aboutBadge = t('aboutBadge');
+            const aboutTitle = t('aboutTitle');
+            const aboutDesc = t('aboutDesc');
+            const portfolioBadge = t('portfolioBadge');
+            const portfolioTitle = t('portfolioTitle');
+            const portfolioSub = t('portfolioSub');
+            const contactBadge = t('contactBadge');
+
+            let currentLang = 'mm';
+
+            function applyLanguage(lang) {
+                currentLang = lang;
+                const dict = translations[lang];
+                heroTitle.textContent = dict.heroTitle;
+                heroSub.textContent = dict.heroSub;
+                btnChoose.textContent = dict.btnChoose;
+                btnContact.textContent = dict.btnContact;
+                pillarHeading.textContent = dict.pillarHeading;
+                pillar1Title.textContent = dict.pillar1Title;
+                pillar1Desc.textContent = dict.pillar1Desc;
+                pillar2Title.textContent = dict.pillar2Title;
+                pillar2Desc.textContent = dict.pillar2Desc;
+                pillar3Title.textContent = dict.pillar3Title;
+                pillar3Desc.textContent = dict.pillar3Desc;
+                contactHeading.textContent = dict.contactHeading;
+                contactSub.textContent = dict.contactSub;
+                aboutBadge.textContent = dict.aboutBadge;
+                aboutTitle.textContent = dict.aboutTitle;
+                aboutDesc.textContent = dict.aboutDesc;
+                portfolioBadge.textContent = dict.portfolioBadge;
+                portfolioTitle.textContent = dict.portfolioTitle;
+                portfolioSub.textContent = dict.portfolioSub;
+                contactBadge.textContent = dict.contactBadge;
+
+                langMmBtn.classList.toggle('active', lang === 'mm');
+                langEnBtn.classList.toggle('active', lang === 'en');
+                html.lang = lang === 'mm' ? 'my' : 'en';
             }
-            document.body.removeChild(textarea);
-        }
 
-        function showCopyBadge(element) {
-            const badge = element.querySelector('.copy-badge');
-            if (!badge) return;
-            badge.classList.add('show');
-            clearTimeout(badge._hideTimer);
-            badge._hideTimer = setTimeout(() => {
-                badge.classList.remove('show');
-            }, 1200);
-        }
+            langMmBtn.addEventListener('click', () => {
+                if (currentLang === 'mm') return;
+                applyLanguage('mm');
+                localStorage.setItem('profilecraft-lang', 'mm');
+            });
+            langEnBtn.addEventListener('click', () => {
+                if (currentLang === 'en') return;
+                applyLanguage('en');
+                localStorage.setItem('profilecraft-lang', 'en');
+            });
 
-    })();
-</script>
+            // ── Theme ──
+            function setTheme(theme) {
+                if (theme === 'dark') {
+                    document.body.classList.add('dark');
+                    html.setAttribute('data-theme', 'dark');
+                    themeIcon.className = 'fas fa-sun text-lg';
+                    localStorage.setItem('profilecraft-theme', 'dark');
+                } else {
+                    document.body.classList.remove('dark');
+                    html.setAttribute('data-theme', 'light');
+                    themeIcon.className = 'fas fa-moon text-lg';
+                    localStorage.setItem('profilecraft-theme', 'light');
+                }
+            }
+
+            function toggleTheme() {
+                const isDark = document.body.classList.contains('dark');
+                setTheme(isDark ? 'light' : 'dark');
+            }
+            themeToggle.addEventListener('click', toggleTheme);
+
+            const savedLang = localStorage.getItem('profilecraft-lang') || 'mm';
+            const savedTheme = localStorage.getItem('profilecraft-theme') || 'light';
+            applyLanguage(savedLang);
+            setTheme(savedTheme);
+            document.getElementById('footerYear').textContent = new Date().getFullYear();
+
+            // ── Click-to-Copy ──
+            const copyTriggers = document.querySelectorAll('.copy-trigger');
+            copyTriggers.forEach(trigger => {
+                trigger.addEventListener('click', function(e) {
+                    const textToCopy = this.dataset.copy || this.querySelector('span')?.textContent?.trim() || '';
+                    if (!textToCopy) return;
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(textToCopy).then(() => showCopyBadge(this)).catch(() =>
+                            fallbackCopy(textToCopy, this));
+                    } else {
+                        fallbackCopy(textToCopy, this);
+                    }
+                });
+            });
+
+            function fallbackCopy(text, element) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.left = '-9999px';
+                textarea.style.top = '-9999px';
+                document.body.appendChild(textarea);
+                textarea.focus();
+                textarea.select();
+                try { document.execCommand('copy');
+                    showCopyBadge(element); } catch (err) { console.warn('Copy failed'); }
+                document.body.removeChild(textarea);
+            }
+
+            function showCopyBadge(element) {
+                const badge = element.querySelector('.copy-badge');
+                if (!badge) return;
+                badge.classList.add('show');
+                clearTimeout(badge._hideTimer);
+                badge._hideTimer = setTimeout(() => badge.classList.remove('show'), 1200);
+            }
+
+            // ── Mobile Menu ──
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            const mobileOverlay = document.getElementById('mobileOverlay');
+            const mobilePanel = document.getElementById('mobilePanel');
+            const mobileClose = document.getElementById('mobileClose');
+
+            function toggleMobile(open) {
+                if (open === undefined) {
+                    const isOpen = mobilePanel.classList.contains('open');
+                    open = !isOpen;
+                }
+                mobilePanel.classList.toggle('open', open);
+                mobileOverlay.classList.toggle('open', open);
+                document.body.style.overflow = open ? 'hidden' : '';
+            }
+
+            mobileBtn.addEventListener('click', () => toggleMobile(true));
+            mobileClose.addEventListener('click', () => toggleMobile(false));
+            mobileOverlay.addEventListener('click', () => toggleMobile(false));
+
+            mobilePanel.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => toggleMobile(false));
+            });
+
+        })();
+    </script>
 
 </body>
 </html>

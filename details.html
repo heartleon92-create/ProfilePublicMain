@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile & Payment Page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #4361ee;
+            --primary-light: #6c8cff;
+            --primary-dark: #2a3f9e;
             --secondary: #3a0ca3;
             --accent: #f72585;
             --teal: #4cc9f0;
@@ -16,14 +18,15 @@
             --light: #f8f9fa;
             --lighter: #ffffff;
             --card-bg: #ffffff;
-            --text: #2d3748;
-            --text-secondary: #718096;
+            --text: #1a202c;
+            --text-secondary: #4a5568;
             --border: #e2e8f0;
+            --border-light: #edf2f7;
             --gradient: linear-gradient(135deg, var(--primary), var(--purple));
             --gradient-2: linear-gradient(135deg, var(--teal), var(--primary));
             --gradient-3: linear-gradient(135deg, var(--accent), var(--purple));
-            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --card-shadow-hover: 0 12px 40px rgba(67, 97, 238, 0.15);
             --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
@@ -35,56 +38,72 @@
 
         body {
             font-family: 'Poppins', sans-serif;
-            line-height: 1.6;
+            line-height: 1.7;
             color: var(--text);
-            background: var(--light);
+            background: #f0f2f8;
             padding: 2rem 1rem;
+            min-height: 100vh;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1280px;
             margin: 0 auto;
         }
 
-        /* Header */
+        /* ── Header ── */
         .header {
             text-align: center;
             margin-bottom: 2.5rem;
+            padding: 1rem 0;
         }
 
         .logo {
-            font-size: 2.5rem;
-            font-weight: 700;
+            font-size: 2.8rem;
+            font-weight: 800;
             background: var(--gradient);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
             display: inline-block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.5px;
         }
 
         .tagline {
             color: var(--text-secondary);
             font-size: 1.1rem;
-            margin-bottom: 2rem;
+            font-weight: 400;
         }
 
-        /* Card Styles */
+        /* ── Grid ── */
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .detail-grid {
+                grid-template-columns: 1.3fr 0.7fr;
+            }
+        }
+
+        /* ── Cards ── */
         .card {
             background: var(--card-bg);
-            border-radius: 16px;
-            padding: 2rem;
+            border-radius: 20px;
+            padding: 2rem 2rem 2.5rem;
             margin-bottom: 2rem;
             box-shadow: var(--card-shadow);
             transition: var(--transition);
-            border: 1px solid var(--border);
-            overflow: hidden;
+            border: 1px solid var(--border-light);
             position: relative;
+            overflow: hidden;
         }
 
         .card:hover {
-            transform: translateY(-5px);
             box-shadow: var(--card-shadow-hover);
+            transform: translateY(-2px);
         }
 
         .card::before {
@@ -95,6 +114,11 @@
             right: 0;
             height: 4px;
             background: var(--gradient);
+            opacity: 0.6;
+        }
+
+        .card-accent::before {
+            background: var(--gradient-2);
         }
 
         .section-title {
@@ -103,7 +127,7 @@
             gap: 0.75rem;
             margin-bottom: 1.5rem;
             font-size: 1.5rem;
-            font-weight: 600;
+            font-weight: 700;
             color: var(--text);
         }
 
@@ -115,446 +139,514 @@
             font-size: 1.8rem;
         }
 
-        /* Profile Section */
-        .profile-detail {
+        .section-subtitle {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* ── Product Display ── */
+        .product-display {
             display: flex;
             flex-direction: column;
+            align-items: center;
             gap: 2rem;
         }
 
-        .profile-image {
-            position: relative;
-            width: 150px;
-            height: 150px;
-            margin: 0 auto;
-            border-radius: 50%;
-            padding: 5px;
-            background: var(--gradient);
-            box-shadow: 0 0 25px rgba(67, 97, 238, 0.2);
-        }
-
-        .profile-image img {
+        .product-image-wrapper {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 3px solid var(--lighter);
-        }
-
-        .profile-badge {
-            position: absolute;
-            top: 0;
-            right: 0;
-            background: var(--gradient-3);
-            color: var(--lighter);
-            padding: 0.35rem 1rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(247, 37, 133, 0.2);
-        }
-
-        .profile-info {
-            text-align: center;
-        }
-
-        .profile-name {
-            font-size: 2.2rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--purple));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .profile-career {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            font-size: 1.1rem;
-        }
-
-        .profile-pricing {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .current-price {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .original-price {
-            font-size: 1.4rem;
-            text-decoration: line-through;
-            color: var(--text-secondary);
-        }
-
-        .discount-badge {
-            background: var(--gradient-3);
-            color: var(--lighter);
-            padding: 0.4rem 1rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            box-shadow: 0 4px 10px rgba(247, 37, 133, 0.2);
-        }
-
-        /* Single Thumbnail Display */
-        .thumbnail-display {
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .thumbnail-title {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--text);
-            font-weight: 600;
-        }
-
-        .thumbnail-container {
-            position: relative;
-            max-width: 600px;
-            margin: 0 auto;
+            max-width: 700px;
             border-radius: 16px;
             overflow: hidden;
-            box-shadow: var(--card-shadow);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             transition: var(--transition);
+            background: #f0f2f5;
         }
 
-        .thumbnail-container:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--card-shadow-hover);
+        .product-image-wrapper:hover {
+            transform: scale(1.01);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
         }
 
-        .thumbnail-container img {
+        .product-image-wrapper img {
             width: 100%;
             height: auto;
             display: block;
         }
 
-        .thumbnail-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
-            padding: 1.5rem;
-            color: white;
-            text-align: left;
+        .product-info {
+            width: 100%;
+            max-width: 700px;
+            text-align: center;
         }
 
-        .thumbnail-overlay h3 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
+        @media (min-width: 768px) {
+            .product-info {
+                text-align: left;
+            }
         }
 
-        .thumbnail-overlay p {
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-
-        /* Payment Options */
-        
-
-        .section {
-            margin: 2rem 0;
-        }
-
-        .section-title {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            font-weight: 600;
-            color: var(--text);
-        }
-
-        .section-title i {
-            background: var(--gradient);
+        .profile-name {
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 0.25rem;
+            background: linear-gradient(135deg, var(--primary), var(--purple));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            font-size: 1.8rem;
+            letter-spacing: -0.5px;
         }
 
-        /* Notice Banner */
-        .payment-notice {
-            background: linear-gradient(135deg, #ffd166, #ffb74d);
-            color: #7d6608;
-            padding: 1rem 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            box-shadow: 0 4px 10px rgba(255, 179, 0, 0.2);
-            border-left: 4px solid #f1c40f;
-            animation: pulse 2s infinite;
-        }
-
-        .payment-notice i {
-            font-size: 1.5rem;
-        }
-
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-
-        /* Payment Options */
-        .payment-options {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-        }
-
-        .payment-card {
-            border-radius: 16px;
-            padding: 1.8rem;
-            background: var(--lighter);
-            box-shadow: var(--card-shadow);
-            transition: var(--transition);
-            border: 1px solid var(--border);
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .payment-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--card-shadow-hover);
-        }
-
-        .payment-card.active {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.2);
-        }
-
-        .payment-header {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 1.2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-    
-        .payment-icon img{
-          width: 60px;
-        }
-
-        .payment-name {
-            font-weight: 700;
-            font-size: 1.4rem;
-            color: var(--text);
-        }
-
-        .payment-description {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-            margin-bottom: 1rem;
-        }
-
-        /* Account Info */
-        .account-info {
-            background: rgba(67, 97, 238, 0.08);
-            border-radius: 12px;
-            padding: 1.2rem;
-            margin-top: 1rem;
-            display: none;
-            animation: fadeIn 0.5s ease-out;
-            border-left: 3px solid var(--primary);
-        }
-
-        .account-info.active {
-            display: block;
-        }
-
-        .account-title {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
+        .product-category {
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            margin-bottom: 0.75rem;
+            font-weight: 500;
         }
 
-        .account-details {
+        @media (min-width: 768px) {
+            .product-category {
+                justify-content: flex-start;
+            }
+        }
+
+        .product-pricing {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+            margin: 0.75rem 0 1.5rem;
+        }
+
+        @media (min-width: 768px) {
+            .product-pricing {
+                justify-content: flex-start;
+            }
+        }
+
+        .current-price {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .original-price {
+            font-size: 1.6rem;
+            text-decoration: line-through;
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .discount-badge {
+            background: var(--gradient-3);
+            color: var(--lighter);
+            padding: 0.35rem 1.2rem;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(247, 37, 133, 0.25);
+        }
+
+        /* ── Feature Cards ── */
+        .feature-list {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 1rem;
         }
 
-        .account-detail {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .account-detail i {
-            color: var(--primary);
-            width: 20px;
-        }
-
-        .copy-btn {
-            margin-top: 0.75rem;
-            background: var(--gradient);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 6px;
+        .feature-card {
+            padding: 1.5rem 1.75rem;
+            border: 2px solid var(--border-light);
+            border-radius: 16px;
             cursor: pointer;
-            font-size: 0.9rem;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
             transition: var(--transition);
+            background: var(--lighter);
+            position: relative;
+            user-select: none;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
         }
 
-        .copy-btn:hover {
-            opacity: 0.9;
+        .feature-card:hover {
+            border-color: var(--primary);
+            box-shadow: 0 6px 24px rgba(67, 97, 238, 0.10);
             transform: translateY(-2px);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
+        .feature-card.selected {
+            border-color: var(--primary);
+            background: #f0f4ff;
+            box-shadow: 0 6px 24px rgba(67, 97, 238, 0.14);
+            transform: translateY(-2px);
         }
 
-        /* Responsive Design */
+        .feature-card.selected .feature-name {
+            color: var(--primary-dark);
+        }
+
+        .feature-card .feature-main {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .feature-card .feature-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .feature-card input[type="checkbox"] {
+            width: 22px;
+            height: 22px;
+            accent-color: var(--primary);
+            cursor: pointer;
+            flex-shrink: 0;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .feature-card .feature-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .feature-card .feature-price {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--primary);
+            white-space: nowrap;
+            background: rgba(67, 97, 238, 0.08);
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+        }
+
+        .feature-card .feature-right {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .feature-card .info-toggle {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.1rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .feature-card .info-toggle:hover {
+            background: var(--light);
+            color: var(--primary);
+            transform: scale(1.1);
+        }
+
+        /* ── Smooth Description Accordion ── */
+        .feature-card .feature-desc-wrapper {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.4s cubic-bezier(0.25, 0.8, 0.25, 1),
+                        opacity 0.3s ease,
+                        margin 0.3s ease;
+            opacity: 0;
+            margin-top: 0;
+        }
+
+        .feature-card .feature-desc-wrapper.open {
+            max-height: 300px;
+            opacity: 1;
+            margin-top: 0.75rem;
+        }
+
+        .feature-card .feature-desc {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border-light);
+            line-height: 1.7;
+            background: rgba(248, 249, 250, 0.5);
+            padding: 0.75rem 1rem;
+            border-radius: 10px;
+            font-weight: 400;
+        }
+
+        .feature-card .feature-desc i {
+            color: var(--primary);
+            margin-right: 0.4rem;
+        }
+
+        /* ── Order Summary ── */
+        .summary-card {
+            position: sticky;
+            top: 1rem;
+        }
+
+        .summary-card .card {
+            background: var(--lighter);
+            border: 1px solid var(--border-light);
+        }
+
+        .summary-card .card::before {
+            background: var(--gradient-2);
+        }
+
+        .summary-base {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            padding: 0.4rem 0;
+            font-weight: 500;
+        }
+
+        .summary-base .base-value {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        .summary-subtotal {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            padding: 0.4rem 0 0.75rem;
+            border-bottom: 1px dashed var(--border-light);
+            font-weight: 500;
+        }
+
+        .summary-subtotal .addon-value {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .summary-items {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 0.75rem 0;
+            max-height: 280px;
+            overflow-y: auto;
+        }
+
+        .summary-items li {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.6rem 0;
+            border-bottom: 1px solid var(--border-light);
+            font-size: 0.92rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .summary-items li:last-child {
+            border-bottom: none;
+        }
+
+        .summary-items .item-name {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        .summary-items .item-price {
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .summary-empty {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            padding: 1.5rem 0;
+        }
+
+        .summary-empty i {
+            display: block;
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--border);
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            padding: 1rem 0 0.5rem;
+            border-top: 2px solid var(--border);
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .summary-total .total-label {
+            color: var(--text);
+        }
+
+        .summary-total .total-price {
+            color: var(--primary);
+        }
+
+        .proceed-btn {
+            display: block;
+            width: 100%;
+            background: var(--gradient);
+            color: #fff;
+            border: none;
+            padding: 1.1rem;
+            border-radius: 14px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 6px 24px rgba(67, 97, 238, 0.3);
+            margin-top: 1.25rem;
+            text-align: center;
+            letter-spacing: 0.3px;
+        }
+
+        .proceed-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px rgba(67, 97, 238, 0.4);
+        }
+
+        .proceed-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .proceed-btn i {
+            margin-right: 0.75rem;
+        }
+
+        .security-note {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-align: center;
+            margin-top: 0.75rem;
+            opacity: 0.7;
+        }
+
+        /* ── Thumbnail Gallery ── */
+        .thumbnail-gallery-wrapper {
+            margin-top: 1.5rem;
+            position: relative;
+            display: none;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .thumbnail-gallery-scroll {
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            cursor: grab;
+            padding: 0.5rem 0;
+        }
+
+        .thumbnail-gallery-scroll::-webkit-scrollbar {
+            display: none;
+        }
+
+        .thumbnail-gallery-scroll:active {
+            cursor: grabbing;
+        }
+
+        .thumbnail-gallery {
+            display: inline-flex;
+            gap: 0.8rem;
+            padding: 0 1rem;
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+
         @media (min-width: 768px) {
-            .payment-options {
-                grid-template-columns: repeat(2, 1fr);
+            .thumbnail-gallery {
+                justify-content: center;
+                padding: 0;
+            }
+            .thumbnail-gallery-scroll {
+                overflow-x: visible;
+                cursor: default;
+            }
+        }
+
+        .thumbnail-item {
+            flex: 0 0 auto;
+            width: 85px;
+            height: 85px;
+            border-radius: 14px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+            border: 3px solid transparent;
+            position: relative;
+        }
+
+        @media (min-width: 768px) {
+            .thumbnail-item {
+                width: 95px;
+                height: 95px;
             }
         }
 
         @media (min-width: 1024px) {
-            .payment-options {
-                grid-template-columns: repeat(3, 1fr);
+            .thumbnail-item {
+                width: 105px;
+                height: 105px;
             }
         }
-        /* Process Steps */
-        .process-steps {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.5rem;
-            position: relative;
+
+        .thumbnail-item:hover {
+            transform: scale(1.08);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
         }
 
-        .process-step {
-            position: relative;
-            padding: 2rem 1.5rem 1.5rem 5rem;
-            background: var(--lighter);
-            border-radius: 16px;
-            border: 1px solid var(--border);
-            transition: var(--transition);
-            box-shadow: var(--card-shadow);
+        .thumbnail-item.active {
+            border-color: var(--primary);
+            box-shadow: 0 4px 16px rgba(67, 97, 238, 0.2);
         }
 
-        .process-step:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--card-shadow-hover);
+        .thumbnail-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.3s ease;
         }
 
-        .step-number {
-            position: absolute;
-            left: 1.5rem;
-            top: 1.5rem;
-            width: 3rem;
-            height: 3rem;
-            border-radius: 50%;
-            background: var(--gradient);
-            color: var(--lighter);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.3rem;
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
+        .thumbnail-item:hover img {
+            opacity: 0.9;
         }
 
-        .step-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.8rem;
-            color: var(--primary);
-            font-weight: 600;
+        .main-image {
+            transition: opacity 0.4s ease;
         }
 
-        .step-description {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* Form Elements */
-        .telegram-button {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: var(--gradient);
-            color: var(--lighter);
-            border: none;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: var(--transition);
-            margin: 1.5rem 0;
-            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.2);
-        }
-
-        .telegram-button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
-        }
-
-        .form-instructions {
-            background: rgba(58, 12, 163, 0.05);
-            border-radius: 16px;
-            padding: 1.8rem;
-            margin-top: 1.5rem;
-            border: 1px solid var(--border);
-        }
-
-        .instructions-title {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: var(--primary);
-            font-size: 1.1rem;
-        }
-
-        .instructions-text {
-            color: var(--text-secondary);
-            line-height: 1.6;
-        }
-
-        /* Footer */
+        /* ── Footer ── */
         footer {
             background: var(--lighter);
-            border-radius: 16px;
+            border-radius: 20px;
             padding: 2.5rem;
             margin-top: 4rem;
             box-shadow: var(--card-shadow);
-            border: 1px solid var(--border);
+            border: 1px solid var(--border-light);
         }
 
         .footer-content {
@@ -564,106 +656,21 @@
             text-align: center;
         }
 
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                text-align: left;
+            }
+        }
+
         .footer-links {
             display: flex;
             justify-content: center;
             gap: 2rem;
             flex-wrap: wrap;
         }
-        /* Thumbnail Gallery Styles */
-.thumbnail-gallery-wrapper {
-  margin-top: 1.5rem;
-  position: relative;
-  display: none; /* Hidden by default, shown via JS if needed */
-}
-
-.thumbnail-gallery-scroll {
-  overflow-x: auto;
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE/Edge */
-  cursor: grab;
-  padding: 0.5rem 0;
-}
-
-.thumbnail-gallery-scroll::-webkit-scrollbar {
-  display: none; /* Chrome, Safari */
-}
-
-.thumbnail-gallery-scroll:active {
-  cursor: grabbing;
-}
-
-.thumbnail-gallery {
-  display: inline-flex;
-  gap: 0.8rem;
-  padding: 0 1rem;
-  min-width: 100%;
-  box-sizing: border-box;
-}
-
-.thumbnail-item {
-  flex: 0 0 auto;
-  width: 80px;
-  height: 80px;
-  border-radius: 12px;
-  overflow: hidden;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  border: 2px solid transparent;
-  position: relative;
-}
-
-.thumbnail-item:hover {
-  transform: scale(1.08);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-}
-
-.thumbnail-item.active {
-  border-color: #4361ee;
-}
-
-.thumbnail-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: opacity 0.3s ease;
-}
-
-.thumbnail-item:hover img {
-  opacity: 0.9;
-}
-
-/* Main image transition */
-.main-image {
-  transition: opacity 0.4s ease;
-}
-
-/* Tablet and larger screens */
-@media (min-width: 768px) {
-  .thumbnail-gallery {
-    justify-content: center;
-    padding: 0;
-  }
-  
-  .thumbnail-item {
-    width: 90px;
-    height: 90px;
-  }
-  
-  .thumbnail-gallery-scroll {
-    overflow-x: visible;
-    cursor: default;
-  }
-}
-
-/* Desktop enhancements */
-@media (min-width: 1024px) {
-  .thumbnail-item {
-    width: 100px;
-    height: 100px;
-  }
-}
 
         .footer-links a {
             color: var(--text-secondary);
@@ -674,7 +681,6 @@
 
         .footer-links a:hover {
             color: var(--primary);
-            text-decoration: none;
         }
 
         .social-icons {
@@ -707,81 +713,64 @@
             font-size: 0.95rem;
         }
 
-        /* Responsive Design */
-        @media (min-width: 768px) {
-            body {
-                padding: 3rem 2rem;
-            }
-            
-            .profile-detail {
-                flex-direction: row;
-                text-align: left;
-                align-items: center;
-            }
-            
-            .profile-info {
-                text-align: left;
-                flex: 1;
-            }
-            
-            .profile-pricing {
-                justify-content: flex-start;
-            }
-            
-            .profile-career {
-                justify-content: flex-start;
-            }
-            
-        
-            .process-steps {
-                grid-template-columns: repeat(2, 1fr);
-            }
-            
-            .footer-content {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-                text-align: left;
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .process-steps {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            
-            .process-step:nth-child(4) {
-                grid-column: 1 / 2;
-                grid-row: 2 / 3;
-            }
-            
-            .process-step:nth-child(5) {
-                grid-column: 2 / 3;
-                grid-row: 2 / 3;
-            }
-        }
-
-        /* Animation Enhancements */
+        /* ── Animations ── */
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
         .card, .header {
-            animation: fadeIn 0.6s ease-out;
+            animation: fadeIn 0.5s ease-out;
         }
 
-        .profile-image {
-            animation: fadeIn 0.8s ease-out;
+        .feature-card {
+            animation: fadeIn 0.4s ease forwards;
+            opacity: 0;
         }
 
-        /* Custom scrollbar */
+        .feature-card:nth-child(1) { animation-delay: 0.05s; }
+        .feature-card:nth-child(2) { animation-delay: 0.10s; }
+        .feature-card:nth-child(3) { animation-delay: 0.15s; }
+        .feature-card:nth-child(4) { animation-delay: 0.20s; }
+        .feature-card:nth-child(5) { animation-delay: 0.25s; }
+        .feature-card:nth-child(6) { animation-delay: 0.30s; }
+        .feature-card:nth-child(7) { animation-delay: 0.35s; }
+        .feature-card:nth-child(8) { animation-delay: 0.40s; }
+        .feature-card:nth-child(9) { animation-delay: 0.45s; }
+        .feature-card:nth-child(10) { animation-delay: 0.50s; }
+        .feature-card:nth-child(11) { animation-delay: 0.55s; }
+        .feature-card:nth-child(12) { animation-delay: 0.60s; }
+        .feature-card:nth-child(13) { animation-delay: 0.65s; }
+        .feature-card:nth-child(14) { animation-delay: 0.70s; }
+        .feature-card:nth-child(15) { animation-delay: 0.75s; }
+        .feature-card:nth-child(16) { animation-delay: 0.80s; }
+        .feature-card:nth-child(17) { animation-delay: 0.85s; }
+        .feature-card:nth-child(18) { animation-delay: 0.90s; }
+        .feature-card:nth-child(19) { animation-delay: 0.95s; }
+        .feature-card:nth-child(20) { animation-delay: 1.00s; }
+
+        .feature-desc-wrapper.open .feature-desc {
+            animation: fadeSlideIn 0.3s ease;
+        }
+
+        /* ── Scrollbar ── */
         ::-webkit-scrollbar {
             width: 8px;
         }
 
         ::-webkit-scrollbar-track {
             background: var(--light);
+            border-radius: 4px;
         }
 
         ::-webkit-scrollbar-thumb {
@@ -792,7 +781,56 @@
         ::-webkit-scrollbar-thumb:hover {
             background: var(--primary);
         }
-        
+
+        /* ── Loading ── */
+        .loading-spinner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem 1rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .loading-spinner i {
+            font-size: 2.2rem;
+            margin-right: 1rem;
+            animation: spin 1s linear infinite;
+            color: var(--primary);
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 480px) {
+            .profile-name {
+                font-size: 1.8rem;
+            }
+            .current-price {
+                font-size: 1.6rem;
+            }
+            .feature-card {
+                padding: 1.2rem 1.25rem;
+            }
+            .card {
+                padding: 1.25rem;
+            }
+            .feature-card .feature-name {
+                font-size: 0.95rem;
+            }
+            .logo {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .feature-card .feature-main {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.5rem;
+            }
+            .feature-card .feature-right {
+                justify-content: flex-end;
+            }
+        }
     </style>
 </head>
 <body>
@@ -802,239 +840,105 @@
     </div>
 
     <main class="container">
-        <!-- Profile Design Detail Section -->
-        
+        <!-- Loading State -->
+        <div id="loadingState" class="loading-spinner">
+            <i class="fas fa-spinner"></i>
+            <span>Loading profile details...</span>
+        </div>
 
-        <!-- Single Thumbnail Section -->
-        <section class="section">
-            <div class="card">
-                <h2 class="thumbnail-title">Profile Design Example</h2>
-                <div class="thumbnail-display">
-                    <div class="thumbnail-container">
-                    <img class="main-image" src="img/ATZ-P01.png" alt="Design Example">
-                    <div class="profile-info">
-                        <h1 class="profile-name">Aung Min</h1>
-                        <p class="profile-career"><i class="fas fa-briefcase"></i> Graphic Designer</p>
-                        <div class="profile-pricing">
-                        <span class="current-price">82,000 MMK</span>
-                        <span class="original-price">90,000 MMK</span>
-                        <span class="discount-badge">Save 9%</span>
+        <!-- Main Content -->
+        <div id="mainContent" style="display:none;">
+            <div class="detail-grid">
+                <!-- LEFT COLUMN -->
+                <div class="left-column">
+                    <!-- Product Display -->
+                    <section class="section">
+                        <div class="card">
+                            <div class="product-display">
+                                <div class="product-image-wrapper">
+                                    <img class="main-image" src="" alt="Profile Image">
+                                </div>
+                                <div class="product-info">
+                                    <h1 class="profile-name" id="profileName">Loading...</h1>
+                                    <p class="product-category" id="profileCategory">
+                                        <i class="fas fa-briefcase"></i> <span>Loading...</span>
+                                    </p>
+                                    <div class="product-pricing">
+                                        <span class="current-price" id="currentPrice">-- MMK</span>
+                                        <span class="original-price" id="originalPrice" style="display:none;">-- MMK</span>
+                                        <span class="discount-badge" id="discountBadge" style="display:none;">--</span>
+                                    </div>
+                                </div>
+                                <div class="thumbnail-gallery-wrapper" style="display:none;">
+                                    <div class="thumbnail-gallery-scroll">
+                                        <div class="thumbnail-gallery" id="thumbnailGallery"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                 </div>
-  
-  <!-- Add this thumbnail gallery section -->
-<div class="thumbnail-gallery-wrapper" style="display:none;">
-  <div class="thumbnail-gallery-scroll">
-    <div class="thumbnail-gallery"></div>
-  </div>
-</div>
+                    </section>
 
-</div>
-                    </div>
-                </div>
-            </div>
-        </section>
-         <section class="section">
-            <h2 class="section-title">
-                <i class="fas fa-user-edit"></i>
-                <span>Your Information / သင့်အချက်အလက်</span>
-            </h2>
-            
-            <div class="card">
-                <button type="button" class="telegram-button" id="telegramButton">
-                    <i class="fab fa-telegram"></i>
-                    Send Data via Telegram
-                </button>
-                
-                <div class="form-instructions">
-                    <p class="instructions-title">
-                        <i class="fas fa-info-circle"></i>
-                        Instructions / ညွှန်ကြားချက်များ
-                    </p>
-                    <p class="instructions-text">
-                        EN: Click the button to send your information directly to our Telegram. We will confirm, deploy your profile on GitHub, and send you a public link before payment.
-                        <br><br>
-                        MM: Telegram ကိုနှိပ်ပြီး သင့်အမည်၊ အလုပ်အကိုင်နဲ့ Profile အချက်အလက်တွေ မျှဝေပါ။ ကျွန်တော်တို့က အတည်ပြုပြီး GitHub link ပေးပါမည်။ အဲဒီနောက် ငွေချေပါမည်။
-                    </p>
-                </div>
-            </div>
-        </section>
- <section class="section">
-            <h2 class="section-title">
-                <i class="fas fa-list-ol"></i>
-                <span>How It Works / လုပ်ငန်းစဉ်</span>
-            </h2>
-            
-            <div class="process-steps">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <h3 class="step-title">Send Data via Telegram / Telegram မှတစ်ဆင့် အချက်အလက်များပေးပို့ပါ</h3>
-                    <p class="step-description">
-                        Share your information through our Telegram bot for initial processing.
-                        <br><br>
-                        ကျွန်ုပ်တို့၏ Telegram bot မှတစ်ဆင့် သင့်အချက်အလက်များကို အကြိုတင်ပြင်ဆင်မှုအတွက် မျှဝေပါ။
-                    </p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <h3 class="step-title">Admin Confirms & Customizes / စီမံခန့်ခွဲသူ အတည်ပြုပြီး စိတ်ကြိုက်ပြင်ဆင်ပေးခြင်း</h3>
-                    <p class="step-description">
-                        We'll confirm your details and customize your profile based on your information.
-                        <br><br>
-                        ကျွန်ုပ်တို့သည် သင့်အသေးစိတ်အချက်အလက်များကို အတည်ပြုပြီး သင့်အချက်အလက်များအပေါ် အခြေခံ၍ သင့်ပရိုဖိုင်ကို စိတ်ကြိုက်ပြင်ဆင်ပေးပါမည်။
-                    </p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <h3 class="step-title">GitHub Link Sent to You / GitHub Link ကို သင့်ထံပေးပို့ခြင်း</h3>
-                    <p class="step-description">
-                        Once customized, we'll deploy your profile and send you the public GitHub link.
-                        <br><br>
-                        စိတ်ကြိုက်ပြင်ဆင်ပြီးသည်နှင့် ကျွန်ုပ်တို့သည် သင့်ပရိုဖိုင်ကို တင်ပြီး သင့်ထံသို့ အများသုံး GitHub link ကို ပေးပို့ပါမည်။
-                    </p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <h3 class="step-title">You Make Payment / ငွေချေခြင်း</h3>
-                    <p class="step-description">
-                        After receiving the link, you can pay via your preferred payment method.
-                        <br><br>
-                        Link ကိုလက်ခံရရှိပြီးနောက် သင်နှစ်သက်ရာ ငွေချေနည်းလမ်းဖြင့် ငွေချေနိုင်ပါသည်။
-                    </p>
-                </div>
-                
-                <div class="process-step">
-                    <div class="step-number">5</div>
-                    <h3 class="step-title">Profile Goes Live / ပရိုဖိုင် အသက်ဝင်ခြင်း</h3>
-                    <p class="step-description">
-                        Once payment is confirmed, your profile will be fully active and live.
-                        <br><br>
-                        ငွေချေမှုအတည်ပြုပြီးသည်နှင့် သင့်ပရိုဖိုင်သည် အပြည့်အဝ အသက်ဝင်ပြီး တိုက်ရိုက်ထုတ်လွှင့်မည်ဖြစ်သည်။
-                    </p>
-                </div>
-            </div>
-        </section>
-        <!-- Process Explanation Section -->
-        <section <section class="section">
-            <h2 class="section-title">
-                <i class="fas fa-credit-card"></i>
-                <span>Choose Your Payment Method / ငွေပေးချေနိုင် သော Payment များ</span>
-            </h2>
-            
-            <!-- Notice Banner -->
-            <div class="payment-notice">
-                <i class="fas fa-exclamation-circle"></i>
-                <div>GitHub profile အပြီး customize လုပ်ပြီး link ပေးသွားမည်။ အဲဒီအချိန်မှာပဲ ငွေချေပါမည်။</div>
-            </div>
-            
-            <div class="payment-options">
-                <div class="payment-card kpay" data-method="kpay">
-                    <div class="payment-header">
-                        <div class="payment-icon">
-                            <img src="data:image/png;base64,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" alt="">
-                        </div>
-                        <span class="payment-name">KPay</span>
-                    </div>
-                  
-                    
-                    <!-- Account Information (Hidden by default) -->
-                    <div class="account-info" id="kpay-info">
-                        <div class="account-title">
-                            <i class="fas fa-wallet"></i>
-                            <span>KPay Account Details</span>
-                        </div>
-                        <div class="account-details">
-                             <div class="account-detail">
-                                <i class="fas fa-user"></i>
-                                <span>Name: Aung Thant Zni</span>
+                    <!-- Features Section -->
+                    <section class="section">
+                        <div class="card">
+                            <div class="section-title">
+                                <i class="fas fa-puzzle-piece"></i>
+                                <span>Feature Add-ons</span>
                             </div>
-                            <div class="account-detail">
-                                <i class="fas fa-phone"></i>
-                                <span>Phone: 09 789587299</span>
+                            <div class="section-subtitle">
+                                <i class="fas fa-mouse-pointer" style="color:var(--primary);"></i>
+                                Select features to customize your profile. Click <i class="fas fa-info-circle" style="color:var(--primary);"></i> for details in Myanmar.
                             </div>
-                            <!-- <div class="account-detail">
-                                <i class="fas fa-id-card"></i>
-                                <span>Account: 1234567890</span>
-                            </div> -->
-                        </div>
-                     <button class="copy-btn" data-account="09 789587299">
-  <i class="fas fa-copy"></i> Copy Phone
-</button>
-                    </div>
-                </div>
-                
-                <div class="payment-card cbpay" data-method="cbpay">
-                    <div class="payment-header">
-                        <div class="payment-icon">
-<img src="data:image/jpeg;base64,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" alt="">                        </div>
-                        <span class="payment-name">CB Pay</span>
-                    </div>
-                 
-                    
-                    <!-- Account Information (Hidden by default) -->
-                    <div class="account-info" id="cbpay-info">
-                        <div class="account-title">
-                            <i class="fas fa-wallet"></i>
-                            <span>CB Pay Account Details</span>
-                        </div>
-                        <div class="account-details">
-                             <div class="account-detail">
-                                <i class="fas fa-user"></i>
-                                <span>Name: Aung Thant Zin</span>
-                            </div>
-                           
-                            <div class="account-detail">
-                                <i class="fas fa-id-card"></i>
-                                <span>0191600500041459</span>
+                            <div id="featureListContainer" class="feature-list">
+                                <!-- Dynamically rendered -->
                             </div>
                         </div>
-                     <button class="copy-btn" data-account="0191600500041459">
-  <i class="fas fa-copy"></i> Copy Account Number 
-</button>
-                    </div> 
+                    </section>
                 </div>
-                
-                <div class="payment-card wavepay" data-method="wavepay">
-                    <div class="payment-header">
-                        <div class="payment-icon">
-                          <img src="data:image/jpeg;base64,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" alt="">
-                        </div>
-                        <span class="payment-name">WavePay</span>
-                    </div>
-               
-                    
-                    <!-- Account Information (Hidden by default) -->
-                    <div class="account-info" id="wavepay-info">
-                        <div class="account-title">
-                            <i class="fas fa-wallet"></i>
-                            <span>WavePay Account Details</span>
-                        </div>
-                        <div class="account-details">
-                            <div class="account-detail">
-                                <i class="fas fa-user"></i>
-                                <span>Name: Aung Thant Zni</span>
-                            </div>
-                            <div class="account-detail">
-                                <i class="fas fa-phone"></i>
-                                <span>Phone: 09 789587299</span>
-                            </div>
-                            <!-- <div class="account-detail">
-                                <i class="fas fa-id-card"></i>
-                                <span>Account: </span>
-                            </div> -->
-                        </div>
-                        <button class="copy-btn" data-account="09 555 123 456">
-                            <i class="fas fa-copy"></i> Copy
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
 
-               
+                <!-- RIGHT COLUMN: Order Summary -->
+                <div class="right-column">
+                    <div class="summary-card">
+                        <div class="card card-accent">
+                            <div class="section-title">
+                                <i class="fas fa-receipt"></i>
+                                <span>Order Summary</span>
+                            </div>
+
+                            <div class="summary-base">
+                                <span>Base Price</span>
+                                <span class="base-value" id="summaryBasePrice">-- MMK</span>
+                            </div>
+
+                            <div id="summaryFeaturesContainer">
+                                <div class="summary-empty">
+                                    <i class="fas fa-plus-circle"></i>
+                                    No features selected
+                                </div>
+                            </div>
+
+                            <div class="summary-subtotal">
+                                <span>Add-ons Total</span>
+                                <span class="addon-value" id="summaryAddonTotal">0 MMK</span>
+                            </div>
+
+                            <div class="summary-total">
+                                <span class="total-label">Total</span>
+                                <span class="total-price" id="summaryGrandTotal">-- MMK</span>
+                            </div>
+
+                            <button class="proceed-btn" id="proceedBtn" disabled>
+                                <i class="fas fa-arrow-right"></i> Proceed to Order / မှာယူမည်
+                            </button>
+                            <div class="security-note">
+                                <i class="fas fa-lock" style="margin-right:0.3rem;"></i>
+                                Your selection will be saved securely
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 
     <footer>
@@ -1045,13 +949,11 @@
                     <a href="#">FAQ</a>
                     <a href="#">Terms</a>
                 </div>
-                
                 <div class="social-icons">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="https://t.me/Kamadoshinjiroo"><i class="fab fa-telegram"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
                 </div>
-                
                 <div class="copyright">
                     &copy; 2025 ProfileCraft. All rights reserved.
                 </div>
@@ -1059,797 +961,708 @@
         </div>
     </footer>
 
-    <script>
-       const profilesData = {
-  "profiles": [
-    {
-      "id": "ATZ-B01",
-      "name": "Aung Min",
-      "career": "Graphic Designer",
-      "careerMy": "ဂရပ်ဖစ်ဒီဇိုင်နာ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 18000,
-      "discountPrice": null,
-      "popular": true,
-      "image": "img/basic-1.png",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B02",
-      "name": "Kyaw Zin",
-      "career": "Photographer",
-      "careerMy": "ဓာတ်ပုံဆရာ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 15000,
-      "discountPrice": 12000,
-      "popular": false,
-      "image": "img/basic-2.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B03",
-      "name": "Su Mon",
-      "career": "Student",
-      "careerMy": "ကျောင်းသူ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 12000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-3.png",
-      "isNew": true,
-      "isFree": true
-    },
-    {
-      "id": "ATZ-B04",
-      "name": "Zaw Zaw",
-      "career": "Office Worker",
-      "careerMy": "ရုံးဝန်ထမ်း",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 20000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-4.png",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B05",
-      "name": "Hnin Ei",
-      "career": "Teacher",
-      "careerMy": "ဆရာမ",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 17000,
-      "discountPrice": 15000,
-      "popular": true,
-      "image": "img/basic-5.png",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B06",
-      "name": "Mya Thandar",
-      "career": "Doctor",
-      "careerMy": "ဆရာဝန်",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 25000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-6.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B07",
-      "name": "Ma Su Hnin",
-      "career": "Freelance Graphic Desingner",
-      "careerMy": "Freelance Graphic Desinger",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 27000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-7.png",
-      "isNew": false,
-      "isFree": false
-    },{
-      "id": "ATZ-B08",
-      "name": "DR. Aye Chan",
-      "career": "Doctor",
-      "careerMy": "ဆရာဝန်",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 25000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-8.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-B09",
-      "name": "U Min Htwe",
-      "career": "Local Bakery Owner",
-      "careerMy": "ပြည်တွင်းမုန့်တိုက်ပိုင်ရှင်",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 25000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-10.png",
-      "isNew": false,
-      "isFree": false
-    },
+  <script>
+        // ═══════════════════════════════════════════════════════════════
+        //  TELEGRAM CONFIGURATION — SET YOUR TOKENS & CHAT IDs HERE
+        // ═══════════════════════════════════════════════════════════════
+        const TELEGRAM_BOT_TOKEN = "8667705229:AAE7yXyApUypoQSxd9TIExaPn4Yk2G4BfxI";
+        const TELEGRAM_CEO_CHAT_ID = "1742022528";         // Receives Order Summary Alert
+        const TELEGRAM_ADMIN_CHAT_ID = "-1004426222447"; // Receives Full AI Prompts
+        // ═══════════════════════════════════════════════════════════════
 
-    {
-      "id": "ATZ-B10",
-      "name": "Ko Than Zaw",
-      "career": "Auto Mechanic",
-      "careerMy": "စက်ပြင်",
-      "category": "Basic",
-      "status": "Basic",
-      "price": 25000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/basic-10.png",
-      "isNew": true,
-      "isFree": false
-    },
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 1.  STATE
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    {
-      "id": "ATZ-S01",
-      "name": "Aung Aung",
-      "career": "Senior UI/UX Designer",
-      "careerMy": "UI/UX ဒီဇိုင်နာ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 40000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-S01.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S02",
-      "name": "Sarah Johnson",
-      "career": "Frontend Developer & UI Designer",
-      "careerMy": "Frontend Developer & UI Designer",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 45000,
-      "discountPrice": null,
-      "popular": true,
-      "image": "img/ATZ-S02.png",
-      "isNew": false,
-      "isFree": true
-    },
-    {
-      "id": "ATZ-S03",
-      "name": "Dr. Sarah Williams",
-      "career": "Mathematics Professor",
-      "careerMy": "သင်္ချာပါမောက္ခ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 42000,
-      "discountPrice": 39000,
-      "popular": true,
-      "image": "img/ATZ-S03.png",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S04",
-      "name": "Alex Johnson",
-      "career": "Senior UI/UX Designer",
-      "careerMy": "Senior UI/UX ဒီဇိုင်နာ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 38000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-S04.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S05",
-      "name": "Michael Johnson",
-      "career": "Operations Supervisor",
-      "careerMy": "Operations Supervisor",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 47000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-S05.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S06",
-      "name": "Myo Thant",
-      "career": "Creative Designer",
-      "careerMy": "Creative Designer",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 46000,
-      "discountPrice": 43000,
-      "popular": false,
-      "image": "img/ATZ-S06.png",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-S07",
-      "name": "Daw Nandar Win",
-      "career": "Corporate Lawyer",
-      "careerMy": "Corporateရှေ့နေ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 40000,
-      "discountPrice": 36000,
-      "popular": true,
-      "image": "img/ATZ-S07.png",
-      "isNew": false,
-      "isFree": false
-    },
-     {
-      "id": "ATZ-S08",
-      "name": "Ko Thura Aung",
-      "career": "Acoustic Guitarist",
-      "careerMy": "Acoustic ဂစ်တာသမား",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 40000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-S09.png",
-      "isNew": true,
-      "isFree": false
-    },
-        {
-      "id": "ATZ-S09",
-      "name": "Ko Kaung Myat",
-      "career": "Wedding & Portrait Photographer",
-      "careerMy": "မင်္ဂလာဆောင်နှင့် Portrait ဓာတ်ပုံဆရာ",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 40000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-S09.png",
-      "isNew": true,
-      "isFree": false
-    },
-    {
+        let currentProduct = null;
+        let selectedFeatures = [];
+        let allFeatures = [];
 
-      "id": "ATZ-S10",
-      "name": "Nyi Nyi Htut",
-      "career": "Marathon Runner",
-      "careerMy": "မာရသွန်အပြေးသမား",
-      "category": "Standard",
-      "status": "Standard",
-      "price": 45000,
-      "discountPrice": null,
-      "popular": true,
-      "image": "img/ATZ-S10.png",
-      "isNew": false,
-      "isFree": true
-    },
-    
-    {
-      "id": "ATZ-P01",
-      "name": "Zaw Zaw",
-      "career": "Senior UI/UX Designer & Developer",
-      "careerMy": "Senior UI/UX Designer & Developer",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 90000,
-      "discountPrice": 82000,
-      "popular": true,
-      "image": "img/ATZ-P01.png",
-        "thumbnails": [
-            "img/ATZ-P01-thumb-1.png" ,
-            "img/ATZ-P01-thumb-2.png",
-            "img/ATZ-P01-thumb-3.png"
-        ],
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P02",
-      "name": "Alexandra Williams",
-      "career": "Creative Director & UI/UX Designer",
-      "careerMy": "Creative Director & UI/UX Designer",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 95000,
-      "discountPrice": 85000,
-      "popular": true,
-      "image": "img/ATZ-P02.png",
-          "thumbnails": [
-             "img/ATZ-P02-thumb-1.png" ,
-            "img/ATZ-P02-thumb-2.png",
-            "img/ATZ-P02-thumb-3.png",
-            "img/ATZ-P02-thumb-4.png"
-        ],
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 2.  FETCH DATA — UPDATED to support separated JSON files
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P03",
-      "name": "DR.Srah Williams",
-      "career": "Mathematics Professor",
-      "careerMy": "သင်္ချာပါမောက္ခ",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 88000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-P03.png",
-       "thumbnails": [
-            "img/ATZ-P03-thumb-1.png" ,
-            "img/ATZ-P03-thumb-2.png",
-            "img/ATZ-P03-thumb-3.png",
-            "img/ATZ-P04-thumb-3.png"
-        ],
-
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P04",
-      "name": "Emily Robertson ",
-      "career": "HR & Office Management Executive",
-      "careerMy": "HR & Office Management Executive",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 99000,
-      "discountPrice": 92000,
-      "popular": true,
-      "image": "img/ATZ-P04.png",
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P05",
-      "name": "DR. Aye Chan Kyaw",
-      "career": "Senior Cardiologist",
-      "careerMy": "အကြီးတန်းနှလုံးအထူးကု",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 87000,
-      "discountPrice": 83000,
-      "popular": false,
-      "image": "img/ATZ-P05.png",
-       "thumbnails": [
-            "img/ATZ-P05-thumb-1.png" ,
-            "img/ATZ-P05-thumb-2.png",
-        ],
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P06",
-      "name": "Chef Kyaw Zin Htet",
-      "career": "Excutive Chet - Yangon Fine Dining",
-      "careerMy": "Executive Chef - Yangon Fine Dining",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 93000,
-      "discountPrice": null,
-      "popular": true,
-      "image": "img/ATZ-P06.png",
-       "thumbnails": [
-            "img/ATZ-P06-thumb-1.png" ,
-            "img/ATZ-P06-thumb-2.png",
-            "img/ATZ-P06-thumb-3.png"
-        ],
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P07",
-      "name": "Ko Nyi Nyi Tun",
-      "career": "Founder & CEO - TechWave",
-      "careerMy": "Founder & CEO - TeachWave",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 89000,
-      "discountPrice": 85000,
-      "popular": false,
-      "image": "img/ATZ-P07.png",
-       "thumbnails": [
-            "img/ATZ-P07-thumb-1.png" ,
-            "img/ATZ-P07-thumb-2.png",
-        ],
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P08",
-      "name": "Daw May Thin",
-      "career": "High School Teacher (Mathamatics)",
-      "careerMy": "အထက်တန်းပြဆရာ(သင်္ချာ)၊",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 100000,
-      "discountPrice": 95000,
-      "popular": true,
-      "image": "img/ATZ-P08.png",
-       "thumbnails": [
-            "img/ATZ-P08-thumb-1.png" ,
-            "img/ATZ-P08-thumb-2.png",
-        ],
-      "isNew": false,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P09",
-      "name": "Su Hlaing",
-      "career": "Creative Fashion Desinger",
-      "careerMy": "ဖန်တီးမှု ဖက်ရှင်ဒီဇိုင်နာ",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 86000,
-      "discountPrice": null,
-      "popular": false,
-      "image": "img/ATZ-P09.png",
-       "thumbnails": [
-            "img/ATZ-P09-thumb-1.png" ,
-            "img/ATZ-P09-thumb-2.png",
-        ],
-      "isNew": true,
-      "isFree": false
-    },
-    {
-      "id": "ATZ-P10",
-      "name": "Aung Kyaw Moe",
-      "career": "Teach Startup Founder",
-      "careerMy": "Teach Startup Founder",
-      "category": "Premium",
-      "status": "Premium",
-      "price": 94000,
-      "discountPrice": 88000,
-      "popular": true,
-      "image": "img/ATZ-P10.png",
-       "thumbnails": [
-            "img/ATZ-P10-thumb-1.png" ,
-            "img/ATZ-P10-thumb-2.png",
-        ],
-      "isNew": false,
-      "isFree": false
-    }
-  ]
-};
-
-
-        // Simple animation for page elements
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add animation delay to process steps
-            const steps = document.querySelectorAll('.process-step');
-            steps.forEach((step, index) => {
-                step.style.animationDelay = `${index * 0.1}s`;
-            });
-            
-            
-            // Add animation delay to payment cards
-            const payments = document.querySelectorAll('.payment-card');
-            payments.forEach((card, index) => {
-                card.style.animationDelay = `${index * 0.15}s`;
-            });
-              const telegramButton = document.getElementById("telegramButton");
-    if (telegramButton) {
-        telegramButton.addEventListener("click", () => {
-            window.open("https://t.me/Kamadoshinjiroo", "_blank");
-        });
-    }
-            
-            // Telegram button interaction
-           
-        });
-        document.addEventListener("DOMContentLoaded", () => {
-    const profileId = localStorage.getItem("selectedProfileId");
-    if (!profileId) return;
-
-    // Find the profile by ID
-    const profile = profilesData.profiles.find(p => p.id === profileId);
-    if (!profile) return;
-
-    // Fill content
-    document.querySelector(".thumbnail-container img").src = profile.image;
-    document.querySelector(".profile-name").textContent = profile.name;
-    document.querySelector(".profile-career").innerHTML = `<i class="fas fa-briefcase"></i> ${profile.career}`;
-
-    const pricing = document.querySelector(".profile-pricing");
-    if (profile.discountPrice) {
-      pricing.innerHTML = `
-        <span class="current-price">${profile.discountPrice.toLocaleString()} MMK</span>
-        <span class="original-price">${profile.price.toLocaleString()} MMK</span>
-        <span class="discount-badge">Save ${Math.round(((profile.price - profile.discountPrice) / profile.price) * 100)}%</span>
-      `;
-    } else {
-      pricing.innerHTML = `<span class="current-price">${profile.price.toLocaleString()} MMK</span>`;
-    }
-  });
-
- function initThumbnailGallery(thumbnailsData) {
-      // Check if we have at least 2 thumbnails
-      if (!thumbnailsData || thumbnailsData.length < 2) {
-        return; // Don't show gallery if less than 2 images
-      }
-      
-      const galleryContainer = document.querySelector('.thumbnail-gallery');
-      const mainImage = document.querySelector('.main-image');
-      const galleryWrapper = document.querySelector('.thumbnail-gallery-wrapper');
-      
-      // Clear any existing thumbnails
-      galleryContainer.innerHTML = '';
-      
-      // Show the gallery wrapper
-      galleryWrapper.style.display = 'block';
-      
-      // Create thumbnail elements
-      thumbnailsData.forEach((src, index) => {
-        const thumbnailItem = document.createElement('div');
-        thumbnailItem.className = 'thumbnail-item';
-        if (index === 0) {
-          thumbnailItem.classList.add('active');
+        async function fetchJSON(path) {
+            const response = await fetch(path);
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status} – ${response.statusText}`);
+            }
+            return response.json();
         }
-        
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = `Thumbnail ${index + 1}`;
-        img.loading = 'lazy';
-        
-        thumbnailItem.appendChild(img);
-        galleryContainer.appendChild(thumbnailItem);
-        
-        // Add click event to switch main image
-        thumbnailItem.addEventListener('click', function() {
-          // Remove active class from all thumbnails
-          document.querySelectorAll('.thumbnail-item').forEach(item => {
-            item.classList.remove('active');
-          });
-          
-          // Add active class to clicked thumbnail
-          this.classList.add('active');
-          
-          // Smooth transition for main image
-          mainImage.style.opacity = '0';
-          
-          setTimeout(() => {
-            mainImage.src = src;
-            mainImage.style.opacity = '1';
-          }, 400);
-        });
-      });
-      
-      // Add touch/swipe functionality for mobile
-      let touchStartX = 0;
-      let touchScrollLeft = 0;
-      const galleryScroll = document.querySelector('.thumbnail-gallery-scroll');
-      
-      galleryScroll.addEventListener('touchstart', function(e) {
-        touchStartX = e.touches[0].clientX;
-        touchScrollLeft = galleryScroll.scrollLeft;
-        this.style.cursor = 'grabbing';
-        this.style.scrollBehavior = 'auto';
-      });
-      
-      galleryScroll.addEventListener('touchmove', function(e) {
-        if (!touchStartX) return;
-        
-        const touchX = e.touches[0].clientX;
-        const walk = (touchX - touchStartX) * 2; // Scroll-fastness
-        galleryScroll.scrollLeft = touchScrollLeft - walk;
-      });
-      
-      galleryScroll.addEventListener('touchend', function() {
-        touchStartX = 0;
-        this.style.cursor = 'grab';
-        this.style.scrollBehavior = 'smooth';
-      });
-    }
 
-    // Initialize the gallery when page loads
-   document.addEventListener('DOMContentLoaded', function () {
-  const selectedProfileId = localStorage.getItem('selectedProfileId');
+        /**
+         * Load features based on product type
+         * @param {Object} product - The product object from product.json
+         * @returns {Array} Array of feature objects
+         */
+        async function loadFeaturesForProduct(product) {
+            // Determine which JSON file to use based on product type/purpose
+            // If product has 'type' property: 'business' or 'profile'
+            // Fallback: check if 'purpose' property exists
+            let featureFile = './json/profile_function.json'; // default
 
-  if (!selectedProfileId) {
-    console.error("No profile ID found in localStorage");
-    return;
-  }
+            if (product.type === 'business' || product.purpose === 'business') {
+                featureFile = './json/business_function.json';
+            } else if (product.type === 'profile' || product.purpose === 'profile') {
+                featureFile = './json/profile_function.json';
+            } else {
+                // If no explicit type, try to infer from category or use default
+                console.warn('[Detail] No type/purpose specified for product, defaulting to profile_function.json');
+            }
 
-  // Find the profile with that ID
-  const profile = profilesData.profiles.find(p => p.id === selectedProfileId);
+            console.log(`[Detail] Loading features from: ${featureFile} for product type: ${product.type || product.purpose || 'default'}`);
 
-  if (!profile) {
-    console.error("Profile not found for ID:", selectedProfileId);
-    return;
-  }
-
-  // Fill main details
-  document.querySelector('.main-image').src = profile.image;
-  document.querySelector('.profile-name').textContent = profile.name;
-  document.querySelector('.profile-career').innerHTML = `<i class="fas fa-briefcase"></i> ${profile.career}`;
-
-  const currentPriceEl = document.querySelector('.current-price');
-  const originalPriceEl = document.querySelector('.original-price');
-  const discountBadgeEl = document.querySelector('.discount-badge');
-
-  currentPriceEl.textContent = profile.price.toLocaleString() + " MMK";
-
-  if (profile.discountPrice) {
-    originalPriceEl.textContent = profile.discountPrice.toLocaleString() + " MMK";
-    discountBadgeEl.textContent = `Save ${Math.round(((profile.price - profile.discountPrice) / profile.price) * 100)}%`;
-  } else {
-    originalPriceEl.style.display = 'none';
-    discountBadgeEl.style.display = 'none';
-  }
-// Add touch/swipe functionality for mobile
-const galleryScroll = document.querySelector('.thumbnail-gallery-scroll');
-if (galleryScroll) {
-  let touchStartX = 0;
-  let touchScrollLeft = 0;
-
-  galleryScroll.addEventListener('touchstart', function (e) {
-    touchStartX = e.touches[0].clientX;
-    touchScrollLeft = galleryScroll.scrollLeft;
-    this.style.cursor = 'grabbing';
-    this.style.scrollBehavior = 'auto';
-  });
-
-  galleryScroll.addEventListener('touchmove', function (e) {
-    if (!touchStartX) return;
-    const touchX = e.touches[0].clientX;
-    const walk = (touchX - touchStartX) * 2; // Scroll-fastness
-    galleryScroll.scrollLeft = touchScrollLeft - walk;
-  });
-
-  galleryScroll.addEventListener('touchend', function () {
-    touchStartX = 0;
-    this.style.cursor = 'grab';
-    this.style.scrollBehavior = 'smooth';
-  });
-}
-
-  // Initialize thumbnails gallery
-  initThumbnailGallery(profile.thumbnails);
-});
-
-// Example usage - call this when a profile is selected
-// loadProfileDetails("ATZ-B01");
-// Usage example - call this function with your thumbnails array
-// initThumbnailGallery(["img1.png", "img2.png", "img3.png"]);
-(function () {
-  // Robust copy helper with Clipboard API + execCommand fallback
-  function copyToClipboard(text) {
-    if (!text) return Promise.reject('No text to copy');
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      return navigator.clipboard.writeText(text);
-    }
-    return new Promise((resolve, reject) => {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.left = '-9999px';
-      document.body.appendChild(ta);
-      ta.focus();
-      ta.select();
-      try {
-        const ok = document.execCommand('copy');
-        document.body.removeChild(ta);
-        if (ok) resolve();
-        else reject('execCommand failed');
-      } catch (err) {
-        document.body.removeChild(ta);
-        reject(err);
-      }
-    });
-  }
-
-  // Small toast notification (created on demand)
-  function showToast(message, timeout = 1700) {
-    let toast = document.getElementById('copy-toast');
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.id = 'copy-toast';
-      toast.setAttribute('role', 'status');
-      toast.setAttribute('aria-live', 'polite');
-      toast.style.cssText =
-        'position:fixed;bottom:22px;left:50%;transform:translateX(-50%);padding:10px 14px;border-radius:8px;background:rgba(0,0,0,0.82);color:#fff;font-weight:600;z-index:9999;opacity:0;transition:opacity .18s ease;';
-      document.body.appendChild(toast);
-    }
-    toast.textContent = message;
-    requestAnimationFrame(() => (toast.style.opacity = '1'));
-    clearTimeout(toast._hideTimer);
-    toast._hideTimer = setTimeout(() => {
-      toast.style.opacity = '0';
-      // remove after fade for cleanliness
-      setTimeout(() => {
-        if (toast.parentNode) toast.parentNode.removeChild(toast);
-      }, 220);
-    }, timeout);
-  }
-
-  document.addEventListener('DOMContentLoaded', function () {
-    // handle card clicks (show account info)
-    const paymentCards = document.querySelectorAll('.payment-card[data-method]');
-    const accountInfos = document.querySelectorAll('.account-info');
-
-    paymentCards.forEach((card) => {
-      card.addEventListener('click', function () {
-        const method = this.dataset.method;
-        paymentCards.forEach((c) => c.classList.remove('active'));
-        accountInfos.forEach((i) => i.classList.remove('active'));
-        this.classList.add('active');
-        const accountInfo = document.getElementById(`${method}-info`);
-        if (accountInfo) accountInfo.classList.add('active');
-      });
-    });
-
-    // Use event delegation for copy buttons so it works if content is dynamic
-    document.body.addEventListener('click', function (e) {
-      const btn = e.target.closest('.copy-btn');
-      if (!btn) return;
-      e.stopPropagation(); // don't fire the card click
-
-      // Prefer data-account attribute. If not available, gather the visible account details.
-      let textToCopy = (btn.dataset && btn.dataset.account) || btn.getAttribute('data-account') || '';
-      if (!textToCopy) {
-        const container = btn.closest('.account-info') || btn.parentElement;
-        if (container) {
-          const spans = Array.from(container.querySelectorAll('.account-detail span'));
-          if (spans.length) textToCopy = spans.map(s => s.textContent.trim()).join(' | ');
+            try {
+                const featureData = await fetchJSON(featureFile);
+                
+                // Handle both array and object-with-array formats
+                const features = Array.isArray(featureData) ? featureData : featureData.features || [];
+                
+                // Filter features matching product category
+                const matchingFeatures = features.filter(f => f.category === product.category);
+                
+                console.log(`[Detail] Found ${matchingFeatures.length} features for category "${product.category}"`);
+                return matchingFeatures;
+            } catch (err) {
+                console.error(`[Detail] Error loading features from ${featureFile}:`, err);
+                return [];
+            }
         }
-      }
 
-      if (!textToCopy) {
-        showToast('Nothing to copy');
-        return;
-      }
+        async function loadProductData() {
+            try {
+                const productData = await fetchJSON('./json/product.json');
+                if (!productData || !productData.profiles || !Array.isArray(productData.profiles)) {
+                    throw new Error('Invalid product.json structure');
+                }
+                return productData.profiles;
+            } catch (err) {
+                console.error('[Detail] Error loading product.json:', err);
+                throw err;
+            }
+        }
 
-      const originalHTML = btn.innerHTML;
-      btn.disabled = true;
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 3.  GET PROFILE ID
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-      copyToClipboard(textToCopy)
-        .then(() => {
-          btn.innerHTML = '<i class="fas fa-check"></i> Copied';
-          showToast('Copied to clipboard');
-        })
-        .catch(() => {
-          btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Copy failed';
-          showToast('Copy failed — please copy manually');
-        })
-        .finally(() => {
-          setTimeout(() => {
-            btn.innerHTML = originalHTML;
-            btn.disabled = false;
-          }, 1600);
+        function getProfileId() {
+            const params = new URLSearchParams(window.location.search);
+            let id = params.get('id');
+
+            if (!id) {
+                const stored = localStorage.getItem('selected_template_info');
+                if (stored) {
+                    try {
+                        const info = JSON.parse(stored);
+                        id = info.id;
+                    } catch (e) {
+                        console.warn('Failed to parse localStorage data', e);
+                    }
+                }
+            }
+            return id;
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 4.  RENDER PRODUCT
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function renderProduct(profile) {
+            const mainImage = document.querySelector('.main-image');
+            if (mainImage) mainImage.src = profile.image || './img/default.png';
+
+            const nameEl = document.getElementById('profileName');
+            if (nameEl) nameEl.textContent = profile.name || 'Unknown';
+
+            const categoryEl = document.getElementById('profileCategory');
+            if (categoryEl) {
+                const careerText = profile.careerMy || profile.career || profile.category || 'General';
+                categoryEl.innerHTML = `<i class="fas fa-briefcase"></i> ${careerText}`;
+            }
+
+            const currentPriceEl = document.getElementById('currentPrice');
+            const originalPriceEl = document.getElementById('originalPrice');
+            const discountBadgeEl = document.getElementById('discountBadge');
+
+            const basePrice = profile.discountPrice || profile.price || 0;
+
+            if (currentPriceEl) {
+                currentPriceEl.textContent = basePrice.toLocaleString() + ' MMK';
+            }
+
+            if (profile.discountPrice && profile.price && profile.discountPrice < profile.price) {
+                if (originalPriceEl) {
+                    originalPriceEl.textContent = profile.price.toLocaleString() + ' MMK';
+                    originalPriceEl.style.display = 'inline';
+                }
+                if (discountBadgeEl) {
+                    const savePercent = Math.round(((profile.price - profile.discountPrice) / profile.price) * 100);
+                    discountBadgeEl.textContent = `Save ${savePercent}%`;
+                    discountBadgeEl.style.display = 'inline';
+                }
+            } else {
+                if (originalPriceEl) originalPriceEl.style.display = 'none';
+                if (discountBadgeEl) discountBadgeEl.style.display = 'none';
+            }
+
+            currentProduct = {
+                ...profile,
+                displayPrice: basePrice
+            };
+
+            updateSummary();
+
+            if (profile.thumbnails && profile.thumbnails.length > 1) {
+                initThumbnailGallery(profile.thumbnails);
+            } else {
+                const wrapper = document.querySelector('.thumbnail-gallery-wrapper');
+                if (wrapper) wrapper.style.display = 'none';
+            }
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 5.  THUMBNAIL GALLERY
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function initThumbnailGallery(thumbnailsData) {
+            if (!thumbnailsData || thumbnailsData.length < 2) {
+                const wrapper = document.querySelector('.thumbnail-gallery-wrapper');
+                if (wrapper) wrapper.style.display = 'none';
+                return;
+            }
+
+            const galleryContainer = document.getElementById('thumbnailGallery');
+            const mainImage = document.querySelector('.main-image');
+            const galleryWrapper = document.querySelector('.thumbnail-gallery-wrapper');
+
+            if (!galleryContainer || !mainImage || !galleryWrapper) return;
+
+            galleryContainer.innerHTML = '';
+            galleryWrapper.style.display = 'block';
+
+            thumbnailsData.forEach((src, index) => {
+                const item = document.createElement('div');
+                item.className = 'thumbnail-item';
+                if (index === 0) item.classList.add('active');
+
+                const img = document.createElement('img');
+                img.src = src;
+                img.alt = `Thumbnail ${index + 1}`;
+                img.loading = 'lazy';
+
+                item.appendChild(img);
+                galleryContainer.appendChild(item);
+
+                item.addEventListener('click', function () {
+                    document.querySelectorAll('.thumbnail-item').forEach(el => el.classList.remove('active'));
+                    this.classList.add('active');
+                    mainImage.style.opacity = '0';
+                    setTimeout(() => {
+                        mainImage.src = src;
+                        mainImage.style.opacity = '1';
+                    }, 400);
+                });
+            });
+
+            const galleryScroll = document.querySelector('.thumbnail-gallery-scroll');
+            if (galleryScroll) {
+                let touchStartX = 0;
+                let touchScrollLeft = 0;
+
+                galleryScroll.addEventListener('touchstart', function (e) {
+                    touchStartX = e.touches[0].clientX;
+                    touchScrollLeft = galleryScroll.scrollLeft;
+                    this.style.cursor = 'grabbing';
+                    this.style.scrollBehavior = 'auto';
+                });
+
+                galleryScroll.addEventListener('touchmove', function (e) {
+                    if (!touchStartX) return;
+                    const touchX = e.touches[0].clientX;
+                    const walk = (touchX - touchStartX) * 2;
+                    galleryScroll.scrollLeft = touchScrollLeft - walk;
+                });
+
+                galleryScroll.addEventListener('touchend', function () {
+                    touchStartX = 0;
+                    this.style.cursor = 'grab';
+                    this.style.scrollBehavior = 'smooth';
+                });
+            }
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 6.  RENDER FEATURES (ENLARGED CARDS + SMOOTH DESCRIPTION)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function renderFeatures(features) {
+            const container = document.getElementById('featureListContainer');
+            if (!container) return;
+
+            if (!features || features.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center;padding:2.5rem 0;color:var(--text-secondary);">
+                        <i class="fas fa-info-circle" style="font-size:2.5rem;display:block;margin-bottom:0.75rem;color:var(--border);"></i>
+                        No feature add-ons available for this category.
+                    </div>
+                `;
+                return;
+            }
+
+            allFeatures = features;
+
+            container.innerHTML = features.map((func) => `
+                <div class="feature-card" id="feature_${func.id}" data-feature-id="${func.id}" data-price="${func.price_addon}" data-name="${func.name}">
+                    <div class="feature-main">
+                        <div class="feature-left">
+                            <input type="checkbox" id="chk_${func.id}" class="feature-checkbox">
+                            <span class="feature-name">${func.name}</span>
+                        </div>
+                        <div class="feature-right">
+                            <span class="feature-price">+${func.price_addon.toLocaleString()} MMK</span>
+                            <button class="info-toggle" data-target="desc_${func.id}" aria-label="Toggle description" title="View details in Myanmar">
+                                <i class="fas fa-info-circle"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="feature-desc-wrapper" id="descWrapper_${func.id}">
+                        <div class="feature-desc" id="desc_${func.id}">
+                            <i class="fas fa-quote-left" style="font-size:0.7rem;opacity:0.5;"></i>
+                            ${func.description_my || 'No description available.'}
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // ── Bind Events ──
+
+            container.querySelectorAll('.feature-card').forEach(card => {
+                const checkbox = card.querySelector('.feature-checkbox');
+                const infoBtn = card.querySelector('.info-toggle');
+                const descWrapper = card.querySelector('.feature-desc-wrapper');
+
+                // Card click toggles checkbox (unless clicking info button)
+                card.addEventListener('click', function(e) {
+                    if (e.target.closest('.info-toggle')) return;
+                    if (checkbox) {
+                        checkbox.checked = !checkbox.checked;
+                        checkbox.dispatchEvent(new Event('change'));
+                    }
+                });
+
+                // Checkbox change
+                if (checkbox) {
+                    checkbox.addEventListener('change', function(e) {
+                        e.stopPropagation();
+                        const id = card.dataset.featureId;
+                        const price = parseInt(card.dataset.price);
+                        const name = card.dataset.name;
+
+                        if (this.checked) {
+                            card.classList.add('selected');
+                            if (!selectedFeatures.find(f => f.id === id)) {
+                                selectedFeatures.push({ id, price, name });
+                            }
+                            // Auto-expand description when selected
+                            if (descWrapper) {
+                                descWrapper.classList.add('open');
+                            }
+                        } else {
+                            card.classList.remove('selected');
+                            selectedFeatures = selectedFeatures.filter(f => f.id !== id);
+                        }
+                        updateSummary();
+                    });
+                }
+
+                // Info toggle button — smooth expand/collapse
+                if (infoBtn && descWrapper) {
+                    infoBtn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        descWrapper.classList.toggle('open');
+                        const icon = this.querySelector('i');
+                        if (icon) {
+                            icon.className = descWrapper.classList.contains('open') 
+                                ? 'fas fa-info-circle' 
+                                : 'fas fa-info-circle';
+                        }
+                    });
+
+                    // Hover: smooth expand on hover, collapse on leave (with delay)
+                    card.addEventListener('mouseenter', function() {
+                        if (!descWrapper.classList.contains('open')) {
+                            descWrapper.classList.add('open');
+                            descWrapper.dataset.hoverTriggered = 'true';
+                        }
+                    });
+
+                    card.addEventListener('mouseleave', function() {
+                        if (descWrapper.dataset.hoverTriggered === 'true') {
+                            setTimeout(() => {
+                                if (!descWrapper.dataset.userToggled) {
+                                    descWrapper.classList.remove('open');
+                                    descWrapper.dataset.hoverTriggered = 'false';
+                                }
+                            }, 400);
+                        }
+                    });
+
+                    infoBtn.addEventListener('click', function() {
+                        const isOpen = descWrapper.classList.contains('open');
+                        descWrapper.dataset.userToggled = isOpen ? 'true' : 'false';
+                        descWrapper.dataset.hoverTriggered = 'false';
+                    });
+                }
+            });
+
+            updateSummary();
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 7.  UPDATE SUMMARY
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        function updateSummary() {
+            if (!currentProduct) return;
+
+            const basePrice = currentProduct.displayPrice || 0;
+            const addonTotal = selectedFeatures.reduce((sum, f) => sum + (f.price || 0), 0);
+            const grandTotal = basePrice + addonTotal;
+
+            const baseEl = document.getElementById('summaryBasePrice');
+            if (baseEl) baseEl.textContent = basePrice.toLocaleString() + ' MMK';
+
+            const addonEl = document.getElementById('summaryAddonTotal');
+            if (addonEl) addonEl.textContent = addonTotal.toLocaleString() + ' MMK';
+
+            const totalEl = document.getElementById('summaryGrandTotal');
+            if (totalEl) totalEl.textContent = grandTotal.toLocaleString() + ' MMK';
+
+            const container = document.getElementById('summaryFeaturesContainer');
+            if (!container) return;
+
+            if (selectedFeatures.length === 0) {
+                container.innerHTML = `
+                    <div class="summary-empty">
+                        <i class="fas fa-plus-circle"></i>
+                        No features selected
+                    </div>
+                `;
+            } else {
+                container.innerHTML = `
+                    <ul class="summary-items">
+                        ${selectedFeatures.map(f => `
+                            <li>
+                                <span class="item-name">${f.name}</span>
+                                <span class="item-price">+${f.price.toLocaleString()} MMK</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                `;
+            }
+
+            const proceedBtn = document.getElementById('proceedBtn');
+            if (proceedBtn) {
+                proceedBtn.disabled = false;
+            }
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 8.  DUAL-CHANNEL TELEGRAM DISPATCH
+        //     ─ CEO Group:   Simple Order Summary Alert
+        //     ─ Admin Group: Full AI Prompts Payload
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        /**
+         * Send a simple order summary alert to the CEO/Admin Group
+         * This is a concise, business-readable notification.
+         */
+        async function sendCEOAlert(orderData) {
+            if (TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN" || TELEGRAM_CEO_CHAT_ID === "YOUR_CEO_GROUP_CHAT_ID") {
+                console.warn('Telegram CEO bot not configured. Skipping CEO alert.');
+                return;
+            }
+
+            const featureNames = orderData.selectedFeatures.length > 0
+                ? orderData.selectedFeatures.map(f => f.name).join(', ')
+                : '(No features selected)';
+
+            const message = `
+🔔 *NEW ORDER ALERT — CEO*
+
+👤 *Client:* ${orderData.productName}
+📂 *Category:* ${orderData.productCategory || 'N/A'}
+🏷️ *Type:* ${orderData.productType || 'profile'}
+
+📦 *Features:* ${featureNames}
+
+💰 *Base Price:* ${orderData.basePrice.toLocaleString()} MMK
+💳 *Total:* ${orderData.totalPrice.toLocaleString()} MMK
+
+🕐 ${new Date().toLocaleString('en-US', { timeZone: 'Asia/Yangon' })}
+            `.trim();
+
+            try {
+                const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CEO_CHAT_ID,
+                        text: message,
+                        parse_mode: 'Markdown',
+                    })
+                });
+                const result = await response.json();
+                if (!result.ok) {
+                    console.error('Telegram CEO API error:', result);
+                } else {
+                    console.log('✅ CEO alert sent to Telegram');
+                }
+            } catch (error) {
+                console.error('Failed to send CEO alert:', error);
+            }
+        }
+
+        /**
+         * Send the full AI prompts payload to the Technical Admin/Developer Group
+         * This contains the complete structured data including all feature prompts.
+         */
+        async function sendAdminFullPayload(orderData) {
+            if (TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN" || TELEGRAM_ADMIN_CHAT_ID === "YOUR_ADMIN_DEVELOPER_CHAT_ID") {
+                console.warn('Telegram Admin bot not configured. Skipping Admin full payload.');
+                return;
+            }
+
+            // Build the full prompts payload
+            const featurePayloads = orderData.selectedFeatures.map((f, i) => {
+                // Find the full feature object from allFeatures
+                const fullFeature = allFeatures.find(af => af.id === f.id);
+                return {
+                    id: f.id,
+                    name: f.name,
+                    price: f.price,
+                    description_my: fullFeature?.description_my || '',
+                    prompts: fullFeature?.prompts || null
+                };
+            });
+
+            const payload = {
+                order: {
+                    productId: orderData.productId,
+                    productName: orderData.productName,
+                    productCategory: orderData.productCategory,
+                    productType: orderData.productType,
+                    basePrice: orderData.basePrice,
+                    totalPrice: orderData.totalPrice,
+                    timestamp: new Date().toISOString(),
+                    submittedAt: new Date().toLocaleString('en-US', { timeZone: 'Asia/Yangon' })
+                },
+                selectedFeatures: featurePayloads,
+                featureCount: orderData.selectedFeatures.length
+            };
+
+            const jsonPayload = JSON.stringify(payload, null, 2);
+
+            // Split long messages if needed (Telegram has 4096 char limit)
+            const maxLength = 4000;
+            let message = `
+📋 *FULL AI PROMPTS PAYLOAD — ADMIN*
+
+📊 *Order Summary:*
+   • Product: ${orderData.productName} (${orderData.productId})
+   • Category: ${orderData.productCategory || 'N/A'}
+   • Type: ${orderData.productType || 'profile'}
+   • Base: ${orderData.basePrice.toLocaleString()} MMK
+   • Total: ${orderData.totalPrice.toLocaleString()} MMK
+   • Features: ${orderData.selectedFeatures.length} selected
+
+📦 *Feature Details with Prompts:*
+\`\`\`json
+${jsonPayload}
+\`\`\`
+
+🔗 *Source:* ${window.location.href}
+            `.trim();
+
+            // Send the full payload (split if too long)
+            if (message.length > maxLength) {
+                // Send summary first, then split JSON
+                const summary = `
+📋 *FULL AI PROMPTS PAYLOAD — ADMIN*
+
+📊 *Order:* ${orderData.productName} (${orderData.productId})
+📂 *Category:* ${orderData.productCategory || 'N/A'}
+💰 *Total:* ${orderData.totalPrice.toLocaleString()} MMK
+📦 *Features:* ${orderData.selectedFeatures.length} selected
+
+📄 *JSON Payload (${jsonPayload.length} chars) — see following messages:*
+                `.trim();
+
+                try {
+                    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_ADMIN_CHAT_ID,
+                            text: summary,
+                            parse_mode: 'Markdown',
+                        })
+                    });
+
+                    // Split JSON into chunks
+                    const chunkSize = 3900;
+                    for (let i = 0; i < jsonPayload.length; i += chunkSize) {
+                        const chunk = jsonPayload.substring(i, i + chunkSize);
+                        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                chat_id: TELEGRAM_ADMIN_CHAT_ID,
+                                text: `\`\`\`json\n${chunk}\n\`\`\``,
+                                parse_mode: 'Markdown',
+                            })
+                        });
+                        // Small delay to avoid rate limiting
+                        await new Promise(resolve => setTimeout(resolve, 200));
+                    }
+                    console.log('✅ Admin full payload sent to Telegram (split)');
+                } catch (error) {
+                    console.error('Failed to send Admin full payload:', error);
+                }
+            } else {
+                try {
+                    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_ADMIN_CHAT_ID,
+                            text: message,
+                            parse_mode: 'Markdown',
+                        })
+                    });
+                    const result = await response.json();
+                    if (!result.ok) {
+                        console.error('Telegram Admin API error:', result);
+                    } else {
+                        console.log('✅ Admin full payload sent to Telegram');
+                    }
+                } catch (error) {
+                    console.error('Failed to send Admin full payload:', error);
+                }
+            }
+        }
+
+        /**
+         * Main dispatch function — sends to both channels
+         */
+        async function dispatchTelegramNotifications(orderData) {
+            // 1. Send CEO Alert (simple summary)
+            await sendCEOAlert(orderData);
+
+            // 2. Send Admin Full Payload (complete with prompts)
+            await sendAdminFullPayload(orderData);
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 9.  PROCEED TO ORDER
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        async function proceedToOrder() {
+            if (!currentProduct) {
+                alert('Please wait for the product to load.');
+                return;
+            }
+
+            const orderData = {
+                productId: currentProduct.id,
+                productName: currentProduct.name,
+                productCategory: currentProduct.category,
+                productType: currentProduct.type || 'profile',
+                basePrice: currentProduct.displayPrice,
+                selectedFeatures: selectedFeatures.map(f => ({
+                    id: f.id,
+                    name: f.name,
+                    price: f.price
+                })),
+                totalPrice: currentProduct.displayPrice + selectedFeatures.reduce((sum, f) => sum + f.price, 0)
+            };
+
+            try {
+                // Send Telegram notifications (async, non-blocking)
+                dispatchTelegramNotifications(orderData);
+
+                // Save to sessionStorage and redirect
+                sessionStorage.setItem('pendingOrder', JSON.stringify(orderData));
+                window.location.href = `order.html?id=${currentProduct.id}`;
+            } catch (e) {
+                console.error('Failed to save order data:', e);
+                alert('Unable to proceed. Please try again.');
+            }
+        }
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        // 10. MAIN INIT — UPDATED with separated JSON loading
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        document.addEventListener('DOMContentLoaded', async function() {
+            const loadingState = document.getElementById('loadingState');
+            const mainContent = document.getElementById('mainContent');
+
+            try {
+                const id = getProfileId();
+                if (!id) {
+                    console.warn('[Detail] No profile ID found. Redirecting to index.');
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                // 1. Load product data
+                const profiles = await loadProductData();
+
+                // 2. Find matching profile
+                const profile = profiles.find(p => p.id === id);
+                if (!profile) {
+                    console.warn(`[Detail] Profile "${id}" not found. Redirecting.`);
+                    window.location.href = 'index.html';
+                    return;
+                }
+
+                console.log(`[Detail] Product loaded: ${profile.name} (${profile.id})`);
+                console.log(`[Detail] Product type: ${profile.type || profile.purpose || 'default'}`);
+                console.log(`[Detail] Product category: ${profile.category}`);
+
+                // 3. Load features based on product type
+                const categoryFeatures = await loadFeaturesForProduct(profile);
+
+                // 4. Show UI
+                loadingState.style.display = 'none';
+                mainContent.style.display = 'block';
+
+                // 5. Render product and features
+                renderProduct(profile);
+                renderFeatures(categoryFeatures);
+
+                // 6. Bind proceed button
+                const proceedBtn = document.getElementById('proceedBtn');
+                if (proceedBtn) {
+                    proceedBtn.addEventListener('click', proceedToOrder);
+                }
+
+                updateSummary();
+
+            } catch (error) {
+                console.error('[Detail] Initialization error:', error);
+                loadingState.innerHTML = `
+                    <div style="text-align:center;padding:2.5rem 1rem;color:#e74c3c;">
+                        <i class="fas fa-exclamation-triangle" style="font-size:2.5rem;display:block;margin-bottom:1rem;"></i>
+                        <h3 style="font-weight:600;">Failed to load profile details</h3>
+                        <p style="margin-top:0.5rem;">Please refresh the page or return to the <a href="index.html" style="color:var(--primary);font-weight:600;">homepage</a>.</p>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);margin-top:0.5rem;">${error.message}</p>
+                    </div>
+                `;
+            }
         });
-    });
-
-    // Optional: hide payment-notice after 10s (same behaviour as your old code)
-    const notice = document.querySelector('.payment-notice');
-    if (notice) {
-      setTimeout(() => {
-        notice.style.transition = 'opacity .6s ease';
-        notice.style.opacity = '0';
-        setTimeout(() => (notice.style.display = 'none'), 600);
-      }, 10000);
-    }
-  });
-})();
     </script>
 </body>
 </html>

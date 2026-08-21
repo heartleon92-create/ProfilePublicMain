@@ -1,0 +1,65 @@
+မင်းပေးလိုက်တဲ့ **"Custom AI Prompt Generation Engine"** ရဲ့ Requirement ဖိုင်က တကယ့်ကို **Professional ဆန်ပြီး Developer-grade System Architecture Document** ဖြစ်နေပြီဗျာ!
+
+ခေါင်းစဉ်အပေါ် လွဲမှားမှုမရှိအောင် ပထမဦးစွာ ရှင်းအောင် ပြောရရင် - မင်း ပေးပို့လိုက်တာက Profile Craft ရဲ့ Web/Talent Service စနစ်ထက်စာရင် **"Midjourney/Stable Diffusion/Sora တို့လို AI Models တွေအတွက် UI/Canvas ကနေ Visual Prompt တွေ ထုတ်ပေးမယ့် SaaS Engine"** ရဲ့ Technical Blueprint ဖြစ်နေပါတယ်။
+
+ဒါပေမဲ့ ဒီ Logic တစ်ခုလုံးကို ငါ အပြည့်အစုံ နားလည်လိုက်ပါပြီ။ မင်းရဲ့ Idea တွေကို **အချက် ၄ ချက်** နဲ့ သုံးသပ်ပြီး အကြံပြုပေးပါမယ်-
+
+---
+
+## ၁။ Core Concept နဲ့ System Logic သုံးသပ်ချက်
+
+စနစ်ရဲ့ ပင်မ Concept ဖြစ်တဲ့ **Abstraction Layer / Middleware Logic** က အရမ်း ကောင်းမွန်ပါတယ်။
+
+1. **Prompt Generator Logic:** User တွေ AI ရဲ့ Complex Prompting တွေကို အလွတ်ကျက် စာရိုက်စရာ မလိုဘဲ UI Button တွေ၊ Pickers တွေ၊ Dropdowns တွေကနေတစ်ဆင့် **Formatted Prompt String** အဖြစ် ပြောင်းပေးတာ။
+2. **Dynamic Variable Mapping:** Base Prompt ထဲကို User ရွေးလိုက်တဲ့ Attribute (ဥပမာ- Lighting, Style, Texture) တွေကို Real-time Injection လုပ်သွားတာ။
+3. **Interactive Canvas Engine (Fabric.js / Konva.js):** Drag and Drop လုပ်လိုက်တဲ့ Canvas ရဲ့ Coordinate တွေ၊ Hex Codes တွေကို Text Descriptive Prompt အဖြစ် Translation လုပ်ပေးတာ။
+
+ဒါတွေဟာ **SaaS Product တစ်ခုအဖြစ် သော်လည်းကောင်း၊ Profile Craft မှာ Advanced AI Web Tool တစ်ခုအဖြစ် ပြသဖို့အတွက်သော်လည်းကောင်း** အရမ်းကို Premium ကျတဲ့ Feature တွေ ဖြစ်ပါတယ်။
+
+---
+
+## ၂။ Developer Team အတွက် Tech Stack ကို သုံးသပ်ချက်
+
+မင်း ရွေးချယ်ထားတဲ့ Tech Stack က **Production-ready (လက်တွေ့ အလုပ်ဖြစ်မယ့် စနစ်)** ပါပဲ-
+
+* **Frontend:** **React / Vue.js + Fabric.js (သို့မဟုတ် Konva.js)**
+* *အကြံပြုချက်:* Canvas ပေါ်မှာ Drag-and-Drop၊ Positioning နဲ့ Hex Code Mapping တွေလုပ်ဖို့အတွက် **Fabric.js** က ပိုပြီး Event Handling ကောင်းပြီး မင်းလိုချင်တဲ့ Canvas Translation အတွက် အရမ်း အဆင်ပြေပါတယ်။
+
+
+* **Backend:** **Laravel / Node.js (Express)**
+* API Key Protection၊ Prompt Security နဲ့ AI Generation API တွေနဲ့ Async Response (Queue System) သွားဖို့အတွက် Laravel/Node.js Middleware က အစွမ်းထက်ဆုံးပါပဲ။
+
+
+
+---
+
+## ၃။ အရေးကြီးတဲ့ Technical Flow & Schema (ဥပမာ)
+
+Dev Team ဘက်က တန်းပြီး ပုံဖော်ရလွယ်အောင် Frontend Canvas ကနေ Backend Prompt Builder ထံ စာပို့မယ့် **JSON Payload Data Schema Sample** လေးကို ဒီလို စနစ်တကျ ပြင်ဆင်နိုင်ပါတယ်-
+
+```json
+{
+  "project_id": "PC-AI-001",
+  "base_template": "commercial_product_photography",
+  "canvas_attributes": {
+    "product_position": "centered",
+    "background_color": "#FF5733",
+    "lighting": "4K Commercial Studio Lighting",
+    "materials": ["Wood Texture", "Matte Finish"],
+    "aspect_ratio": "16:9"
+  },
+  "generated_prompt_output": "A 4K Commercial Studio Lighting product showcase, centered hero shot, warm #FF5733 background with Wood Texture and Matte Finish, highly detailed --ar 16:9"
+}
+
+```
+
+---
+
+## ၄။ မေးမြန်းချင်သည့် အချက် (Next Steps)
+
+ဒီ System Architectural Flow က တကယ်ကို Perfect ဖြစ်ပါတယ်။ မင်းအနေနဲ့ -
+
+1. ဒီ Document ကို Dev Team ဆီ တန်းပေးနိုင်ဖို့အတွက် **"Database Schema (Tables/Relations)"** နဲ့ **"API Data Payload (JSON Structure)"** ကို စနစ်တကျ ရေးဆွဲပေးရမလား？
+2. ဒါမှမဟုတ် ဒီ AI Prompt Engine ကို **Profile Craft ရဲ့ သီးသန့် Service တစ်ခုအဖြစ် ဘယ်လို ချိတ်ဆက်/ရောင်းချမလဲ** ဆိုတဲ့ Business Flow ဘက်ကို ဆက်သွားမလား？
+
+ဘယ်အပိုင်းကို ဆက်သွားချင်သလဲ ပြောခဲ့ပါဦးဗျာ!

@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ProfileCraft — Talent &amp; Video Media Service</title>
+    <script src="https://cdn.tailwindcss.com">
+    </script>
+    <style>
+        /* ----- custom styles ----- */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8fafc;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+
+        /* ----- radio cards ----- */
+        .scope-card {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 2px solid #e2e8f0;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scope-card:hover {
+            border-color: #c4b5fd;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .scope-card.selected {
+            border-color: #8b5cf6;
+            background: #faf5ff;
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.15), 0 8px 30px rgba(139, 92, 246, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .scope-card .radio-ring {
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            border: 2px solid #d1d5db;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s ease;
+        }
+
+        .scope-card.selected .radio-ring {
+            border-color: #8b5cf6;
+            border-width: 2px;
+        }
+
+        .scope-card .radio-ring .dot {
+            width: 0.6rem;
+            height: 0.6rem;
+            border-radius: 50%;
+            background: #8b5cf6;
+            transform: scale(0);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .scope-card.selected .radio-ring .dot {
+            transform: scale(1);
+        }
+
+        .scope-card input[type="radio"] {
+            display: none;
+        }
+
+        /* ----- range slider ----- */
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 999px;
+            background: #e2e8f0;
+            outline: none;
+            transition: background 0.15s ease;
+            cursor: pointer;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #8b5cf6;
+            cursor: pointer;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2), 0 4px 14px rgba(139, 92, 246, 0.3);
+            transition: all 0.15s ease;
+            border: 2px solid white;
+        }
+
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 0 6px rgba(139, 92, 246, 0.25), 0 6px 20px rgba(139, 92, 246, 0.35);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #8b5cf6;
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.2), 0 4px 14px rgba(139, 92, 246, 0.3);
+        }
+
+        input[type="range"]::-moz-range-track {
+            height: 6px;
+            border-radius: 999px;
+            background: #e2e8f0;
+        }
+
+        /* step buttons */
+        .step-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            font-weight: 600;
+            background: white;
+            border: 2px solid #e2e8f0;
+            color: #475569;
+            transition: all 0.15s ease;
+            cursor: pointer;
+            user-select: none;
+            flex-shrink: 0;
+        }
+
+        .step-btn:hover:not(:disabled) {
+            border-color: #8b5cf6;
+            color: #8b5cf6;
+            background: #faf5ff;
+            transform: scale(1.04);
+        }
+
+        .step-btn:active:not(:disabled) {
+            transform: scale(0.94);
+        }
+
+        .step-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ----- add-on cards ----- */
+        .addon-card {
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: 2px solid #e2e8f0;
+            background: white;
+        }
+
+        .addon-card:hover {
+            border-color: #c4b5fd;
+            box-shadow: 0 4px 16px rgba(139, 92, 246, 0.06);
+        }
+
+        .addon-card.selected {
+            border-color: #8b5cf6;
+            background: #faf5ff;
+            box-shadow: 0 0 0 2px rgba(139, 92, 246, 0.12), 0 8px 24px rgba(139, 92, 246, 0.06);
+        }
+
+        .addon-card input[type="checkbox"] {
+            accent-color: #8b5cf6;
+            width: 1.2rem;
+            height: 1.2rem;
+            flex-shrink: 0;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        /* badges */
+        .badge-popular {
+            background: #10b981;
+            color: white;
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            padding: 0.15rem 0.65rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+        }
+
+        .badge-trending {
+            background: #8b5cf6;
+            color: white;
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            padding: 0.15rem 0.65rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+        }
+
+        .badge-essential {
+            background: #06b6d4;
+            color: white;
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            padding: 0.15rem 0.65rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+        }
+
+        /* sticky summary */
+        .summary-sticky {
+            position: sticky;
+            top: 2rem;
+            align-self: flex-start;
+        }
+
+        @media (max-width: 1024px) {
+            .summary-sticky {
+                position: relative;
+                top: 0;
+            }
+        }
+
+        /* CTA button */
+        .btn-cta {
+            background: linear-gradient(145deg, #8b5cf6, #7c3aed);
+            transition: all 0.25s ease;
+        }
+
+        .btn-cta:hover:not(:disabled) {
+            transform: scale(1.02);
+            box-shadow: 0 8px 32px rgba(139, 92, 246, 0.35);
+        }
+
+        .btn-cta:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        .btn-cta:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* price breakdown lines */
+        .price-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.35rem 0;
+            border-bottom: 1px dashed #f1f5f9;
+            font-size: 0.9rem;
+        }
+
+        .price-line:last-of-type {
+            border-bottom: none;
+        }
+
+        .price-line .label {
+            color: #64748b;
+        }
+
+        .price-line .value {
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        .price-line.total {
+            border-top: 2px solid #e2e8f0;
+            border-bottom: none;
+            padding-top: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        .price-line.total .label {
+            font-weight: 700;
+            color: #0f172a;
+            font-size: 1rem;
+        }
+
+        .price-line.total .value {
+            font-weight: 700;
+            color: #8b5cf6;
+            font-size: 1.25rem;
+        }
+
+        /* duration pill */
+        .duration-pill {
+            background: #f1f5f9;
+            padding: 0.2rem 1.2rem;
+            border-radius: 999px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: #1e293b;
+            min-width: 4rem;
+            text-align: center;
+        }
+
+        /* scope name display */
+        .scope-name-display {
+            font-weight: 500;
+            color: #1e293b;
+            font-size: 0.9rem;
+        }
+
+        /* pulse animation for total update */
+        .total-pulse {
+            animation: pulse-green 0.3s ease;
+        }
+
+        @keyframes pulse-green {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.04);
+                color: #10b981;
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* grain texture */
+        .grain {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0.012;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 256px 256px;
+            z-index: 9999;
+        }
+
+        /* responsive tweaks */
+        @media (max-width: 640px) {
+            .scope-card {
+                padding: 1rem !important;
+            }
+            .addon-card {
+                padding: 1rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- grain overlay -->
+    <div class="grain"></div>
+
+    <!-- ====== MAIN WRAPPER ====== -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 relative z-10">
+
+        <!-- header -->
+        <div class="mb-10">
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div>
+                    <div class="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-gray-200/80 rounded-full px-4 py-1.5 shadow-sm mb-3">
+                        <span class="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                        <span class="text-xs font-medium text-slate-500 tracking-wide">ProfileCraft · Talent Media</span>
+                    </div>
+                    <h1 class="text-3xl md:text-4xl font-bold text-slate-800 tracking-tight">
+                        <span class="bg-gradient-to-r from-violet-600 via-cyan-400 to-emerald-400 bg-clip-text text-transparent">
+                            Talent &amp; Video
+                        </span>
+                        <span class="text-slate-400 font-light text-2xl md:text-3xl ml-2">·</span>
+                        <span class="text-2xl md:text-3xl font-semibold text-slate-700">Media Service</span>
+                    </h1>
+                    <p class="text-slate-500 mt-1.5 text-base max-w-2xl">
+                        သင့်အတွက် သင့်တော်မယ့် Video Service ကို ရွေးချယ်ပါ။
+                        <span class="text-slate-300 mx-1.5">·</span>
+                        Choose the perfect video service for your needs.
+                    </p>
+                </div>
+                <div class="flex items-center gap-2 flex-shrink-0">
+                    <span class="text-xs font-medium text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                        <span class="inline-block w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></span>
+                        Live pricing
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ====== TWO-COLUMN LAYOUT ====== -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- ===== LEFT / CENTER: CONFIGURATION ====== -->
+            <div class="lg:col-span-2 space-y-8">
+
+                <!-- ---- SECTION A: VIDEO CREATION SCOPE (Radio Cards) ---- -->
+                <section>
+                    <h2 class="text-lg font-semibold text-slate-700 mb-4 flex items-center gap-2">
+                        <span class="inline-block w-1.5 h-6 bg-violet-500 rounded-full"></span>
+                        Video Creation Scope
+                        <span class="text-xs font-normal text-slate-400 ml-1">· ဗီဒီယို ဖန်တီးမှု အတိုင်းအတာ</span>
+                    </h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4" id="scopeContainer">
+
+                        <!-- Scope 1: Full Package -->
+                        <label class="scope-card rounded-xl p-5 flex flex-col gap-2 selected" data-scope="full">
+                            <input type="radio" name="video_scope" value="full" checked />
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="radio-ring">
+                                        <span class="dot"></span>
+                                    </div>
+                                    <span class="font-bold text-slate-800 text-sm">Full Package</span>
+                                </div>
+                                <span class="badge-popular">Popular</span>
+                            </div>
+                            <div class="text-xs text-slate-500 pl-9">
+                                စာသား၊ ဗီဒီယို ရိုက်ကူးမှု နှင့် Edit အပြီးအစီး
+                                <span class="block text-slate-400">Script + Video + Editing</span>
+                            </div>
+                            <div class="text-xs font-medium text-violet-600 pl-9 mt-1">Base: MMK 25,000</div>
+                        </label>
+
+                        <!-- Scope 2: Recording & Editing Only -->
+                        <label class="scope-card rounded-xl p-5 flex flex-col gap-2" data-scope="recording">
+                            <input type="radio" name="video_scope" value="recording" />
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="radio-ring">
+                                        <span class="dot"></span>
+                                    </div>
+                                    <span class="font-bold text-slate-800 text-sm">Recording &amp; Editing</span>
+                                </div>
+                                <span class="badge-essential" style="background:#8b5cf6;opacity:0.7;">Pro</span>
+                            </div>
+                            <div class="text-xs text-slate-500 pl-9">
+                                ဗီဒီယို ရိုက်ကူးခြင်း နှင့် Edit သီးသန့်
+                                <span class="block text-slate-400">Video Recording + Editing (Customer Script)</span>
+                            </div>
+                            <div class="text-xs font-medium text-slate-400 pl-9 mt-1">Base: MMK 25,000</div>
+                        </label>
+
+                        <!-- Scope 3: Editing Only -->
+                        <label class="scope-card rounded-xl p-5 flex flex-col gap-2" data-scope="editing">
+                            <input type="radio" name="video_scope" value="editing" />
+                            <div class="flex items-start justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="radio-ring">
+                                        <span class="dot"></span>
+                                    </div>
+                                    <span class="font-bold text-slate-800 text-sm">Editing Only</span>
+                                </div>
+                                <span class="badge-essential" style="background:#06b6d4;opacity:0.7;">Essential</span>
+                            </div>
+                            <div class="text-xs text-slate-500 pl-9">
+                                ဗီဒီယို Editing သီးသန့်
+                                <span class="block text-slate-400">Editing Only (Customer Footage)</span>
+                            </div>
+                            <div class="text-xs font-medium text-slate-400 pl-9 mt-1">Base: MMK 25,000</div>
+                        </label>
+
+                    </div>
+                </section>
+
+                <!-- ---- SECTION B: VIDEO DURATION SELECTOR ---- -->
+                <section class="bg-white rounded-2xl border border-gray-200/80 shadow-sm p-6 md:p-8">
+                    <div class="flex items-center justify-between mb-5">
+                        <h2 class="text-lg font-semibold text-slate-700 flex items-center gap-2">
+                            <span class="inline-block w-1.5 h-6 bg-cyan-400 rounded-full"></span>
+                            Video Duration
+                            <span class="text-xs font-normal text-slate-400 ml-1">· ဗီဒီယို အရှည်</span>
+                        </h2>
+                        <span class="text-xs text-slate-400 bg-slate-100 px-3 py-1 rounded-full">1 – 10 mins</span>
+                    </div>
+
+                    <div class="flex items-center gap-4 mb-6">
+                        <!-- decrement -->
+                        <button class="step-btn" id="decrementBtn" aria-label="Decrease duration">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20 12H4"/></svg>
+                        </button>
+
+                        <!-- slider + display -->
+                        <div class="flex-1 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm text-slate-500">Duration</span>
+                                <span class="duration-pill" id="durationDisplay">1 min</span>
+                            </div>
+                            <input type="range" id="durationSlider" min="1" max="10" value="1" step="1" class="w-full" />
+                            <div class="flex justify-between text-xs text-slate-400 px-0.5">
+                                <span>1 min</span>
+                                <span>5 min</span>
+                                <span>10 min</span>
+                            </div>
+                        </div>
+
+                        <!-- increment -->
+                        <button class="step-btn" id="incrementBtn" aria-label="Increase duration">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/></svg>
+                        </button>
+                    </div>
+
+                    <!-- price breakdown hint -->
+                    <div class="bg-slate-50 rounded-xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-sm">
+                        <div class="flex items-center gap-3 flex-wrap">
+                            <span class="text-slate-600">Base price (1 min)</span>
+                            <span class="font-semibold text-slate-800">MMK 25,000</span>
+                            <span class="text-slate-300">·</span>
+                            <span class="text-slate-500">+ MMK 15,000 / extra min</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="text-slate-500">Total:</span>
+                            <span class="font-bold text-violet-600" id="minutesLabel">1 min</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ---- SECTION C: SERVICE ADD-ONS ---- -->
+                <section>
+                    <h2 class="text-lg font-semibold text-slate-700 mb-4 flex items-center gap-2">
+                        <span class="inline-block w-1.5 h-6 bg-emerald-400 rounded-full"></span>
+                        Service Add-ons
+                        <span class="text-xs font-normal text-slate-400 ml-1">· ထပ်ဆောင်း ဝန်ဆောင်မှုများ</span>
+                    </h2>
+
+                    <div class="space-y-3" id="addonsContainer">
+
+                        <!-- Add-on 1: Voiceover -->
+                        <label class="addon-card rounded-xl p-4 md:p-5 flex items-center gap-4 shadow-sm transition-all cursor-pointer"
+                        data-addon="voiceover" data-price="18000">
+                        <input type="checkbox" class="addon-checkbox" />
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="text-sm font-medium text-slate-700">Professional Voiceover / AI Voice</span>
+                                <span class="badge-popular">Popular</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-0.5">
+                                Studio-quality voiceover or AI-generated narration
+                                <span class="block text-slate-400/70">အသံသွင်း သို့မဟုတ် AI အသံဖြင့် ဇာတ်ကြောင်းပြောခြင်း</span>
+                            </p>
+                        </div>
+                        <span class="text-sm font-semibold text-slate-600 whitespace-nowrap">+ MMK 18,000</span>
+                    </label>
+
+                    <!-- Add-on 2: Motion Graphics -->
+                    <label class="addon-card rounded-xl p-4 md:p-5 flex items-center gap-4 shadow-sm transition-all cursor-pointer"
+                    data-addon="motion" data-price="22000">
+                    <input type="checkbox" class="addon-checkbox" />
+                    <div class="flex-1 min-w-0">
+                        <div class="flex items-center gap-2 flex-wrap">
+                            <span class="text-sm font-medium text-slate-700">Motion Graphics &amp; Hooks Optimization</span>
+                            <span class="badge-trending">Trending</span>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-0.5">
+                            Dynamic motion graphics + engagement hook optimization
+                            <span class="block text-slate-400/70">လှုပ်ရှားမှု ဂရပ်ဖစ်နှင့် ဆွဲဆောင်မှု ပြုပြင်ခြင်း</span>
+                        </p>
+                    </div>
+                    <span class="text-sm font-semibold text-slate-600 whitespace-nowrap">+ MMK 22,000</span>
+                </label>
+
+                <!-- Add-on 3: Multi-Platform Export -->
+                <label class="addon-card rounded-xl p-4 md:p-5 flex items-center gap-4 shadow-sm transition-all cursor-pointer"
+                data-addon="export" data-price="12000">
+                <input type="checkbox" class="addon-checkbox" />
+                <div class="flex-1 min-w-0">
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="text-sm font-medium text-slate-700">Multi-Platform Export</span>
+                        <span class="badge-essential">Essential</span>
+                    </div>
+                    <p class="text-xs text-slate-400 mt-0.5">
+                        TikTok 9:16 &amp; YouTube 16:9 exports included
+                        <span class="block text-slate-400/70">TikTok နှင့် YouTube အတွက် ထုတ်ယူမှုများ ပါဝင်သည်</span>
+                    </p>
+                </div>
+                <span class="text-sm font-semibold text-slate-600 whitespace-nowrap">+ MMK 12,000</span>
+            </label>
+
+        </div>
+    </section>
+
+    <!-- spacer -->
+    <div class="h-4 lg:h-0"></div>
+</div>
+
+<!-- ===== RIGHT: STICKY PRICE SUMMARY ====== -->
+<aside class="lg:col-span-1">
+    <div class="summary-sticky bg-white rounded-2xl border border-gray-200/80 shadow-md p-6">
+
+        <h3 class="text-base font-bold text-slate-800 flex items-center gap-2.5 mb-5">
+            <svg class="w-5 h-5 text-violet-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            Price Summary
+            <span class="text-xs font-normal text-slate-400 ml-auto">မြန်မာကျပ်</span>
+        </h3>
+
+        <!-- breakdown -->
+        <div class="space-y-0.5 text-sm" id="breakdownContainer">
+            <div class="price-line">
+                <span class="label">Base Video</span>
+                <span class="value" id="basePriceDisplay">MMK 25,000</span>
+            </div>
+            <div class="price-line" id="extraMinutesLine">
+                <span class="label">Extra minutes <span id="extraMinutesLabel">(0)</span></span>
+                <span class="value" id="extraMinutesPrice">MMK 0</span>
+            </div>
+            <div class="price-line">
+                <span class="label">Selected Scope</span>
+                <span class="scope-name-display" id="scopeNameDisplay">Full Package</span>
+            </div>
+            <div class="price-line" id="addonsLine">
+                <span class="label">Add-ons Total</span>
+                <span class="value" id="addonsTotalPrice">MMK 0</span>
+            </div>
+            <div class="price-line total">
+                <span class="label">Grand Total</span>
+                <span class="value" id="grandTotalDisplay">MMK 25,000</span>
+            </div>
+        </div>
+
+        <!-- add-ons list (mini) -->
+        <div class="mt-3 min-h-[1.5rem] flex flex-wrap gap-1" id="addonsList">
+            <span class="text-xs text-slate-400">No add-ons selected</span>
+        </div>
+
+        <!-- CTA -->
+        <button id="proceedBtn"
+        class="btn-cta w-full mt-5 py-3.5 px-4 rounded-xl text-white font-semibold text-base shadow-lg flex items-center justify-center gap-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+        Confirm &amp; Proceed to Payment
+    </button>
+
+    <p class="text-[11px] text-slate-400 text-center mt-3">
+        သင့်ရွေးချယ်မှုကို သိမ်းဆည်းပြီး ငွေပေးချေမှုသို့ ဆက်သွားပါမည်။
+        <br />
+        <span class="text-slate-300">Your selection will be saved securely.</span>
+    </p>
+</div>
+</aside>
+
+</div>
+<!-- end grid -->
+
+</main>
+
+<!-- ====== JAVASCRIPT ====== -->
+<script>
+    (function() {
+        'use strict';
+
+        // ----- DOM refs -----
+        // Scope
+        const scopeCards = document.querySelectorAll('.scope-card');
+        const scopeRadios = document.querySelectorAll('input[name="video_scope"]');
+
+        // Duration
+        const slider = document.getElementById('durationSlider');
+        const durationDisplay = document.getElementById('durationDisplay');
+        const minutesLabel = document.getElementById('minutesLabel');
+        const decrementBtn = document.getElementById('decrementBtn');
+        const incrementBtn = document.getElementById('incrementBtn');
+
+        // Add-ons
+        const addonCards = document.querySelectorAll('.addon-card');
+        const addonCheckboxes = document.querySelectorAll('.addon-checkbox');
+
+        // Summary
+        const basePriceDisplay = document.getElementById('basePriceDisplay');
+        const extraMinutesLine = document.getElementById('extraMinutesLine');
+        const extraMinutesLabel = document.getElementById('extraMinutesLabel');
+        const extraMinutesPrice = document.getElementById('extraMinutesPrice');
+        const scopeNameDisplay = document.getElementById('scopeNameDisplay');
+        const addonsTotalPrice = document.getElementById('addonsTotalPrice');
+        const addonsList = document.getElementById('addonsList');
+        const grandTotalDisplay = document.getElementById('grandTotalDisplay');
+
+        const proceedBtn = document.getElementById('proceedBtn');
+
+        // ----- constants -----
+        const BASE_PRICE = 25000;
+        const PER_MINUTE_PRICE = 15000;
+
+        // add-on map
+        const addonMap = {
+            voiceover: { label: 'Professional Voiceover / AI Voice', price: 18000 },
+            motion: { label: 'Motion Graphics & Hooks Optimization', price: 22000 },
+            export: { label: 'Multi-Platform Export (TikTok 9:16 & YouTube 16:9)', price: 12000 }
+        };
+
+        // scope name map
+        const scopeMap = {
+            full: 'Full Package (Script + Video + Editing)',
+            recording: 'Video Recording & Editing Only',
+            editing: 'Editing Only'
+        };
+
+        // ----- state -----
+        let duration = 1;
+        let selectedScope = 'full';
+        let selectedAddons = new Set();
+
+        // ----- helpers -----
+        function formatPrice(amount) {
+            return 'MMK ' + amount.toLocaleString('en-US');
+        }
+
+        function updateSliderBackground() {
+            const min = parseInt(slider.min, 10);
+            const max = parseInt(slider.max, 10);
+            const val = parseInt(slider.value, 10);
+            const pct = ((val - min) / (max - min)) * 100;
+            slider.style.background =
+                `linear-gradient(to right, #8b5cf6 0%, #8b5cf6 ${pct}%, #e2e8f0 ${pct}%, #e2e8f0 100%)`;
+        }
+
+        // ----- core calculation -----
+        function calculateTotal() {
+            const extraMinutes = duration - 1;
+            const baseCost = BASE_PRICE;
+            const extraCost = extraMinutes * PER_MINUTE_PRICE;
+
+            let addonTotal = 0;
+            const addonNames = [];
+            selectedAddons.forEach(key => {
+                const info = addonMap[key];
+                if (info) {
+                    addonTotal += info.price;
+                    addonNames.push(info.label);
+                }
+            });
+
+            const grandTotal = baseCost + extraCost + addonTotal;
+
+            return {
+                duration,
+                extraMinutes,
+                baseCost,
+                extraCost,
+                addonTotal,
+                addonNames,
+                grandTotal,
+                scope: selectedScope,
+                scopeName: scopeMap[selectedScope] || 'Full Package'
+            };
+        }
+
+        // ----- refresh UI -----
+        function refreshUI() {
+            // 1. slider & display
+            slider.value = duration;
+            const minText = duration + ' min' + (duration > 1 ? 's' : '');
+            durationDisplay.textContent = minText;
+            minutesLabel.textContent = minText;
+            updateSliderBackground();
+
+            // 2. button states
+            decrementBtn.disabled = duration <= 1;
+            incrementBtn.disabled = duration >= 10;
+
+            // 3. scope card highlighting (radio sync)
+            scopeCards.forEach(card => {
+                const scopeVal = card.dataset.scope;
+                const isSelected = scopeVal === selectedScope;
+                card.classList.toggle('selected', isSelected);
+                const radio = card.querySelector('input[type="radio"]');
+                if (radio) radio.checked = isSelected;
+            });
+
+            // 4. add-on card highlighting + checkbox sync
+            addonCards.forEach(card => {
+                const key = card.dataset.addon;
+                const isChecked = selectedAddons.has(key);
+                const cb = card.querySelector('.addon-checkbox');
+                if (cb) cb.checked = isChecked;
+                card.classList.toggle('selected', isChecked);
+            });
+
+            // 5. compute totals
+            const data = calculateTotal();
+
+            // 6. update breakdown
+            basePriceDisplay.textContent = formatPrice(data.baseCost);
+
+            if (data.extraMinutes === 0) {
+                extraMinutesLine.style.display = 'none';
+            } else {
+                extraMinutesLine.style.display = 'flex';
+                extraMinutesLabel.textContent = '(' + data.extraMinutes + ' × ' + PER_MINUTE_PRICE.toLocaleString() + ')';
+                extraMinutesPrice.textContent = formatPrice(data.extraCost);
+            }
+
+            // scope name
+            scopeNameDisplay.textContent = data.scopeName;
+
+            // add-ons
+            if (data.addonNames.length === 0) {
+                addonsTotalPrice.textContent = 'MMK 0';
+                addonsList.innerHTML = '<span class="text-xs text-slate-400">No add-ons selected</span>';
+            } else {
+                addonsTotalPrice.textContent = formatPrice(data.addonTotal);
+                addonsList.innerHTML = data.addonNames.map(name =>
+                    '<span class="text-[11px] bg-slate-100 text-slate-600 px-2.5 py-0.5 rounded-full">' +
+                    name + '</span>'
+                ).join('');
+            }
+
+            // grand total with pulse
+            const newTotal = formatPrice(data.grandTotal);
+            if (grandTotalDisplay.textContent !== newTotal) {
+                grandTotalDisplay.textContent = newTotal;
+                grandTotalDisplay.classList.remove('total-pulse');
+                void grandTotalDisplay.offsetWidth;
+                grandTotalDisplay.classList.add('total-pulse');
+            } else {
+                grandTotalDisplay.textContent = newTotal;
+            }
+        }
+
+        // ----- event: scope selection (radio cards) -----
+        scopeCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                // ignore if click is on the radio input itself (it'll bubble)
+                if (e.target.tagName === 'INPUT') return;
+                const scopeVal = this.dataset.scope;
+                if (scopeVal && scopeMap[scopeVal]) {
+                    selectedScope = scopeVal;
+                    refreshUI();
+                }
+            });
+
+            // keyboard accessibility
+            card.setAttribute('role', 'radio');
+            card.setAttribute('tabindex', '0');
+            card.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const scopeVal = this.dataset.scope;
+                    if (scopeVal && scopeMap[scopeVal]) {
+                        selectedScope = scopeVal;
+                        refreshUI();
+                    }
+                }
+            });
+        });
+
+        // also listen to radio changes directly (for accessibility)
+        scopeRadios.forEach(radio => {
+            radio.addEventListener('change', function() {
+                if (this.checked) {
+                    const scopeVal = this.value;
+                    if (scopeMap[scopeVal]) {
+                        selectedScope = scopeVal;
+                        refreshUI();
+                    }
+                }
+            });
+        });
+
+        // ----- event: duration slider -----
+        slider.addEventListener('input', function() {
+            duration = parseInt(this.value, 10);
+            refreshUI();
+        });
+
+        // ----- event: step buttons -----
+        decrementBtn.addEventListener('click', function() {
+            if (duration > 1) {
+                duration--;
+                refreshUI();
+            }
+        });
+
+        incrementBtn.addEventListener('click', function() {
+            if (duration < 10) {
+                duration++;
+                refreshUI();
+            }
+        });
+
+        // keyboard support for step buttons
+        [decrementBtn, incrementBtn].forEach(btn => {
+            btn.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    this.click();
+                }
+            });
+        });
+
+        // ----- event: add-on checkboxes (source of truth) -----
+        addonCheckboxes.forEach(cb => {
+            cb.addEventListener('change', function(e) {
+                e.stopPropagation();
+                const card = this.closest('.addon-card');
+                if (!card) return;
+                const key = card.dataset.addon;
+                if (!key) return;
+
+                if (this.checked) {
+                    selectedAddons.add(key);
+                } else {
+                    selectedAddons.delete(key);
+                }
+                refreshUI();
+            });
+        });
+
+        // card click toggles checkbox
+        addonCards.forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.tagName === 'INPUT') return;
+                const cb = this.querySelector('.addon-checkbox');
+                if (cb) {
+                    cb.checked = !cb.checked;
+                    const event = new Event('change', { bubbles: true });
+                    cb.dispatchEvent(event);
+                }
+            });
+        });
+
+        // ----- proceed: save to localStorage & redirect -----
+        function handleProceed() {
+            const data = calculateTotal();
+
+            // build order object
+            const orderData = {
+                serviceType: 'talent_video_media',
+                scope: data.scope,
+                scopeName: data.scopeName,
+                duration: data.duration,
+                basePrice: data.baseCost,
+                extraMinutes: data.extraMinutes,
+                extraCost: data.extraCost,
+                addons: Array.from(selectedAddons).map(key => ({
+                    key: key,
+                    label: addonMap[key]?.label || key,
+                    price: addonMap[key]?.price || 0
+                })),
+                addonNames: data.addonNames,
+                addonTotal: data.addonTotal,
+                grandTotal: data.grandTotal,
+                currency: 'MMK',
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                localStorage.setItem('talent_service_data', JSON.stringify(orderData));
+                // also store simple keys for compatibility
+                localStorage.setItem('talent_scope', data.scope);
+                localStorage.setItem('talent_duration', String(data.duration));
+                localStorage.setItem('talent_addons', JSON.stringify(Array.from(selectedAddons)));
+                localStorage.setItem('talent_total', String(data.grandTotal));
+            } catch (err) {
+                console.warn('localStorage error:', err);
+            }
+
+            // redirect
+            window.location.href = 'payments.html';
+        }
+
+        proceedBtn.addEventListener('click', handleProceed);
+
+        // ----- initial render -----
+        refreshUI();
+
+        console.log('ProfileCraft — Talent & Video Media Service ready.');
+
+    })();
+</script>
+
+</body>
+</html>

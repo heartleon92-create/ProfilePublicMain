@@ -1,0 +1,1816 @@
+[
+{
+"id": "f_fashion_01",
+"name": "Add to Cart",
+"category": "Fashion & Apparel Store",
+"price_addon": 5000,
+"description_my": "ရွေးချယ်ထားသော အရွယ်အစား၊ အရောင်နှင့် အရေအတွက်အတိုင်း ပစ္စည်းကို Shopping Cart ထဲသို့ ထည့်ပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Add to Cart. Include dynamic cart updates, quantity controls, selected size and color handling, stock validation, cart count updates, and responsive feedback.",
+"backend_module": {
+"function_label": "FUNCTION_A_AddToCart",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: AddToCart]\nProvide language-agnostic backend logic (Controller + Database Schema) for adding a fashion product with selected size, color, quantity, price, and variant ID to the shopping cart. Validate product availability and prevent invalid quantities. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_02",
+"name": "Select Size",
+"category": "Fashion & Apparel Store",
+"price_addon": 5000,
+"description_my": "အဝတ်အစား သို့မဟုတ် ဖိနပ်အတွက် လိုအပ်သော Size ကို ရွေးချယ်နိုင်ပြီး ရရှိနိုင်မှုအခြေအနေကို ပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Size. Include interactive size buttons, selected-state styling, unavailable-size handling, variant synchronization, and responsive layout.",
+"backend_module": {
+"function_label": "FUNCTION_A_SelectSize",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SelectSize]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving valid sizes for a fashion product and validating the selected size against product variants and inventory. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_03",
+"name": "Select Color",
+"category": "Fashion & Apparel Store",
+"price_addon": 5000,
+"description_my": "ပစ္စည်းတွင် ရရှိနိုင်သော အရောင်များထဲမှ အလိုရှိသောအရောင်ကို ရွေးချယ်ပြီး သက်ဆိုင်ရာ Product ပုံနှင့် Variant ကို ပြောင်းလဲပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Color. Include color swatches, selected-state styling, product image switching, variant synchronization, and responsive interaction.",
+"backend_module": {
+"function_label": "FUNCTION_A_SelectColor",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SelectColor]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving available colors and validating the selected color against product variants and inventory. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_04",
+"name": "Update Variant Price",
+"category": "Fashion & Apparel Store",
+"price_addon": 7500,
+"description_my": "Size၊ Color သို့မဟုတ် အခြား Variant ရွေးချယ်မှုများ ပြောင်းလဲသည့်အခါ သက်ဆိုင်ရာ ပစ္စည်းဈေးနှုန်းကို အလိုအလျောက် ပြောင်းလဲပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Update Variant Price. Dynamically update product pricing when size, color, or other variants change, including discount price, original price, stock state, and responsive price display.",
+"backend_module": {
+"function_label": "FUNCTION_A_UpdateVariantPrice",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: UpdateVariantPrice]\nProvide language-agnostic backend logic (Controller + Database Schema) for finding the exact product variant based on product ID, size, color, and variant attributes, then returning its current price, discount price, and inventory information. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_05",
+"name": "Check Size Stock",
+"category": "Fashion & Apparel Store",
+"price_addon": 7500,
+"description_my": "ရွေးချယ်ထားသော Size နှင့် Color အလိုက် ပစ္စည်းလက်ကျန်ရှိ၊ မရှိကို စစ်ဆေးပြီး Out of Stock သို့မဟုတ် လက်ကျန်နည်းနေပါက အသိပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Check Size Stock. Show real-time availability for each size, disable unavailable sizes, display low-stock messaging, and update availability when color or variant changes.",
+"backend_module": {
+"function_label": "FUNCTION_A_CheckSizeStock",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: CheckSizeStock]\nProvide language-agnostic backend logic (Controller + Database Schema) for checking inventory by product ID, size, color, and variant ID. Return available quantity, stock status, and whether the variant can be purchased. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_06",
+"name": "Filter by Category",
+"category": "Fashion & Apparel Store",
+"price_addon": 5000,
+"description_my": "Clothing၊ Shoes၊ Bags၊ Accessories စသည့် Product Category များအလိုက် ပစ္စည်းများကို အလွယ်တကူ စစ်ထုတ်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Category. Include dynamic category tabs, active-state styling, product grid updates, empty-state handling, and responsive mobile controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterByCategory",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterByCategory]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering fashion products by category such as clothing, shoes, bags, and accessories. Support pagination and return matching products with category metadata. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_07",
+"name": "Filter by Size",
+"category": "Fashion & Apparel Store",
+"price_addon": 5000,
+"description_my": "ရွေးချယ်ထားသော Size အလိုက် ကိုက်ညီသော ပစ္စည်းများကို စစ်ထုတ်ပြီး ရရှိနိုင်သော Product များကိုသာ ပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Size. Include multi-select size filters, active states, product grid updates, clear-filter functionality, and responsive filter controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterBySize",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterBySize]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering products based on one or multiple available sizes. Return products that have at least one matching in-stock size and include available-size metadata. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_08",
+"name": "Filter by Color",
+"category": "Fashion & Apparel Store",
+"price_addon": 5000,
+"description_my": "အရောင်အလိုက် Product များကို စစ်ထုတ်ပြီး ရွေးချယ်ထားသော အရောင်နှင့် ကိုက်ညီသည့် ပစ္စည်းများကိုသာ ပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Color. Include interactive color swatches, multi-select support, selected-state indicators, dynamic product filtering, and responsive controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterByColor",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterByColor]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering products by one or multiple colors. Support normalized color values and return matching products with available color metadata. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_09",
+"name": "Filter by Price",
+"category": "Fashion & Apparel Store",
+"price_addon": 5000,
+"description_my": "သတ်မှတ်ထားသော အနိမ့်ဆုံးနှင့် အမြင့်ဆုံးဈေးနှုန်းအတွင်းရှိ Product များကိုသာ ရွေးချယ်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Price. Include minimum and maximum price controls, range slider interaction, live price labels, product filtering, reset functionality, and responsive layout.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterByPrice",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterByPrice]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering products within a minimum and maximum price range. Account for discounted prices where appropriate and support pagination. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_10",
+"name": "Sort by Price",
+"category": "Fashion & Apparel Store",
+"price_addon": 5000,
+"description_my": "Product များကို ဈေးနှုန်းအနိမ့်မှ အမြင့် သို့မဟုတ် အမြင့်မှ အနိမ့်အတိုင်း စီစဉ်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Sort by Price. Include ascending and descending price sorting, current-sort display, smooth product grid updates, and responsive select controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_SortByPrice",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SortByPrice]\nProvide language-agnostic backend logic (Controller + Database Schema) for sorting products by current selling price in ascending or descending order. Support discounted prices and pagination while preventing invalid sort parameters. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_11",
+"name": "Quick View",
+"category": "Fashion & Apparel Store",
+"price_addon": 7500,
+"description_my": "Product Detail Page သို့ မသွားဘဲ Product ၏ ပုံ၊ ဈေးနှုန်း၊ Size၊ Color နှင့် Stock အခြေအနေများကို အမြန်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Quick View. Include modal product preview, gallery images, price, variants, stock status, size and color selection, add-to-cart action, and responsive mobile behavior.",
+"backend_module": {
+"function_label": "FUNCTION_A_QuickView",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: QuickView]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving compact product details for a quick-view modal, including images, pricing, variants, available sizes, colors, stock status, and discount information. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_12",
+"name": "Product Gallery",
+"category": "Fashion & Apparel Store",
+"price_addon": 7500,
+"description_my": "Product ၏ ပုံများကို Main Image၊ Thumbnail များနှင့် Mobile Swipe အပါအဝင် စနစ်တကျ ကြည့်ရှုနိုင်သည့် Gallery စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Product Gallery. Include main image switching, thumbnail navigation, zoom interaction, mobile swipe support, variant-specific images, loading states, and responsive layout.",
+"backend_module": {
+"function_label": "FUNCTION_A_ProductGallery",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ProductGallery]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving ordered product gallery images, variant-specific images, image alt text, and primary-image metadata. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_13",
+"name": "Add to Wishlist",
+"category": "Fashion & Apparel Store",
+"price_addon": 7500,
+"description_my": "နှစ်သက်သော Product များကို Wishlist ထဲသို့ သိမ်းဆည်းထားပြီး နောက်ပိုင်းတွင် အလွယ်တကူ ပြန်လည်ကြည့်ရှုနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Add to Wishlist. Include heart-button interaction, saved-state styling, login-aware behavior, wishlist count updates, duplicate prevention, and responsive feedback.",
+"backend_module": {
+"function_label": "FUNCTION_A_AddToWishlist",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: AddToWishlist]\nProvide language-agnostic backend logic (Controller + Database Schema) for adding or removing a product from a user's wishlist. Prevent duplicate records and validate product existence and user authentication. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_14",
+"name": "Apply Coupon",
+"category": "Fashion & Apparel Store",
+"price_addon": 7500,
+"description_my": "အသုံးပြုသူထည့်သွင်းသော Coupon Code ကို စစ်ဆေးပြီး သတ်မှတ်ထားသော စည်းမျဉ်းများနှင့် ကိုက်ညီပါက လျှော့ဈေးကို အလိုအလျောက် အသုံးပြုပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Apply Coupon. Include coupon input validation, loading state, success and error messages, discount preview, cart total updates, and responsive checkout interaction.",
+"backend_module": {
+"function_label": "FUNCTION_A_ApplyCoupon",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ApplyCoupon]\nProvide language-agnostic backend logic (Controller + Database Schema) for validating a coupon code against expiration date, usage limits, minimum order value, eligible products or categories, and discount type. Return the calculated coupon discount and validation status. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_15",
+"name": "Calculate Discount",
+"category": "Fashion & Apparel Store",
+"price_addon": 5000,
+"description_my": "မူရင်းဈေးနှုန်း၊ Discount ပမာဏနှင့် Discount ပြီးနောက် ကျသင့်မည့် နောက်ဆုံးဈေးနှုန်းကို အလိုအလျောက်တွက်ချက်ပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Calculate Discount. Dynamically calculate percentage or fixed discounts, show original and final prices, update cart totals, and provide responsive price summaries.",
+"backend_module": {
+"function_label": "FUNCTION_A_CalculateDiscount",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: CalculateDiscount]\nProvide language-agnostic backend logic (Controller + Database Schema) for calculating product, variant, coupon, and cart-level discounts. Validate discount rules and return subtotal, discount amount, and final total. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_16",
+"name": "Show Related Products",
+"category": "Fashion & Apparel Store",
+"price_addon": 5000,
+"description_my": "လက်ရှိကြည့်ရှုနေသော Product နှင့် Category၊ Brand သို့မဟုတ် Style ဆင်တူသည့် Product များကို အကြံပြုပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Related Products. Include dynamically loaded recommendations based on category, tags, brand, and product attributes with responsive cards and quick actions.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowRelatedProducts",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowRelatedProducts]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving related fashion products using category, brand, tags, product type, and shared attributes while excluding the current product. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_17",
+"name": "Show Size Guide",
+"category": "Fashion & Apparel Store",
+"price_addon": 5000,
+"description_my": "အဝတ်အစားနှင့် ဖိနပ်များအတွက် Size Chart၊ အတိုင်းအတာနှင့် Size ရွေးချယ်ရန် လမ်းညွှန်ချက်များကို ရှင်းလင်းစွာ ပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Size Guide. Include accessible modal behavior, measurement tables, unit switching, category-specific sizing, close controls, and responsive mobile presentation.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowSizeGuide",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowSizeGuide]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving size-guide information based on product category, brand, measurements, and supported units. Return size labels, measurement ranges, and guidance text. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_18",
+"name": "Save Cart",
+"category": "Fashion & Apparel Store",
+"price_addon": 7500,
+"description_my": "Shopping Cart ထဲရှိ Product များ၊ ရွေးချယ်ထားသော Variant များနှင့် Quantity များကို သိမ်းဆည်းပြီး နောက်တစ်ကြိမ် ပြန်ဝင်သည့်အခါ ပြန်လည်ရယူပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Save Cart. Persist cart data in local storage for guests and synchronize with the user account when authenticated, including variant selections, quantities, and cart totals.",
+"backend_module": {
+"function_label": "FUNCTION_A_SaveCart",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SaveCart]\nProvide language-agnostic backend logic (Controller + Database Schema) for saving a user's cart items, selected variants, quantities, prices, and timestamps. Validate current product and stock information before persistence and support cart synchronization. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_19",
+"name": "Checkout",
+"category": "Fashion & Apparel Store",
+"price_addon": 10000,
+"description_my": "Customer အချက်အလက်၊ ပို့ဆောင်မည့်လိပ်စာ၊ Delivery နှင့် Payment အချက်အလက်များကို ဖြည့်သွင်းပြီး Order တင်နိုင်သည့် Checkout စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Checkout. Include customer information, shipping address, delivery method, payment selection, validation, order creation flow, loading states, error handling, and responsive checkout steps.",
+"backend_module": {
+"function_label": "FUNCTION_A_Checkout",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: Checkout]\nProvide language-agnostic backend logic (Controller + Database Schema) for converting a validated cart into an order. Recheck inventory and prices, calculate totals, create order and order-item records, reserve or decrement stock safely, store shipping and payment metadata, and return the created order reference. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_fashion_20",
+"name": "Show Order Summary",
+"category": "Fashion & Apparel Store",
+"price_addon": 7500,
+"description_my": "မှာယူထားသော ပစ္စည်းများ၊ အရွယ်အစား၊ အရောင်၊ အရေအတွက်၊ လျှော့ဈေး၊ ပို့ဆောင်ခနှင့် စုစုပေါင်းကျသင့်ငွေ အသေးစိတ်ကို ရှင်းလင်းစွာ ပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Order Summary. Include product thumbnails, selected variants, quantities, subtotal, discounts, shipping fee, final total, payment method, and responsive summary layout.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowOrderSummary",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowOrderSummary]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving a complete order summary including order items, product information, selected size and color, quantities, unit prices, discounts, shipping charges, taxes if applicable, payment method, and final total. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+}
+,
+{
+"id": "f_cosmetics_01",
+"name": "Add to Cart",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 5000,
+"description_my": "ရွေးချယ်ထားသော Shade၊ Variant နှင့် အရေအတွက်အတိုင်း အလှကုန်ပစ္စည်းကို Shopping Cart ထဲသို့ ထည့်ပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Add to Cart. Include dynamic cart updates, quantity controls, selected shade and variant handling, stock validation, cart count updates, and responsive feedback.",
+"backend_module": {
+"function_label": "FUNCTION_A_AddToCart",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: AddToCart]\nProvide language-agnostic backend logic (Controller + Database Schema) for adding a cosmetics or skincare product with selected shade, variant, quantity, price, and variant ID to the shopping cart. Validate product availability and prevent invalid quantities. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_02",
+"name": "Select Shade",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 5000,
+"description_my": "Makeup ပစ္စည်းများအတွက် ရရှိနိုင်သော Shade များထဲမှ သင့်လျော်သောအရောင်ကို ရွေးချယ်ပြီး သက်ဆိုင်ရာ ဈေးနှုန်း၊ ပုံနှင့် Stock ကို ပြောင်းလဲပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Shade. Include interactive shade swatches, selected-state styling, product image switching, shade-specific pricing, availability states, and responsive controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_SelectShade",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SelectShade]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving available makeup shades and validating the selected shade against product variants and inventory. Return shade name, color metadata, price, image, and stock information. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_03",
+"name": "Select Variant",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 5000,
+"description_my": "Size၊ ပမာဏ၊ Formula သို့မဟုတ် Package Type ကဲ့သို့သော Product Variant များထဲမှ လိုအပ်သော Variant ကို ရွေးချယ်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Variant. Include dynamic variant buttons, selected-state styling, price updates, stock status, variant-specific images, and responsive interaction.",
+"backend_module": {
+"function_label": "FUNCTION_A_SelectVariant",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SelectVariant]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving and validating cosmetic product variants such as size, volume, formula, finish, or package type. Return variant ID, price, stock, images, and availability information. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_04",
+"name": "Check Stock",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 7500,
+"description_my": "ရွေးချယ်ထားသော Shade သို့မဟုတ် Variant အလိုက် Product လက်ကျန်ရှိ၊ မရှိကို စစ်ဆေးပြီး Out of Stock နှင့် Low Stock အခြေအနေများကို ပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Check Stock. Display in-stock, low-stock, and out-of-stock states, disable unavailable purchase actions, and refresh stock whenever shade or variant changes.",
+"backend_module": {
+"function_label": "FUNCTION_A_CheckStock",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: CheckStock]\nProvide language-agnostic backend logic (Controller + Database Schema) for checking cosmetics inventory by product ID, shade ID, variant ID, and other variant attributes. Return available quantity, stock status, and purchase eligibility. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_05",
+"name": "Filter by Skin Type",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 7500,
+"description_my": "Oily၊ Dry၊ Combination၊ Normal နှင့် Sensitive Skin Type များအလိုက် သင့်လျော်သော Skincare Product များကို စစ်ထုတ်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Skin Type. Include multi-select skin-type filters, active states, product grid updates, clear filters, result counts, and responsive mobile controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterBySkinType",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterBySkinType]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering skincare products by supported skin types such as oily, dry, combination, normal, and sensitive. Support multiple skin-type selections and pagination. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_06",
+"name": "Filter by Concern",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 7500,
+"description_my": "Acne၊ Dryness၊ Dark Spots၊ Oil Control နှင့် Uneven Skin Tone စသည့် Skin Concern များအလိုက် သက်ဆိုင်ရာ Product များကို ရှာဖွေစစ်ထုတ်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Concern. Include multi-select concern filters, active states, dynamic product filtering, result counts, clear-filter functionality, and responsive controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterByConcern",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterByConcern]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering skincare and beauty products by concerns such as acne, dryness, oiliness, dark spots, redness, and uneven skin tone. Support multiple concerns and pagination. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_07",
+"name": "Filter by Brand",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 5000,
+"description_my": "နှစ်သက်သော Cosmetics နှင့် Skincare Brand အလိုက် Product များကို စစ်ထုတ်ပြီး လွယ်ကူစွာ ရှာဖွေနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Brand. Include multi-brand selection, active-state styling, product grid updates, result counts, clear filters, and responsive filter controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterByBrand",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterByBrand]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering cosmetics and skincare products by one or multiple brands. Support pagination, active products, and brand metadata. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_08",
+"name": "Filter by Price",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 5000,
+"description_my": "သတ်မှတ်ထားသော ဈေးနှုန်းအတွင်းရှိ Cosmetics နှင့် Skincare Product များကိုသာ ရွေးချယ်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Price. Include minimum and maximum price inputs, range slider, live price labels, dynamic product filtering, result count, reset functionality, and responsive controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterByPrice",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterByPrice]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering cosmetics and skincare products within a minimum and maximum selling price. Support discounted prices and pagination while validating numeric ranges. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_09",
+"name": "Search Products",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 7500,
+"description_my": "Product Name၊ Brand၊ Category၊ Ingredient သို့မဟုတ် Skin Concern စသည့် Keyword များဖြင့် Cosmetics နှင့် Skincare Product များကို အမြန်ရှာဖွေနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Search Products. Include live search with debounce, autocomplete suggestions, keyword matching, recent searches, highlighted results, empty-state handling, and responsive search UI.",
+"backend_module": {
+"function_label": "FUNCTION_A_SearchProducts",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SearchProducts]\nProvide language-agnostic backend logic (Controller + Database Schema) for searching cosmetics and skincare products by name, brand, category, SKU, ingredient, skin type, and concern keywords. Support partial matching, relevance ordering, pagination, and safe query handling. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_10",
+"name": "Quick View",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 7500,
+"description_my": "Product Detail Page သို့ မသွားဘဲ Product ပုံ၊ ဈေးနှုန်း၊ Shade၊ Variant၊ Ingredients အကျဉ်းနှင့် Stock အခြေအနေများကို အမြန်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Quick View. Include modal product preview, gallery, price, shade, variant, stock, key ingredients, rating summary, and add-to-cart interaction.",
+"backend_module": {
+"function_label": "FUNCTION_A_QuickView",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: QuickView]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving compact cosmetics product information for a quick-view modal, including images, variants, shades, pricing, stock, key ingredients, ratings, and usage summary. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_11",
+"name": "Add to Wishlist",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 7500,
+"description_my": "နှစ်သက်သော Cosmetics နှင့် Skincare Product များကို Wishlist ထဲသို့ သိမ်းဆည်းပြီး နောက်ပိုင်းတွင် ပြန်လည်ကြည့်ရှုနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Add to Wishlist. Include wishlist toggle buttons, saved-state styling, authentication-aware behavior, wishlist count updates, duplicate prevention, and responsive feedback.",
+"backend_module": {
+"function_label": "FUNCTION_A_AddToWishlist",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: AddToWishlist]\nProvide language-agnostic backend logic (Controller + Database Schema) for adding or removing cosmetics and skincare products from a user's wishlist. Prevent duplicate records and validate product existence and user authentication. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_12",
+"name": "Show Ingredients",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 7500,
+"description_my": "Product တွင် ပါဝင်သော Ingredients များ၊ Ingredient တစ်ခုချင်းစီ၏ အမည်နှင့် ရည်ရွယ်ချက်ကို ရှင်းလင်းစွာ ဖော်ပြပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Ingredients. Include searchable ingredient lists, expandable ingredient details, ingredient categories, highlighted key ingredients, and responsive presentation.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowIngredients",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowIngredients]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving product ingredients with ingredient name, display order, category, description, and product association. Support structured ingredient metadata without making unsupported medical claims. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_13",
+"name": "Show How To Use",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 5000,
+"description_my": "Product ကို ဘယ်အချိန်၊ ဘယ်လိုအဆင့်ဆင့် အသုံးပြုရမည်ကို ရှင်းလင်းလွယ်ကူစွာ ပြသပေးသည့် အသုံးပြုနည်း စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show How To Use. Include step-by-step usage instructions, expandable sections, recommended usage time, product order, warnings, and responsive layout.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowHowToUse",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowHowToUse]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving structured product usage instructions including steps, recommended usage time, application amount where provided by the manufacturer, routine position, storage instructions, and product-specific warnings. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_14",
+"name": "Show Product Reviews",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 7500,
+"description_my": "Customer များ၏ Product Review၊ Rating၊ Comment နှင့် Verified Purchase အခြေအနေများကို စုစည်းပြီး ကြည့်ရှုနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Product Reviews. Include rating summary, star distribution, review list, pagination, verified-purchase badges, review filtering, sorting, and responsive review cards.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowProductReviews",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowProductReviews]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving cosmetics product reviews with rating summaries, rating distribution, review text, reviewer metadata, verified-purchase status, sorting, filtering, and pagination. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_15",
+"name": "Calculate Discount",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 5000,
+"description_my": "မူရင်းဈေးနှုန်း၊ Discount ပမာဏနှင့် Discount ပြီးနောက် ကျသင့်မည့် နောက်ဆုံးဈေးနှုန်းကို အလိုအလျောက်တွက်ချက်ပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Calculate Discount. Dynamically calculate percentage or fixed discounts, display original and final prices, show savings, update cart totals, and provide responsive price summaries.",
+"backend_module": {
+"function_label": "FUNCTION_A_CalculateDiscount",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: CalculateDiscount]\nProvide language-agnostic backend logic (Controller + Database Schema) for calculating product, variant, promotion, and cart-level discounts. Validate discount rules and return subtotal, discount amount, savings, and final total. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_16",
+"name": "Apply Coupon",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 7500,
+"description_my": "Coupon Code ကို စစ်ဆေးပြီး သတ်မှတ်ချက်များနှင့် ကိုက်ညီပါက Cosmetics နှင့် Skincare Order တွင် Discount ကို အသုံးပြုပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Apply Coupon. Include coupon input validation, loading state, success and error messages, discount preview, cart total updates, and responsive checkout interaction.",
+"backend_module": {
+"function_label": "FUNCTION_A_ApplyCoupon",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ApplyCoupon]\nProvide language-agnostic backend logic (Controller + Database Schema) for validating a coupon code against expiration date, usage limits, minimum order value, eligible products or brands, and discount type. Return the calculated coupon discount and validation status. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_17",
+"name": "Show Related Products",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 5000,
+"description_my": "လက်ရှိကြည့်ရှုနေသော Product နှင့် Brand၊ Skin Type၊ Concern သို့မဟုတ် Category ဆင်တူသည့် Product များကို အကြံပြုပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Related Products. Include dynamically loaded recommendations based on category, brand, skin type, concern, ingredients, and product tags with responsive cards and quick actions.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowRelatedProducts",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowRelatedProducts]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving related cosmetics and skincare products using category, brand, skin type, concerns, tags, and shared product attributes while excluding the current product. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_18",
+"name": "Save Cart",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 7500,
+"description_my": "Shopping Cart ထဲရှိ Cosmetics Product များ၊ Shade၊ Variant နှင့် Quantity များကို သိမ်းဆည်းပြီး နောက်တစ်ကြိမ် ပြန်ဝင်သည့်အခါ ပြန်လည်ရယူပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Save Cart. Persist cart data in local storage for guests and synchronize with the user account when authenticated, including shade, variant, quantity, price, and cart totals.",
+"backend_module": {
+"function_label": "FUNCTION_A_SaveCart",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SaveCart]\nProvide language-agnostic backend logic (Controller + Database Schema) for saving a user's cosmetics cart items, selected shades, variants, quantities, prices, and timestamps. Validate current product and stock information before persistence and support cart synchronization. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_19",
+"name": "Checkout",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 10000,
+"description_my": "Customer အချက်အလက်၊ ပို့ဆောင်မည့်လိပ်စာ၊ Delivery နှင့် Payment အချက်အလက်များကို ဖြည့်သွင်းပြီး Cosmetics Order တင်နိုင်သည့် Checkout စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Checkout. Include customer information, shipping address, delivery method, payment selection, validation, order creation flow, loading states, error handling, and responsive checkout steps.",
+"backend_module": {
+"function_label": "FUNCTION_A_Checkout",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: Checkout]\nProvide language-agnostic backend logic (Controller + Database Schema) for converting a validated cosmetics cart into an order. Recheck inventory, selected shades and variants, current prices, discounts, coupon eligibility, and shipping information before creating order records. Safely reserve or decrement stock and return the created order reference. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_cosmetics_20",
+"name": "Show Order Summary",
+"category": "Cosmetics & Skincare Shop",
+"price_addon": 7500,
+"description_my": "မှာယူထားသော Cosmetics နှင့် Skincare Product များ၊ Shade၊ Variant၊ အရေအတွက်၊ Discount၊ ပို့ဆောင်ခနှင့် စုစုပေါင်းကျသင့်ငွေကို ရှင်းလင်းစွာ ပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Order Summary. Include product thumbnails, selected shades and variants, quantities, subtotal, discounts, shipping fee, final total, payment method, and responsive summary layout.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowOrderSummary",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowOrderSummary]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving a complete cosmetics order summary including product information, selected shades and variants, quantities, unit prices, discounts, coupon discounts, shipping charges, taxes if applicable, payment method, and final total. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+}
+
+
+,
+  {
+    "id": "f_electronics_01",
+    "name": "Add to Cart",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 5000,
+    "description_my": "ရွေးချယ်ထားသော အီလက်ထရွန်းနစ်ပစ္စည်းကို မော်ဒယ်၊ သိုလှောင်မှုနှင့် အရောင်သတ်မှတ်ကာ ဈေးဝယ်ခြင်းတောင်းထဲ ထည့်သွင်းပေးသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Add to Cart. Include model selection, storage capacity selector, color picker, quantity control, add to cart button with loading animation, stock availability indicator, and cart badge counter update.",
+      "backend_module": {
+        "function_label": "FUNCTION_A_AddToCart",
+        "architecture_type": "REST API Controller / DB Transaction",
+        "prompt_text": "------------------------\n[FUNCTION A: AddToCart]\nProvide language-agnostic backend logic (Controller + DB Schema) for adding electronic product variant to cart. Validate model, storage, color combination, check real-time stock, update cart session, calculate subtotal with applicable taxes. Return JSON: { status: 201, data: { cart_items, total_items, subtotal, tax } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_02",
+    "name": "Select Model",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 4000,
+    "description_my": "ထုတ်ကုန်အုပ်စုအတွင်း ရရှိနိုင်သော မော်ဒယ်များကို ပြသပြီး သုံးစွဲသူ ရွေးချယ်နိုင်သည့် စနစ် (ဥပမာ- iPhone 15, 15 Pro, 15 Pro Max)။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Model. Display model cards or radio buttons with key specs, price differences, highlight selected model, show stock status per model, and auto-update storage/color options.",
+      "backend_module": {
+        "function_label": "FUNCTION_B_SelectModel",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION B: SelectModel]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching available models under a product line. Include model specifications, base price, stock availability, and compatible accessories. Return JSON: { status: 200, data: { product_line, models: [{ id, name, specs, price, stock, image }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_03",
+    "name": "Select Storage",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 3500,
+    "description_my": "ပစ္စည်းအတွက် ရရှိနိုင်သော သိုလှောင်မှုပမာဏများ (64GB, 128GB, 256GB, 512GB, 1TB) ကိုပြသပြီး ရွေးချယ်နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Storage. Display storage capacity buttons with price differences, show stock per capacity, highlight selected option, and update total price dynamically.",
+      "backend_module": {
+        "function_label": "FUNCTION_C_SelectStorage",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION C: SelectStorage]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching available storage options for a specific model. Include capacity, price variation, stock quantity, and speed/type specifications. Return JSON: { status: 200, data: { model_id, storage_options: [{ capacity, price_addon, stock, type }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_04",
+    "name": "Select Color",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 3000,
+    "description_my": "ပစ္စည်းအတွက် ရရှိနိုင်သော အရောင်များကို ပြသပြီး သုံးစွဲသူ ရွေးချယ်နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Color. Display color swatches with visual representation, show availability per color, update product preview image on selection, and indicate premium color pricing if applicable.",
+      "backend_module": {
+        "function_label": "FUNCTION_D_SelectColor",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION D: SelectColor]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching available colors for a specific model and storage combination. Include color name, hex code, stock, and image URL. Return JSON: { status: 200, data: { variant_id, colors: [{ name, hex, stock, image_url, price_addon }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_05",
+    "name": "Check Stock",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 4000,
+    "description_my": "ရွေးချယ်ထားသော မော်ဒယ်၊ သိုလှောင်မှုနှင့် အရောင်ပေါင်းစပ်မှုအတွက် လက်ကျန်ပစ္စည်းကို အချိန်နှင့်တစ်ပြေးညီ စစ်ဆေးပေးသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Check Stock. Display real-time stock status badge (In Stock, Low Stock, Out of Stock, Pre-order), show estimated restock date, and disable add to cart when out of stock.",
+      "backend_module": {
+        "function_label": "FUNCTION_E_CheckStock",
+        "architecture_type": "REST API Controller / DB Query / Cache",
+        "prompt_text": "------------------------\n[FUNCTION E: CheckStock]\nProvide language-agnostic backend logic (Controller + DB Query) for real-time inventory checking. Include warehouse location, batch tracking, pre-order availability, and stock threshold alerts. Return JSON: { status: 200, data: { variant_id, available, stock_count, status, restock_date, warehouse } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_06",
+    "name": "Filter by Brand",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 4500,
+    "description_my": "အမှတ်တံဆိပ်အလိုက် (Apple, Samsung, Sony, Dell, HP, Lenovo) ပစ္စည်းများကို စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Brand. Display brand filter checkboxes with logos, show product count per brand, allow multiple brand selection, and update product grid smoothly.",
+      "backend_module": {
+        "function_label": "FUNCTION_F_FilterByBrand",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION F: FilterByBrand]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering products by brand. Support multiple brand selection, return paginated results with brand metadata. Return JSON: { status: 200, data: { products: [], total, brands: [{ id, name, count }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_07",
+    "name": "Filter by Price",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 4500,
+    "description_my": "ဈေးနှုန်းအပိုင်းအခြားအလိုက် အီလက်ထရွန်းနစ်ပစ္စည်းများကို စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Price. Implement dual-range slider, display min/max price labels, show product count, and update grid with debounced input handling.",
+      "backend_module": {
+        "function_label": "FUNCTION_G_FilterByPrice",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION G: FilterByPrice]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering electronics by price range. Support currency conversion, tax-inclusive pricing, and promotional pricing consideration. Return JSON: { status: 200, data: { products: [], total, price_range: { min, max } } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_08",
+    "name": "Filter by Specification",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 5500,
+    "description_my": "နည်းပညာဆိုင်ရာ သတ်မှတ်ချက်များ (RAM, Processor, Screen Size, Camera MP, Battery) အလိုက် ပစ္စည်းများကို စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Specification. Create dynamic filter groups for RAM, processor, screen size, camera, battery, connectivity. Use checkboxes, range sliders, and dropdowns with real-time product updates.",
+      "backend_module": {
+        "function_label": "FUNCTION_H_FilterBySpecification",
+        "architecture_type": "REST API Controller / DB Query / ElasticSearch",
+        "prompt_text": "------------------------\n[FUNCTION H: FilterBySpecification]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering products by technical specifications. Support dynamic filter attributes, range queries, and nested conditions. Return JSON: { status: 200, data: { products: [], total, available_specs: {} } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_09",
+    "name": "Compare Products",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 7000,
+    "description_my": "ပစ္စည်းနှစ်ခုသို့မဟုတ် ထို့ထက်ပိုသော ပစ္စည်းများ၏ သတ်မှတ်ချက်များ၊ ဈေးနှုန်းနှင့် အင်္ဂါရပ်များကို ဘေးချင်းယှဉ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Compare Products. Implement product selection interface, comparison table with side-by-side specifications, highlight differences, show price comparison, and allow up to 4 products comparison.",
+      "backend_module": {
+        "function_label": "FUNCTION_I_CompareProducts",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION I: CompareProducts]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching multiple product specifications for comparison. Normalize attributes across different brands and categories. Return JSON: { status: 200, data: { products: [{ id, name, specs: { key: value } }], comparison_matrix } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_10",
+    "name": "Search Products",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 6000,
+    "description_my": "ပစ္စည်းအမည်၊ သတ်မှတ်ချက်များ သို့မဟုတ် ကုဒ်နံပါတ်ဖြင့် အီလက်ထရွန်းနစ်ပစ္စည်းများကို ရှာဖွေနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Search Products. Include search bar with autocomplete suggestions, search history, voice search option, filter chip display, and instant results with keyboard navigation support.",
+      "backend_module": {
+        "function_label": "FUNCTION_J_SearchProducts",
+        "architecture_type": "REST API Controller / ElasticSearch / Full-Text Search",
+        "prompt_text": "------------------------\n[FUNCTION J: SearchProducts]\nProvide language-agnostic backend logic (Controller + Search Engine) for product search with fuzzy matching, typo tolerance, synonym support, and relevance scoring. Support SKU, brand, model, and specification search. Return JSON: { status: 200, data: { products: [], total, suggestions: [] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_11",
+    "name": "Quick View",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 5000,
+    "description_my": "စာမျက်နှာအပြည့်မဖွင့်ဘဲ ပစ္စည်း၏ အသေးစိတ်အချက်အလက်များ၊ သတ်မှတ်ချက်များနှင့် ဈေးနှုန်းကို ပေါ့ပ်အပ်ဝင်းဒိုးတွင် ကြည့်ရှုနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Quick View. Create modal with product images, key specifications summary, model/storage/color selection, add to cart, and close button with smooth animations.",
+      "backend_module": {
+        "function_label": "FUNCTION_K_QuickView",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION K: QuickView]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching concise product data for quick view modal. Include key specs, pricing, available variants, and stock status. Return JSON: { status: 200, data: { id, name, image, price, rating, key_specs, variants_summary } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_12",
+    "name": "Show Specifications",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 4500,
+    "description_my": "ပစ္စည်း၏ ပြည့်စုံသော နည်းပညာဆိုင်ရာ သတ်မှတ်ချက်များကို ဇယားဖြင့် စနစ်တကျ ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Specifications. Display organized specification table with categories (Display, Processor, Memory, Camera, Battery, Connectivity, Dimensions), expandable sections, and print-friendly format.",
+      "backend_module": {
+        "function_label": "FUNCTION_L_ShowSpecifications",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION L: ShowSpecifications]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching complete product specifications grouped by categories. Include unit measurements and technical details. Return JSON: { status: 200, data: { product_id, specs: { category: [{ key, value, unit }] } } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_13",
+    "name": "Show Warranty",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 3500,
+    "description_my": "ပစ္စည်းအတွက် အာမခံကာလ၊ အကျုံးဝင်မှုနှင့် တောင်းဆိုနည်းတို့ကို အသေးစိတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Warranty. Display warranty period, coverage details (parts, labor, accidental damage), warranty registration form, claim process, and downloadable warranty certificate.",
+      "backend_module": {
+        "function_label": "FUNCTION_M_ShowWarranty",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION M: ShowWarranty]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching warranty information per product model. Include manufacturer warranty, extended warranty options, terms and conditions, and registration status. Return JSON: { status: 200, data: { product_id, warranty_type, period, coverage, terms, extended_options } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_14",
+    "name": "Show Reviews",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 5000,
+    "description_my": "သုံးစွဲသူများ၏ အကဲဖြတ်ချက်များ၊ အဆင့်သတ်မှတ်ချက်များနှင့် ထင်မြင်ချက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Reviews. Display average rating stars, rating breakdown bar chart, review cards with user info, date, verified purchase badge, helpful votes, pagination, and photo/video reviews.",
+      "backend_module": {
+        "function_label": "FUNCTION_N_ShowReviews",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION N: ShowReviews]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching product reviews with pagination, sorting by date/rating/helpfulness, and rating analytics. Include verified purchase validation. Return JSON: { status: 200, data: { average_rating, total_reviews, rating_distribution, reviews: [] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_15",
+    "name": "Calculate Discount",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 4500,
+    "description_my": "အရောင်းမြှင့်တင်မှုများ၊ ရာသီအလိုက် လျှော့စျေးများနှင့် အထူးကမ်းလှမ်းချက်များကို တွက်ချက်ပေးသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Calculate Discount. Display original price, discount percentage, savings amount, final price, countdown timer for flash sales, and progress bar for limited quantity discounts.",
+      "backend_module": {
+        "function_label": "FUNCTION_O_CalculateDiscount",
+        "architecture_type": "REST API Controller / Business Logic",
+        "prompt_text": "------------------------\n[FUNCTION O: CalculateDiscount]\nProvide language-agnostic backend logic (Controller + Business Logic) for calculating discounts on electronics. Support tiered discounts, bundle deals, seasonal promotions, student/military discounts, and trade-in offers. Return JSON: { status: 200, data: { original_total, discount_amount, final_total, savings, discount_breakdown } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_16",
+    "name": "Apply Coupon",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 5000,
+    "description_my": "သုံးစွဲသူ ထည့်သွင်းလိုက်သော ကူပွန်ကုဒ်ကို အတည်ပြုပြီး လျှော့စျေးကို အလိုအလျောက် တွက်ချက်ပေးသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Apply Coupon. Include coupon input with validation, apply/remove buttons, discount breakdown display, minimum order threshold warning, and category-specific coupon validation.",
+      "backend_module": {
+        "function_label": "FUNCTION_P_ApplyCoupon",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION P: ApplyCoupon]\nProvide language-agnostic backend logic (Controller + DB Query) for coupon validation on electronics. Support brand-specific, category-specific, and minimum spend coupons. Include usage limits, expiry validation, and combination rules. Return JSON: { status: 200, data: { valid, discount_amount, message, coupon_details } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_17",
+    "name": "Add to Wishlist",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 4500,
+    "description_my": "သုံးစွဲသူ နှစ်သက်ရာ အီလက်ထရွန်းနစ်ပစ္စည်းများကို နောက်မှဝယ်ရန် စိတ်ကြိုက်စာရင်းတွင် သိမ်းဆည်းနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Add to Wishlist. Include heart icon toggle with animation, price tracking feature, stock alert option, wishlist count badge, and sync across devices.",
+      "backend_module": {
+        "function_label": "FUNCTION_Q_AddToWishlist",
+        "architecture_type": "REST API Controller / DB Transaction",
+        "prompt_text": "------------------------\n[FUNCTION Q: AddToWishlist]\nProvide language-agnostic backend logic (Controller + DB Schema) for managing wishlist of electronics. Include price drop tracking, availability alerts, and categorize wishlist items. Return JSON: { status: 200, data: { wishlist_items: [], total, price_drop_alerts: [] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_18",
+    "name": "Save Cart",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 5000,
+    "description_my": "သုံးစွဲသူ၏ ဈေးဝယ်ခြင်းတောင်းပါဝင်ပစ္စည်းများကို နောက်မှပြန်လည်ကြည့်ရှုနိုင်ရန် သိမ်းဆည်းပေးသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Save Cart. Include save cart with custom name, saved carts list with thumbnails, load cart, update cart, delete cart, and set default cart option.",
+      "backend_module": {
+        "function_label": "FUNCTION_R_SaveCart",
+        "architecture_type": "REST API Controller / DB Transaction",
+        "prompt_text": "------------------------\n[FUNCTION R: SaveCart]\nProvide language-agnostic backend logic (Controller + DB Schema) for saving electronics cart states. Include product variants, promotion codes applied, and estimated delivery dates. Support multiple saved carts with expiry. Return JSON: { status: 200, data: { saved_carts: [{ id, name, items, total, created_at, expires_at }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_19",
+    "name": "Checkout",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 8000,
+    "description_my": "ဈေးဝယ်ခြင်းတောင်းပါဝင်ပစ္စည်းများအတွက် ငွေပေးချေမှုလုပ်ငန်းစဉ်ကို စတင်ဆောင်ရွက်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Checkout. Create multi-step checkout (address, delivery method, payment, confirmation) with form validation, address autocomplete, delivery option calculator, order summary, and secure payment UI.",
+      "backend_module": {
+        "function_label": "FUNCTION_S_Checkout",
+        "architecture_type": "REST API Controller / DB Transaction / Payment Gateway",
+        "prompt_text": "------------------------\n[FUNCTION S: Checkout]\nProvide language-agnostic backend logic (Controller + DB Schema) for electronics checkout. Include shipping calculations, tax computation, payment processing, order creation, inventory deduction, and confirmation email. Support installment plans. Return JSON: { status: 201, data: { order_id, tracking_number, estimated_delivery, payment_status } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_electronics_20",
+    "name": "Track Order",
+    "category": "Electronics & Tech Gadgets",
+    "price_addon": 5500,
+    "description_my": "မှာယူထားသော ပစ္စည်း၏ ပို့ဆောင်မှုအခြေအနေကို အချိန်နှင့်တစ်ပြေးညီ ခြေရာခံကြည့်ရှုနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Track Order. Display order status timeline with steps (Processing, Shipped, In Transit, Delivered), courier details, tracking number with copy button, and interactive map preview.",
+      "backend_module": {
+        "function_label": "FUNCTION_T_TrackOrder",
+        "architecture_type": "REST API Controller / DB Query / Courier API Integration",
+        "prompt_text": "------------------------\n[FUNCTION T: TrackOrder]\nProvide language-agnostic backend logic (Controller + DB Query + Courier API) for tracking order shipments. Include order status history, estimated delivery dates, courier tracking integration, and real-time updates. Return JSON: { status: 200, data: { order_id, status, timeline: [], courier, tracking_number, estimated_delivery } }.\n------------------------"
+      }
+    }
+  }
+,
+
+{
+"id": "f_furniture_01",
+"name": "Add to Cart",
+"category": "Furniture & Home Decor",
+"price_addon": 5000,
+"description_my": "ရွေးချယ်ထားသော Color၊ Material၊ Size နှင့် အရေအတွက်အတိုင်း Furniture သို့မဟုတ် Home Decor ပစ္စည်းကို Shopping Cart ထဲသို့ ထည့်ပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Add to Cart. Include dynamic cart updates, quantity controls, selected color, material, and size handling, stock validation, cart count updates, and responsive feedback.",
+"backend_module": {
+"function_label": "FUNCTION_A_AddToCart",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: AddToCart]\nProvide language-agnostic backend logic (Controller + Database Schema) for adding a furniture or home decor product with selected color, material, size, quantity, price, and variant ID to the shopping cart. Validate product availability, variant validity, and quantity before adding. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_02",
+"name": "Select Color",
+"category": "Furniture & Home Decor",
+"price_addon": 5000,
+"description_my": "Furniture သို့မဟုတ် Decor ပစ္စည်းအတွက် ရရှိနိုင်သော အရောင်များထဲမှ ရွေးချယ်ပြီး သက်ဆိုင်ရာ Product ပုံ၊ Variant နှင့် ဈေးနှုန်းကို ပြောင်းလဲပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Color. Include interactive color swatches, selected-state styling, product image switching, variant synchronization, price updates, and responsive interaction.",
+"backend_module": {
+"function_label": "FUNCTION_A_SelectColor",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SelectColor]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving available furniture product colors and validating the selected color against product variants and inventory. Return matching variant details, price, images, and availability. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_03",
+"name": "Select Material",
+"category": "Furniture & Home Decor",
+"price_addon": 7500,
+"description_my": "Wood၊ Metal၊ Rattan၊ Leather၊ Fabric စသည့် ရရှိနိုင်သော Material များထဲမှ လိုအပ်သော Material ကို ရွေးချယ်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Material. Include material options, selected-state styling, material-specific images, price updates, availability handling, and responsive controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_SelectMaterial",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SelectMaterial]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving available materials for a furniture product and validating the selected material against product variants. Return material information, price adjustment, images, stock, and availability. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_04",
+"name": "Select Size",
+"category": "Furniture & Home Decor",
+"price_addon": 7500,
+"description_my": "Furniture ၏ ရရှိနိုင်သော Size သို့မဟုတ် Dimension Option များထဲမှ လိုအပ်သည့်အရွယ်အစားကို ရွေးချယ်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Size. Include size options, selected-state styling, dimension display, price updates, availability validation, and responsive controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_SelectSize",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SelectSize]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving available furniture sizes or dimension variants and validating the selected size. Return variant ID, width, height, depth, price, stock, and availability information. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_05",
+"name": "Filter by Room",
+"category": "Furniture & Home Decor",
+"price_addon": 5000,
+"description_my": "Living Room၊ Bedroom၊ Dining Room၊ Office နှင့် Outdoor စသည့် အသုံးပြုမည့်နေရာအလိုက် Furniture များကို စစ်ထုတ်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Room. Include room category tabs, multi-select filters, active states, dynamic product grid updates, result counts, and responsive mobile controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterByRoom",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterByRoom]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering furniture and home decor products by room type such as living room, bedroom, dining room, office, bathroom, and outdoor. Support multiple room selections and pagination. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_06",
+"name": "Filter by Style",
+"category": "Furniture & Home Decor",
+"price_addon": 5000,
+"description_my": "Modern၊ Minimalist၊ Scandinavian၊ Industrial၊ Classic နှင့် Bohemian စသည့် Design Style အလိုက် Product များကို စစ်ထုတ်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Style. Include style filters, multi-select support, active-state styling, dynamic product updates, result counts, and responsive controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterByStyle",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterByStyle]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering furniture products by design styles such as modern, minimalist, Scandinavian, industrial, classic, contemporary, and bohemian. Support multiple styles and pagination. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_07",
+"name": "Filter by Material",
+"category": "Furniture & Home Decor",
+"price_addon": 5000,
+"description_my": "Wood၊ Metal၊ Glass၊ Rattan၊ Leather နှင့် Fabric စသည့် Material အမျိုးအစားအလိုက် Furniture များကို စစ်ထုတ်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Material. Include multi-select material filters, active states, product grid updates, result counts, clear filters, and responsive filter controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterByMaterial",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterByMaterial]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering furniture and home decor products by one or multiple materials. Support normalized material attributes, pagination, and active products. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_08",
+"name": "Filter by Price",
+"category": "Furniture & Home Decor",
+"price_addon": 5000,
+"description_my": "သတ်မှတ်ထားသော အနိမ့်ဆုံးနှင့် အမြင့်ဆုံးဈေးနှုန်းအတွင်းရှိ Furniture နှင့် Home Decor Product များကိုသာ ရွေးချယ်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Price. Include minimum and maximum price inputs, range slider, live price labels, dynamic product filtering, result count, reset functionality, and responsive controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterByPrice",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterByPrice]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering furniture products within a minimum and maximum selling price. Support discounted prices and pagination while validating numeric ranges. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_09",
+"name": "Search Products",
+"category": "Furniture & Home Decor",
+"price_addon": 7500,
+"description_my": "Product Name၊ Category၊ Room၊ Style၊ Material သို့မဟုတ် Brand စသည့် Keyword များဖြင့် Furniture Product များကို အမြန်ရှာဖွေနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Search Products. Include live search with debounce, autocomplete suggestions, keyword matching, recent searches, highlighted results, empty-state handling, and responsive search UI.",
+"backend_module": {
+"function_label": "FUNCTION_A_SearchProducts",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SearchProducts]\nProvide language-agnostic backend logic (Controller + Database Schema) for searching furniture and home decor products by product name, SKU, category, room, style, material, brand, and tags. Support partial matching, relevance ordering, pagination, and safe query handling. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_10",
+"name": "Show Dimensions",
+"category": "Furniture & Home Decor",
+"price_addon": 7500,
+"description_my": "Furniture ၏ အလျား၊ အနံ၊ အမြင့်နှင့် အခြား Dimension များကို ရှင်းလင်းစွာ ဖော်ပြပြီး အခန်းအတွင်း နေရာချနိုင်မှုကို ခန့်မှန်းနိုင်စေသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Dimensions. Include dimension diagrams, width, depth, height, weight, unit switching, expandable measurements, and responsive presentation.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowDimensions",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowDimensions]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving furniture dimensions including width, depth, height, seat height where applicable, package dimensions, weight, and supported measurement units. Return structured dimension data as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_11",
+"name": "Show Product Gallery",
+"category": "Furniture & Home Decor",
+"price_addon": 7500,
+"description_my": "Furniture Product ၏ ရှေ့၊ နောက်၊ ဘေး၊ အနီးကပ်နှင့် အခန်းအတွင်းထားရှိထားသော ပုံများကို Gallery အဖြစ် ကြည့်ရှုနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Product Gallery. Include main image switching, thumbnail navigation, zoom, mobile swipe support, room-context images, image loading states, and responsive layout.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowProductGallery",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowProductGallery]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving ordered furniture product gallery images, image types such as front, side, detail, and room-context images, alt text, and primary-image metadata. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_12",
+"name": "Quick View",
+"category": "Furniture & Home Decor",
+"price_addon": 7500,
+"description_my": "Product Detail Page သို့ မသွားဘဲ Furniture ၏ ပုံ၊ ဈေးနှုန်း၊ Material၊ Color၊ Size နှင့် Dimension အကျဉ်းများကို အမြန်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Quick View. Include modal product preview, gallery, price, color, material, size, dimensions, availability, and add-to-cart interaction with responsive mobile behavior.",
+"backend_module": {
+"function_label": "FUNCTION_A_QuickView",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: QuickView]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving compact furniture product details for a quick-view modal, including images, price, colors, materials, sizes, dimensions, availability, and key specifications. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_13",
+"name": "Add to Wishlist",
+"category": "Furniture & Home Decor",
+"price_addon": 7500,
+"description_my": "နှစ်သက်သော Furniture နှင့် Home Decor Product များကို Wishlist ထဲသို့ သိမ်းဆည်းပြီး နောက်ပိုင်းတွင် ပြန်လည်ကြည့်ရှုနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Add to Wishlist. Include wishlist toggle buttons, saved-state styling, authentication-aware behavior, wishlist count updates, duplicate prevention, and responsive feedback.",
+"backend_module": {
+"function_label": "FUNCTION_A_AddToWishlist",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: AddToWishlist]\nProvide language-agnostic backend logic (Controller + Database Schema) for adding or removing furniture and home decor products from a user's wishlist. Prevent duplicate entries and validate product existence and user authentication. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_14",
+"name": "Show Related Products",
+"category": "Furniture & Home Decor",
+"price_addon": 5000,
+"description_my": "လက်ရှိကြည့်ရှုနေသော Furniture နှင့် Room၊ Style၊ Material သို့မဟုတ် Category ဆင်တူသည့် Product များကို အကြံပြုပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Related Products. Include dynamically loaded recommendations based on room, category, style, material, brand, and product tags with responsive cards and quick actions.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowRelatedProducts",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowRelatedProducts]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving related furniture and home decor products using room, category, style, material, brand, and shared attributes while excluding the current product. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_15",
+"name": "Calculate Delivery Fee",
+"category": "Furniture & Home Decor",
+"price_addon": 7500,
+"description_my": "ပစ္စည်းအရွယ်အစား၊ အလေးချိန်၊ ပို့ဆောင်မည့်နေရာနှင့် Delivery Type အပေါ်မူတည်ပြီး ပို့ဆောင်ခကို အလိုအလျောက်တွက်ချက်ပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Calculate Delivery Fee. Include address input, delivery method selection, dynamic fee calculation, estimated delivery information, loading state, error handling, and responsive checkout layout.",
+"backend_module": {
+"function_label": "FUNCTION_A_CalculateDeliveryFee",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: CalculateDeliveryFee]\nProvide language-agnostic backend logic (Controller + Database Schema) for calculating furniture delivery fees based on destination area, product dimensions, weight, quantity, delivery zone, and delivery method. Return delivery fee, estimated delivery time, and applicable service information. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_16",
+"name": "Check Delivery Area",
+"category": "Furniture & Home Decor",
+"price_addon": 7500,
+"description_my": "Customer ထည့်သွင်းသော မြို့နယ်၊ Postal Code သို့မဟုတ် Address အပေါ်မူတည်ပြီး Furniture ပို့ဆောင်ပေးနိုင်၊ မနိုင်ကို စစ်ဆေးပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Check Delivery Area. Include location input, delivery availability status, supported-area suggestions, estimated delivery time, delivery fee preview, and responsive interaction.",
+"backend_module": {
+"function_label": "FUNCTION_A_CheckDeliveryArea",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: CheckDeliveryArea]\nProvide language-agnostic backend logic (Controller + Database Schema) for validating whether furniture products can be delivered to a specified city, township, postal code, or delivery zone. Return service availability, supported delivery methods, estimated delivery duration, and applicable area restrictions. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_17",
+"name": "Apply Coupon",
+"category": "Furniture & Home Decor",
+"price_addon": 7500,
+"description_my": "Coupon Code ကို စစ်ဆေးပြီး သတ်မှတ်ချက်များနှင့် ကိုက်ညီပါက Furniture Order တွင် Discount ကို အသုံးပြုပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Apply Coupon. Include coupon input validation, loading state, success and error messages, discount preview, cart total updates, and responsive checkout interaction.",
+"backend_module": {
+"function_label": "FUNCTION_A_ApplyCoupon",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ApplyCoupon]\nProvide language-agnostic backend logic (Controller + Database Schema) for validating a coupon code against expiration date, usage limits, minimum order value, eligible furniture categories or products, and discount type. Return the calculated coupon discount and validation status. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_18",
+"name": "Save Cart",
+"category": "Furniture & Home Decor",
+"price_addon": 7500,
+"description_my": "Shopping Cart ထဲရှိ Furniture Product များ၊ Color၊ Material၊ Size နှင့် Quantity များကို သိမ်းဆည်းပြီး နောက်တစ်ကြိမ် ပြန်ဝင်သည့်အခါ ပြန်လည်ရယူပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Save Cart. Persist cart data in local storage for guests and synchronize with the user account when authenticated, including selected variants, quantities, prices, and delivery-related information.",
+"backend_module": {
+"function_label": "FUNCTION_A_SaveCart",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SaveCart]\nProvide language-agnostic backend logic (Controller + Database Schema) for saving a user's furniture cart items, selected color, material, size, quantity, price, and timestamps. Validate current product and inventory information before persistence and support cart synchronization. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_19",
+"name": "Checkout",
+"category": "Furniture & Home Decor",
+"price_addon": 10000,
+"description_my": "Customer အချက်အလက်၊ ပို့ဆောင်မည့်လိပ်စာ၊ Delivery၊ Payment နှင့် Order အချက်အလက်များကို ဖြည့်သွင်းပြီး Furniture Order တင်နိုင်သည့် Checkout စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Checkout. Include customer information, shipping address, delivery method, delivery fee, payment selection, validation, order creation, loading states, error handling, and responsive checkout steps.",
+"backend_module": {
+"function_label": "FUNCTION_A_Checkout",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: Checkout]\nProvide language-agnostic backend logic (Controller + Database Schema) for converting a validated furniture cart into an order. Recheck inventory, selected variants, current prices, coupon eligibility, delivery area, delivery fee, and shipping information before creating order records. Safely reserve or decrement stock and return the created order reference. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_furniture_20",
+"name": "Track Order",
+"category": "Furniture & Home Decor",
+"price_addon": 7500,
+"description_my": "မှာယူထားသော Furniture Order ၏ လက်ရှိအခြေအနေ၊ Delivery အဆင့်၊ ပို့ဆောင်မည့်အချိန်နှင့် Tracking အချက်အလက်များကို ကြည့်ရှုနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Track Order. Include order ID search, tracking status timeline, delivery progress indicators, carrier or delivery information, estimated delivery date, status messages, and responsive mobile layout.",
+"backend_module": {
+"function_label": "FUNCTION_A_TrackOrder",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: TrackOrder]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving furniture order and delivery tracking information using an authenticated user and order reference or tracking number. Return order status, delivery events, delivery provider information, estimated delivery date, and latest tracking update while protecting unauthorized order access. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+}
+
+
+,
+
+  {
+    "id": "f_beauty_01",
+    "name": "Add to Cart",
+    "category": "Beauty & Personal Care",
+    "price_addon": 5000,
+    "description_my": "ရွေးချယ်ထားသော အလှကုန်ပစ္စည်းကို ပမာဏသတ်မှတ်ကာ ဈေးဝယ်ခြင်းတောင်းထဲ ထည့်သွင်းပေးသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Add to Cart. Include quantity selector, variant selection (size/ml), add to cart button with animation, stock availability warning, and cart badge counter update.",
+      "backend_module": {
+        "function_label": "FUNCTION_A_AddToCart",
+        "architecture_type": "REST API Controller / DB Transaction",
+        "prompt_text": "------------------------\n[FUNCTION A: AddToCart]\nProvide language-agnostic backend logic (Controller + DB Schema) for adding beauty products to cart. Validate quantity against stock, check for subscription options, calculate subtotal with applicable promotions. Return JSON: { status: 201, data: { cart_items, total_items, subtotal } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_02",
+    "name": "Search Products",
+    "category": "Beauty & Personal Care",
+    "price_addon": 6000,
+    "description_my": "အလှကုန်ပစ္စည်းအမည်၊ ပါဝင်ပစ္စည်းများ သို့မဟုတ် ကုန်အမှတ်တံဆိပ်ဖြင့် ရှာဖွေနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Search Products. Include search bar with autocomplete, product suggestions with thumbnails, voice search, filter chips, and instant results with keyboard navigation.",
+      "backend_module": {
+        "function_label": "FUNCTION_B_SearchProducts",
+        "architecture_type": "REST API Controller / ElasticSearch / Full-Text Search",
+        "prompt_text": "------------------------\n[FUNCTION B: SearchProducts]\nProvide language-agnostic backend logic (Controller + Search Engine) for beauty product search. Support fuzzy matching on product names, brands, ingredients, and skin concerns. Include relevance scoring. Return JSON: { status: 200, data: { products: [], total, suggestions: [], popular_searches: [] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_03",
+    "name": "Filter by Category",
+    "category": "Beauty & Personal Care",
+    "price_addon": 4500,
+    "description_my": "အမျိုးအစားအလိုက် (မျက်နှာသန့်စင်ခြင်း၊ အစိုဓာတ်ထိန်းခြင်း၊ မိတ်ကပ်၊ ဆံပင်၊ ခန္ဓာကိုယ်) ပစ္စည်းများကို စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Category. Display category grid or dropdown with icons, highlight active category, show product count per category, and update product grid smoothly.",
+      "backend_module": {
+        "function_label": "FUNCTION_C_FilterByCategory",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION C: FilterByCategory]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering beauty products by category. Support nested categories and sub-categories. Return JSON: { status: 200, data: { products: [], total, categories: [{ id, name, count, subcategories }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_04",
+    "name": "Filter by Price",
+    "category": "Beauty & Personal Care",
+    "price_addon": 4500,
+    "description_my": "ဈေးနှုန်းအပိုင်းအခြားအလိုက် အလှကုန်ပစ္စည်းများကို စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Price. Implement dual-range slider with min/max price labels, show product count, and update grid on range change with debounced input.",
+      "backend_module": {
+        "function_label": "FUNCTION_D_FilterByPrice",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION D: FilterByPrice]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering beauty products by price range. Support price per unit (price/ml) for value comparison. Return JSON: { status: 200, data: { products: [], total, price_range: { min, max } } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_05",
+    "name": "Filter by Concern",
+    "category": "Beauty & Personal Care",
+    "price_addon": 5500,
+    "description_my": "အသားအရေနှင့် ဆံပင်ဆိုင်ရာ ပြဿနာများ (ဝက်ခြံ၊ အရေးအကြောင်း၊ အစိုဓာတ်ခန်းခြောက်၊ ဆံပင်ကျွတ်) အလိုက် စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Concern. Display concern tags or icons (Acne, Wrinkles, Dryness, Hyperpigmentation, Sensitivity, Hair Fall), allow multiple selection, and update product grid in real-time.",
+      "backend_module": {
+        "function_label": "FUNCTION_E_FilterByConcern",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION E: FilterByConcern]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering beauty products by skin and hair concerns. Support multiple concern selection and cross-referencing with ingredients. Return JSON: { status: 200, data: { products: [], total, concerns: [{ id, name, count }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_06",
+    "name": "Filter by Product Type",
+    "category": "Beauty & Personal Care",
+    "price_addon": 4500,
+    "description_my": "ထုတ်ကုန်အမျိုးအစားအလိုက် (ခရင်မ်၊ ဆပ်ပြာ၊ ဆီ၊ ရေချိုးဆပ်ပြာ၊ ရေမွှေး) ပစ္စည်းများကို စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Product Type. Display product type chips (Cleanser, Moisturizer, Serum, Toner, Mask, Lotion, Shampoo, Conditioner, Soap, Perfume), support multiple selection, and update product grid.",
+      "backend_module": {
+        "function_label": "FUNCTION_F_FilterByProductType",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION F: FilterByProductType]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering beauty products by product type/formulation. Support texture and finish filters. Return JSON: { status: 200, data: { products: [], total, types: [{ id, name, count }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_07",
+    "name": "Select Variant",
+    "category": "Beauty & Personal Care",
+    "price_addon": 3500,
+    "description_my": "ပစ္စည်းအတွက် ရရှိနိုင်သော မျိုးကွဲများ (အရွယ်အစား၊ အနံ့၊ အရောင်) ကို ပြသပြီး ရွေးချယ်နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Variant. Display variant options (size/ml, scent, shade) with price differences, stock indicators, and update product image preview and total price.",
+      "backend_module": {
+        "function_label": "FUNCTION_G_SelectVariant",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION G: SelectVariant]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching available variants of beauty products. Include size/ml, scent variations, shade colors, and price per unit. Return JSON: { status: 200, data: { product_id, variants: [{ id, size, scent, shade, price, stock, sku }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_08",
+    "name": "Check Stock",
+    "category": "Beauty & Personal Care",
+    "price_addon": 4000,
+    "description_my": "ရွေးချယ်ထားသော ပစ္စည်းအမျိုးကွဲအတွက် လက်ကျန်ပစ္စည်းကို အချိန်နှင့်တစ်ပြေးညီ စစ်ဆေးပေးသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Check Stock. Display real-time stock status (In Stock, Low Stock, Out of Stock, Restocking Soon), show available quantity, and warn when adding more than available.",
+      "backend_module": {
+        "function_label": "FUNCTION_H_CheckStock",
+        "architecture_type": "REST API Controller / DB Query / Cache",
+        "prompt_text": "------------------------\n[FUNCTION H: CheckStock]\nProvide language-agnostic backend logic (Controller + DB Query) for real-time beauty product inventory checking. Include batch numbers and expiry dates for perishable items. Return JSON: { status: 200, data: { variant_id, available, stock_count, status, expiry_date } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_09",
+    "name": "Quick View",
+    "category": "Beauty & Personal Care",
+    "price_addon": 5000,
+    "description_my": "စာမျက်နှာအပြည့်မဖွင့်ဘဲ အလှကုန်ပစ္စည်း၏ အသေးစိတ်အချက်အလက်များ၊ ပါဝင်ပစ္စည်းများနှင့် အသုံးပြုနည်းကို ပေါ့ပ်အပ်ဝင်းဒိုးတွင် ကြည့်ရှုနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Quick View. Create modal with product images, key details, ingredient highlights, usage guide snippet, variant selector, add to cart, and close button with smooth animations.",
+      "backend_module": {
+        "function_label": "FUNCTION_I_QuickView",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION I: QuickView]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching concise beauty product data. Include key ingredients, concerns addressed, and quick usage tips. Return JSON: { status: 200, data: { id, name, image, price, rating, key_ingredients, concerns, variants_summary } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_10",
+    "name": "Add to Wishlist",
+    "category": "Beauty & Personal Care",
+    "price_addon": 4500,
+    "description_my": "သုံးစွဲသူ နှစ်သက်ရာ အလှကုန်ပစ္စည်းများကို နောက်မှဝယ်ရန် စိတ်ကြိုက်စာရင်းတွင် သိမ်းဆည်းနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Add to Wishlist. Include heart icon toggle with animation, price drop notification toggle, stock alert option, and sync across devices.",
+      "backend_module": {
+        "function_label": "FUNCTION_J_AddToWishlist",
+        "architecture_type": "REST API Controller / DB Transaction",
+        "prompt_text": "------------------------\n[FUNCTION J: AddToWishlist]\nProvide language-agnostic backend logic (Controller + DB Schema) for managing beauty product wishlist. Include price tracking and restock notifications. Return JSON: { status: 200, data: { wishlist_items: [], total, alerts: [] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_11",
+    "name": "Show Ingredients",
+    "category": "Beauty & Personal Care",
+    "price_addon": 5000,
+    "description_my": "ပစ္စည်းတွင်ပါဝင်သော ပါဝင်ပစ္စည်းများစာရင်းကို အသေးစိတ်ဖော်ပြပြီး ပါဝင်ပစ္စည်းတစ်ခုချင်းစီ၏ အကျိုးကျေးဇူးများကိုလည်း ရှင်းပြသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Ingredients. Display full ingredient list with INCI names, highlight key active ingredients with benefit badges, show allergen warnings, and include ingredient glossary.",
+      "backend_module": {
+        "function_label": "FUNCTION_K_ShowIngredients",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION K: ShowIngredients]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching beauty product ingredient lists. Include INCI names, function, benefits, and potential allergens. Support clean beauty indicators. Return JSON: { status: 200, data: { product_id, ingredient_list: [{ name, inci_name, function, benefits, concentration, allergen }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_12",
+    "name": "Show Usage Guide",
+    "category": "Beauty & Personal Care",
+    "price_addon": 4500,
+    "description_my": "ပစ္စည်းကို မှန်ကန်စွာအသုံးပြုနည်း၊ အဆင့်ဆင့်လုပ်ဆောင်ပုံ၊ အကြံပြုချက်များနှင့် သတိပေးချက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Usage Guide. Display step-by-step instructions with illustrations, application tips, frequency recommendations, morning/night routine integration, and safety warnings.",
+      "backend_module": {
+        "function_label": "FUNCTION_L_ShowUsageGuide",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION L: ShowUsageGuide]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching beauty product usage instructions. Include step-by-step guide, recommended usage frequency, application method, and skin type suitability. Return JSON: { status: 200, data: { product_id, steps: [{ step, instruction, image }], frequency, warnings, tips } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_13",
+    "name": "Show Reviews",
+    "category": "Beauty & Personal Care",
+    "price_addon": 5000,
+    "description_my": "သုံးစွဲသူများ၏ အကဲဖြတ်ချက်များ၊ အဆင့်သတ်မှတ်ချက်များ၊ ဓာတ်ပုံများနှင့် အသုံးပြုပြီးနောက် ထင်မြင်ချက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Reviews. Display average rating, rating breakdown, review cards with skin type badges, age range, before/after photos, helpful votes, verified purchase, and pagination.",
+      "backend_module": {
+        "function_label": "FUNCTION_M_ShowReviews",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION M: ShowReviews]\nProvide language-agnostic backend logic (Controller + DB Query) for fetching beauty product reviews. Include skin type, age, and concern filters. Support photo reviews and helpfulness sorting. Return JSON: { status: 200, data: { average_rating, total_reviews, rating_distribution, reviews: [{ user, skin_type, rating, text, images, helpful_count }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_14",
+    "name": "Show Recommendations",
+    "category": "Beauty & Personal Care",
+    "price_addon": 5500,
+    "description_my": "သုံးစွဲသူ၏ အသားအရေအမျိုးအစား၊ စိုးရိမ်မှုများနှင့် နှစ်သက်မှုအပေါ်မူတည်၍ သင့်တော်သော ပစ္စည်းများကို အကြံပြုပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Recommendations. Display personalized product recommendations with skin concern tags, product cards, and 'Why we recommend' badges. Include routine builder integration.",
+      "backend_module": {
+        "function_label": "FUNCTION_N_ShowRecommendations",
+        "architecture_type": "REST API Controller / Recommendation Engine / ML",
+        "prompt_text": "------------------------\n[FUNCTION N: ShowRecommendations]\nProvide language-agnostic backend logic (Controller + Recommendation Algorithm) for personalized beauty product recommendations. Consider skin type, concerns, age, and purchase history. Return JSON: { status: 200, data: { recommendations: [{ product, reason, match_percentage }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_15",
+    "name": "Calculate Discount",
+    "category": "Beauty & Personal Care",
+    "price_addon": 4500,
+    "description_my": "ပရိုမိုးရှင်းများ၊ ပက်ကေ့ချ်များနှင့် လျှော့စျေးများကို တွက်ချက်ပေးသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Calculate Discount. Display original price, discount percentage, savings, bundle deal offers, loyalty points that can be used, and final price with currency format.",
+      "backend_module": {
+        "function_label": "FUNCTION_O_CalculateDiscount",
+        "architecture_type": "REST API Controller / Business Logic",
+        "prompt_text": "------------------------\n[FUNCTION O: CalculateDiscount]\nProvide language-agnostic backend logic (Controller + Business Logic) for calculating beauty product discounts. Support bundle discounts, subscription savings, loyalty points, and promotional campaigns. Return JSON: { status: 200, data: { original_total, discount_amount, final_total, savings, applied_promotions } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_16",
+    "name": "Apply Coupon",
+    "category": "Beauty & Personal Care",
+    "price_addon": 5000,
+    "description_my": "သုံးစွဲသူ ထည့်သွင်းလိုက်သော ကူပွန်ကုဒ်ကို အတည်ပြုပြီး လျှော့စျေးကို အလိုအလျောက် တွက်ချက်ပေးသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Apply Coupon. Include coupon input with real-time validation, apply/remove buttons, discount breakdown, minimum spend notification, and category-specific coupon validation.",
+      "backend_module": {
+        "function_label": "FUNCTION_P_ApplyCoupon",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION P: ApplyCoupon]\nProvide language-agnostic backend logic (Controller + DB Query) for beauty product coupon validation. Support brand-specific, category-specific, and first-purchase coupons. Return JSON: { status: 200, data: { valid, discount_amount, coupon_details, message } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_17",
+    "name": "Save Cart",
+    "category": "Beauty & Personal Care",
+    "price_addon": 5000,
+    "description_my": "သုံးစွဲသူ၏ ဈေးဝယ်ခြင်းတောင်းပါဝင်ပစ္စည်းများကို နောက်မှပြန်လည်ကြည့်ရှုနိုင်ရန် သိမ်းဆည်းပေးသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Save Cart. Include save cart with custom name, saved carts list with product thumbnails, load cart, update cart, delete cart, and subscription cart support.",
+      "backend_module": {
+        "function_label": "FUNCTION_Q_SaveCart",
+        "architecture_type": "REST API Controller / DB Transaction",
+        "prompt_text": "------------------------\n[FUNCTION Q: SaveCart]\nProvide language-agnostic backend logic (Controller + DB Schema) for saving beauty cart states. Include variants, subscription frequency, and promotions applied. Return JSON: { status: 200, data: { saved_carts: [{ id, name, items, total, created_at, subscription }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_18",
+    "name": "Checkout",
+    "category": "Beauty & Personal Care",
+    "price_addon": 8000,
+    "description_my": "ဈေးဝယ်ခြင်းတောင်းပါဝင်ပစ္စည်းများအတွက် ငွေပေးချေမှုလုပ်ငန်းစဉ်ကို စတင်ဆောင်ရွက်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Checkout. Create multi-step checkout (shipping address, delivery options, order review, payment) with form validation, subscription option, gift wrap option, and order confirmation.",
+      "backend_module": {
+        "function_label": "FUNCTION_R_Checkout",
+        "architecture_type": "REST API Controller / DB Transaction / Payment Gateway",
+        "prompt_text": "------------------------\n[FUNCTION R: Checkout]\nProvide language-agnostic backend logic (Controller + DB Schema) for beauty product checkout. Include subscription handling, gift options, and personalized samples. Return JSON: { status: 201, data: { order_id, estimated_delivery, subscription_status, order_reference } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_19",
+    "name": "Track Order",
+    "category": "Beauty & Personal Care",
+    "price_addon": 5500,
+    "description_my": "မှာယူထားသော ပစ္စည်း၏ ပို့ဆောင်မှုအခြေအနေကို အချိန်နှင့်တစ်ပြေးညီ ခြေရာခံကြည့်ရှုနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Track Order. Display order status timeline, tracking number with copy button, courier details, estimated delivery date, and delivery updates with time stamps.",
+      "backend_module": {
+        "function_label": "FUNCTION_S_TrackOrder",
+        "architecture_type": "REST API Controller / DB Query / Courier API Integration",
+        "prompt_text": "------------------------\n[FUNCTION S: TrackOrder]\nProvide language-agnostic backend logic (Controller + DB Query + Courier API) for tracking beauty product shipments. Include order status history and real-time updates. Return JSON: { status: 200, data: { order_id, status, timeline: [], courier, tracking_number, estimated_delivery } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_beauty_20",
+    "name": "Show Order Summary",
+    "category": "Beauty & Personal Care",
+    "price_addon": 7500,
+    "description_my": "မှာယူထားသော ပစ္စည်းများ၊ အရွယ်အစား၊ အရေအတွက်၊ စုစုပေါင်းကျသင့်ငွေနှင့် ပို့ဆောင်ခ အသေးစိတ်ကို ရှင်းလင်းစွာ ပြသပေးသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Order Summary. Include product thumbnails, quantities, variant details (size/ml), subtotal, discounts, shipping fee, tax, final total, and subscription details in responsive layout.",
+      "backend_module": {
+        "function_label": "FUNCTION_T_ShowOrderSummary",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION T: ShowOrderSummary]\nProvide language-agnostic backend logic (Controller + DB Schema) for retrieving complete beauty order summary. Include order items, product variants, quantities, unit prices, discounts, shipping charges, taxes, subscription details, and final total. Return JSON: { status: 200, data: { order_id, items: [], subtotal, discount, shipping, tax, total, subscription } }.\n------------------------"
+      }
+    }
+  }
+
+
+  ,
+  
+{
+"id": "f_restaurant_01",
+"name": "Load Menu",
+"category": "Restaurant & Food Delivery",
+"price_addon": 7500,
+"description_my": "စားသောက်ဆိုင်၏ ရရှိနိုင်သော အစားအစာများ၊ ဈေးနှုန်း၊ ပုံ၊ Category နှင့် Availability အချက်အလက်များကို Menu အဖြစ် အလိုအလျောက်ပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Load Menu. Include dynamic menu loading, food images, prices, availability badges, category grouping, loading states, empty states, and responsive food cards.",
+"backend_module": {
+"function_label": "FUNCTION_A_LoadMenu",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: LoadMenu]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving a restaurant menu including food name, description, category, image, price, sizes, add-ons, availability, and display order. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_02",
+"name": "Filter by Category",
+"category": "Restaurant & Food Delivery",
+"price_addon": 5000,
+"description_my": "Main Course၊ Appetizer၊ Dessert၊ Beverage နှင့် အခြား Menu Category များအလိုက် အစားအစာများကို စစ်ထုတ်ကြည့်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter by Category. Include category tabs, active states, dynamic food list filtering, result counts, clear-filter behavior, and responsive mobile navigation.",
+"backend_module": {
+"function_label": "FUNCTION_A_FilterByCategory",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: FilterByCategory]\nProvide language-agnostic backend logic (Controller + Database Schema) for filtering restaurant menu items by category. Support active menu items, category ordering, pagination if required, and unavailable item handling. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_03",
+"name": "Search Food",
+"category": "Restaurant & Food Delivery",
+"price_addon": 7500,
+"description_my": "အစားအစာအမည်၊ Category၊ Ingredient သို့မဟုတ် Keyword များဖြင့် Menu ထဲမှ လိုချင်သောအစားအစာကို အမြန်ရှာဖွေနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Search Food. Include live search with debounce, autocomplete suggestions, keyword matching, highlighted results, recent searches, empty states, and responsive search UI.",
+"backend_module": {
+"function_label": "FUNCTION_A_SearchFood",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SearchFood]\nProvide language-agnostic backend logic (Controller + Database Schema) for searching menu items by food name, description, category, ingredient, tags, and SKU. Support partial matching, relevance ordering, pagination, and safe query handling. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_04",
+"name": "Select Food Size",
+"category": "Restaurant & Food Delivery",
+"price_addon": 5000,
+"description_my": "Small၊ Medium၊ Large သို့မဟုတ် အခြားရရှိနိုင်သော Food Size များထဲမှ ရွေးချယ်ပြီး သက်ဆိုင်ရာ ဈေးနှုန်းကို အလိုအလျောက်ပြောင်းလဲပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Food Size. Include size selection buttons, selected-state styling, dynamic price updates, availability states, quantity integration, and responsive controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_SelectFoodSize",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SelectFoodSize]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving available food sizes and validating the selected size. Return size ID, size name, price, availability, and any size-specific attributes. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_05",
+"name": "Select Add Ons",
+"category": "Restaurant & Food Delivery",
+"price_addon": 7500,
+"description_my": "Cheese၊ Sauce၊ Extra Toppings၊ Drinks နှင့် အခြားရရှိနိုင်သော Add-on များကို ရွေးချယ်ပြီး အစားအစာတွင် ထည့်သွင်းနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Add Ons. Include checkbox and quantity controls, add-on prices, selection limits, dynamic total updates, selected-state styling, and responsive customization UI.",
+"backend_module": {
+"function_label": "FUNCTION_A_SelectAddOns",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SelectAddOns]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving and validating available add-ons for a food item. Support add-on groups, optional or required selections, maximum selection limits, quantities, and additional prices. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_06",
+"name": "Update Quantity",
+"category": "Restaurant & Food Delivery",
+"price_addon": 5000,
+"description_my": "Cart ထဲရှိ အစားအစာတစ်ခုချင်းစီ၏ Quantity ကို တိုးခြင်း၊ လျှော့ခြင်းနှင့် အလိုအလျောက် Total Price ပြန်တွက်ပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Update Quantity. Include plus and minus controls, minimum and maximum quantity validation, live line-total updates, cart total updates, and responsive controls.",
+"backend_module": {
+"function_label": "FUNCTION_A_UpdateQuantity",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: UpdateQuantity]\nProvide language-agnostic backend logic (Controller + Database Schema) for updating the quantity of a food cart item. Validate minimum and maximum quantities, current availability, selected size, and add-ons before updating the cart. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_07",
+"name": "Add to Cart",
+"category": "Restaurant & Food Delivery",
+"price_addon": 5000,
+"description_my": "ရွေးချယ်ထားသော Food Size၊ Add-ons နှင့် Quantity အတိုင်း အစားအစာကို Shopping Cart ထဲသို့ ထည့်ပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Add to Cart. Include selected size and add-ons, quantity handling, cart count updates, line totals, availability validation, toast feedback, and responsive cart interaction.",
+"backend_module": {
+"function_label": "FUNCTION_A_AddToCart",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: AddToCart]\nProvide language-agnostic backend logic (Controller + Database Schema) for adding a food item with selected size, add-ons, quantity, unit price, and restaurant ID to the cart. Validate menu availability and variant selections before adding. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_08",
+"name": "Remove from Cart",
+"category": "Restaurant & Food Delivery",
+"price_addon": 5000,
+"description_my": "Cart ထဲရှိ မလိုအပ်တော့သော အစားအစာများကို ဖယ်ရှားပြီး Cart Count နှင့် စုစုပေါင်းကျသင့်ငွေကို အလိုအလျောက်ပြန်လည်တွက်ချက်ပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Remove from Cart. Include remove buttons, confirmation behavior, animated item removal, cart count updates, subtotal recalculation, empty-cart state, and responsive layout.",
+"backend_module": {
+"function_label": "FUNCTION_A_RemoveFromCart",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: RemoveFromCart]\nProvide language-agnostic backend logic (Controller + Database Schema) for removing a food cart item by cart item ID and authenticated user or session. Recalculate cart totals and return the updated cart state. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_09",
+"name": "Calculate Subtotal",
+"category": "Restaurant & Food Delivery",
+"price_addon": 5000,
+"description_my": "Cart ထဲရှိ အစားအစာများ၏ Unit Price၊ Size၊ Add-ons နှင့် Quantity အပေါ်မူတည်ပြီး Subtotal ကို အလိုအလျောက်တွက်ချက်ပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Calculate Subtotal. Dynamically calculate item line totals, size adjustments, add-on charges, quantities, subtotal, and update the order summary responsively.",
+"backend_module": {
+"function_label": "FUNCTION_A_CalculateSubtotal",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: CalculateSubtotal]\nProvide language-agnostic backend logic (Controller + Database Schema) for calculating a restaurant cart subtotal using food base prices, selected sizes, add-ons, quantities, and applicable item-level adjustments. Return line totals and subtotal with validated server-side pricing. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_10",
+"name": "Calculate Delivery Fee",
+"category": "Restaurant & Food Delivery",
+"price_addon": 7500,
+"description_my": "ပို့ဆောင်မည့်နေရာ၊ အကွာအဝေး၊ Delivery Zone နှင့် Delivery Method အပေါ်မူတည်ပြီး Food Delivery Fee ကို အလိုအလျောက်တွက်ချက်ပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Calculate Delivery Fee. Include delivery address integration, zone selection, dynamic fee calculation, estimated delivery time, loading states, error handling, and responsive checkout UI.",
+"backend_module": {
+"function_label": "FUNCTION_A_CalculateDeliveryFee",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: CalculateDeliveryFee]\nProvide language-agnostic backend logic (Controller + Database Schema) for calculating food delivery fees based on restaurant location, customer delivery area, distance or delivery zone, order amount, and delivery method. Return delivery fee, estimated delivery duration, and applicable delivery rules. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_11",
+"name": "Apply Coupon",
+"category": "Restaurant & Food Delivery",
+"price_addon": 7500,
+"description_my": "Coupon Code ကို စစ်ဆေးပြီး သတ်မှတ်ချက်နှင့် ကိုက်ညီပါက Food Order တွင် Discount ကို အသုံးပြုပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Apply Coupon. Include coupon input validation, loading state, success and error messages, discount preview, order total updates, and responsive checkout interaction.",
+"backend_module": {
+"function_label": "FUNCTION_A_ApplyCoupon",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ApplyCoupon]\nProvide language-agnostic backend logic (Controller + Database Schema) for validating a restaurant coupon against expiration date, usage limits, minimum order value, eligible menu items, restaurant restrictions, and discount type. Return calculated discount and validation status. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_12",
+"name": "Select Delivery Address",
+"category": "Restaurant & Food Delivery",
+"price_addon": 7500,
+"description_my": "Food Delivery အတွက် သိမ်းဆည်းထားသော Address များထဲမှ ရွေးချယ်ခြင်း သို့မဟုတ် Address အသစ်ထည့်သွင်းပြီး Delivery Area ကို စစ်ဆေးနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Delivery Address. Include saved addresses, new-address form, address selection, delivery-area validation, address labels, selected state, and responsive checkout interaction.",
+"backend_module": {
+"function_label": "FUNCTION_A_SelectDeliveryAddress",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SelectDeliveryAddress]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving a user's saved delivery addresses and validating the selected address against the restaurant's delivery coverage. Support create, update, select, and default address behavior. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_13",
+"name": "Select Payment Method",
+"category": "Restaurant & Food Delivery",
+"price_addon": 7500,
+"description_my": "Cash၊ Mobile Payment၊ Card သို့မဟုတ် ရရှိနိုင်သော Payment Method များထဲမှ မှာယူမှုအတွက် အသုံးပြုမည့် ငွေပေးချေမှုနည်းလမ်းကို ရွေးချယ်နိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Select Payment Method. Include payment option cards, selected states, payment-specific instructions, validation, secure confirmation flow, and responsive checkout UI.",
+"backend_module": {
+"function_label": "FUNCTION_A_SelectPaymentMethod",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: SelectPaymentMethod]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving available payment methods for a restaurant order and validating the selected method. Support cash, digital payment, card, or configured payment providers without exposing sensitive payment credentials. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_14",
+"name": "Place Order",
+"category": "Restaurant & Food Delivery",
+"price_addon": 10000,
+"description_my": "Cart၊ Delivery Address၊ Payment Method နှင့် Order Total အချက်အလက်များကို စစ်ဆေးပြီး Food Order ကို အတည်ပြုတင်ပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Place Order. Include final validation, order confirmation, loading state, duplicate-submission prevention, payment handling, success screen, and responsive order placement flow.",
+"backend_module": {
+"function_label": "FUNCTION_A_PlaceOrder",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: PlaceOrder]\nProvide language-agnostic backend logic (Controller + Database Schema) for creating a restaurant food delivery order from a validated cart. Recheck menu availability, prices, sizes, add-ons, coupon, delivery fee, address, and payment method before creating order and order-item records. Return the created order reference and initial status. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_15",
+"name": "Generate Order ID",
+"category": "Restaurant & Food Delivery",
+"price_addon": 5000,
+"description_my": "Order တစ်ခုချင်းစီအတွက် ထပ်တူမဖြစ်သော Unique Order ID ကို အလိုအလျောက်ဖန်တီးပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Generate Order ID. Display the generated order reference after successful checkout, include copy functionality, order confirmation messaging, and responsive confirmation layout.",
+"backend_module": {
+"function_label": "FUNCTION_A_GenerateOrderId",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: GenerateOrderId]\nProvide language-agnostic backend logic (Controller + Database Schema) for generating a unique, collision-resistant restaurant order identifier. Ensure uniqueness through database constraints and transaction-safe generation. Return the generated order ID and creation timestamp. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_16",
+"name": "Track Order",
+"category": "Restaurant & Food Delivery",
+"price_addon": 7500,
+"description_my": "မှာယူထားသော Food Order ၏ လက်ရှိအခြေအနေ၊ Restaurant Preparation နှင့် Delivery အဆင့်များကို အချိန်နှင့်တပြေးညီ ကြည့်ရှုနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Track Order. Include order ID lookup, live status updates, preparation and delivery timeline, progress indicators, estimated delivery time, and responsive tracking UI.",
+"backend_module": {
+"function_label": "FUNCTION_A_TrackOrder",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: TrackOrder]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving food delivery tracking information using an authenticated user and order ID. Return restaurant preparation status, delivery status, delivery events, estimated delivery time, and latest update while protecting unauthorized order access. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_17",
+"name": "Show Order Status",
+"category": "Restaurant & Food Delivery",
+"price_addon": 5000,
+"description_my": "Order မှာယူမှုကို Confirmed၊ Preparing၊ Ready၊ Out for Delivery နှင့် Delivered စသည့် အခြေအနေများအဖြစ် ရှင်းလင်းစွာ ပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Order Status. Include status badges, step-by-step timeline, progress indicators, timestamps, status messages, refresh or polling behavior, and responsive mobile layout.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowOrderStatus",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowOrderStatus]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving the current lifecycle status of a food delivery order, including confirmed, preparing, ready, out-for-delivery, delivered, cancelled, and relevant timestamps. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_18",
+"name": "Reorder",
+"category": "Restaurant & Food Delivery",
+"price_addon": 7500,
+"description_my": "ယခင်မှာယူခဲ့သော Food Order ထဲမှ အစားအစာများ၊ Size၊ Add-ons နှင့် Quantity များကို ပြန်လည်အသုံးပြုပြီး Order အသစ်အဖြစ် လွယ်ကူစွာ မှာယူနိုင်သည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Reorder. Include previous-order item selection, availability checks, unavailable-item warnings, cart restoration, quantity editing, and responsive reorder flow.",
+"backend_module": {
+"function_label": "FUNCTION_A_Reorder",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: Reorder]\nProvide language-agnostic backend logic (Controller + Database Schema) for recreating a previous restaurant order as a new cart while revalidating current menu availability, prices, sizes, add-ons, and quantities. Identify unavailable items without creating a new order until checkout. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_19",
+"name": "Show Popular Items",
+"category": "Restaurant & Food Delivery",
+"price_addon": 5000,
+"description_my": "အမှာယူမှုများပြားသော သို့မဟုတ် လူကြိုက်များသော အစားအစာများကို Popular Items အဖြစ် စုစည်းပြီး အလွယ်တကူ ရွေးချယ်နိုင်ရန် ပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Popular Items. Include dynamically loaded popular food cards, ranking or popularity indicators, images, prices, quick add-to-cart actions, and responsive horizontal or grid layouts.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowPopularItems",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowPopularItems]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving popular restaurant menu items using configurable metrics such as order frequency, quantity sold, or recent popularity. Support time ranges, category filtering, availability, and result limits. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+},
+{
+"id": "f_restaurant_20",
+"name": "Show Restaurant Info",
+"category": "Restaurant & Food Delivery",
+"price_addon": 5000,
+"description_my": "စားသောက်ဆိုင်အမည်၊ လိပ်စာ၊ ဖွင့်ချိန်၊ ဖုန်းနံပါတ်၊ Delivery Information၊ Rating နှင့် အခြားအရေးကြီးသော Restaurant အချက်အလက်များကို ပြသပေးသည့် စနစ်။",
+"prompts": {
+"frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Restaurant Info. Include restaurant name, logo, cover image, address, opening hours, contact information, rating summary, delivery information, service status, and responsive information sections.",
+"backend_module": {
+"function_label": "FUNCTION_A_ShowRestaurantInfo",
+"architecture_type": "REST API Controller / DB Query",
+"prompt_text": "------------------------\n[FUNCTION A: ShowRestaurantInfo]\nProvide language-agnostic backend logic (Controller + Database Schema) for retrieving restaurant profile information including name, logo, cover image, address, contact details, opening hours, service availability, delivery zones, ratings, and basic restaurant metadata. Return response as JSON: { status: 200, data: array }.\n------------------------"
+}
+}
+}
+]
