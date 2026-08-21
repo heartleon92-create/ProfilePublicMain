@@ -1,0 +1,1865 @@
+[
+  {
+    "id": "f_freelancer_01",
+    "name": "Show Services",
+    "category": "Freelancer",
+    "price_addon": 5000,
+    "description_my": "ကိုယ်တိုင်ဆောင်ရွက်ပေးနိုင်သော ဝန်ဆောင်မှုများစာရင်းကို အသေးစိတ်ဖော်ပြသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Services. Display service cards with icons, descriptions, pricing, and call-to-action buttons. Include service category tabs and responsive grid layout.",
+      "backend_module": {
+        "function_label": "FUNCTION_A_ShowServices",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION A: ShowServices]\nProvide language-agnostic backend logic (Controller + DB Schema) for retrieving freelancer services list. Include service name, description, pricing model, estimated delivery time, and portfolio count. Return JSON: { status: 200, data: { services: [{ id, name, description, price, delivery_time, portfolio_count }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_freelancer_02",
+    "name": "Show Pricing",
+    "category": "Freelancer",
+    "price_addon": 4500,
+    "description_my": "ဝန်ဆောင်မှုများအတွက် ဈေးနှုန်းဇယားကို ရှင်းလင်းစွာ ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Pricing. Display pricing tables with packages (Basic, Standard, Premium), features comparison, and CTA buttons. Include currency format and toggle for monthly/annual billing.",
+      "backend_module": {
+        "function_label": "FUNCTION_B_ShowPricing",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION B: ShowPricing]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving freelancer pricing packages. Include package name, features list, price, recommended badge, and delivery time. Return JSON: { status: 200, data: { packages: [{ id, name, features, price, recommended, delivery_time }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_freelancer_03",
+    "name": "Book Consultation",
+    "category": "Freelancer",
+    "price_addon": 6000,
+    "description_my": "သုံးစွဲသူများ အခမဲ့ သို့မဟုတ် အခပေးအတိုင်ပင်ခံချိန်းကို အွန်လိုင်းမှ ကြိုတင်စာရင်းသွင်းနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Book Consultation. Include calendar date picker, time slot selection, purpose dropdown, contact form, and confirmation with email notification.",
+      "backend_module": {
+        "function_label": "FUNCTION_C_BookConsultation",
+        "architecture_type": "REST API Controller / DB Transaction / Calendar Integration",
+        "prompt_text": "------------------------\n[FUNCTION C: BookConsultation]\nProvide language-agnostic backend logic (Controller + DB Schema + Calendar API) for booking consultation sessions. Include availability checking, slot reservation, confirmation email, and calendar sync. Return JSON: { status: 201, data: { booking_id, date, time, status, calendar_link } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_freelancer_04",
+    "name": "Contact Form",
+    "category": "Freelancer",
+    "price_addon": 3500,
+    "description_my": "သုံးစွဲသူများ မေးမြန်းစုံစမ်းလိုသော အကြောင်းအရာများကို ပေးပို့နိုင်သည့် ဆက်သွယ်ရေးစနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Contact Form. Include name, email, subject, message fields, validation, captcha, and success/error notifications with loading state.",
+      "backend_module": {
+        "function_label": "FUNCTION_D_ContactForm",
+        "architecture_type": "REST API Controller / Email Service",
+        "prompt_text": "------------------------\n[FUNCTION D: ContactForm]\nProvide language-agnostic backend logic (Controller + Email Service) for handling contact form submissions. Include validation, spam protection, email notification, and rate limiting. Return JSON: { status: 200, data: { message: 'Email sent successfully' } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_freelancer_05",
+    "name": "Show Projects",
+    "category": "Freelancer",
+    "price_addon": 5500,
+    "description_my": "ကိုယ်တိုင်ဆောင်ရွက်ပြီးစီးခဲ့သော ပရောဂျက်များကို ဓာတ်ပုံများနှင့်တကွ ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Projects. Display project grid with thumbnails, titles, categories, and descriptions. Include hover effects, project detail modal, and filter by category.",
+      "backend_module": {
+        "function_label": "FUNCTION_E_ShowProjects",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION E: ShowProjects]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving freelancer portfolio projects. Include project title, description, images, category, technologies used, and client name. Return JSON: { status: 200, data: { projects: [{ id, title, description, images, category, tech_stack, client }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_freelancer_06",
+    "name": "Show Testimonials",
+    "category": "Freelancer",
+    "price_addon": 4000,
+    "description_my": "ယခင်ဖောက်သည်များ၏ ထောက်ခံချက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Testimonials. Display testimonial cards with client photos, names, positions, company logos, rating stars, and carousel or grid layout.",
+      "backend_module": {
+        "function_label": "FUNCTION_F_ShowTestimonials",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION F: ShowTestimonials]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving client testimonials. Include client name, company, position, testimonial text, rating, and project reference. Return JSON: { status: 200, data: { testimonials: [{ id, client_name, company, position, text, rating, project }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_freelancer_07",
+    "name": "Download CV",
+    "category": "Freelancer",
+    "price_addon": 3000,
+    "description_my": "ကိုယ်ရေးအကျဉ်းကို PDF ဖိုင်အဖြစ် ဒေါင်းလုဒ်လုပ်နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Download CV. Include download button with PDF icon, file size display, last updated date, and optional online viewer popup.",
+      "backend_module": {
+        "function_label": "FUNCTION_G_DownloadCV",
+        "architecture_type": "REST API Controller / File Service",
+        "prompt_text": "------------------------\n[FUNCTION G: DownloadCV]\nProvide language-agnostic backend logic (Controller + File Service) for generating and downloading CV as PDF. Include dynamic content population from profile data and version tracking. Return JSON: { status: 200, data: { file_url, file_size, updated_at } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_freelancer_08",
+    "name": "Show Availability",
+    "category": "Freelancer",
+    "price_addon": 4500,
+    "description_my": "လက်ရှိအလုပ်လက်ခံနိုင်သည့် အခြေအနေကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Availability. Display availability status badge (Available, Busy, Booked, Available Soon), estimated response time, and call-to-action button.",
+      "backend_module": {
+        "function_label": "FUNCTION_H_ShowAvailability",
+        "architecture_type": "REST API Controller / DB Query / Cache",
+        "prompt_text": "------------------------\n[FUNCTION H: ShowAvailability]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving freelancer availability status. Include current status, next available date, and projected workload. Return JSON: { status: 200, data: { status, next_available, workload_percentage, message } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_office_worker_01",
+    "name": "Show Experience",
+    "category": "Office Worker",
+    "price_addon": 5000,
+    "description_my": "လုပ်ငန်းအတွေ့အကြုံများကို အချိန်ဇယားဖြင့် အသေးစိတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Experience. Display timeline or card layout with company names, positions, dates, responsibilities, and achievements with bullet points.",
+      "backend_module": {
+        "function_label": "FUNCTION_I_ShowExperience",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION I: ShowExperience]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving work experience history. Include company, position, start/end dates, responsibilities, and key achievements. Return JSON: { status: 200, data: { experiences: [{ id, company, position, start_date, end_date, responsibilities, achievements }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_office_worker_02",
+    "name": "Show Skills",
+    "category": "Office Worker",
+    "price_addon": 4500,
+    "description_my": "ပိုင်ဆိုင်သော ကျွမ်းကျင်မှုများကို အုပ်စုဖွဲ့ကာ ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Skills. Display skills with proficiency bars, skill tags, and categorize by technical, soft, and language skills. Include interactive filtering.",
+      "backend_module": {
+        "function_label": "FUNCTION_J_ShowSkills",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION J: ShowSkills]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving employee skills. Include skill name, proficiency level, years of experience, and category. Return JSON: { status: 200, data: { skills: [{ id, name, proficiency, years, category }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_office_worker_03",
+    "name": "Download CV",
+    "category": "Office Worker",
+    "price_addon": 3000,
+    "description_my": "ကိုယ်ရေးအကျဉ်းကို PDF ဖိုင်အဖြစ် ဒေါင်းလုဒ်လုပ်နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Download CV. Include download button, PDF preview option, and last updated info. Support multiple CV versions if available.",
+      "backend_module": {
+        "function_label": "FUNCTION_K_DownloadCV",
+        "architecture_type": "REST API Controller / File Service",
+        "prompt_text": "------------------------\n[FUNCTION K: DownloadCV]\nProvide language-agnostic backend logic (Controller + File Service) for downloading professional CV as PDF. Include all sections with formatted layout and branding. Return JSON: { status: 200, data: { file_url, file_name, version } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_office_worker_04",
+    "name": "Show Education",
+    "category": "Office Worker",
+    "price_addon": 4500,
+    "description_my": "ပညာအရည်အချင်းများကို တက္ကသိုလ်၊ ဘွဲ့၊ ဂုဏ်ထူးများဖြင့် ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Education. Display education cards with institution name, degree, field of study, dates, and honors with proper formatting.",
+      "backend_module": {
+        "function_label": "FUNCTION_L_ShowEducation",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION L: ShowEducation]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving education history. Include institution, degree, field, start/end dates, and honors. Return JSON: { status: 200, data: { education: [{ id, institution, degree, field, start_date, end_date, honors }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_office_worker_05",
+    "name": "Show Achievements",
+    "category": "Office Worker",
+    "price_addon": 4000,
+    "description_my": "ကိုယ်ရေးရာဇဝင်တွင် ထည့်သွင်းဖော်ပြထားသော အောင်မြင်မှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Achievements. Display achievement cards with icons, titles, descriptions, dates, and badges or certificates link.",
+      "backend_module": {
+        "function_label": "FUNCTION_M_ShowAchievements",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION M: ShowAchievements]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving professional achievements. Include title, description, date, category, and certificate link. Return JSON: { status: 200, data: { achievements: [{ id, title, description, date, category, certificate_url }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_office_worker_06",
+    "name": "Contact Form",
+    "category": "Office Worker",
+    "price_addon": 3500,
+    "description_my": "လုပ်ငန်းဆက်သွယ်ရေးအတွက် မေးမြန်းချက်များ ပေးပို့နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Contact Form. Include professional contact form with name, email, subject, message, and validation with status notifications.",
+      "backend_module": {
+        "function_label": "FUNCTION_N_ContactForm",
+        "architecture_type": "REST API Controller / Email Service",
+        "prompt_text": "------------------------\n[FUNCTION N: ContactForm]\nProvide language-agnostic backend logic (Controller + Email Service) for professional contact form handling. Include validation, spam prevention, and auto-responder. Return JSON: { status: 200, data: { message: 'Inquiry sent successfully' } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_teacher_01",
+    "name": "Show Subjects",
+    "category": "Teacher",
+    "price_addon": 4500,
+    "description_my": "သင်ကြားပေးနိုင်သော ဘာသာရပ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Subjects. Display subject cards with icons, brief description, grade levels, and proficiency indicators. Include subject category filtering.",
+      "backend_module": {
+        "function_label": "FUNCTION_O_ShowSubjects",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION O: ShowSubjects]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving teacher subjects. Include subject name, description, grade levels, and specializations. Return JSON: { status: 200, data: { subjects: [{ id, name, description, grade_levels, specialization }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_teacher_02",
+    "name": "Show Courses",
+    "category": "Teacher",
+    "price_addon": 5500,
+    "description_my": "သင်ကြားပေးသော သင်တန်းများကို အသေးစိတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Courses. Display course cards with titles, descriptions, duration, level, and enrollment buttons. Include course schedule and syllabus preview.",
+      "backend_module": {
+        "function_label": "FUNCTION_P_ShowCourses",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION P: ShowCourses]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving teacher courses. Include course name, description, duration, level, schedule, and syllabus. Return JSON: { status: 200, data: { courses: [{ id, name, description, duration, level, schedule, syllabus }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_teacher_03",
+    "name": "Show Teaching Experience",
+    "category": "Teacher",
+    "price_addon": 5000,
+    "description_my": "သင်ကြားရေးအတွေ့အကြုံကို အချိန်ဇယားဖြင့် ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Teaching Experience. Display timeline with institutions, positions, subjects taught, and duration. Include notable teaching highlights.",
+      "backend_module": {
+        "function_label": "FUNCTION_Q_ShowTeachingExperience",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION Q: ShowTeachingExperience]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving teaching experience. Include institution, position, subjects, start/end dates, and achievements. Return JSON: { status: 200, data: { experiences: [{ id, institution, position, subjects, start_date, end_date, achievements }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_teacher_04",
+    "name": "Show Certificates",
+    "category": "Teacher",
+    "price_addon": 4000,
+    "description_my": "ရရှိထားသော သင်ကြားရေးဆိုင်ရာ လက်မှတ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Certificates. Display certificate cards with names, issuing organizations, dates, and verification links or images.",
+      "backend_module": {
+        "function_label": "FUNCTION_R_ShowCertificates",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION R: ShowCertificates]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving teacher certifications. Include certificate name, issuing institution, date, and verification code. Return JSON: { status: 200, data: { certificates: [{ id, name, issuer, date, verification_code }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_teacher_05",
+    "name": "Show Resources",
+    "category": "Teacher",
+    "price_addon": 4500,
+    "description_my": "သင်ကြားရေးဆိုင်ရာ အရင်းအမြစ်များ (သင်ခန်းစာများ၊ စာအုပ်များ၊ လေ့ကျင့်ခန်းများ) ကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Resources. Display resource cards with file icons, titles, types, download links, and search/filter functionality.",
+      "backend_module": {
+        "function_label": "FUNCTION_S_ShowResources",
+        "architecture_type": "REST API Controller / DB Query / File Service",
+        "prompt_text": "------------------------\n[FUNCTION S: ShowResources]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving teaching resources. Include resource name, type, file_url, description, and subject. Return JSON: { status: 200, data: { resources: [{ id, name, type, file_url, description, subject }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_teacher_06",
+    "name": "Contact Form",
+    "category": "Teacher",
+    "price_addon": 3500,
+    "description_my": "ကျောင်းသား၊ မိဘများနှင့် ဆက်သွယ်ရန်အတွက် မေးမြန်းချက်များ ပေးပို့နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Contact Form. Include name, email, phone, subject, message fields, and student/parent role selection with validation.",
+      "backend_module": {
+        "function_label": "FUNCTION_T_ContactForm",
+        "architecture_type": "REST API Controller / Email Service",
+        "prompt_text": "------------------------\n[FUNCTION T: ContactForm]\nProvide language-agnostic backend logic (Controller + Email Service) for teacher contact form. Include role classification, subject selection, and response tracking. Return JSON: { status: 200, data: { message: 'Message sent successfully' } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_doctor_01",
+    "name": "Show Specialization",
+    "category": "Doctor",
+    "price_addon": 5000,
+    "description_my": "ဆရာဝန်၏ အထူးပြုဘာသာရပ်ကို အသေးစိတ်ဖော်ပြသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Specialization. Display specialization with detailed description, related conditions, and services offered. Include specialty badge and certifications.",
+      "backend_module": {
+        "function_label": "FUNCTION_A_ShowSpecialization",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION A: ShowSpecialization]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving doctor specialization details. Include specialty name, description, treated conditions, and services. Return JSON: { status: 200, data: { id, name, description, conditions, services } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_doctor_02",
+    "name": "Show Experience",
+    "category": "Doctor",
+    "price_addon": 5000,
+    "description_my": "ဆရာဝန်၏ ဆေးဘက်ဆိုင်ရာ အတွေ့အကြုံကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Experience. Display timeline with hospitals, positions, years worked, and notable contributions.",
+      "backend_module": {
+        "function_label": "FUNCTION_B_ShowExperience",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION B: ShowExperience]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving medical work experience. Include hospital, position, start/end dates, responsibilities, and achievements. Return JSON: { status: 200, data: { experiences: [{ id, hospital, position, start_date, end_date, responsibilities }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_doctor_03",
+    "name": "Show Education",
+    "category": "Doctor",
+    "price_addon": 4500,
+    "description_my": "ဆရာဝန်၏ ပညာအရည်အချင်းနှင့် ဘွဲ့များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Education. Display medical education with institution, degree, year, and additional training/residency information.",
+      "backend_module": {
+        "function_label": "FUNCTION_C_ShowEducation",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION C: ShowEducation]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving medical education history. Include institution, degree, field, years, and residency. Return JSON: { status: 200, data: { education: [{ id, institution, degree, field, year, residency }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_doctor_04",
+    "name": "Show Certificates",
+    "category": "Doctor",
+    "price_addon": 4000,
+    "description_my": "ဆရာဝန်၏ ဆေးဘက်ဆိုင်ရာ လိုင်စင်နှင့် အသိအမှတ်ပြုလက်မှတ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Certificates. Display license and certification cards with medical board information, license numbers, and expiry dates.",
+      "backend_module": {
+        "function_label": "FUNCTION_D_ShowCertificates",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION D: ShowCertificates]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving medical licenses and certifications. Include certificate name, issuing authority, license number, and validity period. Return JSON: { status: 200, data: { certificates: [{ id, name, authority, license_number, issued_date, expiry_date }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_doctor_05",
+    "name": "Show Services",
+    "category": "Doctor",
+    "price_addon": 5000,
+    "description_my": "ဆရာဝန်မှ ဆောင်ရွက်ပေးနိုင်သော ကျန်းမာရေးဝန်ဆောင်မှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Services. Display medical services with descriptions, consultation fees, duration, and availability indicators.",
+      "backend_module": {
+        "function_label": "FUNCTION_E_ShowServices",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION E: ShowServices]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving medical services. Include service name, description, duration, consultation fee, and availability. Return JSON: { status: 200, data: { services: [{ id, name, description, duration, fee, available }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_doctor_06",
+    "name": "Request Appointment",
+    "category": "Doctor",
+    "price_addon": 6000,
+    "description_my": "သုံးစွဲသူများ ဆရာဝန်နှင့် ကြိုတင်ရက်ချိန်းယူနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Request Appointment. Include date picker, time slot selection, symptoms description, patient info form, and appointment confirmation.",
+      "backend_module": {
+        "function_label": "FUNCTION_F_RequestAppointment",
+        "architecture_type": "REST API Controller / DB Transaction / Calendar Integration",
+        "prompt_text": "------------------------\n[FUNCTION F: RequestAppointment]\nProvide language-agnostic backend logic (Controller + DB Schema + Calendar API) for medical appointment booking. Include availability check, slot reservation, patient details, symptoms, and reminder scheduling. Return JSON: { status: 201, data: { appointment_id, doctor_name, date, time, status, reminder } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_photographer_01",
+    "name": "Open Gallery",
+    "category": "Photographer",
+    "price_addon": 5500,
+    "description_my": "ဓာတ်ပုံများကို ပြသသည့် ပြခန်းစနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Open Gallery. Display photo grid with thumbnails, full-screen lightbox viewer, navigation arrows, and smooth transitions.",
+      "backend_module": {
+        "function_label": "FUNCTION_G_OpenGallery",
+        "architecture_type": "REST API Controller / DB Query / Image Service",
+        "prompt_text": "------------------------\n[FUNCTION G: OpenGallery]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving photo gallery images. Include image URLs, titles, descriptions, categories, and EXIF data. Return JSON: { status: 200, data: { gallery: [{ id, title, description, image_url, category, exif }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_photographer_02",
+    "name": "Filter Gallery",
+    "category": "Photographer",
+    "price_addon": 4500,
+    "description_my": "ပြခန်းအတွင်းရှိ ဓာတ်ပုံများကို အမျိုးအစား သို့မဟုတ် အချိန်အလိုက် စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter Gallery. Display filter buttons (Wedding, Portrait, Event, Nature, Product), date filters, and show/hide categories with smooth animation.",
+      "backend_module": {
+        "function_label": "FUNCTION_H_FilterGallery",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION H: FilterGallery]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering gallery images by category, date, or tags. Return JSON: { status: 200, data: { filtered: [], total } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_photographer_03",
+    "name": "Show Albums",
+    "category": "Photographer",
+    "price_addon": 5000,
+    "description_my": "ဓာတ်ပုံအယ်လ်ဘမ်များကို စုစည်းပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Albums. Display album covers with titles, photo counts, and dates. Include click to view album contents.",
+      "backend_module": {
+        "function_label": "FUNCTION_I_ShowAlbums",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION I: ShowAlbums]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving photo albums. Include album name, cover image, photo count, event date, and description. Return JSON: { status: 200, data: { albums: [{ id, name, cover_image, photo_count, event_date, description }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_photographer_04",
+    "name": "Show Packages",
+    "category": "Photographer",
+    "price_addon": 5500,
+    "description_my": "ဓာတ်ပုံပညာရှင်၏ ဝန်ဆောင်မှုပက်ကေ့ချ်များနှင့် ဈေးနှုန်းများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Packages. Display packages with features, photo count, duration, price, and book now button. Include comparison table.",
+      "backend_module": {
+        "function_label": "FUNCTION_J_ShowPackages",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION J: ShowPackages]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving photography packages. Include package name, features, price, duration, photo delivery format, and edited photo count. Return JSON: { status: 200, data: { packages: [{ id, name, features, price, duration, photo_count, delivery_format }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_photographer_05",
+    "name": "Book Session",
+    "category": "Photographer",
+    "price_addon": 6000,
+    "description_my": "သုံးစွဲသူများ ဓာတ်ပုံရိုက်ကူးရန် ကြိုတင်စာရင်းသွင်းနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Book Session. Include session type selection, date/time picker, location input, event details form, and confirmation with deposit payment option.",
+      "backend_module": {
+        "function_label": "FUNCTION_K_BookSession",
+        "architecture_type": "REST API Controller / DB Transaction / Calendar Integration",
+        "prompt_text": "------------------------\n[FUNCTION K: BookSession]\nProvide language-agnostic backend logic (Controller + DB Schema + Calendar API) for booking photography sessions. Include session type, date/time, location, event details, and deposit handling. Return JSON: { status: 201, data: { booking_id, session_date, time, location, total_price, deposit_paid } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_photographer_06",
+    "name": "Show Testimonials",
+    "category": "Photographer",
+    "price_addon": 4000,
+    "description_my": "ယခင်ဖောက်သည်များ၏ ထောက်ခံချက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Testimonials. Display testimonial cards with photos, names, event types, review text, and rating stars with carousel.",
+      "backend_module": {
+        "function_label": "FUNCTION_L_ShowTestimonials",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION L: ShowTestimonials]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving photography client testimonials. Include client name, event type, testimonial text, rating, and photo reference. Return JSON: { status: 200, data: { testimonials: [{ id, client_name, event_type, text, rating, image_reference }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_photographer_07",
+    "name": "Show Equipment",
+    "category": "Photographer",
+    "price_addon": 4000,
+    "description_my": "ဓာတ်ပုံပညာရှင်အသုံးပြုသော ပစ္စည်းကိရိယာများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Equipment. Display equipment cards with photos, names, specifications, and usage categories.",
+      "backend_module": {
+        "function_label": "FUNCTION_M_ShowEquipment",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION M: ShowEquipment]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving photographer equipment. Include equipment name, brand, specifications, image, and category. Return JSON: { status: 200, data: { equipment: [{ id, name, brand, specs, image, category }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_engineer_01",
+    "name": "Show Projects",
+    "category": "Engineer",
+    "price_addon": 5500,
+    "description_my": "အင်ဂျင်နီယာ၏ ဆောင်ရွက်ပြီးစီးခဲ့သော ပရောဂျက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Projects. Display project cards with images, titles, descriptions, technologies used, and roles. Include project detail modal.",
+      "backend_module": {
+        "function_label": "FUNCTION_N_ShowProjects",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION N: ShowProjects]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving engineering projects. Include project name, description, images, technologies, role, and outcomes. Return JSON: { status: 200, data: { projects: [{ id, name, description, images, technologies, role, outcome }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_engineer_02",
+    "name": "Show Technical Skills",
+    "category": "Engineer",
+    "price_addon": 4500,
+    "description_my": "အင်ဂျင်နီယာ၏ နည်းပညာဆိုင်ရာ ကျွမ်းကျင်မှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Technical Skills. Display skills with proficiency levels, categorized by engineering discipline, and years of experience.",
+      "backend_module": {
+        "function_label": "FUNCTION_O_ShowTechnicalSkills",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION O: ShowTechnicalSkills]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving engineering technical skills. Include skill name, proficiency, years, and category. Return JSON: { status: 200, data: { skills: [{ id, name, proficiency, years, category }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_engineer_03",
+    "name": "Show Experience",
+    "category": "Engineer",
+    "price_addon": 5000,
+    "description_my": "အင်ဂျင်နီယာ၏ လုပ်ငန်းအတွေ့အကြုံကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Experience. Display career timeline with companies, positions, projects handled, and key contributions.",
+      "backend_module": {
+        "function_label": "FUNCTION_P_ShowExperience",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION P: ShowExperience]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving engineering work experience. Include company, position, projects, start/end dates, and achievements. Return JSON: { status: 200, data: { experiences: [{ id, company, position, start_date, end_date, projects, achievements }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_engineer_04",
+    "name": "Show Certifications",
+    "category": "Engineer",
+    "price_addon": 4000,
+    "description_my": "အင်ဂျင်နီယာ၏ လိုင်စင်နှင့် အသိအမှတ်ပြုလက်မှတ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Certifications. Display certification cards with names, issuing organizations, dates, and verification links.",
+      "backend_module": {
+        "function_label": "FUNCTION_Q_ShowCertifications",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION Q: ShowCertifications]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving engineering certifications. Include certification name, issuer, date, and verification code. Return JSON: { status: 200, data: { certifications: [{ id, name, issuer, date, verification_code }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_engineer_05",
+    "name": "Show Achievements",
+    "category": "Engineer",
+    "price_addon": 4000,
+    "description_my": "အင်ဂျင်နီယာ၏ အောင်မြင်မှုများနှင့် ဆုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Achievements. Display achievement cards with titles, descriptions, dates, and award badges.",
+      "backend_module": {
+        "function_label": "FUNCTION_R_ShowAchievements",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION R: ShowAchievements]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving engineering achievements. Include title, description, date, and award type. Return JSON: { status: 200, data: { achievements: [{ id, title, description, date, award_type }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_engineer_06",
+    "name": "Download CV",
+    "category": "Engineer",
+    "price_addon": 3000,
+    "description_my": "အင်ဂျင်နီယာ၏ ကိုယ်ရေးအကျဉ်းကို PDF ဖိုင်အဖြစ် ဒေါင်းလုဒ်လုပ်နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Download CV. Include download button, PDF preview, and version selection.",
+      "backend_module": {
+        "function_label": "FUNCTION_S_DownloadCV",
+        "architecture_type": "REST API Controller / File Service",
+        "prompt_text": "------------------------\n[FUNCTION S: DownloadCV]\nProvide language-agnostic backend logic (Controller + File Service) for downloading engineering CV as PDF. Include all technical and professional sections. Return JSON: { status: 200, data: { file_url, file_name, version } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_chef_01",
+    "name": "Show Menu",
+    "category": "Chef",
+    "price_addon": 5000,
+    "description_my": "ချက်ပြုတ်ကျွမ်းကျင်သူ၏ ဟင်းလျာစာရင်းကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Menu. Display menu items with images, names, descriptions, ingredients, and prices. Include category filters and dietary tags.",
+      "backend_module": {
+        "function_label": "FUNCTION_T_ShowMenu",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION T: ShowMenu]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving chef menu items. Include dish name, description, ingredients, price, dietary info, and category. Return JSON: { status: 200, data: { menu: [{ id, name, description, ingredients, price, dietary, category, image }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_chef_02",
+    "name": "Show Signature Dishes",
+    "category": "Chef",
+    "price_addon": 5000,
+    "description_my": "ချက်ပြုတ်ကျွမ်းကျင်သူ၏ ထူးခြားသော အထူးဟင်းလျာများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Signature Dishes. Display featured dishes with images, stories, inspiration, and key ingredients with special badges.",
+      "backend_module": {
+        "function_label": "FUNCTION_A_ShowSignatureDishes",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION A: ShowSignatureDishes]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving signature dishes. Include dish name, description, image, inspiration, and unique ingredients. Return JSON: { status: 200, data: { signature_dishes: [{ id, name, description, image, inspiration, ingredients }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_chef_03",
+    "name": "Open Food Gallery",
+    "category": "Chef",
+    "price_addon": 5000,
+    "description_my": "ချက်ပြုတ်ထားသော ဟင်းလျာများ၏ ဓာတ်ပုံများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Open Food Gallery. Display food images in grid layout with hover effects, lightbox viewer, and categorized by dish type.",
+      "backend_module": {
+        "function_label": "FUNCTION_B_OpenFoodGallery",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION B: OpenFoodGallery]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving food gallery images. Include image URL, dish name, description, and category. Return JSON: { status: 200, data: { gallery: [{ id, image_url, dish_name, description, category }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_chef_04",
+    "name": "Show Experience",
+    "category": "Chef",
+    "price_addon": 4500,
+    "description_my": "ချက်ပြုတ်ကျွမ်းကျင်သူ၏ လုပ်ငန်းအတွေ့အကြုံကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Experience. Display career timeline with restaurants, positions, cuisines, and years worked.",
+      "backend_module": {
+        "function_label": "FUNCTION_C_ShowExperience",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION C: ShowExperience]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving chef work experience. Include restaurant, position, cuisine, start/end dates, and achievements. Return JSON: { status: 200, data: { experiences: [{ id, restaurant, position, cuisine, start_date, end_date, achievements }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_chef_05",
+    "name": "Show Services",
+    "category": "Chef",
+    "price_addon": 5000,
+    "description_my": "ချက်ပြုတ်ကျွမ်းကျင်သူမှ ဆောင်ရွက်ပေးနိုင်သော ဝန်ဆောင်မှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Services. Display service cards (Private Dining, Catering, Cooking Classes, Menu Consulting) with descriptions and pricing.",
+      "backend_module": {
+        "function_label": "FUNCTION_D_ShowServices",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION D: ShowServices]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving chef services. Include service name, description, price, and availability. Return JSON: { status: 200, data: { services: [{ id, name, description, price, available }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_chef_06",
+    "name": "Book Event",
+    "category": "Chef",
+    "price_addon": 6000,
+    "description_my": "သုံးစွဲသူများ ချက်ပြုတ်ကျွမ်းကျင်သူကို ပွဲများအတွက် ကြိုတင်စာရင်းသွင်းနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Book Event. Include event type selection, date/time picker, guest count, menu preferences, and event details form with confirmation.",
+      "backend_module": {
+        "function_label": "FUNCTION_E_BookEvent",
+        "architecture_type": "REST API Controller / DB Transaction",
+        "prompt_text": "------------------------\n[FUNCTION E: BookEvent]\nProvide language-agnostic backend logic (Controller + DB Schema) for booking chef events. Include event type, date/time, guest count, menu preferences, and contact details. Return JSON: { status: 201, data: { booking_id, event_type, date, time, guests, status } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_programmer_01",
+    "name": "Show Projects",
+    "category": "Programmer",
+    "price_addon": 5500,
+    "description_my": "ပရိုဂရမ်မာ၏ ဆော့ဖ်ဝဲလ်ပရောဂျက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Projects. Display project cards with screenshots, technologies, descriptions, GitHub links, and live demos.",
+      "backend_module": {
+        "function_label": "FUNCTION_F_ShowProjects",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION F: ShowProjects]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving programming projects. Include project name, description, technologies, GitHub URL, demo URL, and images. Return JSON: { status: 200, data: { projects: [{ id, name, description, tech_stack, github_url, demo_url, image }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_programmer_02",
+    "name": "Filter Projects",
+    "category": "Programmer",
+    "price_addon": 4500,
+    "description_my": "ပရောဂျက်များကို နည်းပညာများ၊ ဘာသာစကားများနှင့် အမျိုးအစားအလိုက် စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter Projects. Display filter chips for programming languages, frameworks, and categories with live project grid update.",
+      "backend_module": {
+        "function_label": "FUNCTION_G_FilterProjects",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION G: FilterProjects]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering programming projects by tech stack, language, or category. Return JSON: { status: 200, data: { filtered: [], total } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_programmer_03",
+    "name": "Show Tech Stack",
+    "category": "Programmer",
+    "price_addon": 4500,
+    "description_my": "ပရိုဂရမ်မာအသုံးပြုသော နည်းပညာများနှင့် ပရိုဂရမ်ဘာသာစကားများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Tech Stack. Display technology icons with names, proficiency levels, and categorized by frontend, backend, database, and tools.",
+      "backend_module": {
+        "function_label": "FUNCTION_H_ShowTechStack",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION H: ShowTechStack]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving programmer tech stack. Include technology name, proficiency, category, and years of experience. Return JSON: { status: 200, data: { tech_stack: [{ id, name, proficiency, category, years }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_programmer_04",
+    "name": "Show GitHub Projects",
+    "category": "Programmer",
+    "price_addon": 5000,
+    "description_my": "ပရိုဂရမ်မာ၏ GitHub အကောင့်မှ ပရောဂျက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show GitHub Projects. Display repository cards with stars, forks, languages, commit activity, and last updated date.",
+      "backend_module": {
+        "function_label": "FUNCTION_I_ShowGitHubProjects",
+        "architecture_type": "REST API Controller / GitHub API Integration",
+        "prompt_text": "------------------------\n[FUNCTION I: ShowGitHubProjects]\nProvide language-agnostic backend logic (Controller + GitHub API Integration) for fetching GitHub repositories. Include repo name, description, stars, forks, language, and activity. Return JSON: { status: 200, data: { repos: [{ id, name, description, stars, forks, language, updated_at }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_programmer_05",
+    "name": "Show Experience",
+    "category": "Programmer",
+    "price_addon": 5000,
+    "description_my": "ပရိုဂရမ်မာ၏ လုပ်ငန်းအတွေ့အကြုံကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Experience. Display career timeline with companies, positions, technologies used, and key contributions.",
+      "backend_module": {
+        "function_label": "FUNCTION_J_ShowExperience",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION J: ShowExperience]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving programming work experience. Include company, position, tech stack, start/end dates, and achievements. Return JSON: { status: 200, data: { experiences: [{ id, company, position, tech_stack, start_date, end_date, achievements }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_programmer_06",
+    "name": "Download CV",
+    "category": "Programmer",
+    "price_addon": 3000,
+    "description_my": "ပရိုဂရမ်မာ၏ ကိုယ်ရေးအကျဉ်းကို PDF ဖိုင်အဖြစ် ဒေါင်းလုဒ်လုပ်နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Download CV. Include download button, PDF preview, and tech skill summary.",
+      "backend_module": {
+        "function_label": "FUNCTION_K_DownloadCV",
+        "architecture_type": "REST API Controller / File Service",
+        "prompt_text": "------------------------\n[FUNCTION K: DownloadCV]\nProvide language-agnostic backend logic (Controller + File Service) for downloading programmer CV as PDF. Include tech skills, projects, and experience. Return JSON: { status: 200, data: { file_url, file_name } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_programmer_07",
+    "name": "Contact Form",
+    "category": "Programmer",
+    "price_addon": 3500,
+    "description_my": "ပရိုဂရမ်မာနှင့် ဆက်သွယ်ရန်အတွက် မေးမြန်းချက်များ ပေးပို့နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Contact Form. Include name, email, project type, budget, message fields with validation and status notifications.",
+      "backend_module": {
+        "function_label": "FUNCTION_L_ContactForm",
+        "architecture_type": "REST API Controller / Email Service",
+        "prompt_text": "------------------------\n[FUNCTION L: ContactForm]\nProvide language-agnostic backend logic (Controller + Email Service) for programmer contact form. Include project type classification and budget range. Return JSON: { status: 200, data: { message: 'Message sent successfully' } }.\n------------------------"
+      }
+    }
+  }
+
+
+  ,
+  {
+    "id": "f_journalist_01",
+    "name": "Show Articles",
+    "category": "Journalist",
+    "price_addon": 5500,
+    "description_my": "သတင်းစာဆရာ၏ ရေးသားခဲ့သော ဆောင်းပါးများကို စုစည်းပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Articles. Display article cards with headlines, publication dates, categories, featured images, and read time.",
+      "backend_module": {
+        "function_label": "FUNCTION_A_ShowArticles",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION A: ShowArticles]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving journalist articles. Include title, summary, publication date, category, image, and read time. Return JSON: { status: 200, data: { articles: [{ id, title, summary, date, category, image, read_time }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_journalist_02",
+    "name": "Filter Articles",
+    "category": "Journalist",
+    "price_addon": 4500,
+    "description_my": "ဆောင်းပါးများကို အမျိုးအစား၊ ခေါင်းစဉ်နှင့် ခုနှစ်အလိုက် စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter Articles. Display filter options for categories, topics, years, and publication sources with live filtering.",
+      "backend_module": {
+        "function_label": "FUNCTION_B_FilterArticles",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION B: FilterArticles]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering articles by category, topic, date range, or publication. Return JSON: { status: 200, data: { filtered: [], total } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_journalist_03",
+    "name": "Show Publications",
+    "category": "Journalist",
+    "price_addon": 5000,
+    "description_my": "သတင်းစာဆရာ၏ ထုတ်ဝေခဲ့သော မီဒီယာများနှင့် ဂျာနယ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Publications. Display publication cards with logos, names, article counts, and credibility ratings.",
+      "backend_module": {
+        "function_label": "FUNCTION_C_ShowPublications",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION C: ShowPublications]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving journalist publications. Include publication name, logo, article count, and description. Return JSON: { status: 200, data: { publications: [{ id, name, logo, article_count, description }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_journalist_04",
+    "name": "Show Interviews",
+    "category": "Journalist",
+    "price_addon": 5000,
+    "description_my": "သတင်းစာဆရာ၏ ပြုလုပ်ခဲ့သော အင်တာဗျူးများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Interviews. Display interview cards with photos, names, titles, key quotes, and links to full interviews.",
+      "backend_module": {
+        "function_label": "FUNCTION_D_ShowInterviews",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION D: ShowInterviews]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving journalist interviews. Include interviewee name, title, photo, key quotes, and interview link. Return JSON: { status: 200, data: { interviews: [{ id, name, title, photo, key_quotes, link }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_journalist_05",
+    "name": "Show Awards",
+    "category": "Journalist",
+    "price_addon": 4000,
+    "description_my": "သတင်းစာဆရာ၏ ရရှိခဲ့သော ဆုများနှင့် ဂုဏ်ပြုမှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Awards. Display award cards with names, issuing organizations, years, and award badges.",
+      "backend_module": {
+        "function_label": "FUNCTION_E_ShowAwards",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION E: ShowAwards]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving journalist awards. Include award name, organization, year, and description. Return JSON: { status: 200, data: { awards: [{ id, name, organization, year, description }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_journalist_06",
+    "name": "Show Media Links",
+    "category": "Journalist",
+    "price_addon": 4000,
+    "description_my": "သတင်းစာဆရာ၏ ဆိုရှယ်မီဒီယာနှင့် ပရော်ဖက်ရှင်နယ် ပရိုဖိုင်လင့်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Media Links. Display social media icons with links to Twitter/X, LinkedIn, Substack, Medium, and news outlets.",
+      "backend_module": {
+        "function_label": "FUNCTION_F_ShowMediaLinks",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION F: ShowMediaLinks]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving journalist media links. Include platform name, URL, icon, and follower count. Return JSON: { status: 200, data: { media_links: [{ platform, url, icon, followers }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_consultant_01",
+    "name": "Show Services",
+    "category": "Consultant",
+    "price_addon": 5500,
+    "description_my": "အတိုင်ပင်ခံ၏ ဝန်ဆောင်မှုများကို အသေးစိတ်ဖော်ပြသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Services. Display service cards with icons, descriptions, duration, and pricing tiers.",
+      "backend_module": {
+        "function_label": "FUNCTION_G_ShowServices",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION G: ShowServices]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving consultant services. Include service name, description, duration, and pricing. Return JSON: { status: 200, data: { services: [{ id, name, description, duration, pricing }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_consultant_02",
+    "name": "Show Case Studies",
+    "category": "Consultant",
+    "price_addon": 6000,
+    "description_my": "အတိုင်ပင်ခံ၏ ဆောင်ရွက်ခဲ့သော ဖြေရှင်းချက်လေ့လာမှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Case Studies. Display case study cards with client names, industries, challenges, solutions, and measurable results.",
+      "backend_module": {
+        "function_label": "FUNCTION_H_ShowCaseStudies",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION H: ShowCaseStudies]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving consultant case studies. Include client, industry, challenge, solution, results, and testimonial. Return JSON: { status: 200, data: { case_studies: [{ id, client, industry, challenge, solution, results, testimonial }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_consultant_03",
+    "name": "Show Industries",
+    "category": "Consultant",
+    "price_addon": 4500,
+    "description_my": "အတိုင်ပင်ခံ အထူးပြုဆောင်ရွက်သော စက်မှုလုပ်ငန်းနယ်ပယ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Industries. Display industry badges with icons, descriptions, and relevant experience highlights.",
+      "backend_module": {
+        "function_label": "FUNCTION_I_ShowIndustries",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION I: ShowIndustries]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving consultant industry specializations. Include industry name, icon, description, and years of experience. Return JSON: { status: 200, data: { industries: [{ id, name, icon, description, years }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_consultant_04",
+    "name": "Book Consultation",
+    "category": "Consultant",
+    "price_addon": 7000,
+    "description_my": "သုံးစွဲသူများ အတိုင်ပင်ခံနှင့် ကြိုတင်ဆွေးနွေးချိန်ယူနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Book Consultation. Include calendar picker, time slots, consultation type selection, company info form, and confirmation.",
+      "backend_module": {
+        "function_label": "FUNCTION_J_BookConsultation",
+        "architecture_type": "REST API Controller / DB Transaction / Calendar Integration",
+        "prompt_text": "------------------------\n[FUNCTION J: BookConsultation]\nProvide language-agnostic backend logic (Controller + DB Schema + Calendar API) for booking consultant sessions. Include consultation type, date/time, client company, and agenda. Return JSON: { status: 201, data: { booking_id, date, time, agenda, status } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_consultant_05",
+    "name": "Show Testimonials",
+    "category": "Consultant",
+    "price_addon": 4000,
+    "description_my": "ယခင်ဖောက်သည်များ၏ ထောက်ခံချက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Testimonials. Display testimonial cards with client company logos, names, positions, and case study references.",
+      "backend_module": {
+        "function_label": "FUNCTION_K_ShowTestimonials",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION K: ShowTestimonials]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving consultant testimonials. Include client name, company, position, testimonial text, and project reference. Return JSON: { status: 200, data: { testimonials: [{ id, client, company, position, text, project }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_consultant_06",
+    "name": "Show Pricing",
+    "category": "Consultant",
+    "price_addon": 5000,
+    "description_my": "အတိုင်ပင်ခံ၏ ဝန်ဆောင်မှုဈေးနှုန်းများကို ဇယားဖြင့် ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Pricing. Display pricing packages with features, prices, billing options, and value highlights.",
+      "backend_module": {
+        "function_label": "FUNCTION_L_ShowPricing",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION L: ShowPricing]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving consultant pricing. Include package name, features, price, and duration. Return JSON: { status: 200, data: { packages: [{ id, name, features, price, duration }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_blogger_01",
+    "name": "Show Posts",
+    "category": "Fashion Blogger",
+    "price_addon": 5500,
+    "description_my": "ဖက်ရှင်ဘလော့ဂါ၏ ရေးသားခဲ့သော ဘလော့ဂ်ပို့စ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Posts. Display blog post cards with feature images, titles, categories, dates, and excerpt with read more links.",
+      "backend_module": {
+        "function_label": "FUNCTION_M_ShowPosts",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION M: ShowPosts]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving fashion blog posts. Include title, excerpt, date, category, image, and read time. Return JSON: { status: 200, data: { posts: [{ id, title, excerpt, date, category, image, read_time }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_blogger_02",
+    "name": "Filter Posts",
+    "category": "Fashion Blogger",
+    "price_addon": 4500,
+    "description_my": "ဘလော့ဂ်ပို့စ်များကို အမျိုးအစား၊ ခေါင်းစဉ်နှင့် ခုနှစ်အလိုက် စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter Posts. Display filter chips for categories (Street Style, Luxury, Sustainable, Trends, Reviews) and seasons.",
+      "backend_module": {
+        "function_label": "FUNCTION_N_FilterPosts",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION N: FilterPosts]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering fashion blog posts by category, tag, or date. Return JSON: { status: 200, data: { filtered: [], total } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_blogger_03",
+    "name": "Open Post",
+    "category": "Fashion Blogger",
+    "price_addon": 4500,
+    "description_my": "ဘလော့ဂ်ပို့စ်တစ်ခုချင်းစီ၏ အပြည့်အစုံကို ဖွင့်ကြည့်နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Open Post. Display full article with images, text, tags, share buttons, comments, and related posts.",
+      "backend_module": {
+        "function_label": "FUNCTION_O_OpenPost",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION O: OpenPost]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving full blog post content. Include full article, images, tags, author, and metadata. Return JSON: { status: 200, data: { post: { id, title, content, images, tags, author, created_at } } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_blogger_04",
+    "name": "Show Looks",
+    "category": "Fashion Blogger",
+    "price_addon": 5000,
+    "description_my": "ဖက်ရှင်ဘလော့ဂါ၏ ဝတ်စားဆင်ယင်ပုံများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Looks. Display outfit cards with photos, clothing details, brand tags, and shop links.",
+      "backend_module": {
+        "function_label": "FUNCTION_P_ShowLooks",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION P: ShowLooks]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving outfit looks. Include outfit name, image, clothing items, brands, and product links. Return JSON: { status: 200, data: { looks: [{ id, name, image, items: [{ name, brand, link }] }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_blogger_05",
+    "name": "Show Brands",
+    "category": "Fashion Blogger",
+    "price_addon": 4500,
+    "description_my": "ဖက်ရှင်ဘလော့ဂါ ပူးပေါင်းဆောင်ရွက်ခဲ့သော အမှတ်တံဆိပ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Brands. Display brand logos with names, collaboration types, and links to brand content.",
+      "backend_module": {
+        "function_label": "FUNCTION_Q_ShowBrands",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION Q: ShowBrands]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving collaborated brands. Include brand name, logo, collaboration type, and link. Return JSON: { status: 200, data: { brands: [{ id, name, logo, collaboration, link }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_blogger_06",
+    "name": "Show Social Links",
+    "category": "Fashion Blogger",
+    "price_addon": 3500,
+    "description_my": "ဖက်ရှင်ဘလော့ဂါ၏ ဆိုရှယ်မီဒီယာလင့်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Social Links. Display social media icons with follower counts for Instagram, TikTok, YouTube, Pinterest, and Twitter.",
+      "backend_module": {
+        "function_label": "FUNCTION_R_ShowSocialLinks",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION R: ShowSocialLinks]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving fashion blogger social links. Include platform, URL, follower count, and engagement metrics. Return JSON: { status: 200, data: { social_links: [{ platform, url, followers, engagement }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_blogger_07",
+    "name": "Subscribe Newsletter",
+    "category": "Fashion Blogger",
+    "price_addon": 4000,
+    "description_my": "ဖက်ရှင်ဘလော့ဂါ၏ သတင်းလွှာကို စာရင်းသွင်းနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Subscribe Newsletter. Include email input, subscribe button, success notification, and email preferences.",
+      "backend_module": {
+        "function_label": "FUNCTION_S_SubscribeNewsletter",
+        "architecture_type": "REST API Controller / Email Service",
+        "prompt_text": "------------------------\n[FUNCTION S: SubscribeNewsletter]\nProvide language-agnostic backend logic (Controller + Email Service) for newsletter subscription. Include email validation, double opt-in, and preference management. Return JSON: { status: 200, data: { message: 'Subscription successful' } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_architect_01",
+    "name": "Show Projects",
+    "category": "Architect",
+    "price_addon": 6000,
+    "description_my": "ဗိသုကာပညာရှင်၏ ဒီဇိုင်းပရောဂျက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Projects. Display project cards with images, names, types, years, and locations with hover detail.",
+      "backend_module": {
+        "function_label": "FUNCTION_T_ShowProjects",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION T: ShowProjects]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving architectural projects. Include project name, type, location, year, image, and description. Return JSON: { status: 200, data: { projects: [{ id, name, type, location, year, image, description }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_architect_02",
+    "name": "Filter Projects",
+    "category": "Architect",
+    "price_addon": 4500,
+    "description_my": "ဗိသုကာပရောဂျက်များကို အမျိုးအစား၊ နေရာနှင့် ခုနှစ်အလိုက် စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter Projects. Display filter options for project types (Residential, Commercial, Institutional, Landscape, Interior) and locations.",
+      "backend_module": {
+        "function_label": "FUNCTION_A_FilterProjects",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION A: FilterProjects]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering architectural projects by type, location, or year. Return JSON: { status: 200, data: { filtered: [], total } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_architect_03",
+    "name": "Show Project Details",
+    "category": "Architect",
+    "price_addon": 5500,
+    "description_my": "ဗိသုကာပရောဂျက်တစ်ခုချင်းစီ၏ အသေးစိတ်အချက်အလက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Project Details. Display full project information with floor plans, renderings, design philosophy, and project team.",
+      "backend_module": {
+        "function_label": "FUNCTION_B_ShowProjectDetails",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION B: ShowProjectDetails]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving detailed architectural project information. Include design concept, materials, floor plans, renderings, and timeline. Return JSON: { status: 200, data: { project: { id, name, concept, materials, floor_plans, renderings, timeline } } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_architect_04",
+    "name": "Open Gallery",
+    "category": "Architect",
+    "price_addon": 5000,
+    "description_my": "ဗိသုကာပညာရှင်၏ ဒီဇိုင်းပုံများနှင့် ဓာတ်ပုံများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Open Gallery. Display architectural images in grid layout with lightbox viewer, categorized by project type.",
+      "backend_module": {
+        "function_label": "FUNCTION_C_OpenGallery",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION C: OpenGallery]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving architectural gallery images. Include image URL, project reference, category, and description. Return JSON: { status: 200, data: { gallery: [{ id, image_url, project, category, description }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_architect_05",
+    "name": "Show Services",
+    "category": "Architect",
+    "price_addon": 5000,
+    "description_my": "ဗိသုကာပညာရှင်၏ ဆောင်ရွက်ပေးနိုင်သော ဝန်ဆောင်မှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Services. Display service cards (Architectural Design, Interior Design, Urban Planning, Landscape Architecture) with details.",
+      "backend_module": {
+        "function_label": "FUNCTION_D_ShowServices",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION D: ShowServices]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving architectural services. Include service name, description, and portfolio count. Return JSON: { status: 200, data: { services: [{ id, name, description, portfolio_count }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_architect_06",
+    "name": "Show Awards",
+    "category": "Architect",
+    "price_addon": 4000,
+    "description_my": "ဗိသုကာပညာရှင်၏ ရရှိခဲ့သော ဆုများနှင့် အသိအမှတ်ပြုမှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Awards. Display award cards with names, organizations, years, and project references.",
+      "backend_module": {
+        "function_label": "FUNCTION_E_ShowAwards",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION E: ShowAwards]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving architectural awards. Include award name, organization, year, and project. Return JSON: { status: 200, data: { awards: [{ id, name, organization, year, project }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_architect_07",
+    "name": "Contact Form",
+    "category": "Architect",
+    "price_addon": 3500,
+    "description_my": "ဗိသုကာပညာရှင်နှင့် ဆက်သွယ်ရန်အတွက် မေးမြန်းချက်များ ပေးပို့နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Contact Form. Include name, email, phone, project type, budget, message fields with validation.",
+      "backend_module": {
+        "function_label": "FUNCTION_F_ContactForm",
+        "architecture_type": "REST API Controller / Email Service",
+        "prompt_text": "------------------------\n[FUNCTION F: ContactForm]\nProvide language-agnostic backend logic (Controller + Email Service) for architect contact form. Include project type and budget classification. Return JSON: { status: 200, data: { message: 'Inquiry sent successfully' } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_musician_01",
+    "name": "Play Music",
+    "category": "Musician",
+    "price_addon": 6000,
+    "description_my": "ဂီတပညာရှင်၏ သီချင်းများကို နားဆင်နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Play Music. Build audio player with play/pause, progress bar, volume control, and track list with playlist management.",
+      "backend_module": {
+        "function_label": "FUNCTION_G_PlayMusic",
+        "architecture_type": "REST API Controller / Media Service",
+        "prompt_text": "------------------------\n[FUNCTION G: PlayMusic]\nProvide language-agnostic backend logic (Controller + Media Service) for streaming music. Include audio file delivery, streaming optimization, and track metadata. Return JSON: { status: 200, data: { tracks: [{ id, title, artist, album, duration, audio_url, cover_art }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_musician_02",
+    "name": "Show Albums",
+    "category": "Musician",
+    "price_addon": 5000,
+    "description_my": "ဂီတပညာရှင်၏ အယ်လ်ဘမ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Albums. Display album cards with cover art, titles, release dates, track counts, and play buttons.",
+      "backend_module": {
+        "function_label": "FUNCTION_H_ShowAlbums",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION H: ShowAlbums]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving musician albums. Include album name, cover art, release date, track count, and label. Return JSON: { status: 200, data: { albums: [{ id, name, cover_art, release_date, track_count, label }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_musician_03",
+    "name": "Show Songs",
+    "category": "Musician",
+    "price_addon": 4500,
+    "description_my": "ဂီတပညာရှင်၏ သီချင်းများစာရင်းကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Songs. Display song list with titles, durations, album names, and play/pause controls.",
+      "backend_module": {
+        "function_label": "FUNCTION_I_ShowSongs",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION I: ShowSongs]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving musician songs. Include song title, duration, album, genre, and audio preview. Return JSON: { status: 200, data: { songs: [{ id, title, duration, album, genre, preview_url }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_musician_04",
+    "name": "Show Videos",
+    "category": "Musician",
+    "price_addon": 5500,
+    "description_my": "ဂီတပညာရှင်၏ ဂီတဗီဒီယိုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Videos. Display video cards with thumbnails, titles, view counts, and YouTube/Vimeo embed integration.",
+      "backend_module": {
+        "function_label": "FUNCTION_J_ShowVideos",
+        "architecture_type": "REST API Controller / DB Query / Video API Integration",
+        "prompt_text": "------------------------\n[FUNCTION J: ShowVideos]\nProvide language-agnostic backend logic (Controller + DB Query + Video API) for retrieving musician videos. Include video title, thumbnail, URL, view count, and upload date. Return JSON: { status: 200, data: { videos: [{ id, title, thumbnail, url, views, uploaded_at }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_musician_05",
+    "name": "Show Events",
+    "category": "Musician",
+    "price_addon": 5000,
+    "description_my": "ဂီတပညာရှင်၏ ဖျော်ဖြေပွဲများနှင့် ဖြစ်ရပ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Events. Display event cards with dates, venues, ticket links, and countdown timers.",
+      "backend_module": {
+        "function_label": "FUNCTION_K_ShowEvents",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION K: ShowEvents]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving musician events. Include event name, date, venue, ticket link, and description. Return JSON: { status: 200, data: { events: [{ id, name, date, venue, ticket_url, description }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_musician_06",
+    "name": "Show Social Links",
+    "category": "Musician",
+    "price_addon": 3500,
+    "description_my": "ဂီတပညာရှင်၏ ဆိုရှယ်မီဒီယာလင့်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Social Links. Display icons for Spotify, Apple Music, YouTube, Instagram, TikTok, and SoundCloud.",
+      "backend_module": {
+        "function_label": "FUNCTION_L_ShowSocialLinks",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION L: ShowSocialLinks]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving musician social links. Include platform, URL, and followers. Return JSON: { status: 200, data: { social_links: [{ platform, url, followers }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_musician_07",
+    "name": "Booking Form",
+    "category": "Musician",
+    "price_addon": 6000,
+    "description_my": "ဂီတပညာရှင်ကို ပွဲများအတွက် ကြိုတင်စာရင်းသွင်းနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Booking Form. Include event type, date picker, venue, expected audience, budget, and contact details.",
+      "backend_module": {
+        "function_label": "FUNCTION_M_BookingForm",
+        "architecture_type": "REST API Controller / DB Transaction / Email Service",
+        "prompt_text": "------------------------\n[FUNCTION M: BookingForm]\nProvide language-agnostic backend logic (Controller + DB Schema + Email) for musician booking requests. Include event type, date, venue, audience size, budget, and requirements. Return JSON: { status: 201, data: { booking_id, event, date, venue, status } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_investor_01",
+    "name": "Show Portfolio",
+    "category": "Investor",
+    "price_addon": 6000,
+    "description_my": "ရင်းနှီးမြှုပ်နှံသူ၏ ရင်းနှီးမြှုပ်နှံမှုပရိုဖိုလီယိုကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Portfolio. Display investment portfolio with company names, industries, stages, and investment sizes in cards.",
+      "backend_module": {
+        "function_label": "FUNCTION_N_ShowPortfolio",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION N: ShowPortfolio]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving investor portfolio. Include company name, industry, investment stage, amount, and current status. Return JSON: { status: 200, data: { portfolio: [{ id, company, industry, stage, amount, status }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_investor_02",
+    "name": "Show Investments",
+    "category": "Investor",
+    "price_addon": 5500,
+    "description_my": "ရင်းနှီးမြှုပ်နှံသူ၏ အသေးစိတ် ရင်းနှီးမြှုပ်နှံမှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Investments. Display investment cards with logos, descriptions, ROI metrics, and funding rounds.",
+      "backend_module": {
+        "function_label": "FUNCTION_O_ShowInvestments",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION O: ShowInvestments]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving detailed investments. Include company, investment round, amount, equity, and ROI. Return JSON: { status: 200, data: { investments: [{ id, company, round, amount, equity, roi }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_investor_03",
+    "name": "Show Experience",
+    "category": "Investor",
+    "price_addon": 5000,
+    "description_my": "ရင်းနှီးမြှုပ်နှံသူ၏ လုပ်ငန်းအတွေ့အကြုံကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Experience. Display career timeline with companies, positions, industries, and achievements.",
+      "backend_module": {
+        "function_label": "FUNCTION_P_ShowExperience",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION P: ShowExperience]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving investor work experience. Include company, position, industry, years, and achievements. Return JSON: { status: 200, data: { experiences: [{ id, company, position, industry, years, achievements }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_investor_04",
+    "name": "Show Achievements",
+    "category": "Investor",
+    "price_addon": 4000,
+    "description_my": "ရင်းနှီးမြှုပ်နှံသူ၏ အောင်မြင်မှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Achievements. Display achievement badges with titles, descriptions, and years.",
+      "backend_module": {
+        "function_label": "FUNCTION_Q_ShowAchievements",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION Q: ShowAchievements]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving investor achievements. Include title, description, year, and recognition. Return JSON: { status: 200, data: { achievements: [{ id, title, description, year, recognition }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_investor_05",
+    "name": "Show Interests",
+    "category": "Investor",
+    "price_addon": 4500,
+    "description_my": "ရင်းနှီးမြှုပ်နှံသူ၏ စိတ်ဝင်စားသော နယ်ပယ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Interests. Display interest badges with sectors (Fintech, AI, Healthcare, E-commerce) and investment stages.",
+      "backend_module": {
+        "function_label": "FUNCTION_R_ShowInterests",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION R: ShowInterests]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving investor interests. Include sector, investment stage, geography, and deal size. Return JSON: { status: 200, data: { interests: [{ sector, stage, geography, deal_size }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_investor_06",
+    "name": "Contact Form",
+    "category": "Investor",
+    "price_addon": 3500,
+    "description_my": "ရင်းနှီးမြှုပ်နှံသူနှင့် ဆက်သွယ်ရန်အတွက် မေးမြန်းချက်များ ပေးပို့နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Contact Form. Include name, email, company, pitch deck upload, and investment proposal details.",
+      "backend_module": {
+        "function_label": "FUNCTION_S_ContactForm",
+        "architecture_type": "REST API Controller / Email Service / File Upload",
+        "prompt_text": "------------------------\n[FUNCTION S: ContactForm]\nProvide language-agnostic backend logic (Controller + Email Service + File Upload) for investor contact. Include pitch deck upload and proposal filtering. Return JSON: { status: 200, data: { message: 'Proposal submitted' } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_actress_01",
+    "name": "Show Portfolio",
+    "category": "Actress",
+    "price_addon": 5500,
+    "description_my": "မင်းသမီး၏ အနုပညာပရိုဖိုလီယိုကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Portfolio. Display professional portfolio with headshots, biography, body stats, and representation details.",
+      "backend_module": {
+        "function_label": "FUNCTION_T_ShowPortfolio",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION T: ShowPortfolio]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving actress portfolio. Include name, bio, headshot, body stats, and representation. Return JSON: { status: 200, data: { portfolio: { name, bio, headshot, stats, representation } } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_actress_02",
+    "name": "Show Filmography",
+    "category": "Actress",
+    "price_addon": 5500,
+    "description_my": "မင်းသမီး၏ ရိုက်ကူးခဲ့သော ရုပ်ရှင်များနှင့် ဇာတ်ကားများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Filmography. Display film cards with movie posters, titles, years, roles, directors, and characters.",
+      "backend_module": {
+        "function_label": "FUNCTION_A_ShowFilmography",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION A: ShowFilmography]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving actress filmography. Include movie title, year, role, director, and character name. Return JSON: { status: 200, data: { filmography: [{ id, title, year, role, director, character }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_actress_03",
+    "name": "Show Gallery",
+    "category": "Actress",
+    "price_addon": 5000,
+    "description_my": "မင်းသမီး၏ ဓာတ်ပုံများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Gallery. Display image gallery with headshots, event photos, movie stills, and behind-the-scenes.",
+      "backend_module": {
+        "function_label": "FUNCTION_B_ShowGallery",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION B: ShowGallery]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving actress gallery images. Include image URL, category, event name, and description. Return JSON: { status: 200, data: { gallery: [{ id, image_url, category, event, description }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_actress_04",
+    "name": "Show Videos",
+    "category": "Actress",
+    "price_addon": 5000,
+    "description_my": "မင်းသမီး၏ ဗီဒီယိုများ (ရုပ်ရှင်အပုဒ်များ၊ အင်တာဗျူးများ) ကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Videos. Display video cards with thumbnails, titles, project names, and embed players.",
+      "backend_module": {
+        "function_label": "FUNCTION_C_ShowVideos",
+        "architecture_type": "REST API Controller / DB Query / Video Integration",
+        "prompt_text": "------------------------\n[FUNCTION C: ShowVideos]\nProvide language-agnostic backend logic (Controller + DB Query + Video API) for retrieving actress videos. Include title, thumbnail, URL, project name, and type. Return JSON: { status: 200, data: { videos: [{ id, title, thumbnail, url, project, type }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_actress_05",
+    "name": "Show Awards",
+    "category": "Actress",
+    "price_addon": 4000,
+    "description_my": "မင်းသမီး၏ ရရှိခဲ့သော ဆုများနှင့် အသိအမှတ်ပြုမှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Awards. Display award cards with names, ceremonies, years, and categories.",
+      "backend_module": {
+        "function_label": "FUNCTION_D_ShowAwards",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION D: ShowAwards]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving actress awards. Include award name, ceremony, year, category, and project. Return JSON: { status: 200, data: { awards: [{ id, name, ceremony, year, category, project }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_actress_06",
+    "name": "Show Credits",
+    "category": "Actress",
+    "price_addon": 4500,
+    "description_my": "မင်းသမီး၏ ရုပ်ရှင်ခရက်ဒစ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Credits. Display credit cards with project names, directors, production companies, and release years.",
+      "backend_module": {
+        "function_label": "FUNCTION_E_ShowCredits",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION E: ShowCredits]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving actress credits. Include project name, director, production, year, and credit type. Return JSON: { status: 200, data: { credits: [{ id, project, director, production, year, credit_type }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_actress_07",
+    "name": "Contact Form",
+    "category": "Actress",
+    "price_addon": 3500,
+    "description_my": "မင်းသမီးနှင့် ဆက်သွယ်ရန်အတွက် မေးမြန်းချက်များ ပေးပို့နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Contact Form. Include name, email, production company, project type, and message fields.",
+      "backend_module": {
+        "function_label": "FUNCTION_F_ContactForm",
+        "architecture_type": "REST API Controller / Email Service",
+        "prompt_text": "------------------------\n[FUNCTION F: ContactForm]\nProvide language-agnostic backend logic (Controller + Email Service) for actress contact. Include production details and project classification. Return JSON: { status: 200, data: { message: 'Inquiry sent successfully' } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_designer_01",
+    "name": "Show Collections",
+    "category": "Fashion Designer",
+    "price_addon": 6000,
+    "description_my": "ဖက်ရှင်ဒီဇိုင်နာ၏ စုစည်းမှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Collections. Display collection cards with feature images, names, seasons, years, and theme descriptions.",
+      "backend_module": {
+        "function_label": "FUNCTION_G_ShowCollections",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION G: ShowCollections]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving fashion collections. Include collection name, season, year, theme, image, and look count. Return JSON: { status: 200, data: { collections: [{ id, name, season, year, theme, image, look_count }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_designer_02",
+    "name": "Filter Collections",
+    "category": "Fashion Designer",
+    "price_addon": 4500,
+    "description_my": "စုစည်းမှုများကို ရာသီ၊ နှစ်နှင့် အမျိုးအစားအလိုက် စစ်ထုတ်ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Filter Collections. Display filter options for season, year, gender, and collection type.",
+      "backend_module": {
+        "function_label": "FUNCTION_H_FilterCollections",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION H: FilterCollections]\nProvide language-agnostic backend logic (Controller + DB Query) for filtering fashion collections by season, year, or gender. Return JSON: { status: 200, data: { filtered: [], total } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_designer_03",
+    "name": "Open Lookbook",
+    "category": "Fashion Designer",
+    "price_addon": 5500,
+    "description_my": "ဖက်ရှင်ဒီဇိုင်နာ၏ လက်ကြည့်စာအုပ်ကို ဖွင့်ကြည့်နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Open Lookbook. Display lookbook pages with outfit images, styling details, and garment descriptions in magazine-style layout.",
+      "backend_module": {
+        "function_label": "FUNCTION_I_OpenLookbook",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION I: OpenLookbook]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving fashion lookbook. Include look images, styling notes, garment details, and collection reference. Return JSON: { status: 200, data: { lookbook: [{ id, image, style_notes, garments, collection }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_designer_04",
+    "name": "Show Gallery",
+    "category": "Fashion Designer",
+    "price_addon": 5000,
+    "description_my": "ဖက်ရှင်ဒီဇိုင်နာ၏ ဒီဇိုင်းပုံများနှင့် ဖြန့်ချိထားသော ပုံရိပ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Gallery. Display fashion images in grid layout with lightbox, categorized by collection.",
+      "backend_module": {
+        "function_label": "FUNCTION_J_ShowGallery",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION J: ShowGallery]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving fashion designer gallery. Include image URL, collection, category, and description. Return JSON: { status: 200, data: { gallery: [{ id, image_url, collection, category, description }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_designer_05",
+    "name": "Show Services",
+    "category": "Fashion Designer",
+    "price_addon": 5000,
+    "description_my": "ဖက်ရှင်ဒီဇိုင်နာ၏ ဆောင်ရွက်ပေးနိုင်သော ဝန်ဆောင်မှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Services. Display service cards (Custom Design, Bridal, Ready-to-Wear, Collection Development) with details.",
+      "backend_module": {
+        "function_label": "FUNCTION_K_ShowServices",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION K: ShowServices]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving fashion design services. Include service name, description, price range, and portfolio count. Return JSON: { status: 200, data: { services: [{ id, name, description, price_range, portfolio_count }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_designer_06",
+    "name": "Show Awards",
+    "category": "Fashion Designer",
+    "price_addon": 4000,
+    "description_my": "ဖက်ရှင်ဒီဇိုင်နာ၏ ရရှိခဲ့သော ဆုများနှင့် အသိအမှတ်ပြုမှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Awards. Display award cards with names, organizations, years, and collection references.",
+      "backend_module": {
+        "function_label": "FUNCTION_L_ShowAwards",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION L: ShowAwards]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving fashion designer awards. Include award name, organization, year, and collection. Return JSON: { status: 200, data: { awards: [{ id, name, organization, year, collection }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_fashion_designer_07",
+    "name": "Contact Form",
+    "category": "Fashion Designer",
+    "price_addon": 3500,
+    "description_my": "ဖက်ရှင်ဒီဇိုင်နာနှင့် ဆက်သွယ်ရန်အတွက် မေးမြန်းချက်များ ပေးပို့နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Contact Form. Include name, email, company, project type, budget, and design requirements.",
+      "backend_module": {
+        "function_label": "FUNCTION_M_ContactForm",
+        "architecture_type": "REST API Controller / Email Service",
+        "prompt_text": "------------------------\n[FUNCTION M: ContactForm]\nProvide language-agnostic backend logic (Controller + Email Service) for fashion designer contact. Include project type and budget range. Return JSON: { status: 200, data: { message: 'Inquiry sent' } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_pilot_01",
+    "name": "Show Experience",
+    "category": "Pilot",
+    "price_addon": 5500,
+    "description_my": "လေယာဉ်မှူး၏ ပျံသန်းမှုအတွေ့အကြုံကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Experience. Display career timeline with airlines, aircraft types, positions, and years flown.",
+      "backend_module": {
+        "function_label": "FUNCTION_N_ShowExperience",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION N: ShowExperience]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving pilot experience. Include airline, aircraft type, position, start/end dates, and total flight hours. Return JSON: { status: 200, data: { experiences: [{ id, airline, aircraft, position, start_date, end_date, flight_hours }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_pilot_02",
+    "name": "Show Certifications",
+    "category": "Pilot",
+    "price_addon": 5000,
+    "description_my": "လေယာဉ်မှူး၏ လိုင်စင်နှင့် အသိအမှတ်ပြုလက်မှတ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Certifications. Display license cards with types, issuing authorities, numbers, and expiry dates.",
+      "backend_module": {
+        "function_label": "FUNCTION_O_ShowCertifications",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION O: ShowCertifications]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving pilot certifications. Include license type, authority, license number, issued/expiry dates, and ratings. Return JSON: { status: 200, data: { certifications: [{ id, type, authority, license_number, issued_date, expiry_date, ratings }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_pilot_03",
+    "name": "Show Qualifications",
+    "category": "Pilot",
+    "price_addon": 4500,
+    "description_my": "လေယာဉ်မှူး၏ အရည်အချင်းနှင့် ကျွမ်းကျင်မှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Qualifications. Display qualification badges with aircraft type ratings, instrument ratings, and medical certificates.",
+      "backend_module": {
+        "function_label": "FUNCTION_P_ShowQualifications",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION P: ShowQualifications]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving pilot qualifications. Include aircraft type ratings, instrument rating, instructor rating, and medical class. Return JSON: { status: 200, data: { qualifications: [{ type, rating, valid_until }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_pilot_04",
+    "name": "Show Flight Hours",
+    "category": "Pilot",
+    "price_addon": 4500,
+    "description_my": "လေယာဉ်မှူး၏ စုစုပေါင်းပျံသန်းချိန်ကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Flight Hours. Display total flight hours, breakdown by aircraft type, and flight hour statistics.",
+      "backend_module": {
+        "function_label": "FUNCTION_Q_ShowFlightHours",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION Q: ShowFlightHours]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving pilot flight hours. Include total hours, hours by aircraft type, PIC hours, SIC hours, and night/IFR hours. Return JSON: { status: 200, data: { total_hours, by_aircraft: [], pic_hours, sic_hours, night_hours, ifr_hours } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_pilot_05",
+    "name": "Show Education",
+    "category": "Pilot",
+    "price_addon": 4500,
+    "description_my": "လေယာဉ်မှူး၏ ပညာအရည်အချင်းကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Education. Display education cards with institutions, degrees, fields, and graduation years.",
+      "backend_module": {
+        "function_label": "FUNCTION_R_ShowEducation",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION R: ShowEducation]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving pilot education. Include institution, degree, field, and graduation year. Return JSON: { status: 200, data: { education: [{ id, institution, degree, field, year }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_pilot_06",
+    "name": "Download CV",
+    "category": "Pilot",
+    "price_addon": 3500,
+    "description_my": "လေယာဉ်မှူး၏ ကိုယ်ရေးအကျဉ်းကို PDF ဖိုင်အဖြစ် ဒေါင်းလုဒ်လုပ်နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Download CV. Include download button, PDF preview, and aviation-specific CV format.",
+      "backend_module": {
+        "function_label": "FUNCTION_S_DownloadCV",
+        "architecture_type": "REST API Controller / File Service",
+        "prompt_text": "------------------------\n[FUNCTION S: DownloadCV]\nProvide language-agnostic backend logic (Controller + File Service) for downloading pilot CV as PDF. Include aviation-specific sections and experience. Return JSON: { status: 200, data: { file_url, file_name } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_lawyer_01",
+    "name": "Show Practice Areas",
+    "category": "Lawyer",
+    "price_addon": 5500,
+    "description_my": "ရှေ့နေ၏ အထူးပြုဥပဒေနယ်ပယ်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Practice Areas. Display practice area cards with names, descriptions, case types, and success rates.",
+      "backend_module": {
+        "function_label": "FUNCTION_T_ShowPracticeAreas",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION T: ShowPracticeAreas]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving lawyer practice areas. Include area name, description, case types, and success rate. Return JSON: { status: 200, data: { practice_areas: [{ id, name, description, case_types, success_rate }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_lawyer_02",
+    "name": "Show Experience",
+    "category": "Lawyer",
+    "price_addon": 5000,
+    "description_my": "ရှေ့နေ၏ ဥပဒေအတွေ့အကြုံကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Experience. Display career timeline with firms, positions, cases handled, and years.",
+      "backend_module": {
+        "function_label": "FUNCTION_A_ShowExperience",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION A: ShowExperience]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving lawyer experience. Include firm, position, cases handled, and start/end dates. Return JSON: { status: 200, data: { experiences: [{ id, firm, position, cases, start_date, end_date }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_lawyer_03",
+    "name": "Show Case Studies",
+    "category": "Lawyer",
+    "price_addon": 6000,
+    "description_my": "ရှေ့နေ၏ အမှုတွဲများနှင့် ဖြေရှင်းချက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Case Studies. Display case cards with case types, outcomes, notable rulings, and client details.",
+      "backend_module": {
+        "function_label": "FUNCTION_B_ShowCaseStudies",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION B: ShowCaseStudies]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving legal case studies. Include case name, type, outcome, ruling, and description. Return JSON: { status: 200, data: { case_studies: [{ id, name, type, outcome, ruling, description }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_lawyer_04",
+    "name": "Request Consultation",
+    "category": "Lawyer",
+    "price_addon": 6000,
+    "description_my": "သုံးစွဲသူများ ရှေ့နေနှင့် ဥပဒေဆိုင်ရာ ကြိုတင်ဆွေးနွေးချိန်ယူနိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Request Consultation. Include case type selection, date/time picker, case details form, and confirmation.",
+      "backend_module": {
+        "function_label": "FUNCTION_C_RequestConsultation",
+        "architecture_type": "REST API Controller / DB Transaction / Calendar Integration",
+        "prompt_text": "------------------------\n[FUNCTION C: RequestConsultation]\nProvide language-agnostic backend logic (Controller + DB Schema + Calendar) for legal consultation booking. Include case type, date/time, case summary, and confidentiality agreement. Return JSON: { status: 201, data: { consultation_id, date, time, case_type, status } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_lawyer_05",
+    "name": "Show Credentials",
+    "category": "Lawyer",
+    "price_addon": 4500,
+    "description_my": "ရှေ့နေ၏ ဥပဒေဘွဲ့များ၊ လိုင်စင်များနှင့် အသိအမှတ်ပြုချက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Credentials. Display credential cards with degrees, bar associations, licenses, and certifications.",
+      "backend_module": {
+        "function_label": "FUNCTION_D_ShowCredentials",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION D: ShowCredentials]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving lawyer credentials. Include degree, bar association, license number, and certifications. Return JSON: { status: 200, data: { credentials: [{ id, degree, bar_association, license_number, certifications }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_lawyer_06",
+    "name": "Contact Form",
+    "category": "Lawyer",
+    "price_addon": 3500,
+    "description_my": "ရှေ့နေနှင့် ဆက်သွယ်ရန်အတွက် မေးမြန်းချက်များ ပေးပို့နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Contact Form. Include name, email, phone, case type, brief summary, and message fields.",
+      "backend_module": {
+        "function_label": "FUNCTION_E_ContactForm",
+        "architecture_type": "REST API Controller / Email Service",
+        "prompt_text": "------------------------\n[FUNCTION E: ContactForm]\nProvide language-agnostic backend logic (Controller + Email Service) for lawyer contact. Include case type classification and confidentiality notice. Return JSON: { status: 200, data: { message: 'Inquiry sent' } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_startup_founder_01",
+    "name": "Show Company",
+    "category": "Startup Founder / CEO",
+    "price_addon": 5500,
+    "description_my": "စတင်တည်ထောင်သူ၏ ကုမ္ပဏီအကြောင်းအရာကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Company. Display company overview with logo, mission, vision, founding story, and company values.",
+      "backend_module": {
+        "function_label": "FUNCTION_F_ShowCompany",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION F: ShowCompany]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving startup company details. Include name, logo, mission, vision, founding story, and team size. Return JSON: { status: 200, data: { company: { name, logo, mission, vision, story, team_size } } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_startup_founder_02",
+    "name": "Show Vision",
+    "category": "Startup Founder / CEO",
+    "price_addon": 5000,
+    "description_my": "စတင်တည်ထောင်သူ၏ ရည်မှန်းချက်နှင့် အမြော်အမြင်ကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Vision. Display vision statement, long-term goals, industry impact, and future roadmap.",
+      "backend_module": {
+        "function_label": "FUNCTION_G_ShowVision",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION G: ShowVision]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving startup vision. Include vision statement, goals, impact vision, and roadmap. Return JSON: { status: 200, data: { vision: { statement, goals, impact, roadmap } } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_startup_founder_03",
+    "name": "Show Products",
+    "category": "Startup Founder / CEO",
+    "price_addon": 5500,
+    "description_my": "စတင်တည်ထောင်သူ၏ ထုတ်ကုန်များနှင့် ဝန်ဆောင်မှုများကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Products. Display product cards with images, names, descriptions, features, and user count.",
+      "backend_module": {
+        "function_label": "FUNCTION_H_ShowProducts",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION H: ShowProducts]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving startup products. Include product name, description, features, image, and user metrics. Return JSON: { status: 200, data: { products: [{ id, name, description, features, image, users }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_startup_founder_04",
+    "name": "Show Achievements",
+    "category": "Startup Founder / CEO",
+    "price_addon": 4500,
+    "description_my": "စတင်တည်ထောင်သူ၏ အောင်မြင်မှုများနှင့် မှတ်တိုင်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Achievements. Display achievement badges with metrics (Funding raised, Users, Revenue, Awards) and milestones.",
+      "backend_module": {
+        "function_label": "FUNCTION_I_ShowAchievements",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION I: ShowAchievements]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving startup achievements. Include metric type, value, description, and date. Return JSON: { status: 200, data: { achievements: [{ id, metric, value, description, date }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_startup_founder_05",
+    "name": "Show Timeline",
+    "category": "Startup Founder / CEO",
+    "price_addon": 5000,
+    "description_my": "စတင်တည်ထောင်သူ၏ ကုမ္ပဏီသမိုင်းကြောင်းကို အချိန်ဇယားဖြင့် ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Timeline. Display interactive timeline with key milestones (Founded, Funding, Product Launch, Awards, Revenue milestones).",
+      "backend_module": {
+        "function_label": "FUNCTION_J_ShowTimeline",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION J: ShowTimeline]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving startup timeline. Include event, date, description, and milestone type. Return JSON: { status: 200, data: { timeline: [{ id, event, date, description, type }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_startup_founder_06",
+    "name": "Show Press",
+    "category": "Startup Founder / CEO",
+    "price_addon": 4500,
+    "description_my": "စတင်တည်ထောင်သူ၏ မီဒီယာဖော်ပြချက်များကို ပြသသည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Show Press. Display press cards with publication logos, titles, dates, and article links.",
+      "backend_module": {
+        "function_label": "FUNCTION_K_ShowPress",
+        "architecture_type": "REST API Controller / DB Query",
+        "prompt_text": "------------------------\n[FUNCTION K: ShowPress]\nProvide language-agnostic backend logic (Controller + DB Query) for retrieving startup press coverage. Include publication, title, date, link, and description. Return JSON: { status: 200, data: { press: [{ id, publication, title, date, link, description }] } }.\n------------------------"
+      }
+    }
+  },
+  {
+    "id": "f_startup_founder_07",
+    "name": "Contact Form",
+    "category": "Startup Founder / CEO",
+    "price_addon": 3500,
+    "description_my": "စတင်တည်ထောင်သူနှင့် ဆက်သွယ်ရန်အတွက် မေးမြန်းချက်များ ပေးပို့နိုင်သည့် စနစ်။",
+    "prompts": {
+      "frontend_js": "Write clean Vanilla JS and Tailwind CSS for Contact Form. Include name, email, company, partnership type, and message fields.",
+      "backend_module": {
+        "function_label": "FUNCTION_L_ContactForm",
+        "architecture_type": "REST API Controller / Email Service",
+        "prompt_text": "------------------------\n[FUNCTION L: ContactForm]\nProvide language-agnostic backend logic (Controller + Email Service) for startup founder contact. Include partnership and collaboration filtering. Return JSON: { status: 200, data: { message: 'Inquiry sent successfully' } }.\n------------------------"
+      }
+    }
+  }
+]
