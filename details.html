@@ -1428,131 +1428,84 @@
          * Send the full AI prompts payload to the Technical Admin/Developer Group
          * This contains the complete structured data including all feature prompts.
          */
-        async function sendAdminFullPayload(orderData) {
-            if (TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN" || TELEGRAM_ADMIN_CHAT_ID === "YOUR_ADMIN_DEVELOPER_CHAT_ID") {
-                console.warn('Telegram Admin bot not configured. Skipping Admin full payload.');
-                return;
-            }
+       /**
+ * Send a clean AI‑prompt message to the Admin Telegram chat.
+ * This replaces the old JSON‑stringified payload with an executable Markdown prompt.
+ */
+async function sendAdminFullPayload(orderData) {
+    if (TELEGRAM_BOT_TOKEN === "YOUR_BOT_TOKEN" || TELEGRAM_ADMIN_CHAT_ID === "YOUR_ADMIN_DEVELOPER_CHAT_ID") {
+        console.warn('Telegram Admin bot not configured. Skipping Admin prompt.');
+        return;
+    }
 
-            // Build the full prompts payload
-            const featurePayloads = orderData.selectedFeatures.map((f, i) => {
-                // Find the full feature object from allFeatures
-                const fullFeature = allFeatures.find(af => af.id === f.id);
-                return {
-                    id: f.id,
-                    name: f.name,
-                    price: f.price,
-                    description_my: fullFeature?.description_my || '',
-                    prompts: fullFeature?.prompts || null
-                };
-            });
+    // 1. Format Frontend Requirements
+    const frontendSection = orderData.selectedFeatures.map((f, i) => {
+        const fullFeature = allFeatures.find(af => af.id === f.id);
+        const jsPrompt = fullFeature?.prompts?.frontend_js || 'N/A';
+        return `#### **${i + 1}. ${f.name} (${f.id})**\n- **Requirement:** ${jsPrompt}`;
+    }).join('\n\n');
 
-            const payload = {
-                order: {
-                    productId: orderData.productId,
-                    productName: orderData.productName,
-                    productCategory: orderData.productCategory,
-                    productType: orderData.productType,
-                    basePrice: orderData.basePrice,
-                    totalPrice: orderData.totalPrice,
-                    timestamp: new Date().toISOString(),
-                    submittedAt: new Date().toLocaleString('en-US', { timeZone: 'Asia/Yangon' })
-                },
-                selectedFeatures: featurePayloads,
-                featureCount: orderData.selectedFeatures.length
-            };
+    // 2. Format Backend Requirements
+    const backendSection = orderData.selectedFeatures.map((f, i) => {
+        const fullFeature = allFeatures.find(af => af.id === f.id);
+        const backendPrompt = fullFeature?.prompts?.backend_module?.prompt_text || 'N/A';
+        return `------------------------\n[FUNCTION ${i + 1}: ${f.name}]\n${backendPrompt}`;
+    }).join('\n\n');
 
-            const jsonPayload = JSON.stringify(payload, null, 2);
+    // 3. Assemble Master Executable Plain‑Text Prompt
+    const masterPrompt = 
+`Role: Senior Full-Stack Web Developer & UI/UX Designer
 
-            // Split long messages if needed (Telegram has 4096 char limit)
-            const maxLength = 4000;
-            let message = `
-📋 *FULL AI PROMPTS PAYLOAD — ADMIN*
+Task: Create a modern, fully responsive web application module for "${orderData.productName}" (${orderData.productCategory}) using HTML5, Tailwind CSS, Vanilla JavaScript, and a clean backend API architecture (REST API + Database Schema design).
 
-📊 *Order Summary:*
-   • Product: ${orderData.productName} (${orderData.productId})
-   • Category: ${orderData.productCategory || 'N/A'}
-   • Type: ${orderData.productType || 'profile'}
-   • Base: ${orderData.basePrice.toLocaleString()} MMK
-   • Total: ${orderData.totalPrice.toLocaleString()} MMK
-   • Features: ${orderData.selectedFeatures.length} selected
+---
 
-📦 *Feature Details with Prompts:*
-\`\`\`json
-${jsonPayload}
-\`\`\`
+### 🎨 1. Project Context
+- **Product Name:** ${orderData.productName} (${orderData.productId})
+- **Category:** ${orderData.productCategory}
+- **Type:** ${orderData.productType}
+- **Base Price:** ${orderData.basePrice?.toLocaleString()} MMK
+- **Total Price:** ${orderData.totalPrice?.toLocaleString()} MMK
+- **Selected Add-ons:** ${orderData.selectedFeatures.length} features
 
-🔗 *Source:* ${window.location.href}
-            `.trim();
+---
 
-            // Send the full payload (split if too long)
-            if (message.length > maxLength) {
-                // Send summary first, then split JSON
-                const summary = `
-📋 *FULL AI PROMPTS PAYLOAD — ADMIN*
+### 🛠️ 2. Frontend Features & Interactive Logic (Vanilla JS + Tailwind CSS)
 
-📊 *Order:* ${orderData.productName} (${orderData.productId})
-📂 *Category:* ${orderData.productCategory || 'N/A'}
-💰 *Total:* ${orderData.totalPrice.toLocaleString()} MMK
-📦 *Features:* ${orderData.selectedFeatures.length} selected
+${frontendSection}
 
-📄 *JSON Payload (${jsonPayload.length} chars) — see following messages:*
-                `.trim();
+---
 
-                try {
-                    await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: TELEGRAM_ADMIN_CHAT_ID,
-                            text: summary,
-                            parse_mode: 'Markdown',
-                        })
-                    });
+### 🗄️ 3. Backend & Database Architecture
 
-                    // Split JSON into chunks
-                    const chunkSize = 3900;
-                    for (let i = 0; i < jsonPayload.length; i += chunkSize) {
-                        const chunk = jsonPayload.substring(i, i + chunkSize);
-                        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/json' },
-                            body: JSON.stringify({
-                                chat_id: TELEGRAM_ADMIN_CHAT_ID,
-                                text: `\`\`\`json\n${chunk}\n\`\`\``,
-                                parse_mode: 'Markdown',
-                            })
-                        });
-                        // Small delay to avoid rate limiting
-                        await new Promise(resolve => setTimeout(resolve, 200));
-                    }
-                    console.log('✅ Admin full payload sent to Telegram (split)');
-                } catch (error) {
-                    console.error('Failed to send Admin full payload:', error);
-                }
-            } else {
-                try {
-                    const response = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: TELEGRAM_ADMIN_CHAT_ID,
-                            text: message,
-                            parse_mode: 'Markdown',
-                        })
-                    });
-                    const result = await response.json();
-                    if (!result.ok) {
-                        console.error('Telegram Admin API error:', result);
-                    } else {
-                        console.log('✅ Admin full payload sent to Telegram');
-                    }
-                } catch (error) {
-                    console.error('Failed to send Admin full payload:', error);
-                }
-            }
-        }
+Provide language-agnostic backend logic, REST API Controller pseudocode, and Database Schema for the following required functions:
 
+${backendSection}
+
+---
+
+### 📄 Deliverables Required:
+1. Complete Single-file HTML5 & Tailwind CSS UI structure.
+2. Complete Vanilla JavaScript code implementing all requested frontend feature logic.
+3. Language-agnostic Backend API Controllers returning structured JSON \`{ status: 200, data: [...] }\`.
+4. Relational Database Schema SQL definition supporting these features.`;
+
+    // 4. Send as Plain Text Message to Admin Chat ID
+    try {
+        await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: TELEGRAM_ADMIN_CHAT_ID,
+                text: masterPrompt,
+                parse_mode: 'Markdown'
+            })
+        });
+        console.log('✅ Admin prompt sent to Telegram');
+    } catch (err) {
+        console.error('Error sending Admin Telegram prompt:', err);
+    }
+}
         /**
          * Main dispatch function — sends to both channels
          */
