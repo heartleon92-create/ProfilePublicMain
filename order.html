@@ -7,284 +7,397 @@
     <script src="https://cdn.tailwindcss.com">
     </script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    
     <style>
-        /* ─── root ─── */
+        /* ─── Clean Light Theme ─── */
         :root {
-            --slate: #0f172a;
-            --slate-light: #1e293b;
-            --slate-card: #1e293bcc;
-            --glow: #38bdf8;
-            --amber: #f59e0b;
-            --emerald: #10b981;
+            --bg-body: #f8fafc;
+            --card-bg: #ffffff;
+            --card-border: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #94a3b8;
+            --accent-violet: #7c3aed;
+            --accent-indigo: #4f46e5;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --shadow-lg: 0 10px 40px -12px rgba(0,0,0,0.12);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: var(--slate);
-            color: #f1f5f9;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, system-ui, sans-serif;
+            background: var(--bg-body);
+            color: var(--text-primary);
             min-height: 100vh;
+            padding: 2rem 1.5rem;
+        }
+
+        /* ─── Main Container ─── */
+        .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            padding: 2.5rem 2.5rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 640px) {
+            body { padding: 1rem; }
+            .invoice-container { padding: 1.5rem 1.25rem; }
+        }
+
+        /* ─── Typography ─── */
+        .font-serif { font-family: 'Georgia', 'Times New Roman', serif; }
+
+        /* ─── Order Meta Grid ─── */
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 1.25rem 1.5rem;
+            border: 1px solid #e2e8f0;
+        }
+        @media (max-width: 640px) {
+            .meta-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        }
+        .meta-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 0.05em; color: #94a3b8; font-weight: 600; }
+        .meta-value { font-size: 0.95rem; font-weight: 600; color: #0f172a; margin-top: 0.1rem; }
+
+        /* ─── Status Badge ─── */
+        .status-badge {
+            display: inline-block;
+            background: #fef3c7;
+            color: #92400e;
+            font-size: 0.7rem;
+            font-weight: 600;
+            padding: 0.2rem 0.9rem;
+            border-radius: 9999px;
+            border: 1px solid #fcd34d;
+            transition: all 0.4s ease;
+        }
+        .status-badge.confirmed {
+            background: #d1fae5;
+            color: #065f46;
+            border-color: #6ee7b7;
+        }
+
+        /* ─── Table Styles ─── */
+        .receipt-table { width: 100%; border-collapse: collapse; }
+        .receipt-table th { text-align: left; font-size: 0.7rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; padding-bottom: 0.6rem; border-bottom: 1px solid #e2e8f0; }
+        .receipt-table td { padding: 0.6rem 0; border-bottom: 1px solid #f1f5f9; vertical-align: middle; }
+        .receipt-table tr:last-child td { border-bottom: none; }
+        .receipt-table .price-col { text-align: right; font-weight: 500; font-feature-settings: "tnum"; }
+
+        /* ─── Feature row with remove ─── */
+        .feature-name { display: flex; align-items: center; gap: 0.5rem; }
+        .remove-btn { color: #94a3b8; transition: all 0.2s ease; background: none; border: none; cursor: pointer; padding: 0.2rem; }
+        .remove-btn:hover { color: #ef4444; transform: scale(1.1); }
+        .remove-btn:active { transform: scale(0.9); }
+
+        /* ─── Floating Tooltip ─── */
+        .info-tip { position: relative; display: inline-flex; align-items: center; cursor: help; }
+        .info-tip .tip-icon { color: #94a3b8; transition: color 0.2s ease; font-size: 0.75rem; }
+        .info-tip:hover .tip-icon { color: #7c3aed; }
+        .info-tip .tooltip-box {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            left: 50%;
+            bottom: calc(100% + 8px);
+            transform: translateX(-50%) translateY(4px);
+            background: #0f172a;
+            color: #f1f5f9;
+            font-size: 0.7rem;
+            font-weight: 400;
+            padding: 0.6rem 0.9rem;
+            border-radius: 0.75rem;
+            width: 220px;
+            text-align: center;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.2s ease;
+            pointer-events: none;
+            z-index: 20;
+            line-height: 1.4;
+        }
+        .info-tip .tooltip-box::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: #0f172a;
+        }
+        .info-tip:hover .tooltip-box {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* ─── Total row ─── */
+        .total-row td { padding-top: 1rem; border-top: 2px solid #e2e8f0; font-weight: 700; }
+        .total-amount { color: #10b981; font-size: 1.25rem; font-weight: 700; font-feature-settings: "tnum"; }
+
+        /* ─── Confirm Section ─── */
+        .confirm-box {
+            background: #f8fafc;
+            border-radius: 1rem;
+            padding: 1.5rem 1.75rem;
+            border: 1px solid #e2e8f0;
+            margin-top: 1.5rem;
+        }
+        .confirm-box .summary-row { display: flex; justify-content: space-between; padding: 0.3rem 0; font-size: 0.9rem; }
+        .confirm-box .summary-row.total { border-top: 1px solid #e2e8f0; margin-top: 0.4rem; padding-top: 0.6rem; font-weight: 700; font-size: 1.05rem; }
+
+        /* ─── Confirm Button ─── */
+        .btn-confirm {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 1.5rem;
-        }
-
-        /* ─── glass card ─── */
-        .glass {
-            background: rgba(30, 41, 59, 0.7);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(56, 189, 248, 0.12);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.04);
-        }
-
-        .glass-border-glow {
-            border: 1px solid rgba(56, 189, 248, 0.20);
-            box-shadow: 0 0 30px -8px rgba(56, 189, 248, 0.10);
-        }
-
-        /* ─── badge pulse ─── */
-        .badge-pulse {
-            animation: pulseGlow 2s ease-in-out infinite;
-        }
-        @keyframes pulseGlow {
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 20px 6px rgba(245, 158, 11, 0.15);
-            }
-        }
-
-        /* ─── shimmer button ─── */
-        .btn-shimmer {
+            gap: 0.75rem;
+            width: 100%;
+            padding: 0.9rem 1.5rem;
+            background: linear-gradient(135deg, #7c3aed, #4f46e5);
+            color: white;
+            font-weight: 700;
+            font-size: 1rem;
+            border: none;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.2);
+            transition: all 0.25s ease;
+            cursor: pointer;
             position: relative;
             overflow: hidden;
-            transition: all 0.25s ease;
         }
-        .btn-shimmer::before {
+        .btn-confirm:hover { transform: scale(1.01); box-shadow: 0 8px 28px rgba(124, 58, 237, 0.25); }
+        .btn-confirm:active { transform: scale(0.97); }
+        .btn-confirm:disabled { opacity: 0.7; pointer-events: none; }
+        .btn-confirm .spinner { display: none; }
+        .btn-confirm.loading .spinner { display: inline-block; }
+        .btn-confirm.loading .btn-text { display: none; }
+        .btn-confirm::before {
             content: '';
             position: absolute;
             top: 0;
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.12), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
             transition: left 0.6s ease;
         }
-        .btn-shimmer:hover::before {
-            left: 100%;
+        .btn-confirm:hover::before { left: 100%; }
+
+        /* ─── Success Modal ─── */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.35);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            z-index: 100;
+            animation: overlayFade 0.35s ease forwards;
         }
-        .btn-shimmer:active {
-            transform: scale(0.97);
-        }
-        .btn-shimmer.loading {
-            pointer-events: none;
-            opacity: 0.7;
+        .modal-overlay.active { display: flex; }
+        @keyframes overlayFade {
+            0% { opacity: 0; }
+            100% { opacity: 1; }
         }
 
-        /* ─── success animations ─── */
-        .success-card {
-            animation: successFadeIn 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        .modal-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem 2rem 2rem;
+            max-width: 440px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+            border: 1px solid #e2e8f0;
+            animation: modalPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
-        @keyframes successFadeIn {
-            0% {
-                opacity: 0;
-                transform: scale(0.92) translateY(16px);
-            }
-            100% {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
+        @keyframes modalPop {
+            0% { opacity: 0; transform: scale(0.92) translateY(20px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
         }
 
-        .check-bounce {
-            animation: checkBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        .check-circle {
+            width: 4.5rem;
+            height: 4.5rem;
+            background: #d1fae5;
+            border-radius: 9999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.75rem;
+            animation: checkBounce 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
+        .check-circle i { color: #10b981; font-size: 2rem; }
         @keyframes checkBounce {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                transform: scale(1.2);
-                opacity: 1;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+            0% { transform: scale(0); }
+            60% { transform: scale(1.15); }
+            100% { transform: scale(1); }
         }
 
-        .tick-circle {
-            animation: tickPulse 2s ease-in-out infinite;
-        }
-        @keyframes tickPulse {
-            0%,
-            100% {
-                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.3);
-            }
-            50% {
-                box-shadow: 0 0 30px 10px rgba(16, 185, 129, 0.12);
-            }
+        .notice-box {
+            background: linear-gradient(135deg, #f5f3ff, #ecfdf5);
+            padding: 0.9rem 1.2rem;
+            border-radius: 0.75rem;
+            border: 1px solid #ddd6fe;
+            font-size: 0.85rem;
+            color: #1e293b;
+            line-height: 1.6;
+            margin: 1rem 0 1.5rem;
         }
 
-        /* ─── feature list ─── */
-        .feature-item {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
-            padding: 0.5rem 0;
-        }
-        .feature-item:last-child {
-            border-bottom: none;
-        }
-
-        /* ─── scrollbar ─── */
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-track {
+        .modal-actions { display: flex; flex-wrap: wrap; gap: 0.65rem; justify-content: center; }
+        .modal-actions .btn-outline {
+            border: 2px solid #7c3aed;
+            color: #7c3aed;
             background: transparent;
+            padding: 0.6rem 1.4rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
         }
-        ::-webkit-scrollbar-thumb {
-            background: rgba(56, 189, 248, 0.25);
-            border-radius: 8px;
+        .modal-actions .btn-outline:hover { background: #7c3aed; color: white; transform: scale(1.04); }
+        .modal-actions .btn-outline:active { transform: scale(0.95); }
+        .modal-actions .btn-solid {
+            background: #0f172a;
+            color: white;
+            padding: 0.6rem 1.4rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            border: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
         }
+        .modal-actions .btn-solid:hover { background: #1e293b; transform: scale(1.04); }
+        .modal-actions .btn-solid:active { transform: scale(0.95); }
 
-        /* ─── responsive tweaks ─── */
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-            .glass {
-                backdrop-filter: blur(12px);
-            }
+        /* ─── Misc ─── */
+        .divider { border-top: 1px solid #e2e8f0; margin: 1.25rem 0; }
+        .text-emerald { color: #10b981; }
+
+        /* ─── Responsive tweaks ─── */
+        @media (max-width: 480px) {
+            .meta-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; padding: 0.9rem 1rem; }
+            .meta-value { font-size: 0.8rem; }
+            .confirm-box { padding: 1rem; }
+            .modal-card { padding: 1.75rem 1.25rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ════════════════════════════════════════════════════════════════ -->
-    <!--  MAIN CONTAINER                                               -->
-    <!-- ════════════════════════════════════════════════════════════════ -->
-    <div id="app" class="w-full max-w-6xl mx-auto">
+    <div class="invoice-container">
 
-        <!-- ─── two‑column grid ─── -->
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
+        <!-- ─── 1. THANK YOU HEADER ─── -->
+        <h1 class="text-2xl font-serif font-bold text-slate-900 mb-5">Thank You. Your order has been received.</h1>
 
-            <!-- ─── LEFT: INVOICE PREVIEW ─── -->
-            <div id="invoicePanel" class="glass rounded-3xl p-6 sm:p-8 glass-border-glow transition-all duration-300">
-                <!-- header badge -->
-                <div class="flex items-center justify-between flex-wrap gap-3 mb-6">
-                    <div class="flex items-center gap-3">
-                        <span class="text-xl font-bold tracking-tight text-white/90">🧾 Invoice</span>
-                        <span class="text-xs text-white/30 font-mono bg-white/5 px-3 py-1 rounded-full border border-white/5">
-                            #<span id="orderRef">------</span>
-                        </span>
-                    </div>
-                    <div class="badge-pulse flex items-center gap-2 bg-amber-500/10 border border-amber-500/25 text-amber-400 text-xs font-semibold px-4 py-1.5 rounded-full">
-                        <span class="inline-block w-2 h-2 rounded-full bg-amber-400 animate-pulse"></span>
-                        Status: <span id="statusBadge">UNPAID</span>
-                    </div>
+        <!-- ─── 2. ORDER META GRID ─── -->
+        <div class="meta-grid">
+            <div>
+                <div class="meta-label">Order Number</div>
+                <div class="meta-value" id="orderRef">#------</div>
+            </div>
+            <div>
+                <div class="meta-label">Date</div>
+                <div class="meta-value" id="orderTimestamp">—</div>
+            </div>
+            <div>
+                <div class="meta-label">Total</div>
+                <div class="meta-value" id="totalDisplay">0 MMK</div>
+            </div>
+            <div>
+                <div class="meta-label">Payment Status</div>
+                <div class="meta-value"><span class="status-badge" id="statusBadge">UNPAID</span></div>
+            </div>
+        </div>
+
+        <!-- ─── 3. ORDER DETAILS ─── -->
+        <h2 class="text-xl font-serif font-bold text-slate-800 mt-7 mb-4">Order details</h2>
+
+        <div id="invoiceContent">
+            <!-- populated by JS -->
+        </div>
+
+        <!-- ─── 4. CONFIRM ORDER SECTION ─── -->
+        <div id="confirmSection">
+            <div class="confirm-box">
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <span id="subtotalDisplay">0 MMK</span>
                 </div>
-
-                <!-- product info -->
-                <div id="invoiceContent">
-                    <!-- populated by JS -->
+                <div class="summary-row">
+                    <span>Database Fee</span>
+                    <span id="tierFeeDisplay">0 MMK</span>
                 </div>
-
-                <!-- timestamp -->
-                <div class="mt-6 pt-4 border-t border-white/5 text-xs text-white/30 flex items-center gap-2">
-                    <i class="fa-regular fa-clock"></i>
-                    <span id="orderTimestamp">—</span>
+                <div class="summary-row total">
+                    <span>Total</span>
+                    <span class="text-emerald text-lg" id="totalDisplay">0 MMK</span>
                 </div>
             </div>
 
-            <!-- ─── RIGHT: ACTION PANEL ─── -->
-            <div id="actionPanel" class="glass rounded-3xl p-6 sm:p-8 glass-border-glow flex flex-col">
+            <button id="confirmBtn" class="btn-confirm mt-4">
+                <span class="btn-text"><i class="fa-regular fa-paper-plane mr-2"></i>Confirm Order / မှာယူမည်</span>
+                <span class="spinner"><i class="fa-solid fa-spinner fa-spin"></i></span>
+            </button>
 
-                <!-- default: confirmation action -->
-                <div id="confirmSection" class="flex-1 flex flex-col">
-                    <h2 class="text-xl font-bold text-white/90 flex items-center gap-2">
-                        <i class="fa-regular fa-circle-check text-emerald-400"></i>
-                        Confirm Order
-                    </h2>
-                    <p class="text-sm text-white/40 mt-1 leading-relaxed">
-                        Please review your order details before confirming. Once confirmed, our team will reach out within 3 hours.
-                    </p>
+            <p class="text-xs text-center text-slate-400 mt-3">
+                <i class="fa-solid fa-shield-halved mr-1"></i> Secured · No payment collected now
+            </p>
+        </div>
 
-                    <div class="mt-6 space-y-3 bg-white/5 rounded-2xl p-4 border border-white/5">
-                        <div class="flex justify-between text-sm">
-                            <span class="text-white/50">Subtotal</span>
-                            <span class="text-white/80 font-mono" id="subtotalDisplay">0 MMK</span>
-                        </div>
-                        <div class="flex justify-between text-sm">
-                            <span class="text-white/50">Database Tier</span>
-                            <span class="text-white/80 font-mono" id="tierFeeDisplay">0 MMK</span>
-                        </div>
-                        <div class="flex justify-between text-base font-bold pt-2 border-t border-white/10">
-                            <span class="text-white/80">Total</span>
-                            <span class="text-emerald-400 text-xl font-mono" id="totalDisplay">0 MMK</span>
-                        </div>
-                    </div>
+    </div>
 
-                    <button id="confirmBtn" class="btn-shimmer mt-6 w-full py-4 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold rounded-2xl shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/30 transition-all flex items-center justify-center gap-3 text-base">
-                        <span id="confirmBtnText"><i class="fa-regular fa-paper-plane mr-2"></i>Confirm Order / မှာယူမည်</span>
-                        <span id="confirmSpinner" class="hidden"><i class="fa-solid fa-spinner fa-spin"></i></span>
-                    </button>
-
-                    <p class="text-center text-xs text-white/25 mt-4">
-                        <i class="fa-regular fa-lock mr-1"></i> Secured · No payment collected now
-                    </p>
-                </div>
-
-                <!-- success state (hidden by default) -->
-                <div id="successSection" class="flex-1 flex flex-col items-center justify-center text-center hidden success-card">
-                    <div class="tick-circle w-24 h-24 rounded-full bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center mb-5">
-                        <i class="fa-solid fa-check text-emerald-400 text-5xl check-bounce"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold text-white/90">Order Confirmed! 🎉</h3>
-                    <p class="text-emerald-400/80 text-sm mt-1 max-w-sm">
-                        သင့် Order Data များကို Record လုပ်ပြီးပါပြီ။ ProfileCraft အဖွဲ့မှ (၃) နာရီအတွင်း သင့်ထံ အကြောင်းပြန် ဆက်သွယ်ပေးပါမည်။
-                    </p>
-
-                    <div class="mt-8 flex flex-wrap gap-3 justify-center">
-                        <button id="downloadInvoiceBtn" class="px-6 py-2.5 bg-white/10 hover:bg-white/20 text-white/80 rounded-xl border border-white/10 transition-all text-sm font-medium flex items-center gap-2">
-                            <i class="fa-regular fa-file-pdf"></i> Save Invoice
-                        </button>
-                        <a href="details.html" id="backHomeBtn" class="px-6 py-2.5 bg-white/5 hover:bg-white/10 text-white/60 rounded-xl border border-white/5 transition-all text-sm font-medium flex items-center gap-2">
-                            <i class="fa-regular fa-arrow-left"></i> Back to Home
-                        </a>
-                    </div>
-                </div>
-
+    <!-- ─── SUCCESS MODAL ─── -->
+    <div id="successSection" class="modal-overlay">
+        <div class="modal-card">
+            <div class="check-circle"><i class="fa-solid fa-check"></i></div>
+            <h3 class="text-2xl font-bold text-slate-900 mb-1">Order Confirmed! 🎉</h3>
+            <div class="notice-box">
+                <i class="fa-regular fa-bell mr-2 text-violet-500"></i>
+                <span>သင့် Order Data များကို Record လုပ်ပြီးပါပြီ။ ProfileCraft အဖွဲ့မှ (၃) နာရီအတွင်း သင့်ထံ အကြောင်းပြန် ဆက်သွယ်ပေးပါမည်။</span>
+            </div>
+            <div class="modal-actions">
+                <button id="downloadInvoiceBtn" class="btn-outline"><i class="fa-regular fa-file-lines"></i> Save Invoice</button>
+                <a href="order.html" class="btn-solid"><i class="fa-regular fa-arrow-left"></i> Back to Home</a>
             </div>
         </div>
     </div>
 
     <!-- ════════════════════════════════════════════════════════════════ -->
-    <!--  JAVASCRIPT  (order.js)                                       -->
- <script>
+    <!--  JAVASCRIPT  (unchanged logic, adapted for new layout)        -->
+    <!-- ════════════════════════════════════════════════════════════════ -->
+    <script>
     (function() {
         'use strict';
 
-        // ────────────────────────────────────────────────────────────────
-        //  1. CONFIG
-        // ────────────────────────────────────────────────────────────────
-
+        // ─── CONFIG ───
         const TELEGRAM_BOT_TOKEN = 'removed';
-        const TELEGRAM_SALES_CHAT_ID = 'removed'; // Variable Name ကို တညီတညွတ်တည်း ပြင်ဆင်ထားသည်
+        const TELEGRAM_SALES_CHAT_ID = 'removed';
 
-        // ────────────────────────────────────────────────────────────────
-        //  2. HELPERS
-        // ────────────────────────────────────────────────────────────────
-
+        // ─── HELPERS ───
         function generateOrderRef() {
             const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
             let ref = '';
@@ -301,20 +414,15 @@
         function formatDate(ts) {
             if (!ts) return '—';
             const d = new Date(ts);
-            return d.toLocaleString('en-US', {
-                weekday: 'short',
+            return d.toLocaleDateString('en-US', {
                 year: 'numeric',
                 month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: true
+                day: 'numeric'
             });
         }
 
         function getOrderFromStorage() {
             try {
-                // details.js ၏ sessionStorage နှင့် Key Name 'pendingOrder' ကို သုံးထားသည်
                 const raw = sessionStorage.getItem('pendingOrder');
                 if (!raw) return null;
                 const order = JSON.parse(raw);
@@ -326,136 +434,142 @@
             }
         }
 
-        // ────────────────────────────────────────────────────────────────
-        //  3. RENDER INVOICE
-        // ────────────────────────────────────────────────────────────────
-
+        // ─── RENDER INVOICE ───
         function renderInvoice(order) {
             const container = document.getElementById('invoiceContent');
-
             const ref = order.orderRef || generateOrderRef();
-            document.getElementById('orderRef').textContent = ref;
-            document.getElementById('statusBadge').textContent = 'UNPAID';
+            
+            // Update meta fields
+            document.getElementById('orderRef').textContent = '#' + ref;
             document.getElementById('orderTimestamp').textContent = formatDate(order.submittedAt || Date.now());
+            
+            const statusBadge = document.getElementById('statusBadge');
+            statusBadge.textContent = 'UNPAID';
+            statusBadge.className = 'status-badge';
 
-            // — Product Header —
-            let html = `
-            <div class="flex items-start gap-4 pb-4 border-b border-white/5">
-              <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-cyan-500/20 to-blue-600/20 flex items-center justify-center text-2xl flex-shrink-0">
-                <i class="fa-regular fa-rectangle-ad"></i>
-              </div>
-              <div>
-                <h3 class="text-lg font-bold text-white/90">${order.productName || 'Product'}</h3>
-                <p class="text-sm text-white/40">${order.productCategory || 'Category'} · ${order.productId || 'ID'}</p>
-              </div>
-            </div>
-          `;
-
-            // — Base Price / Package —
             const basePrice = Number(order.basePrice) || 0;
-            html += `
-            <div class="flex items-center justify-between py-3 border-b border-white/5">
-              <span class="text-sm text-white/60">📦 Base Package Price</span>
-              <span class="text-sm font-mono text-white/80">${formatPrice(basePrice)}</span>
-            </div>
-          `;
-
-            // — Database Tier —
             const tier = order.databaseTier || { name: 'Standard', price: 0 };
             const tierFee = Number(tier.price) || 0;
-            if (tierFee > 0) {
-                html += `
-                <div class="flex items-center justify-between py-3 border-b border-white/5">
-                  <span class="text-sm text-white/60">🗄️ Database Tier</span>
-                  <span class="flex items-center gap-2">
-                    <span class="text-sm font-medium text-white/80">${tier.name}</span>
-                    <span class="text-xs font-mono text-cyan-400 bg-cyan-400/10 px-2 py-0.5 rounded-full">+${formatPrice(tierFee)}</span>
-                  </span>
-                </div>
-              `;
-            }
-
-            // — Selected Features —
             const features = order.selectedFeatures || [];
             const featuresTotal = features.reduce((sum, f) => sum + (Number(f.price) || 0), 0);
-            
-            // Total = Base Price + Features Total + Database Tier
             const total = order.totalPrice || (basePrice + featuresTotal + tierFee);
 
+            // Build table HTML
+            let html = `
+                <table class="receipt-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th class="price-col">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            // Base package row
+            html += `
+                <tr>
+                    <td>
+                        <div class="flex items-center gap-2">
+                            <span class="font-medium text-slate-800">${order.productName || 'Product'}</span>
+                            <span class="text-xs text-slate-400">(${order.productCategory || 'Category'})</span>
+                        </div>
+                    </td>
+                    <td class="price-col">${formatPrice(basePrice)}</td>
+                </tr>
+            `;
+
+            // Features rows with remove buttons
             if (features.length > 0) {
-                html += `
-                <div class="py-3 border-b border-white/5">
-                  <div class="flex items-center justify-between mb-2">
-                    <span class="text-sm text-white/60">⚡ Selected Features (${features.length})</span>
-                    <span class="text-sm text-white/40 font-mono">${formatPrice(featuresTotal)}</span>
-                  </div>
-                  <div class="space-y-1">
-              `;
-                features.forEach(f => {
-                    const price = Number(f.price) || 0;
+                features.forEach((f, index) => {
+                    const desc = f.description || 'No description available.';
                     html += `
-                    <div class="feature-item flex items-center justify-between text-sm pl-2">
-                      <span class="flex items-center gap-2 text-white/70">
-                        <i class="fa-regular fa-circle-check text-emerald-400/70 text-xs"></i>
-                        ${f.name || 'Feature'}
-                      </span>
-                      <span class="font-mono text-white/50 text-xs">${formatPrice(price)}</span>
-                    </div>
-                  `;
+                        <tr>
+                            <td>
+                                <div class="feature-name">
+                                    <button class="remove-btn" data-index="${index}" title="Remove feature">
+                                        <i class="fa-solid fa-xmark"></i>
+                                    </button>
+                                    <span>${f.name || 'Feature'}</span>
+                                    <span class="info-tip">
+                                        <i class="fa-regular fa-circle-question tip-icon"></i>
+                                        <span class="tooltip-box">${desc}</span>
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="price-col">${formatPrice(f.price || 0)}</td>
+                        </tr>
+                    `;
                 });
-                html += `
-                  </div>
-                </div>
-              `;
-            } else {
-                html += `
-                <div class="py-3 border-b border-white/5 text-sm text-white/30">
-                  <i class="fa-regular fa-circle mr-1"></i> No add-on features selected
-                </div>
-              `;
             }
 
-            // — Totals —
+            // Database tier
+            if (tierFee > 0) {
+                html += `
+                    <tr>
+                        <td><span class="text-slate-600">Database Tier: ${tier.name}</span></td>
+                        <td class="price-col">${formatPrice(tierFee)}</td>
+                    </tr>
+                `;
+            }
+
+            // Subtotal & totals
+            const subtotal = basePrice + featuresTotal;
             html += `
-            <div class="mt-4 pt-2 space-y-2">
-              <div class="flex justify-between text-sm">
-                <span class="text-white/50">Base Package</span>
-                <span class="text-white/60 font-mono">${formatPrice(basePrice)}</span>
-              </div>
-              ${featuresTotal > 0 ? `
-              <div class="flex justify-between text-sm">
-                <span class="text-white/50">Add-ons Subtotal</span>
-                <span class="text-white/60 font-mono">${formatPrice(featuresTotal)}</span>
-              </div>` : ''}
-              ${tierFee > 0 ? `
-              <div class="flex justify-between text-sm">
-                <span class="text-white/50">Database Fee</span>
-                <span class="text-white/60 font-mono">${formatPrice(tierFee)}</span>
-              </div>` : ''}
-              <div class="flex justify-between text-lg font-bold pt-2 border-t border-white/10">
-                <span class="text-white/80">Total Amount</span>
-                <span class="text-emerald-400 text-xl font-mono">${formatPrice(total)}</span>
-              </div>
-            </div>
-          `;
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td>Subtotal</td>
+                            <td class="price-col">${formatPrice(subtotal)}</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td class="font-bold text-slate-800">Total</td>
+                            <td class="price-col total-amount">${formatPrice(total)}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            `;
 
             container.innerHTML = html;
 
-            // Update Right Panel Summary Elements
-            if(document.getElementById('subtotalDisplay')) document.getElementById('subtotalDisplay').textContent = formatPrice(basePrice + featuresTotal);
-            if(document.getElementById('tierFeeDisplay')) document.getElementById('tierFeeDisplay').textContent = formatPrice(tierFee);
-            if(document.getElementById('totalDisplay')) document.getElementById('totalDisplay').textContent = formatPrice(total);
+            // Update summary in confirm box
+            document.getElementById('subtotalDisplay').textContent = formatPrice(subtotal);
+            document.getElementById('tierFeeDisplay').textContent = formatPrice(tierFee);
+            document.getElementById('totalDisplay').textContent = formatPrice(total);
+
+            // Also update meta total
+            const metaTotal = document.querySelector('.meta-grid .meta-value:last-child');
+            if (metaTotal) metaTotal.textContent = formatPrice(total);
 
             window._orderTotal = total;
             window._orderRef = ref;
+            window._selectedFeatures = features;
 
-            return { total, ref };
+            // Re-bind remove events
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const index = parseInt(this.getAttribute('data-index'), 10);
+                    if (!isNaN(index) && window._selectedFeatures && window._selectedFeatures[index]) {
+                        window._selectedFeatures.splice(index, 1);
+                        // Update order in storage
+                        try {
+                            const stored = sessionStorage.getItem('pendingOrder');
+                            if (stored) {
+                                const orderData = JSON.parse(stored);
+                                orderData.selectedFeatures = window._selectedFeatures;
+                                const fTotal = window._selectedFeatures.reduce((s, f) => s + (Number(f.price) || 0), 0);
+                                orderData.totalPrice = (orderData.basePrice || 0) + fTotal + (orderData.databaseTier?.price || 0);
+                                sessionStorage.setItem('pendingOrder', JSON.stringify(orderData));
+                            }
+                        } catch (_) {}
+                        renderInvoice(order);
+                    }
+                });
+            });
         }
 
-        // ────────────────────────────────────────────────────────────────
-        //  4. TELEGRAM DISPATCH
-        // ────────────────────────────────────────────────────────────────
-
+        // ─── TELEGRAM ───
         async function sendSalesAdminAlert(order) {
             const features = order.selectedFeatures || [];
             const tier = order.databaseTier || { name: 'Standard', price: 0 };
@@ -463,9 +577,7 @@
             const ref = window._orderRef || '------';
             const date = formatDate(order.submittedAt || Date.now());
 
-            let featureLines = features.map(f =>
-                `  • ${f.name || 'Feature'} — ${formatPrice(f.price || 0)}`
-            ).join('\n');
+            let featureLines = features.map(f => `  • ${f.name || 'Feature'} — ${formatPrice(f.price || 0)}`).join('\n');
             if (!featureLines) featureLines = '  • No features selected';
 
             const message =
@@ -502,42 +614,37 @@
             }
         }
 
-        // ────────────────────────────────────────────────────────────────
-        //  5. CONFIRM HANDLER
-        // ────────────────────────────────────────────────────────────────
-
+        // ─── CONFIRM HANDLER ───
         async function handleConfirm(order) {
             const btn = document.getElementById('confirmBtn');
-            const btnText = document.getElementById('confirmBtnText');
-            const spinner = document.getElementById('confirmSpinner');
             const confirmSection = document.getElementById('confirmSection');
             const successSection = document.getElementById('successSection');
 
             btn.classList.add('loading');
-            if (btnText) btnText.textContent = 'Confirming...';
-            if (spinner) spinner.classList.remove('hidden');
+            btn.disabled = true;
 
             try {
                 await sendSalesAdminAlert(order);
             } catch (_) {}
 
-            // Save confirmed order status into sessionStorage
             order.confirmedAt = new Date().toISOString();
             order.status = 'confirmed';
             sessionStorage.setItem('pendingOrder', JSON.stringify(order));
 
-            if (confirmSection) confirmSection.style.display = 'none';
-            if (successSection) successSection.classList.remove('hidden');
+            // Update status badge
+            const badge = document.getElementById('statusBadge');
+            badge.textContent = 'PAID';
+            badge.className = 'status-badge confirmed';
+
+            // Show success modal
+            confirmSection.style.display = 'none';
+            successSection.classList.add('active');
 
             btn.classList.remove('loading');
-            if (btnText) btnText.textContent = 'Confirm Order / မှာယူမည်';
-            if (spinner) spinner.classList.add('hidden');
+            btn.disabled = false;
         }
 
-        // ────────────────────────────────────────────────────────────────
-        //  6. DOWNLOAD INVOICE
-        // ────────────────────────────────────────────────────────────────
-
+        // ─── DOWNLOAD ───
         function downloadInvoice() {
             const originalTitle = document.title;
             document.title = 'Invoice_' + (window._orderRef || 'order');
@@ -545,10 +652,7 @@
             document.title = originalTitle;
         }
 
-        // ────────────────────────────────────────────────────────────────
-        //  7. INIT
-        // ────────────────────────────────────────────────────────────────
-
+        // ─── INIT ───
         function init() {
             const order = getOrderFromStorage();
 
@@ -569,7 +673,7 @@
             if (confirmBtn) {
                 confirmBtn.addEventListener('click', function(e) {
                     e.preventDefault();
-                    if (this.classList.contains('loading')) return;
+                    if (this.disabled) return;
                     handleConfirm(order);
                 });
             }
@@ -588,7 +692,7 @@
         document.addEventListener('DOMContentLoaded', init);
 
     })();
-</script>
+    </script>
 
 </body>
 </html>
