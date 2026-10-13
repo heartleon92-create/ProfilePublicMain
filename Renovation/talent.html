@@ -1,0 +1,2170 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ads Video Service (UGC Talent & Production) — ProfileCraft</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Noto+Sans+Myanmar:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #024BFE;
+            --primary-dark: #0242E1;
+            --bg-main: #F7FAFE;
+            --bg-card: #FFFFFF;
+            --text-main: #1A202C;
+            --text-secondary: #4A5568;
+            --border: #E2E8F0;
+            --border-light: #EDF2F7;
+            --gradient: linear-gradient(135deg, #024BFE, #0242E1);
+            --shadow: 0 4px 20px rgba(2, 75, 254, 0.08);
+            --shadow-hover: 0 12px 40px rgba(2, 75, 254, 0.15);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Noto Sans Myanmar', 'Poppins', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            min-height: 100vh;
+        }
+
+        body.lang-en { font-family: 'Poppins', 'Noto Sans Myanmar', sans-serif; }
+        body.lang-my .en-only { display: none !important; }
+        body.lang-en .my-only { display: none !important; }
+
+        .mm-text { font-family: 'Noto Sans Myanmar', 'Poppins', sans-serif; }
+
+        .container { max-width: 1280px; margin: 0 auto; }
+
+        /* ══════════════════════════════════════════════════════════
+           PREMIUM HEADER
+           ══════════════════════════════════════════════════════════ */
+        .header {
+            position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1.25rem;
+            padding: 1.1rem 1.75rem;
+            border-radius: 24px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(247,250,254,0.95) 100%);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(2, 75, 254, 0.08);
+            box-shadow:
+                0 1px 2px rgba(2, 75, 254, 0.04),
+                0 12px 40px -12px rgba(2, 75, 254, 0.12),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 12% 50%, rgba(2, 75, 254, 0.06) 0%, transparent 45%);
+            pointer-events: none;
+        }
+
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            position: relative;
+            z-index: 1;
+            min-width: 0;
+        }
+
+        .logo-container {
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
+            background: var(--gradient);
+            box-shadow:
+                0 8px 20px -6px rgba(2, 75, 254, 0.45),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-container::after {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: linear-gradient(120deg, transparent 40%, rgba(255,255,255,0.35) 50%, transparent 60%);
+            transform: rotate(25deg);
+            animation: shine 4s ease-in-out infinite;
+        }
+
+        @keyframes shine {
+            0%, 100% { transform: translateX(-100%) rotate(25deg); }
+            50% { transform: translateX(100%) rotate(25deg); }
+        }
+
+        .logo-container i {
+            color: #FFFFFF;
+            font-size: 1.6rem;
+            z-index: 2;
+        }
+
+        .brand-text { min-width: 0; }
+
+        .brand-name {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .brand-name .verified-dot {
+            display: inline-flex;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--gradient);
+            align-items: center;
+            justify-content: center;
+            color: #FFF;
+            font-size: 0.55rem;
+            box-shadow: 0 2px 6px rgba(2, 75, 254, 0.4);
+        }
+
+        .brand-tagline {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            margin-top: 0.15rem;
+        }
+
+        .brand-tagline .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #22C55E;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2); }
+            50% { box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.08); }
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            position: relative;
+            z-index: 1;
+            flex-shrink: 0;
+        }
+
+        .header-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.9rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            background: #F0F5FF;
+            color: var(--primary);
+            border: 1px solid rgba(2, 75, 254, 0.15);
+            white-space: nowrap;
+        }
+
+        .header-chip i { font-size: 0.7rem; }
+
+        /* ── Language Switcher ── */
+        .lang-switcher {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #FFFFFF;
+            border: 1.5px solid rgba(2, 75, 254, 0.15);
+            border-radius: 999px;
+            padding: 0.25rem;
+            gap: 0.15rem;
+            box-shadow: 0 2px 8px rgba(2, 75, 254, 0.06);
+        }
+
+        .lang-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.5rem 0.95rem;
+            border-radius: 999px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.22s cubic-bezier(0.25, 0.8, 0.25, 1);
+            white-space: nowrap;
+        }
+
+        .lang-btn .flag { font-size: 0.9rem; line-height: 1; }
+        .lang-btn:hover { color: var(--primary); }
+        .lang-btn.active {
+            background: var(--gradient);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px -2px rgba(2, 75, 254, 0.4);
+        }
+
+        @media (max-width: 720px) {
+            .header { flex-wrap: wrap; padding: 1rem; }
+            .header-chip.hide-mobile { display: none; }
+            .brand-name { font-size: 1.15rem; }
+            .logo-container { width: 48px; height: 48px; border-radius: 14px; }
+            .logo-container i { font-size: 1.3rem; }
+            .lang-btn { padding: 0.45rem 0.7rem; font-size: 0.72rem; }
+        }
+
+        /* ── Promo Banner ── */
+        .promo-section {
+            margin-bottom: 2.5rem;
+            border-radius: 20px;
+            overflow: hidden;
+            background: var(--gradient);
+            color: #FFFFFF;
+            box-shadow: var(--shadow-hover);
+            position: relative;
+        }
+
+        .promo-container {
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .promo-container {
+                text-align: left;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .promo-content h2 { font-size: 2rem; font-weight: 800; margin-bottom: 0.5rem; }
+        .promo-content p { font-size: 1.05rem; opacity: 0.9; }
+
+        .promo-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 0.75rem;
+            backdrop-filter: blur(5px);
+        }
+
+        /* ── Layout Grid ── */
+        .service-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 1024px) {
+            .service-grid { grid-template-columns: 1.4fr 0.6fr; }
+        }
+
+        .card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-light);
+        }
+
+        .section-title {
+            font-size: 1.35rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--text-main);
+        }
+
+        .section-title i { color: var(--primary); }
+
+        .form-label-icon {
+            color: var(--primary);
+            font-size: 0.9rem;
+            margin-right: 0.35rem;
+        }
+
+        /* ── Talent Grid ── */
+        .talent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .talent-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            text-align: center;
+            padding-bottom: 1.25rem;
+        }
+
+        .talent-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .talent-card.selected {
+            border-color: var(--primary);
+            background: #F0F5FF;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .talent-img-wrapper {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            background: #E2E8F0;
+            position: relative;
+        }
+
+        .talent-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+
+        .talent-video-count {
+            position: absolute;
+            top: 0.6rem;
+            left: 0.6rem;
+            background: rgba(0, 0, 0, 0.55);
+            color: #FFF;
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 0.25rem 0.55rem;
+            border-radius: 999px;
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .talent-video-count i { font-size: 0.62rem; }
+
+        .talent-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0.75rem 0 0.2rem;
+        }
+
+        .talent-accent {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            padding: 0 0.75rem;
+        }
+
+        .preview-sample-btn {
+            background: var(--bg-main);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 0.5rem 1.1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+
+        .preview-sample-btn:hover { background: var(--primary); color: #FFFFFF; }
+
+        /* ── Form Elements ── */
+        .form-group { margin-bottom: 1.5rem; }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ══ NICHE PILL GRID ══ */
+        .niche-grid { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+        .niche-pill { cursor: pointer; position: relative; }
+        .niche-pill input { position: absolute; opacity: 0; pointer-events: none; }
+        .niche-pill-inner {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.6rem 1rem;
+            border-radius: 999px;
+            border: 1.5px solid var(--border);
+            background: #FFFFFF;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: all 0.22s cubic-bezier(0.25, 0.8, 0.25, 1);
+            white-space: nowrap;
+        }
+        .niche-pill-inner i { font-size: 0.85rem; color: #94A3B8; transition: color 0.22s ease; }
+        .niche-pill:hover .niche-pill-inner {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 14px rgba(2, 75, 254, 0.08);
+        }
+        .niche-pill:hover .niche-pill-inner i { color: var(--primary); }
+        .niche-pill input:checked + .niche-pill-inner {
+            background: var(--gradient);
+            border-color: var(--primary-dark);
+            color: #FFFFFF;
+            box-shadow: 0 8px 18px rgba(2, 75, 254, 0.25);
+        }
+        .niche-pill input:checked + .niche-pill-inner i { color: #FFFFFF; }
+
+        /* ══ AD FORMAT CARD GRID ══ */
+        .format-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.85rem;
+        }
+        .format-card { cursor: pointer; position: relative; }
+        .format-card input { position: absolute; opacity: 0; pointer-events: none; }
+        .format-card-inner {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.35rem;
+            padding: 1.1rem 1rem;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            background: #FFFFFF;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+            height: 100%;
+            overflow: hidden;
+        }
+        .format-icon {
+            width: 40px; height: 40px;
+            border-radius: 12px;
+            background: #F0F5FF;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.05rem;
+            margin-bottom: 0.35rem;
+            transition: all 0.25s ease;
+        }
+        .format-title { font-size: 0.95rem; font-weight: 700; color: var(--text-main); line-height: 1.2; }
+        .format-desc { font-size: 0.74rem; color: var(--text-secondary); line-height: 1.3; }
+        .format-check {
+            position: absolute;
+            top: 0.75rem; right: 0.75rem;
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.65rem;
+            opacity: 0;
+            transform: scale(0.5);
+            transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .format-card:hover .format-card-inner {
+            border-color: #93B4FF;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px -10px rgba(2, 75, 254, 0.18);
+        }
+        .format-card input:checked + .format-card-inner {
+            border-color: var(--primary);
+            background: linear-gradient(180deg, #F7FAFF 0%, #FFFFFF 100%);
+            box-shadow: 0 12px 28px -10px rgba(2, 75, 254, 0.25);
+            transform: translateY(-2px);
+        }
+        .format-card input:checked + .format-card-inner .format-icon {
+            background: var(--gradient);
+            color: #FFFFFF;
+            box-shadow: 0 6px 14px rgba(2, 75, 254, 0.3);
+        }
+        .format-card input:checked + .format-card-inner .format-check {
+            opacity: 1; transform: scale(1);
+        }
+
+        /* ══════════════════════════════════════════════════════════
+           VIDEO DURATION PROGRESS SLIDER
+           ══════════════════════════════════════════════════════════ */
+        .duration-slider-wrapper {
+            position: relative;
+            padding: 1.25rem 1.25rem 1rem;
+            border-radius: 18px;
+            background: linear-gradient(180deg, #F7FAFF 0%, #FFFFFF 100%);
+            border: 2px solid var(--border-light);
+            transition: var(--transition);
+        }
+
+        .duration-slider-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .duration-slider-label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .duration-slider-label i { color: var(--primary); font-size: 0.78rem; }
+
+        .duration-badge-live {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1.1rem;
+            border-radius: 999px;
+            background: var(--gradient);
+            color: #FFFFFF;
+            font-size: 0.95rem;
+            font-weight: 800;
+            box-shadow: 0 6px 16px -4px rgba(2, 75, 254, 0.4);
+            transition: var(--transition);
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        .duration-badge-live i { font-size: 0.8rem; opacity: 0.9; }
+
+        .duration-range {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 999px;
+            background: linear-gradient(90deg,
+                var(--primary) 0%,
+                var(--primary) var(--slider-percent, 5%),
+                #E2E8F0 var(--slider-percent, 5%),
+                #E2E8F0 100%);
+            outline: none;
+            cursor: pointer;
+            transition: background 0.15s ease;
+            display: block;
+        }
+
+        .duration-range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            border: 4px solid var(--primary);
+            cursor: grab;
+            box-shadow:
+                0 4px 12px rgba(2, 75, 254, 0.35),
+                0 0 0 6px rgba(2, 75, 254, 0.12);
+            transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .duration-range::-webkit-slider-thumb:hover {
+            transform: scale(1.15);
+            box-shadow:
+                0 6px 18px rgba(2, 75, 254, 0.5),
+                0 0 0 8px rgba(2, 75, 254, 0.15);
+        }
+
+        .duration-range::-webkit-slider-thumb:active {
+            cursor: grabbing;
+            transform: scale(1.05);
+        }
+
+        .duration-range::-moz-range-thumb {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            border: 4px solid var(--primary);
+            cursor: grab;
+            box-shadow:
+                0 4px 12px rgba(2, 75, 254, 0.35),
+                0 0 0 6px rgba(2, 75, 254, 0.12);
+            transition: all 0.2s ease;
+        }
+
+        .duration-range::-moz-range-thumb:hover {
+            transform: scale(1.15);
+            box-shadow:
+                0 6px 18px rgba(2, 75, 254, 0.5),
+                0 0 0 8px rgba(2, 75, 254, 0.15);
+        }
+
+        .duration-ticks {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.75rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #94A3B8;
+            padding: 0 4px;
+            user-select: none;
+        }
+
+        .duration-ticks span {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .duration-ticks span::before {
+            content: '';
+            width: 2px;
+            height: 6px;
+            background: #CBD5E1;
+            border-radius: 1px;
+        }
+
+        .duration-presets {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .duration-preset-btn {
+            padding: 0.4rem 0.85rem;
+            border-radius: 999px;
+            border: 1.5px solid var(--border);
+            background: #FFFFFF;
+            font-family: inherit;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.22s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .duration-preset-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .duration-preset-btn.active {
+            background: var(--gradient);
+            border-color: var(--primary-dark);
+            color: #FFFFFF;
+            box-shadow: 0 4px 12px -2px rgba(2, 75, 254, 0.4);
+        }
+
+        .duration-preset-btn i { font-size: 0.7rem; }
+
+        .duration-hint {
+            margin-top: 0.85rem;
+            font-size: 0.72rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.6rem 0.85rem;
+            border-radius: 10px;
+            background: #F0F5FF;
+            border: 1px solid #D6E4FF;
+        }
+
+        .duration-hint i { color: var(--primary); font-size: 0.78rem; }
+
+        /* ══ ADD-ON TOGGLE CARDS ══ */
+        .addon-grid { display: flex; flex-direction: column; gap: 0.75rem; }
+        .addon-card { cursor: pointer; position: relative; display: block; }
+        .addon-card input { position: absolute; opacity: 0; pointer-events: none; }
+        .addon-card-inner {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.1rem 1.25rem;
+            border-radius: 16px;
+            border: 2px solid var(--border);
+            background: #FFFFFF;
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+            position: relative;
+        }
+        .addon-icon {
+            flex-shrink: 0;
+            width: 44px; height: 44px;
+            border-radius: 13px;
+            background: #F0F5FF;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.25s ease;
+        }
+        .addon-body { display: flex; flex-direction: column; gap: 0.15rem; flex: 1; min-width: 0; }
+        .addon-title { font-size: 0.92rem; font-weight: 700; color: var(--text-main); line-height: 1.25; }
+        .addon-desc { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.35; }
+        .addon-price-tag {
+            flex-shrink: 0;
+            font-size: 0.78rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: #F0F5FF;
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            border: 1px solid #D6E4FF;
+            transition: all 0.25s ease;
+        }
+        .addon-toggle {
+            flex-shrink: 0;
+            width: 42px; height: 24px;
+            border-radius: 999px;
+            background: #E2E8F0;
+            position: relative;
+            transition: background 0.25s ease;
+        }
+        .addon-toggle-knob {
+            position: absolute;
+            top: 3px; left: 3px;
+            width: 18px; height: 18px;
+            border-radius: 50%;
+            background: #FFFFFF;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+            transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .addon-card:hover .addon-card-inner {
+            border-color: #93B4FF;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 22px -12px rgba(2, 75, 254, 0.2);
+        }
+        .addon-card input:checked + .addon-card-inner {
+            border-color: var(--primary);
+            background: linear-gradient(180deg, #F7FAFF 0%, #FFFFFF 100%);
+            box-shadow: 0 12px 26px -12px rgba(2, 75, 254, 0.28);
+        }
+        .addon-card input:checked + .addon-card-inner .addon-icon {
+            background: var(--gradient);
+            color: #FFFFFF;
+            box-shadow: 0 6px 14px rgba(2, 75, 254, 0.3);
+        }
+        .addon-card input:checked + .addon-card-inner .addon-price-tag {
+            background: var(--gradient);
+            color: #FFFFFF;
+            border-color: transparent;
+        }
+        .addon-card input:checked + .addon-card-inner .addon-toggle { background: var(--gradient); }
+        .addon-card input:checked + .addon-card-inner .addon-toggle-knob { transform: translateX(18px); }
+
+        /* Focus-visible */
+        .niche-pill input:focus-visible + .niche-pill-inner,
+        .format-card input:focus-visible + .format-card-inner,
+        .addon-card input:focus-visible + .addon-card-inner {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+        .duration-range:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 4px;
+        }
+
+        /* ── Sticky Order Summary ── */
+        .summary-card { position: sticky; top: 2rem; }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            padding: 0.5rem 0;
+        }
+        .summary-row.total {
+            border-top: 2px solid var(--border);
+            margin-top: 1rem;
+            padding-top: 1rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+        .summary-row.total .total-price { color: var(--primary); }
+
+        .proceed-btn {
+            display: block;
+            width: 100%;
+            background: var(--gradient);
+            color: #FFFFFF;
+            border: none;
+            padding: 1rem;
+            border-radius: 14px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(2, 75, 254, 0.3);
+            margin-top: 1.5rem;
+            text-align: center;
+            font-family: inherit;
+        }
+        .proceed-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+
+        /* ══════════════════════════════════════════════════════════
+           MULTI-VIDEO TIKTOK-STYLE PREVIEW MODAL — FIXED
+           ══════════════════════════════════════════════════════════ */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(10, 15, 30, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            padding: 1rem;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+
+        .video-modal-content {
+            background: #0F172A;
+            width: 100%;
+            max-width: 960px;
+            max-height: 92vh;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            transform: scale(0.92);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.7);
+            display: grid;
+            grid-template-columns: 1fr;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 720px) {
+            .video-modal-content {
+                grid-template-columns: 340px 1fr;
+                max-height: 85vh;
+            }
+        }
+
+        .modal-overlay.active .video-modal-content { transform: scale(1); }
+
+        .modal-sidebar {
+            padding: 1.5rem;
+            background: linear-gradient(180deg, #111C33 0%, #0F172A 100%);
+            border-right: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            overflow-y: auto;
+        }
+
+        .modal-talent-header {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .modal-talent-avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(2, 75, 254, 0.6);
+            box-shadow: 0 0 20px rgba(2, 75, 254, 0.35);
+        }
+
+        .modal-talent-info { min-width: 0; }
+        .modal-talent-name {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #FFFFFF;
+            line-height: 1.2;
+        }
+        .modal-talent-accent {
+            font-size: 0.75rem;
+            color: #94A3B8;
+            margin-top: 0.15rem;
+        }
+
+        .modal-video-list-title {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #64748B;
+            margin-bottom: 0.25rem;
+        }
+
+        .modal-video-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+
+        .modal-video-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.65rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1.5px solid transparent;
+            cursor: pointer;
+            transition: all 0.22s ease;
+        }
+
+        .modal-video-item:hover {
+            background: rgba(2, 75, 254, 0.12);
+            border-color: rgba(2, 75, 254, 0.3);
+        }
+
+        .modal-video-item.active {
+            background: rgba(2, 75, 254, 0.18);
+            border-color: var(--primary);
+        }
+
+        .modal-video-thumb {
+            position: relative;
+            flex-shrink: 0;
+            width: 68px;
+            height: 90px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #1E293B;
+        }
+
+        .modal-video-thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+        .modal-video-thumb .play-mini {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.65) 100%);
+        }
+
+        .modal-video-thumb .play-mini i {
+            color: #FFF;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .modal-video-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 0.2rem;
+            min-width: 0;
+        }
+
+        .modal-video-meta .v-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #F1F5F9;
+            line-height: 1.25;
+        }
+
+        .modal-video-meta .v-desc {
+            font-size: 0.7rem;
+            color: #94A3B8;
+            line-height: 1.3;
+        }
+
+        /* ── Video Stage — Fully Centered & Responsive ── */
+        .modal-video-stage {
+            position: relative;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            aspect-ratio: 9 / 16;
+            max-height: 85vh;
+            overflow: hidden;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 720px) {
+            .modal-video-stage {
+                aspect-ratio: auto;
+                height: 100%;
+                max-height: 85vh;
+            }
+        }
+
+        .modal-video-stage video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            background: #000;
+            margin: 0 auto;
+        }
+
+        .modal-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.55);
+            color: #FFF;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 5;
+        }
+
+        .modal-nav-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-50%) scale(1.08);
+        }
+
+        .modal-nav-btn.prev { left: 1rem; }
+        .modal-nav-btn.next { right: 1rem; }
+
+        .modal-nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        .modal-nav-btn:disabled:hover {
+            background: rgba(0, 0, 0, 0.55);
+            border-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-50%) scale(1);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(0, 0, 0, 0.55);
+            color: #FFF;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+        }
+
+        .close-modal:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: rotate(90deg);
+        }
+
+        .modal-video-counter {
+            position: absolute;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.65);
+            color: #FFF;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            z-index: 5;
+        }
+
+        .modal-video-counter i { color: var(--primary); font-size: 0.7rem; }
+
+        /* ── Mobile Fix: Centered, Full-Width Player ── */
+        @media (max-width: 719px) {
+            .video-modal-content {
+                max-height: 92vh;
+                overflow-y: auto;
+                overflow-x: hidden;
+                border-radius: 20px;
+                width: calc(100% - 1rem);
+                margin: 0 auto;
+            }
+
+            .modal-sidebar {
+                order: 2;
+                max-height: 40vh;
+            }
+
+            .modal-video-stage {
+                order: 1;
+                aspect-ratio: 9 / 16;
+                max-height: 55vh;
+                width: 100%;
+                margin: 0 auto;
+                border-radius: 20px 20px 0 0;
+            }
+
+            .modal-video-stage video {
+                width: 100%;
+                max-width: 100%;
+                object-fit: contain;
+            }
+        }
+    </style>
+</head>
+<body class="lang-my">
+
+    <div class="container">
+        <!-- ═══════════════ PREMIUM HEADER ═══════════════ -->
+        <header class="header">
+            <div class="header-brand">
+                <div class="logo-container">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div class="brand-text">
+                    <div class="brand-name">
+                        ProfileCraft
+                        <span class="verified-dot"><i class="fas fa-check"></i></span>
+                    </div>
+                    <div class="brand-tagline">
+                        <span class="dot"></span>
+                        <span class="my-only">ကြော်ငြာဗီဒီယို ဝန်ဆောင်မှု (UGC)</span>
+                        <span class="en-only">Ads Video Service (UGC)</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="header-actions">
+                <span class="header-chip hide-mobile">
+                    <i class="fas fa-bolt"></i>
+                    <span class="my-only">၂၄ နာရီ ပို့ဆောင်</span>
+                    <span class="en-only">24h Delivery</span>
+                </span>
+
+                <div class="lang-switcher" role="group" aria-label="Language">
+                    <button type="button" class="lang-btn active" data-lang="my" aria-pressed="true">
+                        <span class="flag">🇲🇲</span>
+                        <span>မြန်မာ</span>
+                    </button>
+                    <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">
+                        <span class="flag">🇬🇧</span>
+                        <span>EN</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- ═══════════════ PROMO BANNER ═══════════════ -->
+        <!-- <section class="promo-section">
+            <div class="promo-container">
+                <div class="promo-content">
+                    <span class="promo-badge">
+                        <i class="fas fa-bolt"></i>
+                        <span class="my-only">အထူး ပက်ကေ့ချ် ကမ်းလှမ်းချက်</span>
+                        <span class="en-only">Special Package Offer</span>
+                    </span>
+                    <h2 class="my-only">သင့်အမှတ်တံဆိပ်ကို Pro UGC ဖြင့် မြှင့်တင်လိုက်ပါ</h2>
+                    <h2 class="en-only">Boost Your Brand with Pro UGC Talents</h2>
+                    <p class="my-only">TikTok၊ Reels နှင့် Paid Campaign များအတွက် ထိရောက်သော ဗီဒီယိုကြော်ငြာများ ရယူလိုက်ပါ။</p>
+                    <p class="en-only">Get high-converting video ads for TikTok, Reels &amp; Paid Campaigns starting today.</p>
+                </div>
+                <div>
+                    <button style="background:#FFFFFF; color:var(--primary); border:none; padding:0.8rem 1.8rem; border-radius:30px; font-weight:700; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,0.1); font-family:inherit;">
+                        <span class="my-only">မော်ဒယ်များ ကြည့်ရှုရန်</span>
+                        <span class="en-only">Explore Talents</span>
+                    </button>
+                </div>
+            </div>
+        </section> -->
+
+        <!-- ═══════════════ MAIN GRID ═══════════════ -->
+        <div class="service-grid">
+            <div class="left-column">
+
+                <!-- 1. TALENT SELECTION -->
+                <div class="card">
+                    <div class="section-title">
+                        <i class="fas fa-users"></i>
+                        <span class="my-only">၁။ မော်ဒယ် ရွေးချယ်ပါ</span>
+                        <span class="en-only">1. Choose Your Talent Model</span>
+                    </div>
+                    <div class="talent-grid" id="talentGrid"></div>
+                </div>
+
+                <!-- 2. VIDEO REQUIREMENTS -->
+                <div class="card">
+                    <div class="section-title">
+                        <i class="fas fa-sliders-h"></i>
+                        <span class="my-only">၂။ ဗီဒီယို လိုအပ်ချက်များ</span>
+                        <span class="en-only">2. Video Requirements &amp; Style</span>
+                    </div>
+
+                    <!-- 2A. Niche -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-tag form-label-icon"></i>
+                            <span class="my-only">ကုန်ပစ္စည်း အမျိုးအစား</span>
+                            <span class="en-only">Product Niche / Category</span>
+                        </label>
+                        <div class="niche-grid" id="nicheGrid">
+                            <label class="niche-pill">
+                                <input type="radio" name="niche" value="Cosmetics" checked>
+                                <span class="niche-pill-inner">
+                                    <i class="fas fa-spa"></i>
+                                    <span class="my-only">အလှကုန်</span>
+                                    <span class="en-only">Cosmetics</span>
+                                </span>
+                            </label>
+                            <label class="niche-pill">
+                                <input type="radio" name="niche" value="Food & Beverage">
+                                <span class="niche-pill-inner">
+                                    <i class="fas fa-utensils"></i>
+                                    <span class="my-only">အစားအသောက်</span>
+                                    <span class="en-only">Food &amp; Beverage</span>
+                                </span>
+                            </label>
+                            <label class="niche-pill">
+                                <input type="radio" name="niche" value="Fashion">
+                                <span class="niche-pill-inner">
+                                    <i class="fas fa-tshirt"></i>
+                                    <span class="my-only">ဖက်ရှင်</span>
+                                    <span class="en-only">Fashion</span>
+                                </span>
+                            </label>
+                            <label class="niche-pill">
+                                <input type="radio" name="niche" value="Tech & Gadgets">
+                                <span class="niche-pill-inner">
+                                    <i class="fas fa-mobile-alt"></i>
+                                    <span class="my-only">နည်းပညာ</span>
+                                    <span class="en-only">Tech &amp; Gadgets</span>
+                                </span>
+                            </label>
+                            <label class="niche-pill">
+                                <input type="radio" name="niche" value="Health">
+                                <span class="niche-pill-inner">
+                                    <i class="fas fa-heartbeat"></i>
+                                    <span class="my-only">ကျန်းမာရေး</span>
+                                    <span class="en-only">Health</span>
+                                </span>
+                            </label>
+                            <label class="niche-pill">
+                                <input type="radio" name="niche" value="Home">
+                                <span class="niche-pill-inner">
+                                    <i class="fas fa-home"></i>
+                                    <span class="my-only">အိမ်သုံး</span>
+                                    <span class="en-only">Home</span>
+                                </span>
+                            </label>
+                            <label class="niche-pill">
+                                <input type="radio" name="niche" value="Education">
+                                <span class="niche-pill-inner">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span class="my-only">ပညာရေး</span>
+                                    <span class="en-only">Education</span>
+                                </span>
+                            </label>
+                            <label class="niche-pill">
+                                <input type="radio" name="niche" value="Travel">
+                                <span class="niche-pill-inner">
+                                    <i class="fas fa-plane"></i>
+                                    <span class="my-only">ခရီးသွား</span>
+                                    <span class="en-only">Travel</span>
+                                </span>
+                            </label>
+                            <label class="niche-pill">
+                                <input type="radio" name="niche" value="Fitness">
+                                <span class="niche-pill-inner">
+                                    <i class="fas fa-dumbbell"></i>
+                                    <span class="my-only">ကြံ့ခိုင်ရေး</span>
+                                    <span class="en-only">Fitness</span>
+                                </span>
+                            </label>
+                            <label class="niche-pill">
+                                <input type="radio" name="niche" value="General">
+                                <span class="niche-pill-inner">
+                                    <i class="fas fa-star"></i>
+                                    <span class="my-only">အထွေထွေ</span>
+                                    <span class="en-only">General / Other</span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 2B. Ad Format -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-film form-label-icon"></i>
+                            <span class="my-only">ကြော်ငြာ ပုံစံ</span>
+                            <span class="en-only">Ad Format / Style</span>
+                        </label>
+                        <div class="format-grid" id="formatGrid">
+                            <label class="format-card">
+                                <input type="radio" name="adStyle" value="Unboxing" checked>
+                                <span class="format-card-inner">
+                                    <span class="format-icon"><i class="fas fa-box-open"></i></span>
+                                    <span class="format-title my-only">Unboxing</span>
+                                    <span class="format-title en-only">Unboxing</span>
+                                    <span class="format-desc my-only">ပထမဆုံး မြင်တွေ့မှု</span>
+                                    <span class="format-desc en-only">First impression</span>
+                                    <span class="format-check"><i class="fas fa-check"></i></span>
+                                </span>
+                            </label>
+                            <label class="format-card">
+                                <input type="radio" name="adStyle" value="Review">
+                                <span class="format-card-inner">
+                                    <span class="format-icon"><i class="fas fa-search-plus"></i></span>
+                                    <span class="format-title my-only">Product Review</span>
+                                    <span class="format-title en-only">Product Review</span>
+                                    <span class="format-desc my-only">အသေးစိတ် သုံးသပ်ချက်</span>
+                                    <span class="format-desc en-only">Detailed review</span>
+                                    <span class="format-check"><i class="fas fa-check"></i></span>
+                                </span>
+                            </label>
+                            <label class="format-card">
+                                <input type="radio" name="adStyle" value="Skit">
+                                <span class="format-card-inner">
+                                    <span class="format-icon"><i class="fas fa-theater-masks"></i></span>
+                                    <span class="format-title my-only">Skit / ဇာတ်လမ်း</span>
+                                    <span class="format-title en-only">Skit / Story</span>
+                                    <span class="format-desc my-only">ဟာသ ဇာတ်လမ်းတို</span>
+                                    <span class="format-desc en-only">Relatable storytelling</span>
+                                    <span class="format-check"><i class="fas fa-check"></i></span>
+                                </span>
+                            </label>
+                            <label class="format-card">
+                                <input type="radio" name="adStyle" value="Testimonial">
+                                <span class="format-card-inner">
+                                    <span class="format-icon"><i class="fas fa-quote-right"></i></span>
+                                    <span class="format-title my-only">Testimonial</span>
+                                    <span class="format-title en-only">Testimonial</span>
+                                    <span class="format-desc my-only">ရလဒ် သက်သေခံ</span>
+                                    <span class="format-desc en-only">Results &amp; proof</span>
+                                    <span class="format-check"><i class="fas fa-check"></i></span>
+                                </span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 2C. Duration Slider -->
+                    <div class="form-group">
+                        <label class="form-label">
+                            <i class="fas fa-clock form-label-icon"></i>
+                            <span class="my-only">ဗီဒီယို ကြာချိန်</span>
+                            <span class="en-only">Video Duration</span>
+                        </label>
+
+                        <div class="duration-slider-wrapper">
+                            <div class="duration-slider-header">
+                                <span class="duration-slider-label">
+                                    <i class="fas fa-sliders-h"></i>
+                                    <span class="my-only">ဆွဲချ၍ ရွေးချယ်ပါ</span>
+                                    <span class="en-only">Drag to select duration</span>
+                                </span>
+                                <span class="duration-badge-live" id="durationBadge">
+                                    <i class="fas fa-clock"></i>
+                                    <span id="durationText">15s</span>
+                                </span>
+                            </div>
+
+                            <input type="range"
+                                   id="durationSlider"
+                                   class="duration-range"
+                                   min="5"
+                                   max="7200"
+                                   step="5"
+                                   value="15"
+                                   aria-label="Video duration in seconds">
+
+                            <div class="duration-ticks">
+                                <span>5s</span>
+                                <span>1m</span>
+                                <span>5m</span>
+                                <span>15m</span>
+                                <span>30m</span>
+                                <span>1h</span>
+                                <span>2h</span>
+                            </div>
+
+                            <div class="duration-presets">
+                                <button type="button" class="duration-preset-btn active" data-seconds="15">
+                                    <i class="fas fa-bolt"></i> 15s
+                                </button>
+                                <button type="button" class="duration-preset-btn" data-seconds="30">
+                                    <i class="fas fa-star"></i> 30s
+                                </button>
+                                <button type="button" class="duration-preset-btn" data-seconds="60">
+                                    <i class="fas fa-gem"></i> 1m
+                                </button>
+                                <button type="button" class="duration-preset-btn" data-seconds="300">
+                                    <i class="fas fa-video"></i> 5m
+                                </button>
+                                <button type="button" class="duration-preset-btn" data-seconds="900">
+                                    <i class="fas fa-film"></i> 15m
+                                </button>
+                                <button type="button" class="duration-preset-btn" data-seconds="3600">
+                                    <i class="fas fa-hourglass-half"></i> 1h
+                                </button>
+                                <button type="button" class="duration-preset-btn" data-seconds="7200">
+                                    <i class="fas fa-hourglass-end"></i> 2h
+                                </button>
+                            </div>
+
+                            <div class="duration-hint">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="my-only">ကြာချိန် ပိုရှည်လေ စျေးနှုန်း ပိုမြင့်လေ — ချက်ချင်း ပြောင်းလဲတွက်ချက်ပါသည်။</span>
+                                <span class="en-only">Longer duration = higher price. Live calculation as you drag.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 2D. Add-ons -->
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label class="form-label">
+                            <i class="fas fa-plus-circle form-label-icon"></i>
+                            <span class="my-only">နောက်ထပ် ဝန်ဆောင်မှုများ</span>
+                            <span class="en-only">Add-on Services &amp; Scope</span>
+                        </label>
+                        <div class="addon-grid" id="addonGrid">
+
+                            <label class="addon-card" for="addScript">
+                                <input type="checkbox" id="addScript" value="15000">
+                                <span class="addon-card-inner">
+                                    <span class="addon-icon"><i class="fas fa-pen-fancy"></i></span>
+                                    <span class="addon-body">
+                                        <span class="addon-title my-only">ပရော်ဖက်ရှင်နယ် ဇာတ်ညွှန်း ရေးသားခြင်း</span>
+                                        <span class="addon-title en-only">Professional Script Writing</span>
+                                        <span class="addon-desc my-only">Hook, Body နှင့် CTA အပြည့်အစုံ</span>
+                                        <span class="addon-desc en-only">Hook, body &amp; CTA — done for you</span>
+                                    </span>
+                                    <span class="addon-price-tag">+15,000 MMK</span>
+                                    <span class="addon-toggle" aria-hidden="true">
+                                        <span class="addon-toggle-knob"></span>
+                                    </span>
+                                </span>
+                            </label>
+
+                            <label class="addon-card" for="addEditing">
+                                <input type="checkbox" id="addEditing" value="20000">
+                                <span class="addon-card-inner">
+                                    <span class="addon-icon"><i class="fas fa-magic"></i></span>
+                                    <span class="addon-body">
+                                        <span class="addon-title my-only">ဗီဒီယို တည်းဖြတ်ခြင်း အပြည့်အစုံ</span>
+                                        <span class="addon-title en-only">Full Video Editing</span>
+                                        <span class="addon-desc my-only">စာတန်းထိုး၊ B-roll၊ BGM နှင့် အထူးပြုပြင်မှုများ</span>
+                                        <span class="addon-desc en-only">Subtitles, B-rolls, BGM &amp; effects</span>
+                                    </span>
+                                    <span class="addon-price-tag">+20,000 MMK</span>
+                                    <span class="addon-toggle" aria-hidden="true">
+                                        <span class="addon-toggle-knob"></span>
+                                    </span>
+                                </span>
+                            </label>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- STICKY SUMMARY -->
+            <div class="right-column">
+                <div class="summary-card">
+                    <div class="card">
+                        <div class="section-title">
+                            <i class="fas fa-receipt"></i>
+                            <span class="my-only">အော်ဒါ အနှစ်ချုပ်</span>
+                            <span class="en-only">Order Summary</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span class="my-only">ရွေးချယ်ထားသော မော်ဒယ်:</span>
+                            <span class="en-only">Selected Talent:</span>
+                            <span id="summaryTalentName" style="font-weight:600; color:var(--text-main);">—</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="my-only">မော်ဒယ် အခြေခံခ:</span>
+                            <span class="en-only">Base Talent Fee:</span>
+                            <span id="summaryTalentFee">0 MMK</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="my-only">ကြာချိန် (<span id="summaryDurationLabel">15s</span>):</span>
+                            <span class="en-only">Duration (<span id="summaryDurationLabelEn">15s</span>):</span>
+                            <span id="summaryDurationFee">25,000 MMK</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="my-only">နောက်ထပ် စုစုပေါင်း:</span>
+                            <span class="en-only">Add-ons Total:</span>
+                            <span id="summaryAddonsFee">0 MMK</span>
+                        </div>
+
+                        <div class="summary-row total">
+                            <span class="my-only">စုစုပေါင်း:</span>
+                            <span class="en-only">Grand Total:</span>
+                            <span class="total-price" id="summaryGrandTotal">25,000 MMK</span>
+                        </div>
+
+                        <button class="proceed-btn" id="proceedOrderBtn">
+                            <i class="fas fa-paper-plane" style="margin-right: 8px;"></i>
+                            <span class="my-only">တယ်လီဂရမ်မှတစ်ဆင့် အော်ဒါတင်ရန်</span>
+                            <span class="en-only">Proceed &amp; Order via Telegram</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════ MULTI-VIDEO TIKTOK-STYLE MODAL ═══════════════ -->
+    <div class="modal-overlay" id="videoModal">
+        <div class="video-modal-content">
+            <button class="close-modal" id="closeModal" aria-label="Close">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <aside class="modal-sidebar">
+                <div class="modal-talent-header">
+                    <img id="modalAvatar" class="modal-talent-avatar" src="" alt="">
+                    <div class="modal-talent-info">
+                        <div class="modal-talent-name" id="modalTalentName">—</div>
+                        <div class="modal-talent-accent" id="modalTalentAccent">—</div>
+                    </div>
+                </div>
+
+                <div class="modal-video-list-title">
+                    <i class="fas fa-film" style="color:var(--primary); margin-right:0.35rem;"></i>
+                    <span class="my-only">ဗီဒီယို နမူနာများ</span>
+                    <span class="en-only">Video Samples</span>
+                </div>
+
+                <div class="modal-video-list" id="modalVideoList"></div>
+            </aside>
+
+            <div class="modal-video-stage">
+                <video id="modalVideoPlayer" controls playsinline preload="metadata" muted></video>
+
+                <button class="modal-nav-btn prev" id="prevVideoBtn" aria-label="Previous">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="modal-nav-btn next" id="nextVideoBtn" aria-label="Next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+
+                <div class="modal-video-counter">
+                    <i class="fas fa-play-circle"></i>
+                    <span id="videoCounter">1 / 1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        // ══════════════════════════════════════════════════════
+        // LOCAL VIDEO PATH CONFIG
+        // Videos are served from /img/video/video-1/
+        // ══════════════════════════════════════════════════════
+        const LOCAL_VIDEO_PATH = '/img/video/video-1/';
+
+        // ══════════════════════════════════════════════════════
+        // TALENT DATA — each talent has 2+ local sample videos
+        // ══════════════════════════════════════════════════════
+        const talentsData = [
+            {
+                id: 'T01',
+                name: 'May Thu',
+                nameMy: 'မေသူ',
+                accent: 'Burmese (Standard / Trendy)',
+                accentMy: 'မြန်မာ (ခေတ်မီ)',
+                category: 'Cosmetics & Fashion',
+                photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&auto=format&fit=crop&q=80',
+                baseFee: 30000,
+                videos: [
+                    {
+                        title: 'Skincare Unboxing',
+                        titleMy: 'အသားအရေ ထိန်းသိမ်းရေး Unboxing',
+                        desc: 'First impression + texture close-up',
+                        descMy: 'ပထမဆုံး မြင်တွေ့မှုနှင့် အသေးစိတ်',
+                        thumbnail: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=200&h=260&fit=crop',
+                        url: LOCAL_VIDEO_PATH + 'testingVideo.mp4'
+                    },
+                    {
+                        title: 'Daily Routine Ad',
+                        titleMy: 'နေ့စဉ် သုံးစွဲမှု ကြော်ငြာ',
+                        desc: 'Relatable morning routine',
+                        descMy: 'နေ့စဉ် သုံးစွဲမှု ပုံစံ',
+                        thumbnail: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=200&h=260&fit=crop',
+                        url: LOCAL_VIDEO_PATH + 'talent1_sample2.mp4'
+                    }
+                ]
+            },
+            {
+                id: 'T02',
+                name: 'Htet Htet',
+                nameMy: 'ထက်ထက်',
+                accent: 'Burmese & English (Fluent)',
+                accentMy: 'မြန်မာ နှင့် အင်္ဂလိပ်',
+                category: 'Tech & Lifestyle',
+                photo: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&auto=format&fit=crop&q=80',
+                baseFee: 35000,
+                videos: [
+                    {
+                        title: 'Gadget Review',
+                        titleMy: 'ဂျက်ဂက် သုံးသပ်ချက်',
+                        desc: 'Feature walkthrough',
+                        descMy: 'အင်္ဂါရပ် ရှင်းလင်းချက်',
+                        thumbnail: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=200&h=260&fit=crop',
+                        url: LOCAL_VIDEO_PATH + 'talent2_sample1.mp4'
+                    },
+                    {
+                        title: 'Lifestyle Skit',
+                        titleMy: 'နေ့စဉ်ဘဝ ဇာတ်လမ်း',
+                        desc: 'Relatable tech moment',
+                        descMy: 'နည်းပညာ နှင့် ဘဝ',
+                        thumbnail: 'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=200&h=260&fit=crop',
+                        url: LOCAL_VIDEO_PATH + 'talent2_sample2.mp4'
+                    }
+                ]
+            },
+            {
+                id: 'T03',
+                name: 'Aung Kyaw',
+                nameMy: 'အောင်ကျော်',
+                accent: 'Burmese (Energetic / Male)',
+                accentMy: 'မြန်မာ (အမျိုးသား)',
+                category: 'Gadgets & Food',
+                photo: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=400&auto=format&fit=crop&q=80',
+                baseFee: 30000,
+                videos: [
+                    {
+                        title: 'Food Taste Test',
+                        titleMy: 'အစားအသောက် မြည်းစမ်းခြင်း',
+                        desc: 'Honest reaction',
+                        descMy: 'ရိုးသားသော တုံ့ပြန်မှု',
+                        thumbnail: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=200&h=260&fit=crop',
+                        url: LOCAL_VIDEO_PATH + 'talent3_sample1.mp4'
+                    },
+                    {
+                        title: 'Quick Review',
+                        titleMy: 'အမြန်သုံးသပ်ချက်',
+                        desc: '30-second verdict',
+                        descMy: '၃၀ စက္ကန့် အတွင်း',
+                        thumbnail: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=200&h=260&fit=crop',
+                        url: LOCAL_VIDEO_PATH + 'talent3_sample2.mp4'
+                    }
+                ]
+            },
+            {
+                id: 'T04',
+                name: 'Su Myat',
+                nameMy: 'စုမြတ်',
+                accent: 'Burmese (Soft / Skit)',
+                accentMy: 'မြန်မာ (နူးညံ့)',
+                category: 'Food & Skincare',
+                photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&auto=format&fit=crop&q=80',
+                baseFee: 25000,
+                videos: [
+                    {
+                        title: 'Skincare Routine',
+                        titleMy: 'အသားအရေ ထိန်းသိမ်းမှု',
+                        desc: 'Step-by-step glow',
+                        descMy: 'အဆင့်ဆင့် ပြုစုမှု',
+                        thumbnail: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=200&h=260&fit=crop',
+                        url: LOCAL_VIDEO_PATH + 'talent4_sample1.mp4'
+                    },
+                    {
+                        title: 'Product Testimonial',
+                        titleMy: 'ထုတ်ကုန် သက်သေခံ',
+                        desc: 'Real results story',
+                        descMy: 'အမှန်တကယ် ရလဒ်',
+                        thumbnail: 'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=200&h=260&fit=crop',
+                        url: LOCAL_VIDEO_PATH + 'talent4_sample2.mp4'
+                    }
+                ]
+            }
+        ];
+
+        let selectedTalent = talentsData[0];
+        let currentVideoIndex = 0;
+        let currentTalentInModal = null;
+
+        // ══════════════════════════════════════════════════════
+        // DURATION PRICING ENGINE
+        // ══════════════════════════════════════════════════════
+        const DURATION_PRICING = {
+            baseSeconds: 15,
+            basePrice: 25000,
+            tiers: [
+                { maxSeconds: 15,  multiplier: 1.0,  labelMy: 'အတို',    labelEn: 'Short' },
+                { maxSeconds: 30,  multiplier: 1.6,  labelMy: 'သာမန်',   labelEn: 'Standard' },
+                { maxSeconds: 60,  multiplier: 2.8,  labelMy: 'အလယ်အလတ်', labelEn: 'Medium' },
+                { maxSeconds: 300, multiplier: 6.0,  labelMy: 'ရှည်',    labelEn: 'Long' },
+                { maxSeconds: 900, multiplier: 12.0, labelMy: 'အလွန်ရှည်', labelEn: 'Extended' },
+                { maxSeconds: 3600,multiplier: 25.0, labelMy: 'နာရီဝက်', labelEn: 'Half-Hour' },
+                { maxSeconds: 7200,multiplier: 45.0, labelMy: 'နာရီပြည့်', labelEn: 'Full-Hour' }
+            ]
+        };
+
+        function getDurationFee(seconds) {
+            const s = Math.max(5, Math.min(7200, seconds));
+            for (const tier of DURATION_PRICING.tiers) {
+                if (s <= tier.maxSeconds) {
+                    return Math.round(DURATION_PRICING.basePrice * tier.multiplier);
+                }
+            }
+            return Math.round(DURATION_PRICING.basePrice * 45);
+        }
+
+        function formatDuration(seconds) {
+            const s = Math.max(5, Math.min(7200, seconds));
+            if (s < 60) return `${s}s`;
+            const mins = s / 60;
+            if (mins < 60) {
+                if (Number.isInteger(mins)) return `${mins} min${mins > 1 ? 's' : ''}`;
+                return `${mins.toFixed(1)} mins`;
+            }
+            const hours = s / 3600;
+            if (Number.isInteger(hours)) return `${hours} hr${hours > 1 ? 's' : ''}`;
+            return `${hours.toFixed(2)} hrs`;
+        }
+
+        // ══════════════════════════════════════════════════════
+        // LANGUAGE SWITCHER
+        // ══════════════════════════════════════════════════════
+        function setLanguage(lang) {
+            document.body.classList.remove('lang-my', 'lang-en');
+            document.body.classList.add('lang-' + lang);
+            document.documentElement.lang = lang === 'my' ? 'my' : 'en';
+
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                const isActive = btn.dataset.lang === lang;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-pressed', isActive);
+            });
+
+            try { localStorage.setItem('pc-lang', lang); } catch(e) {}
+
+            updateDurationUI();
+            calculateTotal();
+        }
+
+        document.querySelectorAll('.lang-btn').forEach(btn => {
+            btn.addEventListener('click', () => setLanguage(btn.dataset.lang));
+        });
+
+        try {
+            const saved = localStorage.getItem('pc-lang');
+            if (saved === 'en' || saved === 'my') setLanguage(saved);
+        } catch(e) {}
+
+        // ══════════════════════════════════════════════════════
+        // RENDER TALENTS
+        // ══════════════════════════════════════════════════════
+        function renderTalents() {
+            const grid = document.getElementById('talentGrid');
+            grid.innerHTML = talentsData.map((t, idx) => `
+                <div class="talent-card ${idx === 0 ? 'selected' : ''}" data-id="${t.id}">
+                    <div class="talent-img-wrapper">
+                        <img src="${t.photo}" alt="${t.name}" loading="lazy">
+                        <div class="talent-video-count">
+                            <i class="fas fa-play-circle"></i> ${t.videos.length} clips
+                        </div>
+                    </div>
+                    <h4 class="talent-name">
+                        <span class="my-only">${t.nameMy}</span>
+                        <span class="en-only">${t.name}</span>
+                    </h4>
+                    <p class="talent-accent">
+                        <span class="my-only">${t.accentMy}</span>
+                        <span class="en-only">${t.accent}</span>
+                    </p>
+                    <button class="preview-sample-btn" data-id="${t.id}">
+                        <i class="fas fa-play"></i>
+                        <span class="my-only">နမူနာ ကြည့်ရန်</span>
+                        <span class="en-only">Preview Sample</span>
+                    </button>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.talent-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    if (e.target.closest('.preview-sample-btn')) return;
+                    document.querySelectorAll('.talent-card').forEach(c => c.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedTalent = talentsData.find(t => t.id === this.dataset.id);
+                    calculateTotal();
+                });
+            });
+
+            document.querySelectorAll('.preview-sample-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const talent = talentsData.find(t => t.id === this.dataset.id);
+                    openVideoModal(talent, 0);
+                });
+            });
+        }
+
+        // ══════════════════════════════════════════════════════
+        // MULTI-VIDEO MODAL
+        // ══════════════════════════════════════════════════════
+        const modal = document.getElementById('videoModal');
+        const closeModalBtn = document.getElementById('closeModal');
+        const modalVideoPlayer = document.getElementById('modalVideoPlayer');
+        const modalVideoList = document.getElementById('modalVideoList');
+        const modalAvatar = document.getElementById('modalAvatar');
+        const modalTalentName = document.getElementById('modalTalentName');
+        const modalTalentAccent = document.getElementById('modalTalentAccent');
+        const prevBtn = document.getElementById('prevVideoBtn');
+        const nextBtn = document.getElementById('nextVideoBtn');
+        const videoCounter = document.getElementById('videoCounter');
+
+        // Debug: log video load errors
+        modalVideoPlayer.addEventListener('error', function () {
+            console.warn('[Video Player] Failed to load:', modalVideoPlayer.currentSrc || modalVideoPlayer.src);
+        });
+        modalVideoPlayer.addEventListener('loadeddata', function () {
+            console.log('[Video Player] Loaded:', modalVideoPlayer.currentSrc || modalVideoPlayer.src);
+        });
+
+        function openVideoModal(talent, startIndex) {
+            currentTalentInModal = talent;
+            currentVideoIndex = startIndex || 0;
+
+            modalAvatar.src = talent.photo;
+            modalAvatar.alt = talent.name;
+            modalTalentName.innerHTML = `
+                <span class="my-only">${talent.nameMy}</span>
+                <span class="en-only">${talent.name}</span>
+            `;
+            modalTalentAccent.innerHTML = `
+                <span class="my-only">${talent.accentMy}</span>
+                <span class="en-only">${talent.accent}</span>
+            `;
+
+            renderVideoList(talent);
+            loadVideoByIndex(currentVideoIndex);
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function renderVideoList(talent) {
+            modalVideoList.innerHTML = talent.videos.map((v, i) => `
+                <div class="modal-video-item ${i === currentVideoIndex ? 'active' : ''}" data-index="${i}">
+                    <div class="modal-video-thumb">
+                        <div class="play-mini"><i class="fas fa-play"></i></div>
+                    </div>
+                    <div class="modal-video-meta">
+                        <span class="v-title">
+                            <span class="my-only">${v.titleMy || v.title}</span>
+                            <span class="en-only">${v.title}</span>
+                        </span>
+                        <span class="v-desc">
+                            <span class="my-only">${v.descMy || v.desc}</span>
+                            <span class="en-only">${v.desc}</span>
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+
+            modalVideoList.querySelectorAll('.modal-video-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const idx = parseInt(item.dataset.index);
+                    loadVideoByIndex(idx);
+                });
+            });
+        }
+
+        // ── Robust source rebinding ──
+        function loadVideoByIndex(index) {
+            if (!currentTalentInModal) return;
+            const videos = currentTalentInModal.videos;
+            if (index < 0 || index >= videos.length) return;
+
+            currentVideoIndex = index;
+            const video = videos[index];
+
+            // 1. Pause current playback
+            try { modalVideoPlayer.pause(); } catch (e) {}
+
+            // 2. Clear src attribute and any <source> children
+            modalVideoPlayer.removeAttribute('src');
+            while (modalVideoPlayer.firstChild) {
+                modalVideoPlayer.removeChild(modalVideoPlayer.firstChild);
+            }
+
+            // 3. Create a fresh <source> element to force reload
+            const sourceEl = document.createElement('source');
+            sourceEl.src = video.url;
+            sourceEl.type = 'video/mp4';
+            modalVideoPlayer.appendChild(sourceEl);
+
+            // 4. Set src directly as fallback
+            modalVideoPlayer.src = video.url;
+
+            // 5. Force the browser to reload
+            modalVideoPlayer.load();
+
+            // 6. Attempt autoplay (muted to bypass autoplay policies)
+            modalVideoPlayer.muted = true;
+            const playPromise = modalVideoPlayer.play();
+            if (playPromise && typeof playPromise.catch === 'function') {
+                playPromise.catch(() => {});
+            }
+
+            // 7. Update UI
+            modalVideoList.querySelectorAll('.modal-video-item').forEach((item, i) => {
+                item.classList.toggle('active', i === index);
+            });
+
+            videoCounter.textContent = `${index + 1} / ${videos.length}`;
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === videos.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => loadVideoByIndex(currentVideoIndex - 1));
+        nextBtn.addEventListener('click', () => loadVideoByIndex(currentVideoIndex + 1));
+
+        function closeVideoModal() {
+            modal.classList.remove('active');
+            modalVideoPlayer.pause();
+            modalVideoPlayer.src = '';
+            document.body.style.overflow = '';
+        }
+
+        closeModalBtn.addEventListener('click', closeVideoModal);
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) closeVideoModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (!modal.classList.contains('active')) return;
+            if (e.key === 'Escape') closeVideoModal();
+            if (e.key === 'ArrowLeft') loadVideoByIndex(currentVideoIndex - 1);
+            if (e.key === 'ArrowRight') loadVideoByIndex(currentVideoIndex + 1);
+        });
+
+        // ══════════════════════════════════════════════════════
+        // DURATION SLIDER LOGIC
+        // ══════════════════════════════════════════════════════
+        const durationSlider = document.getElementById('durationSlider');
+        const durationBadge = document.getElementById('durationBadge');
+        const durationText = document.getElementById('durationText');
+
+        function updateSliderTrack() {
+            const min = parseInt(durationSlider.min);
+            const max = parseInt(durationSlider.max);
+            const val = parseInt(durationSlider.value);
+            const percent = ((val - min) / (max - min)) * 100;
+            durationSlider.style.setProperty('--slider-percent', percent + '%');
+        }
+
+        function updateDurationUI() {
+            const seconds = parseInt(durationSlider.value);
+            const display = formatDuration(seconds);
+            durationText.textContent = display;
+            updateSliderTrack();
+
+            document.querySelectorAll('.duration-preset-btn').forEach(btn => {
+                btn.classList.toggle('active', parseInt(btn.dataset.seconds) === seconds);
+            });
+        }
+
+        durationSlider.addEventListener('input', () => {
+            updateDurationUI();
+            calculateTotal();
+        });
+
+        document.querySelectorAll('.duration-preset-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                durationSlider.value = btn.dataset.seconds;
+                updateDurationUI();
+                calculateTotal();
+            });
+        });
+
+        updateDurationUI();
+
+        // ══════════════════════════════════════════════════════
+        // CALCULATIONS
+        // ══════════════════════════════════════════════════════
+        function getCurrentSelections() {
+            const nicheRadio = document.querySelector('input[name="niche"]:checked');
+            const styleRadio = document.querySelector('input[name="adStyle"]:checked');
+            const durationSeconds = parseInt(durationSlider.value);
+            const scriptChecked = document.getElementById('addScript').checked;
+            const editingChecked = document.getElementById('addEditing').checked;
+
+            return {
+                niche: nicheRadio ? nicheRadio.value : 'General',
+                style: styleRadio ? styleRadio.value : 'Unboxing',
+                durationSeconds: durationSeconds,
+                durationFee: getDurationFee(durationSeconds),
+                script: scriptChecked,
+                editing: editingChecked,
+            };
+        }
+
+        function calculateTotal() {
+            const sel = getCurrentSelections();
+            const baseFee = selectedTalent ? selectedTalent.baseFee : 0;
+            const durationFee = sel.durationFee;
+
+            let addonsFee = 0;
+            if (sel.script) addonsFee += parseInt(document.getElementById('addScript').value);
+            if (sel.editing) addonsFee += parseInt(document.getElementById('addEditing').value);
+
+            const grandTotal = baseFee + durationFee + addonsFee;
+
+            const talentDisplay = selectedTalent
+                ? `<span class="my-only">${selectedTalent.nameMy}</span><span class="en-only">${selectedTalent.name}</span>`
+                : '—';
+
+            document.getElementById('summaryTalentName').innerHTML = talentDisplay;
+            document.getElementById('summaryTalentFee').textContent  = baseFee.toLocaleString() + ' MMK';
+            document.getElementById('summaryDurationFee').textContent = durationFee.toLocaleString() + ' MMK';
+            document.getElementById('summaryAddonsFee').textContent   = addonsFee.toLocaleString() + ' MMK';
+            document.getElementById('summaryGrandTotal').textContent  = grandTotal.toLocaleString() + ' MMK';
+
+            const durationLabel = formatDuration(sel.durationSeconds);
+            const labelEl = document.getElementById('summaryDurationLabel');
+            const labelElEn = document.getElementById('summaryDurationLabelEn');
+            if (labelEl) labelEl.textContent = durationLabel;
+            if (labelElEn) labelElEn.textContent = durationLabel;
+        }
+
+        function bindRequirementListeners() {
+            document.querySelectorAll('input[name="niche"]').forEach(el => {
+                el.addEventListener('change', calculateTotal);
+            });
+            document.querySelectorAll('input[name="adStyle"]').forEach(el => {
+                el.addEventListener('change', calculateTotal);
+            });
+            document.getElementById('addScript')?.addEventListener('change', calculateTotal);
+            document.getElementById('addEditing')?.addEventListener('change', calculateTotal);
+        }
+
+        // ══════════════════════════════════════════════════════
+        // ORDER DISPATCH
+        // ══════════════════════════════════════════════════════
+        document.getElementById('proceedOrderBtn')?.addEventListener('click', function () {
+            const sel = getCurrentSelections();
+            const grandTotal = document.getElementById('summaryGrandTotal').textContent;
+            const durationDisplay = formatDuration(sel.durationSeconds);
+
+            const payload = {
+                talent: selectedTalent ? selectedTalent.name : 'None',
+                talentId: selectedTalent ? selectedTalent.id : null,
+                niche: sel.niche,
+                adStyle: sel.style,
+                durationSeconds: sel.durationSeconds,
+                durationDisplay: durationDisplay,
+                scriptWriting: sel.script,
+                fullEditing: sel.editing,
+                total: grandTotal,
+            };
+
+            alert(
+                `📦 Order payload ready\n\n` +
+                `Talent:   ${payload.talent} (${payload.talentId})\n` +
+                `Niche:    ${payload.niche}\n` +
+                `Format:   ${payload.adStyle}\n` +
+                `Duration: ${payload.durationDisplay} (${payload.durationSeconds}s)\n` +
+                `Script:   ${payload.scriptWriting ? 'Yes' : 'No'}\n` +
+                `Editing:  ${payload.fullEditing ? 'Yes' : 'No'}\n` +
+                `Total:    ${payload.total}`
+            );
+
+            /* Telegram dispatch — uncomment & configure:
+            const BOT_TOKEN = 'YOUR_BOT_TOKEN';
+            const CHAT_ID   = 'YOUR_CHAT_ID';
+            const text = `🎬 New UGC Order\n` +
+                         `Talent: ${payload.talent} (${payload.talentId})\n` +
+                         `Niche: ${payload.niche}\n` +
+                         `Style: ${payload.adStyle}\n` +
+                         `Duration: ${payload.durationDisplay}\n` +
+                         `Script: ${payload.scriptWriting ? 'Yes' : 'No'}\n` +
+                         `Editing: ${payload.fullEditing ? 'Yes' : 'No'}\n` +
+                         `Total: ${payload.total}`;
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text })
+            });
+            */
+        });
+
+        // ══════════════════════════════════════════════════════
+        // INIT
+        // ══════════════════════════════════════════════════════
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTalents();
+            bindRequirementListeners();
+            updateDurationUI();
+            calculateTotal();
+        });
+    })();
+    </script>
+</body>
+</html>

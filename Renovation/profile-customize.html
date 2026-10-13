@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Profile Design Customizer — Select to Prompt Builder</title>
+
+<!-- ============================================================
+     TECH STACK (all CDN, no build step)
+     ============================================================ -->
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+Myanmar:wght@400;600&display=swap" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css" />
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand:   '#DC2626',
+          ink:     '#111827',
+          surface: '#F9FAFB',
+          line:    '#E5E7EB',
+        },
+        fontFamily: {
+          sans: ['Inter', 'Noto Sans JP', 'Noto Sans Myanmar', 'system-ui', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  /* ---------- scrollbar ---------- */
+  ::-webkit-scrollbar { width: 7px; height: 7px; }
+  ::-webkit-scrollbar-track { background: #F3F4F6; border-radius: 8px; }
+  ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 8px; }
+  ::-webkit-scrollbar-thumb:hover { background: #DC2626; }
+
+  /* ---------- panel animation ---------- */
+  .fade-in { animation: fadeIn .22s ease both; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
+  /* ---------- option cards (visual radio) ---------- */
+  .opt-card { transition: all .18s ease; cursor: pointer; }
+  .opt-card:hover { border-color: #DC2626; transform: translateY(-1px); }
+  .opt-card.active { border-color: #DC2626; box-shadow: 0 0 0 2px rgba(220,38,38,.15); background: #FEF2F2; }
+  .opt-card.active .opt-check { opacity: 1; transform: scale(1); }
+  .opt-check { opacity: 0; transform: scale(.6); transition: all .18s ease; }
+
+  /* ---------- color swatch ---------- */
+  .swatch { width: 100%; aspect-ratio: 1/1; border-radius: 10px; border: 2px solid transparent; cursor: pointer; transition: all .15s ease; }
+  .swatch:hover { transform: scale(1.06); }
+  .swatch.active { border-color: #111827; box-shadow: 0 0 0 3px #fff inset; }
+
+  /* ---------- tag pill ---------- */
+  .tag-pill { transition: all .15s ease; cursor: pointer; user-select: none; }
+  .tag-pill.active { background: #111827; color: #fff; border-color: #111827; }
+
+  /* ---------- beginner / advanced ---------- */
+  .advanced-only { display: none; }
+  body.mode-advanced .advanced-only { display: block; }
+
+  /* ---------- toast ---------- */
+  #toast { transition: all .3s ease; }
+
+  /* ============================================================
+     RIGHT-SIDE PROMPT SIDEBAR
+     - takes 50% of viewport width (88% on small screens)
+     - overlays the page (does NOT push content)
+     - toggle button slides with the sidebar
+     ============================================================ */
+  :root { --sidebar-w: 50vw; }
+  @media (max-width: 1023px) { :root { --sidebar-w: 88vw; } }
+  @media (max-width: 640px)  { :root { --sidebar-w: 94vw; } }
+
+  #promptSidebar {
+    width: var(--sidebar-w);
+    transform: translateX(100%);
+    transition: transform .38s cubic-bezier(.4,0,.2,1);
+    will-change: transform;
+  }
+  #promptSidebar.open { transform: translateX(0); }
+
+  #promptBackdrop {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+  }
+  #promptBackdrop.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* vertical toggle button that lives on the right edge */
+  #promptToggleBtn {
+    right: 0;
+    transition: right .38s cubic-bezier(.4,0,.2,1), background .2s ease, box-shadow .2s ease;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    letter-spacing: .12em;
+  }
+  #promptToggleBtn.open { right: var(--sidebar-w); }
+  #promptToggleBtn:hover { box-shadow: 0 8px 24px rgba(220,38,38,.35); }
+
+  /* preview pulse when sidebar opens (draws the eye back to the preview) */
+  #previewShell.pulse { animation: previewPulse .6s ease; }
+  @keyframes previewPulse {
+    0%   { box-shadow: 0 0 0 0 rgba(220,38,38,.35); }
+    100% { box-shadow: 0 0 0 18px rgba(220,38,38,0); }
+  }
+</style>
+</head>
+
+<body class="bg-surface font-sans text-ink antialiased">
+
+<!-- ============================================================
+     TOP BAR
+     ============================================================ -->
+<header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-line">
+  <div class="max-w-[1600px] mx-auto px-4 h-16 flex items-center justify-between gap-4">
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-lg bg-brand text-white grid place-items-center font-bold">P</div>
+      <div>
+        <h1 class="font-bold text-base leading-tight">Profile Design Customizer</h1>
+        <p class="text-[11px] text-gray-400 leading-tight">Pick → Preview → Generate developer prompt</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <!-- language -->
+      <select id="langSelect" class="hidden sm:block text-xs border border-line rounded-lg px-2 py-1.5 bg-white">
+        <option value="en">EN</option>
+        <option value="jp">日本語</option>
+        <option value="mm">မြန်မာ</option>
+      </select>
+
+      <!-- beginner / advanced -->
+      <div class="flex rounded-lg border border-line overflow-hidden text-xs">
+        <button id="modeBeginner" class="px-3 py-1.5 bg-ink text-white">Guided</button>
+        <button id="modeAdvanced" class="px-3 py-1.5 bg-white text-gray-600">Advanced</button>
+      </div>
+
+      <button id="resetBtn" class="text-xs px-3 py-1.5 rounded-lg border border-line hover:bg-gray-50">
+        <i class="fas fa-rotate-left"></i>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     MAIN GRID — 2 COLUMNS (customization | preview)
+     The prompt now lives in the right-hand sidebar overlay.
+     ============================================================ -->
+<main class="max-w-[1600px] mx-auto px-4 py-6 grid grid-cols-1 xl:grid-cols-12 gap-6">
+
+  <!-- ==========================================================
+       LEFT — CUSTOMIZATION PANEL
+       ========================================================== -->
+  <section class="xl:col-span-5 2xl:col-span-4 space-y-4">
+
+    <!-- ---------- 1. QUICK PRESETS ---------- -->
+    <div class="bg-white rounded-xl border border-line overflow-hidden">
+      <div class="px-5 py-3.5 border-b border-line flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+        <h2 class="font-semibold text-sm" data-i18n="sec_presets">Start with a preset</h2>
+        <span class="text-[11px] text-gray-400 ml-auto" data-i18n="sec_presets_hint">You can fine-tune everything below</span>
+      </div>
+      <div class="p-4 grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+        <button class="preset-btn opt-card border border-line rounded-xl p-3 text-left" data-preset="minimal">
+          <div class="flex gap-1 mb-2">
+            <span class="w-3 h-3 rounded-full" style="background:#111827"></span>
+            <span class="w-3 h-3 rounded-full" style="background:#9CA3AF"></span>
+            <span class="w-3 h-3 rounded-full" style="background:#F9FAFB;border:1px solid #E5E7EB"></span>
+          </div>
+          <p class="text-xs font-semibold">Minimal</p>
+          <p class="text-[10px] text-gray-400">Clean · airy</p>
+        </button>
+        <button class="preset-btn opt-card border border-line rounded-xl p-3 text-left" data-preset="sports">
+          <div class="flex gap-1 mb-2">
+            <span class="w-3 h-3 rounded-full" style="background:#DC2626"></span>
+            <span class="w-3 h-3 rounded-full" style="background:#111827"></span>
+            <span class="w-3 h-3 rounded-full" style="background:#F59E0B"></span>
+          </div>
+          <p class="text-xs font-semibold">Bold Sports</p>
+          <p class="text-[10px] text-gray-400">Energetic · high contrast</p>
+        </button>
+        <button class="preset-btn opt-card border border-line rounded-xl p-3 text-left" data-preset="corporate">
+          <div class="flex gap-1 mb-2">
+            <span class="w-3 h-3 rounded-full" style="background:#1E3A8A"></span>
+            <span class="w-3 h-3 rounded-full" style="background:#64748B"></span>
+            <span class="w-3 h-3 rounded-full" style="background:#F8FAFC;border:1px solid #E5E7EB"></span>
+          </div>
+          <p class="text-xs font-semibold">Corporate</p>
+          <p class="text-[10px] text-gray-400">Trust · structured</p>
+        </button>
+        <button class="preset-btn opt-card border border-line rounded-xl p-3 text-left" data-preset="neon">
+          <div class="flex gap-1 mb-2">
+            <span class="w-3 h-3 rounded-full" style="background:#22D3EE"></span>
+            <span class="w-3 h-3 rounded-full" style="background:#A855F7"></span>
+            <span class="w-3 h-3 rounded-full" style="background:#0B0F19"></span>
+          </div>
+          <p class="text-xs font-semibold">Dark Neon</p>
+          <p class="text-[10px] text-gray-400">Techy · glowing</p>
+        </button>
+        <button class="preset-btn opt-card border border-line rounded-xl p-3 text-left" data-preset="pastel">
+          <div class="flex gap-1 mb-2">
+            <span class="w-3 h-3 rounded-full" style="background:#F9A8D4"></span>
+            <span class="w-3 h-3 rounded-full" style="background:#A7F3D0"></span>
+            <span class="w-3 h-3 rounded-full" style="background:#FEF3C7"></span>
+          </div>
+          <p class="text-xs font-semibold">Soft Pastel</p>
+          <p class="text-[10px] text-gray-400">Friendly · soft</p>
+        </button>
+        <button class="preset-btn opt-card border border-line rounded-xl p-3 text-left" data-preset="editorial">
+          <div class="flex gap-1 mb-2">
+            <span class="w-3 h-3 rounded-full" style="background:#000000"></span>
+            <span class="w-3 h-3 rounded-full" style="background:#B45309"></span>
+            <span class="w-3 h-3 rounded-full" style="background:#FFFBEB"></span>
+          </div>
+          <p class="text-xs font-semibold">Editorial</p>
+          <p class="text-[10px] text-gray-400">Magazine · typographic</p>
+        </button>
+      </div>
+    </div>
+
+    <!-- ---------- 2. PROFILE BASICS ---------- -->
+    <div class="bg-white rounded-xl border border-line overflow-hidden">
+      <div class="px-5 py-3.5 border-b border-line flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+        <h2 class="font-semibold text-sm" data-i18n="sec_profile">Your profile</h2>
+      </div>
+      <div class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="sm:col-span-2">
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_name">Display name</label>
+          <input id="pName" type="text" value="Alex Tanaka"
+                 class="w-full text-sm border border-line rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand/30 focus:border-brand outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_role">Job title / Role</label>
+          <input id="pRole" type="text" value="Frontend Engineer"
+                 class="w-full text-sm border border-line rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand/30 focus:border-brand outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_location">Location</label>
+          <input id="pLocation" type="text" value="Yangon, MM"
+                 class="w-full text-sm border border-line rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand/30 focus:border-brand outline-none" />
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_tagline">Tagline</label>
+          <input id="pTagline" type="text" value="I build clean, fast, accessible interfaces."
+                 class="w-full text-sm border border-line rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand/30 focus:border-brand outline-none" />
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_bio">Short bio</label>
+          <textarea id="pBio" rows="3"
+                    class="w-full text-sm border border-line rounded-lg px-3 py-2 resize-none focus:ring-2 focus:ring-brand/30 focus:border-brand outline-none">5 years shipping design systems and product UI. Comfortable owning a feature end-to-end.</textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_cta">Primary button label</label>
+          <input id="pCta" type="text" value="Get in touch"
+                 class="w-full text-sm border border-line rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand/30 focus:border-brand outline-none" />
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_avatar">Avatar style</label>
+          <select id="pAvatar" class="w-full text-sm border border-line rounded-lg px-3 py-2 bg-white">
+            <option value="Circle photo">Circle photo</option>
+            <option value="Rounded square">Rounded square</option>
+            <option value="Square with border">Square with border</option>
+            <option value="Initials monogram">Initials monogram</option>
+            <option value="No avatar">No avatar</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- 3. COLOR & THEME ---------- -->
+    <div class="bg-white rounded-xl border border-line overflow-hidden">
+      <div class="px-5 py-3.5 border-b border-line flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+        <h2 class="font-semibold text-sm" data-i18n="sec_colors">Colors &amp; theme</h2>
+      </div>
+      <div class="p-4 space-y-4">
+
+        <!-- preset palettes -->
+        <div>
+          <p class="text-xs font-medium text-gray-600 mb-2" data-i18n="lbl_palette">Palette preset</p>
+          <div id="paletteGrid" class="grid grid-cols-6 gap-2"></div>
+        </div>
+
+        <!-- dark / light -->
+        <div class="flex items-center justify-between py-2 border-t border-line">
+          <div>
+            <p class="text-xs font-semibold" data-i18n="lbl_mode">Dark mode</p>
+            <p class="text-[10px] text-gray-400">Include a dark theme variant in the spec</p>
+          </div>
+          <label class="relative inline-flex items-center cursor-pointer">
+            <input id="darkToggle" type="checkbox" class="sr-only peer" />
+            <div class="w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-ink after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-5"></div>
+          </label>
+        </div>
+
+        <!-- manual color pickers (advanced) -->
+        <div class="advanced-only pt-2 border-t border-line">
+          <p class="text-xs font-medium text-gray-600 mb-2">Custom tokens</p>
+          <div id="colorTokenGrid" class="grid grid-cols-2 gap-3"></div>
+        </div>
+
+        <div class="advanced-only">
+          <p class="text-xs font-medium text-gray-600 mb-2">Gradient background</p>
+          <div class="grid grid-cols-3 gap-2">
+            <label class="opt-card border border-line rounded-lg p-2 text-center" data-group="gradient" data-value="None">
+              <span class="block text-[11px] font-medium">None</span>
+              <span class="opt-check absolute"></span>
+            </label>
+            <label class="opt-card border border-line rounded-lg p-2 text-center" data-group="gradient" data-value="Linear 135deg">
+              <span class="block h-4 rounded mb-1" style="background:linear-gradient(135deg,#DC2626,#7C3AED)"></span>
+              <span class="block text-[11px] font-medium">Linear</span>
+            </label>
+            <label class="opt-card border border-line rounded-lg p-2 text-center" data-group="gradient" data-value="Radial soft">
+              <span class="block h-4 rounded mb-1" style="background:radial-gradient(circle,#F59E0B,#FEF3C7)"></span>
+              <span class="block text-[11px] font-medium">Radial</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- 4. TYPOGRAPHY ---------- -->
+    <div class="bg-white rounded-xl border border-line overflow-hidden">
+      <div class="px-5 py-3.5 border-b border-line flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+        <h2 class="font-semibold text-sm" data-i18n="sec_type">Typography</h2>
+      </div>
+      <div class="p-4 grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_heading_font">Heading font</label>
+          <select id="fontHeading" class="w-full text-sm border border-line rounded-lg px-3 py-2 bg-white">
+            <option value="Inter">Inter (sans)</option>
+            <option value="Noto Sans JP">Noto Sans JP</option>
+            <option value="Noto Sans Myanmar">Noto Sans Myanmar</option>
+            <option value="Georgia">Georgia (serif)</option>
+            <option value="ui-monospace">Monospace</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_body_font">Body font</label>
+          <select id="fontBody" class="w-full text-sm border border-line rounded-lg px-3 py-2 bg-white">
+            <option value="Inter">Inter (sans)</option>
+            <option value="Noto Sans JP">Noto Sans JP</option>
+            <option value="Noto Sans Myanmar">Noto Sans Myanmar</option>
+            <option value="Georgia">Georgia (serif)</option>
+            <option value="ui-monospace">Monospace</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_scale">Base size</label>
+          <select id="typeScale" class="w-full text-sm border border-line rounded-lg px-3 py-2 bg-white">
+            <option value="Compact 14px base">Compact (14px)</option>
+            <option value="Standard 16px base" selected>Standard (16px)</option>
+            <option value="Large 18px base">Large (18px)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_weight">Heading weight</label>
+          <select id="typeWeight" class="w-full text-sm border border-line rounded-lg px-3 py-2 bg-white">
+            <option value="600">Semibold 600</option>
+            <option value="700" selected>Bold 700</option>
+            <option value="800">Extrabold 800</option>
+            <option value="900">Black 900</option>
+          </select>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_tracking">Letter spacing</label>
+          <input id="tracking" type="range" min="-2" max="4" step="0.5" value="0" class="w-full accent-brand" />
+          <div class="flex justify-between text-[10px] text-gray-400 mt-1">
+            <span>Tight</span><span id="trackingVal">0px</span><span>Wide</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- 5. LAYOUT STRUCTURE ---------- -->
+    <div class="bg-white rounded-xl border border-line overflow-hidden">
+      <div class="px-5 py-3.5 border-b border-line flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+        <h2 class="font-semibold text-sm" data-i18n="sec_layout">Layout</h2>
+      </div>
+      <div class="p-4 space-y-4">
+        <div id="layoutGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5"></div>
+        <div class="grid grid-cols-2 gap-3 pt-3 border-t border-line">
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_container">Content width</label>
+            <select id="containerWidth" class="w-full text-sm border border-line rounded-lg px-3 py-2 bg-white">
+              <option value="Narrow 720px">Narrow 720px</option>
+              <option value="Standard 1024px" selected>Standard 1024px</option>
+              <option value="Wide 1280px">Wide 1280px</option>
+              <option value="Full-width fluid">Full-width fluid</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_density">Spacing density</label>
+            <select id="density" class="w-full text-sm border border-line rounded-lg px-3 py-2 bg-white">
+              <option value="Airy — generous whitespace">Airy</option>
+              <option value="Balanced — medium spacing" selected>Balanced</option>
+              <option value="Dense — compact spacing">Dense</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- 6. SURFACE / SHAPE / MOTION ---------- -->
+    <div class="bg-white rounded-xl border border-line overflow-hidden">
+      <div class="px-5 py-3.5 border-b border-line flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+        <h2 class="font-semibold text-sm" data-i18n="sec_shape">Shape &amp; motion</h2>
+      </div>
+      <div class="p-4 space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1" data-i18n="lbl_radius">Corner roundness</label>
+          <input id="radius" type="range" min="0" max="28" step="2" value="12" class="w-full accent-brand" />
+          <div class="flex justify-between text-[10px] text-gray-400 mt-1">
+            <span>Sharp</span><span id="radiusVal">12px</span><span>Pill</span>
+          </div>
+        </div>
+        <div>
+          <p class="text-xs font-medium text-gray-600 mb-2" data-i18n="lbl_shadow">Card elevation</p>
+          <div class="grid grid-cols-4 gap-2" id="shadowGrid"></div>
+        </div>
+        <div class="advanced-only">
+          <p class="text-xs font-medium text-gray-600 mb-2">Border style</p>
+          <div class="grid grid-cols-3 gap-2" id="borderGrid"></div>
+        </div>
+        <div>
+          <p class="text-xs font-medium text-gray-600 mb-2" data-i18n="lbl_motion">Motion level</p>
+          <div class="grid grid-cols-4 gap-2" id="motionGrid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- 7. SECTIONS ---------- -->
+    <div class="bg-white rounded-xl border border-line overflow-hidden">
+      <div class="px-5 py-3.5 border-b border-line flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+        <h2 class="font-semibold text-sm" data-i18n="sec_sections">Sections</h2>
+        <span class="text-[11px] text-gray-400 ml-auto" data-i18n="sec_sections_hint">Drag to reorder · toggle to show</span>
+      </div>
+      <ul id="sectionList" class="p-3 space-y-2"></ul>
+    </div>
+
+    <!-- ---------- 8. HTML TAG PICKER ---------- -->
+    <div class="bg-white rounded-xl border border-line overflow-hidden">
+      <div class="px-5 py-3.5 border-b border-line flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+        <h2 class="font-semibold text-sm" data-i18n="sec_tags">HTML tags to include</h2>
+        <span class="text-[11px] text-gray-400 ml-auto" data-i18n="sec_tags_hint">Each tag ships with a pre-written prompt fragment</span>
+      </div>
+      <div class="p-4 space-y-4">
+        <div>
+          <p class="text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-2">Structure</p>
+          <div class="flex flex-wrap gap-2" data-taggroup="structure"></div>
+        </div>
+        <div>
+          <p class="text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-2">Content</p>
+          <div class="flex flex-wrap gap-2" data-taggroup="content"></div>
+        </div>
+        <div>
+          <p class="text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-2">Interactive</p>
+          <div class="flex flex-wrap gap-2" data-taggroup="interactive"></div>
+        </div>
+        <div>
+          <p class="text-[11px] font-semibold text-gray-500 uppercase tracking-wide mb-2">Media</p>
+          <div class="flex flex-wrap gap-2" data-taggroup="media"></div>
+        </div>
+        <div class="text-[11px] text-gray-500 bg-gray-50 rounded-lg px-3 py-2 border border-line">
+          <i class="fas fa-circle-info text-brand mr-1"></i>
+          <span id="tagCountLabel">0 tags selected — their prompt fragments will be appended verbatim.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ---------- 9. EXTRA INSTRUCTIONS ---------- -->
+    <div class="bg-white rounded-xl border border-line overflow-hidden">
+      <div class="px-5 py-3.5 border-b border-line flex items-center gap-2">
+        <span class="w-1.5 h-1.5 rounded-full bg-brand"></span>
+        <h2 class="font-semibold text-sm" data-i18n="sec_extra">Anything else?</h2>
+      </div>
+      <div class="p-4 space-y-3">
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Extra requirements (optional)</label>
+          <textarea id="extraNotes" rows="3" placeholder="e.g. Must support Burmese + Japanese text. No external icon fonts."
+                    class="w-full text-sm border border-line rounded-lg px-3 py-2 resize-none focus:ring-2 focus:ring-brand/30 focus:border-brand outline-none"></textarea>
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-gray-600 mb-1">Accessibility target</label>
+          <select id="a11yLevel" class="w-full text-sm border border-line rounded-lg px-3 py-2 bg-white">
+            <option value="WCAG 2.1 AA">WCAG 2.1 AA</option>
+            <option value="WCAG 2.1 AAA">WCAG 2.1 AAA</option>
+            <option value="Basic semantic HTML only">Basic semantic HTML only</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ==========================================================
+       RIGHT — LIVE PREVIEW (now the full remaining width)
+       ========================================================== -->
+  <section class="xl:col-span-7 2xl:col-span-8">
+    <div class="sticky top-20">
+      <div class="bg-white rounded-xl border border-line overflow-hidden">
+
+        <!-- preview toolbar -->
+        <div class="px-5 py-3.5 border-b border-line flex flex-wrap items-center gap-3">
+          <h2 class="font-semibold text-sm flex items-center gap-2">
+            <i class="fas fa-eye text-brand"></i> Live preview
+            <span class="text-[11px] font-normal text-gray-400">— this is the exact profile layout your prompt describes</span>
+          </h2>
+
+          <div class="flex gap-1 text-[11px] ml-auto">
+            <button class="preview-size px-2.5 py-1.5 rounded-lg border border-line" data-w="375">
+              <i class="fas fa-mobile-screen"></i> Mobile
+            </button>
+            <button class="preview-size px-2.5 py-1.5 rounded-lg border border-line bg-ink text-white" data-w="768">
+              <i class="fas fa-tablet-screen-button"></i> Tablet
+            </button>
+            <button class="preview-size px-2.5 py-1.5 rounded-lg border border-line" data-w="100%">
+              <i class="fas fa-desktop"></i> Desktop
+            </button>
+          </div>
+        </div>
+
+        <!-- device chrome + preview surface -->
+        <div class="p-5 bg-gradient-to-br from-gray-100 via-gray-50 to-gray-100">
+          <div class="mx-auto bg-white overflow-hidden border border-line shadow-lg"
+               id="previewShell"
+               style="width:100%;border-radius:14px;">
+
+            <!-- faux browser bar -->
+            <div class="flex items-center gap-2 px-4 py-2.5 border-b border-line bg-gray-50">
+              <span class="w-2.5 h-2.5 rounded-full bg-red-400"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-yellow-400"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-green-400"></span>
+              <div class="ml-3 flex-1 h-6 rounded-md bg-white border border-line flex items-center px-3 text-[10px] text-gray-400 font-mono truncate">
+                https://yourname.dev
+              </div>
+            </div>
+
+            <!-- rendered profile mockup -->
+            <div id="previewFrame" class="p-6"></div>
+          </div>
+
+          <!-- preview hint -->
+          <p class="text-center text-[11px] text-gray-400 mt-4">
+            <i class="fas fa-circle-info mr-1"></i>
+            Preview is a simplified visual mockup. The generated prompt describes the full production implementation.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     PROMPT SIDEBAR — overlays the page from the right
+     ============================================================ -->
+<div id="promptBackdrop"
+     class="fixed inset-0 bg-black/40 backdrop-blur-[2px] z-[60] hidden"></div>
+
+<aside id="promptSidebar"
+       class="fixed top-0 right-0 h-full bg-white shadow-2xl z-[70] flex flex-col"
+       aria-hidden="true">
+
+  <!-- sidebar header -->
+  <div class="flex items-center gap-3 px-5 py-4 border-b border-line shrink-0">
+    <div class="w-9 h-9 rounded-lg bg-brand text-white grid place-items-center">
+      <i class="fas fa-wand-magic-sparkles"></i>
+    </div>
+    <div class="min-w-0">
+      <h2 class="font-bold text-sm leading-tight">Developer prompt</h2>
+      <p class="text-[11px] text-gray-400 leading-tight truncate">Concatenated from PROMPT_REGISTRY — copy or download</p>
+    </div>
+    <button id="closeSidebarBtn"
+            class="ml-auto w-8 h-8 rounded-lg border border-line grid place-items-center hover:bg-gray-50 transition">
+      <i class="fas fa-times text-gray-500"></i>
+    </button>
+  </div>
+
+  <!-- sidebar actions -->
+  <div class="flex flex-wrap gap-2 px-5 py-3 border-b border-line bg-gray-50 shrink-0">
+    <button id="generateBtn" class="bg-brand text-white text-xs px-3 py-2 rounded-lg hover:bg-red-700 transition">
+      <i class="fas fa-bolt"></i> Regenerate
+    </button>
+    <button id="copyBtn" class="border border-line bg-white text-xs px-3 py-2 rounded-lg hover:bg-gray-50 transition">
+      <i class="far fa-copy"></i> Copy
+    </button>
+    <button id="downloadBtn" class="border border-line bg-white text-xs px-3 py-2 rounded-lg hover:bg-gray-50 transition">
+      <i class="fas fa-download"></i> Download .txt
+    </button>
+    <span id="promptStats" class="ml-auto text-[11px] text-gray-400 self-center font-mono"></span>
+  </div>
+
+  <!-- sidebar body -->
+  <div class="flex-1 overflow-hidden p-5">
+    <textarea id="layoutOutput" readonly
+      class="w-full h-full border border-line rounded-lg p-4 font-mono text-[11.5px] leading-relaxed bg-gray-50 resize-none overflow-auto focus:ring-1 focus:ring-brand outline-none">Configure your profile on the left — the developer prompt will appear here.</textarea>
+  </div>
+
+  <!-- sidebar footer -->
+  <div class="px-5 py-3 border-t border-line text-[11px] text-gray-400 flex items-start gap-2 shrink-0">
+    <i class="fas fa-circle-info mt-0.5"></i>
+    <span>Every selectable option is pre-mapped to an English prompt fragment inside <code class="font-mono">PROMPT_REGISTRY</code>. Nothing is invented at runtime — the generator only concatenates stored strings.</span>
+  </div>
+</aside>
+
+<!-- ============================================================
+     VERTICAL TOGGLE BUTTON — sits on the right edge
+     ============================================================ -->
+<button id="promptToggleBtn"
+        class="fixed top-1/2 -translate-y-1/2 z-[80] bg-brand text-white px-2.5 py-4 rounded-l-xl shadow-lg flex items-center gap-2"
+        aria-controls="promptSidebar"
+        aria-expanded="false">
+  <i id="promptToggleIcon" class="fas fa-code"></i>
+  <span class="text-[10px] font-bold uppercase">Prompt</span>
+</button>
+
+<!-- toast -->
+<div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 translate-y-24 opacity-0 bg-ink text-white text-xs px-4 py-2.5 rounded-lg shadow-lg z-[90] pointer-events-none"></div>
+
+<script>
+/* ============================================================================
+   PROFILE DESIGN CUSTOMIZER — SELECT-TO-PROMPT BUILDER
+   ----------------------------------------------------------------------------
+   ARCHITECTURE
+   1) PROMPT_REGISTRY  → every option's English prompt fragment, pre-authored
+   2) PRESETS          → bundles that set many controls at once
+   3) state            → current selection snapshot
+   4) render*()        → build the UI from the registry (no hardcoded markup)
+   5) generatePrompt() → concatenate registry fragments into one spec
+   6) bind()           → jQuery event delegation, auto-regenerate on change
+   ========================================================================== */
+
+
+/* ============================================================================
+   1. PROMPT REGISTRY
+   ========================================================================== */
+const PROMPT_REGISTRY = {
+
+  palettes: {
+    "Crimson Edge": {
+      swatches: ['#DC2626', '#111827', '#F59E0B', '#F9FAFB'],
+      tokens: { primary:'#DC2626', secondary:'#111827', accent:'#F59E0B', background:'#FFFFFF', surface:'#F9FAFB', text:'#111827' },
+      prompt: "Use a high-energy palette: primary #DC2626 (crimson) for CTAs and key accents, secondary #111827 (near-black) for headings and dark surfaces, accent #F59E0B (amber) for highlights and badges, background #FFFFFF, surface #F9FAFB, body text #111827. Maintain a contrast ratio of at least 4.5:1 for all body text."
+    },
+    "Ocean Trust": {
+      swatches: ['#1E3A8A', '#0EA5E9', '#64748B', '#F8FAFC'],
+      tokens: { primary:'#1E3A8A', secondary:'#0EA5E9', accent:'#64748B', background:'#FFFFFF', surface:'#F8FAFC', text:'#0F172A' },
+      prompt: "Use a calm corporate palette: primary #1E3A8A (deep navy), secondary #0EA5E9 (sky), accent #64748B (slate), background #FFFFFF, surface #F8FAFC, body text #0F172A. Favour restrained use of colour with generous neutral space."
+    },
+    "Mono Studio": {
+      swatches: ['#111827', '#6B7280', '#E5E7EB', '#FFFFFF'],
+      tokens: { primary:'#111827', secondary:'#6B7280', accent:'#E5E7EB', background:'#FFFFFF', surface:'#F9FAFB', text:'#111827' },
+      prompt: "Use a strictly monochrome palette: primary #111827, secondary #6B7280, borders #E5E7EB, background #FFFFFF, surface #F9FAFB. No hue — rely on typography weight, spacing and border contrast to create hierarchy."
+    },
+    "Neon Terminal": {
+      swatches: ['#22D3EE', '#A855F7', '#0B0F19', '#111827'],
+      tokens: { primary:'#22D3EE', secondary:'#A855F7', accent:'#F472B6', background:'#0B0F19', surface:'#111827', text:'#E5E7EB' },
+      prompt: "Use a dark technical palette: background #0B0F19, surface #111827, primary #22D3EE (cyan), secondary #A855F7 (violet), accent #F472B6, body text #E5E7EB. Add a subtle 1px luminous border on cards and a soft outer glow on primary buttons. Ensure all text still passes 4.5:1 contrast on the dark surface."
+    },
+    "Soft Pastel": {
+      swatches: ['#F9A8D4', '#A7F3D0', '#FEF3C7', '#FFFFFF'],
+      tokens: { primary:'#EC4899', secondary:'#10B981', accent:'#F59E0B', background:'#FFFFFF', surface:'#FDF2F8', text:'#374151' },
+      prompt: "Use a soft pastel palette: primary #EC4899 with #F9A8D4 tints, secondary #10B981 with #A7F3D0 tints, accent #F59E0B with #FEF3C7 tints, background #FFFFFF, surface #FDF2F8, body text #374151. Keep saturation low and corners generous."
+    },
+    "Editorial Ink": {
+      swatches: ['#000000', '#B45309', '#FFFBEB', '#1C1917'],
+      tokens: { primary:'#000000', secondary:'#B45309', accent:'#FFFBEB', background:'#FFFBEB', surface:'#FFFFFF', text:'#1C1917' },
+      prompt: "Use an editorial print-inspired palette: pure black #000000 for headlines, warm accent #B45309, paper background #FFFBEB, card surface #FFFFFF, body text #1C1917. Prioritise typographic hierarchy over colour."
+    }
+  },
+
+  colorTokens: [
+    { id:'primary',    label:'Primary',    default:'#DC2626', prompt:'primary colour' },
+    { id:'secondary',  label:'Secondary',  default:'#111827', prompt:'secondary colour' },
+    { id:'accent',     label:'Accent',     default:'#F59E0B', prompt:'accent colour' },
+    { id:'background', label:'Background', default:'#FFFFFF', prompt:'page background' },
+    { id:'surface',    label:'Surface',    default:'#F9FAFB', prompt:'card / surface background' },
+    { id:'text',       label:'Text',       default:'#111827', prompt:'body text colour' }
+  ],
+
+  layouts: {
+    "Hero Top": {
+      icon:'fa-square-full',
+      desc:'Avatar + name centered, content stacked below',
+      prompt:"LAYOUT — HERO TOP: Render a vertically stacked single-column layout. Section 1 is a full-width hero band containing the avatar (centered), the display name in an <h1>, the role in an <h2>, the tagline in a <p>, and the primary CTA button. All subsequent sections stack beneath it in a single centered column."
+    },
+    "Split 2-Column": {
+      icon:'fa-table-columns',
+      desc:'Sticky left profile card, scrolling right content',
+      prompt:"LAYOUT — SPLIT 2-COLUMN: Use a CSS Grid with a sticky left column (approx. 340px) holding the avatar, name, role, tagline, CTA and social links, and a fluid right column holding the scrolling content sections. The left column uses position: sticky; top: 5rem. Collapse to a single column below 1024px, with the profile card rendered first."
+    },
+    "Sidebar Left": {
+      icon:'fa-bars-staggered',
+      desc:'Fixed vertical navigation rail plus content',
+      prompt:"LAYOUT — SIDEBAR LEFT: Render a fixed vertical navigation rail (approx. 240px) on the left containing anchor links to each section with an active-state indicator. The main content area scrolls independently to the right of the rail, with smooth scroll-to-anchor behaviour. Collapse the rail into a top hamburger drawer below 768px."
+    },
+    "Card Grid": {
+      icon:'fa-grip',
+      desc:'Profile card plus modular content tiles',
+      prompt:"LAYOUT — CARD GRID: Render the profile as one card inside a responsive CSS Grid (repeat(auto-fit, minmax(280px, 1fr))). Each content section becomes its own card tile of equal visual weight, with a shared gap, equal corner radius and a consistent internal padding scale."
+    },
+    "Timeline": {
+      icon:'fa-timeline',
+      desc:'Vertical timeline for experience and milestones',
+      prompt:"LAYOUT — TIMELINE: Render the experience and education sections as a vertical timeline with a single 2px spine line on the left, circular node markers aligned to each entry, and entry cards offset to the right of the spine. On mobile, reduce the spine offset and keep the nodes visible."
+    },
+    "Magazine": {
+      icon:'fa-newspaper',
+      desc:'Asymmetric editorial grid with large type',
+      prompt:"LAYOUT — MAGAZINE: Use an asymmetric editorial grid. The hero occupies a 7/12 column with oversized display typography, while the profile meta (role, location, social links) occupies a 5/12 column as a bordered aside. Alternate section widths down the page to create a printed-magazine rhythm."
+    }
+  },
+
+  sections: [
+    { id:'about',      label:'About',            on:true,  prompt:"ABOUT: An <section> with an <h2> heading, followed by 2–4 short <p> paragraphs of bio text constrained to a 65ch measure." },
+    { id:'skills',     label:'Skills',           on:true,  prompt:"SKILLS: A <section> containing a <ul> of skill items. Each <li> shows the skill name and a proficiency indicator (labelled bar, dot scale, or tag). Group skills into 2–4 labelled categories." },
+    { id:'experience', label:'Experience',       on:true,  prompt:"EXPERIENCE: A <section> of <article> entries, each with role title, company, date range (in a <time> element), a 2–3 line description, and an optional list of 3 achievement bullets." },
+    { id:'projects',   label:'Projects',         on:true,  prompt:"PROJECTS: A responsive card grid of <article> cards. Each card contains a thumbnail <img> with alt text, a project title, a one-line summary, a technology tag list, and a link to the live site or repository." },
+    { id:'education',  label:'Education',        on:false, prompt:"EDUCATION: A compact <section> listing degrees or certifications with institution name, credential, and year. Keep it visually lighter than the Experience section." },
+    { id:'testimonials',label:'Testimonials',    on:false, prompt:"TESTIMONIALS: A <blockquote>-based section with 2–3 short quotes, each attributed with a name, role and optional avatar. Use a subtle surface background to separate it from neighbouring sections." },
+    { id:'contact',    label:'Contact',          on:true,  prompt:"CONTACT: A <section> containing a short prompt line and a contact <form> with name, email and message fields plus a submit button. Include inline validation states (default, focus, error, success). If no backend is required, use a mailto: action." },
+    { id:'social',     label:'Social Links',     on:true,  prompt:"SOCIAL LINKS: A horizontal <ul> of icon links (GitHub, LinkedIn, X, Email). Each <a> must have an accessible aria-label and open external links with rel=\"noopener noreferrer\" target=\"_blank\"." },
+    { id:'stats',      label:'Stats / Numbers',  on:false, prompt:"STATS: A row of 3–4 metric blocks, each with an oversized numeral and a small descriptive caption. Use tabular-nums and keep the row responsive (wrap to 2 columns on mobile)." },
+    { id:'cta',        label:'CTA Banner',       on:false, prompt:"CTA BANNER: A full-width band near the bottom of the page with a short headline, one supporting line, and a single high-contrast primary button. It must visually break from the surrounding white sections." }
+  ],
+
+  shadows: {
+    "None":    { css:'none',                                              prompt:"Do not use any box-shadow anywhere. Separate surfaces with 1px borders only." },
+    "Subtle":  { css:'0 1px 2px rgba(0,0,0,.05)',                         prompt:"Use a very subtle elevation: box-shadow 0 1px 2px rgba(0,0,0,.05) on cards." },
+    "Soft":    { css:'0 4px 16px rgba(0,0,0,.08)',                        prompt:"Use a soft elevation: box-shadow 0 4px 16px rgba(0,0,0,.08) on cards, increasing to 0 8px 24px rgba(0,0,0,.10) on hover." },
+    "Lifted":  { css:'0 12px 32px rgba(0,0,0,.14)',                       prompt:"Use a pronounced elevation: box-shadow 0 12px 32px rgba(0,0,0,.14) on primary cards, with a smooth 200ms transition on hover." }
+  },
+
+  borders: {
+    "Hairline":  { css:'1px solid #E5E7EB', prompt:"Use 1px hairline borders in #E5E7EB on all card surfaces." },
+    "Strong":    { css:'2px solid #111827', prompt:"Use confident 2px borders in #111827 to define cards and separate sections." },
+    "None":      { css:'none',              prompt:"Use no borders at all — rely purely on background colour shifts and spacing to separate regions." }
+  },
+
+  motions: {
+    "None":     { prompt:"Do not add any animation or transition. All state changes are instant." },
+    "Subtle":   { prompt:"Add only micro-transitions: 150ms ease on colour, opacity, and box-shadow for hover and focus states. Nothing moves position." },
+    "Standard": { prompt:"Add 200ms ease-out transitions on hover and focus, plus a gentle fade-and-rise (translateY 12px → 0) on section entrance via IntersectionObserver. Respect prefers-reduced-motion by disabling all transforms." },
+    "Expressive":{ prompt:"Add expressive motion: staggered entrance animations per card (60ms delay increments), 300ms cubic-bezier(.2,.8,.2,1) transitions, and a subtle parallax on the hero avatar. Fully disable under prefers-reduced-motion: reduce." }
+  },
+
+  tags: {
+    structure: {
+      header:   { label:'<header>',  prompt:"<header> — Page-level masthead containing the identity block (avatar, name, role) and the primary CTA. Sticky on scroll with a backdrop blur and a hairline bottom border." },
+      nav:      { label:'<nav>',     prompt:"<nav> — Primary navigation with <ul>/<li>/<a> structure, an aria-label=\"Primary\", an active-link state, and a mobile hamburger drawer below 768px." },
+      main:     { label:'<main>',    prompt:"<main> — Single <main> landmark wrapping all page content. Only one per document." },
+      section:  { label:'<section>', prompt:"<section> — Each content block is a <section> with an aria-labelledby pointing to its own <h2>. Sections are separated by consistent vertical rhythm." },
+      article:  { label:'<article>', prompt:"<article> — Used for self-contained entries (experience items, project cards, testimonials), each with its own heading." },
+      aside:    { label:'<aside>',   prompt:"<aside> — Supplementary column for meta info, quick facts, or social links. Visually lighter than the main content." },
+      footer:   { label:'<footer>',  prompt:"<footer> — Closing region with a copyright line, a repeat of the primary social links, and a subtle top border." },
+      div:      { label:'<div>',     prompt:"<div> — Used only as a neutral layout/utility wrapper where no semantic element applies. Never used for text content blocks." }
+    },
+    content: {
+      h1:       { label:'<h1>',      prompt:"<h1> — Exactly one per page. Holds the display name. Uses the largest type step with a tight letter-spacing and heavy weight." },
+      h2:       { label:'<h2>',      prompt:"<h2> — Section headings. Consistent size step, 0.75rem bottom margin, and an optional short accent underline." },
+      h3:       { label:'<h3>',      prompt:"<h3> — Sub-headings inside cards and timeline entries (job title, project name)." },
+      p:        { label:'<p>',       prompt:"<p> — Body copy constrained to a 65–72ch measure with 1.7 line-height." },
+      ul:       { label:'<ul>',      prompt:"<ul> — Used for skill lists, feature bullets and social links. Custom marker style, list-style: none where icons replace bullets." },
+      blockquote:{ label:'<blockquote>', prompt:"<blockquote> — Testimonial quotes with <cite> attribution, an accent left border, and italic body text." },
+      time:     { label:'<time>',    prompt:"<time datetime=\"YYYY-MM\"> — Used for all date ranges, formatted consistently (e.g. 'Jan 2022 — Present')." },
+      table:    { label:'<table>',   prompt:"<table> — Used for structured spec or comparison data. Include <thead>, <tbody>, <th scope=\"col\">, tabular-nums, and zebra striping." },
+      code:     { label:'<code>',    prompt:"<code> — Monospace inline styling for technical terms, with a subtle tinted background and 4px radius." }
+    },
+    interactive: {
+      a:        { label:'<a>',       prompt:"<a> — All links have descriptive text or aria-label, a visible focus ring, and external links carry rel=\"noopener noreferrer\"." },
+      button:   { label:'<button>',  prompt:"<button> — Three variants required: primary (solid fill), secondary (outline), ghost (text only). Each needs default, hover, focus-visible, active and disabled states." },
+      form:     { label:'<form>',    prompt:"<form> — Contact form with <label> paired to every input, inline validation, an aria-live region for errors, and a success state after submission." },
+      input:    { label:'<input>',   prompt:"<input> — Text and email inputs with visible labels, 44px minimum touch height, a clear focus ring, and an error state using an icon plus a colour change (never colour alone)." },
+      details:  { label:'<details>', prompt:"<details>/<summary> — Used for collapsible FAQ or 'show more' blocks, with a rotating chevron indicator." }
+    },
+    media: {
+      img:      { label:'<img>',     prompt:"<img> — Every image requires meaningful alt text, explicit width/height to prevent layout shift, loading=\"lazy\" below the fold, and responsive srcset where applicable." },
+      picture:  { label:'<picture>', prompt:"<picture> — Used for art-directed responsive images with WebP sources and a JPEG fallback." },
+      svg:      { label:'<svg>',     prompt:"<svg> — Inline icons only, with aria-hidden=\"true\" for decorative icons and role=\"img\" plus <title> for meaningful ones." },
+      video:    { label:'<video>',   prompt:"<video> — Optional hero media with muted, playsinline, loop and a poster frame; never autoplay with sound." }
+    }
+  },
+
+  negative: "Avoid: generic bootstrap-looking UI, unstyled browser defaults, inconsistent spacing, more than three type sizes per section, more than two font families, harsh pure-black shadows, colour-only state indicators, lorem ipsum, placeholder images without alt text, inline styles, !important, divitis, nested tables, autoplaying audio, horizontal scroll on mobile, text smaller than 14px, contrast below 4.5:1, and layout shift on load."
+};
+
+
+/* ============================================================================
+   2. PRESETS
+   ========================================================================== */
+const PRESETS = {
+  minimal:   { palette:'Mono Studio',   layout:'Hero Top',       radius:8,  shadow:'None',    motion:'Subtle',    density:'Airy — generous whitespace',     heading:'Inter', body:'Inter' },
+  sports:    { palette:'Crimson Edge',  layout:'Split 2-Column', radius:14, shadow:'Lifted',  motion:'Expressive',density:'Balanced — medium spacing',       heading:'Inter', body:'Inter' },
+  corporate: { palette:'Ocean Trust',   layout:'Sidebar Left',   radius:6,  shadow:'Subtle',  motion:'Standard',  density:'Balanced — medium spacing',       heading:'Inter', body:'Inter' },
+  neon:      { palette:'Neon Terminal', layout:'Card Grid',      radius:18, shadow:'Soft',    motion:'Expressive',density:'Dense — compact spacing',         heading:'Inter', body:'Inter' },
+  pastel:    { palette:'Soft Pastel',   layout:'Card Grid',      radius:24, shadow:'Soft',    motion:'Standard',  density:'Airy — generous whitespace',      heading:'Inter', body:'Inter' },
+  editorial: { palette:'Editorial Ink', layout:'Magazine',       radius:0,  shadow:'None',    motion:'Subtle',    density:'Airy — generous whitespace',      heading:'Georgia', body:'Georgia' }
+};
+
+
+/* ============================================================================
+   3. STATE
+   ========================================================================== */
+const state = {
+  palette: 'Crimson Edge',
+  colors: {},
+  darkMode: false,
+  gradient: 'None',
+  headingFont: 'Inter',
+  bodyFont: 'Inter',
+  typeScale: 'Standard 16px base',
+  typeWeight: '700',
+  tracking: 0,
+  layout: 'Hero Top',
+  containerWidth: 'Standard 1024px',
+  density: 'Balanced — medium spacing',
+  radius: 12,
+  shadow: 'Soft',
+  border: 'Hairline',
+  motion: 'Standard',
+  sections: [],
+  tags: [],
+  a11y: 'WCAG 2.1 AA'
+};
+
+state.sections = PROMPT_REGISTRY.sections.map(s => ({ ...s }));
+
+
+/* ============================================================================
+   4. HELPERS
+   ========================================================================== */
+const $el = id => document.getElementById(id);
+
+function toast(msg) {
+  const t = $el('toast');
+  t.textContent = msg;
+  t.classList.remove('translate-y-24', 'opacity-0');
+  setTimeout(() => t.classList.add('translate-y-24', 'opacity-0'), 1800);
+}
+
+function applyPaletteToState(name) {
+  const p = PROMPT_REGISTRY.palettes[name];
+  if (!p) return;
+  state.palette = name;
+  state.colors  = { ...p.tokens };
+}
+
+function hexToRgb(hex) {
+  const h = hex.replace('#','');
+  const n = parseInt(h.length === 3 ? h.split('').map(c=>c+c).join('') : h, 16);
+  return [(n>>16)&255, (n>>8)&255, n&255];
+}
+function luminance(hex) {
+  const [r,g,b] = hexToRgb(hex).map(v => {
+    v /= 255;
+    return v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4);
+  });
+  return 0.2126*r + 0.7152*g + 0.0722*b;
+}
+function contrast(a, b) {
+  const l1 = luminance(a), l2 = luminance(b);
+  return ((Math.max(l1,l2) + 0.05) / (Math.min(l1,l2) + 0.05)).toFixed(2);
+}
+
+
+/* ============================================================================
+   5. UI RENDERERS
+   ========================================================================== */
+
+function renderPalettes() {
+  const grid = $el('paletteGrid');
+  grid.innerHTML = '';
+  Object.entries(PROMPT_REGISTRY.palettes).forEach(([name, data]) => {
+    const btn = document.createElement('button');
+    btn.className = 'swatch' + (state.palette === name ? ' active' : '');
+    btn.dataset.palette = name;
+    btn.title = name;
+    btn.style.background = `linear-gradient(135deg, ${data.swatches[0]} 0 50%, ${data.swatches[1]} 50% 100%)`;
+    grid.appendChild(btn);
+  });
+}
+
+function renderColorTokens() {
+  const grid = $el('colorTokenGrid');
+  grid.innerHTML = '';
+  PROMPT_REGISTRY.colorTokens.forEach(tok => {
+    const wrap = document.createElement('div');
+    wrap.className = 'flex items-center gap-2';
+    wrap.innerHTML = `
+      <input type="color" class="color-token w-9 h-9 rounded-lg border border-line cursor-pointer p-0.5"
+             data-token="${tok.id}" value="${state.colors[tok.id] || tok.default}" />
+      <div class="min-w-0">
+        <p class="text-[11px] font-medium truncate">${tok.label}</p>
+        <p class="text-[10px] text-gray-400 font-mono truncate" data-token-hex="${tok.id}">${state.colors[tok.id] || tok.default}</p>
+      </div>`;
+    grid.appendChild(wrap);
+  });
+}
+
+function renderLayouts() {
+  const grid = $el('layoutGrid');
+  grid.innerHTML = '';
+  Object.entries(PROMPT_REGISTRY.layouts).forEach(([name, data]) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-card relative border border-line rounded-xl p-3 text-left bg-white' +
+                    (state.layout === name ? ' active' : '');
+    btn.dataset.layout = name;
+    btn.innerHTML = `
+      <i class="fas ${data.icon} text-brand mb-2 block"></i>
+      <p class="text-xs font-semibold leading-tight">${name}</p>
+      <p class="text-[10px] text-gray-400 leading-snug mt-0.5">${data.desc}</p>
+      <i class="fas fa-circle-check opt-check absolute top-2 right-2 text-brand text-xs"></i>`;
+    grid.appendChild(btn);
+  });
+}
+
+function renderShadows() {
+  const grid = $el('shadowGrid');
+  grid.innerHTML = '';
+  Object.entries(PROMPT_REGISTRY.shadows).forEach(([name, data]) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-card border border-line rounded-lg py-3 text-center bg-white' +
+                    (state.shadow === name ? ' active' : '');
+    btn.dataset.shadow = name;
+    btn.innerHTML = `
+      <span class="block w-7 h-7 mx-auto rounded-md bg-white" style="box-shadow:${data.css}"></span>
+      <span class="block text-[10px] font-medium mt-2">${name}</span>`;
+    grid.appendChild(btn);
+  });
+}
+
+function renderBorders() {
+  const grid = $el('borderGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  Object.entries(PROMPT_REGISTRY.borders).forEach(([name, data]) => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-card border border-line rounded-lg py-3 text-center bg-white' +
+                    (state.border === name ? ' active' : '');
+    btn.dataset.border = name;
+    btn.innerHTML = `
+      <span class="block w-7 h-7 mx-auto rounded-md" style="border:${data.css};background:#fff"></span>
+      <span class="block text-[10px] font-medium mt-2">${name}</span>`;
+    grid.appendChild(btn);
+  });
+}
+
+function renderMotions() {
+  const grid = $el('motionGrid');
+  grid.innerHTML = '';
+  Object.keys(PROMPT_REGISTRY.motions).forEach(name => {
+    const btn = document.createElement('button');
+    btn.className = 'opt-card border border-line rounded-lg py-2 text-center bg-white' +
+                    (state.motion === name ? ' active' : '');
+    btn.dataset.motion = name;
+    btn.innerHTML = `<span class="block text-[10px] font-medium">${name}</span>`;
+    grid.appendChild(btn);
+  });
+}
+
+function renderSections() {
+  const list = $el('sectionList');
+  list.innerHTML = '';
+  state.sections.forEach(sec => {
+    const li = document.createElement('li');
+    li.className = 'flex items-center gap-3 bg-white border border-line rounded-lg px-3 py-2.5 cursor-grab';
+    li.dataset.sectionId = sec.id;
+    li.innerHTML = `
+      <i class="fas fa-grip-vertical text-gray-300 text-xs"></i>
+      <span class="text-xs font-medium flex-1">${sec.label}</span>
+      <label class="relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" class="section-toggle sr-only peer" data-section-id="${sec.id}" ${sec.on ? 'checked' : ''} />
+        <div class="w-9 h-5 bg-gray-200 rounded-full peer peer-checked:bg-brand after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:after:translate-x-4"></div>
+      </label>`;
+    list.appendChild(li);
+  });
+
+  if ($.fn.sortable) {
+    $('#sectionList').sortable({
+      handle: '.fa-grip-vertical',
+      axis: 'y',
+      update: function () {
+        const order = $('#sectionList li').map(function () {
+          return $(this).data('section-id');
+        }).get();
+        state.sections.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+        refresh();
+      }
+    });
+  }
+}
+
+function renderTags() {
+  Object.entries(PROMPT_REGISTRY.tags).forEach(([group, tags]) => {
+    const host = document.querySelector(`[data-taggroup="${group}"]`);
+    if (!host) return;
+    host.innerHTML = '';
+    Object.entries(tags).forEach(([key, data]) => {
+      const btn = document.createElement('button');
+      btn.className = 'tag-pill text-[11px] font-mono border border-line rounded-full px-3 py-1 bg-white' +
+                      (state.tags.includes(key) ? ' active' : '');
+      btn.dataset.tag = key;
+      btn.textContent = data.label;
+      btn.title = data.prompt;
+      host.appendChild(btn);
+    });
+  });
+  updateTagCount();
+}
+
+function updateTagCount() {
+  const n = state.tags.length;
+  $el('tagCountLabel').textContent = n === 0
+    ? '0 tags selected — their prompt fragments will be appended verbatim.'
+    : `${n} tag${n > 1 ? 's' : ''} selected — ${n} pre-written fragment${n > 1 ? 's' : ''} will be appended verbatim.`;
+}
+
+
+/* ============================================================================
+   6. LIVE PREVIEW (more prominent now that the prompt is a sidebar)
+   ========================================================================== */
+function renderPreview() {
+  const c = state.colors;
+  const r = state.radius;
+  const shadowCss = PROMPT_REGISTRY.shadows[state.shadow]?.css || 'none';
+  const borderCss = PROMPT_REGISTRY.borders[state.border]?.css || 'none';
+  const bg = state.darkMode ? (c.background === '#FFFFFF' ? '#0B0F19' : c.background) : c.background;
+  const surface = state.darkMode ? (c.surface === '#F9FAFB' ? '#111827' : c.surface) : c.surface;
+  const text = state.darkMode ? '#E5E7EB' : c.text;
+
+  const shell = $el('previewShell');
+  shell.style.borderRadius = r + 'px';
+
+  const frame = $el('previewFrame');
+  frame.style.fontFamily = `'${state.bodyFont}', sans-serif`;
+
+  const name    = $el('pName').value || 'Your Name';
+  const role    = $el('pRole').value || 'Your Role';
+  const loc     = $el('pLocation').value || '—';
+  const tagline = $el('pTagline').value || '';
+  const bio     = $el('pBio').value || '';
+  const cta     = $el('pCta').value || 'Contact';
+  const initials = name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  const avatarR = $el('pAvatar').value.includes('Circle') ? '9999px' : r + 'px';
+  const showAvatar = $el('pAvatar').value !== 'No avatar';
+
+  const layout = state.layout;
+  const isSplit = layout === 'Split 2-Column';
+  const isMag   = layout === 'Magazine';
+  const isSidebar = layout === 'Sidebar Left';
+  const isGrid  = layout === 'Card Grid';
+  const isTimeline = layout === 'Timeline';
+
+  const visibleSections = state.sections.filter(s => s.on);
+
+  const pad = state.density.includes('Airy') ? '28px' : state.density.includes('Dense') ? '14px' : '20px';
+  const gap = state.density.includes('Airy') ? '22px' : state.density.includes('Dense') ? '10px' : '16px';
+
+  const headingStyle = `font-family:'${state.headingFont}',sans-serif;font-weight:${state.typeWeight};letter-spacing:${state.tracking}px;`;
+
+  /* ---------- build each section card ---------- */
+  function sectionCard(sec, extraStyle='') {
+    return `
+      <div style="background:${surface};border:${borderCss};border-radius:${r}px;box-shadow:${shadowCss};padding:16px;${extraStyle}">
+        <h3 style="${headingStyle}font-size:13px;margin:0 0 10px;display:flex;align-items:center;gap:7px">
+          <span style="width:6px;height:6px;border-radius:9999px;background:${c.primary};display:inline-block"></span>${sec.label}
+        </h3>
+        <div style="height:7px;border-radius:${r}px;background:${c.accent};opacity:.35;margin-bottom:6px"></div>
+        <div style="height:7px;border-radius:${r}px;background:${c.accent};opacity:.22;width:82%;margin-bottom:6px"></div>
+        <div style="height:7px;border-radius:${r}px;background:${c.accent};opacity:.14;width:58%"></div>
+      </div>`;
+  }
+
+  /* ---------- profile card ---------- */
+  const profileCard = `
+    <div style="background:${surface};border:${borderCss};border-radius:${r}px;box-shadow:${shadowCss};padding:20px;${isSplit?'position:sticky;top:0;':''}">
+      ${showAvatar ? `<div style="width:64px;height:64px;border-radius:${avatarR};background:${c.primary};color:#fff;display:grid;place-items:center;font-weight:800;font-size:20px;margin-bottom:14px">${initials}</div>` : ''}
+      <h1 style="${headingStyle}font-size:22px;line-height:1.15;margin:0 0 5px;color:${text}">${name}</h1>
+      <h2 style="font-size:12.5px;font-weight:600;color:${c.primary};margin:0 0 6px">${role}</h2>
+      <p style="font-size:11px;opacity:.55;margin:0 0 10px;display:flex;align-items:center;gap:5px">
+        <span style="display:inline-block;width:5px;height:5px;border-radius:9999px;background:${c.accent}"></span>${loc}
+      </p>
+      <p style="font-size:12px;line-height:1.6;opacity:.78;margin:0 0 14px">${tagline}</p>
+      <button style="background:${c.primary};color:#fff;border:none;border-radius:${Math.min(r,999)}px;padding:10px 18px;font-size:12px;font-weight:600;cursor:pointer;box-shadow:${shadowCss}">${cta}</button>
+      <div style="display:flex;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid ${state.darkMode?'#1F2937':'#E5E7EB'}">
+        ${['G','in','X','@'].map(t => `<span style="width:26px;height:26px;border-radius:8px;background:${c.accent};opacity:.55;display:grid;place-items:center;font-size:10px;font-weight:700;color:${state.darkMode?'#0B0F19':'#374151'}">${t}</span>`).join('')}
+      </div>
+    </div>`;
+
+  /* ---------- compose by layout ---------- */
+  let inner = '';
+
+  if (isSidebar) {
+    inner = `
+      <div style="display:grid;grid-template-columns:200px 1fr;gap:${gap};align-items:start">
+        <div style="background:${state.darkMode?'#111827':'#F3F4F6'};border-radius:${r}px;padding:14px;display:flex;flex-direction:column;gap:8px">
+          <div style="height:8px;border-radius:99px;background:${c.primary};width:70%"></div>
+          ${['About','Skills','Work','Contact'].map(l => `
+            <div style="font-size:11px;font-weight:500;padding:7px 10px;border-radius:${Math.min(r,10)}px;background:${surface};border:${borderCss};color:${text};opacity:.85">${l}</div>
+          `).join('')}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:${gap}">
+          ${profileCard}
+          ${visibleSections.map(s => sectionCard(s)).join('')}
+        </div>
+      </div>`;
+  } else if (isSplit) {
+    inner = `
+      <div style="display:grid;grid-template-columns:minmax(0,280px) 1fr;gap:${gap};align-items:start">
+        ${profileCard}
+        <div style="display:flex;flex-direction:column;gap:${gap}">
+          ${visibleSections.map(s => sectionCard(s)).join('')}
+        </div>
+      </div>`;
+  } else if (isMag) {
+    inner = `
+      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:${gap};align-items:start">
+        <div style="display:flex;flex-direction:column;gap:${gap}">
+          <div style="background:${surface};border:${borderCss};border-radius:${r}px;box-shadow:${shadowCss};padding:22px">
+            ${showAvatar ? `<div style="width:56px;height:56px;border-radius:${avatarR};background:${c.primary};color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px;margin-bottom:12px">${initials}</div>` : ''}
+            <h1 style="${headingStyle}font-size:28px;line-height:1.1;margin:0 0 8px;color:${text}">${name}</h1>
+            <h2 style="font-size:13px;font-weight:600;color:${c.primary};margin:0 0 10px">${role}</h2>
+            <p style="font-size:12.5px;line-height:1.65;opacity:.75;margin:0 0 14px">${tagline}</p>
+            <button style="background:${c.primary};color:#fff;border:none;border-radius:${Math.min(r,999)}px;padding:10px 18px;font-size:12px;font-weight:600;cursor:pointer">${cta}</button>
+          </div>
+          ${visibleSections.slice(0, Math.ceil(visibleSections.length/2)).map(s => sectionCard(s)).join('')}
+        </div>
+        <div style="display:flex;flex-direction:column;gap:${gap}">
+          <div style="background:${state.darkMode?'#111827':'#F9FAFB'};border:${borderCss};border-radius:${r}px;padding:16px">
+            <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;opacity:.5;margin:0 0 8px">Bio</p>
+            <p style="font-size:11.5px;line-height:1.65;opacity:.8;margin:0">${bio}</p>
+          </div>
+          ${visibleSections.slice(Math.ceil(visibleSections.length/2)).map(s => sectionCard(s)).join('')}
+        </div>
+      </div>`;
+  } else if (isGrid) {
+    inner = `
+      <div style="display:flex;flex-direction:column;gap:${gap}">
+        ${profileCard}
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:${gap}">
+          ${visibleSections.map(s => sectionCard(s)).join('')}
+        </div>
+      </div>`;
+  } else if (isTimeline) {
+    inner = `
+      <div style="display:flex;flex-direction:column;gap:${gap}">
+        ${profileCard}
+        <div style="position:relative;padding-left:24px">
+          <div style="position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:${c.accent};opacity:.35"></div>
+          ${visibleSections.map(s => `
+            <div style="position:relative;margin-bottom:${gap}">
+              <span style="position:absolute;left:-24px;top:14px;width:14px;height:14px;border-radius:9999px;background:${c.primary};border:3px solid ${bg}"></span>
+              ${sectionCard(s)}
+            </div>`).join('')}
+        </div>
+      </div>`;
+  } else {
+    /* Hero Top (default) */
+    inner = `
+      <div style="display:flex;flex-direction:column;gap:${gap}">
+        <div style="background:${surface};border:${borderCss};border-radius:${r}px;box-shadow:${shadowCss};padding:28px;text-align:center">
+          ${showAvatar ? `<div style="width:76px;height:76px;border-radius:${avatarR};background:${c.primary};color:#fff;display:grid;place-items:center;font-weight:800;font-size:24px;margin:0 auto 16px">${initials}</div>` : ''}
+          <h1 style="${headingStyle}font-size:26px;line-height:1.15;margin:0 0 6px;color:${text}">${name}</h1>
+          <h2 style="font-size:13px;font-weight:600;color:${c.primary};margin:0 0 8px">${role}</h2>
+          <p style="font-size:11px;opacity:.55;margin:0 0 12px">${loc}</p>
+          <p style="font-size:13px;line-height:1.7;opacity:.78;max-width:52ch;margin:0 auto 18px">${tagline}</p>
+          <button style="background:${c.primary};color:#fff;border:none;border-radius:${Math.min(r,999)}px;padding:11px 22px;font-size:12.5px;font-weight:600;cursor:pointer;box-shadow:${shadowCss}">${cta}</button>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:${gap}">
+          ${visibleSections.map(s => sectionCard(s)).join('')}
+        </div>
+      </div>`;
+  }
+
+  frame.innerHTML = `
+    <div style="background:${bg};color:${text};border-radius:${r}px;padding:${pad};transition:all .25s ease">
+      ${inner}
+    </div>`;
+}
+
+
+/* ============================================================================
+   7. PROMPT GENERATOR
+   ========================================================================== */
+function generatePrompt() {
+  const c = state.colors;
+  const p = PROMPT_REGISTRY.palettes[state.palette];
+  const L = [];
+  const line = s => L.push(s);
+
+  line(`ROLE: You are a senior front-end engineer and UI designer.`);
+  line(`TASK: Build a production-ready personal profile page as a single self-contained HTML document.`);
+  line(`STACK: Semantic HTML5, Tailwind CSS (CDN utility classes), custom CSS in a <style> block where utilities are insufficient, vanilla JavaScript, and jQuery for DOM manipulation and event delegation. No build step, no framework, no bundler.`);
+  line('');
+
+  line(`--- CONTENT DATA ---`);
+  line(`Display name: "${$el('pName').value || 'Your Name'}"`);
+  line(`Role / title: "${$el('pRole').value || 'Your Role'}"`);
+  line(`Location: "${$el('pLocation').value || '—'}"`);
+  line(`Tagline: "${$el('pTagline').value || '—'}"`);
+  line(`Bio: "${$el('pBio').value || '—'}"`);
+  line(`Primary CTA label: "${$el('pCta').value || 'Contact'}"`);
+  line(`Avatar treatment: ${$el('pAvatar').value}.`);
+  line('');
+
+  line(`--- DESIGN TOKENS ---`);
+  line(`Base palette preset: "${state.palette}".`);
+  if (p) line(p.prompt);
+  line(`Resolved colour tokens: primary ${c.primary}, secondary ${c.secondary}, accent ${c.accent}, background ${c.background}, surface ${c.surface}, body text ${c.text}.`);
+  line(`Contrast check — text on background: ${contrast(c.text, c.background)}:1; text on surface: ${contrast(c.text, c.surface)}:1; white on primary: ${contrast('#FFFFFF', c.primary)}:1. Adjust the text or surface colour if any pair falls below 4.5:1.`);
+  line(`Dark mode: ${state.darkMode ? 'YES — implement a dark variant using a class-based toggle on <html> plus a prefers-color-scheme fallback. Persist the choice in localStorage.' : 'NO — light theme only.'}`);
+  line(`Background treatment: ${state.gradient}.`);
+  line(`Typography — headings: ${state.headingFont}; body: ${state.bodyFont}; scale: ${state.typeScale}; heading weight: ${state.typeWeight}; letter-spacing: ${state.tracking}px.`);
+  line(`Define the type scale as CSS custom properties (--step--1 through --step-4) and apply it consistently.`);
+  line(`Container width: ${state.containerWidth}. Vertical rhythm / spacing density: ${state.density}.`);
+  line(`Corner radius token: ${state.radius}px (apply to cards, buttons, inputs and images consistently).`);
+  line(`Elevation: ${state.shadow}. ${PROMPT_REGISTRY.shadows[state.shadow]?.prompt || ''}`);
+  line(`Borders: ${state.border}. ${PROMPT_REGISTRY.borders[state.border]?.prompt || ''}`);
+  line('');
+
+  line(`--- LAYOUT ---`);
+  line(PROMPT_REGISTRY.layouts[state.layout]?.prompt || '');
+  line('');
+
+  line(`--- PAGE SECTIONS (render in exactly this order) ---`);
+  const onSections = state.sections.filter(s => s.on);
+  if (onSections.length === 0) {
+    line(`No sections were enabled. Render only the profile header block.`);
+  } else {
+    onSections.forEach((sec, i) => line(`${i + 1}. ${sec.prompt}`));
+  }
+  line('');
+
+  line(`--- REQUIRED HTML ELEMENTS ---`);
+  if (state.tags.length === 0) {
+    line(`No specific tag requirements were selected. Use standard semantic HTML5.`);
+  } else {
+    state.tags.forEach(key => {
+      const found = Object.values(PROMPT_REGISTRY.tags).find(g => g[key]);
+      if (found) line(found[key].prompt);
+    });
+  }
+  line('');
+
+  line(`--- RESPONSIVE BEHAVIOUR ---`);
+  line(`Design mobile-first. Breakpoints: sm 640px, md 768px, lg 1024px, xl 1280px.`);
+  line(`At < 640px: single column, stacked profile header, full-width buttons with a 44px minimum touch target, and no horizontal scroll.`);
+  line(`At 640–1023px: two-column card grid where applicable, reduced vertical spacing.`);
+  line(`At >= 1024px: apply the full "${state.layout}" layout described above.`);
+  line('');
+
+  line(`--- INTERACTION & MOTION ---`);
+  line(PROMPT_REGISTRY.motions[state.motion]?.prompt || '');
+  line(`All interactive elements require visible default, hover, focus-visible, active and disabled states.`);
+  line(`Use event delegation on a stable parent rather than binding handlers to dynamically created elements.`);
+  line('');
+
+  line(`--- ACCESSIBILITY ---`);
+  line(`Target: ${state.a11y}.`);
+  line(`Use one <h1>, a logical heading order with no skipped levels, landmark elements (header, nav, main, footer), visible focus rings that are never removed, and a skip-to-content link as the first focusable element.`);
+  line(`Every image needs meaningful alt text; decorative images use alt="". Every icon-only control needs an aria-label. Colour must never be the only carrier of meaning.`);
+  line('');
+
+  line(`--- CODE QUALITY ---`);
+  line(`Deliver one self-contained .html file. Group CSS in a single <style> block with clear section comments. Group JS at the end of <body> with named functions and no globals leaking to window.`);
+  line(`Reuse component classes rather than repeating long utility strings. Avoid inline styles except for genuinely dynamic values.`);
+  line('');
+
+  const extra = $el('extraNotes').value.trim();
+  if (extra) {
+    line(`--- ADDITIONAL REQUIREMENTS ---`);
+    line(extra);
+    line('');
+  }
+
+  line(`--- DO NOT ---`);
+  line(PROMPT_REGISTRY.negative);
+  line('');
+
+  line(`--- DELIVERABLES ---`);
+  line(`1. Full HTML markup with the semantic structure described above.`);
+  line(`2. The complete CSS (Tailwind utilities + custom properties for the tokens).`);
+  line(`3. The complete JavaScript / jQuery for interactivity, the dark-mode toggle, and form validation.`);
+  line(`4. A short comment block at the top of the file summarising the design tokens used.`);
+  line(`5. Note any assumptions you made where the specification was ambiguous.`);
+
+  return L.join('\n');
+}
+
+
+/* ============================================================================
+   8. REFRESH
+   ========================================================================== */
+function refresh() {
+  renderPreview();
+  updateTagCount();
+  const txt = generatePrompt();
+  $el('layoutOutput').value = txt;
+  // small live counter in the sidebar header
+  const stats = $el('promptStats');
+  if (stats) {
+    const words = txt.trim().split(/\s+/).length;
+    stats.textContent = `${txt.length} chars · ${words} words`;
+  }
+}
+
+
+/* ============================================================================
+   9. EVENT BINDING
+   ========================================================================== */
+$(function () {
+
+  /* ---------- 9.0 Sidebar toggle ---------- */
+  function openSidebar() {
+    $('#promptSidebar').addClass('open').attr('aria-hidden', 'false');
+    $('#promptBackdrop').removeClass('hidden').addClass('open');
+    $('#promptToggleBtn').addClass('open').attr('aria-expanded', 'true');
+    $('#promptToggleIcon').removeClass('fa-code').addClass('fa-times');
+    // draw attention back to the preview
+    $('#previewShell').addClass('pulse');
+    setTimeout(() => $('#previewShell').removeClass('pulse'), 700);
+  }
+  function closeSidebar() {
+    $('#promptSidebar').removeClass('open').attr('aria-hidden', 'true');
+    $('#promptBackdrop').removeClass('open');
+    setTimeout(() => $('#promptBackdrop').addClass('hidden'), 320);
+    $('#promptToggleBtn').removeClass('open').attr('aria-expanded', 'false');
+    $('#promptToggleIcon').removeClass('fa-times').addClass('fa-code');
+  }
+  function toggleSidebar() {
+    if ($('#promptSidebar').hasClass('open')) closeSidebar();
+    else openSidebar();
+  }
+
+  $('#promptToggleBtn').on('click', toggleSidebar);
+  $('#closeSidebarBtn').on('click', closeSidebar);
+  $('#promptBackdrop').on('click', closeSidebar);
+
+  // Esc closes the sidebar
+  $(document).on('keydown', function (e) {
+    if (e.key === 'Escape' && $('#promptSidebar').hasClass('open')) closeSidebar();
+  });
+
+  /* ---------- 9.1 Preset buttons ---------- */
+  $(document).on('click', '.preset-btn', function () {
+    const key = $(this).data('preset');
+    const cfg = PRESETS[key];
+    if (!cfg) return;
+
+    applyPaletteToState(cfg.palette);
+    state.layout        = cfg.layout;
+    state.radius        = cfg.radius;
+    state.shadow        = cfg.shadow;
+    state.motion        = cfg.motion;
+    state.density       = cfg.density;
+    state.headingFont   = cfg.heading;
+    state.bodyFont      = cfg.body;
+
+    $('#fontHeading').val(cfg.heading);
+    $('#fontBody').val(cfg.body);
+    $('#density').val(cfg.density);
+    $('#radius').val(cfg.radius);
+    $('#radiusVal').text(cfg.radius + 'px');
+
+    $('.preset-btn').removeClass('active');
+    $(this).addClass('active');
+
+    renderPalettes();
+    renderColorTokens();
+    renderLayouts();
+    renderShadows();
+    renderBorders();
+    renderMotions();
+
+    toast('Preset applied: ' + key);
+    refresh();
+  });
+
+  /* ---------- 9.2 Palette swatch ---------- */
+  $(document).on('click', '.swatch', function () {
+    applyPaletteToState($(this).data('palette'));
+    renderPalettes();
+    renderColorTokens();
+    refresh();
+  });
+
+  /* ---------- 9.3 Manual colour tokens ---------- */
+  $(document).on('input', '.color-token', function () {
+    const tok = $(this).data('token');
+    const val = $(this).val();
+    state.colors[tok] = val;
+    $(`[data-token-hex="${tok}"]`).text(val);
+    refresh();
+  });
+
+  /* ---------- 9.4 Dark mode ---------- */
+  $('#darkToggle').on('change', function () {
+    state.darkMode = this.checked;
+    refresh();
+  });
+
+  /* ---------- 9.5 Gradient ---------- */
+  $(document).on('click', '[data-group="gradient"]', function () {
+    $('[data-group="gradient"]').removeClass('active');
+    $(this).addClass('active');
+    state.gradient = $(this).data('value');
+    refresh();
+  });
+
+  /* ---------- 9.6 Layout cards ---------- */
+  $(document).on('click', '[data-layout]', function () {
+    state.layout = $(this).data('layout');
+    renderLayouts();
+    refresh();
+  });
+
+  /* ---------- 9.7 Shadow ---------- */
+  $(document).on('click', '[data-shadow]', function () {
+    state.shadow = $(this).data('shadow');
+    renderShadows();
+    refresh();
+  });
+
+  /* ---------- 9.8 Border ---------- */
+  $(document).on('click', '[data-border]', function () {
+    state.border = $(this).data('border');
+    renderBorders();
+    refresh();
+  });
+
+  /* ---------- 9.9 Motion ---------- */
+  $(document).on('click', '[data-motion]', function () {
+    state.motion = $(this).data('motion');
+    renderMotions();
+    refresh();
+  });
+
+  /* ---------- 9.10 HTML tag chips ---------- */
+  $(document).on('click', '.tag-pill', function () {
+    const key = $(this).data('tag');
+    const idx = state.tags.indexOf(key);
+    if (idx > -1) state.tags.splice(idx, 1);
+    else state.tags.push(key);
+    $(this).toggleClass('active');
+    refresh();
+  });
+
+  /* ---------- 9.11 Section toggles ---------- */
+  $(document).on('change', '.section-toggle', function () {
+    const id = $(this).data('section-id');
+    const sec = state.sections.find(s => s.id === id);
+    if (sec) sec.on = this.checked;
+    refresh();
+  });
+
+  /* ---------- 9.12 Simple form inputs ---------- */
+  $('#pName, #pRole, #pLocation, #pTagline, #pBio, #pCta').on('input', refresh);
+  $('#pAvatar').on('change', refresh);
+
+  /* ---------- 9.13 Typography ---------- */
+  $('#fontHeading').on('change', function () { state.headingFont = this.value; refresh(); });
+  $('#fontBody').on('change',    function () { state.bodyFont    = this.value; refresh(); });
+  $('#typeScale').on('change',   function () { state.typeScale   = this.value; refresh(); });
+  $('#typeWeight').on('change',  function () { state.typeWeight  = this.value; refresh(); });
+
+  $('#tracking').on('input', function () {
+    state.tracking = parseFloat(this.value);
+    $('#trackingVal').text(this.value + 'px');
+    refresh();
+  });
+
+  /* ---------- 9.14 Layout extras ---------- */
+  $('#containerWidth').on('change', function () { state.containerWidth = this.value; refresh(); });
+  $('#density').on('change',        function () { state.density        = this.value; refresh(); });
+  $('#a11yLevel').on('change',      function () { state.a11y           = this.value; refresh(); });
+  $('#extraNotes').on('input', refresh);
+
+  /* ---------- 9.15 Radius slider ---------- */
+  $('#radius').on('input', function () {
+    state.radius = parseInt(this.value, 10);
+    $('#radiusVal').text(state.radius + 'px');
+    refresh();
+  });
+
+  /* ---------- 9.16 Preview width ---------- */
+  $('.preview-size').on('click', function () {
+    $('.preview-size').removeClass('bg-ink text-white').addClass('border-line');
+    $(this).addClass('bg-ink text-white');
+    const w = $(this).data('w');
+    $('#previewShell').css('width', typeof w === 'number' ? w + 'px' : w);
+  });
+
+  /* ---------- 9.17 Beginner / Advanced ---------- */
+  $('#modeAdvanced').on('click', function () {
+    $('body').addClass('mode-advanced');
+    $(this).addClass('bg-ink text-white').removeClass('bg-white text-gray-600');
+    $('#modeBeginner').removeClass('bg-ink text-white').addClass('bg-white text-gray-600');
+  });
+  $('#modeBeginner').on('click', function () {
+    $('body').removeClass('mode-advanced');
+    $(this).addClass('bg-ink text-white').removeClass('bg-white text-gray-600');
+    $('#modeAdvanced').removeClass('bg-ink text-white').addClass('bg-white text-gray-600');
+  });
+
+  /* ---------- 9.18 Generate / Copy / Download ---------- */
+  $('#generateBtn').on('click', function () {
+    refresh();
+    toast('Prompt regenerated');
+  });
+
+  $('#copyBtn').on('click', async function () {
+    const txt = $('#layoutOutput').val();
+    if (!txt.trim()) return toast('Nothing to copy');
+    try {
+      await navigator.clipboard.writeText(txt);
+      const $b = $(this);
+      const original = $b.html();
+      $b.html('<i class="fas fa-check"></i> Copied');
+      setTimeout(() => $b.html(original), 1500);
+      toast('Prompt copied to clipboard');
+    } catch (e) {
+      toast('Copy failed — select and copy manually');
+    }
+  });
+
+  $('#downloadBtn').on('click', function () {
+    const txt = $('#layoutOutput').val();
+    if (!txt.trim()) return toast('Nothing to download');
+    const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+    const url  = URL.createObjectURL(blob);
+    const a    = document.createElement('a');
+    a.href = url;
+    a.download = `profile-design-prompt_${new Date().toISOString().slice(0,19).replace(/[:T]/g,'-')}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    toast('Prompt downloaded');
+  });
+
+  /* ---------- 9.19 Reset ---------- */
+  $('#resetBtn').on('click', function () {
+    if (!confirm('Reset all customisations?')) return;
+
+    applyPaletteToState('Crimson Edge');
+    state.darkMode = false;
+    state.gradient = 'None';
+    state.headingFont = 'Inter';
+    state.bodyFont = 'Inter';
+    state.typeScale = 'Standard 16px base';
+    state.typeWeight = '700';
+    state.tracking = 0;
+    state.layout = 'Hero Top';
+    state.containerWidth = 'Standard 1024px';
+    state.density = 'Balanced — medium spacing';
+    state.radius = 12;
+    state.shadow = 'Soft';
+    state.border = 'Hairline';
+    state.motion = 'Standard';
+    state.tags = [];
+    state.a11y = 'WCAG 2.1 AA';
+    state.sections = PROMPT_REGISTRY.sections.map(s => ({ ...s }));
+
+    $('#darkToggle').prop('checked', false);
+    $('#fontHeading').val('Inter');
+    $('#fontBody').val('Inter');
+    $('#typeScale').val('Standard 16px base');
+    $('#typeWeight').val('700');
+    $('#tracking').val(0); $('#trackingVal').text('0px');
+    $('#containerWidth').val('Standard 1024px');
+    $('#density').val('Balanced — medium spacing');
+    $('#radius').val(12); $('#radiusVal').text('12px');
+    $('#a11yLevel').val('WCAG 2.1 AA');
+    $('#extraNotes').val('');
+    $('.preset-btn').removeClass('active');
+
+    renderPalettes(); renderColorTokens(); renderLayouts();
+    renderShadows(); renderBorders(); renderMotions();
+    renderSections(); renderTags();
+
+    toast('Everything reset');
+    refresh();
+  });
+
+  /* ---------- 9.20 Initial paint ---------- */
+  applyPaletteToState('Crimson Edge');
+
+  renderPalettes();
+  renderColorTokens();
+  renderLayouts();
+  renderShadows();
+  renderBorders();
+  renderMotions();
+  renderSections();
+  renderTags();
+
+  refresh();
+});
+</script>
+
+</body>
+</html>

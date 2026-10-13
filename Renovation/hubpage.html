@@ -1,0 +1,1604 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Profile Craft — Digital Solutions for Profiles &amp; Businesses</title>
+<meta name="description" content="Profile Craft builds professional profile websites, business websites and custom POS / business management systems designed around your requirements." />
+<meta name="theme-color" content="#0F172A" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Profile Craft" />
+<meta property="og:title" content="Profile Craft — Digital Solutions for Profiles &amp; Businesses" />
+<meta property="og:description" content="Professional profile websites, business websites and custom business management systems, built around your requirements." />
+<meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="my_MM" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230F172A'/%3E%3Cpath d='M11 22V10h5.2a3.6 3.6 0 0 1 0 7.2H14' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='21' cy='21' r='2.4' fill='%231D4ED8'/%3E%3C/svg%3E" />
+
+<style>
+/* =========================================================
+   Profile Craft — Corporate Business Hub  (Rev. 7 — CSS-only)
+   Visual / readability pass:
+   - Balanced 45/55 text-to-visual grid (enlarged service images)
+   - Consistent type hierarchy via existing tokens
+   - Cleaner spacing, heading rhythm, and Myanmar line-heights
+   ========================================================= */
+
+:root{
+  /* ---- Palette (unchanged brand) ---- */
+  --ink:#0F172A; --ink-2:#1E293B; --body:#334155; --body-2:#1E293B;
+  --muted:#475569; --muted-2:#5B6B82;
+  --brand:#1D4ED8; --brand-ink:#143A9E;
+  --brand-soft:#EFF6FF; --brand-soft-2:#DBEAFE;
+  --accent:#0E9F6E; --accent-soft:#ECFDF5;
+  --paper:#FFFFFF; --paper-2:#F8FAFC; --paper-3:#F1F5F9; --paper-blue:#F5F8FF;
+  --line:#E2E8F0; --line-2:#CBD5E1;
+  --glass-bg:rgba(255,255,255,.72);
+  --glass-border:rgba(226,232,240,.9);
+  --glass-hi:inset 0 1px 0 rgba(255,255,255,.75);
+
+  /* ---- Font stack (local Myanmar fonts preferred) ---- */
+  --font:"Inter","Noto Sans Myanmar","Padauk","Myanmar Text",
+         -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+         "Helvetica Neue",Arial,sans-serif;
+
+  /* ---- Semantic typography tokens ---- */
+  --fs-body:1.0625rem;        /* 17px desktop body */
+  --fs-body-sm:1rem;          /* 16px mobile body */
+  --fs-lead:1.1875rem;        /* 19px lead paragraph */
+  --fs-section-lead:1.125rem; /* 18px section intro */
+  --fs-card-title:1.0625rem;  /* 17px card heading */
+  --fs-support:0.9375rem;     /* 15px supporting text */
+  --fs-small:0.875rem;        /* 14px small labels */
+  --fs-eyebrow:0.875rem;      /* 14px eyebrow labels */
+  --fs-chip:0.875rem;         /* 14px chips */
+  --fs-meta:0.8125rem;        /* 13px card CTA meta */
+
+  --lh-body:1.7;
+  --lh-body-my:1.85;
+  --lh-heading:1.2;
+  --lh-heading-my:1.5;
+  --lh-support:1.65;
+
+  --text-body:var(--body);
+  --text-muted:var(--muted);
+  --text-strong:var(--ink);
+
+  /* ---- Legacy numeric scale ---- */
+  --fs-12:.75rem; --fs-13:.8125rem; --fs-14:.875rem; --fs-15:.9375rem;
+  --fs-16:1rem; --fs-17:1.0625rem; --fs-18:1.125rem; --fs-20:1.25rem;
+  --fs-24:1.5rem; --fs-28:1.75rem; --fs-32:2rem;
+  --fs-40:2.5rem; --fs-52:3.25rem; --fs-64:4rem;
+
+  /* ---- Spacing scale ---- */
+  --s-1:.25rem; --s-2:.5rem; --s-3:.75rem; --s-4:1rem; --s-5:1.5rem;
+  --s-6:2rem; --s-7:3rem; --s-8:4rem; --s-9:6rem;
+
+  --container:1240px;
+  --radius:12px; --radius-sm:8px; --radius-lg:16px; --hdr-h:70px;
+  --sh-1:0 1px 2px rgba(15,23,42,.06);
+  --sh-2:0 4px 14px rgba(15,23,42,.06),0 1px 3px rgba(15,23,42,.05);
+  --sh-3:0 20px 50px -12px rgba(15,23,42,.14),0 8px 20px -8px rgba(15,23,42,.08);
+  --sh-brand:0 10px 30px -10px rgba(29,78,216,.35);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:var(--font);
+  font-size:var(--fs-body);          /* 17px desktop */
+  line-height:var(--lh-body);
+  color:var(--text-body);
+  background:var(--paper);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+@media (max-width:640px){
+  body{font-size:var(--fs-body-sm);}  /* 16px mobile */
+}
+img,svg{max-width:100%;display:block;}
+a{color:var(--brand);text-decoration:none;transition:color .15s;}
+a:hover{color:var(--brand-ink);}
+
+h1,h2,h3,h4{
+  color:var(--ink);
+  margin:0 0 var(--s-4);
+  font-weight:700;
+  line-height:var(--lh-heading);
+  letter-spacing:-.022em;
+  text-wrap:balance;
+  overflow-wrap:break-word;
+}
+h1{font-size:clamp(2.15rem,4.6vw,var(--fs-64));letter-spacing:-.035em;line-height:1.08;}
+h2{font-size:clamp(1.65rem,3.2vw,var(--fs-40));letter-spacing:-.028em;line-height:1.2;}
+h3{font-size:var(--fs-28);line-height:1.25;}
+h4{font-size:var(--fs-18);line-height:1.35;}
+
+/* Paragraphs inherit body size for consistent scaling */
+p{margin:0 0 var(--s-4);color:var(--text-body);text-wrap:pretty;}
+ul{margin:0 0 var(--s-4);padding-left:1.15rem;}
+li{margin-bottom:var(--s-2);color:var(--text-body);}
+strong,b{color:var(--ink);font-weight:600;}
+
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:var(--radius-sm);}
+
+/* Myanmar line-heights — generous for stacked diacritics */
+html[data-lang="my"] body{line-height:var(--lh-body-my);}
+html[data-lang="my"] h1,
+html[data-lang="my"] h2,
+html[data-lang="my"] h3,
+html[data-lang="my"] h4{line-height:var(--lh-heading-my);letter-spacing:0;}
+html[data-lang="my"] .section-head p{line-height:1.85;}
+
+.container{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:var(--s-5);}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+.skip-link{position:absolute;left:var(--s-4);top:-100px;z-index:1000;
+  background:var(--ink);color:#fff;padding:var(--s-3) var(--s-4);
+  border-radius:var(--radius-sm);transition:top .15s;}
+.skip-link:focus{top:var(--s-4);color:#fff;}
+
+/* Eyebrow — category / kicker label */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:var(--fs-eyebrow);
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--brand);
+  margin-bottom:var(--s-3);
+  line-height:1.4;
+}
+.eyebrow::before{content:"";display:inline-block;width:20px;height:2px;
+ background: radial-gradient(900px 420px at 12% -10%, rgba(37, 99, 235, .42), transparent 62%), radial-gradient(760px 420px at 92% 108%, rgba(127, 166, 255, .24), transparent 60%), linear-gradient(155deg, #0a1730 0%, #122a54 55%, #0d1f42 100%);;border-radius:2px;}
+
+.section{padding-block:var(--s-9);position:relative;
+  background:linear-gradient(180deg,#FFFFFF 0%,#FAFBFC 100%);}
+.section--alt{background:linear-gradient(180deg,#F5F7FA 0%,#EEF2F7 100%);}
+.section--blue{background:linear-gradient(180deg,#F5F8FF 0%,#EFF4FF 100%);}
+.section-head{max-width:780px;margin-bottom:var(--s-7);}
+.section-head--center{margin-inline:auto;text-align:center;}
+.section-head--center .eyebrow::before{display:none;}
+.section-head p{color:var(--text-body);font-size:var(--fs-section-lead);
+  margin:0;line-height:1.75;}
+
+/* ---- Buttons ---- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  font:inherit;font-size:var(--fs-support);font-weight:600;
+  padding:.75rem 1.25rem;border-radius:var(--radius-sm);
+  border:1px solid transparent;cursor:pointer;line-height:1.2;
+  transition:background-color .18s ease, color .18s ease,
+             border-color .18s ease, box-shadow .18s ease, transform .18s ease;
+  white-space:nowrap;text-decoration:none;}
+.btn--primary{background:var(--brand);color:#fff;box-shadow:var(--sh-1);}
+.btn--primary:hover{background:var(--brand-ink);color:#fff;box-shadow:var(--sh-brand);}
+.btn--ghost{background:rgba(255,255,255,.85);color:var(--ink);border-color:var(--line-2);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.btn--ghost:hover{border-color:var(--ink);color:var(--ink);background:#fff;}
+.btn--outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.28);}
+.btn--outline:hover{border-color:#fff;color:#fff;background:rgba(255,255,255,.06);}
+.btn--lg{padding:.95rem 1.5rem;font-size:var(--fs-body);}
+.btn--read{background:rgba(255,255,255,.85);color:var(--brand);border-color:var(--line-2);
+  padding:.8rem 1.3rem;font-size:var(--fs-support);font-weight:600;
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.btn--read:hover{border-color:var(--brand);background:var(--brand-soft);color:var(--brand-ink);}
+.btn .arw{transition:transform .18s ease;display:inline-block;}
+.btn:hover .arw{transform:translateX(4px);}
+
+/* ---- Header ---- */
+.hdr{position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--line);}
+.hdr__inner{display:flex;align-items:center;gap:var(--s-5);height:var(--hdr-h);}
+.brand{display:flex;align-items:center;gap:.65rem;color:var(--ink);flex:0 0 auto;}
+.brand:hover{color:var(--ink);}
+.brand__mark,
+.logo-img{width:32px;height:32px;flex:0 0 auto;}
+.logo-img{object-fit:contain;display:block;}
+.brand__name{font-weight:800;font-size:var(--fs-18);letter-spacing:-.025em;color:var(--ink);}
+.brand__name span{color:var(--brand);}
+
+.nav{margin-left:auto;}
+.nav__list{display:flex;align-items:center;gap:var(--s-5);list-style:none;margin:0;padding:0;}
+.nav__list li{margin:0;}
+.nav__link{color:var(--ink-2);font-size:var(--fs-support);font-weight:500;
+  position:relative;padding:.25rem 0;}
+.nav__link:hover{color:var(--brand);}
+.hdr__actions{display:flex;align-items:center;gap:var(--s-3);}
+
+.lang{display:inline-flex;border:1px solid var(--line-2);border-radius:var(--radius-sm);
+  overflow:hidden;background:rgba(255,255,255,.85);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.lang button{font:inherit;font-size:var(--fs-small);font-weight:600;
+  padding:.4rem .65rem;border:0;background:transparent;color:var(--muted);
+  cursor:pointer;line-height:1;}
+.lang button[aria-pressed="true"]{background:var(--ink);color:#fff;}
+
+.burger{display:none;width:42px;height:42px;border:1px solid var(--line-2);
+  background:rgba(255,255,255,.85);border-radius:var(--radius-sm);align-items:center;
+  justify-content:center;cursor:pointer;}
+.burger span,
+.burger span::before,
+.burger span::after{content:"";display:block;width:18px;height:2px;
+  background:var(--ink);border-radius:2px;position:relative;}
+.burger span::before{position:absolute;top:-6px;}
+.burger span::after{position:absolute;top:6px;}
+
+/* =========================================================
+   HERO — FULL-BLEED BANNER
+   ========================================================= */
+.hero{
+  position:relative;
+  background:linear-gradient(180deg,#FFFFFF 0%,#F5F8FF 100%);
+  border-bottom:1px solid var(--line);
+  padding-block:0 var(--s-8);
+  overflow:hidden;
+}
+.hero-banner{
+  position:relative;width:100%;
+  background:var(--paper-3);line-height:0;overflow:hidden;
+}
+.hero-banner img{display:block;width:100%;height:auto;max-width:100%;}
+.hero-services{
+  position:relative;z-index:2;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:var(--s-4);
+  width:min(1170px, calc(100% - 40px));
+  margin:-80px auto 0;
+}
+
+.service-card{
+  display:flex;align-items:flex-start;gap:.8rem;
+  padding:1.15rem 1.25rem;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(18px) saturate(180%);
+  -webkit-backdrop-filter:blur(18px) saturate(180%);
+  border:1px solid rgba(226,232,240,.95);
+  border-radius:16px;color:var(--ink);text-decoration:none;
+  box-shadow:
+    0 18px 40px -18px rgba(15,23,42,.30),
+    0 4px 10px rgba(15,23,42,.05),
+    inset 0 1px 0 rgba(255,255,255,.9);
+  transition:transform .22s ease, box-shadow .22s ease,
+             border-color .22s ease, background-color .22s ease;
+}
+.service-card:hover,
+.service-card:focus-visible{
+  color:var(--ink);
+  background:rgba(255,255,255,.98);
+  border-color:var(--brand);
+  transform:translateY(-6px);
+  box-shadow:
+    0 30px 56px -22px rgba(29,78,216,.32),
+    0 8px 18px -8px rgba(15,23,42,.12),
+    inset 0 1px 0 rgba(255,255,255,1);
+}
+.service-card:focus-visible{outline:3px solid var(--brand);outline-offset:3px;}
+
+.service-card__ico{
+  flex:0 0 auto;width:38px;height:38px;border-radius:10px;
+  display:grid;place-items:center;
+  background:rgba(29,78,216,.10);color:var(--brand);
+  transition:background-color .22s ease, transform .22s ease;
+}
+.service-card__ico svg{width:19px;height:19px;}
+.service-card--b .service-card__ico{background:rgba(217,119,6,.12);color:#B45309;}
+.service-card--c .service-card__ico{background:rgba(14,159,110,.12);color:var(--accent);}
+.service-card:hover .service-card__ico{transform:scale(1.06);}
+
+.service-card__body{display:flex;flex-direction:column;gap:.25rem;min-width:0;}
+.service-card__title{
+  font-size:var(--fs-card-title);font-weight:700;color:var(--brand);
+  letter-spacing:-.012em;line-height:1.35;
+}
+.service-card__desc{
+  font-size:var(--fs-small);font-weight:500;color:var(--text-body);
+  line-height:1.55;
+}
+.service-card__cta{
+  display:inline-flex;align-items:center;gap:.3rem;margin-top:.55rem;
+  font-size:var(--fs-meta);font-weight:700;letter-spacing:.02em;
+  color:var(--muted);transition:color .22s ease;
+}
+.service-card__cta .arw{display:inline-block;transition:transform .22s ease;}
+.service-card:hover .service-card__cta{color:var(--brand);}
+.service-card:hover .service-card__cta .arw{transform:translateX(4px);}
+
+@media (max-width:1100px){
+  .hero-services{width:min(940px, calc(100% - 32px));margin-top:-56px;gap:var(--s-3);}
+  .service-card{padding:.95rem 1.1rem;gap:.7rem;}
+}
+@media (max-width:900px){
+  .hero{padding-block:0 var(--s-7);}
+  .hero-services{
+    grid-template-columns:1fr;
+    width:min(540px, calc(100% - 32px));
+    margin-top:var(--s-5);gap:var(--s-3);
+  }
+  .service-card{padding:1.05rem 1.15rem;}
+}
+
+/* ---------- Capabilities strip (kept, currently disabled in HTML) ---------- */
+.strip{background:var(--ink);color:#CBD5E1;position:relative;overflow:hidden;}
+.strip::before{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(to right,rgba(255,255,255,.04) 1px,transparent 1px);
+  background-size:80px 100%;pointer-events:none;}
+.strip__inner{position:relative;display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;padding-block:var(--s-5);}
+.strip__item{padding:0 var(--s-5);border-left:1px solid rgba(255,255,255,.12);
+  display:flex;align-items:center;gap:.75rem;
+  font-size:var(--fs-support);font-weight:500;color:#E2E8F0;}
+.strip__item:first-child{border-left:0;padding-left:0;}
+.strip__dot{width:8px;height:8px;border-radius:50%;background:var(--brand);
+  flex:0 0 auto;box-shadow:0 0 0 3px rgba(29,78,216,.25);}
+
+/* ---------- Intro ---------- */
+.intro{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);
+  gap:var(--s-8);align-items:start;}
+.intro__lead{font-size:var(--fs-lead);color:var(--ink-2);line-height:1.65;
+  margin-bottom:var(--s-5);font-weight:500;}
+.intro__body{color:var(--text-body);}
+.intro__points{list-style:none;margin:var(--s-5) 0 0;padding:0;
+  display:grid;grid-template-columns:1fr 1fr;gap:var(--s-3) var(--s-5);}
+.intro__points li{display:flex;gap:.75rem;align-items:flex-start;
+  font-size:var(--fs-support);color:var(--ink-2);font-weight:500;}
+.intro__points li::before{content:"";flex:0 0 auto;width:18px;height:18px;
+  margin-top:.28em;border-radius:5px;background:var(--brand-soft);
+  border:1px solid var(--brand);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231D4ED8' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5L20 7'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:center;background-size:12px;}
+
+/* =========================================================
+   SERVICE BLOCKS
+   Balanced 45 / 55 layout — enlarged visuals
+   ========================================================= */
+.svc-block{
+  display:grid;
+  /* Text 45%  ·  Visual 55%  (previously 50 / 50) */
+  grid-template-columns:minmax(0, .9fr) minmax(0, 1.1fr);
+  /* Slightly tighter gap so the visual column gains real width */
+  gap:clamp(28px, 4.5vw, 64px);
+  align-items:center;
+  padding-block:96px;
+  position:relative;
+}
+/* Reverse rows: visual moves to the left, so flip the ratios */
+.svc-block--reverse{
+  grid-template-columns:minmax(0, 1.1fr) minmax(0, .9fr);
+}
+.svc-block + .svc-block{border-top:1px solid var(--line);}
+.svc-block:first-of-type{padding-top:var(--s-4);}
+.svc-block:last-of-type{padding-bottom:var(--s-4);}
+
+/* Visual container — fills its grid cell, centers the image, keeps
+   rounded corners + soft shadow. No fixed aspect-ratio is forced,
+   so the source artwork is never cropped or letterboxed. */
+.svc-block__visual{
+  position:relative;
+  border-radius:24px;
+  overflow:hidden;
+  background:rgba(255,255,255,0.72);
+  border:1px solid rgba(148,163,184,0.20);
+  box-shadow:0 20px 50px rgba(15,23,42,0.08);
+  line-height:0;
+  /* Stretch to match the content column's height on wide screens */
+  align-self:stretch;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:0;
+}
+.svc-block__visual img{
+  width:100%;
+  height:auto;
+  max-width:100%;
+  display:block;
+  /* object-fit:contain was a no-op with height:auto — removed. */
+}
+.svc-block--reverse .svc-block__visual{order:-1;}
+
+/* Eyebrow — secondary category label */
+.svc-block__eyebrow{
+  display:inline-flex;align-items:center;gap:.65rem;
+  font-size:var(--fs-eyebrow);
+  font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--brand);margin-bottom:var(--s-4);line-height:1.5;
+}
+.svc-block__eyebrow::before{
+  content:"";width:26px;height:2px;background:var(--brand);
+  border-radius:2px;flex:0 0 auto;
+}
+.svc-block--sys .svc-block__eyebrow{color:var(--accent);}
+.svc-block--sys .svc-block__eyebrow::before{background:var(--accent);}
+
+/* Service heading — the dominant element */
+.svc-block h3{
+  font-size:clamp(30px, 3vw, 44px);
+  line-height:1.15;
+  font-weight:800;
+  color:#0F172A;
+  letter-spacing:-.025em;
+  margin-bottom:var(--s-5);
+  text-wrap:balance;
+}
+html[data-lang="my"] .svc-block h3{
+  line-height:1.45;
+  font-size:clamp(24px, 3vw, 36px);
+}
+
+/* Lead paragraph */
+.svc-block__lead{
+  font-size:var(--fs-section-lead);
+  color:var(--text-body);
+  margin-bottom:var(--s-5);
+  max-width:56ch;
+  line-height:1.75;
+}
+html[data-lang="my"] .svc-block__lead{line-height:1.85;}
+
+/* Feature bullets */
+.svc-block__caps{
+  list-style:none;margin:0 0 var(--s-5);padding:0;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:.75rem var(--s-5);
+}
+.svc-block__caps li{
+  display:flex;gap:.65rem;align-items:flex-start;
+  font-size:var(--fs-body);color:var(--text-body);
+  font-weight:500;padding:.4rem 0;line-height:1.65;
+}
+.svc-block__caps li::before{
+  content:"";flex:0 0 auto;width:6px;height:6px;
+  margin-top:.72em;border-radius:50%;background:var(--brand);
+}
+.svc-block--sys .svc-block__caps li::before{background:var(--accent);}
+
+/* Technology chips */
+.svc-block__meta{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:var(--s-5);}
+.svc-block__meta span{
+  font-size:var(--fs-small);font-weight:600;
+  color:var(--brand-ink);
+  background:rgba(29,78,216,0.08);
+  border:1px solid rgba(29,78,216,0.14);
+  border-radius:8px;padding:.4rem .8rem;line-height:1.4;
+}
+.svc-block--sys .svc-block__meta span{
+  color:#065F46;
+  background:rgba(16,185,129,0.08);
+  border-color:rgba(16,185,129,0.18);
+}
+
+/* Footer row */
+.svc-block__foot{
+  display:flex;flex-wrap:wrap;gap:var(--s-4);
+  align-items:center;justify-content:space-between;
+}
+.svc-block__foot > span{
+  font-size:var(--fs-support);
+  color:var(--muted);
+  font-weight:500;line-height:1.6;
+}
+
+/* POS callout */
+.callout{
+  background:rgba(236,253,245,.85);
+  border:1px solid rgba(16,185,129,0.20);
+  border-radius:var(--radius);
+  padding:var(--s-4) var(--s-5);
+  margin-bottom:var(--s-5);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+.callout__label{
+  font-size:var(--fs-small);font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);margin:0 0 .4rem;
+}
+.callout p{margin:0;font-size:var(--fs-body);color:var(--text-body);line-height:1.7;}
+.callout strong{color:var(--ink);}
+
+/* ---------- Why / Steps / Tech / Deploy / FAQ / CTA ---------- */
+.why{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-6);}
+.why__panel{display:grid;grid-template-columns:44px 1fr;gap:var(--s-5);
+  padding:var(--s-6);background:var(--glass-bg);
+  backdrop-filter:blur(16px) saturate(160%);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  border:1px solid var(--glass-border);border-radius:var(--radius);
+  box-shadow:var(--sh-1),var(--glass-hi);
+  transition:border-color .18s, box-shadow .18s, transform .18s;}
+.why__panel:hover{border-color:var(--line-2);box-shadow:var(--sh-2),var(--glass-hi);transform:translateY(-2px);}
+.why__panel--wide{grid-column:1 / -1;}
+.why__ico{width:44px;height:44px;border-radius:10px;
+  display:grid;place-items:center;background:var(--brand-soft);color:var(--brand);}
+.why__panel--wide .why__ico{background:var(--accent-soft);color:var(--accent);}
+.why__ico svg{width:22px;height:22px;}
+.why__panel h3{font-size:var(--fs-card-title);margin-bottom:.35rem;}
+.why__panel p{margin:0;font-size:var(--fs-body);color:var(--text-body);line-height:1.7;}
+
+.steps{list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s-4);position:relative;}
+.steps::before{content:"";position:absolute;left:22px;right:22px;top:20px;height:2px;
+  background:linear-gradient(to right,var(--brand-soft-2), var(--brand-soft-2));z-index:0;}
+.step{position:relative;z-index:1;background:var(--glass-bg);
+  backdrop-filter:blur(14px) saturate(160%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);
+  border:1px solid var(--glass-border);border-radius:var(--radius);
+  padding:var(--s-5) var(--s-4);box-shadow:var(--sh-1),var(--glass-hi);}
+.step__num{width:40px;height:40px;border-radius:50%;
+  display:grid;place-items:center;background:var(--brand);color:#fff;
+  font-size:var(--fs-small);font-weight:800;letter-spacing:.02em;
+  box-shadow:0 0 0 4px #fff;margin-bottom:var(--s-4);}
+.step h3{font-size:var(--fs-card-title);margin-bottom:.3rem;}
+.step p{font-size:var(--fs-support);color:var(--text-body);margin:0;line-height:1.65;}
+
+.tech-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-5);}
+.tech-cat{background:var(--glass-bg);
+  backdrop-filter:blur(16px) saturate(160%);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  border:1px solid var(--glass-border);border-radius:var(--radius);
+  padding:var(--s-6);box-shadow:var(--sh-1),var(--glass-hi);
+  transition:border-color .18s, box-shadow .18s, transform .18s;}
+.tech-cat:hover{border-color:var(--line-2);box-shadow:var(--sh-2),var(--glass-hi);transform:translateY(-2px);}
+.tech-cat__icon{width:40px;height:40px;border-radius:10px;
+  display:grid;place-items:center;background:var(--paper-3);color:var(--ink-2);
+  margin-bottom:var(--s-4);}
+.tech-cat__icon svg{width:20px;height:20px;}
+.tech-cat h3{font-size:var(--fs-card-title);margin-bottom:var(--s-3);color:var(--ink);}
+.tech-chips{display:flex;flex-wrap:wrap;gap:.4rem;list-style:none;margin:0;padding:0;}
+.tech-chips li{margin:0;font-size:var(--fs-chip);font-weight:600;
+  color:var(--ink-2);background:rgba(255,255,255,.85);border:1px solid var(--line-2);
+  border-radius:6px;padding:.35rem .65rem;}
+
+.deploy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5);}
+.deploy{background:var(--glass-bg);
+  backdrop-filter:blur(16px) saturate(160%);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  border:1px solid var(--glass-border);border-radius:var(--radius);
+  padding:var(--s-6);display:flex;flex-direction:column;gap:var(--s-3);
+  box-shadow:var(--sh-1),var(--glass-hi);
+  transition:border-color .18s, box-shadow .18s, transform .18s;}
+.deploy:hover{transform:translateY(-2px);box-shadow:var(--sh-2),var(--glass-hi);}
+.deploy--feature{border-color:var(--brand);
+  box-shadow:0 0 0 3px var(--brand-soft),var(--sh-2),var(--glass-hi);}
+.deploy__label{font-size:var(--fs-meta);font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);}
+.deploy--feature .deploy__label{color:var(--brand);}
+.deploy h3{font-size:var(--fs-20);margin-bottom:var(--s-1);}
+.deploy p{font-size:var(--fs-support);color:var(--text-body);margin:0;line-height:1.7;}
+.deploy ul{list-style:none;margin:var(--s-3) 0 0;padding:0;}
+.deploy ul li{font-size:var(--fs-support);color:var(--ink-2);
+  padding:.5rem 0;border-top:1px solid var(--line);display:flex;gap:.5rem;line-height:1.65;}
+.deploy ul li::before{content:"";flex:0 0 auto;width:6px;height:6px;
+  margin-top:.6em;border-radius:50%;background:var(--brand);}
+.deploy ul li:first-child{border-top:0;padding-top:0;}
+.deploy ul li:last-child{padding-bottom:0;}
+
+.disclaimer{margin-top:var(--s-6);padding:var(--s-5);
+  background:rgba(245,248,255,.9);border:1px solid var(--brand-soft-2);
+  border-radius:var(--radius);color:var(--text-body);font-size:var(--fs-support);
+  line-height:1.75;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);}
+.disclaimer strong{color:var(--ink);}
+
+.faq{max-width:880px;margin-inline:auto;}
+.faq details{background:var(--glass-bg);
+  backdrop-filter:blur(16px) saturate(160%);
+  -webkit-backdrop-filter:blur(16px) saturate(160%);
+  border:1px solid var(--glass-border);border-radius:var(--radius);
+  margin-bottom:var(--s-3);overflow:hidden;
+  box-shadow:var(--sh-1),var(--glass-hi);
+  transition:border-color .18s, box-shadow .18s;}
+.faq details[open]{border-color:var(--line-2);box-shadow:var(--sh-2),var(--glass-hi);}
+.faq summary{list-style:none;cursor:pointer;padding:var(--s-5) var(--s-6);
+  font-weight:600;color:var(--ink);font-size:var(--fs-body);
+  display:flex;justify-content:space-between;gap:var(--s-4);align-items:center;
+  line-height:1.5;}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{content:"+";font-size:var(--fs-24);color:var(--brand);
+  font-weight:400;transition:transform .18s;flex:0 0 auto;line-height:1;}
+.faq details[open] summary::after{content:"−";}
+.faq__answer{padding:0 var(--s-6) var(--s-5);color:var(--text-body);
+  font-size:var(--fs-body);margin:0;line-height:1.75;max-width:72ch;}
+
+.cta{background:linear-gradient(135deg,#0F172A 0%,#1E293B 100%);color:#CBD5E1;
+  border-radius:var(--radius-lg);padding:var(--s-8);
+  display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:var(--s-6);align-items:center;position:relative;overflow:hidden;
+  box-shadow:var(--sh-3);border:1px solid rgba(255,255,255,.06);}
+.cta::before{content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(600px 260px at 100% 0%, rgba(29,78,216,.4), transparent 60%),
+    radial-gradient(400px 200px at 0% 100%, rgba(14,159,110,.22), transparent 60%);
+  pointer-events:none;}
+.cta > *{position:relative;}
+.cta h2{color:#fff;margin-bottom:var(--s-3);}
+.cta p{color:#CBD5E1;margin:0;max-width:56ch;line-height:1.75;font-size:var(--fs-body);}
+.cta__actions{display:flex;flex-wrap:wrap;gap:var(--s-3);}
+.cta .btn--primary{background:#fff;color:var(--ink);
+  box-shadow:0 10px 30px -10px rgba(255,255,255,.35);}
+.cta .btn--primary:hover{background:#F1F5F9;color:var(--ink);}
+
+.ftr{background:#0B1324;color:#B8C4D6;padding-block:var(--s-8) var(--s-6);
+  margin-top:var(--s-9);border-top:1px solid rgba(255,255,255,.06);}
+.ftr a{color:#DCE5F2;transition:color .15s;}
+.ftr a:hover{color:#fff;}
+.ftr__top{display:grid;grid-template-columns:1.6fr repeat(3,1fr);
+  gap:var(--s-6);padding-bottom:var(--s-7);
+  border-bottom:1px solid rgba(255,255,255,.08);}
+.ftr__brand .brand__name{color:#fff;}
+.ftr__brand p{font-size:var(--fs-support);margin:var(--s-4) 0 0;
+  max-width:40ch;color:#B8C4D6;line-height:1.75;}
+.ftr h4{color:#fff;font-size:var(--fs-meta);text-transform:uppercase;
+  letter-spacing:.12em;margin-bottom:var(--s-4);}
+.ftr ul{list-style:none;margin:0;padding:0;}
+.ftr li{margin-bottom:var(--s-2);font-size:var(--fs-support);}
+.ftr__bottom{display:flex;flex-wrap:wrap;gap:var(--s-4);
+  justify-content:space-between;align-items:center;
+  padding-top:var(--s-5);font-size:var(--fs-small);color:#B8C4D6;}
+.ftr__note{font-size:var(--fs-small);color:#94A3B8;margin-top:var(--s-3);
+  max-width:80ch;line-height:1.75;}
+
+.reveal{opacity:0;transform:translateY(16px);
+  transition:opacity .6s ease, transform .6s ease;}
+.reveal.is-in{opacity:1;transform:none;}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width:980px){
+  .nav{position:fixed;inset:var(--hdr-h) 0 auto 0;
+    background:rgba(255,255,255,.96);
+    backdrop-filter:blur(20px) saturate(180%);
+    -webkit-backdrop-filter:blur(20px) saturate(180%);
+    border-bottom:1px solid var(--line);transform:translateY(-120%);
+    transition:transform .22s ease;padding:var(--s-4) var(--s-5) var(--s-5);
+    box-shadow:var(--sh-3);}
+  .nav[data-open="true"]{transform:translateY(0);}
+  .nav__list{flex-direction:column;align-items:stretch;gap:0;}
+  .nav__list li{border-bottom:1px solid var(--line);}
+  .nav__list li:last-child{border-bottom:0;}
+  .nav__link{display:block;padding:var(--s-4) 0;font-size:var(--fs-body);}
+  .burger{display:inline-flex;}
+}
+
+@media (max-width:1100px){
+  .intro{grid-template-columns:1fr;gap:var(--s-6);}
+
+  /* Service blocks stack — image first, then text */
+  .svc-block,
+  .svc-block--reverse{
+    grid-template-columns:1fr;
+    gap:var(--s-6);
+    padding-block:var(--s-7);
+  }
+  .svc-block__visual{order:-1 !important;}
+  .svc-block:first-of-type{padding-top:0;}
+  .svc-block:last-of-type{padding-bottom:0;}
+
+  .why{grid-template-columns:1fr;}
+  .why__panel--wide{grid-column:auto;}
+  .tech-grid{grid-template-columns:repeat(2,1fr);}
+  .deploy-grid{grid-template-columns:1fr;max-width:640px;}
+  .steps{grid-template-columns:repeat(3,1fr);gap:var(--s-4);}
+  .steps::before{display:none;}
+  .strip__inner{grid-template-columns:repeat(2,1fr);gap:var(--s-4) 0;}
+  .strip__item:nth-child(3){border-left:0;padding-left:0;}
+}
+
+@media (max-width:760px){
+  .section{padding-block:var(--s-8);}
+
+  .svc-block,
+  .svc-block--reverse{padding-block:var(--s-6);gap:var(--s-5);}
+  .svc-block__eyebrow{font-size:var(--fs-meta);letter-spacing:.07em;margin-bottom:var(--s-3);}
+  .svc-block h3{font-size:clamp(26px, 6vw, 34px);margin-bottom:var(--s-4);}
+  html[data-lang="my"] .svc-block h3{font-size:clamp(22px, 5.5vw, 30px);}
+  .svc-block__lead{font-size:var(--fs-body);line-height:1.75;}
+  .svc-block__caps{grid-template-columns:1fr;gap:.5rem;}
+  .svc-block__caps li{font-size:var(--fs-support);}
+  .svc-block__meta span{font-size:var(--fs-small);padding:.35rem .7rem;}
+
+  .intro__points{grid-template-columns:1fr;}
+  .tech-grid{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr 1fr;}
+  .strip__inner{grid-template-columns:1fr;gap:var(--s-3);}
+  .strip__item{border-left:0;padding-left:0;padding-block:.25rem;}
+  .cta{grid-template-columns:1fr;padding:var(--s-6);}
+  .cta__actions .btn{flex:1 1 auto;}
+  .ftr__top{grid-template-columns:1fr 1fr;}
+  .ftr__brand{grid-column:1 / -1;}
+}
+
+@media (max-width:460px){
+  .container{padding-inline:var(--s-4);}
+  .svc-block__visual{border-radius:18px;}
+  .svc-block__foot{flex-direction:column;align-items:stretch;}
+  .svc-block__foot .btn{width:100%;}
+  .svc-block__eyebrow{font-size:var(--fs-meta);}
+  .svc-block h3{font-size:24px;}
+  html[data-lang="my"] .svc-block h3{font-size:21px;}
+  .svc-block__lead{font-size:var(--fs-body-sm);}
+  .svc-block__caps li{font-size:var(--fs-support);}
+  .ftr__top{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr;}
+  .step__num{width:36px;height:36px;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;
+    transition-duration:.001ms !important;}
+  html{scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;}
+}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main"
+   data-en="Skip to main content"
+   data-my="အဓိကအကြောင်းအရာသို့ ကျော်သွားရန်">Skip to main content</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="hdr">
+  <div class="container hdr__inner">
+    <a class="brand" href="/Renovation/hubpage.html" aria-label="Profile Craft — Home">
+      <img src="/img/logoCrop.png" alt="ProfileCraft Logo"
+           class="logo-img" width="32" height="32">
+      <span class="brand__name">Profile<span>Craft</span></span>
+    </a>
+
+    <nav class="nav" id="siteNav" aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="#top" data-en="Home" data-my="ပင်မ">Home</a></li>
+        <li><a class="nav__link" href="#services" data-en="Services" data-my="ဝန်ဆောင်မှုများ">Services</a></li>
+        <li><a class="nav__link" href="#about" data-en="About" data-my="အကြောင်း">About</a></li>
+        <li><a class="nav__link" href="#process" data-en="Process" data-my="လုပ်ငန်းစဉ်">Process</a></li>
+        <li><a class="nav__link" href="#contact" data-en="Contact" data-my="ဆက်သွယ်ရန်">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="hdr__actions">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-set-lang="my" aria-pressed="false">MY</button>
+      </div>
+      <a class="btn btn--primary" href="#contact"
+         data-en="Get Started" data-my="စတင်ရန်">Get Started</a>
+      <button class="burger" type="button" aria-label="Menu"
+              aria-expanded="false" aria-controls="siteNav" id="burger">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+
+    <h1 id="hero-title" class="sr-only"
+        data-en="Digital Solutions for Profiles &amp; Businesses"
+        data-my="Profile နှင့် Business များအတွက် Digital Solutions">
+      Digital Solutions for Profiles &amp; Businesses
+    </h1>
+
+    <div class="hero-banner">
+      <img src="/img/hubpage banner.png"
+           alt="Profile Craft — Digital Solution. Banner showing Myanmar landmark scenery, a professional woman and dashboard interface visuals."
+           loading="eager" decoding="async" fetchpriority="high">
+    </div>
+
+    <!-- Floating service cards -->
+    <div class="hero-services">
+
+      <a class="service-card service-card--a"
+         href="/Renovation/profile-service.html"
+         aria-label="Personal Profile — a professional online identity">
+        <span class="service-card__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="8" r="3.6"/>
+            <path d="M4.8 20a7.2 7.2 0 0 1 14.4 0"/>
+          </svg>
+        </span>
+        <span class="service-card__body">
+          <span class="service-card__title"
+                data-en="Personal Profile"
+                data-my="Personal Profile">Personal Profile</span>
+          <span class="service-card__desc"
+                data-en="A professional online identity for individuals"
+                data-my="တစ်ဦးချင်းအတွက် professional online identity">A professional online identity for individuals</span>
+          <span class="service-card__cta">
+            <span data-en="View Service" data-my="ဝန်ဆောင်မှု ကြည့်ရန်">View Service</span>
+            <span class="arw" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </a>
+
+      <a class="service-card service-card--b"
+         href="/Renovation/business-page-service.html"
+         aria-label="Business Website — menu, catalog and small online shop">
+        <span class="service-card__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3.5 9.5 5 4h14l1.5 5.5"/>
+            <path d="M4.5 9.5V20h15V9.5"/>
+            <path d="M3.5 9.5a2.5 2.5 0 0 0 4.25 1.8 2.5 2.5 0 0 0 3.75 0 2.5 2.5 0 0 0 3.75 0 2.5 2.5 0 0 0 4.25-1.8"/>
+            <path d="M9.5 20v-5.5h5V20"/>
+          </svg>
+        </span>
+        <span class="service-card__body">
+          <span class="service-card__title"
+                data-en="Business Website"
+                data-my="Business Website">Business Website</span>
+          <span class="service-card__desc"
+                data-en="Restaurant menu, product catalog &amp; small online shop"
+                data-my="Restaurant menu၊ product catalog နှင့် အသေးစား online shop">Restaurant menu, product catalog &amp; small online shop</span>
+          <span class="service-card__cta">
+            <span data-en="View Service" data-my="ဝန်ဆောင်မှု ကြည့်ရန်">View Service</span>
+            <span class="arw" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </a>
+
+      <a class="service-card service-card--c"
+         href="/Renovation/pos-system-service.html"
+         aria-label="POS / Business System — sales, orders, inventory and reports">
+        <span class="service-card__ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 20V11"/>
+            <path d="M10 20V5"/>
+            <path d="M16 20v-6"/>
+            <path d="M22 20H2"/>
+          </svg>
+        </span>
+        <span class="service-card__body">
+          <span class="service-card__title"
+                data-en="POS / Business System"
+                data-my="POS / Business System">POS / Business System</span>
+          <span class="service-card__desc"
+                data-en="Sales, orders, inventory &amp; reports — internal system"
+                data-my="Sales၊ orders၊ inventory နှင့် reports — အတွင်းပိုင်း system">Sales, orders, inventory &amp; reports — internal system</span>
+          <span class="service-card__cta">
+            <span data-en="View Service" data-my="ဝန်ဆောင်မှု ကြည့်ရန်">View Service</span>
+            <span class="arw" aria-hidden="true">→</span>
+          </span>
+        </span>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ==================== INTRODUCTION ==================== -->
+  <section class="section" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <div class="intro reveal">
+        <div>
+          <span class="eyebrow"
+                data-en="About Profile Craft" data-my="Profile Craft အကြောင်း">About Profile Craft</span>
+          <h2 id="about-title"
+              data-en="Digital solutions built around your needs."
+              data-my="သင့်လိုအပ်ချက်အပေါ် အခြေခံသော digital solution များ။">
+            Digital solutions built around your needs.
+          </h2>
+        </div>
+        <div>
+          <p class="intro__lead"
+             data-en="Profile Craft provides practical digital solutions for individuals, small businesses and organisations — from a single professional profile to a complete internal management system."
+             data-my="Profile Craft သည် တစ်ဦးချင်း၊ အသေးစား လုပ်ငန်းများနှင့် အဖွဲ့အစည်းများအတွက် လက်တွေ့ကျသော digital solution များကို ပံ့ပိုးပေးပါသည် — professional profile တစ်ခုမှ internal management system အပြည့်အစုံအထိ။">
+            Profile Craft provides practical digital solutions for individuals, small businesses and organisations — from a single professional profile to a complete internal management system.
+          </p>
+          <p class="intro__body"
+             data-en="Every project is planned according to the required features, data and business workflow. We do not force a fixed package — instead, we identify what the project actually needs and build the right solution for that scope."
+             data-my="Project တိုင်းကို လိုအပ်သော features များ၊ data နှင့် business workflow အလိုက် စီမံရေးဆွဲပါသည်။ ပုံသေ package ကို အတင်းအကြပ် မထည့်ပါ — project အတွက် အမှန်တကယ် လိုအပ်သည်ကို ဖော်ထုတ်ပြီး သင့်လျော်သော solution ကို တည်ဆောက်ပေးပါသည်။">
+            Every project is planned according to the required features, data and business workflow. We do not force a fixed package — instead, we identify what the project actually needs and build the right solution for that scope.
+          </p>
+          <ul class="intro__points">
+            <li data-en="Profiles for individuals &amp; professionals" data-my="တစ်ဦးချင်းနှင့် professionals များအတွက် Profile များ">Profiles for individuals &amp; professionals</li>
+            <li data-en="Customer-facing business websites" data-my="Customer-facing business website များ">Customer-facing business websites</li>
+            <li data-en="Internal POS &amp; management systems" data-my="Internal POS နှင့် management system များ">Internal POS &amp; management systems</li>
+            <li data-en="Deployment assistance on request" data-my="တောင်းဆိုပါက deployment အကူအညီ">Deployment assistance on request</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SERVICES ==================== -->
+  <section class="section section--alt" id="services" aria-labelledby="services-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"
+              data-en="Our Services" data-my="ကျွန်ုပ်တို့၏ ဝန်ဆောင်မှုများ">Our Services</span>
+        <h2 id="services-title"
+            data-en="Explore our digital solutions and choose the service that fits your needs."
+            data-my="ကျွန်ုပ်တို့၏ digital solution များကို လေ့လာပြီး သင့်လိုအပ်ချက်နှင့် ကိုက်ညီသော ဝန်ဆောင်မှုကို ရွေးချယ်ပါ။">
+          Explore our digital solutions and choose the service that fits your needs.
+        </h2>
+      </div>
+
+      <!-- ===== SERVICE 01 — PERSONAL PROFILE ===== -->
+      <article class="svc-block reveal" id="svc-profile" aria-labelledby="svc-profile-title">
+        <div class="svc-block__content">
+          <span class="svc-block__eyebrow"
+                data-en="Service 01 · Personal Profile"
+                data-my="ဝန်ဆောင်မှု ၀၁ · Personal Profile">Service 01 · Personal Profile</span>
+          <h3 id="svc-profile-title"
+              data-en="A professional online identity, built to represent you."
+              data-my="သင့်ကို ကိုယ်စားပြုရန် တည်ဆောက်ထားသော professional online identity။">
+            A professional online identity, built to represent you.
+          </h3>
+          <p class="svc-block__lead"
+             data-en="Profile websites for individuals, professionals and personal brands. Start with a simple static profile — or add interactive and data-driven functions when your project needs them."
+             data-my="တစ်ဦးချင်း၊ professionals များနှင့် personal brand များအတွက် profile website များ။ ရိုးရှင်းသော static profile ဖြင့် စတင်နိုင်သည် — သို့မဟုတ် သင့် project လိုအပ်သည့်အခါ interactive နှင့် data-driven function များကို ထည့်နိုင်ပါသည်။">
+            Profile websites for individuals, professionals and personal brands. Start with a simple static profile — or add interactive and data-driven functions when your project needs them.
+          </p>
+          <ul class="svc-block__caps">
+            <li data-en="Static Profile — information-based, updated through project revisions" data-my="Static Profile — အချက်အလက် အခြေခံ၊ project revision များမှတစ်ဆင့် update လုပ်သည်">Static Profile — information-based, updated through project revisions</li>
+            <li data-en="Dynamic Profile — interactive sections and data management" data-my="Dynamic Profile — interactive section များနှင့် data management">Dynamic Profile — interactive sections and data management</li>
+            <li data-en="Functional Profile — appointment, schedule and services" data-my="Functional Profile — appointment၊ schedule နှင့် services">Functional Profile — appointment, schedule and services</li>
+            <li data-en="CRUD and cloud data integration when required" data-my="လိုအပ်ပါက CRUD နှင့် cloud data integration">CRUD and cloud data integration when required</li>
+          </ul>
+          <div class="svc-block__meta" aria-label="Technologies">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Cloudflare</span>
+          </div>
+          <div class="svc-block__foot">
+            <span data-en="For individuals &amp; professionals"
+                  data-my="တစ်ဦးချင်းနှင့် professionals များအတွက်">For individuals &amp; professionals</span>
+            <a class="btn btn--read" href="/Renovation/profile-service.html">
+              <span data-en="Read More" data-my="အသေးစိတ် ဖတ်ရန်">Read More</span>
+              <span class="arw" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="svc-block__visual">
+          <img src="/img/profile-service-ad.png"
+               alt="Profile Website — professional online identity service"
+               loading="lazy" decoding="async">
+        </div>
+      </article>
+
+      <!-- ===== SERVICE 02 — BUSINESS WEBSITE ===== -->
+      <article class="svc-block svc-block--reverse reveal" id="svc-business" aria-labelledby="svc-business-title">
+        <div class="svc-block__content">
+          <span class="svc-block__eyebrow"
+                data-en="Service 02 · Business Website"
+                data-my="ဝန်ဆောင်မှု ၀၂ · Business Website">Service 02 · Business Website</span>
+          <h3 id="svc-business-title"
+              data-en="A customer-facing website that shows your business clearly."
+              data-my="သင့်လုပ်ငန်းကို ရှင်းလင်းစွာ ပြသော customer-facing website။">
+            A customer-facing website that shows your business clearly.
+          </h3>
+          <p class="svc-block__lead"
+             data-en="Websites designed for restaurants, small shops, product showcases and local service businesses — so customers can understand what you offer, view your menu or products, and find your contact and location."
+             data-my="Restaurant များ၊ အသေးစား shop များ၊ product showcase များနှင့် local service business များအတွက် ဒီဇိုင်းရေးဆွဲထားသော website များ — customer များအတွက် သင်ပံ့ပိုးသည့် အရာများကို နားလည်နိုင်ရန်၊ menu သို့မဟုတ် product များကို ကြည့်နိုင်ရန်၊ contact နှင့် location ကို ရှာနိုင်ရန်။">
+            Websites designed for restaurants, small shops, product showcases and local service businesses — so customers can understand what you offer, view your menu or products, and find your contact and location.
+          </p>
+          <ul class="svc-block__caps">
+            <li data-en="Restaurants and digital menus" data-my="Restaurant များနှင့် digital menu များ">Restaurants and digital menus</li>
+            <li data-en="Small shops and product showcases" data-my="အသေးစား shop များနှင့် product showcase များ">Small shops and product showcases</li>
+            <li data-en="Business information, contact and location" data-my="Business information၊ contact နှင့် location">Business information, contact and location</li>
+            <li data-en="Budget or professional deployment options" data-my="Budget သို့မဟုတ် professional deployment ရွေးချယ်စရာများ">Budget or professional deployment options</li>
+          </ul>
+          <div class="svc-block__meta" aria-label="Technologies">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span>
+            <span>GitHub Pages</span><span>Cloudflare</span>
+          </div>
+          <div class="svc-block__foot">
+            <span data-en="Budget or professional deployment"
+                  data-my="Budget သို့မဟုတ် professional deployment">Budget or professional deployment</span>
+            <a class="btn btn--read" href="/Renovation/business-page-service.html">
+              <span data-en="Read More" data-my="အသေးစိတ် ဖတ်ရန်">Read More</span>
+              <span class="arw" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="svc-block__visual">
+          <img src="/img/business-service-ad.png"
+               alt="Business Page &amp; Mini Shop — customer-facing website service"
+               loading="lazy" decoding="async">
+        </div>
+      </article>
+
+      <!-- ===== SERVICE 03 — POS / BUSINESS SYSTEM ===== -->
+      <article class="svc-block svc-block--sys reveal" id="svc-pos" aria-labelledby="svc-pos-title">
+        <div class="svc-block__content">
+          <span class="svc-block__eyebrow"
+                data-en="Service 03 · POS &amp; Business Management"
+                data-my="ဝန်ဆောင်မှု ၀၃ · POS နှင့် Business Management">Service 03 · POS &amp; Business Management</span>
+          <h3 id="svc-pos-title"
+              data-en="An internal system for sales, orders, inventory and reports."
+              data-my="Sales၊ Orders၊ Inventory နှင့် Reports များအတွက် အတွင်းပိုင်း system။">
+            An internal system for sales, orders, inventory and reports.
+          </h3>
+          <div class="callout">
+            <p class="callout__label"
+               data-en="Key Difference" data-my="အဓိက ကွာခြားချက်">Key Difference</p>
+            <p data-en="A Business Website is customer-facing. A POS / Business Management System is internal — used by owners, managers and staff to run day-to-day operations."
+               data-my="Business Website သည် customer-facing ဖြစ်သည်။ POS / Business Management System သည် အတွင်းပိုင်းဖြစ်သည် — owner၊ manager နှင့် staff များက နေ့စဉ် operation များ လည်ပတ်ရန် အသုံးပြုသည်။">
+              A Business Website is customer-facing. A POS / Business Management System is internal — used by owners, managers and staff to run day-to-day operations.
+            </p>
+          </div>
+          <ul class="svc-block__caps">
+            <li data-en="Sales, orders and product management" data-my="Sales၊ Orders နှင့် Product Management">Sales, orders and product management</li>
+            <li data-en="Inventory and customer records" data-my="Inventory နှင့် Customer Records">Inventory and customer records</li>
+            <li data-en="Reports, dashboard and admin / user management" data-my="Reports၊ Dashboard နှင့် Admin / User Management">Reports, dashboard and admin / user management</li>
+            <li data-en="Requires backend + SQL database infrastructure" data-my="Backend + SQL Database infrastructure လိုအပ်သည်">Requires backend + SQL database infrastructure</li>
+          </ul>
+          <div class="svc-block__meta" aria-label="Technologies">
+            <span>HTML</span><span>CSS</span><span>JavaScript</span>
+            <span>PHP</span><span>SQL</span><span>Backend</span>
+          </div>
+          <div class="svc-block__foot">
+            <span data-en="Requires backend &amp; database"
+                  data-my="Backend နှင့် Database လိုအပ်သည်">Requires backend &amp; database</span>
+            <a class="btn btn--read" href="/Renovation/pos-system-service.html">
+              <span data-en="Read More" data-my="အသေးစိတ် ဖတ်ရန်">Read More</span>
+              <span class="arw" aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="svc-block__visual">
+          <img src="/img/pos-service-ad.png"
+               alt="Custom POS System — business management system service"
+               loading="lazy" decoding="async">
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ==================== WHY PROFILE CRAFT ==================== -->
+  <section class="section section--blue" id="why" aria-labelledby="why-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"
+              data-en="Why Profile Craft" data-my="Profile Craft ကို ဘာကြောင့် ရွေးချယ်သင့်သနည်း">Why Profile Craft</span>
+        <h2 id="why-title"
+            data-en="Practical advantages — not marketing claims."
+            data-my="လက်တွေ့ကျသော အားသာချက်များ — marketing claim များ မဟုတ်ပါ။">
+          Practical advantages — not marketing claims.
+        </h2>
+        <p data-en="The reasons customers work with us are practical ones, and we are happy to be judged on them."
+           data-my="Customer များ ကျွန်ုပ်တို့နှင့် လုပ်ကိုင်ရသည့် အကြောင်းရင်းများသည် လက်တွေ့ကျသည် — ၎င်းတို့ဖြင့် အကဲဖြတ်ခံရရန် ကျွန်ုပ်တို့ ဝမ်းမြောက်ပါသည်။">
+          The reasons customers work with us are practical ones, and we are happy to be judged on them.
+        </p>
+      </div>
+
+      <div class="why">
+        <div class="why__panel reveal">
+          <div class="why__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 7h16M4 12h10M4 17h7"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-en="Requirement-Based Development" data-my="လိုအပ်ချက်အခြေခံ တည်ဆောက်မှု">Requirement-Based Development</h3>
+            <p data-en="Projects are planned according to the customer's actual needs — not forced into a fixed package."
+               data-my="Project များကို customer ၏ အမှန်တကယ် လိုအပ်ချက်အလိုက် စီမံရေးဆွဲပါသည် — ပုံသေ package ထဲ အတင်းအကြပ် မထည့်ပါ။">
+              Projects are planned according to the customer's actual needs — not forced into a fixed package.
+            </p>
+          </div>
+        </div>
+
+        <div class="why__panel reveal">
+          <div class="why__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-en="Scalable Service Options" data-my="ချဲ့ထွင်နိုင်သော ဝန်ဆောင်မှု ရွေးချယ်စရာများ">Scalable Service Options</h3>
+            <p data-en="Start with a simple solution and add more advanced functionality later when required."
+               data-my="ရိုးရှင်းသော solution ဖြင့် စတင်ပြီး လိုအပ်သည့်အခါ အဆင့်မြင့် functionality များကို နောက်ပိုင်းတွင် ထည့်နိုင်ပါသည်။">
+              Start with a simple solution and add more advanced functionality later when required.
+            </p>
+          </div>
+        </div>
+
+        <div class="why__panel reveal">
+          <div class="why__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m8 16-4-4 4-4M16 8l4 4-4 4M13 4l-2 16"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-en="Clear Technology Choices" data-my="ရှင်းလင်းသော နည်းပညာ ရွေးချယ်မှု">Clear Technology Choices</h3>
+            <p data-en="We use appropriate technologies for the job, and explain which ones are used and why."
+               data-my="အလုပ်အတွက် သင့်လျော်သော နည်းပညာများကို အသုံးပြုပြီး မည်သည့် နည်းပညာကို ဘာကြောင့် သုံးသည်ကို ရှင်းပြပါသည်။">
+              We use appropriate technologies for the job, and explain which ones are used and why.
+            </p>
+          </div>
+        </div>
+
+        <div class="why__panel reveal">
+          <div class="why__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v18"/><path d="M5 8c2 0 3-1 3-3M19 8c-2 0-3-1-3-3"/>
+              <path d="M4 13a8 8 0 0 0 16 0"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-en="Flexible Deployment" data-my="လိုက်လျောညီထွေ Deployment">Flexible Deployment</h3>
+            <p data-en="Suitable deployment options can be selected according to budget and project complexity."
+               data-my="Budget နှင့် project ရှုပ်ထွေးမှုအလိုက် သင့်လျော်သော deployment ရွေးချယ်စရာများကို ရွေးချယ်နိုင်ပါသည်။">
+              Suitable deployment options can be selected according to budget and project complexity.
+            </p>
+          </div>
+        </div>
+
+        <div class="why__panel why__panel--wide reveal">
+          <div class="why__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-en="Practical Solutions" data-my="လက်တွေ့ကျသော ဖြေရှင်းချက်များ">Practical Solutions</h3>
+            <p data-en="We focus on useful business functions rather than unnecessary features. Every module in your project has to earn its place — no cost added without value added."
+               data-my="မလိုအပ်သော feature များထက် အသုံးဝင်သော business function များကို အာရုံစိုက်ပါသည်။ သင့် project ရှိ module တိုင်း နေရာရထိုက်ရမည် — တန်ဖိုး မထည့်ဘဲ ကုန်ကျစရိတ် မတိုးပါ။">
+              We focus on useful business functions rather than unnecessary features. Every module in your project has to earn its place — no cost added without value added.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== HOW IT WORKS ==================== -->
+  <section class="section" id="process" aria-labelledby="process-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-en="How It Works" data-my="လုပ်ဆောင်ပုံ">How It Works</span>
+        <h2 id="process-title"
+            data-en="A clear six-step workflow."
+            data-my="ရှင်းလင်းသော ခြောက်ဆင့် workflow။">A clear six-step workflow.</h2>
+        <p data-en="You always know which stage your project is in and what comes next."
+           data-my="သင့် project မည်သည့် stage တွင် ရှိသည်နှင့် နောက်ဘာလာမည်ကို အမြဲသိရှိနိုင်ပါသည်။">
+          You always know which stage your project is in and what comes next.
+        </p>
+      </div>
+
+      <ol class="steps reveal">
+        <li class="step">
+          <span class="step__num">01</span>
+          <h3 data-en="Discuss" data-my="ဆွေးနွေးခြင်း">Discuss</h3>
+          <p data-en="Understand your needs and business requirements." data-my="သင့်လိုအပ်ချက်နှင့် business requirement များကို နားလည်အောင် ဆွေးနွေးပါသည်။">Understand your needs and business requirements.</p>
+        </li>
+        <li class="step">
+          <span class="step__num">02</span>
+          <h3 data-en="Plan" data-my="စီစဉ်ခြင်း">Plan</h3>
+          <p data-en="Define the required pages, functions, data and technical approach." data-my="လိုအပ်သော page များ၊ function များ၊ data နှင့် technical approach ကို သတ်မှတ်ပါသည်။">Define the required pages, functions, data and technical approach.</p>
+        </li>
+        <li class="step">
+          <span class="step__num">03</span>
+          <h3 data-en="Design" data-my="ဒီဇိုင်း ရေးဆွဲခြင်း">Design</h3>
+          <p data-en="Create the interface and user experience." data-my="Interface နှင့် user experience ကို ဖန်တီးပါသည်။">Create the interface and user experience.</p>
+        </li>
+        <li class="step">
+          <span class="step__num">04</span>
+          <h3 data-en="Develop" data-my="တည်ဆောက်ခြင်း">Develop</h3>
+          <p data-en="Build the website or business system." data-my="Website သို့မဟုတ် business system ကို တည်ဆောက်ပါသည်။">Build the website or business system.</p>
+        </li>
+        <li class="step">
+          <span class="step__num">05</span>
+          <h3 data-en="Test" data-my="စမ်းသပ်ခြင်း">Test</h3>
+          <p data-en="Check functionality, responsiveness, data handling and usability." data-my="Functionality၊ responsiveness၊ data handling နှင့် usability ကို စစ်ဆေးပါသည်။">Check functionality, responsiveness, data handling and usability.</p>
+        </li>
+        <li class="step">
+          <span class="step__num">06</span>
+          <h3 data-en="Launch" data-my="ထုတ်လွှင့်ခြင်း">Launch</h3>
+          <p data-en="Deploy the completed project and provide the required access or link." data-my="ပြီးစီးသော project ကို deploy လုပ်ပြီး လိုအပ်သော access သို့မဟုတ် link ကို ပေးအပ်ပါသည်။">Deploy the completed project and provide the required access or link.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ==================== TECHNOLOGY ==================== -->
+  <section class="section section--alt" id="technology" aria-labelledby="tech-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-en="Technology" data-my="နည်းပညာ">Technology</span>
+        <h2 id="tech-title"
+            data-en="Chosen for the job — not for the label."
+            data-my="အလုပ်အတွက် ရွေးချယ်သည် — အမည်အတွက် မဟုတ်ပါ။">
+          Chosen for the job — not for the label.
+        </h2>
+        <p data-en="Technology is a supporting detail. The right solution for your requirements and budget always comes first."
+           data-my="နည်းပညာသည် အထောက်အကူ ပြုသည့် အသေးစိတ်သာဖြစ်သည်။ သင့်လိုအပ်ချက်နှင့် budget အတွက် သင့်လျော်သော solution က အမြဲ ရှေးရှေးတွင် ရှိသည်။">
+          Technology is a supporting detail. The right solution for your requirements and budget always comes first.
+        </p>
+      </div>
+
+      <div class="tech-grid reveal">
+        <div class="tech-cat">
+          <div class="tech-cat__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 4l-4 16"/>
+            </svg>
+          </div>
+          <h3 data-en="Frontend" data-my="Frontend">Frontend</h3>
+          <ul class="tech-chips"><li>HTML5</li><li>CSS3</li><li>JavaScript</li></ul>
+        </div>
+        <div class="tech-cat">
+          <div class="tech-cat__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="6" rx="2"/>
+              <rect x="3" y="14" width="18" height="6" rx="2"/>
+              <path d="M7 7h.01M7 17h.01"/>
+            </svg>
+          </div>
+          <h3 data-en="Backend" data-my="Backend">Backend</h3>
+          <ul class="tech-chips"><li>PHP</li><li>Server-side logic</li></ul>
+        </div>
+        <div class="tech-cat">
+          <div class="tech-cat__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <ellipse cx="12" cy="6" rx="8" ry="3"/>
+              <path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/>
+              <path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>
+            </svg>
+          </div>
+          <h3 data-en="Database" data-my="Database">Database</h3>
+          <ul class="tech-chips"><li>SQL</li><li>MySQL</li></ul>
+        </div>
+        <div class="tech-cat">
+          <div class="tech-cat__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.6 1.7A4 4 0 0 0 6 19Z"/>
+              <path d="m12 12 .5 4M12 8v.5"/>
+            </svg>
+          </div>
+          <h3 data-en="Deployment" data-my="Deployment">Deployment</h3>
+          <ul class="tech-chips"><li>GitHub Pages</li><li>Cloudflare</li><li>Paid hosting</li></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== DEPLOYMENT ==================== -->
+  <section class="section section--blue" id="deployment" aria-labelledby="deploy-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"
+              data-en="Deployment &amp; Hosting Approach" data-my="Deployment နှင့် Hosting ချဉ်းကပ်ပုံ">Deployment &amp; Hosting Approach</span>
+        <h2 id="deploy-title"
+            data-en="Three deployment paths. One clear choice for each project."
+            data-my="Deployment လမ်းကြောင်း သုံးမျိုး။ Project တစ်ခုစီအတွက် ရှင်းလင်းသော ရွေးချယ်မှု တစ်ခု။">
+          Three deployment paths. One clear choice for each project.
+        </h2>
+        <p data-en="The right deployment depends on the project type and the customer's budget. We help you select and configure it as part of the project."
+           data-my="မှန်ကန်သော deployment သည် project အမျိုးအစားနှင့် customer ၏ budget အပေါ် မူတည်သည်။ Project ၏ တစ်စိတ်တစ်ပိုင်းအဖြစ် ရွေးချယ်ခြင်းနှင့် ပြင်ဆင်ခြင်းကို ကူညီဆောင်ရွက်ပေးပါသည်။">
+          The right deployment depends on the project type and the customer's budget. We help you select and configure it as part of the project.
+        </p>
+      </div>
+
+      <div class="deploy-grid reveal">
+        <div class="deploy">
+          <span class="deploy__label"
+                data-en="For Simple Websites" data-my="ရိုးရှင်းသော Website များအတွက်">For Simple Websites</span>
+          <h3 data-en="Budget Deployment" data-my="Budget Deployment">Budget Deployment</h3>
+          <p data-en="Suitable when the customer wants to minimise hosting costs."
+             data-my="Customer က hosting ကုန်ကျစရိတ်ကို အနည်းဆုံးဖြစ်စေလိုသည့်အခါ သင့်လျော်သည်။">
+            Suitable when the customer wants to minimise hosting costs.
+          </p>
+          <ul>
+            <li data-en="GitHub Pages or similar free static hosting"
+                data-my="GitHub Pages သို့မဟုတ် အလားတူ အခမဲ့ static hosting">
+              GitHub Pages or similar free static hosting
+            </li>
+            <li data-en=".com domain optional" data-my=".com domain ရွေးချယ်နိုင်သည်">.com domain optional</li>
+            <li data-en="Best for profiles and simple business websites"
+                data-my="Profile များနှင့် ရိုးရှင်းသော business website များအတွက် အကောင်းဆုံး">
+              Best for profiles and simple business websites
+            </li>
+          </ul>
+        </div>
+        <div class="deploy deploy--feature">
+          <span class="deploy__label"
+                data-en="For Professional Presence" data-my="Professional Presence အတွက်">For Professional Presence</span>
+          <h3 data-en="Professional Deployment" data-my="Professional Deployment">Professional Deployment</h3>
+          <p data-en="Suitable when the customer wants a stronger, more established web presence."
+             data-my="ပိုမိုခိုင်မာပြီး တည်ရှိပြီးသား web presence ကို customer က လိုချင်သည့်အခါ သင့်လျော်သည်။">
+            Suitable when the customer wants a stronger, more established web presence.
+          </p>
+          <ul>
+            <li data-en="Custom .com domain" data-my="Custom .com domain">Custom .com domain</li>
+            <li data-en="Paid hosting" data-my="Paid hosting">Paid hosting</li>
+            <li data-en="Suitable for business websites" data-my="Business website များအတွက် သင့်လျော်သည်">Suitable for business websites</li>
+          </ul>
+        </div>
+        <div class="deploy">
+          <span class="deploy__label"
+                data-en="For Backend Systems" data-my="Backend System များအတွက်">For Backend Systems</span>
+          <h3 data-en="Server &amp; Database" data-my="Server နှင့် Database">Server &amp; Database</h3>
+          <p data-en="Required for POS and business management systems with real data."
+             data-my="အမှန်တကယ် data ဖြင့် POS နှင့် business management system များအတွက် လိုအပ်သည်။">
+            Required for POS and business management systems with real data.
+          </p>
+          <ul>
+            <li data-en="Backend + SQL database" data-my="Backend + SQL database">Backend + SQL database</li>
+            <li data-en="Appropriate paid hosting / server" data-my="သင့်လျော်သော paid hosting / server">Appropriate paid hosting / server</li>
+            <li data-en="Spec depends on the system scope" data-my="System scope အပေါ် မူတည်၍ spec သတ်မှတ်သည်">Spec depends on the system scope</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="disclaimer reveal"
+         data-en="Note: Profile Craft is not a domain registrar or hosting provider. Where a project requires a domain or hosting, we assist with selecting, purchasing, configuring and deploying using suitable third-party services — as part of project delivery."
+         data-my="မှတ်ချက် — Profile Craft သည် domain registrar သို့မဟုတ် hosting provider မဟုတ်ပါ။ Project တစ်ခုတွင် domain သို့မဟုတ် hosting လိုအပ်ပါက သင့်လျော်သော ပြင်ပ service များကို အသုံးပြု၍ ရွေးချယ်ခြင်း၊ ဝယ်ယူခြင်း၊ configure လုပ်ခြင်းနှင့် deploy လုပ်ခြင်းတို့ကို project delivery ၏ တစ်စိတ်တစ်ပိုင်းအဖြစ် ကူညီဆောင်ရွက်ပေးပါသည်။">
+        Note: Profile Craft is not a domain registrar or hosting provider. Where a project requires a domain or hosting, we assist with selecting, purchasing, configuring and deploying using suitable third-party services — as part of project delivery.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ==================== -->
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <span class="eyebrow"
+              data-en="Common Questions" data-my="အမေးများသော မေးခွန်းများ">Common Questions</span>
+        <h2 id="faq-title"
+            data-en="Answers to what customers usually ask."
+            data-my="Customer များ အများအားဖြင့် မေးလေ့ရှိသည့် မေးခွန်းများ၏ အဖြေများ။">
+          Answers to what customers usually ask.
+        </h2>
+      </div>
+
+      <div class="faq reveal">
+        <details>
+          <summary data-en="What is the difference between a Business Website and a POS?"
+                   data-my="Business Website နှင့် POS အကြား ကွာခြားချက် ဘာလဲ?">
+            What is the difference between a Business Website and a POS?
+          </summary>
+          <p class="faq__answer"
+             data-en="A Business Website is customer-facing — it helps customers see and understand your business online. A POS / Business Management System is internal — it is used by owners, managers and staff to manage sales, orders, products, inventory and reports."
+             data-my="Business Website သည် customer-facing ဖြစ်သည် — customer များအတွက် သင့်လုပ်ငန်းကို online တွင် မြင်နိုင်၊ နားလည်နိုင်ရန် ကူညီပေးသည်။ POS / Business Management System သည် internal ဖြစ်သည် — owner၊ manager နှင့် staff များက Sales၊ Orders၊ Products၊ Inventory နှင့် Reports များကို manage လုပ်ရန် အသုံးပြုသည်။">
+            A Business Website is customer-facing — it helps customers see and understand your business online. A POS / Business Management System is internal — it is used by owners, managers and staff to manage sales, orders, products, inventory and reports.
+          </p>
+        </details>
+        <details>
+          <summary data-en="Can I start with a low-cost deployment?"
+                   data-my="ကုန်ကျစရိတ် နည်းသော deployment ဖြင့် စတင်နိုင်ပါသလား?">
+            Can I start with a low-cost deployment?
+          </summary>
+          <p class="faq__answer"
+             data-en="Yes. Static or customer-facing websites may use free hosting options such as GitHub Pages when appropriate. This is a good fit for profiles and simple business websites."
+             data-my="ရပါသည်။ Static သို့မဟုတ် customer-facing website များအတွက် GitHub Pages ကဲ့သို့ အခမဲ့ hosting ရွေးချယ်စရာများကို သင့်လျော်သလို အသုံးပြုနိုင်ပါသည်။ Profile များနှင့် ရိုးရှင်းသော business website များအတွက် သင့်လျော်ပါသည်။">
+            Yes. Static or customer-facing websites may use free hosting options such as GitHub Pages when appropriate. This is a good fit for profiles and simple business websites.
+          </p>
+        </details>
+        <details>
+          <summary data-en="Do I need a .com domain?"
+                   data-my=".com domain လိုအပ်ပါသလား?">
+            Do I need a .com domain?
+          </summary>
+          <p class="faq__answer"
+             data-en="Not necessarily. It depends on the project and the customer's requirements. A .com domain is recommended for professional business presences, but it is optional for budget deployments."
+             data-my="မဖြစ်မနေ မလိုအပ်ပါ။ Project နှင့် customer ၏ လိုအပ်ချက်အပေါ် မူတည်သည်။ Professional business presence အတွက် .com domain ကို အကြံပြုပါသည်၊ သို့သော် budget deployment များအတွက် ရွေးချယ်နိုင်သည်။">
+            Not necessarily. It depends on the project and the customer's requirements. A .com domain is recommended for professional business presences, but it is optional for budget deployments.
+          </p>
+        </details>
+        <details>
+          <summary data-en="Can Profile Craft build a custom system?"
+                   data-my="Profile Craft က custom system တည်ဆောက်ပေးနိုင်ပါသလား?">
+            Can Profile Craft build a custom system?
+          </summary>
+          <p class="faq__answer"
+             data-en="Yes, if the required functions and technical scope are suitable for the project. We will discuss the modules, data and infrastructure needed before confirming the build."
+             data-my="လိုအပ်သော function များနှင့် technical scope သည် project အတွက် သင့်လျော်ပါက ရပါသည်။ တည်ဆောက်မှု မအတည်ပြုမီ လိုအပ်သော module များ၊ data နှင့် infrastructure ကို ဆွေးနွေးပါမည်။">
+            Yes, if the required functions and technical scope are suitable for the project. We will discuss the modules, data and infrastructure needed before confirming the build.
+          </p>
+        </details>
+        <details>
+          <summary data-en="Can a Profile Website have functions?"
+                   data-my="Profile Website တွင် function များ ထည့်နိုင်ပါသလား?">
+            Can a Profile Website have functions?
+          </summary>
+          <p class="faq__answer"
+             data-en="Yes. Depending on requirements, a profile can include interactive or data-driven functions such as appointment booking, schedules or service listings. Advanced features are project-dependent — they are not included by default."
+             data-my="ရပါသည်။ လိုအပ်ချက်အပေါ် မူတည်၍ profile တွင် appointment booking၊ schedule သို့မဟုတ် service listing များ ကဲ့သို့ interactive သို့မဟုတ် data-driven function များ ထည့်နိုင်ပါသည်။ အဆင့်မြင့် feature များသည် project အပေါ် မူတည်သည် — ပုံမှန်အားဖြင့် မပါဝင်ပါ။">
+            Yes. Depending on requirements, a profile can include interactive or data-driven functions such as appointment booking, schedules or service listings. Advanced features are project-dependent — they are not included by default.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FINAL CTA ==================== -->
+  <section class="section section--alt" id="contact" aria-labelledby="cta-title">
+    <div class="container">
+      <div class="cta reveal">
+        <div>
+          <h2 id="cta-title"
+              data-en="Have a project in mind?"
+              data-my="Project တစ်ခု စိတ်ထဲရှိပါသလား?">Have a project in mind?</h2>
+          <p data-en="Tell us what you need and we can help define the right digital solution for your project."
+             data-my="သင်လိုအပ်သည်ကို ပြောပြပါ။ သင့် project အတွက် သင့်လျော်သော digital solution ကို သတ်မှတ်ရန် ကူညီပေးပါမည်။">
+            Tell us what you need and we can help define the right digital solution for your project.
+          </p>
+        </div>
+        <div class="cta__actions">
+          <a class="btn btn--primary btn--lg"
+             href="https://t.me/profilecraft" target="_blank" rel="noopener"
+             data-en="Contact Profile Craft" data-my="Profile Craft ကို ဆက်သွယ်ရန်">Contact Profile Craft</a>
+          <a class="btn btn--outline btn--lg" href="#services"
+             data-en="Explore Services" data-my="ဝန်ဆောင်မှုများ ကြည့်ရှုရန်">Explore Services</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="ftr">
+  <div class="container">
+    <div class="ftr__top">
+      <div class="ftr__brand">
+        <a class="brand" href="/Renovation/hubpage.html" aria-label="Profile Craft — Home">
+          <img src="/img/logoCrop.png" alt="ProfileCraft Logo"
+               class="logo-img" width="32" height="32">
+          <span class="brand__name">Profile<span style="color:#7FA6FF">Craft</span></span>
+        </a>
+        <p data-en="Profile Craft builds professional profile websites, business websites and custom POS / business management systems for individuals and small businesses."
+           data-my="Profile Craft သည် တစ်ဦးချင်းနှင့် အသေးစား လုပ်ငန်းများအတွက် professional profile website များ၊ business website များ နှင့် custom POS / business management system များကို တည်ဆောက်ပေးပါသည်။">
+          Profile Craft builds professional profile websites, business websites and custom POS / business management systems for individuals and small businesses.
+        </p>
+      </div>
+
+      <div>
+        <h4 data-en="Services" data-my="ဝန်ဆောင်မှုများ">Services</h4>
+        <ul>
+          <li><a href="/Renovation/profile-service.html"
+                 data-en="Personal Profile" data-my="Personal Profile">Personal Profile</a></li>
+          <li><a href="/Renovation/business-page-service.html"
+                 data-en="Business Website" data-my="Business Website">Business Website</a></li>
+          <li><a href="/Renovation/pos-system-service.html"
+                 data-en="POS / Business System" data-my="POS / Business System">POS / Business System</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 data-en="Company" data-my="ကုမ္ပဏီ">Company</h4>
+        <ul>
+          <li><a href="#about" data-en="About" data-my="အကြောင်း">About</a></li>
+          <li><a href="#process" data-en="Process" data-my="လုပ်ငန်းစဉ်">Process</a></li>
+          <li><a href="#technology" data-en="Technology" data-my="နည်းပညာ">Technology</a></li>
+          <li><a href="#faq" data-en="FAQ" data-my="မေးခွန်းများ">FAQ</a></li>
+          <li><a href="#contact" data-en="Contact" data-my="ဆက်သွယ်ရန်">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 data-en="Contact" data-my="ဆက်သွယ်ရန်">Contact</h4>
+        <ul>
+          <li><a href="https://t.me/profilecraft" target="_blank" rel="noopener">Telegram</a></li>
+          <li><a href="mailto:hello@profilecraft.example">hello@profilecraft.example</a></li>
+        </ul>
+        <h4 style="margin-top:var(--s-5)"
+            data-en="Language" data-my="ဘာသာစကား">Language</h4>
+        <ul>
+          <li><a href="#" data-set-lang="en">English</a></li>
+          <li><a href="#" data-set-lang="my">မြန်မာ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ftr__bottom">
+      <span>© <span id="year">2025</span>
+        <span data-en="Profile Craft. All rights reserved."
+              data-my="Profile Craft။ မူပိုင်ခွင့် အားလုံး လက်ဝယ်ရှိသည်။">Profile Craft. All rights reserved.</span>
+      </span>
+      <span data-en="Domain &amp; hosting assistance is provided as part of project deployment."
+            data-my="Domain နှင့် hosting အကူအညီကို project deployment ၏ တစ်စိတ်တစ်ပိုင်းအဖြစ် ဆောင်ရွက်ပေးပါသည်။">
+        Domain &amp; hosting assistance is provided as part of project deployment.
+      </span>
+    </div>
+
+    <p class="ftr__note"
+       data-en="Profile Craft is not a domain registrar or hosting provider. Where a project requires a domain or hosting, we assist with selecting, purchasing, configuring and deploying using suitable third-party services."
+       data-my="Profile Craft သည် domain registrar သို့မဟုတ် hosting provider မဟုတ်ပါ။ Project တစ်ခုတွင် domain သို့မဟုတ် hosting လိုအပ်ပါက သင့်လျော်သော ပြင်ပ service များကို အသုံးပြု၍ ရွေးချယ်ခြင်း၊ ဝယ်ယူခြင်း၊ configure လုပ်ခြင်းနှင့် deploy လုပ်ခြင်းတို့ကို ကူညီဆောင်ရွက်ပေးပါသည်။">
+      Profile Craft is not a domain registrar or hosting provider. Where a project requires a domain or hosting, we assist with selecting, purchasing, configuring and deploying using suitable third-party services.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var STORAGE_KEY = 'pc-lang';
+  var html = document.documentElement;
+  var TITLE = {
+    en: 'Profile Craft — Digital Solutions for Profiles & Businesses',
+    my: 'Profile Craft — Profile နှင့် Business များအတွက် Digital Solutions'
+  };
+
+  function applyLang(lang) {
+    if (lang !== 'en' && lang !== 'my') lang = 'en';
+    html.setAttribute('data-lang', lang);
+    html.setAttribute('lang', lang === 'my' ? 'my' : 'en');
+    var nodes = document.querySelectorAll('[data-en][data-my]');
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      if (el.querySelector('[data-en][data-my]')) continue;
+      var val = el.getAttribute('data-' + lang);
+      if (val != null) el.textContent = val;
+    }
+    if (TITLE[lang]) document.title = TITLE[lang];
+    var btns = document.querySelectorAll('[data-set-lang]');
+    for (var j = 0; j < btns.length; j++) {
+      btns[j].setAttribute('aria-pressed',
+        String(btns[j].getAttribute('data-set-lang') === lang));
+    }
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-set-lang]') : null;
+    if (t) { e.preventDefault(); applyLang(t.getAttribute('data-set-lang')); }
+  });
+
+  var initial = 'en';
+  try {
+    var stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === 'en' || stored === 'my') initial = stored;
+    else if ((navigator.language || '').toLowerCase().indexOf('my') === 0) initial = 'my';
+  } catch (e) {}
+  applyLang(initial);
+
+  var burger = document.getElementById('burger');
+  var nav = document.getElementById('siteNav');
+  if (burger && nav) {
+    burger.addEventListener('click', function () {
+      var open = nav.getAttribute('data-open') === 'true';
+      nav.setAttribute('data-open', String(!open));
+      burger.setAttribute('aria-expanded', String(!open));
+    });
+    nav.addEventListener('click', function (e) {
+      if (e.target.closest('a') && window.matchMedia('(max-width: 980px)').matches) {
+        nav.setAttribute('data-open', 'false');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+    window.addEventListener('resize', function () {
+      if (!window.matchMedia('(max-width: 980px)').matches) {
+        nav.setAttribute('data-open', 'false');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  var revealEls = document.querySelectorAll('.reveal');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    for (var k = 0; k < revealEls.length; k++) revealEls[k].classList.add('is-in');
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+    for (var m = 0; m < revealEls.length; m++) io.observe(revealEls[m]);
+  }
+
+  var y = document.getElementById('year');
+  if (y) y.textContent = String(new Date().getFullYear());
+})();
+</script>
+</body>
+</html>

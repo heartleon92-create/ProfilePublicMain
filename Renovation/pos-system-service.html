@@ -1,0 +1,2283 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>POS &amp; Business Management System — Profile Craft</title>
+<meta name="description" content="Custom POS and business management systems for small businesses: sales, orders, products, inventory, customers, reports, staff and permissions. Packages starting from 800,000 MMK." />
+<meta name="theme-color" content="#0F172A" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Profile Craft" />
+<meta property="og:title" content="POS &amp; Business Management System — Profile Craft" />
+<meta property="og:description" content="Custom business management systems with sales, inventory, orders, reports and staff controls. Three package levels available." />
+<meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="my_MM" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230F172A'/%3E%3Cpath d='M11 22V10h5.2a3.6 3.6 0 0 1 0 7.2H14' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='21' cy='21' r='2.4' fill='%230E9F6E'/%3E%3C/svg%3E" />
+
+<style>
+/* =========================================================
+   Profile Craft — Service detail (POS)
+   Renovated to match the Profile Craft Hub Page.
+   - Full-width hero banner (image only)
+   - RGBA card treatment (cards only)
+   - Larger, higher-contrast supporting text
+   - Larger, clearer block__eyebrow
+   ========================================================= */
+
+:root{
+  /* Ink & text — lifted contrast for readability */
+  --ink:#0B1220; --ink-2:#16233A; --body:#24334A; --muted:#3E4E67; --muted-2:#55657E;
+
+  /* Brand */
+  --brand:#1D4ED8; --brand-ink:#143A9E;
+  --brand-soft:#EFF6FF; --brand-soft-2:#DBEAFE;
+
+  /* Accent (cyan/teal) */
+  --accent:#0E9F6E; --accent-ink:#047857; --accent-cyan:#0891B2;
+  --accent-soft:#ECFDF5; --accent-line:#B9E7CF;
+
+  --warn:#D97706; --warn-soft:#FEF3C7;
+
+  /* Surfaces */
+  --paper:#FFFFFF; --paper-2:#F7FAFF; --paper-3:#F1F5F9; --paper-blue:#F2F7FF;
+  --line:#E2E8F0; --line-2:#CBD5E1;
+
+  /* RGBA card tokens */
+  --card-bg:rgba(255,255,255,.72);
+  --card-bg-strong:rgba(255,255,255,.86);
+  --card-bd:rgba(15,23,42,.09);
+  --card-bd-hover:rgba(29,78,216,.28);
+  --card-sh:0 1px 2px rgba(15,23,42,.05), 0 14px 32px -20px rgba(15,23,42,.30);
+  --card-blur:blur(10px) saturate(140%);
+
+  --font:"Inter","Noto Sans Myanmar","Padauk","Myanmar Text",
+         -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+         "Helvetica Neue",Arial,sans-serif;
+
+  --fs-12:.75rem; --fs-13:.8125rem; --fs-14:.875rem; --fs-15:.9375rem;
+  --fs-16:1rem;   --fs-17:1.0625rem; --fs-18:1.125rem; --fs-20:1.25rem;
+  --fs-24:1.5rem; --fs-28:1.75rem;  --fs-32:2rem;
+  --fs-40:2.5rem; --fs-52:3.25rem;
+
+  --s-1:.25rem; --s-2:.5rem;  --s-3:.75rem; --s-4:1rem;  --s-5:1.5rem;
+  --s-6:2rem;   --s-7:3rem;   --s-8:4rem;   --s-9:6rem;
+
+  --container:1240px;
+  --radius:12px; --radius-sm:8px; --radius-lg:16px;
+  --hdr-h:70px;
+
+  --sh-1:0 1px 2px rgba(15,23,42,.06);
+  --sh-2:0 4px 14px rgba(15,23,42,.07),0 1px 3px rgba(15,23,42,.05);
+  --sh-3:0 20px 50px -12px rgba(15,23,42,.16),0 8px 20px -8px rgba(15,23,42,.08);
+  --sh-brand:0 10px 30px -10px rgba(29,78,216,.35);
+  --sh-accent:0 10px 30px -10px rgba(14,159,110,.35);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+body{
+  margin:0;font-family:var(--font);font-size:var(--fs-16);line-height:1.75;
+  color:var(--body);background:var(--paper);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+img,svg{max-width:100%;display:block;}
+a{color:var(--brand);text-decoration:none;transition:color .15s;}
+a:hover{color:var(--brand-ink);}
+h1,h2,h3,h4{color:var(--ink);margin:0 0 var(--s-4);font-weight:700;line-height:1.2;letter-spacing:-.022em;}
+h1{font-size:clamp(2rem,4.2vw,var(--fs-52));letter-spacing:-.032em;line-height:1.1;}
+h2{font-size:clamp(1.6rem,3vw,var(--fs-40));letter-spacing:-.026em;line-height:1.22;}
+h3{font-size:var(--fs-24);line-height:1.3;}
+h4{font-size:var(--fs-18);line-height:1.4;}
+p{margin:0 0 var(--s-4);color:var(--body);}
+ul{margin:0 0 var(--s-4);padding-left:1.15rem;}
+li{margin-bottom:var(--s-2);}
+strong,b{color:var(--ink);font-weight:600;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
+  background:var(--paper-3);padding:.1em .35em;border-radius:4px;color:var(--ink);}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:var(--radius-sm);}
+
+html[data-lang="my"] body{line-height:1.95;}
+html[data-lang="my"] h1,
+html[data-lang="my"] h2,
+html[data-lang="my"] h3,
+html[data-lang="my"] h4{line-height:1.6;letter-spacing:-.005em;}
+
+/* ---------- Utilities ---------- */
+.container{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:var(--s-5);}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+.skip-link{position:absolute;left:var(--s-4);top:-100px;z-index:1000;
+  background:var(--ink);color:#fff;padding:var(--s-3) var(--s-4);
+  border-radius:var(--radius-sm);transition:top .15s;}
+.skip-link:focus{top:var(--s-4);color:#fff;}
+
+/* ---------- block__eyebrow (enlarged + higher contrast) ---------- */
+.block__eyebrow,
+.eyebrow{
+  display:inline-flex;align-items:center;gap:.55rem;
+  font-size:var(--fs-13);
+  font-weight:800;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  color:var(--accent-ink);
+  background:var(--accent-soft);
+  border:1px solid var(--accent-line);
+  padding:.45rem .95rem;
+  border-radius:99px;
+  margin-bottom:var(--s-4);
+  line-height:1.2;
+}
+.block__eyebrow::before,
+.eyebrow::before{
+  content:"";display:inline-block;width:16px;height:2px;
+  background:currentColor;border-radius:2px;flex:0 0 auto;
+}
+.block__eyebrow--brand,
+.eyebrow--brand{
+  color:var(--brand);background:var(--brand-soft);border-color:var(--brand-soft-2);
+}
+.section-head--center .block__eyebrow::before,
+.section-head--center .eyebrow::before{display:none;}
+
+/* ---------- Sections ---------- */
+.section{padding-block:var(--s-9);position:relative;}
+.section--alt{background:linear-gradient(180deg,#F7FAFF 0%,#F1F6FC 100%);}
+.section--blue{background:linear-gradient(180deg,#F2F7FF 0%,#EAF1FD 100%);}
+.section--tight{padding-block:var(--s-8);}
+
+.section-head{max-width:840px;margin-bottom:var(--s-7);}
+.section-head--center{margin-inline:auto;text-align:center;}
+.section-head p{color:var(--muted);font-size:var(--fs-18);margin:0;line-height:1.75;}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  font:inherit;font-size:var(--fs-15);font-weight:600;
+  padding:.75rem 1.25rem;border-radius:var(--radius-sm);
+  border:1px solid transparent;cursor:pointer;line-height:1.2;
+  transition:background-color .18s, color .18s, border-color .18s,
+             box-shadow .18s, transform .18s;
+  white-space:nowrap;text-decoration:none;}
+.btn--primary{background:var(--brand);color:#fff;box-shadow:var(--sh-1);}
+.btn--primary:hover{background:var(--brand-ink);color:#fff;box-shadow:var(--sh-brand);}
+.btn--accent{background:var(--accent);color:#fff;box-shadow:var(--sh-1);}
+.btn--accent:hover{background:var(--accent-ink);color:#fff;box-shadow:var(--sh-accent);}
+.btn--ghost{background:#fff;color:var(--ink);border-color:var(--line-2);}
+.btn--ghost:hover{border-color:var(--ink);color:var(--ink);}
+.btn--outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.28);}
+.btn--outline:hover{border-color:#fff;color:#fff;background:rgba(255,255,255,.06);}
+.btn--lg{padding:.95rem 1.5rem;font-size:var(--fs-16);}
+.btn--sm{padding:.55rem 1rem;font-size:var(--fs-14);}
+.btn .arw{transition:transform .18s;display:inline-block;}
+.btn:hover .arw{transform:translateX(4px);}
+
+/* ---------- Header ---------- */
+.hdr{position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.94);backdrop-filter:saturate(160%) blur(10px);
+  -webkit-backdrop-filter:saturate(160%) blur(10px);
+  border-bottom:1px solid var(--line);}
+.hdr__inner{display:flex;align-items:center;gap:var(--s-5);height:var(--hdr-h);}
+.brand{display:flex;align-items:center;gap:.65rem;color:var(--ink);flex:0 0 auto;}
+.brand:hover{color:var(--ink);}
+.brand__mark{width:32px;height:32px;flex:0 0 auto;}
+.brand__name{font-weight:800;font-size:var(--fs-18);letter-spacing:-.025em;color:var(--ink);}
+.brand__name span{color:var(--brand);}
+
+.nav{margin-left:auto;}
+.nav__list{display:flex;align-items:center;gap:var(--s-5);list-style:none;margin:0;padding:0;}
+.nav__list li{margin:0;}
+.nav__link{color:var(--ink-2);font-size:var(--fs-15);font-weight:500;}
+.nav__link:hover{color:var(--brand);}
+.nav__link[aria-current="page"]{color:var(--brand);font-weight:600;}
+
+.hdr__actions{display:flex;align-items:center;gap:var(--s-3);}
+.lang{display:inline-flex;border:1px solid var(--line-2);border-radius:var(--radius-sm);
+  overflow:hidden;background:#fff;}
+.lang button{font:inherit;font-size:var(--fs-13);font-weight:600;
+  padding:.4rem .65rem;border:0;background:transparent;color:var(--muted);
+  cursor:pointer;line-height:1;}
+.lang button[aria-pressed="true"]{background:var(--ink);color:#fff;}
+.burger{display:none;width:42px;height:42px;border:1px solid var(--line-2);
+  background:#fff;border-radius:var(--radius-sm);align-items:center;
+  justify-content:center;cursor:pointer;}
+.burger span,
+.burger span::before,
+.burger span::after{content:"";display:block;width:18px;height:2px;
+  background:var(--ink);border-radius:2px;position:relative;}
+.burger span::before{position:absolute;top:-6px;}
+.burger span::after{position:absolute;top:6px;}
+
+/* ---------- Breadcrumb ---------- */
+.crumb{background:var(--paper-2);border-bottom:1px solid var(--line);
+  font-size:var(--fs-14);color:var(--muted);}
+.crumb__inner{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;
+  padding-block:var(--s-3);}
+.crumb a{color:var(--muted);}
+.crumb a:hover{color:var(--brand);}
+.crumb__sep{color:var(--line-2);}
+.crumb__current{color:var(--ink);font-weight:600;}
+
+/* =========================================================
+   HERO — full-width banner (image only)
+   Same pattern as the Hub Page .hero-banner.
+   ========================================================= */
+.hero{
+  position:relative;
+  background:var(--paper);
+  border-bottom:1px solid var(--line);
+  overflow:hidden;
+}
+.hero-banner{
+  width:100%;
+  line-height:0;
+  overflow:hidden;
+}
+.hero-banner img{
+  display:block;
+  width:100%;
+  height:auto;
+  max-width:100%;
+}
+
+/* ---------- Intro / comparison ---------- */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-5);margin-top:var(--s-6);}
+.compare__card{
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  box-shadow:var(--card-sh);
+  backdrop-filter:var(--card-blur);
+  -webkit-backdrop-filter:var(--card-blur);
+  border-radius:var(--radius);
+  padding:var(--s-6);
+}
+.compare__card--pos{
+  border-color:rgba(14,159,110,.32);
+  box-shadow:0 0 0 3px rgba(14,159,110,.10),var(--card-sh);
+}
+.compare__tag{display:inline-block;font-size:var(--fs-13);font-weight:800;
+  letter-spacing:.12em;text-transform:uppercase;padding:.35rem .7rem;
+  border-radius:6px;margin-bottom:var(--s-4);}
+.compare__tag--site{background:var(--brand-soft);color:var(--brand);}
+.compare__tag--pos{background:var(--accent-soft);color:var(--accent-ink);}
+.compare__card h3{font-size:var(--fs-20);margin-bottom:var(--s-3);}
+.compare__card p{color:var(--muted);font-size:var(--fs-16);margin-bottom:var(--s-4);line-height:1.7;}
+.compare__list{list-style:none;margin:0;padding:0;}
+.compare__list li{display:flex;gap:.6rem;align-items:flex-start;
+  font-size:var(--fs-15);color:var(--ink-2);padding:.4rem 0;}
+.compare__list li::before{content:"";flex:0 0 auto;width:6px;height:6px;
+  margin-top:.7em;border-radius:50%;background:var(--brand);}
+.compare__card--pos .compare__list li::before{background:var(--accent);}
+
+/* ---------- Module grid (RGBA cards) ---------- */
+.modules{display:grid;grid-template-columns:repeat(3,1fr);
+  gap:var(--s-4);margin-top:var(--s-6);}
+.mod{
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  box-shadow:var(--card-sh);
+  backdrop-filter:var(--card-blur);
+  -webkit-backdrop-filter:var(--card-blur);
+  border-radius:var(--radius);
+  padding:var(--s-5);display:grid;grid-template-columns:44px 1fr;
+  gap:var(--s-4);align-items:start;
+  transition:border-color .18s, box-shadow .18s, transform .18s, background-color .18s;
+}
+.mod:hover{
+  border-color:rgba(14,159,110,.35);
+  background:var(--card-bg-strong);
+  box-shadow:0 1px 2px rgba(15,23,42,.05),0 18px 38px -22px rgba(14,159,110,.45);
+  transform:translateY(-2px);
+}
+.mod__ico{width:44px;height:44px;border-radius:11px;display:grid;
+  place-items:center;background:var(--accent-soft);color:var(--accent-ink);}
+.mod__ico svg{width:21px;height:21px;}
+.mod h3{font-size:var(--fs-17);margin-bottom:.2rem;line-height:1.35;}
+.mod p{font-size:var(--fs-15);color:var(--muted);margin:0;line-height:1.65;}
+
+/* ---------- Package comparison table ---------- */
+.table-wrap{
+  overflow-x:auto;
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  box-shadow:var(--card-sh);
+  backdrop-filter:var(--card-blur);
+  -webkit-backdrop-filter:var(--card-blur);
+  border-radius:var(--radius);
+  -webkit-overflow-scrolling:touch;
+}
+table.cmp{width:100%;border-collapse:collapse;font-size:var(--fs-15);min-width:720px;}
+table.cmp th,table.cmp td{padding:var(--s-4) var(--s-5);
+  text-align:left;border-bottom:1px solid var(--line);vertical-align:middle;}
+table.cmp thead th{background:rgba(241,245,249,.86);font-weight:700;color:var(--ink);
+  font-size:var(--fs-13);letter-spacing:.04em;border-bottom:2px solid var(--line);
+  text-transform:uppercase;}
+table.cmp thead th:not(:first-child){text-align:center;}
+table.cmp tbody td{color:var(--ink-2);}
+table.cmp tbody td:not(:first-child){text-align:center;}
+table.cmp tbody tr:hover{background:rgba(239,246,255,.65);}
+table.cmp tbody tr:last-child td{border-bottom:0;}
+table.cmp .rowhead{font-weight:600;color:var(--ink);}
+.tick{color:var(--accent);font-weight:700;font-size:var(--fs-16);}
+.dash{color:var(--line-2);font-size:var(--fs-16);}
+.badge{display:inline-block;font-size:var(--fs-12);font-weight:700;
+  padding:.25rem .55rem;border-radius:5px;letter-spacing:.02em;}
+.badge--basic{background:var(--paper-3);color:var(--muted);}
+.badge--std{background:var(--brand-soft);color:var(--brand);}
+.badge--adv{background:var(--accent-soft);color:var(--accent-ink);}
+.badge--rec{background:var(--accent);color:#fff;}
+
+/* ---------- Package cards (RGBA) ---------- */
+.pkgs{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5);
+  margin-top:var(--s-6);align-items:stretch;}
+.pkg{
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  box-shadow:var(--card-sh);
+  backdrop-filter:var(--card-blur);
+  -webkit-backdrop-filter:var(--card-blur);
+  border-radius:var(--radius-lg);
+  padding:var(--s-6);display:flex;flex-direction:column;
+  position:relative;
+  transition:border-color .18s, box-shadow .18s, transform .18s, background-color .18s;
+}
+.pkg:hover{
+  border-color:var(--card-bd-hover);
+  background:var(--card-bg-strong);
+  box-shadow:0 1px 2px rgba(15,23,42,.05),0 22px 44px -24px rgba(15,23,42,.42);
+  transform:translateY(-2px);
+}
+.pkg--feature{
+  border-color:rgba(14,159,110,.45);
+  box-shadow:0 0 0 3px rgba(14,159,110,.12),var(--sh-3);
+}
+.pkg--feature::before{content:attr(data-rec);position:absolute;
+  top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--accent);color:#fff;font-size:var(--fs-12);font-weight:700;
+  padding:.35rem .8rem;border-radius:99px;letter-spacing:.06em;
+  text-transform:uppercase;white-space:nowrap;}
+.pkg__name{font-size:var(--fs-24);color:var(--ink);margin-bottom:var(--s-2);
+  letter-spacing:-.02em;}
+.pkg__tag{font-size:var(--fs-15);color:var(--muted);margin-bottom:var(--s-5);line-height:1.65;}
+.pkg__price{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;
+  padding:var(--s-4) 0;border-block:1px solid var(--line);margin-bottom:var(--s-5);}
+.pkg__price-label{font-size:var(--fs-13);color:var(--muted-2);font-weight:600;}
+.pkg__price-value{font-size:var(--fs-28);font-weight:800;color:var(--ink);
+  letter-spacing:-.02em;}
+.pkg__price-unit{font-size:var(--fs-14);color:var(--muted);font-weight:500;}
+.pkg__scope{display:flex;align-items:center;gap:.6rem;font-size:var(--fs-15);
+  color:var(--ink-2);margin-bottom:var(--s-5);font-weight:600;}
+.pkg__scope svg{width:16px;height:16px;color:var(--accent);flex:0 0 auto;}
+.pkg__label{font-size:var(--fs-12);font-weight:800;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 var(--s-3);}
+.pkg__list{list-style:none;margin:0 0 var(--s-5);padding:0;}
+.pkg__list li{display:flex;gap:.55rem;align-items:flex-start;
+  font-size:var(--fs-15);color:var(--ink-2);padding:.35rem 0;}
+.pkg__list li::before{content:"";flex:0 0 auto;width:16px;height:16px;
+  margin-top:.3em;border-radius:4px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230E9F6E' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5L20 7'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:center;background-size:11px;
+  background-color:var(--accent-soft);}
+.pkg__foot{margin-top:auto;padding-top:var(--s-5);
+  border-top:1px solid var(--line);}
+.pkg__foot .btn{width:100%;}
+.pkg__note{font-size:var(--fs-13);color:var(--muted-2);margin:var(--s-3) 0 0;
+  text-align:center;line-height:1.6;}
+
+/* ---------- Add-ons (RGBA) ---------- */
+.addons{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-3);
+  margin-top:var(--s-5);}
+.addon{
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  box-shadow:0 1px 2px rgba(15,23,42,.04),0 10px 22px -18px rgba(15,23,42,.28);
+  backdrop-filter:var(--card-blur);
+  -webkit-backdrop-filter:var(--card-blur);
+  border-radius:var(--radius-sm);
+  padding:var(--s-4);font-size:var(--fs-15);color:var(--ink-2);
+  display:flex;align-items:center;gap:.6rem;font-weight:500;
+  transition:border-color .18s, background-color .18s, transform .18s;
+}
+.addon:hover{border-color:rgba(14,159,110,.35);background:var(--card-bg-strong);transform:translateY(-1px);}
+.addon svg{width:15px;height:15px;color:var(--accent);flex:0 0 auto;}
+
+.scope-note{
+  background:rgba(239,246,255,.78);
+  border:1px solid rgba(29,78,216,.18);
+  box-shadow:0 1px 2px rgba(15,23,42,.04),0 14px 32px -24px rgba(29,78,216,.35);
+  backdrop-filter:var(--card-blur);
+  -webkit-backdrop-filter:var(--card-blur);
+  border-radius:var(--radius);
+  padding:var(--s-5) var(--s-6);margin-top:var(--s-6);
+  font-size:var(--fs-15);color:var(--ink-2);line-height:1.8;
+}
+.scope-note h4{font-size:var(--fs-17);margin-bottom:var(--s-2);color:var(--ink);}
+
+/* ---------- Data scale (RGBA) ---------- */
+.scale{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5);
+  margin-top:var(--s-6);}
+.scale__card{
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  box-shadow:var(--card-sh);
+  backdrop-filter:var(--card-blur);
+  -webkit-backdrop-filter:var(--card-blur);
+  border-radius:var(--radius);
+  padding:var(--s-6);position:relative;overflow:hidden;
+}
+.scale__card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;
+  border-radius:var(--radius) var(--radius) 0 0;background:var(--brand);}
+.scale__card:nth-child(1)::before{background:#94A3B8;}
+.scale__card:nth-child(2)::before{background:var(--brand);}
+.scale__card:nth-child(3)::before{background:var(--accent);}
+.scale__card h3{font-size:var(--fs-18);margin-bottom:var(--s-3);}
+.scale__card p{font-size:var(--fs-15);color:var(--muted);margin:0;line-height:1.75;}
+
+/* ---------- Deployment options (RGBA) ---------- */
+.deploys{display:grid;grid-template-columns:1fr;gap:var(--s-5);margin-top:var(--s-6);}
+.deploy{
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  box-shadow:var(--card-sh);
+  backdrop-filter:var(--card-blur);
+  -webkit-backdrop-filter:var(--card-blur);
+  border-radius:var(--radius);
+  padding:var(--s-6);
+}
+.deploy__head{display:grid;grid-template-columns:56px 1fr;gap:var(--s-5);
+  align-items:start;margin-bottom:var(--s-5);}
+.deploy__badge{width:56px;height:56px;border-radius:14px;display:grid;
+  place-items:center;background:var(--paper-3);color:var(--ink);
+  font-size:var(--fs-20);font-weight:800;letter-spacing:-.02em;}
+.deploy__badge--a{background:var(--brand-soft);color:var(--brand);}
+.deploy__badge--b{background:var(--warn-soft);color:var(--warn);}
+.deploy__badge--c{background:var(--accent-soft);color:var(--accent-ink);}
+.deploy__title{font-size:var(--fs-20);margin-bottom:.3rem;}
+.deploy__sub{font-size:var(--fs-15);color:var(--muted);margin:0;line-height:1.7;}
+.deploy__body{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-5) var(--s-6);}
+.deploy__col h4{font-size:var(--fs-13);text-transform:uppercase;
+  letter-spacing:.12em;color:var(--muted);margin-bottom:var(--s-3);}
+.deploy__col ul{list-style:none;margin:0;padding:0;}
+.deploy__col li{font-size:var(--fs-15);color:var(--ink-2);padding:.35rem 0;
+  display:flex;gap:.55rem;align-items:flex-start;line-height:1.65;}
+.deploy__col li::before{content:"";flex:0 0 auto;width:6px;height:6px;
+  margin-top:.7em;border-radius:50%;background:var(--brand);}
+.deploy__price{margin-top:var(--s-5);padding:var(--s-4) var(--s-5);
+  background:rgba(241,245,249,.85);border:1px solid var(--line);
+  border-radius:var(--radius-sm);
+  font-size:var(--fs-15);color:var(--ink-2);display:flex;
+  flex-wrap:wrap;gap:var(--s-4) var(--s-5);align-items:center;}
+.deploy__price b{color:var(--ink);}
+.deploy__price-note{font-size:var(--fs-13);color:var(--muted-2);line-height:1.6;}
+
+/* ---------- Architecture diagram (RGBA) ---------- */
+.arch{
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  box-shadow:var(--card-sh);
+  backdrop-filter:var(--card-blur);
+  -webkit-backdrop-filter:var(--card-blur);
+  border-radius:var(--radius);
+  padding:var(--s-7);margin-top:var(--s-6);
+}
+.arch h3{text-align:center;margin-bottom:var(--s-2);}
+.arch > p{text-align:center;color:var(--muted);font-size:var(--fs-15);
+  margin-bottom:var(--s-6);max-width:56ch;margin-inline:auto;line-height:1.7;}
+.arch__flow{display:flex;flex-direction:column;align-items:center;gap:.6rem;}
+.arch__node{background:rgba(248,250,252,.92);border:1px solid var(--line);
+  border-radius:var(--radius-sm);padding:.9rem 1.5rem;
+  font-size:var(--fs-15);font-weight:600;color:var(--ink);
+  min-width:230px;text-align:center;}
+.arch__node--brand{background:rgba(239,246,255,.95);border-color:var(--brand-soft-2);
+  color:var(--brand);}
+.arch__node--accent{background:rgba(236,253,245,.95);border-color:var(--accent-line);
+  color:var(--accent-ink);}
+.arch__node--dark{background:var(--ink);color:#fff;border-color:var(--ink);}
+.arch__arrow{color:var(--line-2);font-size:var(--fs-20);line-height:1;
+  font-weight:700;}
+.arch__note{text-align:center;font-size:var(--fs-14);color:var(--muted);
+  margin-top:var(--s-5);max-width:56ch;margin-inline:auto;line-height:1.7;}
+
+.arch-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-5);
+  margin-top:var(--s-6);}
+
+/* ---------- Included / not included (RGBA) ---------- */
+.scope-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-5);
+  margin-top:var(--s-6);}
+.scope-col{
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  box-shadow:var(--card-sh);
+  backdrop-filter:var(--card-blur);
+  -webkit-backdrop-filter:var(--card-blur);
+  border-radius:var(--radius);
+  padding:var(--s-6);
+}
+.scope-col--inc{border-top:4px solid var(--accent);}
+.scope-col--exc{border-top:4px solid var(--muted-2);}
+.scope-col h3{font-size:var(--fs-18);margin-bottom:var(--s-4);}
+.scope-col ul{list-style:none;margin:0;padding:0;}
+.scope-col li{font-size:var(--fs-15);color:var(--ink-2);
+  padding:.45rem 0;display:flex;gap:.6rem;align-items:flex-start;line-height:1.65;}
+.scope-col--inc li::before{content:"✓";color:var(--accent);font-weight:700;
+  flex:0 0 auto;line-height:1.6;}
+.scope-col--exc li::before{content:"—";color:var(--muted-2);font-weight:700;
+  flex:0 0 auto;line-height:1.6;}
+
+/* ---------- Pricing structure (RGBA) ---------- */
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-5);
+  margin-top:var(--s-6);}
+.pricing-card{
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  box-shadow:var(--card-sh);
+  backdrop-filter:var(--card-blur);
+  -webkit-backdrop-filter:var(--card-blur);
+  border-radius:var(--radius);
+  padding:var(--s-6);
+}
+.pricing-card--dev{border-top:4px solid var(--brand);}
+.pricing-card--infra{border-top:4px solid var(--accent);}
+.pricing-card h3{font-size:var(--fs-18);margin-bottom:var(--s-3);}
+.pricing-card p{font-size:var(--fs-15);color:var(--muted);margin-bottom:var(--s-4);line-height:1.7;}
+.pricing-card ul{list-style:none;margin:0;padding:0;}
+.pricing-card li{font-size:var(--fs-15);color:var(--ink-2);padding:.5rem 0;
+  border-bottom:1px solid var(--line);display:flex;
+  justify-content:space-between;gap:var(--s-4);align-items:baseline;}
+.pricing-card li:last-child{border-bottom:0;}
+.pricing-card li b{color:var(--ink);font-weight:700;text-align:right;}
+
+/* ---------- Process ---------- */
+.steps{list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(7,1fr);gap:var(--s-4);
+  position:relative;}
+.steps::before{content:"";position:absolute;left:20px;right:20px;top:19px;
+  height:2px;background:var(--accent-soft);z-index:0;}
+.step{position:relative;z-index:1;}
+.step__num{width:40px;height:40px;border-radius:50%;display:grid;
+  place-items:center;background:var(--accent);color:#fff;
+  font-size:var(--fs-13);font-weight:800;box-shadow:0 0 0 4px #fff;
+  margin-bottom:var(--s-3);}
+.step h3{font-size:var(--fs-15);margin-bottom:.25rem;line-height:1.4;}
+.step p{font-size:var(--fs-13);color:var(--muted);margin:0;line-height:1.6;}
+
+/* ---------- FAQ (RGBA) ---------- */
+.faq{max-width:900px;margin-inline:auto;}
+.faq details{
+  background:var(--card-bg);
+  border:1px solid var(--card-bd);
+  box-shadow:0 1px 2px rgba(15,23,42,.04),0 12px 26px -22px rgba(15,23,42,.30);
+  backdrop-filter:var(--card-blur);
+  -webkit-backdrop-filter:var(--card-blur);
+  border-radius:var(--radius);margin-bottom:var(--s-3);overflow:hidden;
+  transition:border-color .18s, box-shadow .18s, background-color .18s;}
+.faq details[open]{border-color:rgba(29,78,216,.24);background:var(--card-bg-strong);box-shadow:var(--sh-2);}
+.faq summary{list-style:none;cursor:pointer;padding:var(--s-5) var(--s-6);
+  font-weight:600;color:var(--ink);font-size:var(--fs-17);
+  display:flex;justify-content:space-between;gap:var(--s-4);align-items:center;}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{content:"+";font-size:var(--fs-24);color:var(--accent);
+  font-weight:400;flex:0 0 auto;line-height:1;}
+.faq details[open] summary::after{content:"−";}
+.faq__answer{padding:0 var(--s-6) var(--s-5);color:var(--body);
+  font-size:var(--fs-16);margin:0;line-height:1.85;max-width:72ch;}
+
+/* ---------- Final CTA ---------- */
+.cta{background:var(--ink);color:#CBD5E1;border-radius:var(--radius-lg);
+  padding:var(--s-8);display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:var(--s-6);align-items:center;position:relative;overflow:hidden;
+  box-shadow:var(--sh-3);}
+.cta::before{content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(600px 260px at 100% 0%, rgba(14,159,110,.30), transparent 60%),
+    radial-gradient(400px 200px at 0% 100%, rgba(29,78,216,.22), transparent 60%);
+  pointer-events:none;}
+.cta > *{position:relative;}
+.cta h2{color:#fff;margin-bottom:var(--s-3);}
+.cta p{color:#CBD5E1;margin:0;max-width:56ch;line-height:1.75;font-size:var(--fs-17);}
+.cta__actions{display:flex;flex-wrap:wrap;gap:var(--s-3);}
+.cta .btn--primary{background:#fff;color:var(--ink);
+  box-shadow:0 10px 30px -10px rgba(255,255,255,.35);}
+.cta .btn--primary:hover{background:#F1F5F9;color:var(--ink);}
+
+/* ---------- Footer ---------- */
+.ftr{background:#0B1324;color:#94A3B8;padding-block:var(--s-8) var(--s-6);
+  margin-top:var(--s-9);border-top:1px solid rgba(255,255,255,.06);}
+.ftr a{color:#CBD5E1;}
+.ftr a:hover{color:#fff;}
+.ftr__top{display:grid;grid-template-columns:1.6fr repeat(3,1fr);
+  gap:var(--s-6);padding-bottom:var(--s-7);
+  border-bottom:1px solid rgba(255,255,255,.08);}
+.ftr__brand .brand__name{color:#fff;}
+.ftr__brand p{font-size:var(--fs-15);margin:var(--s-4) 0 0;
+  max-width:42ch;color:#94A3B8;line-height:1.75;}
+.ftr h4{color:#fff;font-size:var(--fs-13);text-transform:uppercase;
+  letter-spacing:.12em;margin-bottom:var(--s-4);}
+.ftr ul{list-style:none;margin:0;padding:0;}
+.ftr li{margin-bottom:var(--s-2);font-size:var(--fs-15);}
+.ftr__bottom{display:flex;flex-wrap:wrap;gap:var(--s-4);
+  justify-content:space-between;align-items:center;
+  padding-top:var(--s-5);font-size:var(--fs-14);color:#94A3B8;}
+.ftr__note{font-size:var(--fs-13);color:#7B8BA3;margin-top:var(--s-3);
+  max-width:80ch;line-height:1.75;}
+
+/* ---------- Reveal ---------- */
+.reveal{opacity:0;transform:translateY(16px);
+  transition:opacity .6s ease, transform .6s ease;}
+.reveal.is-in{opacity:1;transform:none;}
+
+/* ---------- Mobile nav ---------- */
+@media (max-width:980px){
+  .nav{position:fixed;inset:var(--hdr-h) 0 auto 0;background:#fff;
+    border-bottom:1px solid var(--line);transform:translateY(-120%);
+    transition:transform .22s;padding:var(--s-4) var(--s-5) var(--s-5);
+    box-shadow:var(--sh-3);}
+  .nav[data-open="true"]{transform:translateY(0);}
+  .nav__list{flex-direction:column;align-items:stretch;gap:0;}
+  .nav__list li{border-bottom:1px solid var(--line);}
+  .nav__list li:last-child{border-bottom:0;}
+  .nav__link{display:block;padding:var(--s-4) 0;font-size:var(--fs-16);}
+  .burger{display:inline-flex;}
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1100px){
+  .modules{grid-template-columns:repeat(2,1fr);}
+  .pkgs{grid-template-columns:1fr;max-width:580px;margin-inline:auto;}
+  .pkgs .pkg--feature{order:-1;}
+  .addons{grid-template-columns:repeat(3,1fr);}
+  .scale{grid-template-columns:1fr;max-width:660px;margin-inline:auto;}
+  .deploy__body{grid-template-columns:1fr;}
+  .scope-grid{grid-template-columns:1fr;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .arch-grid{grid-template-columns:1fr;}
+  .steps{grid-template-columns:repeat(4,1fr);gap:var(--s-5) var(--s-4);}
+  .steps::before{display:none;}
+  .compare{grid-template-columns:1fr;}
+}
+
+@media (max-width:760px){
+  .section{padding-block:var(--s-8);}
+  .modules{grid-template-columns:1fr;}
+  .addons{grid-template-columns:repeat(2,1fr);}
+  .cta{grid-template-columns:1fr;padding:var(--s-6);}
+  .cta__actions .btn{flex:1 1 auto;}
+  .ftr__top{grid-template-columns:1fr 1fr;}
+  .ftr__brand{grid-column:1 / -1;}
+  .steps{grid-template-columns:repeat(2,1fr);}
+  .deploy__head{grid-template-columns:1fr;gap:var(--s-3);}
+  .arch{padding:var(--s-5);}
+}
+
+@media (max-width:460px){
+  .container{padding-inline:var(--s-4);}
+  .cta__actions .btn{width:100%;}
+  .addons{grid-template-columns:1fr;}
+  .ftr__top{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr;}
+  .pkg{padding:var(--s-5);}
+  .arch__node{min-width:0;width:100%;padding:.8rem 1rem;font-size:var(--fs-14);}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;
+    transition-duration:.001ms !important;}
+  html{scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;}
+}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main"
+   data-en="Skip to main content"
+   data-my="အဓိကအကြောင်းအရာသို့ ကျော်သွားရန်">Skip to main content</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="hdr">
+  <div class="container hdr__inner">
+    <a class="brand" href="/" aria-label="Profile Craft — Home">
+      <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <rect width="40" height="40" rx="9" fill="#0F172A"/>
+        <path d="M13 28V12h6.8a4.4 4.4 0 0 1 0 8.8H17"
+              stroke="#fff" stroke-width="2.8" fill="none"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="26.5" cy="26" r="3" fill="#0E9F6E"/>
+      </svg>
+      <span class="brand__name">Profile<span>Craft</span></span>
+    </a>
+
+    <nav class="nav" id="siteNav" aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="/" data-en="Home" data-my="ပင်မစာမျက်နှာ">Home</a></li>
+        <li><a class="nav__link" href="/#services" aria-current="page"
+               data-en="Services" data-my="Services">Services</a></li>
+        <li><a class="nav__link" href="/#about" data-en="About" data-my="အကြောင်း">About</a></li>
+        <li><a class="nav__link" href="/#process" data-en="Process" data-my="Process">Process</a></li>
+        <li><a class="nav__link" href="#contact" data-en="Contact" data-my="ဆက်သွယ်ရန်">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="hdr__actions">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-set-lang="my" aria-pressed="false">MY</button>
+      </div>
+      <a class="btn btn--primary" href="#contact"
+         data-en="Get Started" data-my="စတင်ရန်">Get Started</a>
+      <button class="burger" type="button" aria-label="Menu"
+              aria-expanded="false" aria-controls="siteNav" id="burger">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ==================== BREADCRUMB ==================== -->
+  <nav class="crumb" aria-label="Breadcrumb">
+    <div class="container crumb__inner">
+      <a href="/" data-en="Home" data-my="ပင်မစာမျက်နှာ">Home</a>
+      <span class="crumb__sep" aria-hidden="true">/</span>
+      <a href="/#services" data-en="Services" data-my="Services">Services</a>
+      <span class="crumb__sep" aria-hidden="true">/</span>
+      <span class="crumb__current"
+            data-en="POS &amp; Business Management System"
+            data-my="POS &amp; Business Management System">POS &amp; Business Management System</span>
+    </div>
+  </nav>
+
+  <!-- ==================== HERO BANNER ==================== -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+
+    <h1 id="hero-title" class="sr-only"
+        data-en="POS Business System"
+        data-my="POS Business System">
+      POS Business System
+    </h1>
+
+    <div class="hero-banner">
+      <img src="/img/POS-system banner.png"
+           alt="Profile Craft — POS Business System"
+           loading="eager"
+           decoding="async"
+           fetchpriority="high">
+    </div>
+
+  </section>
+
+  <!-- ==================== INTRODUCTION ==================== -->
+  <section class="section" id="intro" aria-labelledby="intro-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="block__eyebrow"
+              data-en="More Than a Website"
+              data-my="Website တစ်ခုထက် ပိုတဲ့">More Than a Website</span>
+        <h2 id="intro-title"
+            data-en="A business website shows your business. A POS runs your business."
+            data-my="Business Website က သင့်လုပ်ငန်းကို ပြသတယ်။ POS System က သင့်လုပ်ငန်းကို run လုပ်ပေးတယ်။">
+          A business website shows your business. A POS runs your business.
+        </h2>
+        <p data-en="These are two different kinds of product, built for two different audiences. The comparison below makes the difference clear."
+           data-my="ဒါတွေက audience နှစ်မျိုးအတွက် တည်ဆောက်ထားတဲ့ product နှစ်မျိုး ဖြစ်ပါတယ်။ အောက်က နှိုင်းယှဉ်ချက်မှာ ကွာခြားချက်ကို ရှင်းရှင်းလင်းလင်း မြင်နိုင်ပါတယ်။">
+          These are two different kinds of product, built for two different audiences. The comparison below makes the difference clear.
+        </p>
+      </div>
+
+      <div class="compare reveal">
+        <div class="compare__card">
+          <span class="compare__tag compare__tag--site"
+                data-en="Business Website" data-my="Business Website">Business Website</span>
+          <h3 data-en="Customer-facing" data-my="Customer မျက်နှာမူ">Customer-facing</h3>
+          <p data-en="Used by your customers — to see and understand your business online."
+             data-my="သင့် Customer တွေ အသုံးပြုတယ် — သင့်လုပ်ငန်းကို online မှာ ကြည့်ရှု၊ နားလည်နိုင်ဖို့။">
+            Used by your customers — to see and understand your business online.
+          </p>
+          <ul class="compare__list">
+            <li data-en="Business information" data-my="Business Information">Business information</li>
+            <li data-en="Products &amp; services" data-my="Products &amp; Services">Products &amp; services</li>
+            <li data-en="Menu / product showcase" data-my="Menu / Product Showcase">Menu / product showcase</li>
+            <li data-en="Contact &amp; location" data-my="Contact &amp; Location">Contact &amp; location</li>
+          </ul>
+        </div>
+
+        <div class="compare__card compare__card--pos">
+          <span class="compare__tag compare__tag--pos"
+                data-en="POS / Business System" data-my="POS / Business System">POS / Business System</span>
+          <h3 data-en="Internal operations" data-my="Internal Operations">Internal operations</h3>
+          <p data-en="Used by you and your staff — to run day-to-day business operations."
+             data-my="သင်နဲ့ သင့် Staff တွေ အသုံးပြုတယ် — နေ့စဉ် လုပ်ငန်း operation တွေ run ဖို့။">
+            Used by you and your staff — to run day-to-day business operations.
+          </p>
+          <ul class="compare__list">
+            <li data-en="Sales, orders and transactions"
+                data-my="Sales, Orders နှင့် Transactions">Sales, orders and transactions</li>
+            <li data-en="Products, inventory and stock"
+                data-my="Products, Inventory နှင့် Stock">Products, inventory and stock</li>
+            <li data-en="Customers, staff and permissions"
+                data-my="Customers, Staff နှင့် Permissions">Customers, staff and permissions</li>
+            <li data-en="Reports, dashboards and management"
+                data-my="Reports, Dashboard နှင့် Management">Reports, dashboards and management</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CORE MODULES ==================== -->
+  <section class="section section--alt" id="modules" aria-labelledby="modules-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="block__eyebrow" data-en="Core Modules" data-my="Core Modules">Core Modules</span>
+        <h2 id="modules-title"
+            data-en="The building blocks of a business management system."
+            data-my="Business Management System တစ်ခုရဲ့ အခြေခံ building blocks များ။">
+          The building blocks of a business management system.
+        </h2>
+        <p data-en="Every system is assembled from these modules. Not every package includes every module — the package comparison below shows which ones are included."
+           data-my="System တိုင်းကို ဒီ module တွေနဲ့ စုစည်း တည်ဆောက်ပါတယ်။ Package တိုင်းမှာ module တိုင်း မပါဝင်ပါဘူး — ဘယ် module တွေ ပါဝင်လဲဆိုတာ အောက်က package နှိုင်းယှဉ်ချက်မှာ ကြည့်ပါ။">
+          Every system is assembled from these modules. Not every package includes every module — the package comparison below shows which ones are included.
+        </p>
+      </div>
+
+      <div class="modules reveal" id="modules-grid" aria-label="System modules">
+        <!-- Rendered from POS_DATA.modules -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PACKAGE COMPARISON ==================== -->
+  <section class="section" id="packages" aria-labelledby="packages-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="block__eyebrow" data-en="Packages" data-my="Packages">Packages</span>
+        <h2 id="packages-title"
+            data-en="Compare the three package levels."
+            data-my="Package အဆင့် သုံးမျိုးကို နှိုင်းယှဉ်ပါ။">
+          Compare the three package levels.
+        </h2>
+        <p data-en="Scope is measured in system modules — not marketing website pages. See the note below the table for what that means."
+           data-my="Scope ကို system module များနဲ့ တိုင်းတာပါတယ် — marketing website page များနဲ့ မဟုတ်ပါ။ အဓိပ္ပာယ်ကို ဇယားအောက်က မှတ်ချက်မှာ ကြည့်ပါ။">
+          Scope is measured in system modules — not marketing website pages. See the note below the table for what that means.
+        </p>
+      </div>
+
+      <div class="table-wrap reveal">
+        <table class="cmp" id="compare-table">
+          <caption class="sr-only">Package feature comparison</caption>
+          <thead>
+            <tr>
+              <th scope="col" data-en="Feature" data-my="Feature">Feature</th>
+              <th scope="col">POS Starter</th>
+              <th scope="col">POS Business</th>
+              <th scope="col">POS Pro</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Rendered from POS_DATA.comparison -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="scope-note reveal">
+        <h4 data-en="What &quot;module&quot; means here"
+            data-my="ဒီနေရာမှာ &quot;module&quot; ဆိုတာ">What &quot;module&quot; means here</h4>
+        <p data-en="In a POS system, a &quot;page&quot; is not the same as a marketing website page. One module can contain several screens. For example: Products is one module, and it contains a Product List, Add Product, Edit Product and Product Details view — those are related screens inside a single module. Package screen counts are therefore an approximate scope indicator, not an unlimited-page guarantee. Additional modules beyond the package scope are quoted separately."
+           data-my="POS System တစ်ခုမှာ &quot;page&quot; ဆိုတာ marketing website page နဲ့ မတူပါ။ Module တစ်ခုမှာ screen အများအပြား ပါဝင်နိုင်ပါတယ်။ ဥပမာ — Products က module တစ်ခုဖြစ်ပြီး Product List၊ Add Product၊ Edit Product နဲ့ Product Details screen များ ပါဝင်ပါတယ် — ဒါတွေက module တစ်ခုအတွင်းက ဆက်စပ် screen များ ဖြစ်ပါတယ်။ ဒါကြောင့် package screen အရေအတွက်က ခန့်မှန်း scope indicator သာဖြစ်ပြီး unlimited page အာမခံချက် မဟုတ်ပါ။ Package scope ထက် ကျော်လွန်တဲ့ module များကို သီးခြား quote ပေးပါတယ်။">
+          In a POS system, a &quot;page&quot; is not the same as a marketing website page. One module can contain several screens. For example: Products is one module, and it contains a Product List, Add Product, Edit Product and Product Details view — those are related screens inside a single module. Package screen counts are therefore an approximate scope indicator, not an unlimited-page guarantee. Additional modules beyond the package scope are quoted separately.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PACKAGE DETAILS ==================== -->
+  <section class="section section--alt" id="package-details" aria-labelledby="pkgs-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="block__eyebrow" data-en="Package Details" data-my="Package Details">Package Details</span>
+        <h2 id="pkgs-title"
+            data-en="What each package includes."
+            data-my="Package တစ်ခုစီမှာ ပါဝင်တဲ့ အရာများ။">
+          What each package includes.
+        </h2>
+      </div>
+
+      <div class="pkgs reveal" id="pkgs-grid" aria-label="Package options">
+        <!-- Rendered from POS_DATA.packages -->
+      </div>
+
+      <p style="margin-top:var(--s-6);font-size:var(--fs-15);color:var(--muted);text-align:center;max-width:72ch;margin-inline:auto;line-height:1.75"
+         data-en="All prices are reference starting prices in Myanmar Kyat (MMK). Final cost depends on actual requirements — modules, complexity, database structure, reports, integrations and deployment. Prices will be confirmed in a written quotation."
+         data-my="စျေးနှုန်းအားလုံးက မြန်မာကျပ် (MMK) နဲ့ reference starting price များ ဖြစ်ပါတယ်။ အပြီးသတ် cost က module များ၊ complexity၊ database structure၊ report များ၊ integration များနဲ့ deployment အပေါ် မူတည်ပါတယ်။ စျေးနှုန်းများကို written quotation မှာ အတည်ပြုပါမည်။">
+        All prices are reference starting prices in Myanmar Kyat (MMK). Final cost depends on actual requirements — modules, complexity, database structure, reports, integrations and deployment. Prices will be confirmed in a written quotation.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== ADDITIONAL MODULES ==================== -->
+  <section class="section" id="addons" aria-labelledby="addons-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="block__eyebrow"
+              data-en="Additional Modules" data-my="Additional Modules">Additional Modules</span>
+        <h2 id="addons-title"
+            data-en="Need a module that isn't in the standard packages?"
+            data-my="Standard package များမှာ မပါတဲ့ module လိုအပ်ပါသလား?">
+          Need a module that isn't in the standard packages?
+        </h2>
+        <p data-en="Additional modules can be added to any package and are quoted separately, based on complexity. The list below shows common examples — it is not an exhaustive catalogue."
+           data-my="Additional module များကို package မည်သည့်တစ်ခုမှာမဆို ထည့်နိုင်ပြီး complexity အပေါ် မူတည်၍ သီးခြား quote ပေးပါတယ်။ အောက်က list က common example များ ဖြစ်ပါတယ် — အပြည့်အစုံ catalogue မဟုတ်ပါ။">
+          Additional modules can be added to any package and are quoted separately, based on complexity. The list below shows common examples — it is not an exhaustive catalogue.
+        </p>
+      </div>
+
+      <div class="addons reveal" id="addons-grid" aria-label="Available additional modules">
+        <!-- Rendered from POS_DATA.addons -->
+      </div>
+
+      <div class="scope-note reveal" style="margin-top:var(--s-6)">
+        <h4 data-en="Add-on pricing" data-my="Add-on Pricing">Add-on pricing</h4>
+        <p data-en="Additional modules start from 100,000 MMK per module. This is a placeholder starting price — the actual cost depends on the module's complexity and how it integrates with your existing system. Every add-on is quoted individually; they are not all priced the same."
+           data-my="Additional module များက module တစ်ခုလျှင် 100,000 MMK မှ စတင်ပါတယ်။ ဒါက placeholder starting price ဖြစ်ပြီး အမှန်တကယ် cost က module ရဲ့ complexity နဲ့ သင့်လက်ရှိ system နဲ့ ဘယ်လို integrate လုပ်လဲဆိုတာအပေါ် မူတည်ပါတယ်။ Add-on တိုင်းကို သီးခြား quote ပေးပါတယ်။ အားလုံး စျေးနှုန်း တူညီတာ မဟုတ်ပါ။">
+          Additional modules start from 100,000 MMK per module. This is a placeholder starting price — the actual cost depends on the module's complexity and how it integrates with your existing system. Every add-on is quoted individually; they are not all priced the same.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== MULTI-BRANCH ==================== -->
+  <section class="section section--alt" id="multi-branch" aria-labelledby="mb-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="block__eyebrow"
+              data-en="Advanced Option" data-my="Advanced Option">Advanced Option</span>
+        <h2 id="mb-title"
+            data-en="Multi-branch business system."
+            data-my="Multi-branch Business System.">
+          Multi-branch business system.
+        </h2>
+        <p data-en="For businesses operating multiple locations with central management needs. This is a custom / enterprise scope and is not included in any standard package."
+           data-my="တည်နေရာ အများအပြားမှာ လည်ပတ်ပြီး central management လိုအပ်တဲ့ လုပ်ငန်းများအတွက်။ ဒါက custom / enterprise scope ဖြစ်ပြီး standard package များမှာ မပါဝင်ပါ။">
+          For businesses operating multiple locations with central management needs. This is a custom / enterprise scope and is not included in any standard package.
+        </p>
+      </div>
+
+      <div class="modules reveal" style="grid-template-columns:repeat(3,1fr);margin-top:0">
+        <div class="mod">
+          <div class="mod__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 21V9l9-6 9 6v12"/>
+              <path d="M9 21v-6h6v6"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-en="Branch management" data-my="Branch Management">Branch management</h3>
+            <p data-en="Add and manage multiple branch locations."
+               data-my="Branch တည်နေရာ အများအပြားကို add လုပ်ပြီး manage လုပ်နိုင်သည်။">
+              Add and manage multiple branch locations.
+            </p>
+          </div>
+        </div>
+
+        <div class="mod">
+          <div class="mod__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 6h16v12H4z"/><path d="M4 10h16M8 14h2M14 14h2"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-en="Branch inventory" data-my="Branch Inventory">Branch inventory</h3>
+            <p data-en="Track stock separately per branch location."
+               data-my="Branch တည်နေရာ တစ်ခုချင်းစီအလိုက် Stock ကို သီးခြား track လုပ်နိုင်သည်။">
+              Track stock separately per branch location.
+            </p>
+          </div>
+        </div>
+
+        <div class="mod">
+          <div class="mod__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-en="Central reporting" data-my="Central Reporting">Central reporting</h3>
+            <p data-en="Compare and consolidate sales across branches."
+               data-my="Branch များအကြား Sales များကို နှိုင်းယှဉ်ပြီး စုစည်းနိုင်သည်။">
+              Compare and consolidate sales across branches.
+            </p>
+          </div>
+        </div>
+
+        <div class="mod">
+          <div class="mod__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="3.5"/>
+              <path d="M5 20c1-3.5 3.5-5 7-5s6 1.5 7 5"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-en="Branch users" data-my="Branch Users">Branch users</h3>
+            <p data-en="Assign staff to specific branches with role limits."
+               data-my="Staff များကို သတ်မှတ် branch များမှာ role limit နဲ့ assign လုပ်နိုင်သည်။">
+              Assign staff to specific branches with role limits.
+            </p>
+          </div>
+        </div>
+
+        <div class="mod">
+          <div class="mod__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3v18"/><path d="M5 8c2 0 3-1 3-3M19 8c-2 0-3-1-3-3"/>
+              <path d="M4 13a8 8 0 0 0 16 0"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-en="Advanced infrastructure" data-my="Advanced Infrastructure">Advanced infrastructure</h3>
+            <p data-en="Server, database and backup planning for larger data."
+               data-my="ပိုကြီးတဲ့ Data အတွက် Server၊ Database နဲ့ Backup planning။">
+              Server, database and backup planning for larger data.
+            </p>
+          </div>
+        </div>
+
+        <div class="mod">
+          <div class="mod__ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3 4 7v5c0 5 3.5 8 8 9 4.5-1 8-4 8-9V7l-8-4Z"/>
+            </svg>
+          </div>
+          <div>
+            <h3 data-en="Enterprise scope" data-my="Enterprise Scope">Enterprise scope</h3>
+            <p data-en="Quoted separately based on requirements and scale."
+               data-my="လိုအပ်ချက်နဲ့ scale အပေါ် မူတည်၍ သီးခြား quote ပေးပါသည်။">
+              Quoted separately based on requirements and scale.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:var(--s-6)">
+        <span class="badge badge--rec"
+              data-en="Custom / Enterprise Scope" data-my="Custom / Enterprise Scope">Custom / Enterprise Scope</span>
+        <p style="margin-top:var(--s-3);color:var(--muted);font-size:var(--fs-15)"
+           data-en="Contact for quotation." data-my="Quote အတွက် ဆက်သွယ်ပါ။">
+          Contact for quotation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== DATA SCALE ==================== -->
+  <section class="section" id="data-scale" aria-labelledby="ds-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="block__eyebrow" data-en="Data &amp; Scale" data-my="Data &amp; Scale">Data &amp; Scale</span>
+        <h2 id="ds-title"
+            data-en="The right architecture depends on your data size."
+            data-my="မှန်ကန်တဲ့ architecture က သင့် data ပမာဏအပေါ် မူတည်ပါတယ်။">
+          The right architecture depends on your data size.
+        </h2>
+        <p data-en="We plan the database structure, backups and server resources according to how much data your business actually produces."
+           data-my="သင့်လုပ်ငန်း အမှန်တကယ် ထုတ်လုပ်တဲ့ data ပမာဏအလိုက် database structure၊ backup နဲ့ server resource များကို plan လုပ်ပါတယ်။">
+          We plan the database structure, backups and server resources according to how much data your business actually produces.
+        </p>
+      </div>
+
+      <div class="scale reveal">
+        <div class="scale__card">
+          <h3 data-en="Small business" data-my="Small Business">Small business</h3>
+          <p data-en="Suitable for relatively small data volume — a single shop or small restaurant with modest daily transactions."
+             data-my="Data ပမာဏ အတော်အတန် နည်းတဲ့အတွက် သင့်လျော်သည် — နေ့စဉ် transaction အနည်းငယ်သာရှိတဲ့ ဆိုင်တစ်ခု သို့မဟုတ် အသေးစား စားသောက်ဆိုင်။">
+            Suitable for relatively small data volume — a single shop or small restaurant with modest daily transactions.
+          </p>
+        </div>
+        <div class="scale__card">
+          <h3 data-en="Growing business" data-my="Growing Business">Growing business</h3>
+          <p data-en="Requires a more structured database, indexing, a proper backup strategy and adequate server resources."
+             data-my="ပိုမို structured database၊ indexing၊ သင့်လျော်တဲ့ backup strategy နဲ့ လုံလောက်တဲ့ server resource များ လိုအပ်သည်။">
+            Requires a more structured database, indexing, a proper backup strategy and adequate server resources.
+          </p>
+        </div>
+        <div class="scale__card">
+          <h3 data-en="Larger / multi-branch" data-my="Larger / Multi-branch">Larger / multi-branch</h3>
+          <p data-en="Requires more advanced architecture, infrastructure planning and dedicated server resources."
+             data-my="ပိုမို advanced architecture၊ infrastructure planning နဲ့ dedicated server resource များ လိုအပ်သည်။">
+            Requires more advanced architecture, infrastructure planning and dedicated server resources.
+          </p>
+        </div>
+      </div>
+
+      <p class="reveal" style="margin-top:var(--s-5);font-size:var(--fs-14);color:var(--muted);max-width:72ch;line-height:1.75"
+         data-en="We do not quote a fixed maximum number of records unless it has been tested against your actual system and infrastructure."
+         data-my="သင့်အမှန်တကယ် system နဲ့ infrastructure မှာ စမ်းသပ်ပြီးခြင်း မရှိပါက record အများဆုံး အရေအတွက်ကို fixed ဖော်ပြမထားပါ။">
+        We do not quote a fixed maximum number of records unless it has been tested against your actual system and infrastructure.
+      </p>
+    </div>
+  </section>
+
+  <!-- ==================== DEPLOYMENT OPTIONS ==================== -->
+  <section class="section section--alt" id="deployment" aria-labelledby="dep-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="block__eyebrow"
+              data-en="Deployment Options" data-my="Deployment Options">Deployment Options</span>
+        <h2 id="dep-title"
+            data-en="Where your system will actually run."
+            data-my="သင့် system အမှန်တကယ် run မည့်နေရာ။">
+          Where your system will actually run.
+        </h2>
+        <p data-en="A POS system with a PHP backend and an SQL database needs a proper server environment. This is different from a static website. The three options below cover the realistic deployment paths."
+           data-my="PHP backend နဲ့ SQL database ပါတဲ့ POS System က သင့်လျော်တဲ့ server environment လိုအပ်ပါတယ်။ ဒါက static website နဲ့ မတူပါ။ အောက်က option သုံးမျိုးက လက်တွေ့ကျတဲ့ deployment လမ်းကြောင်းများ ဖြစ်ပါတယ်။">
+          A POS system with a PHP backend and an SQL database needs a proper server environment. This is different from a static website. The three options below cover the realistic deployment paths.
+        </p>
+      </div>
+
+      <div class="deploys">
+
+        <!-- Option A -->
+        <div class="deploy reveal">
+          <div class="deploy__head">
+            <div class="deploy__badge deploy__badge--a" aria-hidden="true">A</div>
+            <div>
+              <h3 class="deploy__title"
+                  data-en="Budget / Low-Cost" data-my="Budget / Low-Cost">
+                Budget / Low-Cost
+              </h3>
+              <p class="deploy__sub"
+                 data-en="PHP + MySQL hosting — suitable for a first POS deployment."
+                 data-my="PHP + MySQL hosting — ပထမဆုံး POS deployment အတွက် သင့်လျော်သည်။">
+                PHP + MySQL hosting — suitable for a first POS deployment.
+              </p>
+            </div>
+          </div>
+          <div class="deploy__body">
+            <div class="deploy__col">
+              <h4 data-en="Infrastructure" data-my="Infrastructure">Infrastructure</h4>
+              <ul>
+                <li data-en="PHP-compatible hosting" data-my="PHP-compatible hosting">PHP-compatible hosting</li>
+                <li data-en="MySQL database" data-my="MySQL database">MySQL database</li>
+                <li data-en="SSL certificate" data-my="SSL certificate">SSL certificate</li>
+                <li data-en="Backup capability" data-my="Backup capability">Backup capability</li>
+              </ul>
+            </div>
+            <div class="deploy__col">
+              <h4 data-en="Notes" data-my="Notes">Notes</h4>
+              <ul>
+                <li data-en="Best for small shops and first-time digital management"
+                    data-my="အသေးစား ဆိုင်များနဲ့ ပထမဆုံး digital management အတွက် အကောင်းဆုံး">
+                  Best for small shops and first-time digital management
+                </li>
+                <li data-en="Cost depends on the hosting provider and plan"
+                    data-my="Cost က hosting provider နဲ့ plan အပေါ် မူတည်သည်">
+                  Cost depends on the hosting provider and plan
+                </li>
+                <li data-en="This is NOT Cloudflare Pages — PHP needs a PHP server"
+                    data-my="ဒါက Cloudflare Pages မဟုတ်ပါ — PHP အတွက် PHP server လိုအပ်သည်">
+                  This is NOT Cloudflare Pages — PHP needs a PHP server
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="deploy__price">
+            <span data-en="Suggested infrastructure budget:"
+                  data-my="Suggested infrastructure budget:">Suggested infrastructure budget:</span>
+            <b>≈ 100,000 – 300,000 MMK / year</b>
+            <span class="deploy__price-note"
+                  data-en="Reference range only. Actual cost depends on the provider and plan."
+                  data-my="Reference range သာ။ အမှန်တကယ် cost က provider နဲ့ plan အပေါ် မူတည်သည်။">
+              Reference range only. Actual cost depends on the provider and plan.
+            </span>
+          </div>
+        </div>
+
+        <!-- Option B -->
+        <div class="deploy reveal">
+          <div class="deploy__head">
+            <div class="deploy__badge deploy__badge--b" aria-hidden="true">B</div>
+            <div>
+              <h3 class="deploy__title"
+                  data-en="Professional" data-my="Professional">Professional</h3>
+              <p class="deploy__sub"
+                 data-en=".com domain + paid hosting — for a stable production deployment."
+                 data-my=".com domain + paid hosting — တည်ငြိမ်တဲ့ production deployment အတွက်။">
+                .com domain + paid hosting — for a stable production deployment.
+              </p>
+            </div>
+          </div>
+          <div class="deploy__body">
+            <div class="deploy__col">
+              <h4 data-en="Setup" data-my="Setup">Setup</h4>
+              <ul>
+                <li data-en=".com domain (purchased separately)"
+                    data-my=".com domain (သီးခြား ဝယ်ယူ)">.com domain (purchased separately)</li>
+                <li data-en="PHP-compatible hosting" data-my="PHP-compatible hosting">PHP-compatible hosting</li>
+                <li data-en="MySQL database" data-my="MySQL database">MySQL database</li>
+                <li data-en="SSL, backup and deployment configuration"
+                    data-my="SSL၊ backup နဲ့ deployment configuration">SSL, backup and deployment configuration</li>
+              </ul>
+            </div>
+            <div class="deploy__col">
+              <h4 data-en="Best for" data-my="Best For">Best for</h4>
+              <ul>
+                <li data-en="Businesses ready for a stable, long-term deployment"
+                    data-my="တည်ငြိမ်ပြီး ရေရှည် deployment အတွက် အသင့်ဖြစ်တဲ့ လုပ်ငန်းများ">
+                  Businesses ready for a stable, long-term deployment
+                </li>
+                <li data-en="Businesses that want a proper branded domain"
+                    data-my="သင့်လျော်တဲ့ branded domain လိုချင်တဲ့ လုပ်ငန်းများ">
+                  Businesses that want a proper branded domain
+                </li>
+                <li data-en="Domain and hosting costs are recurring and separate from the development fee"
+                    data-my="Domain နဲ့ hosting cost များက recurring ဖြစ်ပြီး development fee နဲ့ သီးခြား">
+                  Domain and hosting costs are recurring and separate from the development fee
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="deploy__price">
+            <span data-en="Suggested annual infrastructure budget:"
+                  data-my="Suggested annual infrastructure budget:">Suggested annual infrastructure budget:</span>
+            <b>≈ 200,000 – 600,000+ MMK / year</b>
+            <span class="deploy__price-note"
+                  data-en="Planning range only. Domain and hosting prices can change; the third-party cost is confirmed before quotation."
+                  data-my="Planning range သာ။ Domain နဲ့ hosting စျေးနှုန်းများ ပြောင်းလဲနိုင်သည်။ Third-party cost ကို quotation မတိုင်မီ အတည်ပြုပါသည်။">
+              Planning range only. Domain and hosting prices can change; the third-party cost is confirmed before quotation.
+            </span>
+          </div>
+        </div>
+
+        <!-- Option C -->
+        <div class="deploy reveal">
+          <div class="deploy__head">
+            <div class="deploy__badge deploy__badge--c" aria-hidden="true">C</div>
+            <div>
+              <h3 class="deploy__title"
+                  data-en="Cloud / Custom Infrastructure"
+                  data-my="Cloud / Custom Infrastructure">
+                Cloud / Custom Infrastructure
+              </h3>
+              <p class="deploy__sub"
+                 data-en="For larger systems, multi-branch operations or higher data volumes."
+                 data-my="ပိုကြီးတဲ့ system များ၊ multi-branch operation များ သို့မဟုတ် data ပမာဏ ပိုများတဲ့အတွက်။">
+                For larger systems, multi-branch operations or higher data volumes.
+              </p>
+            </div>
+          </div>
+          <div class="deploy__body">
+            <div class="deploy__col">
+              <h4 data-en="Possible architecture" data-my="Possible Architecture">Possible architecture</h4>
+              <ul>
+                <li data-en="Cloud server / VPS" data-my="Cloud server / VPS">Cloud server / VPS</li>
+                <li data-en="Managed database" data-my="Managed database">Managed database</li>
+                <li data-en="Cloudflare DNS and security" data-my="Cloudflare DNS နဲ့ security">Cloudflare DNS and security</li>
+                <li data-en="Backup and monitoring" data-my="Backup နဲ့ monitoring">Backup and monitoring</li>
+              </ul>
+            </div>
+            <div class="deploy__col">
+              <h4 data-en="Notes" data-my="Notes">Notes</h4>
+              <ul>
+                <li data-en="Quoted separately, based on requirements"
+                    data-my="လိုအပ်ချက်အပေါ် မူတည်၍ သီးခြား quote">
+                  Quoted separately, based on requirements
+                </li>
+                <li data-en="Needed for multi-branch or higher concurrency"
+                    data-my="Multi-branch သို့မဟုတ် အသုံးပြုသူ များစွာအတွက် လိုအပ်သည်">
+                  Needed for multi-branch or higher concurrency
+                </li>
+                <li data-en="Infrastructure cost scales with usage and data volume"
+                    data-my="Infrastructure cost က usage နဲ့ data ပမာဏအလိုက် တိုးလာသည်">
+                  Infrastructure cost scales with usage and data volume
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="deploy__price">
+            <span data-en="Suggested starting infrastructure budget:"
+                  data-my="Suggested starting infrastructure budget:">Suggested starting infrastructure budget:</span>
+            <b data-en="From ≈ 300,000 MMK / year and up"
+               data-my="၃၀၀,၀၀၀ ကျပ် / နှစ် မှ အထက်">From ≈ 300,000 MMK / year and up</b>
+            <span class="deploy__price-note"
+                  data-en="For larger systems, infrastructure is quoted separately from development."
+                  data-my="ပိုကြီးတဲ့ system များအတွက် infrastructure ကို development မှ သီးခြား quote ပေးပါသည်။">
+              For larger systems, infrastructure is quoted separately from development.
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ARCHITECTURE ==================== -->
+  <section class="section" id="architecture" aria-labelledby="arch-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="block__eyebrow" data-en="Architecture" data-my="Architecture">Architecture</span>
+        <h2 id="arch-title"
+            data-en="Two possible technical architectures. Only one is used at a time."
+            data-my="ဖြစ်နိုင်တဲ့ technical architecture နှစ်မျိုး။ တစ်ကြိမ်လျှင် တစ်မျိုးသာ အသုံးပြုသည်။">
+          Two possible technical architectures. Only one is used at a time.
+        </h2>
+        <p data-en="These are alternative approaches, not combined features. The PHP + MySQL architecture is the standard for our POS packages. The Cloudflare-native option is a separate technical approach used only when it fits the project."
+           data-my="ဒါတွေက alternative approach များ ဖြစ်ပြီး ပေါင်းစပ် feature များ မဟုတ်ပါ။ PHP + MySQL architecture က ကျွန်ုပ်တို့ POS package များအတွက် standard ဖြစ်ပါတယ်။ Cloudflare-native option က project နဲ့ ကိုက်ညီမှသာ အသုံးပြုတဲ့ သီးခြား technical approach ဖြစ်ပါတယ်။">
+          These are alternative approaches, not combined features. The PHP + MySQL architecture is the standard for our POS packages. The Cloudflare-native option is a separate technical approach used only when it fits the project.
+        </p>
+      </div>
+
+      <div class="arch-grid">
+        <div class="arch reveal">
+          <h3 data-en="A · PHP + MySQL (Standard)"
+                data-my="A · PHP + MySQL (Standard)">A · PHP + MySQL (Standard)</h3>
+          <p data-en="The default architecture for our POS packages."
+             data-my="ကျွန်ုပ်တို့ POS package များအတွက် default architecture။">
+            The default architecture for our POS packages.
+          </p>
+          <div class="arch__flow">
+            <div class="arch__node arch__node--dark"
+                 data-en="Business User" data-my="Business User">Business User</div>
+            <span class="arch__arrow" aria-hidden="true">↓</span>
+            <div class="arch__node arch__node--brand"
+                 data-en="Frontend (HTML · CSS · JavaScript)" data-my="Frontend (HTML · CSS · JavaScript)">Frontend (HTML · CSS · JavaScript)</div>
+            <span class="arch__arrow" aria-hidden="true">↓</span>
+            <div class="arch__node arch__node--brand"
+                 data-en="Backend (PHP application)" data-my="Backend (PHP application)">Backend (PHP application)</div>
+            <span class="arch__arrow" aria-hidden="true">↓</span>
+            <div class="arch__node arch__node--accent"
+                 data-en="SQL Database (MySQL / MariaDB)" data-my="SQL Database (MySQL / MariaDB)">SQL Database (MySQL / MariaDB)</div>
+            <span class="arch__arrow" aria-hidden="true">↓</span>
+            <div class="arch__node"
+                 data-en="Reports &amp; Management" data-my="Reports &amp; Management">Reports &amp; Management</div>
+          </div>
+          <p class="arch__note"
+             data-en="Runs on PHP-compatible hosting. Cloudflare Pages cannot host PHP."
+             data-my="PHP-compatible hosting မှာ run ပါတယ်။ Cloudflare Pages က PHP ကို host လုပ်နိုင်မည် မဟုတ်ပါ။">
+            Runs on PHP-compatible hosting. Cloudflare Pages cannot host PHP.
+          </p>
+        </div>
+
+        <div class="arch reveal">
+          <h3 data-en="B · Cloudflare-native (Optional)"
+                data-my="B · Cloudflare-native (Optional)">B · Cloudflare-native (Optional)</h3>
+          <p data-en="A different approach — used only if the project fits it."
+             data-my="မတူညီတဲ့ approach — project နဲ့ ကိုက်ညီမှသာ အသုံးပြုသည်။">
+            A different approach — used only if the project fits it.
+          </p>
+          <div class="arch__flow">
+            <div class="arch__node arch__node--dark"
+                 data-en="Business User" data-my="Business User">Business User</div>
+            <span class="arch__arrow" aria-hidden="true">↓</span>
+            <div class="arch__node"
+                 data-en="Cloudflare (DNS · SSL · CDN · Security)" data-my="Cloudflare (DNS · SSL · CDN · Security)">Cloudflare (DNS · SSL · CDN · Security)</div>
+            <span class="arch__arrow" aria-hidden="true">↓</span>
+            <div class="arch__node arch__node--brand"
+                 data-en="Cloudflare Pages (frontend)" data-my="Cloudflare Pages (frontend)">Cloudflare Pages (frontend)</div>
+            <span class="arch__arrow" aria-hidden="true">↓</span>
+            <div class="arch__node arch__node--brand"
+                 data-en="Cloudflare Workers (API)" data-my="Cloudflare Workers (API)">Cloudflare Workers (API)</div>
+            <span class="arch__arrow" aria-hidden="true">↓</span>
+            <div class="arch__node arch__node--accent"
+                 data-en="Cloudflare D1 (database)" data-my="Cloudflare D1 (database)">Cloudflare D1 (database)</div>
+          </div>
+          <p class="arch__note"
+             data-en="This is not the same product as a PHP/MySQL POS. It is a separate implementation with its own quotas and usage-based pricing."
+             data-my="ဒါက PHP/MySQL POS နဲ့ တူညီတဲ့ product မဟုတ်ပါ။ ကိုယ်ပိုင် quota များနဲ့ usage-based pricing ရှိတဲ့ သီးခြား implementation ဖြစ်သည်။">
+            This is not the same product as a PHP/MySQL POS. It is a separate implementation with its own quotas and usage-based pricing.
+          </p>
+        </div>
+      </div>
+
+      <div class="scope-note reveal" style="margin-top:var(--s-6)">
+        <h4 data-en="What Cloudflare actually does"
+              data-my="Cloudflare အမှန်တကယ် လုပ်ဆောင်တဲ့အရာ">
+          What Cloudflare actually does
+        </h4>
+        <p data-en="Cloudflare provides DNS, SSL, CDN, security, static frontend hosting, edge services, Workers and D1 where suitable. It is not accurate to describe Cloudflare as a free PHP host. Cloudflare Pages static assets are currently free/unlimited; Functions use Workers quotas and pricing; D1 has its own usage-based limits. The final infrastructure cost depends on which architecture is used and how much it is used."
+           data-my="Cloudflare က DNS၊ SSL၊ CDN၊ security၊ static frontend hosting၊ edge services၊ Workers နဲ့ သင့်လျော်ပါက D1 တို့ကို ပံ့ပိုးပါတယ်။ Cloudflare ကို free PHP host အဖြစ် ဖော်ပြတာက မှန်ကန်မှု မရှိပါ။ Cloudflare Pages static assets များက လက်ရှိတွင် free/unlimited ဖြစ်ပါတယ်။ Functions များက Workers quota နဲ့ pricing ကို အသုံးပြုပါတယ်။ D1 မှာ ကိုယ်ပိုင် usage-based limit များ ရှိပါတယ်။ အပြီးသတ် infrastructure cost က ဘယ် architecture ကို ဘယ်လောက် အသုံးပြုလဲဆိုတာအပေါ် မူတည်ပါတယ်။">
+          Cloudflare provides DNS, SSL, CDN, security, static frontend hosting, edge services, Workers and D1 where suitable. It is not accurate to describe Cloudflare as a free PHP host. Cloudflare Pages static assets are currently free/unlimited; Functions use Workers quotas and pricing; D1 has its own usage-based limits. The final infrastructure cost depends on which architecture is used and how much it is used.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PRICING STRUCTURE ==================== -->
+  <section class="section section--blue" id="pricing" aria-labelledby="price-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="block__eyebrow"
+              data-en="Cost Structure" data-my="Cost Structure">Cost Structure</span>
+        <h2 id="price-title"
+            data-en="Development fee and infrastructure cost are separate."
+            data-my="Development fee နဲ့ infrastructure cost က သီးခြား ဖြစ်ပါတယ်။">
+          Development fee and infrastructure cost are separate.
+        </h2>
+        <p data-en="The development fee is a one-time cost. Infrastructure — domain, hosting, database and backup — is a recurring cost paid to third-party providers. They are never merged into one number."
+           data-my="Development fee က one-time cost ဖြစ်ပါတယ်။ Infrastructure — domain၊ hosting၊ database နဲ့ backup — က third-party provider များထံ နှစ်စဉ် ပေးရတဲ့ recurring cost ဖြစ်ပါတယ်။ ၎င်းတို့ကို တစ်ခုတည်းသော ကိန်းဂဏန်းအဖြစ် ဘယ်တော့မှ ပေါင်းမထားပါ။">
+          The development fee is a one-time cost. Infrastructure — domain, hosting, database and backup — is a recurring cost paid to third-party providers. They are never merged into one number.
+        </p>
+      </div>
+
+      <div class="pricing-grid reveal">
+        <div class="pricing-card pricing-card--dev">
+          <h3 data-en="Development Fee (One-time)"
+                data-my="Development Fee (One-time)">Development Fee (One-time)</h3>
+          <p data-en="Paid to Profile Craft for design, development, testing and deployment assistance."
+             data-my="Design၊ development၊ testing နဲ့ deployment အကူအညီအတွက် Profile Craft ထံ ပေးသွင်းသည်။">
+            Paid to Profile Craft for design, development, testing and deployment assistance.
+          </p>
+          <ul>
+            <li>
+              <span>POS Starter</span>
+              <b data-en="From 800,000 MMK" data-my="၈၀၀,၀၀၀ ကျပ်မှ">From 800,000 MMK</b>
+            </li>
+            <li>
+              <span>POS Business</span>
+              <b data-en="From 1,500,000 MMK" data-my="၁,၅၀၀,၀၀၀ ကျပ်မှ">From 1,500,000 MMK</b>
+            </li>
+            <li>
+              <span>POS Pro</span>
+              <b data-en="From 3,000,000 MMK" data-my="၃,၀၀၀,၀၀၀ ကျပ်မှ">From 3,000,000 MMK</b>
+            </li>
+            <li>
+              <span data-en="Additional modules" data-my="Additional Modules">Additional modules</span>
+              <b data-en="From 100,000 MMK / module" data-my="Module တစ်ခုလျှင် ၁၀၀,၀၀၀ ကျပ်မှ">From 100,000 MMK / module</b>
+            </li>
+          </ul>
+        </div>
+
+        <div class="pricing-card pricing-card--infra">
+          <h3 data-en="Infrastructure (Recurring)"
+                data-my="Infrastructure (Recurring)">Infrastructure (Recurring)</h3>
+          <p data-en="Paid to third-party domain and hosting providers — not to Profile Craft."
+             data-my="Third-party domain နဲ့ hosting provider များထံ ပေးသွင်းသည် — Profile Craft ထံ မဟုတ်ပါ။">
+            Paid to third-party domain and hosting providers — not to Profile Craft.
+          </p>
+          <ul>
+            <li>
+              <span data-en=".com domain" data-my=".com Domain">.com domain</span>
+              <b data-en="Third-party, annual" data-my="Third-party, annual">Third-party, annual</b>
+            </li>
+            <li>
+              <span data-en="PHP + MySQL hosting" data-my="PHP + MySQL Hosting">PHP + MySQL hosting</span>
+              <b data-en="≈ 100,000 – 600,000+ MMK / year" data-my="၁၀၀,၀၀၀ – ၆၀၀,၀၀၀+ ကျပ် / နှစ်">≈ 100,000 – 600,000+ MMK / year</b>
+            </li>
+            <li>
+              <span data-en="Cloud server / VPS (if used)" data-my="Cloud Server / VPS (if used)">Cloud server / VPS (if used)</span>
+              <b data-en="From ≈ 300,000 MMK / year" data-my="၃၀၀,၀၀၀ ကျပ် / နှစ် မှ">From ≈ 300,000 MMK / year</b>
+            </li>
+            <li>
+              <span data-en="Backup / monitoring (if used)" data-my="Backup / Monitoring (if used)">Backup / monitoring (if used)</span>
+              <b data-en="Third-party, varies" data-my="Third-party, varies">Third-party, varies</b>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="scope-note reveal" style="margin-top:var(--s-6)">
+        <h4 data-en="Optional service fees" data-my="Optional Service Fees">
+          Optional service fees
+        </h4>
+        <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:.5rem 1.5rem">
+          <li style="display:flex;justify-content:space-between;gap:1rem;padding:.45rem 0;border-bottom:1px solid var(--line)">
+            <span data-en="Initial deployment setup" data-my="Initial Deployment Setup">Initial deployment setup</span>
+            <b data-en="From 50,000 MMK" data-my="၅၀,၀၀၀ ကျပ်မှ">From 50,000 MMK</b>
+          </li>
+          <li style="display:flex;justify-content:space-between;gap:1rem;padding:.45rem 0;border-bottom:1px solid var(--line)">
+            <span data-en="Data migration" data-my="Data Migration">Data migration</span>
+            <b data-en="Custom quotation" data-my="Custom Quotation">Custom quotation</b>
+          </li>
+          <li style="display:flex;justify-content:space-between;gap:1rem;padding:.45rem 0;border-bottom:1px solid var(--line)">
+            <span data-en="Admin / staff training" data-my="Admin / Staff Training">Admin / staff training</span>
+            <b data-en="From 50,000 MMK" data-my="၅၀,၀၀၀ ကျပ်မှ">From 50,000 MMK</b>
+          </li>
+          <li style="display:flex;justify-content:space-between;gap:1rem;padding:.45rem 0;border-bottom:1px solid var(--line)">
+            <span data-en="Maintenance plan" data-my="Maintenance Plan">Maintenance plan</span>
+            <b data-en="From 100,000 MMK / month" data-my="၁၀၀,၀၀၀ ကျပ် / လ မှ">From 100,000 MMK / month</b>
+          </li>
+        </ul>
+        <p style="margin-top:var(--s-4);font-size:var(--fs-14);color:var(--muted);margin-bottom:0;line-height:1.75"
+           data-en="These are placeholder starting prices. Final fees are confirmed in a written quotation after requirements are agreed."
+           data-my="၎င်းတို့က placeholder starting price များ ဖြစ်ပါတယ်။ လိုအပ်ချက်များ သဘောတူပြီးနောက် အပြီးသတ် ကြေးများကို written quotation မှာ အတည်ပြုပါသည်။">
+          These are placeholder starting prices. Final fees are confirmed in a written quotation after requirements are agreed.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== INCLUDED / NOT INCLUDED ==================== -->
+  <section class="section" id="scope" aria-labelledby="scope-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="block__eyebrow" data-en="Scope" data-my="Scope">Scope</span>
+        <h2 id="scope-title"
+            data-en="What is included — and what is not."
+            data-my="ဘာတွေ ပါဝင်လဲ — ဘာတွေ မပါဝင်လဲ။">
+          What is included — and what is not.
+        </h2>
+        <p data-en="This prevents scope confusion later. If something is not listed as included, assume it is quoted separately."
+           data-my="ဒါက နောက်ပိုင်း scope ရှုပ်ထွေးမှုကို ကာကွယ်ပေးပါတယ်။ ပါဝင်တယ်လို့ မဖော်ပြထားရင် သီးခြား quote ပေးတယ်လို့ ယူဆပါ။">
+          This prevents scope confusion later. If something is not listed as included, assume it is quoted separately.
+        </p>
+      </div>
+
+      <div class="scope-grid reveal">
+        <div class="scope-col scope-col--inc">
+          <h3 data-en="Included (per package)"
+                data-my="ပါဝင်သည် (package အလိုက်)">Included (per package)</h3>
+          <ul>
+            <li data-en="UI and frontend development"
+                data-my="UI နဲ့ Frontend development">UI and frontend development</li>
+            <li data-en="Backend development (PHP)"
+                data-my="Backend development (PHP)">Backend development (PHP)</li>
+            <li data-en="SQL database setup and structure"
+                data-my="SQL Database setup နဲ့ structure">SQL database setup and structure</li>
+            <li data-en="Responsive design for tablet and desktop"
+                data-my="Tablet နဲ့ Desktop အတွက် Responsive design">Responsive design for tablet and desktop</li>
+            <li data-en="Basic functional testing"
+                data-my="အခြေခံ functional testing">Basic functional testing</li>
+            <li data-en="Deployment assistance (setup and configuration)"
+                data-my="Deployment assistance (setup နဲ့ configuration)">Deployment assistance (setup and configuration)</li>
+            <li data-en="Modules listed in the selected package"
+                data-my="ရွေးချယ်ထားတဲ့ package မှာ ဖော်ပြထားတဲ့ module များ">Modules listed in the selected package</li>
+          </ul>
+        </div>
+
+        <div class="scope-col scope-col--exc">
+          <h3 data-en="Not included unless specified"
+                data-my="သီးခြား ဖော်ပြထားခြင်း မရှိပါက မပါဝင်ပါ">Not included unless specified</h3>
+          <ul>
+            <li data-en="Domain renewal fees"
+                data-my="Domain renewal fees">Domain renewal fees</li>
+            <li data-en="Hosting or server renewal fees"
+                data-my="Hosting သို့မဟုတ် Server renewal fees">Hosting or server renewal fees</li>
+            <li data-en="Large-scale data migration"
+                data-my="အကြီးစား Data migration">Large-scale data migration</li>
+            <li data-en="Third-party paid APIs"
+                data-my="Third-party paid API များ">Third-party paid APIs</li>
+            <li data-en="SMS or messaging services"
+                data-my="SMS သို့မဟုတ် Messaging services">SMS or messaging services</li>
+            <li data-en="Payment gateway fees"
+                data-my="Payment Gateway fees">Payment gateway fees</li>
+            <li data-en="Hardware (computers, tablets, scanners, printers)"
+                data-my="Hardware (Computer, Tablet, Scanner, Printer)">Hardware (computers, tablets, scanners, printers)</li>
+            <li data-en="Barcode scanners or receipt printers"
+                data-my="Barcode Scanner သို့မဟုတ် Receipt Printer">Barcode scanners or receipt printers</li>
+            <li data-en="Custom integrations with third-party systems"
+                data-my="Third-party system များနဲ့ Custom Integration များ">Custom integrations with third-party systems</li>
+            <li data-en="Multi-branch architecture"
+                data-my="Multi-branch Architecture">Multi-branch architecture</li>
+            <li data-en="Enterprise-level infrastructure"
+                data-my="Enterprise-level Infrastructure">Enterprise-level infrastructure</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROCESS ==================== -->
+  <section class="section section--alt" id="process" aria-labelledby="proc-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="block__eyebrow" data-en="Project Process" data-my="Project Process">Project Process</span>
+        <h2 id="proc-title"
+            data-en="Seven steps, from conversation to handover."
+            data-my="စကားပြောခြင်းမှ handover အထိ ခုနစ်ဆင့်။">
+          Seven steps, from conversation to handover.
+        </h2>
+      </div>
+
+      <ol class="steps reveal">
+        <li class="step">
+          <span class="step__num">01</span>
+          <h3 data-en="Requirement Analysis" data-my="Requirement Analysis">Requirement Analysis</h3>
+          <p data-en="Understand your business workflow."
+             data-my="သင့်လုပ်ငန်း workflow ကို နားလည်အောင် လေ့လာသည်။">
+            Understand your business workflow.
+          </p>
+        </li>
+        <li class="step">
+          <span class="step__num">02</span>
+          <h3 data-en="System Planning" data-my="System Planning">System Planning</h3>
+          <p data-en="Define modules, database, users and permissions."
+             data-my="Module များ၊ Database၊ User များနဲ့ Permission များကို သတ်မှတ်သည်။">
+            Define modules, database, users and permissions.
+          </p>
+        </li>
+        <li class="step">
+          <span class="step__num">03</span>
+          <h3 data-en="UI / UX Design" data-my="UI / UX Design">UI / UX Design</h3>
+          <p data-en="Design the management interface."
+             data-my="Management interface ကို ဒီဇိုင်းဆွဲသည်။">
+            Design the management interface.
+          </p>
+        </li>
+        <li class="step">
+          <span class="step__num">04</span>
+          <h3 data-en="Development" data-my="Development">Development</h3>
+          <p data-en="Frontend + backend + database."
+             data-my="Frontend + Backend + Database။">
+            Frontend + backend + database.
+          </p>
+        </li>
+        <li class="step">
+          <span class="step__num">05</span>
+          <h3 data-en="Testing" data-my="Testing">Testing</h3>
+          <p data-en="Functional and responsive testing."
+             data-my="Functional နဲ့ Responsive testing။">
+            Functional and responsive testing.
+          </p>
+        </li>
+        <li class="step">
+          <span class="step__num">06</span>
+          <h3 data-en="Deployment" data-my="Deployment">Deployment</h3>
+          <p data-en="Deploy to the selected infrastructure."
+             data-my="ရွေးချယ်ထားတဲ့ infrastructure သို့ deploy လုပ်သည်။">
+            Deploy to the selected infrastructure.
+          </p>
+        </li>
+        <li class="step">
+          <span class="step__num">07</span>
+          <h3 data-en="Training / Handover" data-my="Training / Handover">Training / Handover</h3>
+          <p data-en="Explain system usage and provide access."
+             data-my="System အသုံးပြုပုံကို ရှင်းပြပြီး access ပေးအပ်သည်။">
+            Explain system usage and provide access.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ==================== -->
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <span class="block__eyebrow" data-en="FAQ" data-my="FAQ">FAQ</span>
+        <h2 id="faq-title"
+            data-en="Common questions about POS systems."
+            data-my="POS System များအကြောင်း အမေးများတဲ့ မေးခွန်းများ။">
+          Common questions about POS systems.
+        </h2>
+      </div>
+
+      <div class="faq reveal">
+        <details>
+          <summary data-en="Is a POS the same as a business website?"
+                   data-my="POS က Business Website နဲ့ တူညီပါသလား?">
+            Is a POS the same as a business website?
+          </summary>
+          <p class="faq__answer"
+             data-en="No. They are different products for different audiences. A business website is customer-facing — customers see your business online. A POS is internal — you and your staff use it to run sales, orders, inventory and reports. Some businesses need both, but they are quoted and built as separate projects."
+             data-my="မတူပါ။ ၎င်းတို့က audience မတူညီတဲ့ product မတူညီတဲ့ နှစ်မျိုး ဖြစ်ပါတယ်။ Business Website က customer-facing ဖြစ်သည် — customer များက သင့်လုပ်ငန်းကို online မှာ မြင်ရသည်။ POS က internal ဖြစ်သည် — သင်နဲ့ သင့် staff က Sales၊ Orders၊ Inventory နဲ့ Reports များ run ဖို့ အသုံးပြုသည်။ လုပ်ငန်းအချို့ နှစ်မျိုးလုံး လိုအပ်သည်၊ ဒါပေမယ့် ၎င်းတို့ကို သီးခြား project များအဖြစ် quote ပေးပြီး တည်ဆောက်ပါသည်။">
+            No. They are different products for different audiences. A business website is customer-facing — customers see your business online. A POS is internal — you and your staff use it to run sales, orders, inventory and reports. Some businesses need both, but they are quoted and built as separate projects.
+          </p>
+        </details>
+
+        <details>
+          <summary data-en="How do you count &quot;modules&quot; for pricing?"
+                   data-my="စျေးနှုန်းအတွက် &quot;module&quot; ကို ဘယ်လို ရေတွက်သလဲ?">
+            How do you count &quot;modules&quot; for pricing?
+          </summary>
+          <p class="faq__answer"
+             data-en="A module is a functional area of the system, not a single screen. For example, Products is one module — even though it contains a product list, add product, edit product and product details screens. Package screen counts are approximate scope indicators, not unlimited-page guarantees."
+             data-my="Module ဆိုတာ system ရဲ့ functional area တစ်ခုဖြစ်ပြီး screen တစ်ခု မဟုတ်ပါ။ ဥပမာ — Products က module တစ်ခုဖြစ်သည် — Product List၊ Add Product၊ Edit Product နဲ့ Product Details screen များ ပါဝင်သော်လည်း။ Package screen အရေအတွက်များက ခန့်မှန်း scope indicator များဖြစ်ပြီး unlimited page အာမခံချက်များ မဟုတ်ပါ။">
+            A module is a functional area of the system, not a single screen. For example, Products is one module — even though it contains a product list, add product, edit product and product details screens. Package screen counts are approximate scope indicators, not unlimited-page guarantees.
+          </p>
+        </details>
+
+        <details>
+          <summary data-en="Can Cloudflare host my PHP POS system?"
+                   data-my="Cloudflare က ကျွန်ုပ်၏ PHP POS System ကို host လုပ်နိုင်ပါသလား?">
+            Can Cloudflare host my PHP POS system?
+          </summary>
+          <p class="faq__answer"
+             data-en="No. Cloudflare Pages hosts static frontend files — it does not run PHP. For a PHP + MySQL POS, you need PHP-compatible hosting with a MySQL database. Cloudflare can still be used for DNS, SSL, CDN and security in front of that hosting. If you want a Cloudflare-native architecture instead, that is a separate approach using Cloudflare Workers and D1, and it is quoted separately."
+             data-my="မရပါ။ Cloudflare Pages က static frontend file များကို host လုပ်သည် — PHP ကို run မလုပ်ပါ။ PHP + MySQL POS အတွက် MySQL database နဲ့ PHP-compatible hosting လိုအပ်သည်။ Cloudflare ကို ထို hosting ရဲ့ ရှေ့တွင် DNS၊ SSL၊ CDN နဲ့ security အတွက် အသုံးပြုနိုင်သေးသည်။ အစားထိုး Cloudflare-native architecture လိုချင်ပါက ၎င်းက Cloudflare Workers နဲ့ D1 ကို အသုံးပြုတဲ့ သီးခြား approach ဖြစ်ပြီး သီးခြား quote ပေးပါသည်။">
+            No. Cloudflare Pages hosts static frontend files — it does not run PHP. For a PHP + MySQL POS, you need PHP-compatible hosting with a MySQL database. Cloudflare can still be used for DNS, SSL, CDN and security in front of that hosting. If you want a Cloudflare-native architecture instead, that is a separate approach using Cloudflare Workers and D1, and it is quoted separately.
+          </p>
+        </details>
+
+        <details>
+          <summary data-en="Does Profile Craft provide the domain and hosting?"
+                   data-my="Profile Craft က Domain နဲ့ Hosting ပေးပါသလား?">
+            Does Profile Craft provide the domain and hosting?
+          </summary>
+          <p class="faq__answer"
+             data-en="No. Profile Craft is not a domain registrar or hosting provider. We help you select, purchase, configure and deploy using suitable third-party services as part of the project. Domain and hosting are paid to those third-party providers — not to Profile Craft — and they are separate recurring costs."
+             data-my="မပေးပါ။ Profile Craft က domain registrar သို့မဟုတ် hosting provider မဟုတ်ပါ။ Project ရဲ့ တစ်စိတ်တစ်ပိုင်းအဖြစ် သင့်လျော်တဲ့ third-party service များကို အသုံးပြု၍ ရွေးချယ်ခြင်း၊ ဝယ်ယူခြင်း၊ configure လုပ်ခြင်းနဲ့ deploy လုပ်ခြင်းတို့ကို ကူညီပေးပါသည်။ Domain နဲ့ Hosting ကို ထို third-party provider များထံ ပေးသွင်းရသည် — Profile Craft ထံ မဟုတ်ပါ — ၎င်းတို့က သီးခြား recurring cost များ ဖြစ်သည်။">
+            No. Profile Craft is not a domain registrar or hosting provider. We help you select, purchase, configure and deploy using suitable third-party services as part of the project. Domain and hosting are paid to those third-party providers — not to Profile Craft — and they are separate recurring costs.
+          </p>
+        </details>
+
+        <details>
+          <summary data-en="Are the displayed prices final?"
+                   data-my="ပြသထားတဲ့ စျေးနှုန်းများက အပြီးသတ်လား?">
+            Are the displayed prices final?
+          </summary>
+          <p class="faq__answer"
+             data-en="No. Every price shown is a reference starting price. The final development fee depends on the number of modules, UI and backend complexity, database structure, user roles, reports, integrations and data migration. Infrastructure cost depends on the provider and plan you choose. All prices are confirmed in a written quotation after we agree on the requirements."
+             data-my="မဟုတ်ပါ။ ပြသထားတဲ့ စျေးနှုန်းတိုင်းက reference starting price ဖြစ်သည်။ အပြီးသတ် development fee က module အရေအတွက်၊ UI နဲ့ backend complexity၊ database structure၊ user role များ၊ report များ၊ integration များနဲ့ data migration အပေါ် မူတည်သည်။ Infrastructure cost က သင်ရွေးချယ်တဲ့ provider နဲ့ plan အပေါ် မူတည်သည်။ စျေးနှုန်းအားလုံးကို လိုအပ်ချက်များ သဘောတူပြီးနောက် written quotation မှာ အတည်ပြုပါသည်။">
+            No. Every price shown is a reference starting price. The final development fee depends on the number of modules, UI and backend complexity, database structure, user roles, reports, integrations and data migration. Infrastructure cost depends on the provider and plan you choose. All prices are confirmed in a written quotation after we agree on the requirements.
+          </p>
+        </details>
+
+        <details>
+          <summary data-en="Can you build a fully custom system?"
+                   data-my="အပြည့်အစုံ Custom System တည်ဆောက်ပေးနိုင်ပါသလား?">
+            Can you build a fully custom system?
+          </summary>
+          <p class="faq__answer"
+             data-en="Yes, if the required functions and technical scope are suitable. We will discuss the modules, data structure, users and infrastructure needed before quoting. For larger systems — multi-branch, higher concurrency, or integrations with external services — the project is scoped and quoted separately."
+             data-my="လိုအပ်တဲ့ function များနဲ့ technical scope က သင့်လျော်ပါက ရပါသည်။ Quote မပေးမီ လိုအပ်တဲ့ module များ၊ data structure၊ user များနဲ့ infrastructure ကို ဆွေးနွေးပါမည်။ ပိုကြီးတဲ့ system များအတွက် — multi-branch၊ အသုံးပြုသူ များစွာ သို့မဟုတ် ပြင်ပ service များနဲ့ integration များ — project ကို သီးခြား scope သတ်မှတ်ပြီး quote ပေးပါသည်။">
+            Yes, if the required functions and technical scope are suitable. We will discuss the modules, data structure, users and infrastructure needed before quoting. For larger systems — multi-branch, higher concurrency, or integrations with external services — the project is scoped and quoted separately.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CUSTOM CTA ==================== -->
+  <section class="section" id="contact" aria-labelledby="cta-title">
+    <div class="container">
+      <div class="cta reveal">
+        <div>
+          <h2 id="cta-title"
+              data-en="Need a different POS system?"
+              data-my="မတူညီတဲ့ POS System လိုအပ်ပါသလား?">
+            Need a different POS system?
+          </h2>
+          <p data-en="Every business operates differently. If the standard packages do not match your workflow, Profile Craft can define a custom system scope based on your actual operations."
+             data-my="လုပ်ငန်းတိုင်း မတူညီစွာ လည်ပတ်ပါတယ်။ Standard package များက သင့် workflow နဲ့ မကိုက်ညီပါက Profile Craft က သင့်အမှန်တကယ် operation များအပေါ် အခြေခံပြီး custom system scope ကို သတ်မှတ်နိုင်ပါတယ်။">
+            Every business operates differently. If the standard packages do not match your workflow, Profile Craft can define a custom system scope based on your actual operations.
+          </p>
+        </div>
+        <div class="cta__actions">
+          <a class="btn btn--primary btn--lg"
+             href="https://t.me/profilecraft" target="_blank" rel="noopener"
+             data-en="Request a Custom Quote" data-my="Custom Quote တောင်းဆိုရန်">Request a Custom Quote</a>
+          <a class="btn btn--outline btn--lg" href="#packages"
+             data-en="Compare Packages" data-my="Package များ နှိုင်းယှဉ်ရန်">Compare Packages</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="ftr">
+  <div class="container">
+    <div class="ftr__top">
+      <div class="ftr__brand">
+        <a class="brand" href="/" aria-label="Profile Craft — Home">
+          <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+            <rect width="40" height="40" rx="9" fill="#1D4ED8"/>
+            <path d="M13 28V12h6.8a4.4 4.4 0 0 1 0 8.8H17"
+                  stroke="#fff" stroke-width="2.8" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="26.5" cy="26" r="3" fill="#0E9F6E"/>
+          </svg>
+          <span class="brand__name">Profile<span style="color:#7FA6FF">Craft</span></span>
+        </a>
+        <p data-en="Profile Craft builds professional profile websites, business websites and custom POS / business management systems for individuals and small businesses."
+           data-my="Profile Craft က တစ်ဦးချင်းနဲ့ အသေးစား လုပ်ငန်းများအတွက် professional profile website များ၊ business website များနဲ့ custom POS / Business Management System များကို တည်ဆောက်ပေးပါသည်။">
+          Profile Craft builds professional profile websites, business websites and custom POS / business management systems for individuals and small businesses.
+        </p>
+      </div>
+
+      <div>
+        <h4 data-en="Services" data-my="Services">Services</h4>
+        <ul>
+          <li><a href="/services/personal-profile"
+                 data-en="Personal Profile" data-my="Personal Profile">Personal Profile</a></li>
+          <li><a href="/services/business-website"
+                 data-en="Business Website" data-my="Business Website">Business Website</a></li>
+          <li><a href="/services/pos-business-system"
+                 data-en="POS / Business System" data-my="POS / Business System">POS / Business System</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 data-en="Company" data-my="Company">Company</h4>
+        <ul>
+          <li><a href="/#about" data-en="About" data-my="အကြောင်း">About</a></li>
+          <li><a href="/#process" data-en="Process" data-my="Process">Process</a></li>
+          <li><a href="/#technology" data-en="Technology" data-my="Technology">Technology</a></li>
+          <li><a href="/#faq" data-en="FAQ" data-my="FAQ">FAQ</a></li>
+          <li><a href="#contact" data-en="Contact" data-my="ဆက်သွယ်ရန်">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 data-en="Contact" data-my="ဆက်သွယ်ရန်">Contact</h4>
+        <ul>
+          <li><a href="https://t.me/profilecraft" target="_blank" rel="noopener">Telegram</a></li>
+          <li><a href="mailto:hello@profilecraft.example">hello@profilecraft.example</a></li>
+        </ul>
+        <h4 style="margin-top:var(--s-5)"
+            data-en="Language" data-my="ဘာသာစကား">Language</h4>
+        <ul>
+          <li><a href="#" data-set-lang="en">English</a></li>
+          <li><a href="#" data-set-lang="my">မြန်မာ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ftr__bottom">
+      <span>© <span id="year">2025</span>
+        <span data-en="Profile Craft. All rights reserved."
+              data-my="Profile Craft။ မူပိုင်ခွင့် အားလုံး လက်ဝယ်ရှိသည်။">Profile Craft. All rights reserved.</span>
+      </span>
+      <span data-en="Domain &amp; hosting assistance is provided as part of project deployment."
+            data-my="Domain နဲ့ Hosting အကူအညီကို project deployment ရဲ့ တစ်စိတ်တစ်ပိုင်းအဖြစ် ဆောင်ရွက်ပေးပါသည်။">
+        Domain &amp; hosting assistance is provided as part of project deployment.
+      </span>
+    </div>
+
+    <p class="ftr__note"
+       data-en="Profile Craft is not a domain registrar or hosting provider. Where a project requires a domain or hosting, we assist with selecting, purchasing, configuring and deploying using suitable third-party services."
+       data-my="Profile Craft က domain registrar သို့မဟုတ် hosting provider မဟုတ်ပါ။ Project တစ်ခုမှာ domain သို့မဟုတ် hosting လိုအပ်ပါက သင့်လျော်တဲ့ third-party service များကို အသုံးပြု၍ ရွေးချယ်ခြင်း၊ ဝယ်ယူခြင်း၊ configure လုပ်ခြင်းနဲ့ deploy လုပ်ခြင်းတို့ကို ကူညီဆောင်ရွက်ပေးပါသည်။">
+      Profile Craft is not a domain registrar or hosting provider. Where a project requires a domain or hosting, we assist with selecting, purchasing, configuring and deploying using suitable third-party services.
+    </p>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   Profile Craft — POS detail page
+   All editable pricing / package data lives in POS_DATA.
+   Change a value there — cards, comparison table, and
+   pricing summary all update from the same source.
+   ========================================================= */
+(function () {
+  'use strict';
+
+  /* =====================================================================
+     EDITABLE DATA
+     ---------------------------------------------------------------------
+     Change prices, module lists, and inclusions here. Nothing else in
+     this file needs to be edited for a price or scope change.
+     ===================================================================== */
+  var POS_DATA = {
+    packages: [
+      {
+        id: 'pos-starter',
+        name: 'POS Starter',
+        recommended: false,
+        tag: {
+          en: 'For small shops & first-time digital management',
+          my: 'အသေးစား ဆိုင်များနဲ့ ပထမဆုံး digital management အတွက်'
+        },
+        priceLabel: { en: 'Starting from', my: 'Starting From' },
+        price: '800,000',
+        priceUnit: { en: 'MMK (development fee)', my: 'ကျပ် (Development Fee)' },
+        scope: { en: 'Up to 5 main modules', my: 'အဓိက Module ၅ ခုအထိ' },
+        modules: [
+          { en: 'Login', my: 'Login' },
+          { en: 'Dashboard', my: 'Dashboard' },
+          { en: 'Products', my: 'Products' },
+          { en: 'Sales', my: 'Sales' },
+          { en: 'Basic Reports', my: 'အခြေခံ Reports' }
+        ]
+      },
+      {
+        id: 'pos-business',
+        name: 'POS Business',
+        recommended: true,
+        tag: {
+          en: 'For growing shops, restaurants & retail',
+          my: 'ကြီးထွားနေတဲ့ ဆိုင်များ၊ စားသောက်ဆိုင်များနဲ့ လက်လီအတွက်'
+        },
+        priceLabel: { en: 'Starting from', my: 'Starting From' },
+        price: '1,500,000',
+        priceUnit: { en: 'MMK (development fee)', my: 'ကျပ် (Development Fee)' },
+        scope: { en: 'Up to 10 main modules', my: 'အဓိက Module ၁၀ ခုအထိ' },
+        modules: [
+          { en: 'Login', my: 'Login' },
+          { en: 'Dashboard', my: 'Dashboard' },
+          { en: 'Products', my: 'Products' },
+          { en: 'Categories', my: 'Categories' },
+          { en: 'Sales', my: 'Sales' },
+          { en: 'Orders', my: 'Orders' },
+          { en: 'Inventory', my: 'Inventory' },
+          { en: 'Customers', my: 'Customers' },
+          { en: 'Reports', my: 'Reports' },
+          { en: 'Settings', my: 'Settings' }
+        ]
+      },
+      {
+        id: 'pos-pro',
+        name: 'POS Pro',
+        recommended: false,
+        tag: {
+          en: 'For businesses needing advanced management & staff controls',
+          my: 'အဆင့်မြင့် management နဲ့ staff control လိုအပ်တဲ့ လုပ်ငန်းများအတွက်'
+        },
+        priceLabel: { en: 'Starting from', my: 'Starting From' },
+        price: '3,000,000',
+        priceUnit: { en: 'MMK (development fee)', my: 'ကျပ် (Development Fee)' },
+        scope: { en: 'Up to 15 main modules', my: 'အဓိက Module ၁၅ ခုအထိ' },
+        modules: [
+          { en: 'Authentication', my: 'Authentication' },
+          { en: 'Dashboard', my: 'Dashboard' },
+          { en: 'Products', my: 'Products' },
+          { en: 'Categories', my: 'Categories' },
+          { en: 'Sales', my: 'Sales' },
+          { en: 'Orders', my: 'Orders' },
+          { en: 'Inventory', my: 'Inventory' },
+          { en: 'Customers', my: 'Customers' },
+          { en: 'Suppliers', my: 'Suppliers' },
+          { en: 'Purchases', my: 'Purchases' },
+          { en: 'Expenses', my: 'Expenses' },
+          { en: 'Reports', my: 'Reports' },
+          { en: 'Staff / Users', my: 'Staff / Users' },
+          { en: 'Roles / Permissions', my: 'Roles / Permissions' },
+          { en: 'System Settings', my: 'System Settings' }
+        ]
+      }
+    ],
+
+    comparison: [
+      { feature: { en:'Login', my:'Login' },                   values: ['✓','✓','✓'] },
+      { feature: { en:'Dashboard', my:'Dashboard' },           values: ['✓','✓','✓'] },
+      { feature: { en:'Products', my:'Products' },             values: ['✓','✓','✓'] },
+      { feature: { en:'Categories', my:'Categories' },         values: ['—','✓','✓'] },
+      { feature: { en:'Sales', my:'Sales' },                   values: ['✓','✓','✓'] },
+      { feature: { en:'Orders', my:'Orders' },                 values: ['—','✓','✓'] },
+      { feature: { en:'Inventory', my:'Inventory' },           values: ['basic','advanced','advanced'] },
+      { feature: { en:'Customers', my:'Customers' },           values: ['—','✓','✓'] },
+      { feature: { en:'Suppliers', my:'Suppliers' },           values: ['—','—','✓'] },
+      { feature: { en:'Purchases', my:'Purchases' },           values: ['—','—','✓'] },
+      { feature: { en:'Expenses', my:'Expenses' },             values: ['—','—','✓'] },
+      { feature: { en:'Reports', my:'Reports' },               values: ['basic','standard','advanced'] },
+      { feature: { en:'Staff', my:'Staff' },                   values: ['—','—','✓'] },
+      { feature: { en:'Roles & Permissions', my:'Roles & Permissions' }, values: ['—','—','✓'] },
+      { feature: { en:'Settings', my:'Settings' },             values: ['basic','✓','advanced'] },
+      { feature: { en:'Suggested screen scope', my:'Suggested Screen Scope' }, values: ['up-to-5','up-to-10','up-to-15'] }
+    ],
+
+    modules: [
+      { icon:'dashboard', name:{en:'Dashboard', my:'Dashboard'},
+        desc:{en:'Business overview and key statistics.', my:'လုပ်ငန်း overview နဲ့ အဓိက statistics များ။'} },
+      { icon:'sales', name:{en:'Sales', my:'Sales'},
+        desc:{en:'Record and manage sales transactions.', my:'Sales transaction များကို record လုပ်ပြီး manage လုပ်နိုင်သည်။'} },
+      { icon:'orders', name:{en:'Orders', my:'Orders'},
+        desc:{en:'Manage customer orders and order status.', my:'Customer Order များနဲ့ Order status ကို manage လုပ်နိုင်သည်။'} },
+      { icon:'products', name:{en:'Products', my:'Products'},
+        desc:{en:'Create and manage products and pricing.', my:'Product များနဲ့ pricing ကို ဖန်တီးပြီး manage လုပ်နိုင်သည်။'} },
+      { icon:'inventory', name:{en:'Inventory', my:'Inventory'},
+        desc:{en:'Track stock levels and inventory changes.', my:'Stock level များနဲ့ Inventory ပြောင်းလဲမှုများကို track လုပ်နိုင်သည်။'} },
+      { icon:'customers', name:{en:'Customers', my:'Customers'},
+        desc:{en:'Store and manage customer information.', my:'Customer data များကို သိမ်းဆည်းပြီး manage လုပ်နိုင်သည်။'} },
+      { icon:'reports', name:{en:'Reports', my:'Reports'},
+        desc:{en:'Sales, product, inventory and business reports.', my:'Sales၊ Product၊ Inventory နဲ့ Business Report များ။'} },
+      { icon:'users', name:{en:'Users / Staff', my:'Users / Staff'},
+        desc:{en:'Manage staff accounts and permissions.', my:'Staff account များနဲ့ permission များကို manage လုပ်နိုင်သည်။'} },
+      { icon:'settings', name:{en:'Settings', my:'Settings'},
+        desc:{en:'Business configuration and system settings.', my:'Business configuration နဲ့ System Setting များ။'} }
+    ],
+
+    addons: [
+      { en:'Supplier Management', my:'Supplier Management' },
+      { en:'Purchase Management', my:'Purchase Management' },
+      { en:'Expense Management', my:'Expense Management' },
+      { en:'Advanced Reports', my:'Advanced Reports' },
+      { en:'Staff Management', my:'Staff Management' },
+      { en:'Role & Permission', my:'Role & Permission' },
+      { en:'Multi-branch', my:'Multi-branch' },
+      { en:'Barcode', my:'Barcode' },
+      { en:'Receipt Printing', my:'Receipt Printing' },
+      { en:'Table Management', my:'Table Management' },
+      { en:'Kitchen Order System', my:'Kitchen Order System' },
+      { en:'Customer Loyalty', my:'Customer Loyalty' },
+      { en:'Appointment', my:'Appointment' },
+      { en:'Notification', my:'Notification' },
+      { en:'Backup System', my:'Backup System' },
+      { en:'Audit Log', my:'Audit Log' }
+    ]
+  };
+
+  /* =====================================================================
+     ICONS — small inline SVG paths for module cards
+     ===================================================================== */
+  var ICONS = {
+    dashboard: '<path d="M3 13h8V3H3zM13 21h8V11h-8zM13 3v6h8V3zM3 21h8v-6H3z"/>',
+    sales: '<path d="M3 3v18h18"/><path d="m7 14 4-4 3 3 5-6"/>',
+    orders: '<path d="M6 2h12l1.5 4H4.5z"/><path d="M5 6v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6"/><path d="M9 11h6M9 15h6"/>',
+    products: '<path d="m12 2 9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M3 7l9 5 9-5"/>',
+    inventory: '<rect x="3" y="3" width="18" height="6" rx="1"/><rect x="3" y="13" width="18" height="8" rx="1"/><path d="M7 6h.01M7 17h.01"/>',
+    customers: '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/>',
+    reports: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+    users: '<circle cx="9" cy="8" r="3.5"/><path d="M3 20c1-3.5 3.5-5 6-5s5 1.5 6 5"/><circle cx="17" cy="9" r="2.5"/><path d="M15 20c.5-2.5 2-4 4-4s3.5 1 4 4"/>',
+    settings: '<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>'
+  };
+
+  function svgIcon(name, size) {
+    var path = ICONS[name] || ICONS.dashboard;
+    var s = size || 20;
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+           'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ' +
+           'width="' + s + '" height="' + s + '">' + path + '</svg>';
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /* =====================================================================
+     RENDER: module cards
+     ===================================================================== */
+  function renderModules() {
+    var host = document.getElementById('modules-grid');
+    if (!host) return;
+    var html = '';
+    POS_DATA.modules.forEach(function (m) {
+      html +=
+        '<div class="mod">' +
+          '<div class="mod__ico" aria-hidden="true">' + svgIcon(m.icon, 21) + '</div>' +
+          '<div>' +
+            '<h3 data-en="' + esc(m.name.en) + '" data-my="' + esc(m.name.my) + '">' + esc(m.name.en) + '</h3>' +
+            '<p data-en="' + esc(m.desc.en) + '" data-my="' + esc(m.desc.my) + '">' + esc(m.desc.en) + '</p>' +
+          '</div>' +
+        '</div>';
+    });
+    host.innerHTML = html;
+  }
+
+  /* =====================================================================
+     RENDER: comparison table
+     ===================================================================== */
+  function renderComparison() {
+    var tbody = document.querySelector('#compare-table tbody');
+    if (!tbody) return;
+    var html = '';
+    POS_DATA.comparison.forEach(function (row) {
+      html += '<tr>';
+      html += '<td class="rowhead" data-en="' + esc(row.feature.en) +
+              '" data-my="' + esc(row.feature.my) + '">' + esc(row.feature.en) + '</td>';
+
+      row.values.forEach(function (v, i) {
+        var cell;
+        if (v === '✓') {
+          cell = '<span class="tick" aria-label="Included">✓</span>';
+        } else if (v === '—') {
+          cell = '<span class="dash" aria-label="Not included">—</span>';
+        } else if (v === 'basic') {
+          cell = '<span class="badge badge--basic" data-en="Basic" data-my="Basic">Basic</span>';
+        } else if (v === 'standard') {
+          cell = '<span class="badge badge--std" data-en="Standard" data-my="Standard">Standard</span>';
+        } else if (v === 'advanced') {
+          cell = '<span class="badge badge--adv" data-en="Advanced" data-my="Advanced">Advanced</span>';
+        } else if (v === 'up-to-5') {
+          cell = '<b data-en="Up to 5" data-my="၅ အထိ">Up to 5</b>';
+        } else if (v === 'up-to-10') {
+          cell = '<b data-en="Up to 10" data-my="၁၀ အထိ">Up to 10</b>';
+        } else if (v === 'up-to-15') {
+          cell = '<b data-en="Up to 15" data-my="၁၅ အထိ">Up to 15</b>';
+        } else {
+          cell = esc(v);
+        }
+        html += '<td>' + cell + '</td>';
+      });
+      html += '</tr>';
+    });
+    tbody.innerHTML = html;
+  }
+
+  /* =====================================================================
+     RENDER: package cards
+     ===================================================================== */
+  function renderPackages() {
+    var host = document.getElementById('pkgs-grid');
+    if (!host) return;
+    var html = '';
+    POS_DATA.packages.forEach(function (p) {
+      var cardClass = 'pkg' + (p.recommended ? ' pkg--feature' : '');
+      var recAttr = p.recommended
+        ? ' data-rec="' + esc('Recommended') + '"'
+        : '';
+
+      var moduleList = p.modules.map(function (m) {
+        return '<li data-en="' + esc(m.en) + '" data-my="' + esc(m.my) + '">' +
+               esc(m.en) + '</li>';
+      }).join('');
+
+      html +=
+        '<div class="' + cardClass + '"' + recAttr + '>' +
+          '<div class="pkg__name" data-en="' + esc(p.name) + '" data-my="' + esc(p.name) + '">' +
+            esc(p.name) +
+          '</div>' +
+          '<p class="pkg__tag" data-en="' + esc(p.tag.en) + '" data-my="' + esc(p.tag.my) + '">' +
+            esc(p.tag.en) +
+          '</p>' +
+
+          '<div class="pkg__price">' +
+            '<span class="pkg__price-label" data-en="' + esc(p.priceLabel.en) +
+              '" data-my="' + esc(p.priceLabel.my) + '">' + esc(p.priceLabel.en) + '</span>' +
+            '<span class="pkg__price-value">' + esc(p.price) + '</span>' +
+            '<span class="pkg__price-unit" data-en="' + esc(p.priceUnit.en) +
+              '" data-my="' + esc(p.priceUnit.my) + '">' + esc(p.priceUnit.en) + '</span>' +
+          '</div>' +
+
+          '<div class="pkg__scope">' +
+            svgIcon('inventory', 16) +
+            '<span data-en="' + esc(p.scope.en) + '" data-my="' + esc(p.scope.my) + '">' +
+              esc(p.scope.en) +
+            '</span>' +
+          '</div>' +
+
+          '<p class="pkg__label" data-en="Included modules" data-my="ပါဝင်တဲ့ Module များ">Included modules</p>' +
+          '<ul class="pkg__list">' + moduleList + '</ul>' +
+
+          '<div class="pkg__foot">' +
+            '<a class="btn btn--primary" href="#contact">' +
+              '<span data-en="Discuss this package" data-my="ဒီ Package အကြောင်း ဆွေးနွေးရန်">Discuss this package</span>' +
+              '<span class="arw" aria-hidden="true">→</span>' +
+            '</a>' +
+            '<p class="pkg__note" data-en="Reference price only — confirmed in a written quotation." data-my="Reference price သာ — written quotation မှာ အတည်ပြုပါသည်။">' +
+              'Reference price only — confirmed in a written quotation.' +
+            '</p>' +
+          '</div>' +
+        '</div>';
+    });
+    host.innerHTML = html;
+  }
+
+  /* =====================================================================
+     RENDER: additional modules
+     ===================================================================== */
+  function renderAddons() {
+    var host = document.getElementById('addons-grid');
+    if (!host) return;
+    var html = '';
+    var tick = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+               'stroke-width="3" stroke-linecap="round" stroke-linejoin="round">' +
+               '<path d="m5 12 5 5L20 7"/></svg>';
+    POS_DATA.addons.forEach(function (a) {
+      html += '<div class="addon">' + tick +
+              '<span data-en="' + esc(a.en) + '" data-my="' + esc(a.my) + '">' +
+              esc(a.en) + '</span></div>';
+    });
+    host.innerHTML = html;
+  }
+
+  /* =====================================================================
+     LANGUAGE — same behaviour as the Hub Page
+     ===================================================================== */
+  var STORAGE_KEY = 'pc-lang';
+  var html = document.documentElement;
+  var TITLE = {
+    en: 'POS & Business Management System — Profile Craft',
+    my: 'POS & Business Management System — Profile Craft'
+  };
+
+  function applyLang(lang) {
+    if (lang !== 'en' && lang !== 'my') lang = 'en';
+    html.setAttribute('data-lang', lang);
+    html.setAttribute('lang', lang === 'my' ? 'my' : 'en');
+
+    var nodes = document.querySelectorAll('[data-en][data-my]');
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      if (el.querySelector('[data-en][data-my]')) continue;
+      var val = el.getAttribute('data-' + lang);
+      if (val != null) el.textContent = val;
+    }
+
+    // Update the "Recommended" label on the package card via data-rec
+    var rec = document.querySelector('[data-rec]');
+    if (rec) {
+      rec.setAttribute('data-rec', lang === 'my' ? 'အကြံပြုသည်' : 'Recommended');
+    }
+
+    if (TITLE[lang]) document.title = TITLE[lang];
+
+    var btns = document.querySelectorAll('[data-set-lang]');
+    for (var j = 0; j < btns.length; j++) {
+      btns[j].setAttribute('aria-pressed',
+        String(btns[j].getAttribute('data-set-lang') === lang));
+    }
+
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-set-lang]') : null;
+    if (t) {
+      e.preventDefault();
+      applyLang(t.getAttribute('data-set-lang'));
+    }
+  });
+
+  /* =====================================================================
+     BOOT
+     ===================================================================== */
+  renderModules();
+  renderComparison();
+  renderPackages();
+  renderAddons();
+
+  var initial = 'en';
+  try {
+    var stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === 'en' || stored === 'my') {
+      initial = stored;
+    } else if ((navigator.language || '').toLowerCase().indexOf('my') === 0) {
+      initial = 'my';
+    }
+  } catch (e) {}
+  applyLang(initial);
+
+  /* ---------- Mobile nav ---------- */
+  var burger = document.getElementById('burger');
+  var nav = document.getElementById('siteNav');
+  if (burger && nav) {
+    burger.addEventListener('click', function () {
+      var open = nav.getAttribute('data-open') === 'true';
+      nav.setAttribute('data-open', String(!open));
+      burger.setAttribute('aria-expanded', String(!open));
+    });
+    nav.addEventListener('click', function (e) {
+      if (e.target.closest('a') && window.matchMedia('(max-width: 980px)').matches) {
+        nav.setAttribute('data-open', 'false');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+    window.addEventListener('resize', function () {
+      if (!window.matchMedia('(max-width: 980px)').matches) {
+        nav.setAttribute('data-open', 'false');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* ---------- Scroll reveal ---------- */
+  var els = document.querySelectorAll('.reveal');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) {
+    for (var k = 0; k < els.length; k++) els[k].classList.add('is-in');
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+    for (var m = 0; m < els.length; m++) io.observe(els[m]);
+  }
+
+  /* ---------- Footer year ---------- */
+  var y = document.getElementById('year');
+  if (y) y.textContent = String(new Date().getFullYear());
+})();
+</script>
+</body>
+</html>

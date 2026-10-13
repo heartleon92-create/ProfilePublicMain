@@ -1,0 +1,2259 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Business Website Development | Profile Craft</title>
+<meta name="description" content="Professional Business Website development for companies, restaurants, shops and small businesses — responsive, modern, fast and built to convert." />
+<meta name="theme-color" content="#0F172A" />
+<meta property="og:type" content="article" />
+<meta property="og:site_name" content="Profile Craft" />
+<meta property="og:title" content="Business Website Development | Profile Craft" />
+<meta property="og:description" content="Professional Business Website services — from a clean static company site to a dynamic, data-driven business presence." />
+<meta property="og:locale" content="en_US" />
+<meta property="og:locale:alternate" content="my_MM" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230F172A'/%3E%3Cpath d='M11 22V10h5.2a3.6 3.6 0 0 1 0 7.2H14' stroke='%23fff' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='21' cy='21' r='2.4' fill='%231D4ED8'/%3E%3C/svg%3E" />
+
+<style>
+/* =========================================================
+   Profile Craft — Service detail (Business Website)
+   Same design system as Hub + Profile Service + POS Service.
+   ========================================================= */
+
+:root{
+  --ink:#0B1220; --ink-2:#16233A;
+  --body:#31405A; --muted:#46566E; --muted-2:#64748B;
+
+  --brand:#1D4ED8; --brand-ink:#143A9E;
+  --brand-soft:#EFF6FF; --brand-soft-2:#DBEAFE;
+  --cyan:#06B6D4; --cyan-ink:#0E7490;
+  --cyan-soft:rgba(6,182,212,.10);
+
+  --accent:#0E9F6E; --accent-ink:#047857;
+  --accent-soft:#ECFDF5; --accent-line:#B9E7CF;
+  --warn:#D97706; --warn-soft:#FEF3C7;
+  --violet:#7C3AED; --violet-soft:#F3E8FF;
+
+  --paper:#FFFFFF; --paper-2:#F7F9FC; --paper-3:#F1F5F9; --paper-blue:#F5F8FF;
+  --line:#E2E8F0; --line-2:#CBD5E1;
+
+  --card-bg:rgba(255,255,255,.74);
+  --card-bg-strong:rgba(255,255,255,.86);
+  --card-border:rgba(15,23,42,.09);
+  --card-border-hover:rgba(29,78,216,.30);
+  --card-shadow:0 1px 2px rgba(15,23,42,.04),0 16px 36px -24px rgba(15,23,42,.38);
+  --card-shadow-hover:0 2px 6px rgba(15,23,42,.05),0 26px 50px -22px rgba(29,78,216,.30);
+  --card-blur:saturate(150%) blur(12px);
+
+  --font:"Inter","Noto Sans Myanmar","Padauk","Myanmar Text",
+         -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+         "Helvetica Neue",Arial,sans-serif;
+
+  --fs-12:.75rem; --fs-13:.8125rem; --fs-14:.875rem; --fs-15:.9375rem;
+  --fs-16:1rem;   --fs-17:1.0625rem; --fs-18:1.125rem; --fs-20:1.25rem;
+  --fs-24:1.5rem; --fs-28:1.75rem;  --fs-32:2rem;
+  --fs-40:2.5rem; --fs-52:3.25rem;
+
+  --s-1:.25rem; --s-2:.5rem;  --s-3:.75rem; --s-4:1rem;  --s-5:1.5rem;
+  --s-6:2rem;   --s-7:3rem;   --s-8:4rem;   --s-9:6rem;
+
+  --container:1240px;
+  --radius:14px; --radius-sm:9px; --radius-lg:18px;
+  --hdr-h:70px;
+
+  --sh-1:0 1px 2px rgba(15,23,42,.06);
+  --sh-2:0 4px 14px rgba(15,23,42,.06),0 1px 3px rgba(15,23,42,.05);
+  --sh-3:0 24px 60px -18px rgba(15,23,42,.20),0 8px 20px -10px rgba(15,23,42,.10);
+  --sh-brand:0 10px 30px -10px rgba(29,78,216,.38);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth;}
+body{
+  margin:0;font-family:var(--font);font-size:var(--fs-16);line-height:1.7;
+  color:var(--body);background:var(--paper);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+img,svg{max-width:100%;display:block;}
+a{color:var(--brand);text-decoration:none;transition:color .15s;}
+a:hover{color:var(--brand-ink);}
+h1,h2,h3,h4{color:var(--ink);margin:0 0 var(--s-4);font-weight:700;line-height:1.18;letter-spacing:-.022em;}
+h1{font-size:clamp(2.1rem,4.4vw,var(--fs-52));letter-spacing:-.032em;line-height:1.08;}
+h2{font-size:clamp(1.65rem,3.1vw,var(--fs-40));letter-spacing:-.026em;}
+h3{font-size:var(--fs-24);line-height:1.25;}
+h4{font-size:var(--fs-18);line-height:1.35;}
+p{margin:0 0 var(--s-4);color:var(--body);}
+ul{margin:0 0 var(--s-4);padding-left:1.15rem;}
+li{margin-bottom:var(--s-2);}
+strong,b{color:var(--ink);font-weight:600;}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;
+  background:var(--paper-3);padding:.12em .4em;border-radius:5px;color:var(--ink);}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px;border-radius:var(--radius-sm);}
+section[id]{scroll-margin-top:calc(var(--hdr-h) + 18px);}
+
+html[data-lang="my"] body{line-height:1.95;}
+html[data-lang="my"] h1,
+html[data-lang="my"] h2,
+html[data-lang="my"] h3,
+html[data-lang="my"] h4{line-height:1.55;letter-spacing:-.005em;}
+
+/* ---------- Utilities ---------- */
+.container{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:var(--s-5);}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
+.skip-link{position:absolute;left:var(--s-4);top:-100px;z-index:1000;
+  background:var(--ink);color:#fff;padding:var(--s-3) var(--s-4);
+  border-radius:var(--radius-sm);transition:top .15s;}
+.skip-link:focus{top:var(--s-4);color:#fff;}
+
+/* ---------- Eyebrow / section label ---------- */
+.eyebrow,
+.block__eyebrow{
+  display:inline-flex;align-items:center;gap:.6rem;
+  font-size:var(--fs-13);font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--brand-ink);
+  background:rgba(29,78,216,.07);
+  border:1px solid rgba(29,78,216,.14);
+  padding:.42rem .9rem;border-radius:999px;
+  margin-bottom:var(--s-4);line-height:1.2;
+}
+.eyebrow::before,
+.block__eyebrow::before{
+  content:"";display:inline-block;width:6px;height:6px;border-radius:50%;
+  background:var(--brand);flex:0 0 auto;
+}
+
+/* ---------- Sections ---------- */
+.section{
+  padding-block:var(--s-9);position:relative;
+  background:
+    radial-gradient(900px 520px at 10% 0%, rgba(29,78,216,.035), transparent 62%),
+    radial-gradient(720px 440px at 100% 92%, rgba(6,182,212,.035), transparent 60%),
+    #FFFFFF;
+}
+.section--alt{
+  background:
+    radial-gradient(900px 460px at 100% 0%, rgba(29,78,216,.055), transparent 62%),
+    radial-gradient(760px 460px at 0% 100%, rgba(6,182,212,.055), transparent 60%),
+    linear-gradient(180deg,#F8FAFD 0%,#EFF3F9 100%);
+}
+.section--blue{
+  background:
+    radial-gradient(900px 460px at 100% 0%, rgba(29,78,216,.07), transparent 62%),
+    radial-gradient(700px 420px at 0% 100%, rgba(6,182,212,.06), transparent 60%),
+    linear-gradient(180deg,#F6F9FF 0%,#EDF3FF 100%);
+}
+.section--tight{padding-block:var(--s-8);}
+.section-head{max-width:860px;margin-bottom:var(--s-7);}
+.section-head--center{margin-inline:auto;text-align:center;}
+.section-head--center .eyebrow{justify-content:center;}
+.section-head p{color:var(--muted);font-size:var(--fs-17);margin:0;line-height:1.75;}
+
+/* ---------- Buttons ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+  font:inherit;font-size:var(--fs-15);font-weight:600;
+  padding:.78rem 1.3rem;border-radius:var(--radius-sm);
+  border:1px solid transparent;cursor:pointer;line-height:1.2;
+  transition:background-color .18s, color .18s, border-color .18s,
+             box-shadow .18s, transform .18s;
+  white-space:nowrap;text-decoration:none;}
+.btn--primary{background:var(--brand);color:#fff;box-shadow:var(--sh-1);}
+.btn--primary:hover{background:var(--brand-ink);color:#fff;box-shadow:var(--sh-brand);}
+.btn--ghost{background:rgba(255,255,255,.75);color:var(--ink);border-color:var(--line-2);
+  backdrop-filter:var(--card-blur);}
+.btn--ghost:hover{border-color:var(--ink);color:var(--ink);}
+.btn--outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.28);}
+.btn--outline:hover{border-color:#fff;color:#fff;background:rgba(255,255,255,.06);}
+.btn--lg{padding:1rem 1.6rem;font-size:var(--fs-16);}
+.btn .arw{transition:transform .18s;display:inline-block;}
+.btn:hover .arw{transform:translateX(4px);}
+
+/* ---------- Header ---------- */
+.hdr{position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.88);backdrop-filter:saturate(160%) blur(14px);
+  border-bottom:1px solid var(--line);}
+.hdr__inner{display:flex;align-items:center;gap:var(--s-5);height:var(--hdr-h);}
+.brand{display:flex;align-items:center;gap:.65rem;color:var(--ink);flex:0 0 auto;}
+.brand:hover{color:var(--ink);}
+.brand__mark{width:32px;height:32px;flex:0 0 auto;}
+.brand__name{font-weight:800;font-size:var(--fs-18);letter-spacing:-.025em;color:var(--ink);}
+.brand__name span{color:var(--brand);}
+
+.nav{margin-left:auto;}
+.nav__list{display:flex;align-items:center;gap:var(--s-5);list-style:none;margin:0;padding:0;}
+.nav__list li{margin:0;}
+.nav__link{color:var(--ink-2);font-size:var(--fs-15);font-weight:500;}
+.nav__link:hover{color:var(--brand);}
+.nav__link[aria-current="page"]{color:var(--brand);font-weight:600;}
+
+.hdr__actions{display:flex;align-items:center;gap:var(--s-3);}
+.lang{display:inline-flex;border:1px solid var(--line-2);border-radius:var(--radius-sm);
+  overflow:hidden;background:rgba(255,255,255,.8);}
+.lang button{font:inherit;font-size:var(--fs-13);font-weight:600;
+  padding:.42rem .68rem;border:0;background:transparent;color:var(--muted);
+  cursor:pointer;line-height:1;}
+.lang button[aria-pressed="true"]{background:var(--ink);color:#fff;}
+.burger{display:none;width:42px;height:42px;border:1px solid var(--line-2);
+  background:rgba(255,255,255,.8);border-radius:var(--radius-sm);align-items:center;
+  justify-content:center;cursor:pointer;}
+.burger span,
+.burger span::before,
+.burger span::after{content:"";display:block;width:18px;height:2px;
+  background:var(--ink);border-radius:2px;position:relative;}
+.burger span::before{position:absolute;top:-6px;}
+.burger span::after{position:absolute;top:6px;}
+
+/* ---------- Breadcrumb ---------- */
+.crumb{background:rgba(248,250,252,.9);border-bottom:1px solid var(--line);
+  font-size:var(--fs-13);color:var(--muted);}
+.crumb__inner{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;
+  padding-block:var(--s-3);}
+.crumb a{color:var(--muted);}
+.crumb a:hover{color:var(--brand);}
+.crumb__sep{color:var(--line-2);}
+.crumb__current{color:var(--ink);font-weight:600;}
+
+/* =========================================================
+   HERO — full-width banner (Hub Page pattern)
+   ========================================================= */
+.hero{position:relative;background:#FFFFFF;border-bottom:1px solid var(--line);}
+
+.hero-banner{
+  position:relative;
+  width:100%;
+  display:block;
+  overflow:hidden;
+  background:
+    radial-gradient(900px 340px at 15% 15%, rgba(6,182,212,.45), transparent 62%),
+    linear-gradient(135deg,#0B1220 0%,#143A9E 52%,#1D4ED8 78%,#06B6D4 100%);
+  min-height:140px;
+  line-height:0;
+}
+.hero-banner img{
+  width:100%;
+  height:auto;
+  display:block;
+  object-fit:cover;
+  object-position:center;
+}
+
+.hero__intro{
+  padding-block:var(--s-7) var(--s-8);
+  max-width:940px;
+}
+.hero__lead{font-size:var(--fs-18);color:var(--muted);
+  max-width:64ch;margin-bottom:var(--s-6);line-height:1.8;}
+.hero__cta{display:flex;flex-wrap:wrap;gap:var(--s-3);margin-bottom:var(--s-6);}
+.hero__meta{display:flex;flex-wrap:wrap;gap:var(--s-3);
+  padding-top:var(--s-6);margin-top:var(--s-2);
+  border-top:1px solid var(--line);}
+.hero__meta-item{
+  display:flex;flex-direction:column;gap:.2rem;
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:12px;padding:.7rem 1.05rem;min-width:158px;
+  box-shadow:0 1px 2px rgba(15,23,42,.04);
+  backdrop-filter:var(--card-blur);}
+.hero__meta-label{font-size:var(--fs-12);color:var(--muted-2);
+  font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
+.hero__meta-value{color:var(--ink);font-weight:700;font-size:var(--fs-15);}
+
+/* ---------- Audience / use-case grid ---------- */
+.audience{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-4);margin-top:var(--s-6);}
+.aud{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:var(--s-5);
+  display:grid;grid-template-columns:42px 1fr;gap:var(--s-4);align-items:start;
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);
+  transition:border-color .18s, box-shadow .18s, transform .18s;}
+.aud:hover{border-color:var(--card-border-hover);
+  box-shadow:var(--card-shadow-hover);transform:translateY(-3px);}
+.aud__ico{width:42px;height:42px;border-radius:11px;display:grid;
+  place-items:center;background:var(--brand-soft);color:var(--brand);flex:0 0 auto;}
+.aud__ico svg{width:20px;height:20px;}
+.aud h3{font-size:var(--fs-16);margin:0 0 .3rem;line-height:1.35;}
+.aud p{font-size:var(--fs-14);color:var(--muted);margin:0;line-height:1.65;}
+
+/* ---------- Website types (3 cards) ---------- */
+.types{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5);margin-top:var(--s-6);}
+.type{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:var(--s-6);position:relative;
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);
+  transition:border-color .18s, box-shadow .18s, transform .18s;}
+.type:hover{border-color:var(--card-border-hover);
+  box-shadow:var(--card-shadow-hover);transform:translateY(-3px);}
+.type--basic{border-top:4px solid #64748B;}
+.type--dynamic{border-top:4px solid var(--brand);}
+.type--custom{border-top:4px solid var(--accent);}
+.type__label{font-size:var(--fs-12);font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:var(--s-3);}
+.type--dynamic .type__label{color:var(--brand);}
+.type--custom .type__label{color:var(--accent-ink);}
+.type h3{font-size:var(--fs-20);margin-bottom:var(--s-3);}
+.type p{font-size:var(--fs-15);color:var(--muted);margin-bottom:var(--s-4);line-height:1.72;}
+.type ul{list-style:none;margin:0;padding:0;}
+.type li{font-size:var(--fs-14);color:var(--ink-2);padding:.34rem 0;
+  display:flex;gap:.6rem;align-items:flex-start;line-height:1.6;}
+.type li::before{content:"";flex:0 0 auto;width:6px;height:6px;
+  margin-top:.62em;border-radius:50%;background:var(--brand);}
+.type--basic li::before{background:#64748B;}
+.type--custom li::before{background:var(--accent);}
+
+/* ---------- Feature grid ---------- */
+.features{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-4);margin-top:var(--s-6);}
+.fn{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:var(--s-5);
+  display:flex;flex-direction:column;gap:.45rem;
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);
+  transition:border-color .18s, box-shadow .18s, transform .18s;}
+.fn:hover{border-color:rgba(14,159,110,.32);
+  box-shadow:var(--card-shadow-hover);transform:translateY(-3px);}
+.fn__ico{width:38px;height:38px;border-radius:10px;display:grid;
+  place-items:center;background:var(--accent-soft);color:var(--accent-ink);
+  margin-bottom:var(--s-3);}
+.fn__ico svg{width:18px;height:18px;}
+.fn h3{font-size:var(--fs-16);margin:0;line-height:1.35;}
+.fn p{font-size:var(--fs-14);color:var(--muted);margin:0;line-height:1.65;}
+
+/* ---------- Comparison table ---------- */
+.table-wrap{overflow-x:auto;background:var(--card-bg-strong);
+  border:1px solid var(--card-border);border-radius:var(--radius);
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);
+  -webkit-overflow-scrolling:touch;}
+table.cmp{width:100%;border-collapse:collapse;font-size:var(--fs-14);min-width:680px;}
+table.cmp th,table.cmp td{padding:var(--s-4) var(--s-5);
+  text-align:left;border-bottom:1px solid var(--line);vertical-align:middle;}
+table.cmp thead th{background:rgba(241,245,249,.85);font-weight:700;color:var(--ink);
+  font-size:var(--fs-13);border-bottom:2px solid var(--line);}
+table.cmp thead th:not(:first-child){text-align:center;}
+table.cmp tbody td{color:var(--ink-2);}
+table.cmp tbody td:not(:first-child){text-align:center;}
+table.cmp tbody tr:hover{background:rgba(239,246,255,.55);}
+table.cmp tbody tr:last-child td{border-bottom:0;}
+table.cmp .rowhead{font-weight:600;color:var(--ink);}
+.tick{color:var(--accent);font-weight:700;font-size:var(--fs-16);}
+.dash{color:var(--line-2);font-size:var(--fs-16);}
+.badge{display:inline-block;font-size:var(--fs-12);font-weight:700;
+  padding:.22rem .55rem;border-radius:6px;letter-spacing:.02em;}
+.badge--basic{background:var(--paper-3);color:var(--muted);}
+.badge--std{background:var(--brand-soft);color:var(--brand);}
+.badge--adv{background:var(--accent-soft);color:var(--accent-ink);}
+.badge--opt{background:var(--warn-soft);color:var(--warn);}
+.badge--custom{background:var(--violet-soft);color:var(--violet);}
+
+/* ---------- Package cards ---------- */
+.pkgs{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5);
+  margin-top:var(--s-6);align-items:stretch;}
+.pkg{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--radius-lg);padding:var(--s-6);
+  display:flex;flex-direction:column;position:relative;
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);
+  transition:border-color .18s, box-shadow .18s, transform .18s;}
+.pkg:hover{border-color:var(--card-border-hover);
+  box-shadow:var(--card-shadow-hover);transform:translateY(-3px);}
+.pkg--feature{border-color:rgba(29,78,216,.42);
+  box-shadow:0 0 0 3px rgba(29,78,216,.10),var(--sh-3);}
+.pkg--feature::before{content:attr(data-rec);position:absolute;
+  top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--brand);color:#fff;font-size:var(--fs-12);font-weight:700;
+  padding:.36rem .9rem;border-radius:99px;letter-spacing:.06em;
+  text-transform:uppercase;white-space:nowrap;box-shadow:var(--sh-brand);}
+.pkg__name{font-size:var(--fs-24);color:var(--ink);margin-bottom:var(--s-2);
+  letter-spacing:-.02em;}
+.pkg__tag{font-size:var(--fs-14);color:var(--muted);margin-bottom:var(--s-5);line-height:1.65;}
+.pkg__price{display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap;
+  padding:var(--s-4) 0;border-block:1px solid var(--line);margin-bottom:var(--s-5);}
+.pkg__price-label{font-size:var(--fs-13);color:var(--muted-2);font-weight:600;}
+.pkg__price-value{font-size:var(--fs-28);font-weight:800;color:var(--ink);
+  letter-spacing:-.025em;}
+.pkg__price-unit{font-size:var(--fs-14);color:var(--muted);font-weight:500;}
+.pkg__scope{display:flex;align-items:center;gap:.6rem;font-size:var(--fs-14);
+  color:var(--ink-2);margin-bottom:var(--s-5);font-weight:600;}
+.pkg__scope svg{width:16px;height:16px;color:var(--brand);flex:0 0 auto;}
+.pkg__label{font-size:var(--fs-12);font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin:0 0 var(--s-3);}
+.pkg__list{list-style:none;margin:0 0 var(--s-5);padding:0;}
+.pkg__list li{display:flex;gap:.6rem;align-items:flex-start;
+  font-size:var(--fs-14);color:var(--ink-2);padding:.34rem 0;line-height:1.6;}
+.pkg__list li::before{content:"";flex:0 0 auto;width:17px;height:17px;
+  margin-top:.22em;border-radius:5px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231D4ED8' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12 5 5L20 7'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:center;background-size:11px;
+  background-color:var(--brand-soft);}
+.pkg__foot{margin-top:auto;padding-top:var(--s-5);
+  border-top:1px solid var(--line);}
+.pkg__foot .btn{width:100%;}
+.pkg__note{font-size:var(--fs-12);color:var(--muted-2);margin:var(--s-3) 0 0;
+  text-align:center;line-height:1.6;}
+
+/* ---------- Static / Dynamic / Custom trio ---------- */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s-5);margin-top:var(--s-6);}
+.trio-card{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:var(--s-6);
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);
+  transition:border-color .18s, box-shadow .18s, transform .18s;}
+.trio-card:hover{border-color:var(--card-border-hover);
+  box-shadow:var(--card-shadow-hover);transform:translateY(-3px);}
+.trio-card--s{border-top:4px solid #64748B;}
+.trio-card--d{border-top:4px solid var(--brand);}
+.trio-card--f{border-top:4px solid var(--accent);}
+.trio-card h3{font-size:var(--fs-20);margin-bottom:var(--s-3);}
+.trio-card__label{font-size:var(--fs-12);font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:var(--s-3);}
+.trio-card--d .trio-card__label{color:var(--brand);}
+.trio-card--f .trio-card__label{color:var(--accent-ink);}
+.trio-card p{font-size:var(--fs-15);color:var(--muted);margin-bottom:var(--s-4);line-height:1.72;}
+.trio-card ul{list-style:none;margin:0;padding:0;}
+.trio-card li{font-size:var(--fs-14);color:var(--ink-2);padding:.36rem 0;
+  display:flex;gap:.6rem;align-items:flex-start;line-height:1.6;}
+.trio-card li::before{content:"";flex:0 0 auto;width:6px;height:6px;
+  margin-top:.62em;border-radius:50%;background:#64748B;}
+.trio-card--d li::before{background:var(--brand);}
+.trio-card--f li::before{background:var(--accent);}
+
+/* ---------- Deployment ---------- */
+.deploys{display:grid;grid-template-columns:1fr;gap:var(--s-5);margin-top:var(--s-6);}
+.deploy{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:var(--s-6);
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);
+  transition:border-color .18s, box-shadow .18s;}
+.deploy:hover{border-color:var(--card-border-hover);box-shadow:var(--card-shadow-hover);}
+.deploy__head{display:grid;grid-template-columns:58px 1fr;gap:var(--s-5);
+  align-items:start;margin-bottom:var(--s-5);}
+.deploy__badge{width:58px;height:58px;border-radius:15px;display:grid;
+  place-items:center;background:var(--paper-3);color:var(--ink);
+  font-size:var(--fs-20);font-weight:800;letter-spacing:-.02em;}
+.deploy__badge--a{background:var(--brand-soft);color:var(--brand);}
+.deploy__badge--b{background:var(--warn-soft);color:var(--warn);}
+.deploy__badge--c{background:var(--accent-soft);color:var(--accent-ink);}
+.deploy__title{font-size:var(--fs-20);margin-bottom:.3rem;}
+.deploy__sub{font-size:var(--fs-15);color:var(--muted);margin:0;line-height:1.65;}
+.deploy__body{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-5) var(--s-6);}
+.deploy__col h4{font-size:var(--fs-13);text-transform:uppercase;
+  letter-spacing:.1em;color:var(--muted);margin-bottom:var(--s-3);}
+.deploy__col ul{list-style:none;margin:0;padding:0;}
+.deploy__col li{font-size:var(--fs-14);color:var(--ink-2);padding:.32rem 0;
+  display:flex;gap:.6rem;align-items:flex-start;line-height:1.65;}
+.deploy__col li::before{content:"";flex:0 0 auto;width:6px;height:6px;
+  margin-top:.65em;border-radius:50%;background:var(--brand);}
+.deploy__price{margin-top:var(--s-5);padding:var(--s-4) var(--s-5);
+  background:rgba(239,246,255,.65);border:1px solid rgba(29,78,216,.12);
+  border-radius:var(--radius-sm);
+  font-size:var(--fs-14);color:var(--ink-2);display:flex;
+  flex-wrap:wrap;gap:var(--s-3) var(--s-5);align-items:center;}
+.deploy__price b{color:var(--ink);}
+.deploy__price-note{font-size:var(--fs-12);color:var(--muted-2);line-height:1.6;}
+
+/* ---------- Cost structure ---------- */
+.pricing-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-5);margin-top:var(--s-6);}
+.pricing-card{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:var(--s-6);
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);}
+.pricing-card--dev{border-top:4px solid var(--brand);}
+.pricing-card--infra{border-top:4px solid var(--accent);}
+.pricing-card h3{font-size:var(--fs-18);margin-bottom:var(--s-3);}
+.pricing-card p{font-size:var(--fs-15);color:var(--muted);margin-bottom:var(--s-4);line-height:1.68;}
+.pricing-card ul{list-style:none;margin:0;padding:0;}
+.pricing-card li{font-size:var(--fs-14);color:var(--ink-2);padding:.5rem 0;
+  border-bottom:1px solid var(--line);display:flex;
+  justify-content:space-between;gap:var(--s-4);align-items:baseline;}
+.pricing-card li:last-child{border-bottom:0;}
+.pricing-card li b{color:var(--ink);font-weight:700;text-align:right;}
+
+/* ---------- Add-ons ---------- */
+.addons-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s-4);
+  margin-top:var(--s-6);}
+.addon{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:var(--s-5);
+  display:flex;flex-direction:column;gap:.45rem;
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);
+  transition:border-color .18s, box-shadow .18s, transform .18s;}
+.addon:hover{border-color:var(--card-border-hover);
+  box-shadow:var(--card-shadow-hover);transform:translateY(-3px);}
+.addon__name{font-size:var(--fs-15);color:var(--ink);font-weight:600;line-height:1.45;}
+.addon__price{font-size:var(--fs-14);color:var(--muted);}
+.addon__price b{color:var(--brand);font-weight:700;}
+
+/* ---------- Two-column comparison ---------- */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-5);margin-top:var(--s-6);}
+.compare__card{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:var(--s-6);
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);}
+.compare__card--self{border-color:rgba(29,78,216,.30);
+  box-shadow:0 0 0 3px rgba(29,78,216,.08),var(--card-shadow);}
+.compare__card--other{border-color:var(--card-border);}
+.compare__tag{display:inline-block;font-size:var(--fs-12);font-weight:700;
+  letter-spacing:.12em;text-transform:uppercase;padding:.34rem .7rem;
+  border-radius:7px;margin-bottom:var(--s-4);}
+.compare__tag--self{background:var(--brand-soft);color:var(--brand);}
+.compare__tag--other{background:var(--paper-3);color:var(--muted);}
+.compare__card h3{font-size:var(--fs-20);margin-bottom:var(--s-3);}
+.compare__card p{color:var(--muted);font-size:var(--fs-15);margin-bottom:var(--s-4);line-height:1.7;}
+.compare__list{list-style:none;margin:0;padding:0;}
+.compare__list li{display:flex;gap:.65rem;align-items:flex-start;
+  font-size:var(--fs-15);color:var(--ink-2);padding:.38rem 0;line-height:1.6;}
+.compare__list li::before{content:"";flex:0 0 auto;width:6px;height:6px;
+  margin-top:.62em;border-radius:50%;background:var(--brand);}
+.compare__card--other .compare__list li::before{background:var(--muted-2);}
+
+/* ---------- VS table ---------- */
+.vs-table{overflow-x:auto;background:var(--card-bg-strong);
+  border:1px solid var(--card-border);border-radius:var(--radius);
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);
+  margin-top:var(--s-6);-webkit-overflow-scrolling:touch;}
+table.vs{width:100%;border-collapse:collapse;font-size:var(--fs-14);min-width:560px;}
+table.vs th,table.vs td{padding:var(--s-4) var(--s-5);
+  text-align:left;border-bottom:1px solid var(--line);vertical-align:middle;}
+table.vs thead th{background:rgba(241,245,249,.85);font-weight:700;color:var(--ink);
+  font-size:var(--fs-13);border-bottom:2px solid var(--line);}
+table.vs tbody td:first-child{font-weight:600;color:var(--ink);}
+table.vs tbody tr:last-child td{border-bottom:0;}
+table.vs tbody tr:hover{background:rgba(239,246,255,.55);}
+
+/* ---------- Process ---------- */
+.steps{list-style:none;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(6,1fr);gap:var(--s-4);
+  position:relative;}
+.steps::before{content:"";position:absolute;left:22px;right:22px;top:21px;
+  height:2px;background:linear-gradient(90deg,var(--brand-soft-2),rgba(6,182,212,.35));
+  z-index:0;}
+.step{position:relative;z-index:1;}
+.step__num{width:44px;height:44px;border-radius:50%;display:grid;
+  place-items:center;background:var(--brand);color:#fff;
+  font-size:var(--fs-13);font-weight:800;box-shadow:0 0 0 5px #fff,var(--sh-brand);
+  margin-bottom:var(--s-4);}
+.step h3{font-size:var(--fs-15);margin-bottom:.25rem;}
+.step p{font-size:var(--fs-13);color:var(--muted);margin:0;line-height:1.6;}
+
+/* ---------- Requirements ---------- */
+.reqs{display:grid;grid-template-columns:1fr 1fr;gap:var(--s-5);margin-top:var(--s-6);}
+.req-col{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--radius);padding:var(--s-6);
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);}
+.req-col h3{font-size:var(--fs-16);margin-bottom:var(--s-4);display:flex;align-items:center;gap:.6rem;}
+.req-col__ico{width:34px;height:34px;border-radius:9px;display:grid;
+  place-items:center;background:var(--brand-soft);color:var(--brand);flex:0 0 auto;}
+.req-col__ico svg{width:16px;height:16px;}
+.req-col ul{list-style:none;margin:0;padding:0;}
+.req-col li{font-size:var(--fs-14);color:var(--ink-2);padding:.36rem 0;
+  display:flex;gap:.6rem;align-items:flex-start;line-height:1.65;}
+.req-col li::before{content:"";flex:0 0 auto;width:5px;height:5px;
+  margin-top:.72em;border-radius:50%;background:var(--brand);}
+
+/* ---------- FAQ ---------- */
+.faq{max-width:920px;margin-inline:auto;}
+.faq details{
+  background:var(--card-bg);border:1px solid var(--card-border);
+  border-radius:var(--radius);margin-bottom:var(--s-3);overflow:hidden;
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);
+  transition:border-color .18s, box-shadow .18s;}
+.faq details[open]{border-color:rgba(29,78,216,.28);box-shadow:var(--card-shadow-hover);}
+.faq summary{list-style:none;cursor:pointer;padding:var(--s-5) var(--s-6);
+  font-weight:600;color:var(--ink);font-size:var(--fs-16);
+  display:flex;justify-content:space-between;gap:var(--s-4);align-items:center;}
+.faq summary::-webkit-details-marker{display:none;}
+.faq summary::after{content:"+";font-size:var(--fs-24);color:var(--brand);
+  font-weight:400;flex:0 0 auto;line-height:1;}
+.faq details[open] summary::after{content:"−";}
+.faq__answer{padding:0 var(--s-6) var(--s-5);color:var(--body);
+  font-size:var(--fs-15);margin:0;line-height:1.8;max-width:74ch;}
+
+/* ---------- Final CTA ---------- */
+.cta{background:linear-gradient(135deg,#0B1220 0%,#152A5E 55%,#143A9E 100%);
+  color:#CBD5E1;border-radius:var(--radius-lg);
+  padding:var(--s-8);display:grid;grid-template-columns:minmax(0,1fr) auto;
+  gap:var(--s-6);align-items:center;position:relative;overflow:hidden;
+  box-shadow:var(--sh-3);}
+.cta::before{content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(620px 280px at 100% 0%, rgba(6,182,212,.35), transparent 62%),
+    radial-gradient(420px 220px at 0% 100%, rgba(124,58,237,.22), transparent 62%);
+  pointer-events:none;}
+.cta > *{position:relative;}
+.cta h2{color:#fff;margin-bottom:var(--s-3);}
+.cta p{color:#C7D3E6;margin:0;max-width:58ch;line-height:1.75;}
+.cta__actions{display:flex;flex-wrap:wrap;gap:var(--s-3);}
+.cta .btn--primary{background:#fff;color:var(--ink);
+  box-shadow:0 10px 30px -10px rgba(255,255,255,.35);}
+.cta .btn--primary:hover{background:#F1F5F9;color:var(--ink);}
+
+/* ---------- Scope note ---------- */
+.scope-note{
+  background:rgba(239,246,255,.78);
+  border:1px solid rgba(29,78,216,.16);
+  border-left:4px solid var(--brand);
+  border-radius:var(--radius);padding:var(--s-5) var(--s-6);margin-top:var(--s-6);
+  font-size:var(--fs-15);color:var(--body);line-height:1.78;
+  box-shadow:var(--card-shadow);backdrop-filter:var(--card-blur);}
+.scope-note h4{font-size:var(--fs-16);margin-bottom:var(--s-2);color:var(--ink);}
+.scope-note p{margin:0 0 var(--s-2);}
+.scope-note p:last-child{margin-bottom:0;}
+
+/* ---------- Footer ---------- */
+.ftr{background:#0A1120;color:#94A3B8;padding-block:var(--s-8) var(--s-6);
+  margin-top:var(--s-9);border-top:1px solid rgba(255,255,255,.06);}
+.ftr a{color:#CBD5E1;}
+.ftr a:hover{color:#fff;}
+.ftr__top{display:grid;grid-template-columns:1.6fr repeat(3,1fr);
+  gap:var(--s-6);padding-bottom:var(--s-7);
+  border-bottom:1px solid rgba(255,255,255,.08);}
+.ftr__brand .brand__name{color:#fff;}
+.ftr__brand p{font-size:var(--fs-14);margin:var(--s-4) 0 0;
+  max-width:42ch;color:#94A3B8;line-height:1.75;}
+.ftr h4{color:#fff;font-size:var(--fs-13);text-transform:uppercase;
+  letter-spacing:.12em;margin-bottom:var(--s-4);}
+.ftr ul{list-style:none;margin:0;padding:0;}
+.ftr li{margin-bottom:var(--s-2);font-size:var(--fs-14);}
+.ftr__bottom{display:flex;flex-wrap:wrap;gap:var(--s-4);
+  justify-content:space-between;align-items:center;
+  padding-top:var(--s-5);font-size:var(--fs-13);color:#94A3B8;}
+.ftr__note{font-size:var(--fs-12);color:#64748B;margin-top:var(--s-3);
+  max-width:84ch;line-height:1.75;}
+
+.reveal{opacity:0;transform:translateY(16px);
+  transition:opacity .6s ease, transform .6s ease;}
+.reveal.is-in{opacity:1;transform:none;}
+
+/* ---------- Mobile nav ---------- */
+@media (max-width:980px){
+  .nav{position:fixed;inset:var(--hdr-h) 0 auto 0;background:#fff;
+    border-bottom:1px solid var(--line);transform:translateY(-120%);
+    transition:transform .22s;padding:var(--s-4) var(--s-5) var(--s-5);
+    box-shadow:var(--sh-3);}
+  .nav[data-open="true"]{transform:translateY(0);}
+  .nav__list{flex-direction:column;align-items:stretch;gap:0;}
+  .nav__list li{border-bottom:1px solid var(--line);}
+  .nav__list li:last-child{border-bottom:0;}
+  .nav__link{display:block;padding:var(--s-4) 0;font-size:var(--fs-16);}
+  .burger{display:inline-flex;}
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width:1100px){
+  .hero__intro{padding-block:var(--s-6) var(--s-8);}
+  .audience{grid-template-columns:repeat(2,1fr);}
+  .types{grid-template-columns:1fr;max-width:640px;margin-inline:auto;}
+  .features{grid-template-columns:repeat(2,1fr);}
+  .pkgs{grid-template-columns:1fr;max-width:580px;margin-inline:auto;}
+  .pkgs .pkg--feature{order:-1;}
+  .trio{grid-template-columns:1fr;max-width:660px;margin-inline:auto;}
+  .deploy__body{grid-template-columns:1fr;}
+  .pricing-grid{grid-template-columns:1fr;}
+  .addons-grid{grid-template-columns:repeat(3,1fr);}
+  .compare{grid-template-columns:1fr;}
+  .reqs{grid-template-columns:1fr;}
+  .steps{grid-template-columns:repeat(3,1fr);gap:var(--s-5) var(--s-4);}
+  .steps::before{display:none;}
+}
+
+@media (max-width:760px){
+  .section{padding-block:var(--s-8);}
+  .hero__cta .btn{flex:1 1 auto;}
+  .hero__meta-item{flex:1 1 45%;min-width:0;}
+  .hero-banner{min-height:110px;}
+  .audience{grid-template-columns:1fr;}
+  .features{grid-template-columns:1fr;}
+  .addons-grid{grid-template-columns:repeat(2,1fr);}
+  .cta{grid-template-columns:1fr;padding:var(--s-6);}
+  .cta__actions .btn{flex:1 1 auto;}
+  .ftr__top{grid-template-columns:1fr 1fr;}
+  .ftr__brand{grid-column:1 / -1;}
+  .steps{grid-template-columns:repeat(2,1fr);}
+  .deploy__head{grid-template-columns:1fr;gap:var(--s-3);}
+}
+
+@media (max-width:460px){
+  .container{padding-inline:var(--s-4);}
+  .hero__cta .btn,
+  .cta__actions .btn{width:100%;}
+  .hero__meta-item{flex:1 1 100%;}
+  .hero-banner{min-height:90px;}
+  .addons-grid{grid-template-columns:1fr;}
+  .ftr__top{grid-template-columns:1fr;}
+  .steps{grid-template-columns:1fr;}
+  .pkg{padding:var(--s-5);}
+  .type{padding:var(--s-5);}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms !important;
+    transition-duration:.001ms !important;}
+  html{scroll-behavior:auto;}
+  .reveal{opacity:1;transform:none;}
+}
+</style>
+</head>
+
+<body>
+<a class="skip-link" href="#main"
+   data-en="Skip to main content"
+   data-my="အဓိကအကြောင်းအရာသို့ ကျော်သွားရန်">Skip to main content</a>
+
+<!-- ==================== HEADER ==================== -->
+<header class="hdr">
+  <div class="container hdr__inner">
+    <a class="brand" href="/" aria-label="Profile Craft — Home">
+      <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <rect width="40" height="40" rx="9" fill="#0F172A"/>
+        <path d="M13 28V12h6.8a4.4 4.4 0 0 1 0 8.8H17"
+              stroke="#fff" stroke-width="2.8" fill="none"
+              stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="26.5" cy="26" r="3" fill="#1D4ED8"/>
+      </svg>
+      <span class="brand__name">Profile<span>Craft</span></span>
+    </a>
+
+    <nav class="nav" id="siteNav" aria-label="Primary">
+      <ul class="nav__list">
+        <li><a class="nav__link" href="/" data-en="Home" data-my="ပင်မစာမျက်နှာ">Home</a></li>
+        <li><a class="nav__link" href="/#services" aria-current="page"
+               data-en="Services" data-my="Services">Services</a></li>
+        <li><a class="nav__link" href="/#about" data-en="About" data-my="အကြောင်း">About</a></li>
+        <li><a class="nav__link" href="/#process" data-en="Process" data-my="လုပ်ငန်းစဉ်">Process</a></li>
+        <li><a class="nav__link" href="#contact" data-en="Contact" data-my="Contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <div class="hdr__actions">
+      <div class="lang" role="group" aria-label="Language">
+        <button type="button" data-set-lang="en" aria-pressed="true">EN</button>
+        <button type="button" data-set-lang="my" aria-pressed="false">MY</button>
+      </div>
+      <a class="btn btn--primary" href="#contact"
+         data-en="Get Started" data-my="စတင်ရန်">Get Started</a>
+      <button class="burger" type="button" aria-label="Menu"
+              aria-expanded="false" aria-controls="siteNav" id="burger">
+        <span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ==================== BREADCRUMB ==================== -->
+  <nav class="crumb" aria-label="Breadcrumb">
+    <div class="container crumb__inner">
+      <a href="/" data-en="Home" data-my="ပင်မစာမျက်နှာ">Home</a>
+      <span class="crumb__sep" aria-hidden="true">/</span>
+      <a href="/#services" data-en="Services" data-my="Services">Services</a>
+      <span class="crumb__sep" aria-hidden="true">/</span>
+      <span class="crumb__current"
+            data-en="Business Website" data-my="Business Website">Business Website</span>
+    </div>
+  </nav>
+
+  <!-- ============================================================
+       HERO — full-width banner (Hub Page pattern)
+       ============================================================ -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+
+    <h1 id="hero-title" class="sr-only"
+        data-en="Business Website Solutions"
+        data-my="လုပ်ငန်းအတွက် Business Website Solutions">
+      Business Website Solutions
+    </h1>
+
+    <div class="hero-banner">
+      <img src="/img/business-service banner.png"
+           alt="Profile Craft — Business Website Service"
+           loading="eager"
+           decoding="async"
+           fetchpriority="high">
+    </div>
+
+    <div class="container hero__intro">
+      <span class="eyebrow"
+            data-en="Service 02 · Business Website"
+            data-my="Service 02 · Business Website">Service 02 · Business Website</span>
+
+      <p class="hero__lead"
+         data-en="A professional website that represents your business online. Show your products, services, business information and contact details through a fast, modern, responsive design."
+         data-my="သင့်လုပ်ငန်းကို အွန်လိုင်းတွင် ကိုယ်စားပြုသော Professional Website တစ်ခု။ သင့် Products၊ Services၊ Business Information နှင့် Contact Details များကို လျင်မြန်၊ ခေတ်မီပြီး Responsive Design ဖြင့် ပြသပါ။">
+        A professional website that represents your business online. Show your products, services, business information and contact details through a fast, modern, responsive design.
+      </p>
+
+      <div class="hero__cta">
+        <a class="btn btn--primary btn--lg" href="#packages"
+           data-en="Choose a Business Package" data-my="Business Package ရွေးချယ်ရန်">Choose a Business Package</a>
+        <a class="btn btn--ghost btn--lg" href="#contact"
+           data-en="Contact Profile Craft" data-my="Profile Craft ကို ဆက်သွယ်ရန်">Contact Profile Craft</a>
+      </div>
+
+      <div class="hero__meta">
+        <div class="hero__meta-item">
+          <span class="hero__meta-label" data-en="Packages" data-my="Packages">Packages</span>
+          <span class="hero__meta-value" data-en="3 levels" data-my="အဆင့် ၃ မျိုး">3 levels</span>
+        </div>
+        <div class="hero__meta-item">
+          <span class="hero__meta-label" data-en="Starting from" data-my="စတင်ဈေး">Starting from</span>
+          <span class="hero__meta-value" data-en="150,000 MMK" data-my="၁၅၀,၀၀၀ ကျပ်">150,000 MMK</span>
+        </div>
+        <div class="hero__meta-item">
+          <span class="hero__meta-label" data-en="Responsive" data-my="Responsive">Responsive</span>
+          <span class="hero__meta-value" data-en="Mobile · Tablet · Desktop" data-my="Mobile · Tablet · Desktop">Mobile · Tablet · Desktop</span>
+        </div>
+        <div class="hero__meta-item">
+          <span class="hero__meta-label" data-en="Languages" data-my="ဘာသာစကားများ">Languages</span>
+          <span class="hero__meta-value" data-en="EN · MY (optional)" data-my="EN · MY (optional)">EN · MY (optional)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WHAT IS IT ==================== -->
+  <section class="section" id="about" aria-labelledby="about-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-en="What Is It?" data-my="၎င်းသည် ဘာလဲ?">What Is It?</span>
+        <h2 id="about-title"
+            data-en="Your business, online."
+            data-my="သင့်လုပ်ငန်း၊ အွန်လိုင်းတွင်။">
+          Your business, online.
+        </h2>
+        <p data-en="A Business Website is a customer-facing online presence. It gives customers a clear, professional place to discover your business, view what you offer, and find your contact details — at any time, from any device."
+           data-my="စီးပွားရေး ဝဘ်ဆိုက်သည် ဖောက်သည်မျက်နှာမူ အွန်လိုင်း တည်ရှိမှု ဖြစ်သည်။ ဖောက်သည်များအတွက် သင့်လုပ်ငန်းကို ရှာဖွေတွေ့ရှိနိုင်ရန်၊ သင်ပံ့ပိုးသည့် အရာများကို ကြည့်ရှုနိုင်ရန်၊ ဆက်သွယ်ရန် အချက်အလက်များကို ရှာနိုင်ရန် ရှင်းလင်းပြီး ပရော်ဖက်ရှင်နယ်ဖြစ်သည့် နေရာတစ်ခု ပေးအပ်သည် — အချိန်မရွေး၊ စက်ပစ္စည်း မည်သည့်အရာမှမဆို။">
+          A Business Website is a customer-facing online presence. It gives customers a clear, professional place to discover your business, view what you offer, and find your contact details — at any time, from any device.
+        </p>
+      </div>
+
+      <div class="section-head reveal" style="max-width:100%;margin-bottom:0">
+        <p style="font-weight:600;color:var(--ink);font-size:var(--fs-16);margin-bottom:var(--s-4)"
+           data-en="Typical content a Business Website can include:"
+           data-my="စီးပွားရေး ဝဘ်ဆိုက်တွင် ထည့်နိုင်သော ပုံမှန် အကြောင်းအရာများ:">
+          Typical content a Business Website can include:
+        </p>
+        <ul class="tags-list" style="display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;padding:0;margin:0">
+          <li style="background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem;font-size:var(--fs-14);color:var(--ink-2)" data-en="Business introduction" data-my="လုပ်ငန်း မိတ်ဆက်">Business introduction</li>
+          <li style="background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem;font-size:var(--fs-14);color:var(--ink-2)" data-en="Products" data-my="ထုတ်ကုန်များ">Products</li>
+          <li style="background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem;font-size:var(--fs-14);color:var(--ink-2)" data-en="Services" data-my="ဝန်ဆောင်မှုများ">Services</li>
+          <li style="background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem;font-size:var(--fs-14);color:var(--ink-2)" data-en="Menu" data-my="မီနူး">Menu</li>
+          <li style="background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem;font-size:var(--fs-14);color:var(--ink-2)" data-en="Pricing" data-my="စျေးနှုန်း">Pricing</li>
+          <li style="background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem;font-size:var(--fs-14);color:var(--ink-2)" data-en="Gallery" data-my="ဓာတ်ပုံ ပြခန်း">Gallery</li>
+          <li style="background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem;font-size:var(--fs-14);color:var(--ink-2)" data-en="Contact" data-my="ဆက်သွယ်ရန်">Contact</li>
+          <li style="background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem;font-size:var(--fs-14);color:var(--ink-2)" data-en="Location" data-my="တည်နေရာ">Location</li>
+          <li style="background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem;font-size:var(--fs-14);color:var(--ink-2)" data-en="Opening hours" data-my="ဖွင့်ချိန်">Opening hours</li>
+          <li style="background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem;font-size:var(--fs-14);color:var(--ink-2)" data-en="Social media" data-my="လူမှုကွန်ရက်">Social media</li>
+          <li style="background:var(--paper-2);border:1px solid var(--line);border-radius:999px;padding:.35rem .8rem;font-size:var(--fs-14);color:var(--ink-2)" data-en="Inquiry / contact options" data-my="စုံစမ်းမေးမြန်းမှု / ဆက်သွယ်ရန် ရွေးချယ်စရာများ">Inquiry / contact options</li>
+        </ul>
+        <p style="margin-top:var(--s-5);font-size:var(--fs-14);color:var(--muted)"
+           data-en="The exact content depends on your business — we agree on the structure before development starts."
+           data-my="အကြောင်းအရာ အတိအကျသည် သင့်လုပ်ငန်းအပေါ် မူတည်သည် — ဖွံ့ဖြိုးမှု မစတင်မီ ဖွဲ့စည်းပုံကို သဘောတူညီပါသည်။">
+          The exact content depends on your business — we agree on the structure before development starts.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== WHO IS IT FOR ==================== -->
+  <section class="section section--alt" id="audience" aria-labelledby="aud-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-en="Who Is It For?" data-my="မည်သူအတွက်လဲ?">Who Is It For?</span>
+        <h2 id="aud-title"
+            data-en="Five common types of business website."
+            data-my="အဖြစ်များသော စီးပွားရေး ဝဘ်ဆိုက် အမျိုးအစား ငါးမျိုး။">
+          Five common types of business website.
+        </h2>
+      </div>
+
+      <div class="audience reveal" id="audience-grid" aria-label="Business types">
+        <!-- Rendered from BW_DATA.audience -->
+      </div>
+
+      <p class="reveal" style="margin-top:var(--s-6);font-size:var(--fs-13);color:var(--muted-2);max-width:80ch"
+         data-en="Note: A Business Website does not automatically include online payment or e-commerce checkout. Those are separate features and are quoted separately if required."
+         data-my="မှတ်ချက် — စီးပွားရေး ဝဘ်ဆိုက်တွင် အွန်လိုင်း ငွေပေးချေမှု သို့မဟုတ် e-commerce checkout အလိုအလျောက် မပါဝင်ပါ။ ၎င်းတို့သည် သီးခြား အင်္ဂါရပ်များဖြစ်ပြီး လိုအပ်ပါက သီးခြား ကိုးးးးကားစျေးနှုန်း ပေးပါသည်။">
+          Note: A Business Website does not automatically include online payment or e-commerce checkout. Those are separate features and are quoted separately if required.
+        </p>
+    </div>
+  </section>
+
+  <!-- ==================== BW vs POS ==================== -->
+  <section class="section" id="vs-pos" aria-labelledby="vsp-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"
+              data-en="Not the Same as POS" data-my="POS နှင့် မတူပါ">Not the Same as POS</span>
+        <h2 id="vsp-title"
+            data-en="A business website shows your business. A POS runs it."
+            data-my="စီးပွားရေး ဝဘ်ဆိုက်သည် သင့်လုပ်ငန်းကို ပြသသည်။ POS သည် ၎င်းကို လည်ပတ်စေသည်။">
+          A business website shows your business. A POS runs it.
+        </h2>
+        <p data-en="These are two different kinds of product. If you need internal management — sales, inventory, staff, reports — that belongs to the POS / Business Management service."
+           data-my="၎င်းတို့သည် မတူညီသည့် ထုတ်ကုန် နှစ်မျိုး ဖြစ်သည်။ အတွင်းပိုင်း စီမံခန့်ခွဲမှု — အရောင်း၊ ကုန်လက်ကျန်၊ ဝန်ထမ်း၊ အစီရင်ခံစာများ — လိုအပ်ပါက ၎င်းသည် POS / စီးပွားရေး စီမံခန့်ခွဲမှု ဝန်ဆောင်မှုတွင် ပါဝင်သည်။">
+          These are two different kinds of product. If you need internal management — sales, inventory, staff, reports — that belongs to the POS / Business Management service.
+        </p>
+      </div>
+
+      <div class="compare reveal">
+        <div class="compare__card">
+          <span class="compare__tag compare__tag--site"
+                data-en="Business Website" data-my="စီးပွားရေး ဝဘ်ဆိုက်">Business Website</span>
+          <h3 data-en="Customer-facing" data-my="ဖောက်သည်မျက်နှာမူ">Customer-facing</h3>
+          <p data-en="Used by your customers — to see and understand your business online."
+             data-my="သင့်ဖောက်သည်များ အသုံးပြုသည် — သင့်လုပ်ငန်းကို အွန်လိုင်းတွင် မြင်နိုင်၊ နားလည်နိုင်ရန်။">
+            Used by your customers — to see and understand your business online.
+          </p>
+          <ul class="compare__list">
+            <li data-en="Business information and introduction" data-my="လုပ်ငန်း အချက်အလက်နှင့် မိတ်ဆက်">Business information and introduction</li>
+            <li data-en="Products, services and menus (display)" data-my="ထုတ်ကုန်၊ ဝန်ဆောင်မှုနှင့် မီနူးများ (ပြသမှု)">Products, services and menus (display)</li>
+            <li data-en="Contact, location and business hours" data-my="ဆက်သွယ်ရန်၊ တည်နေရာနှင့် ဖွင့်ချိန်">Contact, location and business hours</li>
+            <li data-en="Inquiry or contact links" data-my="စုံစမ်းမေးမြန်းမှု သို့မဟုတ် ဆက်သွယ်ရန် လင့်များ">Inquiry or contact links</li>
+          </ul>
+        </div>
+
+        <div class="compare__card compare__card--pos">
+          <span class="compare__tag compare__tag--pos"
+                data-en="POS / Business System" data-my="POS / စီးပွားရေး စနစ်">POS / Business System</span>
+          <h3 data-en="Internal operations" data-my="အတွင်းပိုင်း လုပ်ငန်းဆောင်တာ">Internal operations</h3>
+          <p data-en="Used by you and your staff — to run day-to-day business operations."
+             data-my="သင်နှင့် သင့်ဝန်ထမ်းများ အသုံးပြုသည် — နေ့စဉ် လုပ်ငန်း လုပ်ငန်းဆောင်တာများ လည်ပတ်ရန်။">
+            Used by you and your staff — to run day-to-day business operations.
+          </p>
+          <ul class="compare__list">
+            <li data-en="Sales, orders and transaction records" data-my="အရောင်း၊ အော်ဒါနှင့် ငွေလွှဲမှု မှတ်တမ်းများ">Sales, orders and transaction records</li>
+            <li data-en="Product and inventory management" data-my="ထုတ်ကုန်နှင့် ကုန်လက်ကျန် စီမံခန့်ခွဲမှု">Product and inventory management</li>
+            <li data-en="Staff accounts, roles and permissions" data-my="ဝန်ထမ်း အကောင့်၊ တာဝန်နှင့် ခွင့်ပြုချက်များ">Staff accounts, roles and permissions</li>
+            <li data-en="Reports, dashboards and business data" data-my="အစီရင်ခံစာ၊ ဒက်ရှ်ဘုတ်နှင့် လုပ်ငန်း ဒေတာ">Reports, dashboards and business data</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="text-align:center;margin-top:var(--s-6)">
+        <a class="btn btn--ghost" href="/services/pos-business-system">
+          <span data-en="View POS / Business Management System" data-my="POS / စီးပွားရေး စီမံခန့်ခွဲမှု စနစ်ကို ကြည့်ရန်">View POS / Business Management System</span>
+          <span class="arw" aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PACKAGES ==================== -->
+  <section class="section section--alt" id="packages" aria-labelledby="pkg-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-en="Packages" data-my="ပက်ကေ့ဂျ်များ">Packages</span>
+        <h2 id="pkg-title"
+            data-en="Three packages. Compare features side by side."
+            data-my="ပက်ကေ့ဂျ် သုံးမျိုး။ အင်္ဂါရပ်များကို ခြမ်းချင်း နှိုင်းယှဉ်ပါ။">
+          Three packages. Compare features side by side.
+        </h2>
+        <p data-en="Every package includes responsive design, navigation, contact links, social links, basic SEO structure and deployment assistance. The differences are in page scope and the JavaScript features available."
+           data-my="ပက်ကေ့ဂျက်တိုင်းတွင် တုံ့ပြန်နိုင်သော ဒီဇိုင်း၊ navigation၊ ဆက်သွယ်ရန် လင့်များ၊ လူမှုကွန်ရက် လင့်များ၊ အခြေခံ SEO ဖွဲ့စည်းပုံနှင့် ဖြန့်ကျက်မှု အကူအညီ ပါဝင်သည်။ ကွာခြားချက်များသည် စာမျက်နှာ အတိုင်းအတာနှင့် ရရှိနိုင်သော JavaScript လုပ်ဆောင်ချက်များတွင် ရှိသည်။">
+          Every package includes responsive design, navigation, contact links, social links, basic SEO structure and deployment assistance. The differences are in page scope and the JavaScript features available.
+        </p>
+      </div>
+
+      <div class="table-wrap reveal">
+        <table class="cmp" id="compare-table">
+          <caption class="sr-only">Package feature comparison</caption>
+          <thead>
+            <tr>
+              <th scope="col" data-en="Feature" data-my="အင်္ဂါရပ်">Feature</th>
+              <th scope="col">Business Starter</th>
+              <th scope="col">Business Standard</th>
+              <th scope="col">Business Pro</th>
+            </tr>
+          </thead>
+          <tbody><!-- Rendered --></tbody>
+        </table>
+      </div>
+
+      <div class="pkgs reveal" id="pkgs-grid" aria-label="Package options" style="margin-top:var(--s-7)">
+        <!-- Rendered -->
+      </div>
+
+      <p style="margin-top:var(--s-6);font-size:var(--fs-13);color:var(--muted-2);text-align:center;max-width:75ch;margin-inline:auto"
+         data-en="All prices are reference starting prices. Final cost depends on the actual page count, design complexity, JavaScript features, content preparation, image requirements, deployment and any special integrations — and is confirmed in a written quotation."
+         data-my="စျေးနှုန်းအားလုံးသည် ကိုးကား စတင်စျေးနှုန်းများ ဖြစ်သည်။ အပြီးသတ် ကုန်ကျစရိတ်သည် အမှန်တကယ် စာမျက်နှာ အရေအတွက်၊ ဒီဇိုင်း ရှုပ်ထွေးမှု၊ JavaScript လုပ်ဆောင်ချက်များ၊ အကြောင်းအရာ ပြင်ဆင်မှု၊ ပုံ လိုအပ်ချက်များ၊ ဖြန့်ကျက်မှုနှင့် အထူး ချိတ်ဆက်မှုများအပေါ် မူတည်သည် — စာဖြင့် ကိုးကားစျေးနှုန်းတွင် အတည်ပြုပါသည်။">
+          All prices are reference starting prices. Final cost depends on the actual page count, design complexity, JavaScript features, content preparation, image requirements, deployment and any special integrations — and is confirmed in a written quotation.
+        </p>
+    </div>
+  </section>
+
+  <!-- ==================== PAGE COUNT RULE ==================== -->
+  <section class="section" id="page-rule" aria-labelledby="pr-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-en="How Pages Are Counted" data-my="စာမျက်နှာများ ရေတွက်ပုံ">How Pages Are Counted</span>
+        <h2 id="pr-title"
+            data-en="A page is a URL — not a product card."
+            data-my="စာမျက်နှာ ဆိုသည်မှာ URL တစ်ခု — ထုတ်ကုန် ကတ်တစ်ခု မဟုတ်ပါ။">
+          A page is a URL — not a product card.
+        </h2>
+      </div>
+
+      <div class="two-up reveal">
+        <div class="up up--a">
+          <span class="up__label"
+                data-en="Counts as ONE page" data-my="စာမျက်နှာ တစ်ခုအဖြစ် ရေတွက်သည်">Counts as ONE page</span>
+          <h3 data-en="A distinct URL / content page" data-my="သီးခြား URL / အကြောင်းအရာ စာမျက်နှာ">A distinct URL / content page</h3>
+          <p data-en="Each of these is one page in the package scope:"
+             data-my="၎င်းတို့တစ်ခုစီသည် ပက်ကေ့ဂျက် အတိုင်းအတာတွင် စာမျက်နှာ တစ်ခု ဖြစ်သည်:">
+            Each of these is one page in the package scope:
+          </p>
+          <ul>
+            <li><code>/</code> &nbsp;—&nbsp; <span data-en="Home" data-my="ပင်မ">Home</span></li>
+            <li><code>/about</code></li>
+            <li><code>/services</code></li>
+            <li><code>/products</code></li>
+            <li><code>/contact</code></li>
+          </ul>
+        </div>
+
+        <div class="up up--b">
+          <span class="up__label"
+                data-en="Does NOT count as a page" data-my="စာမျက်နှာအဖြစ် မရေတွက်ပါ">Does NOT count as a page</span>
+          <h3 data-en="Items inside a page" data-my="စာမျက်နှာ တစ်ခုအတွင်းရှိ အရာများ">Items inside a page</h3>
+          <p data-en="These do not add to the page count:"
+             data-my="၎င်းတို့သည် စာမျက်နှာ အရေအတွက်သို့ မထည့်ပါ:">
+            These do not add to the page count:
+          </p>
+          <ul>
+            <li data-en="A product card in a product grid" data-my="ထုတ်ကုန် ဂရစ်ထဲရှိ ထုတ်ကုန် ကတ်တစ်ခု">A product card in a product grid</li>
+            <li data-en="A menu item in a menu list" data-my="မီနူး စာရင်းထဲရှိ မီနူး အချက်တစ်ခု">A menu item in a menu list</li>
+            <li data-en="An image inside a gallery" data-my="ဓာတ်ပုံ ပြခန်းထဲရှိ ပုံတစ်ပုံ">An image inside a gallery</li>
+            <li data-en="A section within a page" data-my="စာမျက်နှာ တစ်ခုအတွင်းရှိ အပိုင်းတစ်ခု">A section within a page</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="scope-note reveal">
+        <h4 data-en="What about product detail pages?"
+            data-my="ထုတ်ကုန် အသေးစိတ် စာမျက်နှာများကော?">
+          What about product detail pages?
+        </h4>
+        <p data-en="If you want individual detail pages for products — for example <code>/products/product-01</code>, <code>/products/product-02</code> — those are additional URL pages and are quoted separately. This keeps page count and item count as two separate concepts, so there is no confusion about what is included."
+           data-my="ထုတ်ကုန်များအတွက် သီးခြား အသေးစိတ် စာမျက်နှာများ လိုချင်ပါက — ဥပမာ <code>/products/product-01</code>၊ <code>/products/product-02</code> — ၎င်းတို့သည် ထပ်ဆောင်း URL စာမျက်နှာများဖြစ်ပြီး သီးခြား ကိုးကားစျေးနှုန်း ပေးပါသည်။ ၎င်းသည် စာမျက်နှာ အရေအတွက်နှင့် အရာ အရေအတွက်ကို သီးခြား အယူအဆ နှစ်ခုအဖြစ် ထားရှိသည် — ဘာပါဝင်သည်ကို ရှုပ်ထွေးမှု မဖြစ်စေရန်။">
+          If you want individual detail pages for products — for example <code>/products/product-01</code>, <code>/products/product-02</code> — those are additional URL pages and are quoted separately. This keeps page count and item count as two separate concepts, so there is no confusion about what is included.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTENT CAPACITY ==================== -->
+  <section class="section section--alt" id="content-capacity" aria-labelledby="cc-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-en="Content Capacity" data-my="အကြောင်းအရာ ပမာဏ">Content Capacity</span>
+        <h2 id="cc-title"
+            data-en="Page count and item count are different things."
+            data-my="စာမျက်နှာ အရေအတွက်နှင့် အရာ အရေအတွက်သည် မတူညီသည်။">
+          Page count and item count are different things.
+        </h2>
+        <p data-en="A single Products page can display many products. A single Menu page can display an entire restaurant menu. The page is one URL — the number of items inside it is a separate question."
+           data-my="Products စာမျက်နှာ တစ်ခုတွင် ထုတ်ကုန် အများအပြား ပြသနိုင်သည်။ Menu စာမျက်နှာ တစ်ခုတွင် စားသောက်ဆိုင် မီနူး တစ်ခုလုံးကို ပြသနိုင်သည်။ စာမျက်နှာသည် URL တစ်ခုဖြစ်သည် — ၎င်းအတွင်းရှိ အရာ အရေအတွက်သည် သီးခြား မေးခွန်း ဖြစ်သည်။">
+          A single Products page can display many products. A single Menu page can display an entire restaurant menu. The page is one URL — the number of items inside it is a separate question.
+        </p>
+      </div>
+
+      <div class="scope-grid reveal">
+        <div class="scope-col scope-col--inc">
+          <h3 data-en="Starter" data-my="Starter">Starter</h3>
+          <ul>
+            <li data-en="Suitable for a small amount of content" data-my="အနည်းငယ်သော အကြောင်းအရာအတွက် သင့်လျော်သည်">Suitable for a small amount of content</li>
+            <li data-en="A single list of services or a short menu" data-my="ဝန်ဆောင်မှု စာရင်း တစ်ခု သို့မဟုတ် မီနူး အတို">A single list of services or a short menu</li>
+            <li data-en="Static content in HTML" data-my="HTML တွင် static အကြောင်းအရာ">Static content in HTML</li>
+          </ul>
+        </div>
+
+        <div class="scope-col scope-col--inc">
+          <h3 data-en="Standard" data-my="Standard">Standard</h3>
+          <ul>
+            <li data-en="Suitable for a larger product or menu collection" data-my="ပိုကြီးသော ထုတ်ကုန် သို့မဟုတ် မီနူး စုစည်းမှုအတွက် သင့်လျော်သည်">Suitable for a larger product or menu collection</li>
+            <li data-en="Content managed in JSON files for easier updates" data-my="ပိုလွယ်ကူစွာ အပ်ဒိတ်လုပ်ရန် JSON ဖိုင်များတွင် စီမံသည်">Content managed in JSON files for easier updates</li>
+            <li data-en="Category filtering where required" data-my="လိုအပ်ပါက အမျိုးအစား စစ်ထုတ်မှု">Category filtering where required</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="scope-note reveal">
+        <h4 data-en="We do not promise unlimited items"
+              data-my="အကန့်အသတ်မဲ့ အရာ အရေအတွက်ကို ကျွန်ုပ်တို့ အာမမခံပါ">
+          We do not promise unlimited items
+        </h4>
+        <p data-en="For static websites, product or menu data is managed through HTML, JSON or JavaScript. If you want to manage content through a browser interface instead of code, that is a data-driven approach — it is a more advanced system and is quoted separately."
+           data-my="Static ဝဘ်ဆိုက်များအတွက် ထုတ်ကုန် သို့မဟုတ် မီနူး ဒေတာကို HTML၊ JSON သို့မဟုတ် JavaScript မှတစ်ဆင့် စီမံသည်။ ကုဒ်အစား ဘရောက်ဇာ မျက်နှာပြင်မှတစ်ဆင့် အကြောင်းအရာကို စီမံချင်ပါက ၎င်းသည် ဒေတာ အခြေခံ ချဉ်းကပ်မှုဖြစ်သည် — ပိုမို အဆင့်မြင့်သော စနစ်ဖြစ်ပြီး သီးခြား ကိုးကားစျေးနှုန်း ပေးပါသည်။">
+          For static websites, product or menu data is managed through HTML, JSON or JavaScript. If you want to manage content through a browser interface instead of code, that is a data-driven approach — it is a more advanced system and is quoted separately.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== STATIC vs DATA-DRIVEN ==================== -->
+  <section class="section" id="static-vs-data" aria-labelledby="svd-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"
+              data-en="Two Approaches" data-my="ချဉ်းကပ်မှု နှစ်မျိုး">Two Approaches</span>
+        <h2 id="svd-title"
+            data-en="Static or data-driven. Two different kinds of website."
+            data-my="Static သို့မဟုတ် ဒေတာ အခြေခံ။ မတူညီသော ဝဘ်ဆိုက် နှစ်မျိုး။">
+          Static or data-driven. Two different kinds of website.
+        </h2>
+      </div>
+
+      <div class="two-up reveal">
+        <div class="up up--a">
+          <span class="up__label" data-en="Option A" data-my="ရွေးချယ်စရာ A">Option A</span>
+          <h3 data-en="Static Business Website" data-my="Static စီးပွားရေး ဝဘ်ဆိုက်">Static Business Website</h3>
+          <p data-en="Built with HTML, CSS and JavaScript. Content lives in the HTML or in JSON files."
+             data-my="HTML၊ CSS နှင့် JavaScript ဖြင့် တည်ဆောက်သည်။ အကြောင်းအရာသည် HTML သို့မဟုတ် JSON ဖိုင်များတွင် ရှိသည်။">
+            Built with HTML, CSS and JavaScript. Content lives in the HTML or in JSON files.
+          </p>
+          <ul>
+            <li data-en="Low cost, fast to load" data-my="ကုန်ကျစရိတ် နည်း၊ လျင်မြန်စွာ ဖွင့်နိုင်">Low cost, fast to load</li>
+            <li data-en="Deployable to free static hosting" data-my="အခမဲ့ static ဟိုစတင်သို့ ဖြန့်ကျက်နိုင်">Deployable to free static hosting</li>
+            <li data-en="Ideal for menus, showcases and business information" data-my="မီနူး၊ ပြသမှုနှင့် လုပ်ငန်း အချက်အလက်အတွက် အကောင်းဆုံး">Ideal for menus, showcases and business information</li>
+            <li data-en="Content updates may require code/data changes unless a management system is added" data-my="စီမံခန့်ခွဲမှု စနစ် မထည့်ပါက အကြောင်းအရာ အပ်ဒိတ်များအတွက် ကုဒ်/ဒေတာ ပြောင်းလဲမှုများ လိုအပ်နိုင်သည်">Content updates may require code/data changes unless a management system is added</li>
+          </ul>
+        </div>
+
+        <div class="up up--b">
+          <span class="up__label" data-en="Option B" data-my="ရွေးချယ်စရာ B">Option B</span>
+          <h3 data-en="Data-Driven Business Website" data-my="ဒေတာ အခြေခံ စီးပွားရေး ဝဘ်ဆိုက်">Data-Driven Business Website</h3>
+          <p data-en="For businesses that need easier content management. Uses an API or data layer, and may include a database or admin interface."
+             data-my="ပိုလွယ်ကူသော အကြောင်းအရာ စီမံခန့်ခွဲမှု လိုအပ်သော လုပ်ငန်းများအတွက်။ API သို့မဟုတ် ဒေတာ အလွှာကို အသုံးပြုပြီး ဒေတာဘေ့စ် သို့မဟုတ် အက်ဒမင် မျက်နှာပြင် ပါဝင်နိုင်သည်။">
+            For businesses that need easier content management. Uses an API or data layer, and may include a database or admin interface.
+          </p>
+          <ul>
+            <li data-en="Product, menu and content management" data-my="ထုတ်ကုန်၊ မီနူးနှင့် အကြောင်းအရာ စီမံခန့်ခွဲမှု">Product, menu and content management</li>
+            <li data-en="Dynamic content and updating without code" data-my="ကုဒ် မပါဘဲ dynamic အကြောင်းအရာ အပ်ဒိတ်">Dynamic content and updating without code</li>
+            <li data-en="More advanced infrastructure may be needed" data-my="ပိုမို အဆင့်မြင့် အခြေခံအဆောက်အအုံ လိုအပ်နိုင်သည်">More advanced infrastructure may be needed</li>
+            <li data-en="This moves toward a Business System, not a simple website" data-my="၎င်းသည် ရိုးရှင်းသော ဝဘ်ဆိုက် မဟုတ်ဘဲ စီးပွားရေး စနစ်ဆီသို့ ရောက်သွားသည်">This moves toward a Business System, not a simple website</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="scope-note reveal">
+        <h4 data-en="Which one do you need?"
+              data-my="သင်ဘယ်ဟာ လိုအပ်လဲ?">
+          Which one do you need?
+        </h4>
+        <p data-en="If you need to update a menu, product prices or business hours occasionally, a static website is usually the right choice. If you need frequent updates, an admin login, or data management, that is a data-driven system — often closer to the POS / Business Management service than a standard Business Website."
+           data-my="မီနူး၊ ထုတ်ကုန် စျေးနှုန်း သို့မဟုတ် ဖွင့်ချိန်ကို ရံဖန်ရံခါ အပ်ဒိတ်လုပ်ရန် လိုအပ်ပါက static ဝဘ်ဆိုက်သည် များသောအားဖြင့် မှန်ကန်သော ရွေးချယ်မှု ဖြစ်သည်။ မကြာခဏ အပ်ဒိတ်လုပ်ရန်၊ အက်ဒမင် login သို့မဟုတ် ဒေတာ စီမံခန့်ခွဲမှု လိုအပ်ပါက ၎င်းသည် ဒေတာ အခြေခံ စနစ် ဖြစ်သည် — ပုံမှန် စီးပွားရေး ဝဘ်ဆိုက်ထက် POS / စီးပွားရေး စီမံခန့်ခွဲမှု ဝန်ဆောင်မှုနှင့် ပိုမို နီးစပ်လေ့ ရှိသည်။">
+          If you need to update a menu, product prices or business hours occasionally, a static website is usually the right choice. If you need frequent updates, an admin login, or data management, that is a data-driven system — often closer to the POS / Business Management service than a standard Business Website.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== DEPLOYMENT ==================== -->
+  <section class="section section--alt" id="deployment" aria-labelledby="dep-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"
+              data-en="Deployment Options" data-my="ဖြန့်ကျက်မှု ရွေးချယ်စရာများ">Deployment Options</span>
+        <h2 id="dep-title"
+            data-en="Three deployment paths, from free to professional."
+            data-my="ဖြန့်ကျက်မှု လမ်းကြောင်း သုံးမျိုး၊ အခမဲ့မှ ပရော်ဖက်ရှင်နယ်အထိ။">
+          Three deployment paths, from free to professional.
+        </h2>
+        <p data-en="A static Business Website can be deployed for free. A professional deployment with a custom .com domain and paid hosting is also available. Both are valid choices — it depends on your budget and how established your brand needs to look."
+           data-my="Static စီးပွားရေး ဝဘ်ဆိုက်ကို အခမဲ့ ဖြန့်ကျက်နိုင်သည်။ စိတ်ကြိုက် .com ဒိုမိန်းနှင့် အခကြေးငွေ ဟိုစတင်ဖြင့် ပရော်ဖက်ရှင်နယ် ဖြန့်ကျက်မှုကိုလည်း ရနိုင်သည်။ နှစ်မျိုးလုံးသည် တရားဝင် ရွေးချယ်စရာများဖြစ်သည် — သင့်ဘတ်ဂျက်နှင့် သင့်အမှတ်တံဆိပ် မည်မျှ တည်ရှိပြီးသား ပုံပေါက်စေလိုသည်အပေါ် မူတည်သည်။">
+          A static Business Website can be deployed for free. A professional deployment with a custom .com domain and paid hosting is also available. Both are valid choices — it depends on your budget and how established your brand needs to look.
+        </p>
+      </div>
+
+      <div class="deploys">
+
+        <!-- Option A -->
+        <div class="deploy reveal">
+          <div class="deploy__head">
+            <div class="deploy__badge deploy__badge--a" aria-hidden="true">A</div>
+            <div>
+              <h3 class="deploy__title"
+                  data-en="Budget / Free Hosting"
+                  data-my="ချွေတာရေး / အခမဲ့ ဟိုစတင်">
+                Budget / Free Hosting
+              </h3>
+              <p class="deploy__sub"
+                 data-en="For static websites where recurring cost should be as low as possible."
+                 data-my="နှစ်စဉ် ကုန်ကျစရိတ်ကို တတ်နိုင်သမျှ နည်းစေလိုသော static ဝဘ်ဆိုက်များအတွက်။">
+                For static websites where recurring cost should be as low as possible.
+              </p>
+            </div>
+          </div>
+          <div class="deploy__body">
+            <div class="deploy__col">
+              <h4 data-en="Platforms" data-my="ပလက်ဖောင်းများ">Platforms</h4>
+              <ul>
+                <li data-en="GitHub Pages" data-my="GitHub Pages">GitHub Pages</li>
+                <li data-en="Cloudflare Pages" data-my="Cloudflare Pages">Cloudflare Pages</li>
+                <li data-en="Other suitable static hosting" data-my="အခြား သင့်လျော်သော static ဟိုစတင်">Other suitable static hosting</li>
+              </ul>
+            </div>
+            <div class="deploy__col">
+              <h4 data-en="Notes" data-my="မှတ်ချက်">Notes</h4>
+              <ul>
+                <li data-en="Best for HTML / CSS / JS websites with JSON content"
+                    data-my="JSON အကြောင်းအရာပါ HTML / CSS / JS ဝဘ်ဆိုက်များအတွက် အကောင်းဆုံး">
+                  Best for HTML / CSS / JS websites with JSON content
+                </li>
+                <li data-en="A free platform URL can be used without a .com domain"
+                    data-my=".com ဒိုမိန်း မလိုဘဲ အခမဲ့ ပလက်ဖောင်း URL ကို အသုံးပြုနိုင်သည်">
+                  A free platform URL can be used without a .com domain
+                </li>
+                <li data-en="Backend or database requirements may need a different deployment"
+                    data-my="Backend သို့မဟုတ် ဒေတာဘေ့စ် လိုအပ်ချက်များအတွက် မတူညီသော ဖြန့်ကျက်မှု လိုအပ်နိုင်သည်">
+                  Backend or database requirements may need a different deployment
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="deploy__price">
+            <span data-en="Hosting:" data-my="ဟိုစတင်:">Hosting:</span>
+            <b data-en="Potentially 0 MMK" data-my="ဖြစ်နိုင်ခြေ ၀ ကျပ်">Potentially 0 MMK</b>
+            <span class="deploy__price-note"
+                  data-en="Not every website can be hosted free — backend or database requirements need different infrastructure."
+                  data-my="ဝဘ်ဆိုက် တိုင်း အခမဲ့ ဟိုစတင်နိုင်သည် မဟုတ်ပါ — backend သို့မဟုတ် ဒေတာဘေ့စ် လိုအပ်ချက်များအတွက် မတူညီသော အခြေခံအဆောက်အအုံ လိုအပ်သည်။">
+              Not every website can be hosted free — backend or database requirements need different infrastructure.
+            </span>
+          </div>
+        </div>
+
+        <!-- Option B -->
+        <div class="deploy reveal">
+          <div class="deploy__head">
+            <div class="deploy__badge deploy__badge--b" aria-hidden="true">B</div>
+            <div>
+              <h3 class="deploy__title"
+                  data-en="Professional — .com + Paid Hosting"
+                  data-my="ပရော်ဖက်ရှင်နယ် — .com + အခကြေးငွေ ဟိုစတင်">
+                Professional — .com + Paid Hosting
+              </h3>
+              <p class="deploy__sub"
+                 data-en="For businesses that want a branded, more established web presence."
+                 data-my="အမှတ်တံဆိပ်ရှိပြီး ပိုမို တည်ရှိပြီးသား ဝဘ် တည်ရှိမှုကို လိုချင်သော လုပ်ငန်းများအတွက်။">
+                For businesses that want a branded, more established web presence.
+              </p>
+            </div>
+          </div>
+          <div class="deploy__body">
+            <div class="deploy__col">
+              <h4 data-en="Setup" data-my="ဆက်တင်">Setup</h4>
+              <ul>
+                <li data-en=".com domain (purchased separately)" data-my=".com ဒိုမိန်း (သီးခြား ဝယ်ယူ)">.com domain (purchased separately)</li>
+                <li data-en="DNS and SSL configuration" data-my="DNS နှင့် SSL ဖွဲ့စည်းမှု">DNS and SSL configuration</li>
+                <li data-en="Paid hosting and deployment" data-my="အခကြေးငွေ ဟိုစတင်နှင့် ဖြန့်ကျက်မှု">Paid hosting and deployment</li>
+              </ul>
+            </div>
+            <div class="deploy__col">
+              <h4 data-en="Notes" data-my="မှတ်ချက်">Notes</h4>
+              <ul>
+                <li data-en="Domain and hosting are paid to third-party providers — not to Profile Craft"
+                    data-my="ဒိုမိန်းနှင့် ဟိုစတင်ကို ပြင်ပ ပံ့ပိုးသူများထံ ပေးသွင်းသည် — Profile Craft ထံ မဟုတ်ပါ">
+                  Domain and hosting are paid to third-party providers — not to Profile Craft
+                </li>
+                <li data-en="Recurring annual cost — separate from the development fee"
+                    data-my="နှစ်စဉ် ထပ်တလဲလဲ ကုန်ကျစရိတ် — ဖွံ့ဖြိုးမှု ကြေးနှင့် သီးခြား">
+                  Recurring annual cost — separate from the development fee
+                </li>
+                <li data-en="Suitable for all three packages"
+                    data-my="ပက်ကေ့ဂျ် သုံးမျိုးလုံးအတွက် သင့်လျော်သည်">
+                  Suitable for all three packages
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="deploy__price">
+            <span data-en="Suggested annual infrastructure budget:"
+                  data-my="အကြံပြု နှစ်စဉ် အခြေခံအဆောက်အအုံ ဘတ်ဂျက်:">Suggested annual infrastructure budget:</span>
+            <b>≈ 150,000 – 400,000+ MMK / year</b>
+            <span class="deploy__price-note"
+                  data-en="Planning range only. Actual costs depend on registrar, hosting provider, renewals and requirements."
+                  data-my="စီမံကိန်း အတိုင်းအတာသာ။ အမှန်တကယ် ကုန်ကျစရိတ်သည် ဒိုမိန်း မှတ်ပုံတင်သူ၊ ဟိုစတင် ပံ့ပိုးသူ၊ သက်တမ်းတိုးမှုနှင့် လိုအပ်ချက်များအပေါ် မူတည်သည်။">
+              Planning range only. Actual costs depend on registrar, hosting provider, renewals and requirements.
+            </span>
+          </div>
+        </div>
+
+        <!-- Option C -->
+        <div class="deploy reveal">
+          <div class="deploy__head">
+            <div class="deploy__badge deploy__badge--c" aria-hidden="true">C</div>
+            <div>
+              <h3 class="deploy__title"
+                  data-en="Cloudflare" data-my="Cloudflare">Cloudflare</h3>
+              <p class="deploy__sub"
+                 data-en="Free static hosting plus DNS, CDN, SSL and security in one place."
+                 data-my="အခမဲ့ static ဟိုစတင်နှင့် DNS၊ CDN၊ SSL နှင့် လုံခြုံရေးကို တစ်နေရာတည်းတွင်။">
+                Free static hosting plus DNS, CDN, SSL and security in one place.
+              </p>
+            </div>
+          </div>
+          <div class="deploy__body">
+            <div class="deploy__col">
+              <h4 data-en="What Cloudflare provides" data-my="Cloudflare ပံ့ပိုးသည့်အရာ">What Cloudflare provides</h4>
+              <ul>
+                <li data-en="DNS and domain configuration" data-my="DNS နှင့် ဒိုမိန်း ဖွဲ့စည်းမှု">DNS and domain configuration</li>
+                <li data-en="CDN and edge caching" data-my="CDN နှင့် edge caching">CDN and edge caching</li>
+                <li data-en="SSL certificate" data-my="SSL လက်မှတ်">SSL certificate</li>
+                <li data-en="Security, DDoS protection and firewall" data-my="လုံခြုံရေး၊ DDoS ကာကွယ်မှုနှင့် firewall">Security, DDoS protection and firewall</li>
+                <li data-en="Cloudflare Pages for static frontend hosting" data-my="static frontend hosting အတွက် Cloudflare Pages">Cloudflare Pages for static frontend hosting</li>
+              </ul>
+            </div>
+            <div class="deploy__col">
+              <h4 data-en="Notes" data-my="မှတ်ချက်">Notes</h4>
+              <ul>
+                <li data-en="Cloudflare Pages is well-suited for static HTML / CSS / JS sites"
+                    data-my="Cloudflare Pages သည် static HTML / CSS / JS ဆိုက်များအတွက် ကောင်းစွာ သင့်လျော်သည်">
+                  Cloudflare Pages is well-suited for static HTML / CSS / JS sites
+                </li>
+                <li data-en="Free and paid usage depends on services and traffic/usage"
+                    data-my="အခမဲ့နှင့် အခကြေးငွေ အသုံးပြုမှုသည် ဝန်ဆောင်မှုများနှင့် traffic/usage အပေါ် မူတည်သည်">
+                  Free and paid usage depends on services and traffic/usage
+                </li>
+                <li data-en="For dynamic functionality, Workers / D1 / backend may be needed"
+                    data-my="Dynamic လုပ်ဆောင်ချက်အတွက် Workers / D1 / backend လိုအပ်နိုင်သည်">
+                  For dynamic functionality, Workers / D1 / backend may be needed
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="deploy__price">
+            <span data-en="Static hosting cost:" data-my="Static ဟိုစတင် ကုန်ကျစရိတ်:">Static hosting cost:</span>
+            <b data-en="Potentially 0 MMK / month" data-my="ဖြစ်နိုင်ခြေ ၀ ကျပ် / လ">Potentially 0 MMK / month</b>
+            <span class="deploy__price-note"
+                  data-en="Free tier limits apply. Advanced usage (Workers, D1, higher bandwidth) is usage-based."
+                  data-my="အခမဲ့ အဆင့် ကန့်သတ်ချက်များ သက်ရောက်သည်။ အဆင့်မြင့် အသုံးပြုမှု (Workers, D1၊ ပိုများသော bandwidth) သည် အသုံးပြုမှု အခြေခံဖြစ်သည်။">
+              Free tier limits apply. Advanced usage (Workers, D1, higher bandwidth) is usage-based.
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== COST BREAKDOWN ==================== -->
+  <section class="section" id="pricing" aria-labelledby="price-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"
+              data-en="Cost Structure" data-my="ကုန်ကျစရိတ် ဖွဲ့စည်းပုံ">Cost Structure</span>
+        <h2 id="price-title"
+            data-en="Development, domain and hosting are three separate things."
+            data-my="ဖွံ့ဖြိုးမှု၊ ဒိုမိန်းနှင့် ဟိုစတင်သည် သီးခြား သုံးမျိုး ဖြစ်သည်။">
+          Development, domain and hosting are three separate things.
+        </h2>
+        <p data-en="Development is a one-time fee paid to Profile Craft. Domain and hosting are recurring costs paid to third-party providers. They are never bundled into one number."
+           data-my="ဖွံ့ဖြိုးမှုသည် Profile Craft ထံ တစ်ကြိမ် ပေးသွင်းသည့် ကြေး ဖြစ်သည်။ ဒိုမိန်းနှင့် ဟိုစတင်သည် ပြင်ပ ပံ့ပိုးသူများထံ နှစ်စဉ် ထပ်တလဲလဲ ပေးသွင်းရသည့် ကုန်ကျစရိတ်များ ဖြစ်သည်။ ၎င်းတို့ကို ကိန်းဂဏန်း တစ်ခုတည်းအဖြစ် မည်သည့်အခါမှ ပေါင်းစပ်မထားပါ။">
+          Development is a one-time fee paid to Profile Craft. Domain and hosting are recurring costs paid to third-party providers. They are never bundled into one number.
+        </p>
+      </div>
+
+      <div class="pricing-grid reveal">
+        <div class="pricing-card pricing-card--dev">
+          <h3 data-en="Development Fee (One-time)"
+                data-my="ဖွံ့ဖြိုးမှု ကြေး (တစ်ကြိမ်)">Development Fee (One-time)</h3>
+          <p data-en="Paid to Profile Craft for design, development and deployment assistance."
+             data-my="ဒီဇိုင်း၊ ဖွံ့ဖြိုးမှုနှင့် ဖြန့်ကျက်မှု အကူအညီအတွက် Profile Craft ထံ ပေးသွင်းသည်။">
+            Paid to Profile Craft for design, development and deployment assistance.
+          </p>
+          <ul id="dev-fee-list"><!-- Rendered --></ul>
+        </div>
+
+        <div class="pricing-card pricing-card--infra">
+          <h3 data-en="Infrastructure (Recurring)"
+                data-my="အခြေခံအဆောက်အအုံ (နှစ်စဉ် ထပ်တလဲလဲ)">Infrastructure (Recurring)</h3>
+          <p data-en="Paid to third-party domain and hosting providers — not to Profile Craft."
+             data-my="ပြင်ပ ဒိုမိန်းနှင့် ဟိုစတင် ပံ့ပိုးသူများထံ ပေးသွင်းသည် — Profile Craft ထံ မဟုတ်ပါ။">
+            Paid to third-party domain and hosting providers — not to Profile Craft.
+          </p>
+          <ul>
+            <li>
+              <span data-en=".com domain" data-my=".com ဒိုမိန်း">.com domain</span>
+              <b data-en="≈ 40,000 – 80,000 MMK / year" data-my="၄၀,၀၀၀ – ၈၀,၀၀၀ ကျပ် / နှစ်">≈ 40,000 – 80,000 MMK / year</b>
+            </li>
+            <li>
+              <span data-en="Free static hosting" data-my="အခမဲ့ static ဟိုစတင်">Free static hosting</span>
+              <b data-en="Potentially 0 MMK" data-my="ဖြစ်နိုင်ခြေ ၀ ကျပ်">Potentially 0 MMK</b>
+            </li>
+            <li>
+              <span data-en="Paid hosting (if used)" data-my="အခကြေးငွေ ဟိုစတင် (အသုံးပြုပါက)">Paid hosting (if used)</span>
+              <b data-en="≈ 100,000 – 300,000+ MMK / year" data-my="၁၀၀,၀၀၀ – ၃၀၀,၀၀၀+ ကျပ် / နှစ်">≈ 100,000 – 300,000+ MMK / year</b>
+            </li>
+            <li>
+              <span data-en="Third-party paid APIs (if used)" data-my="ပြင်ပ အခကြေးငွေ APIs များ (အသုံးပြုပါက)">Third-party paid APIs (if used)</span>
+              <b data-en="Varies by service" data-my="ဝန်ဆောင်မှုအလိုက် ကွဲပြားသည်">Varies by service</b>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== ADD-ONS ==================== -->
+  <section class="section section--alt" id="addons" aria-labelledby="add-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"
+              data-en="Optional Add-ons" data-my="ရွေးချယ်နိုင်သော နောက်ထပ် ဝန်ဆောင်မှုများ">Optional Add-ons</span>
+        <h2 id="add-title"
+            data-en="Extra pages, functions and setup."
+            data-my="နောက်ထပ် စာမျက်နှာများ၊ လုပ်ဆောင်ချက်များနှင့် ဆက်တင်များ။">
+          Extra pages, functions and setup.
+        </h2>
+        <p data-en="Everything below is optional and quoted separately. Prices shown are placeholder starting prices — the actual fee depends on complexity and scope."
+           data-my="အောက်ပါအားလုံးသည် ရွေးချယ်နိုင်ပြီး သီးခြား ကိုးကားစျေးနှုန်း ပေးပါသည်။ ပြသထားသော စျေးနှုန်းများသည် နေရာယူ စတင်စျေးနှုန်းများ ဖြစ်သည် — အမှန်တကယ် ကြေးသည် ရှုပ်ထွေးမှုနှင့် အတိုင်းအတာအပေါ် မူတည်သည်။">
+          Everything below is optional and quoted separately. Prices shown are placeholder starting prices — the actual fee depends on complexity and scope.
+        </p>
+      </div>
+
+      <div class="addons-grid reveal" id="addons-grid" aria-label="Optional add-ons">
+        <!-- Rendered from BW_DATA.addons -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== INCLUDED / NOT INCLUDED ==================== -->
+  <section class="section" id="scope" aria-labelledby="scope-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-en="Scope" data-my="အတိုင်းအတာ">Scope</span>
+        <h2 id="scope-title"
+            data-en="What is included — and what is not."
+            data-my="ပါဝင်သည့်အရာ — နှင့် မပါဝင်သည့်အရာ။">
+          What is included — and what is not.
+        </h2>
+        <p data-en="If something is not listed as included, assume it is quoted separately. This prevents surprises later in the project."
+           data-my="ပါဝင်သည်ဟု မဖော်ပြထားပါက သီးခြား ကိုးကားစျေးနှုန်း ပေးသည်ဟု ယူဆပါ။ ၎င်းသည် ပရောဂျက် နောက်ပိုင်းတွင် အံ့အားသင့်မှုများ မဖြစ်စေရန် ကာကွယ်ပေးသည်။">
+          If something is not listed as included, assume it is quoted separately. This prevents surprises later in the project.
+        </p>
+      </div>
+
+      <div class="scope-grid reveal">
+        <div class="scope-col scope-col--inc">
+          <h3 data-en="Included (per package)"
+                data-my="ပါဝင်သည် (ပက်ကေ့ဂျက်အလိုက်)">Included (per package)</h3>
+          <ul>
+            <li data-en="Responsive design (desktop, tablet, mobile)"
+                data-my="တုံ့ပြန်နိုင်သော ဒီဇိုင်း (ဒက်စ်တော့၊ တက်ဘလက်၊ မိုဘိုင်း)">Responsive design (desktop, tablet, mobile)</li>
+            <li data-en="Navigation and menu structure"
+                data-my="navigation နှင့် မီနူး ဖွဲ့စည်းပုံ">Navigation and menu structure</li>
+            <li data-en="Basic SEO structure (title, meta, semantic HTML)"
+                data-my="အခြေခံ SEO ဖွဲ့စည်းပုံ (title, meta, semantic HTML)">Basic SEO structure (title, meta, semantic HTML)</li>
+            <li data-en="Basic JavaScript functionality (mobile menu, FAQ accordion)"
+                data-my="အခြေခံ JavaScript လုပ်ဆောင်ချက် (မိုဘိုင်း မီနူး၊ FAQ accordion)">Basic JavaScript functionality (mobile menu, FAQ accordion)</li>
+            <li data-en="Contact links, social links and location"
+                data-my="ဆက်သွယ်ရန် လင့်များ၊ လူမှုကွန်ရက် လင့်များနှင့် တည်နေရာ">Contact links, social links and location</li>
+            <li data-en="Deployment assistance (setup and configuration)"
+                data-my="ဖြန့်ကျက်မှု အကူအညီ (ဆက်တင်နှင့် ဖွဲ့စည်းမှု)">Deployment assistance (setup and configuration)</li>
+            <li data-en="Pages and features listed in the selected package"
+                data-my="ရွေးချယ်ထားသော ပက်ကေ့ဂျက်တွင် ဖော်ပြထားသည့် စာမျက်နှာများနှင့် အင်္ဂါရပ်များ">Pages and features listed in the selected package</li>
+          </ul>
+        </div>
+
+        <div class="scope-col scope-col--exc">
+          <h3 data-en="Not included unless specified"
+                data-my="သီးခြား ဖော်ပြထားခြင်း မရှိပါက မပါဝင်ပါ">Not included unless specified</h3>
+          <ul>
+            <li data-en=".com domain registration or renewal"
+                data-my=".com ဒိုမိန်း မှတ်ပုံတင်ခြင်း သို့မဟုတ် သက်တမ်းတိုးခြင်း">.com domain registration or renewal</li>
+            <li data-en="Paid hosting"
+                data-my="အခကြေးငွေ ဟိုစတင်">Paid hosting</li>
+            <li data-en="Premium images, stock photos or paid fonts"
+                data-my="ပရီမီယံ ပုံများ၊ stock ဓာတ်ပုံများ သို့မဟုတ် အခကြေးငွေ ဖောင့်များ">Premium images, stock photos or paid fonts</li>
+            <li data-en="Third-party paid APIs or subscriptions"
+                data-my="ပြင်ပ အခကြေးငွေ APIs များ သို့မဟုတ် subscription များ">Third-party paid APIs or subscriptions</li>
+            <li data-en="Payment gateway or online payment integration"
+                data-my="ငွေပေးချေမှု ဂိတ်ဝေး သို့မဟုတ် အွန်လိုင်း ငွေပေးချေမှု ချိတ်ဆက်မှု">Payment gateway or online payment integration</li>
+            <li data-en="Shopping cart, checkout or e-commerce features"
+                data-my="စျေးဝယ်ခြင်း ခြင်းတောင်၊ checkout သို့မဟုတ် e-commerce အင်္ဂါရပ်များ">Shopping cart, checkout or e-commerce features</li>
+            <li data-en="Backend system, database or admin dashboard"
+                data-my="Backend စနစ်၊ ဒေတာဘေ့စ် သို့မဟုတ် အက်ဒမင် ဒက်ရှ်ဘုတ်">Backend system, database or admin dashboard</li>
+            <li data-en="POS / business management functionality"
+                data-my="POS / စီးပွားရေး စီမံခန့်ခွဲမှု လုပ်ဆောင်ချက်">POS / business management functionality</li>
+            <li data-en="Large-scale data migration or content entry"
+                data-my="အကြီးစား ဒေတာ ရွှေ့ပြောင်းမှု သို့မဟုတ် အကြောင်းအရာ ထည့်သွင်းမှု">Large-scale data migration or content entry</li>
+            <li data-en="Ongoing maintenance (available as a separate plan)"
+                data-my="ဆက်လက် ပြုပြင်ထိန်းသိမ်းမှု (သီးခြား အစီအစဉ်အဖြစ် ရနိုင်သည်)">Ongoing maintenance (available as a separate plan)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BW vs E-COMMERCE ==================== -->
+  <section class="section section--blue" id="vs-ecommerce" aria-labelledby="vse-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow"
+              data-en="Not E-commerce" data-my="E-commerce မဟုတ်ပါ">Not E-commerce</span>
+        <h2 id="vse-title"
+            data-en="A business website is a showcase, not an online shop."
+            data-my="စီးပွားရေး ဝဘ်ဆိုက်သည် ပြသမှု ဖြစ်သည်၊ အွန်လိုင်း ဆိုင် မဟုတ်ပါ။">
+          A business website is a showcase, not an online shop.
+        </h2>
+      </div>
+
+      <div class="vs-grid reveal">
+        <div class="vs-card vs-card--bw">
+          <span class="vs-card__tag"
+                data-en="Business Website" data-my="စီးပွားရေး ဝဘ်ဆိုက်">Business Website</span>
+          <h3 data-en="Showcase / Information / Contact" data-my="ပြသမှု / အချက်အလက် / ဆက်သွယ်ရန်">Showcase / Information / Contact</h3>
+          <p data-en="Helps customers see and understand your business, then contact you by phone, message or in person."
+             data-my="ဖောက်သည်များအတွက် သင့်လုပ်ငန်းကို မြင်နိုင်၊ နားလည်နိုင်စေပြီး ဖုန်း၊ စာ သို့မဟုတ် တိုက်ရိုက် ဆက်သွယ်နိုင်စေသည်။">
+            Helps customers see and understand your business, then contact you by phone, message or in person.
+          </p>
+          <ul>
+            <li data-en="Display products, menus or services" data-my="ထုတ်ကုန်၊ မီနူး သို့မဟုတ် ဝန်ဆောင်မှုများ ပြသခြင်း">Display products, menus or services</li>
+            <li data-en="Contact via phone, messaging or form" data-my="ဖုန်း၊ စာပို့ သို့မဟုတ် ဖောင်မှတစ်ဆင့် ဆက်သွယ်ခြင်း">Contact via phone, messaging or form</li>
+            <li data-en="Business information and location" data-my="လုပ်ငန်း အချက်အလက်နှင့် တည်နေရာ">Business information and location</li>
+            <li data-en="No cart, no checkout, no online payment" data-my="ခြင်းတောင် မရှိ၊ checkout မရှိ၊ အွန်လိုင်း ငွေပေးချေမှု မရှိ">No cart, no checkout, no online payment</li>
+          </ul>
+        </div>
+
+        <div class="vs-card vs-card--ec">
+          <span class="vs-card__tag"
+                data-en="E-commerce Website" data-my="E-commerce ဝဘ်ဆိုက်">E-commerce Website</span>
+          <h3 data-en="Shopping / Cart / Checkout / Payment" data-my="စျေးဝယ်ခြင်း / ခြင်းတောင် / Checkout / ငွေပေးချေမှု">Shopping / Cart / Checkout / Payment</h3>
+          <p data-en="A different kind of system. Customers can place orders, pay online, and manage their accounts."
+             data-my="မတူညီသော စနစ် အမျိုးအစား။ ဖောက်သည်များသည် အော်ဒါ တင်နိုင်၊ အွန်လိုင်း ငွေပေးချေနိုင်ပြီး ၎င်းတို့၏ အကောင့်များကို စီမံနိုင်သည်။">
+            A different kind of system. Customers can place orders, pay online, and manage their accounts.
+          </p>
+          <ul>
+            <li data-en="Shopping cart and checkout flow" data-my="စျေးဝယ်ခြင်း ခြင်းတောင်နှင့် checkout လုပ်ငန်းစဉ်">Shopping cart and checkout flow</li>
+            <li data-en="Online payment gateway integration" data-my="အွန်လိုင်း ငွေပေးချေမှု ဂိတ်ဝေး ချိတ်ဆက်မှု">Online payment gateway integration</li>
+            <li data-en="Order management and customer accounts" data-my="အော်ဒါ စီမံခန့်ခွဲမှုနှင့် ဖောက်သည် အကောင့်များ">Order management and customer accounts</li>
+            <li data-en="Requires backend, database and proper infrastructure" data-my="Backend၊ ဒေတာဘေ့စ်နှင့် သင့်လျော်သော အခြေခံအဆောက်အအုံ လိုအပ်သည်">Requires backend, database and proper infrastructure</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="scope-note reveal">
+        <h4 data-en="If you need e-commerce"
+              data-my="သင် e-commerce လိုအပ်ပါက">
+          If you need e-commerce
+        </h4>
+        <p data-en="E-commerce is not automatically included in any Business Website package. If you need cart, checkout, online payment, order management or customer accounts, that is quoted as a more advanced custom system. Tell us what you need and we will scope it as a separate project."
+           data-my="E-commerce သည် မည်သည့် စီးပွားရေး ဝဘ်ဆိုက် ပက်ကေ့ဂျက်တွင်မှ အလိုအလျောက် မပါဝင်ပါ။ ခြင်းတောင်၊ checkout၊ အွန်လိုင်း ငွေပေးချေမှု၊ အော်ဒါ စီမံခန့်ခွဲမှု သို့မဟုတ် ဖောက်သည် အကောင့်များ လိုအပ်ပါက ၎င်းကို ပိုမို အဆင့်မြင့်သော စိတ်ကြိုက် စနစ်အဖြစ် ကိုးကားစျေးနှုန်း ပေးပါသည်။ သင်လိုအပ်သည်ကို ပြောပြပါ၊ ကျွန်ုပ်တို့ သီးခြား ပရောဂျက်အဖြစ် အတိုင်းအတာ သတ်မှတ်ပေးပါမည်။">
+          E-commerce is not automatically included in any Business Website package. If you need cart, checkout, online payment, order management or customer accounts, that is quoted as a more advanced custom system. Tell us what you need and we will scope it as a separate project.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROCESS ==================== -->
+  <section class="section" id="process" aria-labelledby="proc-title">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-en="Project Process" data-my="ပရောဂျက် လုပ်ငန်းစဉ်">Project Process</span>
+        <h2 id="proc-title"
+            data-en="Six steps, from first call to launch."
+            data-my="ပထမ ခေါ်ဆိုမှုမှ ထုတ်လွှင့်ခြင်းအထိ ခြောက်ဆင့်။">
+          Six steps, from first call to launch.
+        </h2>
+      </div>
+
+      <ol class="steps reveal">
+        <li class="step">
+          <span class="step__num">01</span>
+          <h3 data-en="Requirement Discussion" data-my="လိုအပ်ချက် ဆွေးနွေးမှု">Requirement Discussion</h3>
+          <p data-en="Understand your business and what the website needs to do."
+             data-my="သင့်လုပ်ငန်းနှင့် ဝဘ်ဆိုက် လုပ်ဆောင်ရမည့်အရာကို နားလည်အောင် လေ့လာသည်။">
+            Understand your business and what the website needs to do.
+          </p>
+        </li>
+        <li class="step">
+          <span class="step__num">02</span>
+          <h3 data-en="Content &amp; Structure" data-my="အကြောင်းအရာနှင့် ဖွဲ့စည်းပုံ">Content &amp; Structure</h3>
+          <p data-en="Define pages, sections, products/services and content."
+             data-my="စာမျက်နှာများ၊ အပိုင်းများ၊ ထုတ်ကုန်/ဝန်ဆောင်မှုများနှင့် အကြောင်းအရာကို သတ်မှတ်သည်။">
+            Define pages, sections, products/services and content.
+          </p>
+        </li>
+        <li class="step">
+          <span class="step__num">03</span>
+          <h3 data-en="UI / UX Design" data-my="UI / UX ဒီဇိုင်း">UI / UX Design</h3>
+          <p data-en="Create the visual design and page layouts."
+             data-my="အမြင်အာရုံ ဒီဇိုင်းနှင့် စာမျက်နှာ layout များကို ဖန်တီးသည်။">
+            Create the visual design and page layouts.
+          </p>
+        </li>
+        <li class="step">
+          <span class="step__num">04</span>
+          <h3 data-en="Development" data-my="ဖွံ့ဖြိုးမှု">Development</h3>
+          <p data-en="Build HTML / CSS / JavaScript and any required functions."
+             data-my="HTML / CSS / JavaScript နှင့် လိုအပ်သော လုပ်ဆောင်ချက်များကို တည်ဆောက်သည်။">
+            Build HTML / CSS / JavaScript and any required functions.
+          </p>
+        </li>
+        <li class="step">
+          <span class="step__num">05</span>
+          <h3 data-en="Testing" data-my="စမ်းသပ်စစ်ဆေးမှု">Testing</h3>
+          <p data-en="Responsive and functional testing across devices."
+             data-my="စက်ပစ္စည်းအမျိုးမျိုးတွင် တုံ့ပြန်နိုင်မှုနှင့် လုပ်ဆောင်ချက် စမ်းသပ်စစ်ဆေးမှု။">
+            Responsive and functional testing across devices.
+          </p>
+        </li>
+        <li class="step">
+          <span class="step__num">06</span>
+          <h3 data-en="Deployment" data-my="ဖြန့်ကျက်မှု">Deployment</h3>
+          <p data-en="Deploy to GitHub Pages, Cloudflare Pages or your chosen paid hosting."
+             data-my="GitHub Pages၊ Cloudflare Pages သို့မဟုတ် သင်ရွေးချယ်ထားသော အခကြေးငွေ ဟိုစတင်သို့ ဖြန့်ကျက်သည်။">
+            Deploy to GitHub Pages, Cloudflare Pages or your chosen paid hosting.
+          </p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ==================== FAQ ==================== -->
+  <section class="section section--alt" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section-head section-head--center reveal">
+        <span class="eyebrow" data-en="FAQ" data-my="မေးခွန်းများ">FAQ</span>
+        <h2 id="faq-title"
+            data-en="Common questions about business websites."
+            data-my="စီးပွားရေး ဝဘ်ဆိုက်များအကြောင်း အမေးများသော မေးခွန်းများ။">
+          Common questions about business websites.
+        </h2>
+      </div>
+
+      <div class="faq reveal">
+        <details>
+          <summary data-en="Do I need a .com domain?"
+                   data-my=".com ဒိုမိန်း လိုအပ်ပါသလား?">
+            Do I need a .com domain?
+          </summary>
+          <p class="faq__answer"
+             data-en="No. A free hosting URL (for example, a GitHub Pages or Cloudflare Pages address) may be sufficient for some projects. A .com domain is recommended for a more professional, branded presence — but it is optional and is paid to a third-party registrar, not to Profile Craft."
+             data-my="မလိုအပ်ပါ။ အခမဲ့ ဟိုစတင် URL (ဥပမာ — GitHub Pages သို့မဟုတ် Cloudflare Pages လိပ်စာ) သည် ပရောဂျက် အချို့အတွက် လုံလောက်နိုင်သည်။ .com ဒိုမိန်းကို ပိုမို ပရော်ဖက်ရှင်နယ်ပြီး အမှတ်တံဆိပ်ရှိသော တည်ရှိမှုအတွက် အကြံပြုပါသည် — သို့သော် ရွေးချယ်နိုင်ပြီး ပြင်ပ မှတ်ပုံတင်သူထံ ပေးသွင်းရသည်၊ Profile Craft ထံ မဟုတ်ပါ။">
+            No. A free hosting URL (for example, a GitHub Pages or Cloudflare Pages address) may be sufficient for some projects. A .com domain is recommended for a more professional, branded presence — but it is optional and is paid to a third-party registrar, not to Profile Craft.
+          </p>
+        </details>
+
+        <details>
+          <summary data-en="Can I use GitHub Pages?"
+                   data-my="GitHub Pages ကို အသုံးပြုနိုင်ပါသလား?">
+            Can I use GitHub Pages?
+          </summary>
+          <p class="faq__answer"
+             data-en="Yes, for suitable static websites. GitHub Pages is a good fit for HTML / CSS / JavaScript sites where content is stored in HTML or JSON. It is not suitable for sites that require a PHP backend or an SQL database."
+             data-my="သင့်လျော်သော static ဝဘ်ဆိုက်များအတွက် ရပါသည်။ GitHub Pages သည် အကြောင်းအရာကို HTML သို့မဟုတ် JSON တွင် သိမ်းဆည်းထားသော HTML / CSS / JavaScript ဆိုက်များအတွက် ကောင်းစွာ သင့်လျော်သည်။ PHP backend သို့မဟုတ် SQL ဒေတာဘေ့စ် လိုအပ်သော ဆိုက်များအတွက် မသင့်လျော်ပါ။">
+            Yes, for suitable static websites. GitHub Pages is a good fit for HTML / CSS / JavaScript sites where content is stored in HTML or JSON. It is not suitable for sites that require a PHP backend or an SQL database.
+          </p>
+        </details>
+
+        <details>
+          <summary data-en="Can I use Cloudflare?"
+                   data-my="Cloudflare ကို အသုံးပြုနိုင်ပါသလား?">
+            Can I use Cloudflare?
+          </summary>
+          <p class="faq__answer"
+             data-en="Yes. Cloudflare can be used for DNS, SSL, CDN, security and static website hosting (via Cloudflare Pages) where appropriate. Whether this costs money depends on which Cloudflare services you use and how much traffic/usage the site receives. Cloudflare is not automatically free for every configuration."
+             data-my="ရပါသည်။ Cloudflare ကို DNS၊ SSL၊ CDN၊ လုံခြုံရေးနှင့် static ဝဘ်ဆိုက် ဟိုစတင် (Cloudflare Pages မှတစ်ဆင့်) အတွက် သင့်လျော်သလို အသုံးပြုနိုင်သည်။ ၎င်းသည် ငွေကုန်သည်ရှိမရှိသည် သင်အသုံးပြုသော Cloudflare ဝန်ဆောင်မှုများနှင့် ဆိုက် ရရှိသည့် traffic/usage အပေါ် မူတည်သည်။ Cloudflare သည် configuration တိုင်းအတွက် အလိုအလျောက် အခမဲ့ မဟုတ်ပါ။">
+            Yes. Cloudflare can be used for DNS, SSL, CDN, security and static website hosting (via Cloudflare Pages) where appropriate. Whether this costs money depends on which Cloudflare services you use and how much traffic/usage the site receives. Cloudflare is not automatically free for every configuration.
+          </p>
+        </details>
+
+        <details>
+          <summary data-en="Can I add products?"
+                   data-my="ထုတ်ကုန်များ ထည့်နိုင်ပါသလား?">
+            Can I add products?
+          </summary>
+          <p class="faq__answer"
+             data-en="Yes, depending on the selected implementation and content scope. In a static website, products are typically stored in HTML or JSON files. Adding or changing products then means editing those files. If you need to add products through a browser interface without touching code, that requires a data-driven system with a backend or database — quoted separately."
+             data-my="ရွေးချယ်ထားသော အကောင်အထည်ဖော်မှုနှင့် အကြောင်းအရာ အတိုင်းအတာအပေါ် မူတည်၍ ရပါသည်။ Static ဝဘ်ဆိုက်တွင် ထုတ်ကုန်များကို များသောအားဖြင့် HTML သို့မဟုတ် JSON ဖိုင်များတွင် သိမ်းဆည်းသည်။ ထုတ်ကုန် ထည့်ခြင်း သို့မဟုတ် ပြောင်းလဲခြင်းသည် ထို ဖိုင်များကို တည်းဖြတ်ခြင်း ဖြစ်သည်။ ကုဒ် မထိဘဲ ဘရောက်ဇာ မျက်နှာပြင်မှတစ်ဆင့် ထုတ်ကုန် ထည့်လိုပါက backend သို့မဟုတ် ဒေတာဘေ့စ် ပါသော ဒေတာ အခြေခံ စနစ် လိုအပ်သည် — သီးခြား ကိုးကားစျေးနှုန်း ပေးပါသည်။">
+            Yes, depending on the selected implementation and content scope. In a static website, products are typically stored in HTML or JSON files. Adding or changing products then means editing those files. If you need to add products through a browser interface without touching code, that requires a data-driven system with a backend or database — quoted separately.
+          </p>
+        </details>
+
+        <details>
+          <summary data-en="Can I accept online payments?"
+                   data-my="အွန်လိုင်း ငွေပေးချေမှု လက်ခံနိုင်ပါသလား?">
+            Can I accept online payments?
+          </summary>
+          <p class="faq__answer"
+             data-en="Online payment is not automatically included in a Business Website package. It requires a payment gateway integration, which involves a backend, a database and third-party fees. If you need online payment, we will scope it as a separate, more advanced project."
+             data-my="အွန်လိုင်း ငွေပေးချေမှုသည် စီးပွားရေး ဝဘ်ဆိုက် ပက်ကေ့ဂျက်တွင် အလိုအလျောက် မပါဝင်ပါ။ ၎င်းသည် backend၊ ဒေတာဘေ့စ်နှင့် ပြင်ပ ကြေးများ ပါဝင်သော ငွေပေးချေမှု ဂိတ်ဝေး ချိတ်ဆက်မှု လိုအပ်သည်။ အွန်လိုင်း ငွေပေးချေမှု လိုအပ်ပါက ကျွန်ုပ်တို့ သီးခြား၊ ပိုမို အဆင့်မြင့်သော ပရောဂျက်အဖြစ် အတိုင်းအတာ သတ်မှတ်ပါမည်။">
+            Online payment is not automatically included in a Business Website package. It requires a payment gateway integration, which involves a backend, a database and third-party fees. If you need online payment, we will scope it as a separate, more advanced project.
+          </p>
+        </details>
+
+        <details>
+          <summary data-en="Can you build a restaurant digital menu?"
+                   data-my="စားသောက်ဆိုင် ဒီဂျစ်တယ် မီနူး တည်ဆောက်ပေးနိုင်ပါသလား?">
+            Can you build a restaurant digital menu?
+          </summary>
+          <p class="faq__answer"
+             data-en="Yes. A restaurant menu website fits within the Business Website service. Depending on your needs, the menu can be static (HTML/JSON) or filtered by category with JavaScript. If you want to manage menu items yourself through an admin panel, that becomes a more advanced system and is quoted separately."
+             data-my="ရပါသည်။ စားသောက်ဆိုင် မီနူး ဝဘ်ဆိုက်သည် စီးပွားရေး ဝဘ်ဆိုက် ဝန်ဆောင်မှုတွင် ပါဝင်သည်။ သင့်လိုအပ်ချက်အပေါ် မူတည်၍ မီနူးသည် static (HTML/JSON) သို့မဟုတ် JavaScript ဖြင့် အမျိုးအစားအလိုက် စစ်ထုတ်နိုင်သည်။ အက်ဒမင် မျက်နှာပြင်မှတစ်ဆင့် မီနူး အချက်များကို သင်ကိုယ်တိုင် စီမံချင်ပါက ၎င်းသည် ပိုမို အဆင့်မြင့်သော စနစ် ဖြစ်လာပြီး သီးခြား ကိုးကားစျေးနှုန်း ပေးပါသည်။">
+            Yes. A restaurant menu website fits within the Business Website service. Depending on your needs, the menu can be static (HTML/JSON) or filtered by category with JavaScript. If you want to manage menu items yourself through an admin panel, that becomes a more advanced system and is quoted separately.
+          </p>
+        </details>
+
+        <details>
+          <summary data-en="Is POS included?"
+                   data-my="POS ပါဝင်ပါသလား?">
+            Is POS included?
+          </summary>
+          <p class="faq__answer"
+             data-en="No. POS is a separate service. A Business Website is customer-facing and shows your business. A POS is internal and lets you and your staff manage sales, orders, products, inventory and reports. If you need both, they are quoted and built as two separate projects."
+             data-my="မပါဝင်ပါ။ POS သည် သီးခြား ဝန်ဆောင်မှု ဖြစ်သည်။ စီးပွားရေး ဝဘ်ဆိုက်သည် ဖောက်သည်မျက်နှာမူဖြစ်ပြီး သင့်လုပ်ငန်းကို ပြသသည်။ POS သည် အတွင်းပိုင်းဖြစ်ပြီး သင်နှင့် သင့်ဝန်ထမ်းများက အရောင်း၊ အော်ဒါ၊ ထုတ်ကုန်၊ ကုန်လက်ကျန်နှင့် အစီရင်ခံစာများကို စီမံနိုင်စေသည်။ နှစ်မျိုးလုံး လိုအပ်ပါက ၎င်းတို့ကို သီးခြား ပရောဂျက် နှစ်ခုအဖြစ် ကိုးကားစျေးနှုန်းပေးပြီး တည်ဆောက်ပါသည်။">
+            No. POS is a separate service. A Business Website is customer-facing and shows your business. A POS is internal and lets you and your staff manage sales, orders, products, inventory and reports. If you need both, they are quoted and built as two separate projects.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FINAL CTA ==================== -->
+  <section class="section" id="contact" aria-labelledby="cta-title">
+    <div class="container">
+      <div class="cta reveal">
+        <div>
+          <h2 id="cta-title"
+              data-en="Ready to build your business website?"
+              data-my="သင့်စီးပွားရေး ဝဘ်ဆိုက် တည်ဆောက်ရန် အသင့်ဖြစ်ပြီလား?">
+            Ready to build your business website?
+          </h2>
+          <p data-en="Tell us about your business and we will recommend the right package, page structure and deployment option for your needs and budget."
+             data-my="သင့်လုပ်ငန်းအကြောင်း ပြောပြပါ။ သင့်လိုအပ်ချက်နှင့် ဘတ်ဂျက်အတွက် သင့်လျော်သော ပက်ကေ့ဂျက်၊ စာမျက်နှာ ဖွဲ့စည်းပုံနှင့် ဖြန့်ကျက်မှု ရွေးချယ်စရာကို အကြံပြုပေးပါမည်။">
+            Tell us about your business and we will recommend the right package, page structure and deployment option for your needs and budget.
+          </p>
+        </div>
+        <div class="cta__actions">
+          <a class="btn btn--primary btn--lg"
+             href="https://t.me/profilecraft" target="_blank" rel="noopener"
+             data-en="Contact Profile Craft" data-my="Profile Craft ကို ဆက်သွယ်ရန်">Contact Profile Craft</a>
+          <a class="btn btn--outline btn--lg" href="#packages"
+             data-en="Compare Packages" data-my="ပက်ကေ့ဂျ်များ နှိုင်းယှဉ်ရန်">Compare Packages</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ==================== FOOTER ==================== -->
+<footer class="ftr">
+  <div class="container">
+    <div class="ftr__top">
+      <div class="ftr__brand">
+        <a class="brand" href="/" aria-label="Profile Craft — Home">
+          <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+            <rect width="40" height="40" rx="9" fill="#1D4ED8"/>
+            <path d="M13 28V12h6.8a4.4 4.4 0 0 1 0 8.8H17"
+                  stroke="#fff" stroke-width="2.8" fill="none"
+                  stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="26.5" cy="26" r="3" fill="#0E9F6E"/>
+          </svg>
+          <span class="brand__name">Profile<span style="color:#7FA6FF">Craft</span></span>
+        </a>
+        <p data-en="Profile Craft builds professional profile websites, business websites and custom POS / business management systems for individuals and small businesses."
+           data-my="Profile Craft သည် တစ်ဦးချင်းနှင့် အသေးစား လုပ်ငန်းများအတွက် ပရော်ဖက်ရှင်နယ် ပရိုဖိုင် ဝဘ်ဆိုက်များ၊ စီးပွားရေး ဝဘ်ဆိုက်များနှင့် စိတ်ကြိုက် POS / စီးပွားရေး စီမံခန့်ခွဲမှု စနစ်များကို တည်ဆောက်ပေးပါသည်။">
+          Profile Craft builds professional profile websites, business websites and custom POS / business management systems for individuals and small businesses.
+        </p>
+      </div>
+
+      <div>
+        <h4 data-en="Services" data-my="ဝန်ဆောင်မှုများ">Services</h4>
+        <ul>
+          <li><a href="/services/personal-profile"
+                 data-en="Personal Profile" data-my="ကိုယ်ပိုင် ပရိုဖိုင်">Personal Profile</a></li>
+          <li><a href="/services/business-website"
+                 data-en="Business Website" data-my="စီးပွားရေး ဝဘ်ဆိုက်">Business Website</a></li>
+          <li><a href="/services/pos-business-system"
+                 data-en="POS / Business System" data-my="POS / စီးပွားရေး စနစ်">POS / Business System</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 data-en="Company" data-my="ကုမ္ပဏီ">Company</h4>
+        <ul>
+          <li><a href="/#about" data-en="About" data-my="အကြောင်း">About</a></li>
+          <li><a href="/#process" data-en="Process" data-my="လုပ်ငန်းစဉ်">Process</a></li>
+          <li><a href="/#technology" data-en="Technology" data-my="နည်းပညာ">Technology</a></li>
+          <li><a href="/#faq" data-en="FAQ" data-my="မေးခွန်းများ">FAQ</a></li>
+          <li><a href="#contact" data-en="Contact" data-my="ဆက်သွယ်ရန်">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 data-en="Contact" data-my="ဆက်သွယ်ရန်">Contact</h4>
+        <ul>
+          <li><a href="https://t.me/profilecraft" target="_blank" rel="noopener">Telegram</a></li>
+          <li><a href="mailto:hello@profilecraft.example">hello@profilecraft.example</a></li>
+        </ul>
+        <h4 style="margin-top:var(--s-5)"
+            data-en="Language" data-my="ဘာသာစကား">Language</h4>
+        <ul>
+          <li><a href="#" data-set-lang="en">English</a></li>
+          <li><a href="#" data-set-lang="my">မြန်မာ</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ftr__bottom">
+      <span>© <span id="year">2025</span>
+        <span data-en="Profile Craft. All rights reserved."
+              data-my="Profile Craft။ မူပိုင်ခွင့် အားလုံး လက်ဝယ်ရှိသည်။">Profile Craft. All rights reserved.</span>
+      </span>
+      <span data-en="Domain &amp; hosting assistance is provided as part of project deployment."
+            data-my="ဒိုမိန်းနှင့် ဟိုစတင် အကူအညီကို ပရောဂျက် ဖြန့်ကျက်မှု၏ တစ်စိတ်တစ်ပိုင်းအဖြစ် ဆောင်ရွက်ပေးပါသည်။">
+        Domain &amp; hosting assistance is provided as part of project deployment.
+      </span>
+    </div>
+
+    <p class="ftr__note"
+       data-en="Profile Craft is not a domain registrar or hosting provider. Where a project requires a domain or hosting, we assist with selecting, purchasing, configuring and deploying using suitable third-party services."
+       data-my="Profile Craft သည် ဒိုမိန်း မှတ်ပုံတင်သူ သို့မဟုတ် ဟိုစတင် ပံ့ပိုးသူ မဟုတ်ပါ။ ပရောဂျက်တစ်ခုတွင် ဒိုမိန်း သို့မဟုတ် ဟိုစတင် လိုအပ်ပါက သင့်လျော်သော ပြင်ပ ဝန်ဆောင်မှုများကို အသုံးပြု၍ ရွေးချယ်ခြင်း၊ ဝယ်ယူခြင်း၊ ပြင်ဆင်ခြင်းနှင့် ဖြန့်ကျက်ခြင်းတို့ကို ကူညီဆောင်ရွက်ပေးပါသည်။">
+      Profile Craft is not a domain registrar or hosting provider. Where a project requires a domain or hosting, we assist with selecting, purchasing, configuring and deploying using suitable third-party services.
+    </p>
+  </div>
+</footer>
+
+<script>
+/* =========================================================
+   Profile Craft — Business Website detail page
+   All editable pricing / package / audience data lives in
+   BW_DATA. Change a value there and the whole page updates.
+   ========================================================= */
+(function () {
+  'use strict';
+
+  /* =====================================================================
+     EDITABLE DATA
+     ===================================================================== */
+  var BW_DATA = {
+
+    /* ---------- Packages ---------- */
+    packages: [
+      {
+        id: 'business-starter',
+        name: 'Business Starter',
+        recommended: false,
+        tag: {
+          en: 'For small, personal and local businesses',
+          my: 'အသေးစား၊ ကိုယ်ပိုင်နှင့် ဒေသခံ လုပ်ငန်းများအတွက်'
+        },
+        price: '150,000',
+        priceUnit: { en: 'MMK (development fee)', my: 'ကျပ် (ဖွံ့ဖြိုးမှု ကြေး)' },
+        pages: { en: 'Up to 3 pages', my: 'စာမျက်နှာ ၃ ခုအထိ' },
+        features: [
+          { en: 'Responsive design', my: 'တုံ့ပြန်နိုင်သော ဒီဇိုင်း' },
+          { en: 'Home, About, Contact', my: 'Home၊ About၊ Contact' },
+          { en: 'Basic navigation', my: 'အခြေခံ navigation' },
+          { en: 'Contact links & social links', my: 'ဆက်သွယ်ရန်နှင့် လူမှုကွန်ရက် လင့်များ' },
+          { en: 'Basic SEO structure', my: 'အခြေခံ SEO ဖွဲ့စည်းပုံ' },
+          { en: 'Free static hosting ready', my: 'အခမဲ့ static ဟိုစတင် အသင့်' }
+        ]
+      },
+      {
+        id: 'business-standard',
+        name: 'Business Standard',
+        recommended: true,
+        tag: {
+          en: 'For restaurants, small shops and growing businesses',
+          my: 'စားသောက်ဆိုင်များ၊ အသေးစား ဆိုင်များနှင့် ကြီးထွားနေသော လုပ်ငန်းများအတွက်'
+        },
+        price: '300,000',
+        priceUnit: { en: 'MMK (development fee)', my: 'ကျပ် (ဖွံ့ဖြိုးမှု ကြေး)' },
+        pages: { en: 'Up to 6 pages', my: 'စာမျက်နှာ ၆ ခုအထိ' },
+        features: [
+          { en: 'Products / Menu display', my: 'ထုတ်ကုန် / မီနူး ပြသမှု' },
+          { en: 'Image gallery', my: 'ဓာတ်ပုံ ပြခန်း' },
+          { en: 'Category filtering', my: 'အမျိုးအစား စစ်ထုတ်မှု' },
+          { en: 'Contact, map & hours', my: 'ဆက်သွယ်ရန်၊ မြေပုံနှင့် ဖွင့်ချိန်' },
+          { en: 'Basic JavaScript functions', my: 'အခြေခံ JavaScript လုပ်ဆောင်ချက်များ' },
+          { en: 'Optional language switch', my: 'ရွေးချယ်နိုင်သော ဘာသာစကား ပြောင်းလဲမှု' }
+        ]
+      },
+      {
+        id: 'business-pro',
+        name: 'Business Pro',
+        recommended: false,
+        tag: {
+          en: 'For established businesses with larger content needs',
+          my: 'အကြောင်းအရာ ပိုများသော တည်ရှိပြီးသား လုပ်ငန်းများအတွက်'
+        },
+        price: '500,000',
+        priceUnit: { en: 'MMK (development fee)', my: 'ကျပ် (ဖွံ့ဖြိုးမှု ကြေး)' },
+        pages: { en: 'Up to 10 pages', my: 'စာမျက်နှာ ၁၀ ခုအထိ' },
+        features: [
+          { en: 'Product detail pages', my: 'ထုတ်ကုန် အသေးစိတ် စာမျက်နှာများ' },
+          { en: 'Advanced search & filtering', my: 'အဆင့်မြင့် ရှာဖွေမှုနှင့် စစ်ထုတ်မှု' },
+          { en: 'FAQ, promotions, gallery', my: 'FAQ၊ ပရိုမိုးရှင်း၊ ဓာတ်ပုံ ပြခန်း' },
+          { en: 'Interactive sections & modals', my: 'အပြန်အလှန် တုံ့ပြန်သော အပိုင်းများနှင့် modal များ' },
+          { en: 'Advanced JavaScript', my: 'အဆင့်မြင့် JavaScript' },
+          { en: 'Google Maps integration', my: 'Google Maps ချိတ်ဆက်မှု' }
+        ]
+      }
+    ],
+
+    /* ---------- Comparison table rows ---------- */
+    comparison: [
+      { feature:{en:'Pages',                     my:'စာမျက်နှာများ'},           values: ['up-to-3','up-to-6','up-to-10'] },
+      { feature:{en:'Responsive Design',         my:'တုံ့ပြန်နိုင်သော ဒီဇိုင်း'},  values: ['✓','✓','✓'] },
+      { feature:{en:'Home Page',                 my:'ပင်မ စာမျက်နှာ'},           values: ['✓','✓','✓'] },
+      { feature:{en:'About',                     my:'အကြောင်း'},                values: ['✓','✓','✓'] },
+      { feature:{en:'Services',                  my:'ဝန်ဆောင်မှုများ'},          values: ['basic','✓','advanced'] },
+      { feature:{en:'Products',                  my:'ထုတ်ကုန်များ'},             values: ['—','✓','✓'] },
+      { feature:{en:'Menu',                      my:'မီနူး'},                  values: ['—','✓','✓'] },
+      { feature:{en:'Gallery',                   my:'ဓာတ်ပုံ ပြခန်း'},           values: ['—','✓','✓'] },
+      { feature:{en:'Product Detail Pages',      my:'ထုတ်ကုန် အသေးစိတ် စာမျက်နှာများ'}, values: ['—','—','✓'] },
+      { feature:{en:'FAQ',                       my:'မေးခွန်းများ'},            values: ['—','basic','✓'] },
+      { feature:{en:'Search',                    my:'ရှာဖွေမှု'},               values: ['—','—','✓'] },
+      { feature:{en:'Filtering',                 my:'စစ်ထုတ်မှု'},              values: ['—','basic','advanced'] },
+      { feature:{en:'Contact',                   my:'ဆက်သွယ်ရန်'},              values: ['✓','✓','✓'] },
+      { feature:{en:'Map',                       my:'မြေပုံ'},                  values: ['basic','✓','✓'] },
+      { feature:{en:'Social Links',              my:'လူမှုကွန်ရက် လင့်များ'},     values: ['✓','✓','✓'] },
+      { feature:{en:'JavaScript Functions',      my:'JavaScript လုပ်ဆောင်ချက်များ'}, values: ['basic','standard','advanced'] },
+      { feature:{en:'Language Switch',           my:'ဘာသာစကား ပြောင်းလဲမှု'},   values: ['optional','optional','optional'] },
+      { feature:{en:'SEO Foundation',            my:'SEO အခြေခံ'},             values: ['✓','✓','✓'] }
+    ],
+
+    /* ---------- Audience categories ---------- */
+    audience: [
+      { icon:'restaurant',
+        name:{en:'Restaurants', my:'စားသောက်ဆိုင်များ'},
+        items:[
+          {en:'Menu',            my:'မီနူး'},
+          {en:'Food images',     my:'အစားအသောက် ပုံများ'},
+          {en:'Opening hours',   my:'ဖွင့်ချိန်'},
+          {en:'Location',        my:'တည်နေရာ'},
+          {en:'Contact',         my:'ဆက်သွယ်ရန်'}
+        ]},
+      { icon:'shop',
+        name:{en:'Small Shops', my:'အသေးစား ဆိုင်များ'},
+        items:[
+          {en:'Products',           my:'ထုတ်ကုန်များ'},
+          {en:'Prices',             my:'စျေးနှုန်းများ'},
+          {en:'Product categories', my:'ထုတ်ကုန် အမျိုးအစားများ'},
+          {en:'Contact',            my:'ဆက်သွယ်ရန်'}
+        ]},
+      { icon:'service',
+        name:{en:'Service Businesses', my:'ဝန်ဆောင်မှု လုပ်ငန်းများ'},
+        items:[
+          {en:'Services',       my:'ဝန်ဆောင်မှုများ'},
+          {en:'Pricing',        my:'စျေးနှုန်း'},
+          {en:'About',          my:'အကြောင်း'},
+          {en:'Contact',        my:'ဆက်သွယ်ရန်'},
+          {en:'Inquiry CTA',    my:'စုံစမ်းမေးမြန်းမှု CTA'}
+        ]},
+      { icon:'product',
+        name:{en:'Product Businesses', my:'ထုတ်ကုန် လုပ်ငန်းများ'},
+        items:[
+          {en:'Product showcase', my:'ထုတ်ကုန် ပြသမှု'},
+          {en:'Product info',     my:'ထုတ်ကုန် အချက်အလက်'},
+          {en:'Gallery',          my:'ဓာတ်ပုံ ပြခန်း'},
+          {en:'Order inquiry',    my:'အော်ဒါ စုံစမ်းမှု'}
+        ]},
+      { icon:'local',
+        name:{en:'Personal / Local', my:'ကိုယ်ပိုင် / ဒေသခံ'},
+        items:[
+          {en:'Business info',  my:'လုပ်ငန်း အချက်အလက်'},
+          {en:'Services',       my:'ဝန်ဆောင်မှုများ'},
+          {en:'Location',       my:'တည်နေရာ'},
+          {en:'Social links',   my:'လူမှုကွန်ရက် လင့်များ'}
+        ]}
+    ],
+
+    /* ---------- Add-ons ---------- */
+    addons: [
+      { name:{en:'Custom Domain Setup',          my:'စိတ်ကြိုက် ဒိုမိန်း ဆက်တင်'},
+        price:{en:'From 30,000 MMK',             my:'၃၀,၀၀၀ ကျပ်မှ'} },
+      { name:{en:'Additional Page',              my:'နောက်ထပ် စာမျက်နှာ'},
+        price:{en:'From 30,000 MMK / page',      my:'စာမျက်နှာ တစ်ခုလျှင် ၃၀,၀၀၀ ကျပ်မှ'} },
+      { name:{en:'Advanced JavaScript Function', my:'အဆင့်မြင့် JavaScript လုပ်ဆောင်ချက်'},
+        price:{en:'From 50,000 MMK / function',  my:'လုပ်ဆောင်ချက် တစ်ခုလျှင် ၅၀,၀၀၀ ကျပ်မှ'} },
+      { name:{en:'Product / Menu Data Entry',    my:'ထုတ်ကုန် / မီနူး ဒေတာ ထည့်သွင်းမှု'},
+        price:{en:'Custom quotation',            my:'စိတ်ကြိုက် ကိုးကားစျေးနှုန်း'} },
+      { name:{en:'Custom Design',                my:'စိတ်ကြိုက် ဒီဇိုင်း'},
+        price:{en:'Custom quotation',            my:'စိတ်ကြိုက် ကိုးကားစျေးနှုန်း'} },
+      { name:{en:'Google Maps Integration',      my:'Google Maps ချိတ်ဆက်မှု'},
+        price:{en:'From 20,000 MMK',             my:'၂၀,၀၀၀ ကျပ်မှ'} },
+      { name:{en:'Language System (EN + MY)',    my:'ဘာသာစကား စနစ် (EN + MY)'},
+        price:{en:'From 50,000 MMK',             my:'၅၀,၀၀၀ ကျပ်မှ'} },
+      { name:{en:'Analytics Setup',              my:'Analytics ဆက်တင်'},
+        price:{en:'From 30,000 MMK',             my:'၃၀,၀၀၀ ကျပ်မှ'} }
+    ]
+  };
+
+  /* =====================================================================
+     ICONS
+     ===================================================================== */
+  var ICONS = {
+    restaurant: '<path d="M7 3v9a3 3 0 0 0 3 3v6M4 3v6a3 3 0 0 0 3 3M17 3c-1.5 0-3 2-3 5s1.5 5 3 5v8"/>',
+    shop:       '<path d="M3 9.5 5 4h14l2 5.5"/><path d="M4 9.5h16V19a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 19V9.5Z"/><path d="M9 20.5v-5.5h6v5.5"/>',
+    service:    '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    product:    '<path d="m12 2 9 5v10l-9 5-9-5V7z"/><path d="M12 22V12M3 7l9 5 9-5"/>',
+    local:      '<path d="M12 21s-7-6-7-12a7 7 0 0 1 14 0c0 6-7 12-7 12z"/><circle cx="12" cy="9" r="2.5"/>'
+  };
+
+  function svgIcon(name, size) {
+    var path = ICONS[name] || '';
+    var s = size || 20;
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" ' +
+           'stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ' +
+           'width="' + s + '" height="' + s + '">' + path + '</svg>';
+  }
+
+  function esc(str) {
+    return String(str)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
+  /* =====================================================================
+     RENDER: audience categories
+     ===================================================================== */
+  function renderAudience() {
+    var host = document.getElementById('audience-grid');
+    if (!host) return;
+    var html = '';
+    BW_DATA.audience.forEach(function (a) {
+      var items = a.items.map(function (i) {
+        return '<li data-en="' + esc(i.en) + '" data-my="' + esc(i.my) + '">' + esc(i.en) + '</li>';
+      }).join('');
+      html +=
+        '<div class="aud">' +
+          '<div class="aud__ico" aria-hidden="true">' + svgIcon(a.icon, 20) + '</div>' +
+          '<h3 data-en="' + esc(a.name.en) + '" data-my="' + esc(a.name.my) + '">' + esc(a.name.en) + '</h3>' +
+          '<ul>' + items + '</ul>' +
+        '</div>';
+    });
+    host.innerHTML = html;
+  }
+
+  /* =====================================================================
+     RENDER: comparison table
+     ===================================================================== */
+  function renderComparison() {
+    var tbody = document.querySelector('#compare-table tbody');
+    if (!tbody) return;
+    var html = '';
+    BW_DATA.comparison.forEach(function (row) {
+      html += '<tr>';
+      html += '<td class="rowhead" data-en="' + esc(row.feature.en) +
+              '" data-my="' + esc(row.feature.my) + '">' + esc(row.feature.en) + '</td>';
+      row.values.forEach(function (v) {
+        var cell;
+        if (v === '✓') cell = '<span class="tick" aria-label="Included">✓</span>';
+        else if (v === '—') cell = '<span class="dash" aria-label="Not included">—</span>';
+        else if (v === 'basic') cell = '<span class="badge badge--basic" data-en="Basic" data-my="အခြေခံ">Basic</span>';
+        else if (v === 'standard') cell = '<span class="badge badge--std" data-en="Standard" data-my="စံ">Standard</span>';
+        else if (v === 'advanced') cell = '<span class="badge badge--adv" data-en="Advanced" data-my="အဆင့်မြင့်">Advanced</span>';
+        else if (v === 'optional') cell = '<span class="badge badge--opt" data-en="Optional" data-my="ရွေးချယ်နိုင်">Optional</span>';
+        else if (v === 'up-to-3') cell = '<b data-en="Up to 3" data-my="၃ အထိ">Up to 3</b>';
+        else if (v === 'up-to-6') cell = '<b data-en="Up to 6" data-my="၆ အထိ">Up to 6</b>';
+        else if (v === 'up-to-10') cell = '<b data-en="Up to 10" data-my="၁၀ အထိ">Up to 10</b>';
+        else cell = esc(v);
+        html += '<td>' + cell + '</td>';
+      });
+      html += '</tr>';
+    });
+    tbody.innerHTML = html;
+  }
+
+  /* =====================================================================
+     RENDER: package cards
+     ===================================================================== */
+  function renderPackages() {
+    var host = document.getElementById('pkgs-grid');
+    if (!host) return;
+    var html = '';
+    BW_DATA.packages.forEach(function (p) {
+      var cardClass = 'pkg' + (p.recommended ? ' pkg--feature' : '');
+      var recAttr = p.recommended ? ' data-rec="Recommended"' : '';
+
+      var features = p.features.map(function (f) {
+        return '<li data-en="' + esc(f.en) + '" data-my="' + esc(f.my) + '">' + esc(f.en) + '</li>';
+      }).join('');
+
+      html +=
+        '<div class="' + cardClass + '"' + recAttr + '>' +
+          '<div class="pkg__name">' + esc(p.name) + '</div>' +
+          '<p class="pkg__tag" data-en="' + esc(p.tag.en) + '" data-my="' + esc(p.tag.my) + '">' + esc(p.tag.en) + '</p>' +
+
+          '<div class="pkg__price">' +
+            '<span class="pkg__price-label" data-en="Starting from" data-my="စတင်ဈေး">Starting from</span>' +
+            '<span class="pkg__price-value">' + esc(p.price) + '</span>' +
+            '<span class="pkg__price-unit" data-en="' + esc(p.priceUnit.en) + '" data-my="' + esc(p.priceUnit.my) + '">' + esc(p.priceUnit.en) + '</span>' +
+          '</div>' +
+
+          '<div class="pkg__scope">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" width="16" height="16"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>' +
+            '<span data-en="' + esc(p.pages.en) + '" data-my="' + esc(p.pages.my) + '">' + esc(p.pages.en) + '</span>' +
+          '</div>' +
+
+          '<p class="pkg__label" data-en="Main features" data-my="အဓိက အင်္ဂါရပ်များ">Main features</p>' +
+          '<ul class="pkg__list">' + features + '</ul>' +
+
+          '<div class="pkg__foot">' +
+            '<a class="btn btn--primary" href="#contact">' +
+              '<span data-en="Choose this package" data-my="ဤပက်ကေ့ဂျက် ရွေးချယ်ရန်">Choose this package</span>' +
+              '<span class="arw" aria-hidden="true">→</span>' +
+            '</a>' +
+            '<p class="pkg__note" data-en="Reference price only — confirmed in a written quotation." data-my="ကိုးကား စျေးနှုန်းသာ — စာဖြင့် ကိုးကားစျေးနှုန်းတွင် အတည်ပြုပါသည်။">' +
+              'Reference price only — confirmed in a written quotation.' +
+            '</p>' +
+          '</div>' +
+        '</div>';
+    });
+    host.innerHTML = html;
+  }
+
+  /* =====================================================================
+     RENDER: add-ons
+     ===================================================================== */
+  function renderAddons() {
+    var host = document.getElementById('addons-grid');
+    if (!host) return;
+    var html = '';
+    BW_DATA.addons.forEach(function (a) {
+      html +=
+        '<div class="addon">' +
+          '<div class="addon__name" data-en="' + esc(a.name.en) + '" data-my="' + esc(a.name.my) + '">' + esc(a.name.en) + '</div>' +
+          '<div class="addon__price"><b data-en="' + esc(a.price.en) + '" data-my="' + esc(a.price.my) + '">' + esc(a.price.en) + '</b></div>' +
+        '</div>';
+    });
+    host.innerHTML = html;
+  }
+
+  /* =====================================================================
+     RENDER: development fee list (pricing summary)
+     ===================================================================== */
+  function renderDevFees() {
+    var list = document.getElementById('dev-fee-list');
+    if (!list) return;
+    var html = '';
+    BW_DATA.packages.forEach(function (p) {
+      html +=
+        '<li>' +
+          '<span>' + esc(p.name) + '</span>' +
+          '<b data-en="From ' + esc(p.price) + ' MMK" data-my="' +
+            esc(p.price) + ' ကျပ်မှ">From ' + esc(p.price) + ' MMK</b>' +
+        '</li>';
+    });
+    html +=
+      '<li>' +
+        '<span data-en="Additional page" data-my="နောက်ထပ် စာမျက်နှာ">Additional page</span>' +
+        '<b data-en="From 30,000 MMK" data-my="၃၀,၀၀၀ ကျပ်မှ">From 30,000 MMK</b>' +
+      '</li>';
+    list.innerHTML = html;
+  }
+
+  /* =====================================================================
+     LANGUAGE
+     ===================================================================== */
+  var STORAGE_KEY = 'pc-lang';
+  var html = document.documentElement;
+  var TITLE = {
+    en: 'Business Website Development — Profile Craft',
+    my: 'စီးပွားရေး ဝဘ်ဆိုက် ဖွံ့ဖြိုးမှု — Profile Craft'
+  };
+
+  function applyLang(lang) {
+    if (lang !== 'en' && lang !== 'my') lang = 'en';
+    html.setAttribute('data-lang', lang);
+    html.setAttribute('lang', lang === 'my' ? 'my' : 'en');
+
+    var nodes = document.querySelectorAll('[data-en][data-my]');
+    for (var i = 0; i < nodes.length; i++) {
+      var el = nodes[i];
+      if (el.querySelector('[data-en][data-my]')) continue;
+      var val = el.getAttribute('data-' + lang);
+      if (val != null) el.textContent = val;
+    }
+
+    var rec = document.querySelector('[data-rec]');
+    if (rec) rec.setAttribute('data-rec', lang === 'my' ? 'အကြံပြုသည်' : 'Recommended');
+
+    if (TITLE[lang]) document.title = TITLE[lang];
+
+    var btns = document.querySelectorAll('[data-set-lang]');
+    for (var j = 0; j < btns.length; j++) {
+      btns[j].setAttribute('aria-pressed',
+        String(btns[j].getAttribute('data-set-lang') === lang));
+    }
+
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) {}
+  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest ? e.target.closest('[data-set-lang]') : null;
+    if (t) {
+      e.preventDefault();
+      applyLang(t.getAttribute('data-set-lang'));
+    }
+  });
+
+  /* =====================================================================
+     BOOT
+     ===================================================================== */
+  renderAudience();
+  renderComparison();
+  renderPackages();
+  renderAddons();
+  renderDevFees();
+
+  var initial = 'en';
+  try {
+    var stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === 'en' || stored === 'my') {
+      initial = stored;
+    } else if ((navigator.language || '').toLowerCase().indexOf('my') === 0) {
+      initial = 'my';
+    }
+  } catch (e) {}
+  applyLang(initial);
+
+  /* ---------- Mobile nav ---------- */
+  var burger = document.getElementById('burger');
+  var nav = document.getElementById('siteNav');
+  if (burger && nav) {
+    burger.addEventListener('click', function () {
+      var open = nav.getAttribute('data-open') === 'true';
+      nav.setAttribute('data-open', String(!open));
+      burger.setAttribute('aria-expanded', String(!open));
+    });
+    nav.addEventListener('click', function (e) {
+      if (e.target.closest('a') && window.matchMedia('(max-width: 980px)').matches) {
+        nav.setAttribute('data-open', 'false');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+    window.addEventListener('resize', function () {
+      if (!window.matchMedia('(max-width: 980px)').matches) {
+        nav.setAttribute('data-open', 'false');
+        burger.setAttribute('aria-expanded', 'false');
+      }
+    });
+  }
+
+  /* ---------- Scroll reveal ---------- */
+  var els = document.querySelectorAll('.reveal');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) {
+    for (var k = 0; k < els.length; k++) els[k].classList.add('is-in');
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+    for (var m = 0; m < els.length; m++) io.observe(els[m]);
+  }
+
+  var y = document.getElementById('year');
+  if (y) y.textContent = String(new Date().getFullYear());
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-en="How We Work | Profile Craft" data-my="ကျွန်ုပ်တို့၏ အလုပ်လုပ်ပုံ | Profile Craft">How We Work | Profile Craft</title>
+    <meta name="description" content="Discover Profile Craft's structured project journey from initial requirement discussion to final deployment and handover for personal websites, business websites, and POS systems." data-en="Discover Profile Craft's structured project journey from initial requirement discussion to final deployment and handover for personal websites, business websites, and POS systems." data-my="ကိုယ်ပိုင်ဝဘ်ဆိုဒ်များ၊ လုပ်ငန်းသုံးဝဘ်ဆိုဒ်များနှင့် POS စနစ်များအတွက် လိုအပ်ချက်ဆွေးနွေးမှုမှသည် နောက်ဆုံးဖြန့်ချိမှုအထိ Profile Craft ၏ စနစ်တကျစီစဉ်ထားသော ပရောဂျက်ခရီးစဉ်ကို လေ့လာပါ။">
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: '#0F172A',
+                        royal: '#2563EB',
+                        cyanAccent: '#06B6D4',
+                        violetAccent: '#6366F1',
+                        slateBg: '#F8FAFC'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Pyidaungsu', 'sans-serif'],
+                        myanmar: ['Pyidaungsu', 'Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts: Inter & Pyidaungsu for Myanmar -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Pyidaungsu:wght@300;400;700&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', 'Pyidaungsu', sans-serif;
+            background-color: #F8FAFC;
+            color: #1E293B;
+            overflow-x: hidden;
+        }
+        [lang="my"] {
+            font-family: 'Pyidaungsu', 'Inter', sans-serif;
+            line-height: 1.8;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #2563EB 0%, #06B6D4 50%, #6366F1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, rgba(6,182,212,0.05) 50%, transparent 70%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        .transition-all-300 {
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-slateBg text-slate-800 antialiased selection:bg-blue-600 selection:text-white">
+
+    <!-- Navigation Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="index.html" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-cyan-500 to-indigo-600 flex items-center justify-center text-white font-bold text-xl shadow-md group-hover:scale-105 transition-all">
+                    PC
+                </div>
+                <div>
+                    <span class="text-xl font-extrabold text-navy tracking-tight">Profile <span class="text-royal">Craft</span></span>
+                    <span class="block text-[10px] uppercase tracking-widest text-slate-500 font-semibold" data-en="Digital Services" data-my="ဒီဂျစ်တယ် ဝန်ဆောင်မှုများ">Digital Services</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="index.html" class="text-sm font-medium text-slate-600 hover:text-royal transition-colors" data-en="Home" data-my="ပင်မစာမျက်နှာ">Home</a>
+                <a href="#overview" class="text-sm font-medium text-slate-600 hover:text-royal transition-colors" data-en="Process Overview" data-my="လုပ်ငန်းစဉ်အနှစ်ချုပ်">Process Overview</a>
+                <a href="#stages" class="text-sm font-medium text-slate-600 hover:text-royal transition-colors" data-en="Detailed Stages" data-my="အသေးစိတ်အဆင့်များ">Detailed Stages</a>
+                <a href="#services" class="text-sm font-medium text-slate-600 hover:text-royal transition-colors" data-en="Services" data-my="ဝန်ဆောင်မှုများ">Services</a>
+                <a href="#faq" class="text-sm font-medium text-slate-600 hover:text-royal transition-colors" data-en="FAQ" data-my="မေးလေ့ရှိသောမေးခွန်းများ">FAQ</a>
+            </nav>
+
+            <!-- Actions: Language Toggle & CTA -->
+            <div class="flex items-center space-x-4">
+                <!-- Language Toggle Button -->
+                <button id="langToggleBtn" onclick="toggleLanguage()" class="flex items-center space-x-2 px-3 py-1.5 rounded-full border border-slate-300 bg-slate-50 hover:bg-slate-100 text-xs font-semibold text-slate-700 transition-all shadow-sm">
+                    <i class="fa-solid fa-globe text-royal"></i>
+                    <span id="langIndicator">မြန်မာ / EN</span>
+                </button>
+
+                <!-- CTA Button -->
+                <a href="get-started.html" id="navCta" class="hidden sm:inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-royal hover:bg-blue-700 text-white text-sm font-semibold shadow-md shadow-blue-500/20 transition-all hover:scale-[1.02]" data-en="Start Your Project" data-my="ပရောဂျက်စတင်ရန်">
+                    <span data-en="Start Your Project" data-my="ပရောဂျက်စတင်ရန်">Start Your Project</span>
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button onclick="toggleMobileMenu()" class="lg:hidden p-2 text-slate-700 hover:text-royal focus:outline-none">
+                    <i id="mobileMenuIcon" class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-3">
+            <a href="index.html" class="block py-2 text-base font-medium text-slate-700 hover:text-royal" data-en="Home" data-my="ပင်မစာမျက်နှာ">Home</a>
+            <a href="#overview" onclick="toggleMobileMenu()" class="block py-2 text-base font-medium text-slate-700 hover:text-royal" data-en="Process Overview" data-my="လုပ်ငန်းစဉ်အနှစ်ချုပ်">Process Overview</a>
+            <a href="#stages" onclick="toggleMobileMenu()" class="block py-2 text-base font-medium text-slate-700 hover:text-royal" data-en="Detailed Stages" data-my="အသေးစိတ်အဆင့်များ">Detailed Stages</a>
+            <a href="#services" onclick="toggleMobileMenu()" class="block py-2 text-base font-medium text-slate-700 hover:text-royal" data-en="Services" data-my="ဝန်ဆောင်မှုများ">Services</a>
+            <a href="#faq" onclick="toggleMobileMenu()" class="block py-2 text-base font-medium text-slate-700 hover:text-royal" data-en="FAQ" data-my="မေးလေ့ရှိသောမေးခွန်းများ">FAQ</a>
+            <div class="pt-2">
+                <a href="get-started.html" class="w-full inline-flex items-center justify-center px-5 py-3 rounded-xl bg-royal text-white text-base font-semibold shadow-md" data-en="Start Your Project" data-my="ပရောဂျက်စတင်ရန်">Start Your Project</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Section A — Hero -->
+    <section class="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32 bg-gradient-to-b from-white via-slate-50 to-slate-100 border-b border-slate-200">
+        <div class="hero-glow top-10 left-1/2 -translate-x-1/2"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full bg-blue-50 border border-blue-200/60 text-royal text-xs font-semibold uppercase tracking-wider mb-6">
+                        <i class="fa-solid fa-route text-cyanAccent"></i>
+                        <span data-en="Transparent Project Journey" data-my="ပွင့်လင်းမြင်သာသော ပရောဂျက်ခရီးစဉ်">Transparent Project Journey</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-navy tracking-tight mb-6">
+                        <span data-en="How We Work" data-my="ကျွန်ုပ်တို့၏ အလုပ်လုပ်ပုံ">How We Work</span>
+                        <span class="block text-3xl sm:text-4xl lg:text-5xl mt-2 font-bold gradient-text" data-en="A Clear Process from Idea to Launch" data-my="အကြံဉာဏ်မှသည် လက်တွေ့ထုတ်လုပ်မှုအထိ ရှင်းလင်းသောလုပ်ငန်းစဉ်">A Clear Process from Idea to Launch</span>
+                    </h1>
+                    <p class="text-lg sm:text-xl text-slate-600 mb-8 max-w-2xl mx-auto lg:mx-0 leading-relaxed" data-en="From understanding your requirements to developing, testing and deploying your website or business system, we follow a structured process designed to keep your project clear, organized and aligned with your goals." data-my="သင်၏လိုအပ်ချက်များကို နားလည်ခြင်းမှသည် ဝဘ်ဆိုဒ် သို့မဟုတ် လုပ်ငန်းသုံးစနစ်ကို တည်ဆောက်ခြင်း၊ စမ်းသပ်ခြင်းနှင့် လွှင့်တင်ခြင်းအထိ၊ သင့်ပရောဂျက်ကို ရှင်းလင်း၍ စနစ်တကျနှင့် ရည်မှန်းချက်များနှင့် ကိုက်ညီစေရန် ဒီဇိုင်းထုတ်ထားသော စနစ်တကျလုပ်ငန်းစဉ်ကို ကျွန်ုပ်တို့ လိုက်နာပါသည်။">
+                        From understanding your requirements to developing, testing and deploying your website or business system, we follow a structured process designed to keep your project clear, organized and aligned with your goals.
+                    </p>
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                        <a href="get-started.html" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl bg-royal hover:bg-blue-700 text-white font-semibold text-base shadow-lg shadow-blue-500/25 transition-all hover:scale-105" data-en="Start Your Project" data-my="ပရောဂျက်စတင်ရန်">
+                            <span data-en="Start Your Project" data-my="ပရောဂျက်စတင်ရန်">Start Your Project</span>
+                            <i class="fa-solid fa-arrow-right ml-2 text-sm"></i>
+                        </a>
+                        <a href="index.html#services" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 rounded-xl bg-white hover:bg-slate-50 text-slate-700 font-semibold text-base border border-slate-300 shadow-sm transition-all hover:border-slate-400" data-en="Explore Our Services" data-my="ကျွန်ုပ်တို့၏ ဝန်ဆောင်မှုများ">
+                            <span data-en="Explore Our Services" data-my="ကျွန်ုပ်တို့၏ ဝန်ဆောင်မှုများ">Explore Our Services</span>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Hero Workflow Visual Illustration -->
+                <div class="lg:col-span-5">
+                    <div class="relative bg-navy rounded-2xl p-6 sm:p-8 shadow-2xl border border-slate-700 text-white">
+                        <div class="flex items-center justify-between pb-4 border-b border-slate-700 mb-6">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <span class="text-xs font-mono text-cyanAccent" data-en="profile-craft-workflow.sys" data-my="profile-craft-workflow.sys">profile-craft-workflow.sys</span>
+                        </div>
+                        <div class="space-y-4 font-mono text-xs">
+                            <div class="p-3 bg-slate-800/80 rounded-lg border border-slate-700 flex items-center justify-between">
+                                <span class="text-blue-400 font-semibold">01. Requirement Discussion</span>
+                                <span class="text-emerald-400 text-[10px] uppercase px-2 py-0.5 bg-emerald-950/60 rounded" data-en="Active" data-my="လုပ်ဆောင်ဆဲ">Active</span>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700/60 flex items-center justify-between opacity-80">
+                                <span class="text-slate-300">02. Planning & Scope</span>
+                                <span class="text-slate-400 text-[10px]">Ready</span>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700/60 flex items-center justify-between opacity-70">
+                                <span class="text-slate-300">03. UI/UX Design</span>
+                                <span class="text-slate-400 text-[10px]">Queued</span>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700/60 flex items-center justify-between opacity-60">
+                                <span class="text-slate-300">04. Development & Build</span>
+                                <span class="text-slate-400 text-[10px]">Pending</span>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700/60 flex items-center justify-between opacity-50">
+                                <span class="text-slate-300">05. Testing & Review</span>
+                                <span class="text-slate-400 text-[10px]">Pending</span>
+                            </div>
+                            <div class="p-3 bg-slate-800/50 rounded-lg border border-slate-700/60 flex items-center justify-between opacity-40">
+                                <span class="text-slate-300">06. Deployment & Handover</span>
+                                <span class="text-slate-400 text-[10px]">Pending</span>
+                            </div>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-slate-700/80 flex items-center justify-between text-slate-400 text-[11px]">
+                            <span data-en="Structured & Transparent Milestone Tracking" data-my="စနစ်တကျနှင့် ပွင့်လင်းမြင်သာသော မှတ်တိုင်ခြေရာခံမှု">Structured & Transparent Milestone Tracking</span>
+                            <i class="fa-solid fa-shield-halved text-cyanAccent"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section B — Process Overview -->
+    <section id="overview" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-navy tracking-tight mb-4" data-en="The 6-Stage Project Overview" data-my="ပရောဂျက် အဆင့် (၆) ဆင့် အနှစ်ချုပ်">
+                    The 6-Stage Project Overview
+                </h2>
+                <p class="text-lg text-slate-600" data-en="Our structured roadmap takes you smoothly from the initial conversation to the live deployment of your digital platform." data-my="ကျွန်ုပ်တို့၏ စနစ်တကျ လမ်းပြမြေပုံသည် ပထမဆုံးဆွေးနွေးမှုမှသည် သင်၏ ဒစ်ဂျစ်တယ်ပလက်ဖောင်း တရားဝင်လွှင့်တင်မှုအထိ ချောမွေ့စွာ ပို့ဆောင်ပေးပါသည်။">
+                    Our structured roadmap takes you smoothly from the initial conversation to the live deployment of your digital platform.
+                </p>
+            </div>
+
+            <!-- Horizontal Timeline / Grid Overview -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-6 relative">
+                <!-- Stage 1 Card -->
+                <a href="#stage-1" class="group bg-slate-50 hover:bg-blue-50/50 border border-slate-200 hover:border-royal/50 rounded-2xl p-6 transition-all-300 shadow-sm hover:shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 group-hover:bg-royal text-royal group-hover:text-white flex items-center justify-center font-bold text-lg mb-4 transition-all">
+                            01
+                        </div>
+                        <h3 class="text-base font-bold text-navy mb-2 group-hover:text-royal transition-colors" data-en="Requirement Discussion" data-my="လိုအပ်ချက် ဆွေးနွေးခြင်း">Requirement Discussion</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed" data-en="Understand business goals, target users, features and timeline." data-my="လုပ်ငန်းရည်မှန်းချက်များ၊ ပစ်မှတ်သုံးစွဲသူများ၊ လုပ်ဆောင်ချက်များနှင့် အချိန်ဇယားကို နားလည်ခြင်း။">Understand business goals, target users, features and timeline.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-semibold text-royal">
+                        <span data-en="Learn more" data-my="ပိုမိုလေ့လာရန်">Learn more</span>
+                        <i class="fa-solid fa-arrow-down group-hover:translate-y-0.5 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Stage 2 Card -->
+                <a href="#stage-2" class="group bg-slate-50 hover:bg-blue-50/50 border border-slate-200 hover:border-royal/50 rounded-2xl p-6 transition-all-300 shadow-sm hover:shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 group-hover:bg-royal text-royal group-hover:text-white flex items-center justify-center font-bold text-lg mb-4 transition-all">
+                            02
+                        </div>
+                        <h3 class="text-base font-bold text-navy mb-2 group-hover:text-royal transition-colors" data-en="Planning & Scope" data-my="အစီအစဉ်နှင့် အတိုင်းအတာ သတ်မှတ်ခြင်း">Planning & Scope</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed" data-en="Define project scope, architecture, quotation and schedule." data-my="ပရောဂျက်နယ်ပယ်၊ ဗိသုကာ၊ ဈေးနှုန်းခန့်မှန်းချက်နှင့် အချိန်ဇယား သတ်မှတ်ခြင်း။">Define project scope, architecture, quotation and schedule.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-semibold text-royal">
+                        <span data-en="Learn more" data-my="ပိုမိုလေ့လာရန်">Learn more</span>
+                        <i class="fa-solid fa-arrow-down group-hover:translate-y-0.5 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Stage 3 Card -->
+                <a href="#stage-3" class="group bg-slate-50 hover:bg-blue-50/50 border border-slate-200 hover:border-royal/50 rounded-2xl p-6 transition-all-300 shadow-sm hover:shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 group-hover:bg-royal text-royal group-hover:text-white flex items-center justify-center font-bold text-lg mb-4 transition-all">
+                            03
+                        </div>
+                        <h3 class="text-base font-bold text-navy mb-2 group-hover:text-royal transition-colors" data-en="UI/UX Design" data-my="UI/UX ဒီဇိုင်းရေးဆွဲခြင်း">UI/UX Design</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed" data-en="Design page layouts, user flows, and interface mockups." data-my="စာမျက်နှာအဆင်အပြင်၊ အသုံးပြုသူသွားလာမှုနှင့် ကြားခံမျက်နှာပြင် ဒီဇိုင်းများ ဖန်တီးခြင်း။">Design page layouts, user flows, and interface mockups.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-semibold text-royal">
+                        <span data-en="Learn more" data-my="ပိုမိုလေ့လာရန်">Learn more</span>
+                        <i class="fa-solid fa-arrow-down group-hover:translate-y-0.5 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Stage 4 Card -->
+                <a href="#stage-4" class="group bg-slate-50 hover:bg-blue-50/50 border border-slate-200 hover:border-royal/50 rounded-2xl p-6 transition-all-300 shadow-sm hover:shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 group-hover:bg-royal text-royal group-hover:text-white flex items-center justify-center font-bold text-lg mb-4 transition-all">
+                            04
+                        </div>
+                        <h3 class="text-base font-bold text-navy mb-2 group-hover:text-royal transition-colors" data-en="Development" data-my="ဆော့ဖ်ဝဲ တည်ဆောက်ခြင်း">Development</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed" data-en="Build frontend, backend logic, and database integrations." data-my="ဖရန့်အင်၊ ဘက်ခ်အင် လော့ဂျစ်နှင့် ဒေတာဘေ့စ် ချိတ်ဆက်မှုများကို တည်ဆောက်ခြင်း။">Build frontend, backend logic, and database integrations.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-semibold text-royal">
+                        <span data-en="Learn more" data-my="ပိုမိုလေ့လာရန်">Learn more</span>
+                        <i class="fa-solid fa-arrow-down group-hover:translate-y-0.5 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Stage 5 Card -->
+                <a href="#stage-5" class="group bg-slate-50 hover:bg-blue-50/50 border border-slate-200 hover:border-royal/50 rounded-2xl p-6 transition-all-300 shadow-sm hover:shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 group-hover:bg-royal text-royal group-hover:text-white flex items-center justify-center font-bold text-lg mb-4 transition-all">
+                            05
+                        </div>
+                        <h3 class="text-base font-bold text-navy mb-2 group-hover:text-royal transition-colors" data-en="Testing & Review" data-my="စမ်းသပ်စစ်ဆေးခြင်းနှင့် သုံးသပ်ခြင်း">Testing & Review</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed" data-en="Verify functionality, responsiveness, and customer review." data-my="လုပ်ဆောင်ချက်များ၊ ဖုန်း/ကွန်ပျူတာပေါ်တွင် ကြည့်ကောင်းမှုနှင့် သုံးစွဲသူ စစ်ဆေးအတည်ပြုချက်ကို ရယူခြင်း။">Verify functionality, responsiveness, and customer review.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-semibold text-royal">
+                        <span data-en="Learn more" data-my="ပိုမိုလေ့လာရန်">Learn more</span>
+                        <i class="fa-solid fa-arrow-down group-hover:translate-y-0.5 transition-transform"></i>
+                    </div>
+                </a>
+
+                <!-- Stage 6 Card -->
+                <a href="#stage-6" class="group bg-slate-50 hover:bg-blue-50/50 border border-slate-200 hover:border-royal/50 rounded-2xl p-6 transition-all-300 shadow-sm hover:shadow-md flex flex-col justify-between">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 group-hover:bg-royal text-royal group-hover:text-white flex items-center justify-center font-bold text-lg mb-4 transition-all">
+                            06
+                        </div>
+                        <h3 class="text-base font-bold text-navy mb-2 group-hover:text-royal transition-colors" data-en="Deployment & Handover" data-my="လွှင့်တင်ခြင်းနှင့် လက်လွှဲပေးခြင်း">Deployment & Handover</h3>
+                        <p class="text-xs text-slate-500 leading-relaxed" data-en="Publish live, conduct secure handover, and explain maintenance." data-my="အများပြည်သူကြည့်ရှုနိုင်ရန် တင်ခြင်း၊ လုံခြုံစွာ လက်လွှဲပေးခြင်းနှင့် ထိန်းသိမ်းမှုဆိုင်ရာ ရှင်းပြခြင်း။">Publish live, conduct secure handover, and explain maintenance.</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-200 flex items-center justify-between text-xs font-semibold text-royal">
+                        <span data-en="Learn more" data-my="ပိုမိုလေ့လာရန်">Learn more</span>
+                        <i class="fa-solid fa-arrow-down group-hover:translate-y-0.5 transition-transform"></i>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section C — Detailed Project Stages -->
+    <div id="stages" class="py-12 space-y-24 bg-slate-50">
+        
+        <!-- Stage 1: Requirement Discussion -->
+        <section id="stage-1" class="py-12 bg-white border-y border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-blue-50 text-royal text-xs font-bold uppercase tracking-wider">
+                            <span>Stage 01</span>
+                        </div>
+                        <h3 class="text-3xl font-extrabold text-navy" data-en="Requirement Discussion" data-my="၁။ လိုအပ်ချက် ဆွေးနွေးခြင်း">Requirement Discussion</h3>
+                        <p class="text-base text-slate-600 leading-relaxed" data-en="Before proposing any technical solution, we take time to understand your business, profession, or use case in detail. We listen closely to your core objectives." data-my="မည်သည့် နည်းပညာပိုင်းဆိုင်ရာ ဖြေရှင်းချက်ကိုမျှ မတင်ပြမီ၊ သင့်လုပ်ငန်း၊ လုပ်ငန်းခွင် သို့မဟုတ် အသုံးပြုမည့်ပုံစံကို အသေးစိတ်နားလည်ရန် အချိန်ယူပါသည်။ သင့်၏ အဓိကရည်မှန်းချက်များကို စေ့စေ့စပ်စပ် နားထောင်ပါသည်။">
+                            Before proposing any technical solution, we take time to understand your business, profession, or use case in detail. We listen closely to your core objectives.
+                        </p>
+                        
+                        <div class="space-y-3 bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                            <h4 class="text-sm font-bold text-navy uppercase tracking-wider" data-en="What We Discuss:" data-my="ဆွေးနွေးမည့် အဓိကအချက်များ -">What We Discuss:</h4>
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Your business, profession, or specific use case." data-my="သင့်လုပ်ငန်း၊ အသက်မွေးဝမ်းကျောင်းမှု သို့မဟုတ် အထူးအသုံးပြုပုံ။">Your business, profession, or specific use case.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Main problem the website or system should solve." data-my="ဝဘ်ဆိုဒ် သို့မဟုတ် စနစ်က ဖြေရှင်းပေးရမည့် ပင်မပြဿနာ။">Main problem the website or system should solve.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Target users and expected functionality." data-my="ပစ်မှတ်သုံးစွဲသူများနှင့် မျှော်လင့်ထားသော လုပ်ဆောင်ချက်များ။">Target users and expected functionality.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Required pages, modules or interactive features." data-my="လိုအပ်သော စာမျက်နှာများ၊ မော်ဂျူးများ သို့မဟုတ် အပြန်အလှန်တုံ့ပြန်မှု လုပ်ဆောင်ချက်များ။">Required pages, modules or interactive features.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Preferred visual direction and branding." data-my="နှစ်သက်သည့် အမြင်ပုံစံနှင့် ဘြန်းဒင်း။">Preferred visual direction and branding.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Budget expectations and desired timeline." data-my="ဘတ်ဂျက် ခန့်မှန်းချက်နှင့် လိုချင်သော အချိန်ဇယား။">Budget expectations and desired timeline.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Existing content, images, data or systems, if applicable." data-my="ရှိပြီးသား အကြောင်းအရာများ၊ ပုံများ၊ အချက်အလက်များ သို့မဟုတ် စနစ်များ (ရှိလျှင်)။">Existing content, images, data or systems, if applicable.</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                            <div class="p-4 rounded-xl bg-blue-50/60 border border-blue-100">
+                                <span class="font-bold text-navy block mb-1" data-en="Customer Contribution:" data-my="ဖောက်သည်၏ ပံ့ပိုးမှု -" >Customer Contribution:</span>
+                                <span class="text-slate-600" data-en="Explain needs and provide available info, examples or reference websites." data-my="သင့်လိုအပ်ချက်များကို ရှင်းပြပြီး ရှိပြီးသား အချက်အလက်များ၊ ဥပမာများ သို့မဟုတ် ကိုးကားဝဘ်ဆိုဒ်များကို ပံ့ပိုးပေးခြင်း။">Explain needs and provide available info, examples or reference websites.</span>
+                            </div>
+                            <div class="p-4 rounded-xl bg-emerald-50/60 border border-emerald-100">
+                                <span class="font-bold text-navy block mb-1" data-en="Expected Outcome:" data-my="မျှော်လင့်ရသည့် ရလဒ် -">Expected Outcome:</span>
+                                <span class="text-slate-600" data-en="A clearer understanding of project requirements and next steps." data-my="ပရောဂျက်လိုအပ်ချက်များနှင့် နောက်ဆက်တွဲအဆင့်များကို ပိုမိုရှင်းလင်းစွာ နားလည်လာခြင်း။">A clearer understanding of project requirements and next steps.</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Visual Representation -->
+                    <div class="lg:col-span-6">
+                        <div class="bg-navy rounded-2xl p-6 text-white shadow-xl border border-slate-700">
+                            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-700 text-xs font-mono text-cyanAccent">
+                                <span data-en="Discovery & Consultation Session" data-my="ရှာဖွေတွေ့ရှိမှုနှင့် တိုင်ပင်ဆွေးနွေးခြင်း">Discovery & Consultation Session</span>
+                                <span><i class="fa-solid fa-comments mr-1"></i> Phase 01</span>
+                            </div>
+                            <div class="space-y-4 text-sm font-sans">
+                                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                                    <div class="text-xs text-slate-400 mb-1" data-en="Client Brief & Goals" data-my="ဖောက်သည်၏ အကျဉ်းချုပ်နှင့် ရည်မှန်းချက်များ">Client Brief & Goals</div>
+                                    <div class="font-semibold text-white" data-en="“We need a modern personal portfolio with booking integration and clean corporate aesthetic.”" data-my="“ကျွန်ုပ်တို့အတွက် ကြိုတင်စာရင်းပေးသွင်းမှု ပါဝင်ပြီး ခေတ်မီသော ကိုယ်ပိုင်ဝဘ်ဆိုဒ် လိုအပ်ပါသည်။”">“We need a modern personal portfolio with booking integration and clean corporate aesthetic.”</div>
+                                </div>
+                                <div class="bg-slate-800 p-4 rounded-xl border border-slate-700">
+                                    <div class="text-xs text-slate-400 mb-1" data-en="Profile Craft Assessment" data-my="Profile Craft ၏ သုံးသပ်ချက်">Profile Craft Assessment</div>
+                                    <div class="text-slate-300 text-xs leading-relaxed" data-en="Analyzed scope for personal profile package, identified interactive calendar modules, and confirmed target timeline." data-my="ကိုယ်ပိုင်ပရိုဖိုင်းအတွက် လိုအပ်ချက်များကို စစ်ဆေးခြင်း၊ ပြက္ခဒိန်မော်ဂျူးများကို ဖော်ထုတ်ခြင်းနှင့် အချိန်ဇယားအတည်ပြုခြင်း။">Analyzed scope for personal profile package, identified interactive calendar modules, and confirmed target timeline.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stage 2: Planning & Scope -->
+        <section id="stage-2" class="py-12 bg-white border-b border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <!-- Visual Representation on Left for Alternating Layout -->
+                    <div class="lg:col-span-6 order-2 lg:order-1">
+                        <div class="bg-navy rounded-2xl p-6 text-white shadow-xl border border-slate-700 font-mono text-xs">
+                            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-700 text-cyanAccent">
+                                <span data-en="Project Specification & Quotation" data-my="ပရောဂျက် သတ်မှတ်ချက်နှင့် ဈေးနှုန်းခန့်မှန်းချက်">Project Specification & Quotation</span>
+                                <span>Phase 02</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-slate-800 rounded-lg flex justify-between items-center">
+                                    <span class="text-slate-300" data-en="Scope: Business Website + POS" data-my="နယ်ပယ် - လုပ်ငန်းသုံးဝဘ်ဆိုဒ် + POS">Scope: Business Website + POS</span>
+                                    <span class="text-emerald-400">Confirmed</span>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg flex justify-between items-center">
+                                    <span class="text-slate-300" data-en="Estimated Timeline" data-my="ခန့်မှန်း အချိန်ကာလ">Estimated Timeline</span>
+                                    <span class="text-blue-400">3 - 4 Weeks</span>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg flex justify-between items-center">
+                                    <span class="text-slate-300" data-en="Deliverables Schedule" data-my="ပေးအပ်မည့် အချိန်ဇယား">Deliverables Schedule</span>
+                                    <span class="text-cyanAccent">Milestone Based</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6 space-y-6 order-1 lg:order-2">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-blue-50 text-royal text-xs font-bold uppercase tracking-wider">
+                            <span>Stage 02</span>
+                        </div>
+                        <h3 class="text-3xl font-extrabold text-navy" data-en="Planning & Scope" data-my="၂။ အစီအစဉ်နှင့် အတိုင်းအတာ သတ်မှတ်ခြင်း">Planning & Scope</h3>
+                        <p class="text-base text-slate-600 leading-relaxed" data-en="We convert initial requirements into a defined project scope, outlining exact deliverables, technical approach, cost estimation, and schedule before any development begins." data-my="ပထမဆုံး လိုအပ်ချက်များကို တိကျသော ပရောဂျက်နယ်ပယ်အဖြစ် ပြောင်းလဲကာ လုပ်ဆောင်ရမည့်အရာများ၊ နည်းပညာပိုင်းဆိုင်ရာ ချဉ်းကပ်မှု၊ ကုန်ကျစရိတ်နှင့် အချိန်ဇယားတို့ကို မည်သည့်တည်ဆောက်မှုမျှ မစတင်မီ အသေးစိတ် သတ်မှတ်ပေးပါသည်။">
+                            We convert initial requirements into a defined project scope, outlining exact deliverables, technical approach, cost estimation, and schedule before any development begins.
+                        </p>
+                        
+                        <div class="space-y-3 bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                            <h4 class="text-sm font-bold text-navy uppercase tracking-wider" data-en="What Planning Covers:" data-my="စီစဉ်ဆောင်ရွက်မှုတွင် ပါဝင်သည့်အချက်များ -">What Planning Covers:</h4>
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Page structure for personal or business websites." data-my="ကိုယ်ပိုင် သို့မဟုတ် လုပ်ငန်းသုံး ဝဘ်ဆိုဒ်များအတွက် စာမျက်နှာဖွဲ့စည်းပုံ။">Page structure for personal or business websites.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Modules and screens for POS / management systems." data-my="POS / စီမံခန့်ခွဲမှုစနစ်များအတွက် မော်ဂျူးများနှင့် မျက်နှာပြင်များ။">Modules and screens for POS / management systems.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Required interactive functions and technical approach." data-my="လိုအပ်သော အပြန်အလှန်တုံ့ပြန်မှု လုပ်ဆောင်ချက်များနှင့် နည်းပညာချဉ်းကပ်မှု။">Required interactive functions and technical approach.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Estimated cost, development schedule, inclusions and exclusions." data-my="ခန့်မှန်းကုန်ကျစရိတ်၊ တည်ဆောက်ချိန်ဇယား၊ ပါဝင်သည့်အရာများနှင့် မပါဝင်သည့်အရာများ။">Estimated cost, development schedule, inclusions and exclusions.</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
+                            <span class="font-bold block mb-1" data-en="Important Rule:" data-my="အရေးကြီးသော စည်းမျဉ်း -">Important Rule:</span>
+                            <span data-en="Prices and timelines depend on complexity and confirmed scope. Additional features may affect cost and delivery time. We never promise fixed completion dates before requirements are understood." data-my="ဈေးနှုန်းနှင့် အချိန်ကာလသည် ရှုပ်ထွေးမှုနှင့် အတည်ပြုထားသော နယ်ပယ်အပေါ် မူတည်ပါသည်။ လိုအပ်ချက်များ မသိရသေးဘဲ တိကျသော ပြီးစီးမည့်ရက်စွဲကို ကျွန်ုပ်တို့ မပေးပါ။">Prices and timelines depend on complexity and confirmed scope. Additional features may affect cost and delivery time. We never promise fixed completion dates before requirements are understood.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stage 3: UI/UX Design -->
+        <section id="stage-3" class="py-12 bg-white border-b border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-blue-50 text-royal text-xs font-bold uppercase tracking-wider">
+                            <span>Stage 03</span>
+                        </div>
+                        <h3 class="text-3xl font-extrabold text-navy" data-en="UI/UX Design" data-my="၃။ UI/UX ဒီဇိုင်းရေးဆွဲခြင်း">UI/UX Design</h3>
+                        <p class="text-base text-slate-600 leading-relaxed" data-en="We plan how your website or system looks and how users interact with it. Our design process ensures clean hierarchy, responsive layouts, and intuitive navigation." data-my="သင်၏ ဝဘ်ဆိုဒ် သို့မဟုတ် စနစ် မည်သို့ပုံစံရှိမည်၊ သုံးစွဲသူများ မည်သို့ အသုံးပြုမည်ကို စီစဉ်ပါသည်။ ကျွန်ုပ်တို့၏ ဒီဇိုင်းလုပ်ငန်းစဉ်သည် ရှင်းလင်းသော အဆင်အပြင်၊ ဖုန်းနှင့်ကွန်ပျူတာနှစ်မျိုးစလုံးတွင် ကောင်းမွန်စွာပေါ်လွင်မှုနှင့် လွယ်ကူသော သုံးစွဲမှုကို အာမခံပါသည်။">
+                            We plan how your website or system looks and how users interact with it. Our design process ensures clean hierarchy, responsive layouts, and intuitive navigation.
+                        </p>
+                        
+                        <div class="space-y-3 bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                            <h4 class="text-sm font-bold text-navy uppercase tracking-wider" data-en="Design Scope Includes:" data-my="ဒီဇိုင်းလုပ်ငန်းစဉ်တွင် ပါဝင်သည်များ -">Design Scope Includes:</h4>
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Page layout and content hierarchy." data-my="စာမျက်နှာအဆင်အပြင်နှင့် အကြောင်းအရာအလိုက် စီစဉ်မှု။">Page layout and content hierarchy.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Navigation and user flows." data-my="မီနူးနှင့် သုံးစွဲသူများ ဝင်ရောက်သွားလာမည့် လမ်းကြောင်းများ။">Navigation and user flows.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Typography, colors, and spacing." data-my="ဖောင့်အမျိုးအစား၊ အရောင်များနှင့် ကွာဟချက်များ။">Typography, colors, and spacing.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Responsive desktop and mobile layouts." data-my="ကွန်ပျူတာနှင့် ဖုန်းများအတွက် သင့်လျော်သော အဆင်အပြင်များ။">Responsive desktop and mobile layouts.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Dashboard or system screen designs for POS projects." data-my="POS ပရောဂျက်များအတွက် ဒက်ရှ်ဘอร์ด သို့မဟုတ် စနစ်မျက်နှာပြင် ဒီဇိုင်းများ။">Dashboard or system screen designs for POS projects.</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-blue-50/60 border border-blue-100 text-xs">
+                            <span class="font-bold text-navy block mb-1" data-en="Customer Review & Approval:" data-my="ဖောက်သည်၏ စစ်ဆေးအတည်ပြုချက် -">Customer Review & Approval:</span>
+                            <span class="text-slate-600" data-en="Review proposed design direction and provide consolidated feedback before implementation begins." data-my="အဆိုပြုထားသော ဒီဇိုင်း দিকတကျကို စစ်ဆေးပြီး တည်ဆောက်မှုမစတင်မီ စုစည်းထားသော သုံးသပ်ချက်များကို ပေးအပ်ခြင်း။">Review proposed design direction and provide consolidated feedback before implementation begins.</span>
+                        </div>
+                    </div>
+
+                    <!-- Visual Representation -->
+                    <div class="lg:col-span-6">
+                        <div class="bg-navy rounded-2xl p-6 text-white shadow-xl border border-slate-700">
+                            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-700 text-xs font-mono text-cyanAccent">
+                                <span data-en="UI/UX Wireframing & Layout" data-my="UI/UX ဝါယာဖရိမ်နှင့် အဆင်အပြင်">UI/UX Wireframing & Layout</span>
+                                <span>Phase 03</span>
+                            </div>
+                            <div class="space-y-3 font-mono text-xs">
+                                <div class="grid grid-cols-3 gap-2">
+                                    <div class="bg-slate-800 p-3 rounded text-center border border-slate-700">
+                                        <div class="text-blue-400 font-bold mb-1">Mobile</div>
+                                        <div class="text-[10px] text-slate-400">390 x 844px</div>
+                                    </div>
+                                    <div class="bg-slate-800 p-3 rounded text-center border border-slate-700">
+                                        <div class="text-cyanAccent font-bold mb-1">Tablet</div>
+                                        <div class="text-[10px] text-slate-400">768 x 1024px</div>
+                                    </div>
+                                    <div class="bg-slate-800 p-3 rounded text-center border border-slate-700">
+                                        <div class="text-indigo-400 font-bold mb-1">Desktop</div>
+                                        <div class="text-[10px] text-slate-400">1440 x 900px</div>
+                                    </div>
+                                </div>
+                                <div class="p-4 bg-slate-800 rounded-xl border border-slate-700 text-slate-300">
+                                    <div class="flex items-center justify-between mb-2">
+                                        <span class="font-semibold text-white" data-en="Color Palette & Typography" data-my="အရောင်စုံနှင့် ဖောင့်စနစ်">Color Palette & Typography</span>
+                                        <span class="text-emerald-400">Approved</span>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <div class="w-6 h-6 rounded bg-[#0F172A]" title="Deep Navy"></div>
+                                        <div class="w-6 h-6 rounded bg-[#2563EB]" title="Royal Blue"></div>
+                                        <div class="w-6 h-6 rounded bg-[#06B6D4]" title="Cyan"></div>
+                                        <div class="w-6 h-6 rounded bg-[#6366F1]" title="Soft Violet"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stage 4: Development -->
+        <section id="stage-4" class="py-12 bg-white border-b border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <!-- Visual Representation on Left -->
+                    <div class="lg:col-span-6 order-2 lg:order-1">
+                        <div class="bg-navy rounded-2xl p-6 text-white shadow-xl border border-slate-700 font-mono text-xs">
+                            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-700 text-cyanAccent">
+                                <span data-en="Development & Code Architecture" data-my="ဆော့ဖ်ဝဲတည်ဆောက်ခြင်းနှင့် ကုတ်စနစ်">Development & Code Architecture</span>
+                                <span>Phase 04</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-slate-800 rounded-lg border border-slate-700">
+                                    <div class="text-blue-400 font-bold mb-1">Personal Profile / Business Website</div>
+                                    <div class="text-slate-400 text-[11px]" data-en="HTML5, Tailwind CSS, Responsive JS, Interactive Modules" data-my="HTML5, Tailwind CSS, Responsive JS, အပြန်အလှန်တုံ့ပြန်မှု မော်ဂျူးများ">HTML5, Tailwind CSS, Responsive JS, Interactive Modules</div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg border border-slate-700">
+                                    <div class="text-cyanAccent font-bold mb-1">POS / Business Management System</div>
+                                    <div class="text-slate-400 text-[11px]" data-en="App Screens, Database Integration, Auth, Inventory Logic" data-my="အက်ပ်မျက်နှာပြင်များ၊ ဒေတာဘေ့စ်ချိတ်ဆက်မှု၊ အသုံးပြုသူခွင့်ပြုချက်နှင့် စာရင်းဇယားလော့ဂျစ်">App Screens, Database Integration, Auth, Inventory Logic</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6 space-y-6 order-1 lg:order-2">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-blue-50 text-royal text-xs font-bold uppercase tracking-wider">
+                            <span>Stage 04</span>
+                        </div>
+                        <h3 class="text-3xl font-extrabold text-navy" data-en="Development" data-my="၄။ ဆော့ဖ်ဝဲ တည်ဆောက်ခြင်း">Development</h3>
+                        <p class="text-base text-slate-600 leading-relaxed" data-en="We turn the approved scope and design into a fully functioning digital product. Implementation details vary based on the specific service package selected." data-my="အတည်ပြုထားသော နယ်ပယ်နှင့် ဒီဇိုင်းကို အပြည့်အဝ လုပ်ဆောင်နိုင်သော ဒစ်ဂျစ်တယ်ထုတ်ကုန်အဖြစ် ဖန်တီးပါသည်။ လုပ်ဆောင်ချက်များသည် ရွေးချယ်ထားသော ဝန်ဆောင်မှုအမျိုးအစားအပေါ် မူတည်၍ ကွာခြားပါသည်။">
+                            We turn the approved scope and design into a fully functioning digital product. Implementation details vary based on the specific service package selected.
+                        </p>
+                        
+                        <div class="space-y-3 bg-slate-50 p-6 rounded-2xl border border-slate-200 text-sm">
+                            <h4 class="font-bold text-navy uppercase tracking-wider" data-en="Implementation by Service Type:" data-my="ဝန်ဆောင်မှု အမျိုးအစားအလိုက် တည်ဆောက်ပုံ -">Implementation by Service Type:</h4>
+                            <div class="space-y-3 text-slate-600">
+                                <div>
+                                    <span class="font-semibold text-navy block" data-en="• Personal Profile:" data-my="• ကိုယ်ပိုင်ပရိုဖိုင်းဝဘ်ဆိုဒ် -">• Personal Profile:</span>
+                                    <span class="text-xs" data-en="Personal content, professional presentation, custom interactive JavaScript functions, booking/scheduling calculators." data-my="ကိုယ်ပိုင်အကြောင်းအရာ၊ ပရော်ဖက်ရှင်နယ်တင်ဆက်မှု၊ ဂျာဗားစက్రిပ် ဝန်ဆောင်မှုများနှင့် ကြိုတင်စာရင်းပေးသွင်းမှုများ။">Personal content, professional presentation, custom interactive JavaScript functions, booking/scheduling calculators.</span>
+                                </div>
+                                <div>
+                                    <span class="font-semibold text-navy block" data-en="• Business Website:" data-my="• လုပ်ငန်းသုံးဝဘ်ဆိုဒ် -">• Business Website:</span>
+                                    <span class="text-xs" data-en="Business info, service presentation, product/menu displays, gallery, contact links, and responsive layouts." data-my="လုပ်ငန်းအချက်အလက်၊ ဝန်ဆောင်မှုပြသမှု၊ ကုန်ပစ္စည်းပြခန်း၊ ဆက်သွယ်ရန်လင့်ခ်များနှင့် ဖုန်း/ကွန်ပျူတာ အဆင်ပြေမှု။">Business info, service presentation, product/menu displays, gallery, contact links, and responsive layouts.</span>
+                                </div>
+                                <div>
+                                    <span class="font-semibold text-navy block" data-en="• POS / Business Management System:" data-my="• POS / လုပ်ငန်းစီမံခန့်ခွဲမှုစနစ် -">• POS / Business Management System:</span>
+                                    <span class="text-xs" data-en="Agreed application screens, backend logic, database integration, sales/inventory reports, and access permissions." data-my="သဘောတူထားသော အက်ပ်မျက်နှာပြင်များ၊ ဘက်ခ်အင်လော့ဂျစ်၊ ဒေတာဘေ့စ်ချိတ်ဆက်မှု၊ အရောင်း/စာရင်းအင်း အစီရင်ခံစာများ။">Agreed application screens, backend logic, database integration, sales/inventory reports, and access permissions.</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-blue-50/60 border border-blue-100 text-xs">
+                            <span class="font-bold text-navy block mb-1" data-en="Customer Contribution:" data-my="ဖောက်သည်၏ ပံ့ပိုးမှု -" >Customer Contribution:</span>
+                            <span class="text-slate-600" data-en="Provide agreed text, images, business info, product data, and respond promptly to clarification requests." data-my="သဘောတူထားသော စာသားများ၊ ပုံများ၊ လုပ်ငန်းအချက်အလက်များကို ပံ့ပိုးပေးပြီး မေးမြန်းချက်များကို အချိန်မီ ဖြေကြားပေးခြင်း။">Provide agreed text, images, business info, product data, and respond promptly to clarification requests.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stage 5: Testing & Review -->
+        <section id="stage-5" class="py-12 bg-white border-b border-slate-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <div class="lg:col-span-6 space-y-6">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-blue-50 text-royal text-xs font-bold uppercase tracking-wider">
+                            <span>Stage 05</span>
+                        </div>
+                        <h3 class="text-3xl font-extrabold text-navy" data-en="Testing & Review" data-my="၅။ စမ်းသပ်စစ်ဆေးခြင်းနှင့် သုံးသပ်ခြင်း">Testing & Review</h3>
+                        <p class="text-base text-slate-600 leading-relaxed" data-en="We verify that the implementation works according to agreed requirements. We conduct rigorous testing across common browsers, screen sizes, and workflows." data-my="သဘောတူထားသော လိုအပ်ချက်များနှင့်အညီ လုပ်ဆောင်နိုင်ခြင်း ရှိမရှိ စစ်ဆေးပါသည်။ ဘရောက်ဆာအမျိုးမျိုး၊ ဖန်သားပြင်အရွယ်အစားများနှင့် လုပ်ငန်းစဉ်များတွင် စမ်းသပ်မှုများ ပြုလုပ်ပါသည်။">
+                            We verify that the implementation works according to agreed requirements. We conduct rigorous testing across common browsers, screen sizes, and workflows.
+                        </p>
+                        
+                        <div class="space-y-3 bg-slate-50 p-6 rounded-2xl border border-slate-200">
+                            <h4 class="text-sm font-bold text-navy uppercase tracking-wider" data-en="What We Test & Verify:" data-my="စမ်းသပ်စစ်ဆေးသည့် အချက်များ -">What We Test & Verify:</h4>
+                            <ul class="space-y-2 text-sm text-slate-600">
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Core functionality and interactive workflows." data-my="ပင်မလုပ်ဆောင်ချက်များနှင့် အပြန်အလှန်တုံ့ပြန်မှု လုပ်ငန်းစဉ်များ။">Core functionality and interactive workflows.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Links, navigation, forms, and data validation." data-my="လင့်ခ်များ၊ မီနူးများ၊ ဖောင်များနှင့် အချက်အလက် စစ်ဆေးမှုများ။">Links, navigation, forms, and data validation.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Responsive behavior on mobile, tablet, and desktop." data-my="ဖုန်း၊ တက်ဘလက်နှင့် ကွန်ပျူတာများတွင် မှန်ကန်စွာပေါ်လွင်မှု။">Responsive behavior on mobile, tablet, and desktop.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Database operations and browser compatibility." data-my="ဒေတာဘေ့စ် လုပ်ဆောင်ချက်များနှင့် ဘရောက်ဆာ ကိုက်ညီမှု။">Database operations and browser compatibility.</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
+                            <span class="font-bold block mb-1" data-en="Important Rules for Testing:" data-my="စမ်းသပ်ခြင်းဆိုင်ရာ အရေးကြီးစည်းမျဉ်းများ -">Important Rules for Testing:</span>
+                            <span data-en="Testing ensures agreed features function correctly, but does not guarantee an entirely error-free ecosystem under rare third-party conditions. Issues in scope are fixed; newly requested features require separate scope/quotation." data-my="စမ်းသပ်စစ်ဆေးခြင်းသည် သဘောတူထားသော လုပ်ဆောင်ချက်များ မှန်ကန်ကြောင်း အာမခံသော်လည်း ပြင်ပအခြေအနေများကြောင့် အမှားအယွင်းကင်းစင်မှုကို အကြွင်းမဲ့ မဆိုလိုပါ။ နယ်ပယ်အတွင်း အမှားများကို ပြုပြင်ပေးပြီး၊ အသစ်တောင်းဆိုမှုများအတွက် သီးသန့်ဆွေးနွေးရပါမည်။">Testing ensures agreed features function correctly, but does not guarantee an entirely error-free ecosystem under rare third-party conditions. Issues in scope are fixed; newly requested features require separate scope/quotation.</span>
+                        </div>
+                    </div>
+
+                    <!-- Visual Representation -->
+                    <div class="lg:col-span-6">
+                        <div class="bg-navy rounded-2xl p-6 text-white shadow-xl border border-slate-700 font-mono text-xs">
+                            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-700 text-cyanAccent">
+                                <span data-en="QA Testing & Review Suite" data-my="QA စမ်းသပ်စစ်ဆေးရေး စနစ်">QA Testing & Review Suite</span>
+                                <span>Phase 05</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-slate-800 rounded-lg flex items-center justify-between border border-slate-700">
+                                    <span class="text-slate-300" data-en="UI Responsiveness Check" data-my="ဖုန်း/ကွန်ပျူတာ ပြသမှုစစ်ဆေးခြင်း">UI Responsiveness Check</span>
+                                    <span class="text-emerald-400 font-bold">PASSED</span>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg flex items-center justify-between border border-slate-700">
+                                    <span class="text-slate-300" data-en="Interactive Forms & Validation" data-my="ဖောင်များနှင့် အချက်အလက် စစ်ဆေးမှု">Interactive Forms & Validation</span>
+                                    <span class="text-emerald-400 font-bold">PASSED</span>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg flex items-center justify-between border border-slate-700">
+                                    <span class="text-slate-300" data-en="Client Preview & Feedback Integration" data-my="ဖောက်သည်၏ ကြည့်ရှုစစ်ဆေးပြီး အကြံပြုချက်ပေါင်းစပ်မှု">Client Preview & Feedback Integration</span>
+                                    <span class="text-blue-400 font-bold">COMPLETED</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stage 6: Deployment & Handover -->
+        <section id="stage-6" class="py-12 bg-white">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    <!-- Visual Representation on Left -->
+                    <div class="lg:col-span-6 order-2 lg:order-1">
+                        <div class="bg-navy rounded-2xl p-6 text-white shadow-xl border border-slate-700 font-mono text-xs">
+                            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-700 text-cyanAccent">
+                                <span data-en="Deployment & Secure Handover" data-my="လွှင့်တင်ခြင်းနှင့် လုံခြုံစွာ လက်လွှဲပေးခြင်း">Deployment & Secure Handover</span>
+                                <span>Phase 06</span>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="p-3 bg-slate-800 rounded-lg border border-slate-700">
+                                    <div class="text-blue-400 font-bold mb-1">Deployment Approach</div>
+                                    <div class="text-slate-400 text-[11px]" data-en="Static Hosting, Cloudflare Pages, or Compatible Backend/Database Hosting." data-my="တည်ငြိမ်သော ဟိုစတင်မ်၊ Cloudflare Pages သို့မဟုတ် လိုက်ဖက်သော ဘက်ခ်အင် ဟိုစတင်မ်။">Static Hosting, Cloudflare Pages, or Compatible Backend/Database Hosting.</div>
+                                </div>
+                                <div class="p-3 bg-slate-800 rounded-lg border border-slate-700">
+                                    <div class="text-emerald-400 font-bold mb-1">Secure Handover</div>
+                                    <div class="text-slate-400 text-[11px]" data-en="Credentials, Repository/Source Access, Administrator Training." data-my="အကောင့်အချက်အလက်များ၊ ရိုပိုဇိုရီ/ကုဒ်မူရင်းများ၊ စီမံခန့်ခွဲသူ သင်တန်းပေးခြင်း။">Credentials, Repository/Source Access, Administrator Training.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-6 space-y-6 order-1 lg:order-2">
+                        <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-md bg-blue-50 text-royal text-xs font-bold uppercase tracking-wider">
+                            <span>Stage 06</span>
+                        </div>
+                        <h3 class="text-3xl font-extrabold text-navy" data-en="Deployment & Handover" data-my="၆။ လွှင့်တင်ခြင်းနှင့် လက်လွှဲပေးခြင်း">Deployment & Handover</h3>
+                        <p class="text-base text-slate-600 leading-relaxed" data-en="We publish your finished project live and provide a structured handover so you or your team can manage the platform with confidence." data-my="သင်၏ ပြီးစီးသွားသော ပရောဂျက်ကို အများပြည်သူကြည့်ရှုနိုင်ရန် တင်ပေးပြီး၊ သင် သို့မဟုတ် သင်၏အဖွဲ့သားများ ယုံကြည်မှုရှိရှိ စီမံခန့်ခွဲနိုင်စေရန် စနစ်တကျ လက်လွှဲပေးပါသည်။">
+                            We publish your finished project live and provide a structured handover so you or your team can manage the platform with confidence.
+                        </p>
+                        
+                        <div class="space-y-3 bg-slate-50 p-6 rounded-2xl border border-slate-200 text-sm">
+                            <h4 class="font-bold text-navy uppercase tracking-wider" data-en="Deployment & Handover Details:" data-my="လွှင့်တင်ခြင်းနှင့် လက်လွှဲခြင်းဆိုင်ရာ အသေးစိတ် -">Deployment & Handover Details:</h4>
+                            <ul class="space-y-2 text-slate-600 text-xs">
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Static hosting via Cloudflare Pages or GitHub Pages where applicable." data-my="သင့်လျော်သည့်နေရာတွင် Cloudflare Pages သို့မဟုတ် GitHub Pages ဖြင့် ဟိုစတင်မ်တင်ခြင်း။">Static hosting via Cloudflare Pages or GitHub Pages where applicable.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Custom domain and paid hosting configuration when planned." data-my="စီစဉ်ထားသည့်အတိုင်း ကိုယ်ပိုင်ဒိုမိန်းနှင့် ဟိုစတင်မ် ချိတ်ဆက်ခြင်း။">Custom domain and paid hosting configuration when planned.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Secure handover of credentials, source repository access, and basic user walkthrough." data-my="အကောင့်အချက်အလက်များ၊ ရိုပိုဇိုရီလင့်ခ်နှင့် အသုံးပြုပုံလမ်းညွှန်များကို လုံခြုံစွာ လက်လွှဲပေးခြင်း။">Secure handover of credentials, source repository access, and basic user walkthrough.</span></li>
+                                <li class="flex items-start"><i class="fa-solid fa-check text-royal mt-1 mr-2"></i><span data-en="Clear separation between development fees and recurring domain/hosting costs." data-my="တည်ဆောက်ခနှင့် အမြဲတမ်းကုန်ကျမည့် ဒိုမိန်း/ဟိုစတင်မ် ကြေးများကို ရှင်းလင်းစွာ ခွဲခြားပြသခြင်း။">Clear separation between development fees and recurring domain/hosting costs.</span></li>
+                            </ul>
+                        </div>
+
+                        <div class="p-4 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900">
+                            <span class="font-bold block mb-1" data-en="Important Note on Infrastructure:" data-my="အဆောက်အအုံဆိုင်ရာ အရေးကြီးမှတ်ချက် -">Important Note on Infrastructure:</span>
+                            <span data-en="Domain registration, hosting, ongoing maintenance, and training are not automatically included unless explicitly specified in your project agreement. We do not operate our own hosting infrastructure; third-party fees apply separately." data-my="ပရောဂျက်စာချုပ်တွင် အတိအလည် မပါရှိပါက ဒိုမိန်း၊ ဟိုစတင်မ်၊ ပြုပြင်ထိန်းသိမ်းမှုနှင့် သင်တန်းများသည် အလိုအလျောက် ပါဝင်မည်မဟုတ်ပါ။ ကျွန်ုပ်တို့သည် ကိုယ်ပိုင်ဟိုစတင်မ် မလုပ်ဆောင်ပါ၊ ပြင်ပဝန်ဆောင်ခများ သီးသန့်ရှိပါသည်။">Domain registration, hosting, ongoing maintenance, and training are not automatically included unless explicitly specified in your project agreement. We do not operate our own hosting infrastructure; third-party fees apply separately.</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Section D — How We Keep Projects Clear -->
+    <section class="py-20 bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-extrabold text-navy tracking-tight mb-4" data-en="How We Keep Projects Clear" data-my="ပရောဂျက်များကို မည်သို့ ရှင်းလင်းအောင် ထိန်းသိမ်းသနည်း">
+                    How We Keep Projects Clear
+                </h2>
+                <p class="text-base text-slate-600" data-en="Our working principles are designed to eliminate confusion and maintain complete transparency throughout the project." data-my="ကျွန်ုပ်တို့၏ အလုပ်လုပ်ကိုင်မှု መርတည်းများသည် ပရောဂျက်တစ်လျှောက် အထင်အမြင်လွဲမှားမှုများကို ဖယ်ရှားပေးပြီး အကြွင်းမဲ့ ပွင့်လင်းမြင်သာမှုကို ထိန်းသိမ်းရန် ဒီဇိုင်းထုတ်ထားပါသည်။">
+                    Our working principles are designed to eliminate confusion and maintain complete transparency throughout the project.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Principle 1 -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 text-royal flex items-center justify-center font-bold text-base mb-4">
+                        <i class="fa-solid fa-file-contract"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-navy mb-2" data-en="Clear Requirements First" data-my="ပထမဦးစွာ လိုအပ်ချက်များကို ရှင်းလင်းခြင်း">Clear Requirements First</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed" data-en="We establish exact needs and objectives before writing a single line of code, ensuring total alignment from day one." data-my="ကုဒ်မရေးမီ တိကျသော လိုအပ်ချက်များနှင့် ရည်မှန်းချက်များကို သတ်မှတ်ပြီး ပထမနေ့မှစ၍ အပြည့်အဝ ကိုက်ညီစေပါသည်။">
+                        We establish exact needs and objectives before writing a single line of code, ensuring total alignment from day one.
+                    </p>
+                </div>
+
+                <!-- Principle 2 -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 text-royal flex items-center justify-center font-bold text-base mb-4">
+                        <i class="fa-solid fa-list-check"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-navy mb-2" data-en="Confirmed Scope & Deliverables" data-my="အတည်ပြုထားသော နယ်ပယ်နှင့် ပစ္စည်းများ">Confirmed Scope & Deliverables</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed" data-en="Project scope, timeline, and deliverables are fully documented and agreed upon prior to implementation." data-my="ပရောဂျက်နယ်ပယ်၊ အချိန်ဇယားနှင့် ပေးအပ်မည့်အရာများကို တည်ဆောက်မှုမစတင်မီ အပြည့်အဝ မှတ်တမ်းတင် သဘောတူပါသည်။">
+                        Project scope, timeline, and deliverables are fully documented and agreed upon prior to implementation.
+                    </p>
+                </div>
+
+                <!-- Principle 3 -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 text-royal flex items-center justify-center font-bold text-base mb-4">
+                        <i class="fa-solid fa-comments-dollar"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-navy mb-2" data-en="Transparent Requirements & Cost" data-my="ပွင့်လင်းမြင်သာသော လိုအပ်ချက်နှင့် ကုန်ကျစရိတ်">Transparent Requirements & Cost</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed" data-en="Any additional requirements or scope modifications are communicated clearly with separate estimations." data-my="အပိုလိုအပ်ချက် သို့မဟုတ် နယ်ပယ်ပြောင်းလဲမှုတိုင်းကို သီးခြား ခန့်မှန်းချက်များနှင့်အတူ ရှင်းလင်းစွာ အကြောင်းကြားပါသည်။">
+                        Any additional requirements or scope modifications are communicated clearly with separate estimations.
+                    </p>
+                </div>
+
+                <!-- Principle 4 -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 text-royal flex items-center justify-center font-bold text-base mb-4">
+                        <i class="fa-solid fa-shield-check"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-navy mb-2" data-en="Testing Against Agreed Functionality" data-my="သဘောတူထားသော လုပ်ဆောင်ချက်များနှင့်အညီ စမ်းသပ်ခြင်း">Testing Against Agreed Functionality</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed" data-en="Every feature is rigorously checked against the approved specifications before final review and handover." data-my="လုပ်ဆောင်ချက်တိုင်းကို အတည်ပြုထားသော သတ်မှတ်ချက်များနှင့်အညီ နောက်ဆုံးသုံးသပ်မှုနှင့် လက်လွှဲမှုမပြုမီ တင်းကျပ်စွာ စစ်ဆေးပါသည်။">
+                        Every feature is rigorously checked against the approved specifications before final review and handover.
+                    </p>
+                </div>
+
+                <!-- Principle 5 -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 text-royal flex items-center justify-center font-bold text-base mb-4">
+                        <i class="fa-solid fa-handshake"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-navy mb-2" data-en="Structured Approval Checkpoints" data-my="စနစ်တကျ အတည်ပြုချက် ရယူသည့် အဆင့်များ">Structured Approval Checkpoints</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed" data-en="Customer review and sign-off are required at critical milestones such as design and pre-deployment testing." data-my="ဒီဇိုင်းနှင့် လွှင့်တင်ခါနီး စမ်းသပ်မှုများကဲ့သို့သော အရေးကြီးသော မှတ်တိုင်များတွင် ဖောက်သည်၏ စစ်ဆေးအတည်ပြုချက်ကို ရယူပါသည်။">
+                        Customer review and sign-off are required at critical milestones such as design and pre-deployment testing.
+                    </p>
+                </div>
+
+                <!-- Principle 6 -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm">
+                    <div class="w-10 h-10 rounded-lg bg-blue-100 text-royal flex items-center justify-center font-bold text-base mb-4">
+                        <i class="fa-solid fa-server"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-navy mb-2" data-en="Separation of Development & Infrastructure" data-my="တည်ဆောက်ခနှင့် အဆောက်အအုံကြေး ခွဲခြားခြင်း">Separation of Development & Infrastructure</h3>
+                    <p class="text-xs text-slate-600 leading-relaxed" data-en="Development service fees are clearly distinguished from recurring third-party domain and hosting costs." data-my="တည်ဆောက်ခ ဝန်ဆောင်ခများကို အမြဲတမ်းကုန်ကျမည့် ပြင်ပဒိုမိန်းနှင့် ဟိုစတင်မ်ကြေးများနှင့် ရှင်းလင်းစွာ ခွဲခြားထားပါသည်။">
+                        Development service fees are clearly distinguished from recurring third-party domain and hosting costs.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section E — Different Services, Different Requirements -->
+    <section id="services" class="py-20 bg-slate-50 border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-3xl font-extrabold text-navy tracking-tight mb-4" data-en="Different Services, Different Technical Focus" data-my="ဝန်ဆောင်မှု အမျိုးမျိုး၊ နည်းပညာပိုင်းဆိုင်ရာ အာရုံစိုက်မှု အမျိုးမျိုး">
+                    Different Services, Different Technical Focus
+                </h2>
+                <p class="text-base text-slate-600" data-en="While all projects follow our core 6-stage workflow, their technical requirements and deliverables vary depending on the chosen service." data-my="ပရောဂျက်အားလုံးသည် ကျွန်ုပ်တို့၏ ပင်မအဆင့် (၆) ဆင့် လုပ်ငန်းစဉ်ကို လိုက်နာသော်လည်း၊ ရွေးချယ်ထားသော ဝန်ဆောင်မှုအပေါ်မူတည်၍ နည်းပညာပိုင်းဆိုင်ရာ လိုအပ်ချက်များနှင့် ပေးအပ်မည့်အရာများ ကွာခြားပါသည်။">
+                    While all projects follow our core 6-stage workflow, their technical requirements and deliverables vary depending on the chosen service.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Personal Profile -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm flex flex-col justify-between hover:border-royal/50 transition-all">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 text-royal flex items-center justify-center font-bold text-lg mb-6">
+                            <i class="fa-solid fa-user-tie"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-navy mb-3" data-en="Personal Profile" data-my="ကိုယ်ပိုင်ပရိုဖိုင်းဝဘ်ဆိုဒ်">Personal Profile</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-6" data-en="Focuses on professional personal presentation, portfolio showcase, contact integration, and custom interactive JavaScript functions." data-my="ပရော်ဖက်ရှင်နယ် ကိုယ်ပိုင်တင်ဆက်မှု၊ ပို့ဖိုလီယိုပြသမှု၊ ဆက်သွယ်ရန်ချိတ်ဆက်မှုနှင့် ဂျာဗားစက్రిပ် အပြန်အလှန်တုံ့ပြန်မှု လုပ်ဆောင်ချက်များကို အဓိကထားပါသည်။">
+                            Focuses on professional personal presentation, portfolio showcase, contact integration, and custom interactive JavaScript functions.
+                        </p>
+                    </div>
+                    <div>
+                        <a href="services-personal-profile.html" class="inline-flex items-center text-xs font-bold text-royal hover:text-blue-700">
+                            <span data-en="Explore Personal Profile Service" data-my="ကိုယ်ပိုင်ပရိုဖိုင်း ဝန်ဆောင်မှုကို လေ့လာရန်">Explore Personal Profile Service</span>
+                            <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Business Website -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm flex flex-col justify-between hover:border-royal/50 transition-all">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 text-royal flex items-center justify-center font-bold text-lg mb-6">
+                            <i class="fa-solid fa-building"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-navy mb-3" data-en="Business Website" data-my="လုပ်ငန်းသုံး ဝဘ်ဆိုဒ်">Business Website</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-6" data-en="Focuses on customer-facing information, corporate presentation, product or menu displays, galleries, and responsive lead-generation forms." data-my="ဖောက်သည်များအတွက် အချက်အလက်များ၊ လုပ်ငန်းတင်ဆက်မှု၊ ကုန်ပစ္စည်း သို့မဟုတ် မီနူးပြသမှု၊ ဓာတ်ပုံပြခန်းနှင့် ဖောက်သည်ခေါ်ယူရေး ဖောင်များကို အဓိကထားပါသည်။">
+                            Focuses on customer-facing information, corporate presentation, product or menu displays, galleries, and responsive lead-generation forms.
+                        </p>
+                    </div>
+                    <div>
+                        <a href="services-business-website.html" class="inline-flex items-center text-xs font-bold text-royal hover:text-blue-700">
+                            <span data-en="Explore Business Website Service" data-my="လုပ်ငန်းသုံး ဝဘ်ဆိုဒ် ဝန်ဆောင်မှုကို လေ့လာရန်">Explore Business Website Service</span>
+                            <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- POS / Business Management System -->
+                <div class="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm flex flex-col justify-between hover:border-royal/50 transition-all">
+                    <div>
+                        <div class="w-12 h-12 rounded-xl bg-blue-100 text-royal flex items-center justify-center font-bold text-lg mb-6">
+                            <i class="fa-solid fa-cash-register"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-navy mb-3" data-en="POS / Management System" data-my="POS / လုပ်ငန်းစီမံခန့်ခွဲမှုစနစ်">POS / Management System</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed mb-6" data-en="Focuses on operational workflows, backend logic, database integration, sales/inventory tracking, and secure access permissions." data-my="လုပ်ငန်းလည်ပတ်မှု လုပ်ငန်းစဉ်များ၊ ဘက်ခ်အင်လော့ဂျစ်၊ ဒေတာဘေ့စ်ချိတ်ဆက်မှု၊ အရောင်း/စာရင်းအင်း ခြေရာခံမှုနှင့် လုံခြုံသော အသုံးပြုခွင့်များကို အဓိကထားပါသည်။">
+                            Focuses on operational workflows, backend logic, database integration, sales/inventory tracking, and secure access permissions.
+                        </p>
+                    </div>
+                    <div>
+                        <a href="services-pos-system.html" class="inline-flex items-center text-xs font-bold text-royal hover:text-blue-700">
+                            <span data-en="Explore POS System Service" data-my="POS စနစ် ဝန်ဆောင်မှုကို လေ့လာရန်">Explore POS System Service</span>
+                            <i class="fa-solid fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section F — Frequently Asked Questions -->
+    <section id="faq" class="py-20 bg-white border-b border-slate-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-extrabold text-navy tracking-tight mb-4" data-en="Frequently Asked Questions" data-my="မေးလေ့ရှိသော မေးခွန်းများ">
+                    Frequently Asked Questions
+                </h2>
+                <p class="text-base text-slate-600" data-en="Clear answers to common questions about our process, timelines, costs, and project handover." data-my="ကျွန်ုပ်တို့၏ လုပ်ငန်းစဉ်၊ အချိန်ဇယား၊ ကုန်ကျစရိတ်နှင့် ပရောဂျက်လက်လွှဲခြင်းဆိုင်ရာ မေးခွန်းများအတွက် ရှင်းလင်းသော အဖြေများ။">
+                    Clear answers to common questions about our process, timelines, costs, and project handover.
+                </p>
+            </div>
+
+            <!-- FAQ Accordion List -->
+            <div class="space-y-4" id="faqAccordion">
+                
+                <!-- FAQ 1 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                    <button onclick="toggleFaq(1)" class="w-full px-6 py-4 text-left font-bold text-navy flex items-center justify-between focus:outline-none">
+                        <span class="text-sm sm:text-base" data-en="1. How does a project begin?" data-my="၁။ ပရောဂျက်တစ်ခု မည်သို့ စတင်သနည်း။">1. How does a project begin?</span>
+                        <i id="faqIcon1" class="fa-solid fa-chevron-down text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="faqContent1" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-3">
+                        <p data-en="A project begins with our Requirement Discussion stage. You share your business needs, goals, and references, and we discuss suitable approaches, features, and timeline expectations before proceeding." data-my="ပရောဂျက်တစ်ခုသည် ကျွန်ုပ်တို့၏ လိုအပ်ချက် ဆွေးနွေးမှုအဆင့်ဖြင့် စတင်ပါသည်။ သင်၏ လုပ်ငန်းလိုအပ်ချက်များ၊ ရည်မှန်းချက်များနှင့် ကိုးကားချက်များကို မျှဝေပေးပြီး၊ ရှေ့ဆက်မဆောင်ရွက်မီ သင့်လျော်သော ချဉ်းကပ်မှု၊ လုပ်ဆောင်ချက်များနှင့် အချိန်ဇယားများကို ဆွေးနွေးပါသည်။">A project begins with our Requirement Discussion stage. You share your business needs, goals, and references, and we discuss suitable approaches, features, and timeline expectations before proceeding.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                    <button onclick="toggleFaq(2)" class="w-full px-6 py-4 text-left font-bold text-navy flex items-center justify-between focus:outline-none">
+                        <span class="text-sm sm:text-base" data-en="2. Do I need to prepare content and images before development?" data-my="၂။ တည်ဆောက်မှုမစတင်မီ အကြောင်းအရာနှင့် ပုံများကို ကြိုတင်ပြင်ဆင်ထားရန် လိုအပ်ပါသလား။">2. Do I need to prepare content and images before development?</span>
+                        <i id="faqIcon2" class="fa-solid fa-chevron-down text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="faqContent2" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-3">
+                        <p data-en="Having text, logos, product data, or images ready helps accelerate development. If you don't have them ready, we can assist with placeholders or initial structure during the planning stage." data-my="စာသားများ၊ လိုဂိုများ၊ ကုန်ပစ္စည်းအချက်အလက်များ သို့မဟုတ် ပုံများကို အဆင်သင့်ပြင်ဆင်ထားခြင်းက တည်ဆောက်မှုကို ပိုမိုမြန်ဆန်စေပါသည်။ အဆင်သင့်မဖြစ်သေးပါက စီစဉ်မှုအဆင့်တွင် ပုံစံငယ်များ သို့မဟုတ် ကနဦးဖွဲ့စည်းပုံဖြင့် ကူညီပေးနိုင်ပါသည်။">Having text, logos, product data, or images ready helps accelerate development. If you don't have them ready, we can assist with placeholders or initial structure during the planning stage.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                    <button onclick="toggleFaq(3)" class="w-full px-6 py-4 text-left font-bold text-navy flex items-center justify-between focus:outline-none">
+                        <span class="text-sm sm:text-base" data-en="3. Can I request custom features?" data-my="၃။ စိတ်ကြိုက်လုပ်ဆောင်ချက်များကို တောင်းဆိုနိုင်ပါသလား။">3. Can I request custom features?</span>
+                        <i id="faqIcon3" class="fa-solid fa-chevron-down text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="faqContent3" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-3">
+                        <p data-en="Yes. We specialize in custom solutions. Custom interactive features, booking modules, or specific POS functions can be integrated based on your project requirements and scope agreement." data-my="ဟုတ်ကဲ့ တောင်းဆိုနိုင်ပါသည်။ ကျွန်ုပ်တို့သည် စိတ်ကြိုက်ဖြေရှင်းချက်များတွင် ကျွမ်းကျင်ပါသည်။ စိတ်ကြိုက် အပြန်အလှန်တုံ့ပြန်မှု လုပ်ဆောင်ချက်များ၊ ကြိုတင်စာရင်းပေးသွင်းမှု မော်ဂျူးများ သို့မဟုတ် POS လုပ်ဆောင်ချက်များကို သင့်ပရောဂျက်လိုအပ်ချက်နှင့်အညီ ထည့်သွင်းပေးနိုင်ပါသည်။">Yes. We specialize in custom solutions. Custom interactive features, booking modules, or specific POS functions can be integrated based on your project requirements and scope agreement.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                    <button onclick="toggleFaq(4)" class="w-full px-6 py-4 text-left font-bold text-navy flex items-center justify-between focus:outline-none">
+                        <span class="text-sm sm:text-base" data-en="4. Can I change requirements after development begins?" data-my="၄။ တည်ဆောက်မှုစတင်ပြီးနောက် လိုအပ်ချက်များကို ပြောင်းလဲနိုင်ပါသလား။">4. Can I change requirements after development begins?</span>
+                        <i id="faqIcon4" class="fa-solid fa-chevron-down text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="faqContent4" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-3">
+                        <p data-en="Minor adjustments can often be accommodated. However, significant changes or new feature requests after development starts may affect the project timeline and cost, requiring a supplementary agreement." data-my="အသေးစား ပြုပြင်ပြောင်းလဲမှုများကို များသောအားဖြင့် ထည့်သွင်းပေးနိုင်ပါသည်။ သို့သော် တည်ဆောက်မှုစတင်ပြီးနောက် အဓိကကျသော ပြောင်းလဲမှုများ သို့မဟုတ် လုပ်ဆောင်ချက်အသစ်များ တောင်းဆိုခြင်းသည် အချိန်ဇယားနှင့် ကုန်ကျစရိတ်ကို ထိခိုက်စေနိုင်ပြီး နောက်ဆက်တွဲ သဘောတူညီချက် လိုအပ်နိုင်ပါသည်။">Minor adjustments can often be accommodated. However, significant changes or new feature requests after development starts may affect the project timeline and cost, requiring a supplementary agreement.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                    <button onclick="toggleFaq(5)" class="w-full px-6 py-4 text-left font-bold text-navy flex items-center justify-between focus:outline-none">
+                        <span class="text-sm sm:text-base" data-en="5. How is the project cost determined?" data-my="၅။ ပရောဂျက်ကုန်ကျစရိတ်ကို မည်သို့ တွက်ချက်သနည်း။">5. How is the project cost determined?</span>
+                        <i id="faqIcon5" class="fa-solid fa-chevron-down text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="faqContent5" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-3">
+                        <p data-en="Project cost depends on complexity, required pages, interactive functions, database integrations, and the chosen service category (Personal Profile, Business Website, or POS system)." data-my="ပရောဂျက်ကုန်ကျစရိတ်သည် ရှုပ်ထွေးမှု၊ လိုအပ်သော စာမျက်နှာများ၊ အပြန်အလှန်တုံ့ပြန်မှု လုပ်ဆောင်ချက်များ၊ ဒေတာဘေ့စ်ချိတ်ဆက်မှုများနှင့် ရွေးချယ်ထားသော ဝန်ဆောင်မှုအမျိုးအစားပေါ် မူတည်ပါသည်။">Project cost depends on complexity, required pages, interactive functions, database integrations, and the chosen service category (Personal Profile, Business Website, or POS system).</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                    <button onclick="toggleFaq(6)" class="w-full px-6 py-4 text-left font-bold text-navy flex items-center justify-between focus:outline-none">
+                        <span class="text-sm sm:text-base" data-en="6. How long does a project take?" data-my="၆။ ပရောဂျက်တစ်ခုအတွက် မည်မျှ အချိန်ယူရသနည်း။">6. How long does a project take?</span>
+                        <i id="faqIcon6" class="fa-solid fa-chevron-down text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="faqContent6" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-3">
+                        <p data-en="Timelines vary based on scope. Simple personal profiles may take 1 to 2 weeks, while comprehensive business websites or POS systems typically require 2 to 4+ weeks depending on requirements." data-my="အချိန်ဇယားသည် ပရောဂျက်နယ်ပယ်အပေါ်မူတည်၍ ကွာခြားပါသည်။ ရိုးရှင်းသော ကိုယ်ပိုင်ပရိုဖိုင်းများအတွက် ၁ ပတ်မှ ၂ ပတ်အထိ ကြာနိုင်ပြီး၊ လုပ်ငန်းသုံးဝဘ်ဆိုဒ်များ သို့မဟုတ် POS စနစ်များအတွက် ၂ ပတ်မှ ၄ ပတ် သို့မဟုတ် ထိုထက်ပို၍ ကြာနိုင်ပါသည်။">Timelines vary based on scope. Simple personal profiles may take 1 to 2 weeks, while comprehensive business websites or POS systems typically require 2 to 4+ weeks depending on requirements.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                    <button onclick="toggleFaq(7)" class="w-full px-6 py-4 text-left font-bold text-navy flex items-center justify-between focus:outline-none">
+                        <span class="text-sm sm:text-base" data-en="7. Are domain and hosting costs included?" data-my="၇။ ဒိုမိန်းနှင့် ဟိုစတင်မ် ကုန်ကျစရိတ်များ ပါဝင်ပြီးသားလား။">7. Are domain and hosting costs included?</span>
+                        <i id="faqIcon7" class="fa-solid fa-chevron-down text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="faqContent7" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-3">
+                        <p data-en="Domain registration and paid recurring hosting fees are separate from development service fees unless explicitly stated in your project agreement." data-my="ပရောဂျက်စာချုပ်တွင် အတိအလည် ဖော်ပြထားခြင်း မရှိပါက ဒိုမိန်းနှင့် အမြဲတမ်းဟိုစတင်မ်ကြေးများသည် တည်ဆောက်ခ ဝန်ဆောင်ခများနှင့် သီးသန့်ဖြစ်ပါသည်။">Domain registration and paid recurring hosting fees are separate from development service fees unless explicitly stated in your project agreement.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 8 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                    <button onclick="toggleFaq(8)" class="w-full px-6 py-4 text-left font-bold text-navy flex items-center justify-between focus:outline-none">
+                        <span class="text-sm sm:text-base" data-en="8. Will I receive instructions for using my website or system?" data-my="၈။ ကျွန်ုပ်၏ ဝဘ်ဆိုဒ် သို့မဟုတ် စနစ်ကို အသုံးပြုရန် လမ်းညွှန်ချက်များ ရရှိမည်လား။">8. Will I receive instructions for using my website or system?</span>
+                        <i id="faqIcon8" class="fa-solid fa-chevron-down text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="faqContent8" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-3">
+                        <p data-en="Yes. During the deployment and handover stage, we provide necessary credentials, basic usage walkthroughs, or instructions so you can manage your platform smoothly." data-my="ဟုတ်ကဲ့ ရရှိပါမည်။ လွှင့်တင်ခြင်းနှင့် လက်လွှဲခြင်းအဆင့်တွင် သင့်ပလက်ဖောင်းကို ချောမွေ့စွာ စီမံခန့်ခွဲနိုင်ရန် လိုအပ်သော အချက်အလက်များနှင့် အသုံးပြုပုံ လမ်းညွှန်များကို ပံ့ပိုးပေးပါသည်။">Yes. During the deployment and handover stage, we provide necessary credentials, basic usage walkthroughs, or instructions so you can manage your platform smoothly.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 9 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                    <button onclick="toggleFaq(9)" class="w-full px-6 py-4 text-left font-bold text-navy flex items-center justify-between focus:outline-none">
+                        <span class="text-sm sm:text-base" data-en="9. Is ongoing maintenance included?" data-my="၉။ အမြဲတမ်း ပြုပြင်ထိန်းသိမ်းမှု ပါဝင်ပါသလား။">9. Is ongoing maintenance included?</span>
+                        <i id="faqIcon9" class="fa-solid fa-chevron-down text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="faqContent9" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-3">
+                        <p data-en="Ongoing maintenance and long-term support are not automatically included unless covered by a separate maintenance agreement or retainer package." data-my="သီးသန့် ပြုပြင်ထိန်းသိမ်းမှု စာချုပ် သို့မဟုတ် ဝန်ဆောင်မှုအစီအစဉ် မပါရှိပါက ရေရှည်ပြုပြင်ထိန်းသိမ်းမှုသည် အလိုအလျောက် ပါဝင်မည်မဟုတ်ပါ။">Ongoing maintenance and long-term support are not automatically included unless covered by a separate maintenance agreement or retainer package.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ 10 -->
+                <div class="border border-slate-200 rounded-xl overflow-hidden bg-slate-50">
+                    <button onclick="toggleFaq(10)" class="w-full px-6 py-4 text-left font-bold text-navy flex items-center justify-between focus:outline-none">
+                        <span class="text-sm sm:text-base" data-en="10. What happens if I need additional features after launch?" data-my="၁၀။ လွှင့်တင်ပြီးမှ လုပ်ဆောင်ချက်အသစ်များ ထပ်မံလိုအပ်လာပါက မည်သို့ဖြစ်မည်နည်း။">10. What happens if I need additional features after launch?</span>
+                        <i id="faqIcon10" class="fa-solid fa-chevron-down text-slate-500 transition-transform"></i>
+                    </button>
+                    <div id="faqContent10" class="hidden px-6 pb-4 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-200 pt-3">
+                        <p data-en="We are always happy to assist with future enhancements. Additional features or post-launch updates can be planned and quoted as a new phase or supplementary scope." data-my="နောင်လာမည့် တိုးမြှင့်မှုများအတွက် ကျွန်ုပ်တို့ အမြဲကူညီဆောင်ရွက်ပေးရန် အသင့်ရှိပါသည်။ လွှင့်တင်ပြီးနောက် ထပ်မံတောင်းဆိုသော လုပ်ဆောင်ချက်များကို အဆင့်သစ် သို့မဟုတ် နောက်ဆက်တွဲ နယ်ပယ်အနေဖြင့် အချိန်ဇယားဆွဲ ဈေးနှုန်းသတ်မှတ်နိုင်ပါသည်။">We are always happy to assist with future enhancements. Additional features or post-launch updates can be planned and quoted as a new phase or supplementary scope.</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Section G — Final Call to Action -->
+    <section class="py-20 bg-gradient-to-br from-navy via-slate-900 to-blue-950 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,rgba(37,99,235,0.2),transparent_60%)]"></div>
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h2 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-4" data-en="Have a Project in Mind?" data-my="စိတ်ကူးထားသော ပရောဂျက်တစ်ခု ရှိပါသလား။">
+                Have a Project in Mind?
+            </h2>
+            <p class="text-base sm:text-lg text-slate-300 max-w-2xl mx-auto mb-8" data-en="Tell us what you need. We'll help clarify the requirements and identify a suitable approach for your project." data-my="သင်လိုအပ်သည်များကို ကျွန်ုပ်တို့အား ပြောပြပါ။ လိုအပ်ချက်များကို ရှင်းလင်းစေရန်နှင့် သင့်ပရောဂျက်အတွက် သင့်လျော်သောနည်းလမ်းကို ရှာဖွေဖော်ထုတ်ရန် ကူညီပေးပါမည်။">
+                Tell us what you need. We'll help clarify the requirements and identify a suitable approach for your project.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+                <a href="get-started.html" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-royal hover:bg-blue-600 text-white font-semibold text-base shadow-xl shadow-blue-600/30 transition-all hover:scale-105" data-en="Start Your Project" data-my="ပရောဂျက်စတင်ရန်">
+                    <span data-en="Start Your Project" data-my="ပရောဂျက်စတင်ရန်">Start Your Project</span>
+                </a>
+                <a href="contact.html" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-semibold text-base border border-slate-700 shadow-sm transition-all" data-en="Contact Profile Craft" data-my="Profile Craft သို့ ဆက်သွယ်ရန်">
+                    <span data-en="Contact Profile Craft" data-my="Profile Craft သို့ ဆက်သွယ်ရန်">Contact Profile Craft</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-navy text-slate-400 py-12 border-t border-slate-800 text-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg bg-royal flex items-center justify-center text-white font-bold text-sm">PC</div>
+                        <span class="text-lg font-bold text-white">Profile <span class="text-royal">Craft</span></span>
+                    </div>
+                    <p class="text-slate-400 leading-relaxed" data-en="Professional digital services providing personal profiles, business websites, and POS management systems." data-my="ကိုယ်ပိုင်ဝဘ်ဆိုဒ်များ၊ လုပ်ငန်းသုံးဝဘ်ဆိုဒ်များနှင့် POS စီမံခန့်ခွဲမှုစနစ်များကို ပံ့ပိုးပေးနေသော ပရော်ဖက်ရှင်နယ် ဒစ်ဂျစ်တယ်ဝန်ဆောင်မှုလုပ်ငန်း။">
+                        Professional digital services providing personal profiles, business websites, and POS management systems.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-xs" data-en="Services" data-my="ဝန်ဆောင်မှုများ">Services</h4>
+                    <ul class="space-y-2">
+                        <li><a href="services-personal-profile.html" class="hover:text-white transition-colors" data-en="Personal Profile Websites" data-my="ကိုယ်ပိုင်ပရိုဖိုင်း ဝဘ်ဆိုဒ်များ">Personal Profile Websites</a></li>
+                        <li><a href="services-business-website.html" class="hover:text-white transition-colors" data-en="Business Websites" data-my="လုပ်ငန်းသုံး ဝဘ်ဆိုဒ်များ">Business Websites</a></li>
+                        <li><a href="services-pos-system.html" class="hover:text-white transition-colors" data-en="POS & Management Systems" data-my="POS & စီမံခန့်ခွဲမှုစနစ်များ">POS & Management Systems</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-xs" data-en="Project Journey" data-my="ပရောဂျက်ခရီးစဉ်">Project Journey</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#overview" class="hover:text-white transition-colors" data-en="Process Overview" data-my="လုပ်ငန်းစဉ်အနှစ်ချုပ်">Process Overview</a></li>
+                        <li><a href="#stages" class="hover:text-white transition-colors" data-en="Detailed Stages" data-my="အသေးစိတ်အဆင့်များ">Detailed Stages</a></li>
+                        <li><a href="#faq" class="hover:text-white transition-colors" data-en="FAQ" data-my="မေးလေ့ရှိသောမေးခွန်းများ">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4 uppercase tracking-wider text-xs" data-en="Get Started" data-my="စတင်ရန်">Get Started</h4>
+                    <ul class="space-y-2">
+                        <li><a href="get-started.html" class="hover:text-white transition-colors" data-en="Start Your Project" data-my="ပရောဂျက်စတင်ရန်">Start Your Project</a></li>
+                        <li><a href="contact.html" class="hover:text-white transition-colors" data-en="Contact Us" data-my="ကျွန်ုပ်တို့ထံ ဆက်သွယ်ရန်">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="pt-8 border-t border-slate-800 text-center text-slate-500">
+                <p data-en="© 2026 Profile Craft. All rights reserved." data-my="© 2026 Profile Craft။ မူပိုင်ခွင့်များ ရယူပြီး။">© 2026 Profile Craft. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript for Language Toggle & FAQ Accordion -->
+    <script>
+        let currentLang = 'en';
+
+        function toggleLanguage() {
+            currentLang = currentLang === 'en' ? 'my' : 'en';
+            const htmlTag = document.documentElement;
+            htmlTag.setAttribute('lang', currentLang);
+            
+            const indicator = document.getElementById('langIndicator');
+            indicator.textContent = currentLang === 'en' ? 'မြန်မာ / EN' : 'English / MY';
+
+            // Toggle all translatable elements with data-en and data-my
+            const elements = document.querySelectorAll('[data-en][data-my]');
+            elements.forEach(el => {
+                const text = el.getAttribute(`data-${currentLang}`);
+                if (text) {
+                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                        el.placeholder = text;
+                    } else {
+                        el.textContent = text;
+                    }
+                }
+            });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function toggleFaq(id) {
+            const content = document.getElementById(`faqContent${id}`);
+            const icon = document.getElementById(`faqIcon${id}`);
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+    </script>
+</body>
+</html>
