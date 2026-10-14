@@ -31,14 +31,6 @@
   --muted-2:     #6B7280;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 
-  /* --------------------------------------------------------
-     SIDEBAR WIDTH
-     The application content area (.wrap) is capped at 1600px.
-     The sidebar should occupy ~70% of that content area, so
-     we target 70vw with a hard cap of 1120px (70% of 1600).
-     On tablets and phones the sidebar takes most of the
-     viewport since there is no room to keep content beside it.
-     -------------------------------------------------------- */
   --sidebar-w: min(70vw, 1120px);
 }
 
@@ -84,13 +76,11 @@ input, select, textarea { font-family: inherit; }
   border: 0;
 }
 
-/* ---------- scrollbar ---------- */
 ::-webkit-scrollbar { width: 7px; height: 7px; }
 ::-webkit-scrollbar-track { background: #F3F4F6; border-radius: 8px; }
 ::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 8px; }
 ::-webkit-scrollbar-thumb:hover { background: #DC2626; }
 
-/* ---------- shared helpers ---------- */
 .wrap {
   width: 100%;
   max-width: 1600px;
@@ -109,7 +99,7 @@ input, select, textarea { font-family: inherit; }
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(255, 255, 255, .9);
+  background: rgba(255, 255, 255, .92);
   -webkit-backdrop-filter: blur(8px);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--line);
@@ -183,20 +173,39 @@ input, select, textarea { font-family: inherit; }
 .btn-icon:hover { background: #F9FAFB; }
 
 /* ============================================================
-   3. PAGE LAYOUT
+   3. PAGE LAYOUT  — independent scrolling columns on desktop
    ============================================================ */
 .layout {
   display: grid;
   grid-template-columns: 1fr;
   gap: 24px;
   padding-top: 24px;
-  padding-bottom: 24px;
+  padding-bottom: 40px;
 }
 
 @media (min-width: 1280px) {
-  .layout { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  body { overflow: hidden; }
+
+  .layout {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    height: calc(100vh - 64px);
+    overflow: hidden;
+    padding-bottom: 0;
+  }
   .col-left  { grid-column: span 5; }
   .col-right { grid-column: span 7; }
+
+  .col-left,
+  .col-right {
+    min-height: 0;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-bottom: 40px;
+    overscroll-behavior: contain;
+  }
+  .col-left  { padding-right: 10px; }
+  .col-right { padding-left: 10px; }
 }
 @media (min-width: 1536px) {
   .col-left  { grid-column: span 4; }
@@ -206,7 +215,7 @@ input, select, textarea { font-family: inherit; }
 .col-left > * + * { margin-top: 16px; }
 
 /* ============================================================
-   4. PANELS
+   4. PANELS  +  COLLAPSE / EXPAND
    ============================================================ */
 .panel {
   background: #fff;
@@ -219,10 +228,25 @@ input, select, textarea { font-family: inherit; }
   display: flex;
   align-items: center;
   gap: 8px;
+  width: 100%;
   padding: 14px 20px;
+  border: 0;
   border-bottom: 1px solid var(--line);
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  transition: background .15s ease;
+}
+.panel-head:hover { background: #FCFCFD; }
+.panel-head:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 3px rgba(220, 38, 38, .28);
 }
 .panel-head.wrap-head { flex-wrap: wrap; gap: 12px; }
+.panel-head.static { cursor: default; }
+.panel-head.static:hover { background: #fff; }
 
 .panel-title { font-size: 14px; font-weight: 600; }
 
@@ -235,7 +259,39 @@ input, select, textarea { font-family: inherit; }
 
 .panel-hint { margin-left: auto; font-size: 11px; color: var(--muted); }
 
-.panel-body { padding: 16px; }
+.panel-chevron {
+  margin-left: 8px;
+  font-size: 11px;
+  color: var(--muted-2);
+  transition: transform .22s ease;
+  flex: none;
+}
+.panel-head .panel-hint + .panel-chevron { margin-left: 8px; }
+.panel.collapsed .panel-chevron { transform: rotate(-90deg); }
+.panel.collapsed .panel-head { border-bottom-color: transparent; }
+
+.panel-body {
+  padding: 16px;
+  overflow: hidden;
+  transition: max-height .26s ease, opacity .2s ease, padding .2s ease;
+}
+.panel.collapsed .panel-body {
+  max-height: 0 !important;
+  opacity: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  pointer-events: none;
+}
+
+.panel-badge {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 7px;
+  border-radius: 9999px;
+  background: #FEF2F2;
+  color: var(--brand);
+  margin-left: 8px;
+}
 
 /* ============================================================
    5. FORM CONTROLS
@@ -279,7 +335,7 @@ input, select, textarea { font-family: inherit; }
   border-color: var(--brand);
   box-shadow: 0 0 0 3px rgba(220, 38, 38, .18);
 }
-textarea.input { resize: none; line-height: 1.6; }
+textarea.input { resize: vertical; line-height: 1.6; min-height: 40px; }
 select.input { appearance: auto; }
 
 .range { width: 100%; accent-color: var(--brand); }
@@ -304,7 +360,6 @@ select.input { appearance: auto; }
 .toggle-title { font-size: 12px; font-weight: 600; }
 .toggle-desc  { font-size: 10px; color: var(--muted); }
 
-/* ---------- switch (checkbox as iOS-style toggle) ---------- */
 .switch {
   position: relative;
   display: inline-flex;
@@ -386,29 +441,286 @@ select.input { appearance: auto; }
   transition: all .18s ease;
 }
 
-/* ---------- preset buttons ---------- */
-.preset-grid {
+/* ============================================================
+   7. CAREER PICKER
+   ============================================================ */
+.career-search-wrap { position: relative; margin-bottom: 12px; }
+.career-search-wrap i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--muted);
+  pointer-events: none;
+}
+.career-search { padding-left: 32px; }
+
+.career-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 2px;
+}
+@media (min-width: 640px) {
+  .career-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.career-card {
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-height: 62px;
+}
+.career-card .career-icon {
+  display: block;
+  font-size: 13px;
+  color: var(--brand);
+  margin-bottom: 6px;
+}
+.career-card .career-name {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.career-card .career-desc {
+  font-size: 10px;
+  color: var(--muted);
+  line-height: 1.35;
+  margin-top: 2px;
+}
+.career-card.active .career-icon { color: var(--brand); }
+
+.career-custom-row { margin-top: 12px; }
+
+/* ============================================================
+   8. SECTIONS LIST
+   ============================================================ */
+.section-list {
+  list-style: none;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.section-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.section-item .grip {
+  color: #D1D5DB;
+  font-size: 12px;
+  flex: none;
+  cursor: grab;
+  padding: 4px 2px;
+}
+.section-item .grip:active { cursor: grabbing; }
+.section-label { font-size: 12px; font-weight: 500; flex: 1; min-width: 0; }
+
+.ui-sortable-helper {
+  box-shadow: 0 8px 24px rgba(0,0,0,.14);
+  background: #fff !important;
+}
+.section-list .ui-sortable-placeholder {
+  visibility: visible !important;
+  background: #FEF2F2;
+  border: 1px dashed var(--brand);
+  border-radius: 8px;
+  height: 42px;
+}
+
+/* ============================================================
+   9. DYNAMIC PROFILE FORM
+   ============================================================ */
+.form-group {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+  margin-top: 14px;
+}
+.form-group:first-child { border-top: 0; padding-top: 0; margin-top: 0; }
+
+.form-group-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.form-group-title i { color: var(--brand); font-size: 11px; }
+
+.repeat-item {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  background: #FCFCFD;
+}
+.repeat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.repeat-title { font-size: 11px; font-weight: 700; color: var(--muted-2); text-transform: uppercase; letter-spacing: .05em; }
+.repeat-remove {
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--brand);
+  font-size: 11px;
+  border-radius: 6px;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.repeat-remove:hover { background: #FEF2F2; }
+
+.btn-add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px dashed var(--line);
+  background: #fff;
+  color: var(--muted-2);
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.btn-add:hover { border-color: var(--brand); color: var(--brand); background: #FEF2F2; }
+
+.empty-note {
+  font-size: 11px;
+  color: var(--muted);
+  background: #F9FAFB;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 10px;
+}
+
+/* ============================================================
+   10. THEME PICKER
+   ============================================================ */
+.theme-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
 }
 @media (min-width: 640px) {
-  .preset-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .theme-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
-.preset-btn { border-radius: 12px; padding: 12px; }
+.theme-card { border-radius: 10px; padding: 10px; }
 
-.preset-swatches { display: flex; gap: 4px; margin-bottom: 8px; }
-.preset-dot {
-  width: 12px; height: 12px;
+.theme-swatches { display: flex; gap: 4px; margin-bottom: 7px; }
+.theme-dot {
+  width: 14px; height: 14px;
   border-radius: 9999px;
   display: inline-block;
   flex: none;
+  border: 1px solid rgba(0,0,0,.08);
 }
-.preset-name { font-size: 12px; font-weight: 600; }
-.preset-desc { font-size: 10px; color: var(--muted); }
+.theme-name { font-size: 11px; font-weight: 600; line-height: 1.25; }
 
-/* ---------- layout cards ---------- */
+.custom-colors-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.custom-colors-head .field-label-sm { margin-bottom: 0; }
+.reset-theme-btn {
+  margin-left: auto;
+  font-size: 11px;
+  padding: 4px 9px;
+  border-radius: 6px;
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--muted-2);
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.reset-theme-btn:hover { border-color: var(--brand); color: var(--brand); }
+
+.color-token-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 10px;
+}
+@media (min-width: 640px) {
+  .color-token-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+.token-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 6px 8px;
+  background: #fff;
+}
+.color-token {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  cursor: pointer;
+  padding: 2px;
+  background: #fff;
+  flex: none;
+}
+.token-meta { min-width: 0; flex: 1; }
+.token-name { font-size: 11px; font-weight: 500; }
+.hex-input {
+  width: 100%;
+  font-family: var(--mono);
+  font-size: 11px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 3px 6px;
+  outline: none;
+  text-transform: uppercase;
+}
+.hex-input:focus { border-color: var(--brand); box-shadow: 0 0 0 2px rgba(220,38,38,.15); }
+.hex-input.invalid { border-color: var(--brand); background: #FEF2F2; }
+
+/* ============================================================
+   11. GRADIENT / MINI OPTION CARDS
+   ============================================================ */
+.gradient-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+.gradient-card {
+  border-radius: 8px;
+  padding: 8px;
+  text-align: center;
+  display: block;
+}
+.gradient-preview {
+  display: block;
+  height: 16px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+.gradient-label { display: block; font-size: 11px; font-weight: 500; }
+
 .layout-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -423,7 +735,6 @@ select.input { appearance: auto; }
 .layout-name { font-size: 12px; font-weight: 600; line-height: 1.25; }
 .layout-desc { font-size: 10px; color: var(--muted); line-height: 1.35; margin-top: 2px; }
 
-/* ---------- mini option cards (shadow / border / motion) ---------- */
 .mini-card {
   border-radius: 8px;
   padding: 12px 0;
@@ -453,141 +764,8 @@ select.input { appearance: auto; }
 #borderGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
 #motionGrid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
 
-/* ---------- gradient option cards ---------- */
-.gradient-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-}
-.gradient-card {
-  border-radius: 8px;
-  padding: 8px;
-  text-align: center;
-  display: block;
-}
-.gradient-preview {
-  display: block;
-  height: 16px;
-  border-radius: 4px;
-  margin-bottom: 4px;
-}
-.gradient-label { display: block; font-size: 11px; font-weight: 500; }
-
 /* ============================================================
-   7. COLOR TOKENS & PALETTES
-   ============================================================ */
-#paletteGrid {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.swatch {
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  border-radius: 10px;
-  border: 2px solid transparent;
-  cursor: pointer;
-  padding: 0;
-  transition: all .15s ease;
-}
-.swatch:hover { transform: scale(1.06); }
-.swatch.active {
-  border-color: var(--ink);
-  box-shadow: 0 0 0 3px #fff inset;
-}
-
-.token-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-.token-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
-.color-token {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  border: 1px solid var(--line);
-  cursor: pointer;
-  padding: 2px;
-  background: #fff;
-  flex: none;
-}
-.token-meta { min-width: 0; }
-.token-name { font-size: 11px; font-weight: 500; }
-.token-hex  { font-size: 10px; color: var(--muted); font-family: var(--mono); }
-
-/* ============================================================
-   8. SECTIONS LIST
-   ============================================================ */
-.section-list {
-  list-style: none;
-  padding: 12px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.section-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: #fff;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 10px 12px;
-  cursor: grab;
-}
-.section-item .grip { color: #D1D5DB; font-size: 12px; flex: none; }
-.section-label { font-size: 12px; font-weight: 500; flex: 1; min-width: 0; }
-
-/* ============================================================
-   9. TAG PILLS
-   ============================================================ */
-.tag-block { margin-bottom: 16px; }
-.tag-block:last-of-type { margin-bottom: 0; }
-
-.tag-group-label {
-  font-size: 11px;
-  font-weight: 600;
-  color: #6B7280;
-  text-transform: uppercase;
-  letter-spacing: .05em;
-  margin-bottom: 8px;
-}
-.tag-group { display: flex; flex-wrap: wrap; gap: 8px; }
-
-.tag-pill {
-  font-family: var(--mono);
-  font-size: 11px;
-  border: 1px solid var(--line);
-  border-radius: 9999px;
-  padding: 4px 12px;
-  background: #fff;
-  color: inherit;
-  cursor: pointer;
-  user-select: none;
-  transition: all .15s ease;
-}
-.tag-pill:hover { border-color: var(--brand); }
-.tag-pill.active {
-  background: var(--ink);
-  color: #fff;
-  border-color: var(--ink);
-}
-
-.info-box {
-  font-size: 11px;
-  color: var(--muted-2);
-  background: #F9FAFB;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  padding: 8px 12px;
-  margin-top: 16px;
-}
-.info-box i { color: var(--brand); margin-right: 4px; }
-
-/* ============================================================
-   10. ADVANCED-ONLY VISIBILITY
+   12. ADVANCED-ONLY VISIBILITY
    ============================================================ */
 .advanced-only { display: none; }
 body.mode-advanced .advanced-only { display: block; }
@@ -597,10 +775,8 @@ body.mode-advanced .advanced-only { display: block; }
 }
 
 /* ============================================================
-   11. LIVE PREVIEW
+   13. LIVE PREVIEW
    ============================================================ */
-.preview-sticky { position: sticky; top: 80px; }
-
 .preview-heading {
   display: flex;
   align-items: center;
@@ -647,7 +823,7 @@ body.mode-advanced .advanced-only { display: block; }
   border: 1px solid var(--line);
   border-radius: 14px;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, .1), 0 4px 6px -4px rgba(0, 0, 0, .1);
-  transition: width .3s ease;
+  transition: width .3s ease, border-radius .25s ease;
 }
 
 .browser-bar {
@@ -681,7 +857,130 @@ body.mode-advanced .advanced-only { display: block; }
   text-overflow: ellipsis;
 }
 
-.preview-frame { padding: 24px; }
+/* ---------- theme-driven preview surface ---------- */
+#previewFrame {
+  --profile-bg: #FFFFFF;
+  --profile-surface: #F9FAFB;
+  --profile-primary: #DC2626;
+  --profile-secondary: #111827;
+  --profile-accent: #F59E0B;
+  --profile-heading: #111827;
+  --profile-text: #111827;
+  --profile-border: #E5E7EB;
+  --profile-radius: 12px;
+  --profile-shadow: 0 4px 16px rgba(0,0,0,.08);
+  --profile-border-css: 1px solid var(--profile-border);
+  --profile-heading-font: 'Inter';
+  --profile-body-font: 'Inter';
+  --profile-heading-weight: 700;
+  --profile-tracking: 0px;
+  --pv-pad: 24px;
+  --pv-gap: 16px;
+  padding: 0;
+}
+
+.pv-root {
+  background: var(--profile-bg);
+  color: var(--profile-text);
+  padding: var(--pv-pad);
+  transition: background .25s ease, color .25s ease;
+  font-family: var(--profile-body-font), 'Inter', sans-serif;
+}
+
+.pv-stack { display: flex; flex-direction: column; gap: var(--pv-gap); }
+
+.pv-card {
+  background: var(--profile-surface);
+  border: var(--profile-border-css);
+  border-radius: var(--profile-radius);
+  box-shadow: var(--profile-shadow);
+  padding: 16px;
+}
+
+.pv-heading {
+  color: var(--profile-heading);
+  font-family: var(--profile-heading-font), 'Inter', sans-serif;
+  font-weight: var(--profile-heading-weight);
+  letter-spacing: var(--profile-tracking);
+  line-height: 1.15;
+}
+
+.pv-section-title {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--profile-heading-font), 'Inter', sans-serif;
+  font-weight: var(--profile-heading-weight);
+  letter-spacing: var(--profile-tracking);
+  font-size: 12.5px;
+  color: var(--profile-heading);
+  margin-bottom: 10px;
+}
+.pv-section-title::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 9999px;
+  background: var(--profile-primary);
+  display: inline-block;
+  flex: none;
+}
+
+.pv-role { color: var(--profile-primary); font-weight: 600; }
+.pv-btn {
+  display: inline-block;
+  background: var(--profile-primary);
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: var(--profile-shadow);
+}
+.pv-avatar {
+  display: grid;
+  place-items: center;
+  background: var(--profile-primary);
+  color: #fff;
+  font-weight: 800;
+}
+.pv-muted { opacity: .62; }
+.pv-line {
+  height: 7px;
+  border-radius: 99px;
+  background: var(--profile-accent);
+  opacity: .3;
+  margin-bottom: 6px;
+}
+.pv-chip {
+  display: inline-block;
+  font-size: 10px;
+  font-family: var(--mono);
+  border: 1px solid var(--profile-border);
+  border-radius: 999px;
+  padding: 2px 9px;
+  margin: 0 4px 4px 0;
+  color: var(--profile-text);
+  background: var(--profile-bg);
+}
+.pv-pill {
+  display: grid;
+  place-items: center;
+  width: 26px; height: 26px;
+  border-radius: 8px;
+  background: var(--profile-accent);
+  opacity: .6;
+  font-size: 10px;
+  font-weight: 700;
+}
+.pv-stat-value {
+  font-family: var(--profile-heading-font), 'Inter', sans-serif;
+  font-weight: var(--profile-heading-weight);
+  font-size: 22px;
+  color: var(--profile-primary);
+  line-height: 1;
+}
 
 .preview-hint {
   text-align: center;
@@ -691,7 +990,6 @@ body.mode-advanced .advanced-only { display: block; }
 }
 .preview-hint i { margin-right: 4px; }
 
-/* preview pulse when the sidebar opens */
 #previewShell.pulse { animation: previewPulse .6s ease; }
 @keyframes previewPulse {
   0%   { box-shadow: 0 0 0 0 rgba(220, 38, 38, .35); }
@@ -699,7 +997,29 @@ body.mode-advanced .advanced-only { display: block; }
 }
 
 /* ============================================================
-   12. PROMPT SIDEBAR
+   14. ORDER BAR
+   ============================================================ */
+.order-bar {
+  width: 100%;
+  padding: 20px 0 0;
+  display: flex;
+  justify-content: center;
+}
+.order-bar .btn-order {
+  max-width: 420px;
+  width: 100%;
+  padding: 14px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 4px 14px rgba(220, 38, 38, .25);
+}
+.order-bar .btn-order:hover {
+  box-shadow: 0 6px 20px rgba(220, 38, 38, .35);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   15. PROMPT SIDEBAR
    ============================================================ */
 #promptBackdrop {
   position: fixed;
@@ -712,10 +1032,7 @@ body.mode-advanced .advanced-only { display: block; }
   pointer-events: none;
   transition: opacity .3s ease;
 }
-#promptBackdrop.open {
-  opacity: 1;
-  pointer-events: auto;
-}
+#promptBackdrop.open { opacity: 1; pointer-events: auto; }
 
 #promptSidebar {
   position: fixed;
@@ -734,7 +1051,6 @@ body.mode-advanced .advanced-only { display: block; }
 }
 #promptSidebar.open { transform: translateX(0); }
 
-/* ---- Sidebar content column (hidden while locked) ---- */
 #promptSidebar .sidebar-content {
   display: flex;
   flex-direction: column;
@@ -744,7 +1060,6 @@ body.mode-advanced .advanced-only { display: block; }
 #promptSidebar.locked .sidebar-content { display: none; }
 #promptSidebar:not(.locked) .sidebar-lock { display: none; }
 
-/* ---- Passcode lock screen ---- */
 .sidebar-lock {
   flex: 1;
   display: flex;
@@ -753,14 +1068,9 @@ body.mode-advanced .advanced-only { display: block; }
   padding: 32px 24px;
   background: #fff;
 }
-.sidebar-lock-box {
-  max-width: 340px;
-  width: 100%;
-  text-align: center;
-}
+.sidebar-lock-box { max-width: 340px; width: 100%; text-align: center; }
 .sidebar-lock-icon {
-  width: 56px;
-  height: 56px;
+  width: 56px; height: 56px;
   margin: 0 auto 16px;
   border-radius: 14px;
   background: #FEF2F2;
@@ -769,23 +1079,9 @@ body.mode-advanced .advanced-only { display: block; }
   place-items: center;
   font-size: 20px;
 }
-.sidebar-lock-title {
-  font-size: 16px;
-  font-weight: 700;
-  margin-bottom: 6px;
-}
-.sidebar-lock-desc {
-  font-size: 12px;
-  color: var(--muted-2);
-  line-height: 1.55;
-  margin-bottom: 18px;
-}
-.sidebar-lock-form {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  text-align: left;
-}
+.sidebar-lock-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+.sidebar-lock-desc { font-size: 12px; color: var(--muted-2); line-height: 1.55; margin-bottom: 18px; }
+.sidebar-lock-form { display: flex; flex-direction: column; gap: 10px; text-align: left; }
 .sidebar-lock-form .input {
   text-align: center;
   font-family: var(--mono);
@@ -856,9 +1152,6 @@ body.mode-advanced .advanced-only { display: block; }
   flex: none;
 }
 
-/* NOTE: The .sidebar-order styles have been removed because the
-   Place order button no longer lives inside the sidebar. */
-
 .btn {
   display: inline-flex;
   align-items: center;
@@ -870,18 +1163,10 @@ body.mode-advanced .advanced-only { display: block; }
   cursor: pointer;
   transition: all .15s ease;
 }
-.btn-primary {
-  background: var(--brand);
-  border-color: var(--brand);
-  color: #fff;
-}
+.btn-primary { background: var(--brand); border-color: var(--brand); color: #fff; }
 .btn-primary:hover { background: var(--brand-hover); border-color: var(--brand-hover); }
 
-.btn-ghost {
-  background: #fff;
-  border-color: var(--line);
-  color: inherit;
-}
+.btn-ghost { background: #fff; border-color: var(--line); color: inherit; }
 .btn-ghost:hover { background: #F9FAFB; }
 
 .btn-block {
@@ -890,11 +1175,7 @@ body.mode-advanced .advanced-only { display: block; }
   padding: 10px 14px;
   font-size: 13px;
 }
-.btn-order {
-  background: var(--brand);
-  border-color: var(--brand);
-  color: #fff;
-}
+.btn-order { background: var(--brand); border-color: var(--brand); color: #fff; }
 .btn-order:hover { background: var(--brand-hover); border-color: var(--brand-hover); }
 .btn-order:disabled { opacity: .8; cursor: progress; }
 
@@ -956,31 +1237,7 @@ body.mode-advanced .advanced-only { display: block; }
 .sidebar-foot code { font-family: var(--mono); }
 
 /* ============================================================
-   12b. ORDER ACTION BAR — moved outside the sidebar
-   ============================================================ */
-.order-bar {
-  width: 100%;
-  max-width: 1600px;
-  margin: 0 auto;
-  padding: 16px 16px 40px;
-  display: flex;
-  justify-content: center;
-}
-.order-bar .btn-order {
-  max-width: 420px;
-  width: 100%;
-  padding: 14px 20px;
-  font-size: 14px;
-  font-weight: 600;
-  box-shadow: 0 4px 14px rgba(220, 38, 38, .25);
-}
-.order-bar .btn-order:hover {
-  box-shadow: 0 6px 20px rgba(220, 38, 38, .35);
-  transform: translateY(-1px);
-}
-
-/* ============================================================
-   13. SIDEBAR TOGGLE BUTTON (vertical, right edge)
+   16. SIDEBAR TOGGLE BUTTON
    ============================================================ */
 #promptToggleBtn {
   position: fixed;
@@ -1008,7 +1265,7 @@ body.mode-advanced .advanced-only { display: block; }
 #promptToggleBtn span { font-size: 10px; font-weight: 700; text-transform: uppercase; }
 
 /* ============================================================
-   14. TOAST
+   17. TOAST
    ============================================================ */
 #toast {
   position: fixed;
@@ -1027,18 +1284,22 @@ body.mode-advanced .advanced-only { display: block; }
   transition: transform .3s ease, opacity .3s ease;
   max-width: 92vw;
 }
-#toast.show {
-  transform: translate(-50%, 0);
-  opacity: 1;
-}
+#toast.show { transform: translate(-50%, 0); opacity: 1; }
 
 /* ============================================================
-   15. MISC ANIMATION
+   18. MISC ANIMATION
    ============================================================ */
 .fade-in { animation: fadeIn .22s ease both; }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-6px); }
   to   { opacity: 1; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    transition-duration: .001ms !important;
+  }
 }
 </style>
 </head>
@@ -1054,19 +1315,17 @@ body.mode-advanced .advanced-only { display: block; }
       <div class="logo-mark">P</div>
       <div>
         <h1 class="brand-title">Profile Design Customizer</h1>
-        <p class="brand-sub">Pick → Preview → Generate developer prompt</p>
+        <p class="brand-sub">Pick career → sections → preview → generate prompt</p>
       </div>
     </div>
 
     <div class="topbar-actions">
-      <!-- language -->
       <select id="langSelect" class="lang-select">
         <option value="en">EN</option>
         <option value="jp">日本語</option>
         <option value="mm">မြန်မာ</option>
       </select>
 
-      <!-- beginner / advanced -->
       <div class="mode-switch">
         <button id="modeBeginner" class="active" type="button">Guided</button>
         <button id="modeAdvanced" type="button">Advanced</button>
@@ -1080,7 +1339,7 @@ body.mode-advanced .advanced-only { display: block; }
 </header>
 
 <!-- ============================================================
-     MAIN GRID — 2 COLUMNS (customization | preview)
+     MAIN GRID — 2 INDEPENDENTLY SCROLLING COLUMNS
      ============================================================ -->
 <main class="wrap layout">
 
@@ -1089,339 +1348,270 @@ body.mode-advanced .advanced-only { display: block; }
        ========================================================== -->
   <section class="col-left">
 
-    <!-- ---------- 1. QUICK PRESETS ---------- -->
-    <div class="panel">
-      <div class="panel-head">
+    <!-- ---------- 1. CAREER / PROFILE TYPE ---------- -->
+    <div class="panel" data-panel="career">
+      <button class="panel-head" type="button" aria-expanded="true" aria-controls="panelCareerBody">
         <span class="dot"></span>
-        <h2 class="panel-title" data-i18n="sec_presets">Start with a preset</h2>
-        <span class="panel-hint" data-i18n="sec_presets_hint">You can fine-tune everything below</span>
-      </div>
-      <div class="panel-body preset-grid">
-        <button class="preset-btn opt-card" data-preset="minimal" type="button">
-          <div class="preset-swatches">
-            <span class="preset-dot" style="background:#111827"></span>
-            <span class="preset-dot" style="background:#9CA3AF"></span>
-            <span class="preset-dot" style="background:#F9FAFB;border:1px solid #E5E7EB"></span>
-          </div>
-          <p class="preset-name">Minimal</p>
-          <p class="preset-desc">Clean · airy</p>
-        </button>
-        <button class="preset-btn opt-card" data-preset="sports" type="button">
-          <div class="preset-swatches">
-            <span class="preset-dot" style="background:#DC2626"></span>
-            <span class="preset-dot" style="background:#111827"></span>
-            <span class="preset-dot" style="background:#F59E0B"></span>
-          </div>
-          <p class="preset-name">Bold Sports</p>
-          <p class="preset-desc">Energetic · high contrast</p>
-        </button>
-        <button class="preset-btn opt-card" data-preset="corporate" type="button">
-          <div class="preset-swatches">
-            <span class="preset-dot" style="background:#1E3A8A"></span>
-            <span class="preset-dot" style="background:#64748B"></span>
-            <span class="preset-dot" style="background:#F8FAFC;border:1px solid #E5E7EB"></span>
-          </div>
-          <p class="preset-name">Corporate</p>
-          <p class="preset-desc">Trust · structured</p>
-        </button>
-        <button class="preset-btn opt-card" data-preset="neon" type="button">
-          <div class="preset-swatches">
-            <span class="preset-dot" style="background:#22D3EE"></span>
-            <span class="preset-dot" style="background:#A855F7"></span>
-            <span class="preset-dot" style="background:#0B0F19"></span>
-          </div>
-          <p class="preset-name">Dark Neon</p>
-          <p class="preset-desc">Techy · glowing</p>
-        </button>
-        <button class="preset-btn opt-card" data-preset="pastel" type="button">
-          <div class="preset-swatches">
-            <span class="preset-dot" style="background:#F9A8D4"></span>
-            <span class="preset-dot" style="background:#A7F3D0"></span>
-            <span class="preset-dot" style="background:#FEF3C7"></span>
-          </div>
-          <p class="preset-name">Soft Pastel</p>
-          <p class="preset-desc">Friendly · soft</p>
-        </button>
-        <button class="preset-btn opt-card" data-preset="editorial" type="button">
-          <div class="preset-swatches">
-            <span class="preset-dot" style="background:#000000"></span>
-            <span class="preset-dot" style="background:#B45309"></span>
-            <span class="preset-dot" style="background:#FFFBEB"></span>
-          </div>
-          <p class="preset-name">Editorial</p>
-          <p class="preset-desc">Magazine · typographic</p>
-        </button>
-      </div>
-    </div>
+        <h2 class="panel-title">Career / Profile Type</h2>
+        <span class="panel-hint" id="careerHint">Step 1 — choose first</span>
+        <i class="fas fa-chevron-down panel-chevron"></i>
+      </button>
+      <div class="panel-body" id="panelCareerBody">
+        <div class="career-search-wrap">
+          <i class="fas fa-magnifying-glass"></i>
+          <input id="careerSearch" class="input career-search" type="search"
+                 placeholder="Search careers…" autocomplete="off" />
+        </div>
+        <div id="careerGrid" class="career-grid" role="listbox" aria-label="Career options"></div>
 
-    <!-- ---------- 2. PROFILE BASICS ---------- -->
-    <div class="panel">
-      <div class="panel-head">
-        <span class="dot"></span>
-        <h2 class="panel-title" data-i18n="sec_profile">Your profile</h2>
-      </div>
-      <div class="panel-body form-grid">
-        <div class="span-2">
-          <label class="field-label" for="pName" data-i18n="lbl_name">Display name</label>
-          <input id="pName" class="input" type="text" value="Alex Tanaka" />
+        <div id="careerCustomRow" class="career-custom-row hidden">
+          <label class="field-label" for="customCareerName">Your career / profession</label>
+          <input id="customCareerName" class="input" type="text" placeholder="e.g. Marine Biologist" />
         </div>
-        <div>
-          <label class="field-label" for="pRole" data-i18n="lbl_role">Job title / Role</label>
-          <input id="pRole" class="input" type="text" value="Frontend Engineer" />
-        </div>
-        <div>
-          <label class="field-label" for="pLocation" data-i18n="lbl_location">Location</label>
-          <input id="pLocation" class="input" type="text" value="Yangon, MM" />
-        </div>
-        <div class="span-2">
-          <label class="field-label" for="pTagline" data-i18n="lbl_tagline">Tagline</label>
-          <input id="pTagline" class="input" type="text" value="I build clean, fast, accessible interfaces." />
-        </div>
-        <div class="span-2">
-          <label class="field-label" for="pBio" data-i18n="lbl_bio">Short bio</label>
-          <textarea id="pBio" class="input" rows="3">5 years shipping design systems and product UI. Comfortable owning a feature end-to-end.</textarea>
-        </div>
-        <div>
-          <label class="field-label" for="pCta" data-i18n="lbl_cta">Primary button label</label>
-          <input id="pCta" class="input" type="text" value="Get in touch" />
-        </div>
-        <div>
-          <label class="field-label" for="pAvatar" data-i18n="lbl_avatar">Avatar style</label>
-          <select id="pAvatar" class="input">
-            <option value="Circle photo">Circle photo</option>
-            <option value="Rounded square">Rounded square</option>
-            <option value="Square with border">Square with border</option>
-            <option value="Initials monogram">Initials monogram</option>
-            <option value="No avatar">No avatar</option>
-          </select>
+
+        <div class="info-box" style="margin-top:14px">
+          <i class="fas fa-circle-info"></i>
+          <span id="careerSummary">Selecting a career adjusts the available sections and profile fields.</span>
         </div>
       </div>
     </div>
 
-    <!-- ---------- 3. COLOR & THEME ---------- -->
-    <div class="panel">
-      <div class="panel-head">
+    <!-- ---------- 2. SECTIONS ---------- -->
+    <div class="panel" data-panel="sections">
+      <button class="panel-head" type="button" aria-expanded="true" aria-controls="panelSectionsBody">
         <span class="dot"></span>
-        <h2 class="panel-title" data-i18n="sec_colors">Colors &amp; theme</h2>
+        <h2 class="panel-title">Sections</h2>
+        <span class="panel-hint">Drag to reorder · toggle to show</span>
+        <i class="fas fa-chevron-down panel-chevron"></i>
+      </button>
+      <div class="panel-body" id="panelSectionsBody" style="padding:8px">
+        <ul id="sectionList" class="section-list"></ul>
       </div>
-      <div class="panel-body stack-4">
+    </div>
 
-        <!-- preset palettes -->
-        <div>
-          <p class="field-label-sm" data-i18n="lbl_palette">Palette preset</p>
-          <div id="paletteGrid"></div>
-        </div>
+    <!-- ---------- 3. YOUR PROFILE / CAREER INFORMATION ---------- -->
+    <div class="panel" data-panel="profile">
+      <button class="panel-head" type="button" aria-expanded="true" aria-controls="panelProfileBody">
+        <span class="dot"></span>
+        <h2 class="panel-title">Your Profile / Career Information</h2>
+        <span class="panel-hint" id="profileHint">Adapts to your career</span>
+        <i class="fas fa-chevron-down panel-chevron"></i>
+      </button>
+      <div class="panel-body" id="panelProfileBody">
+        <div id="profileForm"></div>
+      </div>
+    </div>
 
-        <!-- dark / light -->
-        <div class="toggle-row">
+    <!-- ---------- 4. COLORS & THEME ---------- -->
+    <div class="panel collapsed" data-panel="colors">
+      <button class="panel-head" type="button" aria-expanded="false" aria-controls="panelColorsBody">
+        <span class="dot"></span>
+        <h2 class="panel-title">Colors &amp; Theme</h2>
+        <span class="panel-badge hidden" id="customThemeBadge">Customized</span>
+        <span class="panel-hint" id="themeHint">Minimal Light</span>
+        <i class="fas fa-chevron-down panel-chevron"></i>
+      </button>
+      <div class="panel-body" id="panelColorsBody">
+        <div class="stack-4">
+
           <div>
-            <p class="toggle-title" data-i18n="lbl_mode">Dark mode</p>
-            <p class="toggle-desc">Include a dark theme variant in the spec</p>
+            <p class="field-label-sm">Theme preset</p>
+            <div id="themeGrid" class="theme-grid"></div>
           </div>
-          <label class="switch">
-            <input id="darkToggle" type="checkbox" />
-            <span class="switch-track"></span>
-          </label>
-        </div>
 
-        <!-- manual color pickers (advanced) -->
-        <div class="advanced-only bordered">
-          <p class="field-label-sm">Custom tokens</p>
-          <div id="colorTokenGrid" class="token-grid"></div>
-        </div>
-
-        <div class="advanced-only">
-          <p class="field-label-sm">Gradient background</p>
-          <div class="gradient-grid">
-            <label class="opt-card gradient-card" data-group="gradient" data-value="None">
-              <span class="gradient-label">None</span>
-            </label>
-            <label class="opt-card gradient-card" data-group="gradient" data-value="Linear 135deg">
-              <span class="gradient-preview" style="background:linear-gradient(135deg,#DC2626,#7C3AED)"></span>
-              <span class="gradient-label">Linear</span>
-            </label>
-            <label class="opt-card gradient-card" data-group="gradient" data-value="Radial soft">
-              <span class="gradient-preview" style="background:radial-gradient(circle,#F59E0B,#FEF3C7)"></span>
-              <span class="gradient-label">Radial</span>
+          <div class="toggle-row">
+            <div>
+              <p class="toggle-title">Dark mode variant</p>
+              <p class="toggle-desc">Also generate a dark theme variant in the spec</p>
+            </div>
+            <label class="switch">
+              <input id="darkToggle" type="checkbox" />
+              <span class="switch-track"></span>
             </label>
           </div>
+
+          <div class="advanced-only bordered">
+            <div class="custom-colors-head">
+              <p class="field-label-sm">Custom colors</p>
+              <button id="resetThemeBtn" class="reset-theme-btn" type="button">
+                <i class="fas fa-rotate-left"></i> Reset to preset
+              </button>
+            </div>
+            <div id="colorTokenGrid" class="color-token-grid"></div>
+          </div>
+
+          <div class="advanced-only">
+            <p class="field-label-sm">Gradient background</p>
+            <div class="gradient-grid">
+              <button class="opt-card gradient-card" data-group="gradient" data-value="None" type="button">
+                <span class="gradient-label">None</span>
+              </button>
+              <button class="opt-card gradient-card" data-group="gradient" data-value="Linear 135deg" type="button">
+                <span class="gradient-preview" style="background:linear-gradient(135deg,#DC2626,#7C3AED)"></span>
+                <span class="gradient-label">Linear</span>
+              </button>
+              <button class="opt-card gradient-card" data-group="gradient" data-value="Radial soft" type="button">
+                <span class="gradient-preview" style="background:radial-gradient(circle,#F59E0B,#FEF3C7)"></span>
+                <span class="gradient-label">Radial</span>
+              </button>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
 
-    <!-- ---------- 4. TYPOGRAPHY ---------- -->
-    <div class="panel">
-      <div class="panel-head">
+    <!-- ---------- 5. TYPOGRAPHY ---------- -->
+    <div class="panel collapsed" data-panel="type">
+      <button class="panel-head" type="button" aria-expanded="false" aria-controls="panelTypeBody">
         <span class="dot"></span>
-        <h2 class="panel-title" data-i18n="sec_type">Typography</h2>
-      </div>
-      <div class="panel-body form-grid">
-        <div>
-          <label class="field-label" for="fontHeading" data-i18n="lbl_heading_font">Heading font</label>
-          <select id="fontHeading" class="input">
-            <option value="Inter">Inter (sans)</option>
-            <option value="Noto Sans JP">Noto Sans JP</option>
-            <option value="Noto Sans Myanmar">Noto Sans Myanmar</option>
-            <option value="Georgia">Georgia (serif)</option>
-            <option value="ui-monospace">Monospace</option>
-          </select>
-        </div>
-        <div>
-          <label class="field-label" for="fontBody" data-i18n="lbl_body_font">Body font</label>
-          <select id="fontBody" class="input">
-            <option value="Inter">Inter (sans)</option>
-            <option value="Noto Sans JP">Noto Sans JP</option>
-            <option value="Noto Sans Myanmar">Noto Sans Myanmar</option>
-            <option value="Georgia">Georgia (serif)</option>
-            <option value="ui-monospace">Monospace</option>
-          </select>
-        </div>
-        <div>
-          <label class="field-label" for="typeScale" data-i18n="lbl_scale">Base size</label>
-          <select id="typeScale" class="input">
-            <option value="Compact 14px base">Compact (14px)</option>
-            <option value="Standard 16px base" selected>Standard (16px)</option>
-            <option value="Large 18px base">Large (18px)</option>
-          </select>
-        </div>
-        <div>
-          <label class="field-label" for="typeWeight" data-i18n="lbl_weight">Heading weight</label>
-          <select id="typeWeight" class="input">
-            <option value="600">Semibold 600</option>
-            <option value="700" selected>Bold 700</option>
-            <option value="800">Extrabold 800</option>
-            <option value="900">Black 900</option>
-          </select>
-        </div>
-        <div class="span-2">
-          <label class="field-label" for="tracking" data-i18n="lbl_tracking">Letter spacing</label>
-          <input id="tracking" class="range" type="range" min="-2" max="4" step="0.5" value="0" />
-          <div class="range-scale">
-            <span>Tight</span><span id="trackingVal">0px</span><span>Wide</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ---------- 5. LAYOUT STRUCTURE ---------- -->
-    <div class="panel">
-      <div class="panel-head">
-        <span class="dot"></span>
-        <h2 class="panel-title" data-i18n="sec_layout">Layout</h2>
-      </div>
-      <div class="panel-body stack-4">
-        <div id="layoutGrid" class="layout-grid"></div>
-        <div class="form-grid" style="padding-top:12px;border-top:1px solid var(--line)">
+        <h2 class="panel-title">Typography</h2>
+        <span class="panel-hint" id="typeHint">Inter · Standard 16px</span>
+        <i class="fas fa-chevron-down panel-chevron"></i>
+      </button>
+      <div class="panel-body" id="panelTypeBody">
+        <div class="form-grid">
           <div>
-            <label class="field-label" for="containerWidth" data-i18n="lbl_container">Content width</label>
-            <select id="containerWidth" class="input">
-              <option value="Narrow 720px">Narrow 720px</option>
-              <option value="Standard 1024px" selected>Standard 1024px</option>
-              <option value="Wide 1280px">Wide 1280px</option>
-              <option value="Full-width fluid">Full-width fluid</option>
+            <label class="field-label" for="fontHeading">Heading font</label>
+            <select id="fontHeading" class="input">
+              <option value="Inter">Inter (sans)</option>
+              <option value="Noto Sans JP">Noto Sans JP</option>
+              <option value="Noto Sans Myanmar">Noto Sans Myanmar</option>
+              <option value="Georgia">Georgia (serif)</option>
+              <option value="ui-monospace">Monospace</option>
             </select>
           </div>
           <div>
-            <label class="field-label" for="density" data-i18n="lbl_density">Spacing density</label>
-            <select id="density" class="input">
-              <option value="Airy — generous whitespace">Airy</option>
-              <option value="Balanced — medium spacing" selected>Balanced</option>
-              <option value="Dense — compact spacing">Dense</option>
+            <label class="field-label" for="fontBody">Body font</label>
+            <select id="fontBody" class="input">
+              <option value="Inter">Inter (sans)</option>
+              <option value="Noto Sans JP">Noto Sans JP</option>
+              <option value="Noto Sans Myanmar">Noto Sans Myanmar</option>
+              <option value="Georgia">Georgia (serif)</option>
+              <option value="ui-monospace">Monospace</option>
             </select>
           </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ---------- 6. SURFACE / SHAPE / MOTION ---------- -->
-    <div class="panel">
-      <div class="panel-head">
-        <span class="dot"></span>
-        <h2 class="panel-title" data-i18n="sec_shape">Shape &amp; motion</h2>
-      </div>
-      <div class="panel-body stack-4">
-        <div>
-          <label class="field-label" for="radius" data-i18n="lbl_radius">Corner roundness</label>
-          <input id="radius" class="range" type="range" min="0" max="28" step="2" value="12" />
-          <div class="range-scale">
-            <span>Sharp</span><span id="radiusVal">12px</span><span>Pill</span>
+          <div>
+            <label class="field-label" for="typeScale">Base size</label>
+            <select id="typeScale" class="input">
+              <option value="Compact 14px base">Compact (14px)</option>
+              <option value="Standard 16px base" selected>Standard (16px)</option>
+              <option value="Large 18px base">Large (18px)</option>
+            </select>
+          </div>
+          <div>
+            <label class="field-label" for="typeWeight">Heading weight</label>
+            <select id="typeWeight" class="input">
+              <option value="600">Semibold 600</option>
+              <option value="700" selected>Bold 700</option>
+              <option value="800">Extrabold 800</option>
+              <option value="900">Black 900</option>
+            </select>
+          </div>
+          <div class="span-2">
+            <label class="field-label" for="tracking">Letter spacing</label>
+            <input id="tracking" class="range" type="range" min="-2" max="4" step="0.5" value="0" />
+            <div class="range-scale">
+              <span>Tight</span><span id="trackingVal">0px</span><span>Wide</span>
+            </div>
           </div>
         </div>
-        <div>
-          <p class="field-label-sm" data-i18n="lbl_shadow">Card elevation</p>
-          <div id="shadowGrid"></div>
-        </div>
-        <div class="advanced-only">
-          <p class="field-label-sm">Border style</p>
-          <div id="borderGrid"></div>
-        </div>
-        <div>
-          <p class="field-label-sm" data-i18n="lbl_motion">Motion level</p>
-          <div id="motionGrid"></div>
+      </div>
+    </div>
+
+    <!-- ---------- 6. LAYOUT ---------- -->
+    <div class="panel collapsed" data-panel="layout">
+      <button class="panel-head" type="button" aria-expanded="false" aria-controls="panelLayoutBody">
+        <span class="dot"></span>
+        <h2 class="panel-title">Layout</h2>
+        <span class="panel-hint" id="layoutHint">Hero Top</span>
+        <i class="fas fa-chevron-down panel-chevron"></i>
+      </button>
+      <div class="panel-body" id="panelLayoutBody">
+        <div class="stack-4">
+          <div id="layoutGrid" class="layout-grid"></div>
+          <div class="form-grid" style="padding-top:12px;border-top:1px solid var(--line)">
+            <div>
+              <label class="field-label" for="containerWidth">Content width</label>
+              <select id="containerWidth" class="input">
+                <option value="Narrow 720px">Narrow 720px</option>
+                <option value="Standard 1024px" selected>Standard 1024px</option>
+                <option value="Wide 1280px">Wide 1280px</option>
+                <option value="Full-width fluid">Full-width fluid</option>
+              </select>
+            </div>
+            <div>
+              <label class="field-label" for="density">Spacing density</label>
+              <select id="density" class="input">
+                <option value="Airy — generous whitespace">Airy</option>
+                <option value="Balanced — medium spacing" selected>Balanced</option>
+                <option value="Dense — compact spacing">Dense</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- ---------- 7. SECTIONS ---------- -->
-    <div class="panel">
-      <div class="panel-head">
+    <!-- ---------- 7. SHAPE & MOTION ---------- -->
+    <div class="panel collapsed" data-panel="shape">
+      <button class="panel-head" type="button" aria-expanded="false" aria-controls="panelShapeBody">
         <span class="dot"></span>
-        <h2 class="panel-title" data-i18n="sec_sections">Sections</h2>
-        <span class="panel-hint" data-i18n="sec_sections_hint">Drag to reorder · toggle to show</span>
+        <h2 class="panel-title">Shape &amp; motion</h2>
+        <span class="panel-hint" id="shapeHint">12px · Soft · Standard</span>
+        <i class="fas fa-chevron-down panel-chevron"></i>
+      </button>
+      <div class="panel-body" id="panelShapeBody">
+        <div class="stack-4">
+          <div>
+            <label class="field-label" for="radius">Corner roundness</label>
+            <input id="radius" class="range" type="range" min="0" max="28" step="2" value="12" />
+            <div class="range-scale">
+              <span>Sharp</span><span id="radiusVal">12px</span><span>Pill</span>
+            </div>
+          </div>
+          <div>
+            <p class="field-label-sm">Card elevation</p>
+            <div id="shadowGrid"></div>
+          </div>
+          <div class="advanced-only">
+            <p class="field-label-sm">Border style</p>
+            <div id="borderGrid"></div>
+          </div>
+          <div>
+            <p class="field-label-sm">Motion level</p>
+            <div id="motionGrid"></div>
+          </div>
+        </div>
       </div>
-      <ul id="sectionList" class="section-list"></ul>
     </div>
 
-    <!-- ---------- 8. HTML TAG PICKER ---------- -->
-    <div class="panel">
-      <div class="panel-head">
+    <!-- ---------- 8. EXTRA NOTES ---------- -->
+    <div class="panel collapsed" data-panel="extra">
+      <button class="panel-head" type="button" aria-expanded="false" aria-controls="panelExtraBody">
         <span class="dot"></span>
-        <h2 class="panel-title" data-i18n="sec_tags">HTML tags to include</h2>
-        <span class="panel-hint" data-i18n="sec_tags_hint">Each tag ships with a pre-written prompt fragment</span>
+        <h2 class="panel-title">Anything else?</h2>
+        <span class="panel-hint">Optional</span>
+        <i class="fas fa-chevron-down panel-chevron"></i>
+      </button>
+      <div class="panel-body" id="panelExtraBody">
+        <label class="field-label" for="extraNotes">Extra requirements (optional)</label>
+        <textarea id="extraNotes" class="input" rows="3"
+          placeholder="e.g. Must support Burmese + Japanese text. No external icon fonts."></textarea>
+      </div>
+    </div>
+
+    <!-- ---------- 9. GENERATE DEVELOPER PROMPT ---------- -->
+    <div class="panel" data-panel="generate">
+      <div class="panel-head static">
+        <span class="dot"></span>
+        <h2 class="panel-title">Generate Developer Prompt</h2>
+        <span class="panel-hint">Copy · download · order</span>
       </div>
       <div class="panel-body">
-        <div class="tag-block">
-          <p class="tag-group-label">Structure</p>
-          <div class="tag-group" data-taggroup="structure"></div>
-        </div>
-        <div class="tag-block">
-          <p class="tag-group-label">Content</p>
-          <div class="tag-group" data-taggroup="content"></div>
-        </div>
-        <div class="tag-block">
-          <p class="tag-group-label">Interactive</p>
-          <div class="tag-group" data-taggroup="interactive"></div>
-        </div>
-        <div class="tag-block">
-          <p class="tag-group-label">Media</p>
-          <div class="tag-group" data-taggroup="media"></div>
-        </div>
-        <div class="info-box">
-          <i class="fas fa-circle-info"></i>
-          <span id="tagCountLabel">0 tags selected — their prompt fragments will be appended verbatim.</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- ---------- 9. EXTRA INSTRUCTIONS ---------- -->
-    <div class="panel">
-      <div class="panel-head">
-        <span class="dot"></span>
-        <h2 class="panel-title" data-i18n="sec_extra">Anything else?</h2>
-      </div>
-      <div class="panel-body stack-3">
-        <div>
-          <label class="field-label" for="extraNotes">Extra requirements (optional)</label>
-          <textarea id="extraNotes" class="input" rows="3" placeholder="e.g. Must support Burmese + Japanese text. No external icon fonts."></textarea>
-        </div>
-        <div>
-          <label class="field-label" for="a11yLevel">Accessibility target</label>
-          <select id="a11yLevel" class="input">
-            <option value="WCAG 2.1 AA">WCAG 2.1 AA</option>
-            <option value="WCAG 2.1 AAA">WCAG 2.1 AAA</option>
-            <option value="Basic semantic HTML only">Basic semantic HTML only</option>
-          </select>
-        </div>
+        <button id="openPromptBtn" class="btn btn-primary btn-block" type="button">
+          <i class="fas fa-wand-magic-sparkles"></i> Generate Developer Prompt
+        </button>
       </div>
     </div>
 
@@ -1431,78 +1621,62 @@ body.mode-advanced .advanced-only { display: block; }
        RIGHT — LIVE PREVIEW
        ========================================================== -->
   <section class="col-right">
-    <div class="preview-sticky">
-      <div class="panel">
+    <div class="panel">
 
-        <!-- preview toolbar -->
-        <div class="panel-head wrap-head">
-          <h2 class="preview-heading">
-            <i class="fas fa-eye"></i> Live preview
-            <span class="sub">— this is the exact profile layout your prompt describes</span>
-          </h2>
+      <div class="panel-head wrap-head static">
+        <h2 class="preview-heading">
+          <i class="fas fa-eye"></i> Live preview
+          <span class="sub">— reflects your current configuration</span>
+        </h2>
 
-          <div class="preview-sizes">
-            <button class="preview-size" data-w="375" type="button">
-              <i class="fas fa-mobile-screen"></i> Mobile
-            </button>
-            <button class="preview-size active" data-w="768" type="button">
-              <i class="fas fa-tablet-screen-button"></i> Tablet
-            </button>
-            <button class="preview-size" data-w="100%" type="button">
-              <i class="fas fa-desktop"></i> Desktop
-            </button>
-          </div>
+        <div class="preview-sizes">
+          <button class="preview-size" data-w="375" type="button">
+            <i class="fas fa-mobile-screen"></i> Mobile
+          </button>
+          <button class="preview-size active" data-w="768" type="button">
+            <i class="fas fa-tablet-screen-button"></i> Tablet
+          </button>
+          <button class="preview-size" data-w="100%" type="button">
+            <i class="fas fa-desktop"></i> Desktop
+          </button>
         </div>
-
-        <!-- device chrome + preview surface -->
-        <div class="preview-stage">
-          <div class="preview-shell" id="previewShell">
-
-            <!-- faux browser bar -->
-            <div class="browser-bar">
-              <span class="browser-dot red"></span>
-              <span class="browser-dot yellow"></span>
-              <span class="browser-dot green"></span>
-              <div class="browser-url">https://yourname.dev</div>
-            </div>
-
-            <!-- rendered profile mockup -->
-            <div id="previewFrame" class="preview-frame"></div>
-          </div>
-<div class="order-bar">
-  <button id="orderBtn" class="btn btn-order" type="button">
-    <i class="fas fa-paper-plane"></i> Place order
-  </button>
-</div>
-
-          <!-- preview hint -->
-          <p class="preview-hint">
-            <i class="fas fa-circle-info"></i>
-            Preview is a simplified visual mockup. The generated prompt describes the full production implementation.
-          </p>
-        </div>
-
       </div>
+
+      <div class="preview-stage">
+        <div class="preview-shell" id="previewShell">
+          <div class="browser-bar">
+            <span class="browser-dot red"></span>
+            <span class="browser-dot yellow"></span>
+            <span class="browser-dot green"></span>
+            <div class="browser-url">https://yourname.dev</div>
+          </div>
+          <div id="previewFrame"></div>
+        </div>
+
+        <div class="order-bar">
+          <button id="orderBtn" class="btn btn-order" type="button">
+            <i class="fas fa-paper-plane"></i> Place order
+          </button>
+        </div>
+
+        <p class="preview-hint">
+          <i class="fas fa-circle-info"></i>
+          Preview is a simplified visual mockup. The generated prompt describes the full production implementation.
+        </p>
+      </div>
+
     </div>
-    
   </section>
 
 </main>
 
 <!-- ============================================================
-     ORDER ACTION BAR — outside the sidebar, always visible
-     ============================================================ -->
-
-<!-- ============================================================
-     PROMPT SIDEBAR — overlays the page from the right
-     The sidebar is locked behind a passcode by default.
-     Change SIDEBAR_PASSCODE in the script to rotate the passcode.
+     PROMPT SIDEBAR
      ============================================================ -->
 <div id="promptBackdrop" class="hidden"></div>
 
 <aside id="promptSidebar" class="locked" aria-hidden="true">
 
-  <!-- ---------- PASSCODE GATE ---------- -->
   <div class="sidebar-lock">
     <div class="sidebar-lock-box">
       <div class="sidebar-lock-icon"><i class="fas fa-lock"></i></div>
@@ -1520,24 +1694,21 @@ body.mode-advanced .advanced-only { display: block; }
     </div>
   </div>
 
-  <!-- ---------- SIDEBAR CONTENT (only reachable once unlocked) ---------- -->
   <div class="sidebar-content">
 
-    <!-- sidebar header -->
     <div class="sidebar-head">
       <div class="sidebar-icon">
         <i class="fas fa-wand-magic-sparkles"></i>
       </div>
       <div class="sidebar-head-text">
         <h2 class="sidebar-title">Developer prompt</h2>
-        <p class="sidebar-sub">Concatenated from PROMPT_REGISTRY — copy, download, or order</p>
+        <p class="sidebar-sub">Built from your live configuration</p>
       </div>
       <button id="closeSidebarBtn" class="sidebar-close" type="button" aria-label="Close">
         <i class="fas fa-times"></i>
       </button>
     </div>
 
-    <!-- sidebar actions -->
     <div class="sidebar-actions">
       <button id="generateBtn" class="btn btn-primary" type="button">
         <i class="fas fa-bolt"></i> Regenerate
@@ -1551,23 +1722,18 @@ body.mode-advanced .advanced-only { display: block; }
       <span id="promptStats" class="prompt-stats"></span>
     </div>
 
-    <!-- sidebar body -->
     <div class="sidebar-body">
       <textarea id="layoutOutput" class="prompt-output" readonly>Configure your profile on the left — the developer prompt will appear here.</textarea>
     </div>
 
-    <!-- sidebar footer -->
     <div class="sidebar-foot">
       <i class="fas fa-circle-info"></i>
-      <span>Every selectable option is pre-mapped to an English prompt fragment inside <code>PROMPT_REGISTRY</code>. Nothing is invented at runtime — the generator only concatenates stored strings.</span>
+      <span>The prompt is assembled from your live form state — career, sections, profile data, theme tokens and layout settings.</span>
     </div>
 
   </div>
 </aside>
 
-<!-- ============================================================
-     VERTICAL TOGGLE BUTTON — sits on the right edge
-     ============================================================ -->
 <button id="promptToggleBtn"
         type="button"
         aria-controls="promptSidebar"
@@ -1576,405 +1742,662 @@ body.mode-advanced .advanced-only { display: block; }
   <span>Prompt</span>
 </button>
 
-<!-- toast -->
 <div id="toast"></div>
 
 <script>
 /* ============================================================================
-   PROFILE DESIGN CUSTOMIZER — SELECT-TO-PROMPT BUILDER
+   PROFILE DESIGN CUSTOMIZER — CAREER-DRIVEN SELECT-TO-PROMPT BUILDER
    ----------------------------------------------------------------------------
    ARCHITECTURE
-   1) CONFIG           → Telegram delivery + sidebar passcode
-   2) PROMPT_REGISTRY  → every option's English prompt fragment, pre-authored
-   3) PRESETS          → bundles that set many controls at once
-   4) state            → current selection snapshot
-   5) render*()        → build the UI from the registry (no hardcoded markup)
-   6) generatePrompt() → concatenate registry fragments into one spec
-   7) bind()           → jQuery event delegation, auto-regenerate on change
+   1) CONFIG              → Telegram delivery + sidebar passcode
+   2) CAREERS             → career registry (id, name, icon, defaults)
+   3) SECTION_SCHEMA      → per-section field configuration
+   4) THEMES              → 15 theme presets (colour tokens)
+   5) LAYOUTS / SHADOWS / BORDERS / MOTIONS
+   6) state               → current configuration snapshot
+   7) render*()           → build UI from configuration (data-driven)
+   8) generatePrompt()    → assemble the developer spec
+   9) bind()              → jQuery event delegation
    ========================================================================== */
 
 
 /* ============================================================================
-   0. CONFIGURATION — Telegram delivery & sidebar passcode
+   0. CONFIGURATION
    ============================================================================
-   ⚠️  SECURITY WARNING — READ THIS BEFORE DEPLOYING  ⚠️
-   ----------------------------------------------------------------------------
-   A bot token embedded in client-side JavaScript is NOT secret. Anyone who
-   can view the page source or inspect browser network requests can extract
-   the token and use it to send messages as your bot.
+   ⚠️  SECURITY WARNING — READ BEFORE DEPLOYING  ⚠️
+   A bot token embedded in client-side JavaScript is NOT secret. For production,
+   deploy a server-side relay and set TELEGRAM_PROXY_URL below.
+   ========================================================================== */
+const TELEGRAM_BOT_TOKEN     = "";
+const TELEGRAM_CEO_CHAT_ID   = "";
+const TELEGRAM_ADMIN_CHAT_ID = "";
+const TELEGRAM_PROXY_URL     = "";
 
-   For any real deployment:
-     • Do NOT put a real token in this file.
-     • Deploy a small server-side relay (Node/Express, Cloudflare Worker,
-       Netlify/Vercel function, etc.) that keeps the token in an environment
-       secret and accepts an order payload from the browser.
-     • Set TELEGRAM_PROXY_URL below to that endpoint. When it is set, the
-       client POSTs the order to the proxy and the proxy calls the Telegram
-       Bot API with the real token.
-     • Restrict the proxy with origin checks, rate limiting, a shared client
-       key, and an allow-list of chat IDs. Never send the full prompt to an
-       unauthorized chat.
-
-   The direct client-side path below (using TELEGRAM_BOT_TOKEN) is provided
-   ONLY as a local prototype convenience. It is NOT production-grade.
-   ============================================================================ */
-
-  const TELEGRAM_BOT_TOKEN = "8667705229:AAE7yXyApUypoQSxd9TIExaPn4Yk2G4BfxI";
-        const TELEGRAM_CEO_CHAT_ID = "1742022528";         // Receives Order Summary Alert
-        const TELEGRAM_ADMIN_CHAT_ID = "-1004426222447"; // Receives Full AI Prompts
-  // Receives the full prompt .txt document
-const TELEGRAM_PROXY_URL     = "";   // Recommended: server-side relay endpoint
-
-/* ---------------------------------------------------------------------------
-   SIDEBAR PASSCODE (temporary prototype lock)
-   ---------------------------------------------------------------------------
-   This is checked in the browser — it is NOT real authentication and can be
-   read from devtools. Change SIDEBAR_PASSCODE to rotate the passcode.
-   --------------------------------------------------------------------------- */
+/* Sidebar passcode — prototype lock only, NOT real authentication. */
 const SIDEBAR_PASSCODE = "1210";
 
 
 /* ============================================================================
-   1. PROMPT REGISTRY
+   1. CAREERS
    ========================================================================== */
-const PROMPT_REGISTRY = {
+const CAREERS = [
+  { id:'software_developer', name:'Software Developer', icon:'fa-code', desc:'Builds software products',
+    sections:['about','skills','experience','projects','education','contact','social'] },
 
-  palettes: {
-    "Crimson Edge": {
-      swatches: ['#DC2626', '#111827', '#F59E0B', '#F9FAFB'],
-      tokens: { primary:'#DC2626', secondary:'#111827', accent:'#F59E0B', background:'#FFFFFF', surface:'#F9FAFB', text:'#111827' },
-      prompt: "Use a high-energy palette: primary #DC2626 (crimson) for CTAs and key accents, secondary #111827 (near-black) for headings and dark surfaces, accent #F59E0B (amber) for highlights and badges, background #FFFFFF, surface #F9FAFB, body text #111827. Maintain a contrast ratio of at least 4.5:1 for all body text."
-    },
-    "Ocean Trust": {
-      swatches: ['#1E3A8A', '#0EA5E9', '#64748B', '#F8FAFC'],
-      tokens: { primary:'#1E3A8A', secondary:'#0EA5E9', accent:'#64748B', background:'#FFFFFF', surface:'#F8FAFC', text:'#0F172A' },
-      prompt: "Use a calm corporate palette: primary #1E3A8A (deep navy), secondary #0EA5E9 (sky), accent #64748B (slate), background #FFFFFF, surface #F8FAFC, body text #0F172A. Favour restrained use of colour with generous neutral space."
-    },
-    "Mono Studio": {
-      swatches: ['#111827', '#6B7280', '#E5E7EB', '#FFFFFF'],
-      tokens: { primary:'#111827', secondary:'#6B7280', accent:'#E5E7EB', background:'#FFFFFF', surface:'#F9FAFB', text:'#111827' },
-      prompt: "Use a strictly monochrome palette: primary #111827, secondary #6B7280, borders #E5E7EB, background #FFFFFF, surface #F9FAFB. No hue — rely on typography weight, spacing and border contrast to create hierarchy."
-    },
-    "Neon Terminal": {
-      swatches: ['#22D3EE', '#A855F7', '#0B0F19', '#111827'],
-      tokens: { primary:'#22D3EE', secondary:'#A855F7', accent:'#F472B6', background:'#0B0F19', surface:'#111827', text:'#E5E7EB' },
-      prompt: "Use a dark technical palette: background #0B0F19, surface #111827, primary #22D3EE (cyan), secondary #A855F7 (violet), accent #F472B6, body text #E5E7EB. Add a subtle 1px luminous border on cards and a soft outer glow on primary buttons. Ensure all text still passes 4.5:1 contrast on the dark surface."
-    },
-    "Soft Pastel": {
-      swatches: ['#F9A8D4', '#A7F3D0', '#FEF3C7', '#FFFFFF'],
-      tokens: { primary:'#EC4899', secondary:'#10B981', accent:'#F59E0B', background:'#FFFFFF', surface:'#FDF2F8', text:'#374151' },
-      prompt: "Use a soft pastel palette: primary #EC4899 with #F9A8D4 tints, secondary #10B981 with #A7F3D0 tints, accent #F59E0B with #FEF3C7 tints, background #FFFFFF, surface #FDF2F8, body text #374151. Keep saturation low and corners generous."
-    },
-    "Editorial Ink": {
-      swatches: ['#000000', '#B45309', '#FFFBEB', '#1C1917'],
-      tokens: { primary:'#000000', secondary:'#B45309', accent:'#FFFBEB', background:'#FFFBEB', surface:'#FFFFFF', text:'#1C1917' },
-      prompt: "Use an editorial print-inspired palette: pure black #000000 for headlines, warm accent #B45309, paper background #FFFBEB, card surface #FFFFFF, body text #1C1917. Prioritise typographic hierarchy over colour."
-    }
+  { id:'frontend_developer', name:'Frontend Developer', icon:'fa-laptop-code', desc:'Builds user interfaces',
+    sections:['about','skills','experience','projects','education','contact','social'],
+    overrides:{ skills:{ label:'Frontend Skills' } } },
+
+  { id:'backend_developer', name:'Backend Developer', icon:'fa-server', desc:'Builds services & APIs',
+    sections:['about','skills','experience','projects','education','contact','social'],
+    overrides:{ skills:{ label:'Backend Skills' },
+                projects:{ label:'Systems & APIs' } } },
+
+  { id:'fullstack_developer', name:'Full-Stack Developer', icon:'fa-layer-group', desc:'Builds end to end',
+    sections:['about','skills','experience','projects','education','contact','social'] },
+
+  { id:'uiux_designer', name:'UI/UX Designer', icon:'fa-pen-ruler', desc:'Designs digital experiences',
+    sections:['about','skills','experience','projects','education','contact','social'],
+    overrides:{
+      skills:{ label:'Design Skills & Tools', fields:[
+        { id:'specialization', label:'Design Specialization', type:'text', span:2, ph:'Product design, design systems' },
+        { id:'tools', label:'Design Tools', type:'text', span:2, ph:'Figma, Sketch, Adobe XD' },
+        { id:'process', label:'Design Process', type:'textarea', rows:2, span:2, ph:'Research → wireframe → prototype → test' },
+        { id:'categories', label:'Additional Skills', type:'textarea', rows:2, span:2 }
+      ]},
+      projects:{ label:'Portfolio Projects', itemLabel:'Case Study', fields:[
+        { id:'name', label:'Project Name', type:'text' },
+        { id:'role', label:'Your Role', type:'text' },
+        { id:'description', label:'Case Study Summary', type:'textarea', rows:2, span:2 },
+        { id:'caseStudy', label:'Case Study URL', type:'url', ph:'https://…' },
+        { id:'figma', label:'Figma Link', type:'url', ph:'https://figma.com/…' },
+        { id:'tech', label:'Deliverables / Tools', type:'text', span:2 },
+        { id:'image', label:'Cover Image URL', type:'url', span:2 }
+      ]}
+    } },
+
+  { id:'graphic_designer', name:'Graphic Designer', icon:'fa-palette', desc:'Visual & brand design',
+    sections:['about','skills','projects','experience','contact','social'],
+    overrides:{ projects:{ label:'Design Portfolio', itemLabel:'Piece' } } },
+
+  { id:'digital_marketer', name:'Digital Marketer', icon:'fa-bullhorn', desc:'Growth & campaigns',
+    sections:['about','skills','experience','projects','stats','contact','social'] },
+
+  { id:'content_creator', name:'Content Creator', icon:'fa-video', desc:'Creates content & media',
+    sections:['about','contentPortfolio','stats','collaborations','contact','social'] },
+
+  { id:'influencer', name:'Influencer', icon:'fa-star', desc:'Audience-driven creator',
+    sections:['about','contentPortfolio','stats','collaborations','contact','social'] },
+
+  { id:'photographer', name:'Photographer', icon:'fa-camera', desc:'Captures & edits imagery',
+    sections:['about','skills','projects','experience','contact','social'],
+    overrides:{ projects:{ label:'Photo Series', itemLabel:'Series' } } },
+
+  { id:'video_editor', name:'Video Editor', icon:'fa-film', desc:'Edits motion & video',
+    sections:['about','skills','projects','experience','contact','social'],
+    overrides:{ projects:{ label:'Showreel & Projects', itemLabel:'Project' } } },
+
+  { id:'teacher', name:'Teacher / Educator', icon:'fa-chalkboard-user', desc:'Teaches & mentors',
+    sections:['about','subjects','experience','education','courses','contact','social'],
+    overrides:{
+      about:{ fields:[
+        { id:'summary', label:'Teaching Philosophy', type:'textarea', rows:3, span:2 },
+        { id:'years', label:'Years of Teaching Experience', type:'text', ph:'e.g. 8' },
+        { id:'specialization', label:'Teaching Level', type:'text', ph:'High school / University' }
+      ]},
+      experience:{ label:'Teaching Experience', itemLabel:'Teaching Role' }
+    } },
+
+  { id:'doctor', name:'Doctor / Healthcare Professional', icon:'fa-user-doctor', desc:'Clinical practice & care',
+    sections:['about','skills','experience','education','certifications','appointments','contact'],
+    overrides:{
+      skills:{ label:'Specialty & Qualifications', fields:[
+        { id:'primary', label:'Medical Specialty', type:'text', span:2, ph:'Cardiology' },
+        { id:'frameworks', label:'Sub-specialties', type:'text', ph:'Interventional cardiology' },
+        { id:'tools', label:'Procedures & Techniques', type:'text', span:2 },
+        { id:'categories', label:'Languages Spoken', type:'textarea', rows:2, span:2 }
+      ]},
+      about:{ fields:[
+        { id:'summary', label:'Professional Summary', type:'textarea', rows:3, span:2 },
+        { id:'years', label:'Years in Practice', type:'text', ph:'e.g. 12' },
+        { id:'specialization', label:'Specialty', type:'text', ph:'Cardiology' }
+      ]}
+    } },
+
+  { id:'student', name:'Student', icon:'fa-graduation-cap', desc:'Studying & building skills',
+    sections:['about','education','skills','projects','contact','social'] },
+
+  { id:'freelancer', name:'Freelancer', icon:'fa-briefcase', desc:'Independent professional',
+    sections:['about','services','skills','projects','experience','testimonials','contact','social'] },
+
+  { id:'business_owner', name:'Business Owner', icon:'fa-store', desc:'Runs a business',
+    sections:['about','services','projects','testimonials','stats','contact','social'],
+    overrides:{ about:{ fields:[
+      { id:'summary', label:'Business Description', type:'textarea', rows:3, span:2 },
+      { id:'years', label:'Years in Business', type:'text', ph:'e.g. 6' },
+      { id:'specialization', label:'Industry', type:'text', ph:'e.g. Hospitality' }
+    ]} } },
+
+  { id:'consultant', name:'Consultant', icon:'fa-lightbulb', desc:'Advises & delivers expertise',
+    sections:['about','services','experience','testimonials','certifications','contact','social'] },
+
+  { id:'other', name:'Other / Custom Career', icon:'fa-ellipsis', desc:'Define your own path',
+    sections:['about','skills','experience','projects','education','contact','social'] }
+];
+
+function getCareer(id) {
+  return CAREERS.find(c => c.id === id) || CAREERS[CAREERS.length - 1];
+}
+
+
+/* ============================================================================
+   2. SECTION SCHEMA
+   Each section defines its own field configuration.
+   ========================================================================== */
+const SECTION_SCHEMA = {
+
+  about: {
+    label:'About', icon:'fa-user',
+    promptBase:'An <section> with an <h2> heading followed by 2–4 short <p> paragraphs of bio text constrained to a 65ch measure.',
+    fields: [
+      { id:'summary', label:'Professional Summary', type:'textarea', rows:3, span:2,
+        ph:'A short paragraph about what you do and who you help.' },
+      { id:'years', label:'Years of Experience', type:'text', ph:'e.g. 5' },
+      { id:'specialization', label:'Specialization', type:'text', ph:'e.g. React & design systems' }
+    ]
   },
 
-  colorTokens: [
-    { id:'primary',    label:'Primary',    default:'#DC2626', prompt:'primary colour' },
-    { id:'secondary',  label:'Secondary',  default:'#111827', prompt:'secondary colour' },
-    { id:'accent',     label:'Accent',     default:'#F59E0B', prompt:'accent colour' },
-    { id:'background', label:'Background', default:'#FFFFFF', prompt:'page background' },
-    { id:'surface',    label:'Surface',    default:'#F9FAFB', prompt:'card / surface background' },
-    { id:'text',       label:'Text',       default:'#111827', prompt:'body text colour' }
-  ],
-
-  layouts: {
-    "Hero Top": {
-      icon:'fa-square-full',
-      desc:'Avatar + name centered, content stacked below',
-      prompt:"LAYOUT — HERO TOP: Render a vertically stacked single-column layout. Section 1 is a full-width hero band containing the avatar (centered), the display name in an <h1>, the role in an <h2>, the tagline in a <p>, and the primary CTA button. All subsequent sections stack beneath it in a single centered column."
-    },
-    "Split 2-Column": {
-      icon:'fa-table-columns',
-      desc:'Sticky left profile card, scrolling right content',
-      prompt:"LAYOUT — SPLIT 2-COLUMN: Use a CSS Grid with a sticky left column (approx. 340px) holding the avatar, name, role, tagline, CTA and social links, and a fluid right column holding the scrolling content sections. The left column uses position: sticky; top: 5rem. Collapse to a single column below 1024px, with the profile card rendered first."
-    },
-    "Sidebar Left": {
-      icon:'fa-bars-staggered',
-      desc:'Fixed vertical navigation rail plus content',
-      prompt:"LAYOUT — SIDEBAR LEFT: Render a fixed vertical navigation rail (approx. 240px) on the left containing anchor links to each section with an active-state indicator. The main content area scrolls independently to the right of the rail, with smooth scroll-to-anchor behaviour. Collapse the rail into a top hamburger drawer below 768px."
-    },
-    "Card Grid": {
-      icon:'fa-grip',
-      desc:'Profile card plus modular content tiles',
-      prompt:"LAYOUT — CARD GRID: Render the profile as one card inside a responsive CSS Grid (repeat(auto-fit, minmax(280px, 1fr))). Each content section becomes its own card tile of equal visual weight, with a shared gap, equal corner radius and a consistent internal padding scale."
-    },
-    "Timeline": {
-      icon:'fa-timeline',
-      desc:'Vertical timeline for experience and milestones',
-      prompt:"LAYOUT — TIMELINE: Render the experience and education sections as a vertical timeline with a single 2px spine line on the left, circular node markers aligned to each entry, and entry cards offset to the right of the spine. On mobile, reduce the spine offset and keep the nodes visible."
-    },
-    "Magazine": {
-      icon:'fa-newspaper',
-      desc:'Asymmetric editorial grid with large type',
-      prompt:"LAYOUT — MAGAZINE: Use an asymmetric editorial grid. The hero occupies a 7/12 column with oversized display typography, while the profile meta (role, location, social links) occupies a 5/12 column as a bordered aside. Alternate section widths down the page to create a printed-magazine rhythm."
-    }
+  skills: {
+    label:'Skills', icon:'fa-star',
+    promptBase:'A <section> containing a <ul> of skill items. Each <li> shows the skill name and a proficiency indicator. Group skills into 2–4 labelled categories.',
+    fields: [
+      { id:'primary', label:'Core Skills / Languages', type:'text', span:2, ph:'JavaScript, TypeScript, Python' },
+      { id:'frameworks', label:'Frameworks & Libraries', type:'text', ph:'React, Next.js, Node' },
+      { id:'tools', label:'Tools & Technologies', type:'text', ph:'Git, Figma, Docker' },
+      { id:'categories', label:'Skill Categories / Proficiency', type:'textarea', rows:2, span:2,
+        ph:'Frontend: HTML, CSS, React (advanced)\nBackend: Node, Postgres (intermediate)' }
+    ]
   },
 
-  sections: [
-    { id:'about',      label:'About',            on:true,  prompt:"ABOUT: An <section> with an <h2> heading, followed by 2–4 short <p> paragraphs of bio text constrained to a 65ch measure." },
-    { id:'skills',     label:'Skills',           on:true,  prompt:"SKILLS: A <section> containing a <ul> of skill items. Each <li> shows the skill name and a proficiency indicator (labelled bar, dot scale, or tag). Group skills into 2–4 labelled categories." },
-    { id:'experience', label:'Experience',       on:true,  prompt:"EXPERIENCE: A <section> of <article> entries, each with role title, company, date range (in a <time> element), a 2–3 line description, and an optional list of 3 achievement bullets." },
-    { id:'projects',   label:'Projects',         on:true,  prompt:"PROJECTS: A responsive card grid of <article> cards. Each card contains a thumbnail <img> with alt text, a project title, a one-line summary, a technology tag list, and a link to the live site or repository." },
-    { id:'education',  label:'Education',        on:false, prompt:"EDUCATION: A compact <section> listing degrees or certifications with institution name, credential, and year. Keep it visually lighter than the Experience section." },
-    { id:'testimonials',label:'Testimonials',    on:false, prompt:"TESTIMONIALS: A <blockquote>-based section with 2–3 short quotes, each attributed with a name, role and optional avatar. Use a subtle surface background to separate it from neighbouring sections." },
-    { id:'contact',    label:'Contact',          on:true,  prompt:"CONTACT: A <section> containing a short prompt line and a contact <form> with name, email and message fields plus a submit button. Include inline validation states (default, focus, error, success). If no backend is required, use a mailto: action." },
-    { id:'social',     label:'Social Links',     on:true,  prompt:"SOCIAL LINKS: A horizontal <ul> of icon links (GitHub, LinkedIn, X, Email). Each <a> must have an accessible aria-label and open external links with rel=\"noopener noreferrer\" target=\"_blank\"." },
-    { id:'stats',      label:'Stats / Numbers',  on:false, prompt:"STATS: A row of 3–4 metric blocks, each with an oversized numeral and a small descriptive caption. Use tabular-nums and keep the row responsive (wrap to 2 columns on mobile)." },
-    { id:'cta',        label:'CTA Banner',       on:false, prompt:"CTA BANNER: A full-width band near the bottom of the page with a short headline, one supporting line, and a single high-contrast primary button. It must visually break from the surrounding white sections." }
-  ],
-
-  shadows: {
-    "None":    { css:'none',                                              prompt:"Do not use any box-shadow anywhere. Separate surfaces with 1px borders only." },
-    "Subtle":  { css:'0 1px 2px rgba(0,0,0,.05)',                         prompt:"Use a very subtle elevation: box-shadow 0 1px 2px rgba(0,0,0,.05) on cards." },
-    "Soft":    { css:'0 4px 16px rgba(0,0,0,.08)',                        prompt:"Use a soft elevation: box-shadow 0 4px 16px rgba(0,0,0,.08) on cards, increasing to 0 8px 24px rgba(0,0,0,.10) on hover." },
-    "Lifted":  { css:'0 12px 32px rgba(0,0,0,.14)',                       prompt:"Use a pronounced elevation: box-shadow 0 12px 32px rgba(0,0,0,.14) on primary cards, with a smooth 200ms transition on hover." }
+  experience: {
+    label:'Experience', icon:'fa-briefcase', repeatable:true, itemLabel:'Role',
+    promptBase:'A <section> of <article> entries, each with role title, company, date range (in a <time> element), a 2–3 line description, and optional achievement bullets.',
+    fields: [
+      { id:'company', label:'Company / Organisation', type:'text' },
+      { id:'title', label:'Job Title / Role', type:'text' },
+      { id:'period', label:'Employment Period', type:'text', ph:'Jan 2022 — Present' },
+      { id:'location', label:'Location', type:'text', ph:'Remote / Yangon' },
+      { id:'responsibilities', label:'Responsibilities', type:'textarea', rows:2, span:2 },
+      { id:'achievements', label:'Achievements', type:'textarea', rows:2, span:2 }
+    ]
   },
 
-  borders: {
-    "Hairline":  { css:'1px solid #E5E7EB', prompt:"Use 1px hairline borders in #E5E7EB on all card surfaces." },
-    "Strong":    { css:'2px solid #111827', prompt:"Use confident 2px borders in #111827 to define cards and separate sections." },
-    "None":      { css:'none',              prompt:"Use no borders at all — rely purely on background colour shifts and spacing to separate regions." }
+  projects: {
+    label:'Projects', icon:'fa-diagram-project', repeatable:true, itemLabel:'Project',
+    promptBase:'A responsive card grid of <article> cards. Each card contains a thumbnail <img> with alt text, a project title, a one-line summary, a technology tag list, and a link to the live site or repository.',
+    fields: [
+      { id:'name', label:'Project Name', type:'text' },
+      { id:'role', label:'Project Role', type:'text' },
+      { id:'description', label:'Project Description', type:'textarea', rows:2, span:2 },
+      { id:'tech', label:'Technologies Used', type:'text', span:2, ph:'React, Node, PostgreSQL' },
+      { id:'features', label:'Key Features', type:'textarea', rows:2, span:2 },
+      { id:'image', label:'Project Image / Thumbnail URL', type:'url', ph:'https://…' },
+      { id:'demo', label:'Live Demo URL', type:'url', ph:'https://…' },
+      { id:'repo', label:'GitHub Repository URL', type:'url', span:2, ph:'https://github.com/…' }
+    ]
   },
 
-  motions: {
-    "None":     { prompt:"Do not add any animation or transition. All state changes are instant." },
-    "Subtle":   { prompt:"Add only micro-transitions: 150ms ease on colour, opacity, and box-shadow for hover and focus states. Nothing moves position." },
-    "Standard": { prompt:"Add 200ms ease-out transitions on hover and focus, plus a gentle fade-and-rise (translateY 12px → 0) on section entrance via IntersectionObserver. Respect prefers-reduced-motion by disabling all transforms." },
-    "Expressive":{ prompt:"Add expressive motion: staggered entrance animations per card (60ms delay increments), 300ms cubic-bezier(.2,.8,.2,1) transitions, and a subtle parallax on the hero avatar. Fully disable under prefers-reduced-motion: reduce." }
+  education: {
+    label:'Education', icon:'fa-graduation-cap', repeatable:true, itemLabel:'Qualification',
+    promptBase:'A compact <section> listing degrees or certifications with institution name, credential and year. Visually lighter than the Experience section.',
+    fields: [
+      { id:'institution', label:'Institution', type:'text' },
+      { id:'degree', label:'Degree / Qualification', type:'text' },
+      { id:'field', label:'Field of Study', type:'text' },
+      { id:'start', label:'Start Date', type:'text', ph:'2018' },
+      { id:'end', label:'End Date', type:'text', ph:'2022' },
+      { id:'achievements', label:'Relevant Achievements', type:'textarea', rows:2, span:2 }
+    ]
   },
 
-  tags: {
-    structure: {
-      header:   { label:'<header>',  prompt:"<header> — Page-level masthead containing the identity block (avatar, name, role) and the primary CTA. Sticky on scroll with a backdrop blur and a hairline bottom border." },
-      nav:      { label:'<nav>',     prompt:"<nav> — Primary navigation with <ul>/<li>/<a> structure, an aria-label=\"Primary\", an active-link state, and a mobile hamburger drawer below 768px." },
-      main:     { label:'<main>',    prompt:"<main> — Single <main> landmark wrapping all page content. Only one per document." },
-      section:  { label:'<section>', prompt:"<section> — Each content block is a <section> with an aria-labelledby pointing to its own <h2>. Sections are separated by consistent vertical rhythm." },
-      article:  { label:'<article>', prompt:"<article> — Used for self-contained entries (experience items, project cards, testimonials), each with its own heading." },
-      aside:    { label:'<aside>',   prompt:"<aside> — Supplementary column for meta info, quick facts, or social links. Visually lighter than the main content." },
-      footer:   { label:'<footer>',  prompt:"<footer> — Closing region with a copyright line, a repeat of the primary social links, and a subtle top border." },
-      div:      { label:'<div>',     prompt:"<div> — Used only as a neutral layout/utility wrapper where no semantic element applies. Never used for text content blocks." }
-    },
-    content: {
-      h1:       { label:'<h1>',      prompt:"<h1> — Exactly one per page. Holds the display name. Uses the largest type step with a tight letter-spacing and heavy weight." },
-      h2:       { label:'<h2>',      prompt:"<h2> — Section headings. Consistent size step, 0.75rem bottom margin, and an optional short accent underline." },
-      h3:       { label:'<h3>',      prompt:"<h3> — Sub-headings inside cards and timeline entries (job title, project name)." },
-      p:        { label:'<p>',       prompt:"<p> — Body copy constrained to a 65–72ch measure with 1.7 line-height." },
-      ul:       { label:'<ul>',      prompt:"<ul> — Used for skill lists, feature bullets and social links. Custom marker style, list-style: none where icons replace bullets." },
-      blockquote:{ label:'<blockquote>', prompt:"<blockquote> — Testimonial quotes with <cite> attribution, an accent left border, and italic body text." },
-      time:     { label:'<time>',    prompt:"<time datetime=\"YYYY-MM\"> — Used for all date ranges, formatted consistently (e.g. 'Jan 2022 — Present')." },
-      table:    { label:'<table>',   prompt:"<table> — Used for structured spec or comparison data. Include <thead>, <tbody>, <th scope=\"col\">, tabular-nums, and zebra striping." },
-      code:     { label:'<code>',    prompt:"<code> — Monospace inline styling for technical terms, with a subtle tinted background and 4px radius." }
-    },
-    interactive: {
-      a:        { label:'<a>',       prompt:"<a> — All links have descriptive text or aria-label, a visible focus ring, and external links carry rel=\"noopener noreferrer\"." },
-      button:   { label:'<button>',  prompt:"<button> — Three variants required: primary (solid fill), secondary (outline), ghost (text only). Each needs default, hover, focus-visible, active and disabled states." },
-      form:     { label:'<form>',    prompt:"<form> — Contact form with <label> paired to every input, inline validation, an aria-live region for errors, and a success state after submission." },
-      input:    { label:'<input>',   prompt:"<input> — Text and email inputs with visible labels, 44px minimum touch height, a clear focus ring, and an error state using an icon plus a colour change (never colour alone)." },
-      details:  { label:'<details>', prompt:"<details>/<summary> — Used for collapsible FAQ or 'show more' blocks, with a rotating chevron indicator." }
-    },
-    media: {
-      img:      { label:'<img>',     prompt:"<img> — Every image requires meaningful alt text, explicit width/height to prevent layout shift, loading=\"lazy\" below the fold, and responsive srcset where applicable." },
-      picture:  { label:'<picture>', prompt:"<picture> — Used for art-directed responsive images with WebP sources and a JPEG fallback." },
-      svg:      { label:'<svg>',     prompt:"<svg> — Inline icons only, with aria-hidden=\"true\" for decorative icons and role=\"img\" plus <title> for meaningful ones." },
-      video:    { label:'<video>',   prompt:"<video> — Optional hero media with muted, playsinline, loop and a poster frame; never autoplay with sound." }
-    }
+  testimonials: {
+    label:'Testimonials', icon:'fa-quote-right', repeatable:true, itemLabel:'Testimonial',
+    promptBase:'A <blockquote>-based section with 2–3 short quotes, each attributed with a name and role. Use a subtle surface background to separate it from neighbouring sections.',
+    fields: [
+      { id:'quote', label:'Quote', type:'textarea', rows:2, span:2 },
+      { id:'name', label:'Name', type:'text' },
+      { id:'role', label:'Role / Company', type:'text' }
+    ]
   },
 
-  negative: "Avoid: generic bootstrap-looking UI, unstyled browser defaults, inconsistent spacing, more than three type sizes per section, more than two font families, harsh pure-black shadows, colour-only state indicators, lorem ipsum, placeholder images without alt text, inline styles, !important, divitis, nested tables, autoplaying audio, horizontal scroll on mobile, text smaller than 14px, contrast below 4.5:1, and layout shift on load."
+  contact: {
+    label:'Contact', icon:'fa-envelope',
+    promptBase:'A <section> containing a short prompt line and a contact <form> with name, email and message fields plus a submit button. Include inline validation states. If no backend is required, use a mailto: action.',
+    fields: [
+      { id:'email', label:'Email', type:'email', ph:'you@example.com' },
+      { id:'phone', label:'Phone', type:'tel', ph:'+95 …' },
+      { id:'location', label:'Location', type:'text' },
+      { id:'method', label:'Preferred Contact Method', type:'select',
+        options:['Email','Phone','Contact form','Social DM'] }
+    ]
+  },
+
+  social: {
+    label:'Social Links', icon:'fa-link', repeatable:true, itemLabel:'Link',
+    promptBase:'A horizontal <ul> of icon links. Each <a> must have an accessible aria-label and external links must use rel="noopener noreferrer" target="_blank".',
+    fields: [
+      { id:'platform', label:'Platform', type:'text', ph:'GitHub / LinkedIn / X' },
+      { id:'url', label:'URL', type:'url', ph:'https://…' }
+    ]
+  },
+
+  stats: {
+    label:'Stats / Numbers', icon:'fa-chart-simple', repeatable:true, itemLabel:'Stat',
+    promptBase:'A row of 3–4 metric blocks, each with an oversized numeral and a small descriptive caption. Use tabular-nums and wrap to 2 columns on mobile.',
+    fields: [
+      { id:'value', label:'Value', type:'text', ph:'120+' },
+      { id:'label', label:'Label', type:'text', ph:'Projects delivered' }
+    ]
+  },
+
+  cta: {
+    label:'CTA Banner', icon:'fa-bullhorn',
+    promptBase:'A full-width band near the bottom of the page with a short headline, one supporting line, and a single high-contrast primary button.',
+    fields: [
+      { id:'headline', label:'Headline', type:'text', span:2 },
+      { id:'subline', label:'Supporting Line', type:'text', span:2 },
+      { id:'buttonLabel', label:'Button Label', type:'text' },
+      { id:'buttonUrl', label:'Button URL', type:'url' }
+    ]
+  },
+
+  /* ---------- career-specific sections ---------- */
+
+  services: {
+    label:'Services', icon:'fa-hand-holding-heart', repeatable:true, itemLabel:'Service',
+    promptBase:'A grid of service cards, each with a title, short description and optional starting price. Use equal-height cards with a consistent icon or accent.',
+    fields: [
+      { id:'title', label:'Service Name', type:'text' },
+      { id:'price', label:'Starting Price', type:'text', ph:'From $500' },
+      { id:'description', label:'Description', type:'textarea', rows:2, span:2 }
+    ]
+  },
+
+  certifications: {
+    label:'Certifications', icon:'fa-certificate', repeatable:true, itemLabel:'Certification',
+    promptBase:'A compact list of professional certifications with issuing body, year and an optional verification link.',
+    fields: [
+      { id:'name', label:'Certification Name', type:'text' },
+      { id:'issuer', label:'Issuing Body', type:'text' },
+      { id:'date', label:'Year / Date', type:'text' },
+      { id:'url', label:'Verification URL', type:'url' }
+    ]
+  },
+
+  courses: {
+    label:'Courses', icon:'fa-book-open', repeatable:true, itemLabel:'Course',
+    promptBase:'A list of courses taught, each with a title, level, duration and enrolment link.',
+    fields: [
+      { id:'title', label:'Course Title', type:'text' },
+      { id:'level', label:'Level', type:'text', ph:'Beginner / Advanced' },
+      { id:'duration', label:'Duration', type:'text', ph:'12 weeks' },
+      { id:'url', label:'Course URL', type:'url' }
+    ]
+  },
+
+  subjects: {
+    label:'Subjects', icon:'fa-book', repeatable:true, itemLabel:'Subject',
+    promptBase:'A grid of subjects taught, each with the subject name, level and a short description.',
+    fields: [
+      { id:'name', label:'Subject Name', type:'text' },
+      { id:'level', label:'Level', type:'text', ph:'Grade 10 / Undergraduate' },
+      { id:'description', label:'Description', type:'textarea', rows:2, span:2 }
+    ]
+  },
+
+  appointments: {
+    label:'Appointments', icon:'fa-calendar-check',
+    promptBase:'A booking block showing consulting hours, clinic location and a booking link or phone number.',
+    fields: [
+      { id:'hours', label:'Office Hours', type:'text', span:2, ph:'Mon–Fri, 9:00–17:00' },
+      { id:'location', label:'Clinic / Hospital', type:'text', span:2 },
+      { id:'bookingUrl', label:'Booking URL', type:'url' },
+      { id:'phone', label:'Appointment Phone', type:'tel' }
+    ]
+  },
+
+  collaborations: {
+    label:'Collaborations', icon:'fa-handshake', repeatable:true, itemLabel:'Collaboration',
+    promptBase:'A brand-collaboration list, each entry showing the brand name, collaboration type and a short description.',
+    fields: [
+      { id:'brand', label:'Brand / Partner', type:'text' },
+      { id:'type', label:'Collaboration Type', type:'text', ph:'Sponsored post' },
+      { id:'description', label:'Description', type:'textarea', rows:2, span:2 }
+    ]
+  },
+
+  contentPortfolio: {
+    label:'Content Portfolio', icon:'fa-photo-film', repeatable:true, itemLabel:'Content',
+    promptBase:'A media grid of selected content, each item with a title, platform, thumbnail and link.',
+    fields: [
+      { id:'title', label:'Content Title', type:'text' },
+      { id:'platform', label:'Platform', type:'text', ph:'YouTube / TikTok / Instagram' },
+      { id:'description', label:'Description', type:'textarea', rows:2, span:2 },
+      { id:'image', label:'Thumbnail URL', type:'url' },
+      { id:'url', label:'Content URL', type:'url' }
+    ]
+  }
 };
 
 
 /* ============================================================================
-   2. PRESETS
+   3. THEMES — 15 presets
    ========================================================================== */
-const PRESETS = {
-  minimal:   { palette:'Mono Studio',   layout:'Hero Top',       radius:8,  shadow:'None',    motion:'Subtle',    density:'Airy — generous whitespace',     heading:'Inter', body:'Inter' },
-  sports:    { palette:'Crimson Edge',  layout:'Split 2-Column', radius:14, shadow:'Lifted',  motion:'Expressive',density:'Balanced — medium spacing',       heading:'Inter', body:'Inter' },
-  corporate: { palette:'Ocean Trust',   layout:'Sidebar Left',   radius:6,  shadow:'Subtle',  motion:'Standard',  density:'Balanced — medium spacing',       heading:'Inter', body:'Inter' },
-  neon:      { palette:'Neon Terminal', layout:'Card Grid',      radius:18, shadow:'Soft',    motion:'Expressive',density:'Dense — compact spacing',         heading:'Inter', body:'Inter' },
-  pastel:    { palette:'Soft Pastel',   layout:'Card Grid',      radius:24, shadow:'Soft',    motion:'Standard',  density:'Airy — generous whitespace',      heading:'Inter', body:'Inter' },
-  editorial: { palette:'Editorial Ink', layout:'Magazine',       radius:0,  shadow:'None',    motion:'Subtle',    density:'Airy — generous whitespace',      heading:'Georgia', body:'Georgia' }
+const THEMES = {
+  "Minimal Light":          { bg:'#FFFFFF', surface:'#F9FAFB', primary:'#111827', secondary:'#6B7280', accent:'#E5E7EB', heading:'#111827', text:'#374151', border:'#E5E7EB' },
+  "Corporate Blue":         { bg:'#FFFFFF', surface:'#F8FAFC', primary:'#1D4ED8', secondary:'#0EA5E9', accent:'#64748B', heading:'#0F172A', text:'#334155', border:'#E2E8F0' },
+  "Ocean Teal":             { bg:'#FFFFFF', surface:'#F0FDFA', primary:'#0D9488', secondary:'#0891B2', accent:'#14B8A6', heading:'#134E4A', text:'#334155', border:'#CCFBF1' },
+  "Forest Green":           { bg:'#FFFFFF', surface:'#F7FEE7', primary:'#3F6212', secondary:'#65A30D', accent:'#84CC16', heading:'#1A2E05', text:'#365314', border:'#D9F99D' },
+  "Emerald":                { bg:'#FFFFFF', surface:'#ECFDF5', primary:'#059669', secondary:'#10B981', accent:'#34D399', heading:'#064E3B', text:'#334155', border:'#A7F3D0' },
+  "Royal Purple":           { bg:'#FFFFFF', surface:'#F5F3FF', primary:'#6D28D9', secondary:'#8B5CF6', accent:'#C4B5FD', heading:'#2E1065', text:'#3F3D56', border:'#DDD6FE' },
+  "Soft Pastel":            { bg:'#FFFFFF', surface:'#FDF2F8', primary:'#EC4899', secondary:'#10B981', accent:'#F59E0B', heading:'#831843', text:'#374151', border:'#FBCFE8' },
+  "Rose Pink":              { bg:'#FFF1F2', surface:'#FFFFFF', primary:'#E11D48', secondary:'#FB7185', accent:'#FDA4AF', heading:'#881337', text:'#4C0519', border:'#FECDD3' },
+  "Sunset Orange":          { bg:'#FFFFFF', surface:'#FFF7ED', primary:'#EA580C', secondary:'#F59E0B', accent:'#FBBF24', heading:'#7C2D12', text:'#44403C', border:'#FED7AA' },
+  "Bold Red":               { bg:'#FFFFFF', surface:'#FEF2F2', primary:'#DC2626', secondary:'#111827', accent:'#F59E0B', heading:'#111827', text:'#1F2937', border:'#FECACA' },
+  "Dark Neon":              { bg:'#0B0F19', surface:'#111827', primary:'#22D3EE', secondary:'#A855F7', accent:'#F472B6', heading:'#F9FAFB', text:'#E5E7EB', border:'#1F2937' },
+  "Midnight Dark":          { bg:'#0F172A', surface:'#1E293B', primary:'#60A5FA', secondary:'#818CF8', accent:'#38BDF8', heading:'#F8FAFC', text:'#CBD5E1', border:'#334155' },
+  "Slate Professional":     { bg:'#FFFFFF', surface:'#F1F5F9', primary:'#334155', secondary:'#64748B', accent:'#94A3B8', heading:'#0F172A', text:'#334155', border:'#E2E8F0' },
+  "Warm Beige":             { bg:'#FFFBF5', surface:'#FFFFFF', primary:'#B45309', secondary:'#A16207', accent:'#D97706', heading:'#451A03', text:'#57534E', border:'#FDE68A' },
+  "Editorial Black & Gold": { bg:'#FFFBEB', surface:'#FFFFFF', primary:'#000000', secondary:'#B45309', accent:'#D4AF37', heading:'#000000', text:'#1C1917', border:'#E7E5E4' }
+};
+
+const DEFAULT_THEME = 'Minimal Light';
+
+/* colour token definitions exposed in the custom picker */
+const COLOR_TOKENS = [
+  { id:'bg',        label:'Page Background',   prompt:'page background' },
+  { id:'surface',   label:'Card / Surface',    prompt:'card surface background' },
+  { id:'primary',   label:'Primary',           prompt:'primary colour' },
+  { id:'secondary', label:'Secondary',         prompt:'secondary colour' },
+  { id:'accent',    label:'Accent',            prompt:'accent colour' },
+  { id:'heading',   label:'Heading Text',      prompt:'heading text colour' },
+  { id:'text',      label:'Body Text',         prompt:'body text colour' },
+  { id:'border',    label:'Border',            prompt:'border colour' }
+];
+
+
+/* ============================================================================
+   4. LAYOUTS / SHADOWS / BORDERS / MOTIONS
+   ========================================================================== */
+const LAYOUTS = {
+  "Hero Top": {
+    icon:'fa-square-full',
+    desc:'Avatar + name centered, content stacked below',
+    prompt:"LAYOUT — HERO TOP: Render a vertically stacked single-column layout. Section 1 is a full-width hero band containing the avatar (centered), the display name in an <h1>, the role in an <h2>, the tagline in a <p>, and the primary CTA button. All subsequent sections stack beneath it in a single centered column."
+  },
+  "Split 2-Column": {
+    icon:'fa-table-columns',
+    desc:'Sticky left profile card, scrolling right content',
+    prompt:"LAYOUT — SPLIT 2-COLUMN: Use CSS Grid with a sticky left column (approx. 340px) holding the avatar, name, role, tagline, CTA and social links, and a fluid right column holding the scrolling content sections. The left column uses position: sticky; top: 5rem. Collapse to a single column below 1024px, with the profile card rendered first."
+  },
+  "Sidebar Left": {
+    icon:'fa-bars-staggered',
+    desc:'Fixed vertical navigation rail plus content',
+    prompt:"LAYOUT — SIDEBAR LEFT: Render a fixed vertical navigation rail (approx. 240px) on the left containing anchor links to each section with an active-state indicator. The main content area scrolls independently to the right of the rail, with smooth scroll-to-anchor behaviour. Collapse the rail into a top hamburger drawer below 768px."
+  },
+  "Card Grid": {
+    icon:'fa-grip',
+    desc:'Profile card plus modular content tiles',
+    prompt:"LAYOUT — CARD GRID: Render the profile as one card inside a responsive CSS Grid (repeat(auto-fit, minmax(280px, 1fr))). Each content section becomes its own card tile of equal visual weight, with a shared gap, equal corner radius and a consistent internal padding scale."
+  },
+  "Timeline": {
+    icon:'fa-timeline',
+    desc:'Vertical timeline for experience and milestones',
+    prompt:"LAYOUT — TIMELINE: Render the experience and education sections as a vertical timeline with a single 2px spine line on the left, circular node markers aligned to each entry, and entry cards offset to the right of the spine. On mobile, reduce the spine offset and keep the nodes visible."
+  },
+  "Magazine": {
+    icon:'fa-newspaper',
+    desc:'Asymmetric editorial grid with large type',
+    prompt:"LAYOUT — MAGAZINE: Use an asymmetric editorial grid. The hero occupies a 7/12 column with oversized display typography, while the profile meta (role, location, social links) occupies a 5/12 column as a bordered aside. Alternate section widths down the page to create a printed-magazine rhythm."
+  }
+};
+
+const SHADOWS = {
+  "None":   { css:'none',                              prompt:"Do not use any box-shadow anywhere. Separate surfaces with 1px borders only." },
+  "Subtle": { css:'0 1px 2px rgba(0,0,0,.05)',         prompt:"Use a very subtle elevation: box-shadow 0 1px 2px rgba(0,0,0,.05) on cards." },
+  "Soft":   { css:'0 4px 16px rgba(0,0,0,.08)',        prompt:"Use a soft elevation: box-shadow 0 4px 16px rgba(0,0,0,.08) on cards, increasing to 0 8px 24px rgba(0,0,0,.10) on hover." },
+  "Lifted": { css:'0 12px 32px rgba(0,0,0,.14)',       prompt:"Use a pronounced elevation: box-shadow 0 12px 32px rgba(0,0,0,.14) on primary cards, with a smooth 200ms transition on hover." }
+};
+
+const BORDERS = {
+  "Hairline": { css:'1px solid var(--profile-border)', prompt:"Use 1px hairline borders in the border token colour on all card surfaces." },
+  "Strong":   { css:'2px solid var(--profile-heading)',prompt:"Use confident 2px borders in the heading colour to define cards and separate sections." },
+  "None":     { css:'none',                            prompt:"Use no borders at all — rely purely on background colour shifts and spacing to separate regions." }
+};
+
+const MOTIONS = {
+  "None":       { prompt:"Do not add any animation or transition. All state changes are instant." },
+  "Subtle":     { prompt:"Add only micro-transitions: 150ms ease on colour, opacity and box-shadow for hover and focus states. Nothing moves position." },
+  "Standard":   { prompt:"Add 200ms ease-out transitions on hover and focus, plus a gentle fade-and-rise (translateY 12px → 0) on section entrance via IntersectionObserver. Respect prefers-reduced-motion by disabling all transforms." },
+  "Expressive": { prompt:"Add expressive motion: staggered entrance animations per card (60ms delay increments), 300ms cubic-bezier(.2,.8,.2,1) transitions, and a subtle parallax on the hero avatar. Fully disable under prefers-reduced-motion: reduce." }
 };
 
 
 /* ============================================================================
-   3. STATE
+   5. STATE
    ========================================================================== */
 const state = {
-  palette: 'Crimson Edge',
-  colors: {},
+  career: 'software_developer',
+  customCareerName: '',
+
+  sectionsByCareer: {},   // careerId -> [{ id, on }]
+  profileByCareer: {},    // careerId -> { common:{}, sections:{} }
+
+  theme: DEFAULT_THEME,
+  colors: { ...THEMES[DEFAULT_THEME] },
+  customColors: false,
   darkMode: false,
   gradient: 'None',
+
   headingFont: 'Inter',
   bodyFont: 'Inter',
   typeScale: 'Standard 16px base',
   typeWeight: '700',
   tracking: 0,
+
   layout: 'Hero Top',
   containerWidth: 'Standard 1024px',
   density: 'Balanced — medium spacing',
   radius: 12,
   shadow: 'Soft',
   border: 'Hairline',
-  motion: 'Standard',
-  sections: [],
-  tags: [],
-  a11y: 'WCAG 2.1 AA'
+  motion: 'Standard'
 };
 
-state.sections = PROMPT_REGISTRY.sections.map(s => ({ ...s }));
+/* panel open/closed registry — matches the data-panel attributes */
+const PANEL_DEFAULTS = {
+  career:  true,
+  sections:true,
+  profile: true,
+  colors:  false,
+  type:    false,
+  layout:  false,
+  shape:   false,
+  extra:   false
+};
 
 
 /* ============================================================================
-   4. HELPERS
+   6. HELPERS
    ========================================================================== */
 const $el = id => document.getElementById(id);
 
 let toastTimer = null;
 function toast(msg) {
   const t = $el('toast');
+  if (!t) return;
   t.textContent = msg;
   t.classList.add('show');
   clearTimeout(toastTimer);
   toastTimer = setTimeout(() => t.classList.remove('show'), 2600);
 }
 
-function applyPaletteToState(name) {
-  const p = PROMPT_REGISTRY.palettes[name];
-  if (!p) return;
-  state.palette = name;
-  state.colors  = { ...p.tokens };
+function esc(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, m => (
+    { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[m]
+  ));
 }
 
+function getByPath(obj, path) {
+  return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
+}
+
+function setByPath(obj, path, val) {
+  const parts = path.split('.');
+  let cur = obj;
+  for (let i = 0; i < parts.length - 1; i++) {
+    const k = parts[i];
+    if (cur[k] == null) cur[k] = /^\d+$/.test(parts[i + 1]) ? [] : {};
+    cur = cur[k];
+  }
+  cur[parts[parts.length - 1]] = val;
+}
+
+function getProfileData(careerId) {
+  if (!state.profileByCareer[careerId]) {
+    state.profileByCareer[careerId] = { common: {}, sections: {} };
+  }
+  return state.profileByCareer[careerId];
+}
+
+function getSectionsForCareer(careerId) {
+  if (!state.sectionsByCareer[careerId]) {
+    state.sectionsByCareer[careerId] = buildDefaultSections(careerId);
+  }
+  return state.sectionsByCareer[careerId];
+}
+
+function buildDefaultSections(careerId) {
+  const career = getCareer(careerId);
+  const defaults = career.sections || [];
+  const allIds = Object.keys(SECTION_SCHEMA);
+  const ordered = defaults.concat(allIds.filter(id => !defaults.includes(id)));
+  return ordered.map(id => ({ id, on: defaults.includes(id) }));
+}
+
+function getSectionSchema(careerId, sectionId) {
+  const base = SECTION_SCHEMA[sectionId];
+  if (!base) return null;
+  const career = getCareer(careerId);
+  const ov = career.overrides && career.overrides[sectionId];
+  if (!ov) return base;
+  return Object.assign({}, base, ov, {
+    fields: ov.fields || base.fields
+  });
+}
+
+function getSectionLabel(careerId, sectionId) {
+  const s = getSectionSchema(careerId, sectionId);
+  return s ? s.label : sectionId;
+}
+
+function careerDisplayName() {
+  if (state.career === 'other' && state.customCareerName.trim()) {
+    return state.customCareerName.trim();
+  }
+  return getCareer(state.career).name;
+}
+
+/* --- colour helpers --- */
 function hexToRgb(hex) {
-  const h = hex.replace('#','');
-  const n = parseInt(h.length === 3 ? h.split('').map(c=>c+c).join('') : h, 16);
-  return [(n>>16)&255, (n>>8)&255, n&255];
+  const h = String(hex).replace('#', '').trim();
+  const full = h.length === 3 ? h.split('').map(c => c + c).join('') : h;
+  const n = parseInt(full, 16);
+  if (isNaN(n)) return [0, 0, 0];
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
 }
 function luminance(hex) {
-  const [r,g,b] = hexToRgb(hex).map(v => {
+  const [r, g, b] = hexToRgb(hex).map(v => {
     v /= 255;
-    return v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4);
+    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
   });
-  return 0.2126*r + 0.7152*g + 0.0722*b;
+  return 0.2126 * r + 0.7152 * g + 0.0722 * b;
 }
 function contrast(a, b) {
   const l1 = luminance(a), l2 = luminance(b);
-  return ((Math.max(l1,l2) + 0.05) / (Math.min(l1,l2) + 0.05)).toFixed(2);
+  return ((Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)).toFixed(2);
 }
+const HEX_RE = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
 
 
 /* ============================================================================
-   5. UI RENDERERS
+   7. UI RENDERERS
    ========================================================================== */
 
-function renderPalettes() {
-  const grid = $el('paletteGrid');
-  grid.innerHTML = '';
-  Object.entries(PROMPT_REGISTRY.palettes).forEach(([name, data]) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'swatch' + (state.palette === name ? ' active' : '');
-    btn.dataset.palette = name;
-    btn.title = name;
-    btn.style.background = `linear-gradient(135deg, ${data.swatches[0]} 0 50%, ${data.swatches[1]} 50% 100%)`;
-    grid.appendChild(btn);
-  });
-}
-
-function renderColorTokens() {
-  const grid = $el('colorTokenGrid');
-  grid.innerHTML = '';
-  PROMPT_REGISTRY.colorTokens.forEach(tok => {
-    const wrap = document.createElement('div');
-    wrap.className = 'token-row';
-    wrap.innerHTML = `
-      <input type="color" class="color-token"
-             data-token="${tok.id}" value="${state.colors[tok.id] || tok.default}" />
-      <div class="token-meta">
-        <p class="token-name truncate">${tok.label}</p>
-        <p class="token-hex truncate" data-token-hex="${tok.id}">${state.colors[tok.id] || tok.default}</p>
-      </div>`;
-    grid.appendChild(wrap);
-  });
-}
-
-function renderLayouts() {
-  const grid = $el('layoutGrid');
-  grid.innerHTML = '';
-  Object.entries(PROMPT_REGISTRY.layouts).forEach(([name, data]) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'opt-card layout-card' + (state.layout === name ? ' active' : '');
-    btn.dataset.layout = name;
-    btn.innerHTML = `
-      <i class="fas ${data.icon} layout-icon"></i>
-      <p class="layout-name">${name}</p>
-      <p class="layout-desc">${data.desc}</p>
-      <i class="fas fa-circle-check opt-check"></i>`;
-    grid.appendChild(btn);
-  });
-}
-
-function renderShadows() {
-  const grid = $el('shadowGrid');
-  grid.innerHTML = '';
-  Object.entries(PROMPT_REGISTRY.shadows).forEach(([name, data]) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'opt-card mini-card' + (state.shadow === name ? ' active' : '');
-    btn.dataset.shadow = name;
-    btn.innerHTML = `
-      <span class="shadow-preview" style="box-shadow:${data.css}"></span>
-      <span class="mini-label">${name}</span>`;
-    grid.appendChild(btn);
-  });
-}
-
-function renderBorders() {
-  const grid = $el('borderGrid');
+/* ---------- 7.1 career picker ---------- */
+function renderCareers(filterText) {
+  const grid = $el('careerGrid');
   if (!grid) return;
+  const q = (filterText || '').trim().toLowerCase();
   grid.innerHTML = '';
-  Object.entries(PROMPT_REGISTRY.borders).forEach(([name, data]) => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'opt-card mini-card' + (state.border === name ? ' active' : '');
-    btn.dataset.border = name;
-    btn.innerHTML = `
-      <span class="border-preview" style="border:${data.css}"></span>
-      <span class="mini-label">${name}</span>`;
-    grid.appendChild(btn);
-  });
+
+  CAREERS
+    .filter(c => !q || c.name.toLowerCase().includes(q) || c.desc.toLowerCase().includes(q))
+    .forEach(c => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.setAttribute('role', 'option');
+      btn.className = 'opt-card career-card' + (state.career === c.id ? ' active' : '');
+      btn.dataset.career = c.id;
+      btn.setAttribute('aria-selected', state.career === c.id ? 'true' : 'false');
+      btn.innerHTML = `
+        <i class="fas ${c.icon} career-icon"></i>
+        <p class="career-name">${esc(c.name)}</p>
+        <p class="career-desc">${esc(c.desc)}</p>
+        <i class="fas fa-circle-check opt-check"></i>`;
+      grid.appendChild(btn);
+    });
+
+  if (!grid.children.length) {
+    grid.innerHTML = `<p class="empty-note" style="grid-column:1/-1;margin:0">No careers match “${esc(q)}”.</p>`;
+  }
+
+  const customRow = $el('careerCustomRow');
+  if (customRow) customRow.classList.toggle('hidden', state.career !== 'other');
+
+  const summary = $el('careerSummary');
+  if (summary) {
+    const c = getCareer(state.career);
+    const onCount = getSectionsForCareer(state.career).filter(s => s.on).length;
+    summary.innerHTML = state.career === 'other'
+      ? `Custom career selected. ${onCount} sections enabled — adapt the fields below as you need.`
+      : `<strong>${esc(c.name)}</strong> — ${esc(c.desc)}. ${onCount} sections enabled by default.`;
+  }
+
+  const hint = $el('careerHint');
+  if (hint) hint.textContent = careerDisplayName();
 }
 
-function renderMotions() {
-  const grid = $el('motionGrid');
-  grid.innerHTML = '';
-  Object.keys(PROMPT_REGISTRY.motions).forEach(name => {
-    const btn = document.createElement('button');
-    btn.type = 'button';
-    btn.className = 'opt-card mini-card mini-motion' + (state.motion === name ? ' active' : '');
-    btn.dataset.motion = name;
-    btn.innerHTML = `<span class="mini-label">${name}</span>`;
-    grid.appendChild(btn);
-  });
-}
-
+/* ---------- 7.2 sections list ---------- */
 function renderSections() {
   const list = $el('sectionList');
+  if (!list) return;
+
+  const sections = getSectionsForCareer(state.career);
   list.innerHTML = '';
-  state.sections.forEach(sec => {
+
+  sections.forEach(sec => {
+    const schema = getSectionSchema(state.career, sec.id);
+    if (!schema) return;
     const li = document.createElement('li');
     li.className = 'section-item';
     li.dataset.sectionId = sec.id;
     li.innerHTML = `
-      <i class="fas fa-grip-vertical grip"></i>
-      <span class="section-label">${sec.label}</span>
-      <label class="switch switch--brand switch--sm">
+      <i class="fas fa-grip-vertical grip" aria-hidden="true"></i>
+      <span class="section-label">
+        <i class="fas ${schema.icon}" style="color:var(--muted);margin-right:6px;font-size:10px"></i>${esc(schema.label)}
+      </span>
+      <label class="switch switch--brand switch--sm" title="Show this section">
         <input type="checkbox" class="section-toggle" data-section-id="${sec.id}" ${sec.on ? 'checked' : ''} />
         <span class="switch-track"></span>
       </label>`;
@@ -1982,215 +2405,640 @@ function renderSections() {
   });
 
   if ($.fn.sortable) {
+    if ($('#sectionList').hasClass('ui-sortable')) {
+      $('#sectionList').sortable('destroy');
+    }
     $('#sectionList').sortable({
-      handle: '.fa-grip-vertical',
+      handle: '.grip',
       axis: 'y',
+      containment: 'parent',
+      tolerance: 'pointer',
       update: function () {
         const order = $('#sectionList li').map(function () {
           return $(this).data('section-id');
         }).get();
-        state.sections.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+        const arr = getSectionsForCareer(state.career);
+        arr.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
         refresh();
       }
     });
   }
 }
 
-function renderTags() {
-  Object.entries(PROMPT_REGISTRY.tags).forEach(([group, tags]) => {
-    const host = document.querySelector(`[data-taggroup="${group}"]`);
-    if (!host) return;
-    host.innerHTML = '';
-    Object.entries(tags).forEach(([key, data]) => {
-      const btn = document.createElement('button');
-      btn.type = 'button';
-      btn.className = 'tag-pill' + (state.tags.includes(key) ? ' active' : '');
-      btn.dataset.tag = key;
-      btn.textContent = data.label;
-      btn.title = data.prompt;
-      host.appendChild(btn);
-    });
-  });
-  updateTagCount();
+/* ---------- 7.3 dynamic profile form ---------- */
+function fieldHtml(f, path, value) {
+  const id = 'fld_' + path.replace(/\./g, '_').replace(/[^a-zA-Z0-9_]/g, '');
+  const span = f.span === 2 ? ' span-2' : '';
+  const label = `<label class="field-label" for="${id}">${esc(f.label)}</label>`;
+  let control;
+
+  if (f.type === 'textarea') {
+    control = `<textarea id="${id}" class="input" rows="${f.rows || 3}" data-path="${path}"
+      placeholder="${esc(f.ph || '')}">${esc(value || '')}</textarea>`;
+  } else if (f.type === 'select') {
+    const opts = (f.options || []).map(o =>
+      `<option value="${esc(o)}" ${value === o ? 'selected' : ''}>${esc(o)}</option>`).join('');
+    control = `<select id="${id}" class="input" data-path="${path}">${opts}</select>`;
+  } else {
+    control = `<input id="${id}" class="input" type="${f.type || 'text'}" data-path="${path}"
+      value="${esc(value || '')}" placeholder="${esc(f.ph || '')}" />`;
+  }
+  return `<div class="${span.trim()}">${label}${control}</div>`;
 }
 
-function updateTagCount() {
-  const n = state.tags.length;
-  $el('tagCountLabel').textContent = n === 0
-    ? '0 tags selected — their prompt fragments will be appended verbatim.'
-    : `${n} tag${n > 1 ? 's' : ''} selected — ${n} pre-written fragment${n > 1 ? 's' : ''} will be appended verbatim.`;
+function renderSectionGroup(secId, schema, profileData) {
+  const gid = 'grp_' + secId;
+  let html = `<div class="form-group" id="${gid}">
+    <p class="form-group-title"><i class="fas ${schema.icon}"></i> ${esc(schema.label)}</p>`;
+
+  if (schema.repeatable) {
+    let items = profileData.sections[secId];
+    if (!Array.isArray(items)) {
+      items = [{}];
+      profileData.sections[secId] = items;
+    }
+    if (!items.length) {
+      html += `<p class="empty-note">No ${esc((schema.itemLabel || 'entry').toLowerCase())} entries yet.
+        Previously entered data is kept even when this section is hidden.</p>`;
+    }
+    items.forEach((item, idx) => {
+      html += `<div class="repeat-item" data-repeat="${secId}" data-index="${idx}">
+        <div class="repeat-head">
+          <span class="repeat-title">${esc(schema.itemLabel || 'Entry')} ${idx + 1}</span>
+          <button type="button" class="repeat-remove" data-remove="${secId}:${idx}">
+            <i class="fas fa-trash-can"></i> Remove
+          </button>
+        </div>
+        <div class="form-grid">`;
+      schema.fields.forEach(f => {
+        html += fieldHtml(f, `sections.${secId}.${idx}.${f.id}`, item[f.id]);
+      });
+      html += `</div></div>`;
+    });
+    html += `<button type="button" class="btn-add" data-add="${secId}">
+      <i class="fas fa-plus"></i> Add ${esc((schema.itemLabel || 'entry').toLowerCase())}
+    </button>`;
+  } else {
+    const data = profileData.sections[secId] || {};
+    html += `<div class="form-grid">`;
+    schema.fields.forEach(f => {
+      html += fieldHtml(f, `sections.${secId}.${f.id}`, data[f.id]);
+    });
+    html += `</div>`;
+  }
+
+  html += `</div>`;
+  return html;
+}
+
+function renderProfileForm() {
+  const host = $el('profileForm');
+  if (!host) return;
+
+  const careerId = state.career;
+  const pdata = getProfileData(careerId);
+  const enabled = getSectionsForCareer(careerId).filter(s => s.on);
+
+  const career = getCareer(careerId);
+  const nameLabel = 'Display Name';
+  const roleLabel = careerId === 'doctor' ? 'Specialty / Title'
+                  : careerId === 'teacher' ? 'Position / Subject Area'
+                  : careerId === 'influencer' || careerId === 'content_creator' ? 'Content Niche / Title'
+                  : careerId === 'student' ? 'Study Programme / Title'
+                  : 'Professional Title / Role';
+
+  let html = `<div class="form-group">
+    <p class="form-group-title"><i class="fas fa-id-card"></i> Identity</p>
+    <div class="form-grid">
+      <div class="span-2">
+        <label class="field-label" for="fld_common_name">${esc(nameLabel)}</label>
+        <input id="fld_common_name" class="input" type="text" data-path="common.name"
+               value="${esc(pdata.common.name || '')}" placeholder="Alex Tanaka" />
+      </div>
+      <div>
+        <label class="field-label" for="fld_common_role">${esc(roleLabel)}</label>
+        <input id="fld_common_role" class="input" type="text" data-path="common.role"
+               value="${esc(pdata.common.role || '')}" placeholder="Frontend Engineer" />
+      </div>
+      <div>
+        <label class="field-label" for="fld_common_location">Location</label>
+        <input id="fld_common_location" class="input" type="text" data-path="common.location"
+               value="${esc(pdata.common.location || '')}" placeholder="Yangon, MM" />
+      </div>
+      <div class="span-2">
+        <label class="field-label" for="fld_common_tagline">Tagline</label>
+        <input id="fld_common_tagline" class="input" type="text" data-path="common.tagline"
+               value="${esc(pdata.common.tagline || '')}" placeholder="I build clean, fast, accessible interfaces." />
+      </div>
+      <div class="span-2">
+        <label class="field-label" for="fld_common_bio">Short Bio</label>
+        <textarea id="fld_common_bio" class="input" rows="3" data-path="common.bio"
+          placeholder="A few sentences about your background.">${esc(pdata.common.bio || '')}</textarea>
+      </div>
+      <div class="span-2">
+        <label class="field-label" for="fld_common_photo">Profile Photo URL</label>
+        <input id="fld_common_photo" class="input" type="url" data-path="common.photo"
+               value="${esc(pdata.common.photo || '')}" placeholder="https://…" />
+      </div>
+      <div>
+        <label class="field-label" for="fld_common_ctaLabel">Primary CTA Label</label>
+        <input id="fld_common_ctaLabel" class="input" type="text" data-path="common.ctaLabel"
+               value="${esc(pdata.common.ctaLabel || '')}" placeholder="Get in touch" />
+      </div>
+      <div>
+        <label class="field-label" for="fld_common_ctaUrl">Primary CTA Destination</label>
+        <input id="fld_common_ctaUrl" class="input" type="url" data-path="common.ctaUrl"
+               value="${esc(pdata.common.ctaUrl || '')}" placeholder="https://…" />
+      </div>
+      <div class="span-2">
+        <label class="field-label" for="fld_common_avatar">Avatar Style</label>
+        <select id="fld_common_avatar" class="input" data-path="common.avatar">
+          ${['Circle photo','Rounded square','Square with border','Initials monogram','No avatar']
+            .map(o => `<option value="${esc(o)}" ${(pdata.common.avatar || 'Circle photo') === o ? 'selected' : ''}>${esc(o)}</option>`)
+            .join('')}
+        </select>
+      </div>
+    </div>
+  </div>`;
+
+  if (!enabled.length) {
+    html += `<p class="empty-note" style="margin-top:14px">
+      No sections are enabled. Turn on sections in the <strong>Sections</strong> card above to add their fields here.
+    </p>`;
+  } else {
+    enabled.forEach(sec => {
+      const schema = getSectionSchema(careerId, sec.id);
+      if (!schema) return;
+      html += renderSectionGroup(sec.id, schema, pdata);
+    });
+  }
+
+  host.innerHTML = html;
+
+  const hint = $el('profileHint');
+  if (hint) hint.textContent = `${enabled.length} section${enabled.length === 1 ? '' : 's'} active`;
+}
+
+/* ---------- 7.4 theme picker ---------- */
+function renderThemes() {
+  const grid = $el('themeGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  Object.entries(THEMES).forEach(([name, t]) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'opt-card theme-card' + (state.theme === name ? ' active' : '');
+    btn.dataset.theme = name;
+    btn.title = name;
+    btn.innerHTML = `
+      <div class="theme-swatches">
+        <span class="theme-dot" style="background:${t.bg}"></span>
+        <span class="theme-dot" style="background:${t.surface}"></span>
+        <span class="theme-dot" style="background:${t.primary}"></span>
+        <span class="theme-dot" style="background:${t.secondary}"></span>
+        <span class="theme-dot" style="background:${t.text}"></span>
+      </div>
+      <p class="theme-name">${esc(name)}</p>
+      <i class="fas fa-circle-check opt-check"></i>`;
+    grid.appendChild(btn);
+  });
+
+  const hint = $el('themeHint');
+  if (hint) hint.textContent = state.theme + (state.customColors ? ' (custom)' : '');
+
+  const badge = $el('customThemeBadge');
+  if (badge) badge.classList.toggle('hidden', !state.customColors);
+}
+
+function renderColorTokens() {
+  const grid = $el('colorTokenGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+
+  COLOR_TOKENS.forEach(tok => {
+    const val = state.colors[tok.id] || '#000000';
+    const row = document.createElement('div');
+    row.className = 'token-row';
+    row.innerHTML = `
+      <input type="color" class="color-token" data-token="${tok.id}" value="${esc(val)}"
+             aria-label="${esc(tok.label)}" />
+      <div class="token-meta">
+        <p class="token-name truncate">${esc(tok.label)}</p>
+        <input type="text" class="hex-input" data-token-hex="${tok.id}" value="${esc(val)}"
+               spellcheck="false" maxlength="7" aria-label="${esc(tok.label)} hex value" />
+      </div>`;
+    grid.appendChild(row);
+  });
+}
+
+/* ---------- 7.5 layouts / shadows / borders / motions ---------- */
+function renderLayouts() {
+  const grid = $el('layoutGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  Object.entries(LAYOUTS).forEach(([name, data]) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'opt-card layout-card' + (state.layout === name ? ' active' : '');
+    btn.dataset.layout = name;
+    btn.innerHTML = `
+      <i class="fas ${data.icon} layout-icon"></i>
+      <p class="layout-name">${esc(name)}</p>
+      <p class="layout-desc">${esc(data.desc)}</p>
+      <i class="fas fa-circle-check opt-check"></i>`;
+    grid.appendChild(btn);
+  });
+  const hint = $el('layoutHint');
+  if (hint) hint.textContent = state.layout;
+}
+
+function renderShadows() {
+  const grid = $el('shadowGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  Object.entries(SHADOWS).forEach(([name, data]) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'opt-card mini-card' + (state.shadow === name ? ' active' : '');
+    btn.dataset.shadow = name;
+    btn.innerHTML = `
+      <span class="shadow-preview" style="box-shadow:${data.css}"></span>
+      <span class="mini-label">${esc(name)}</span>`;
+    grid.appendChild(btn);
+  });
+  updateShapeHint();
+}
+
+function renderBorders() {
+  const grid = $el('borderGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  Object.entries(BORDERS).forEach(([name, data]) => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'opt-card mini-card' + (state.border === name ? ' active' : '');
+    btn.dataset.border = name;
+    btn.innerHTML = `
+      <span class="border-preview" style="border:${data.css.replace('var(--profile-border)','#E5E7EB').replace('var(--profile-heading)','#111827')}"></span>
+      <span class="mini-label">${esc(name)}</span>`;
+    grid.appendChild(btn);
+  });
+  updateShapeHint();
+}
+
+function renderMotions() {
+  const grid = $el('motionGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  Object.keys(MOTIONS).forEach(name => {
+    const btn = document.createElement('button');
+    btn.type = 'button';
+    btn.className = 'opt-card mini-card mini-motion' + (state.motion === name ? ' active' : '');
+    btn.dataset.motion = name;
+    btn.innerHTML = `<span class="mini-label">${esc(name)}</span>`;
+    grid.appendChild(btn);
+  });
+  updateShapeHint();
+}
+
+function updateShapeHint() {
+  const hint = $el('shapeHint');
+  if (hint) hint.textContent = `${state.radius}px · ${state.shadow} · ${state.motion}`;
 }
 
 
 /* ============================================================================
-   6. LIVE PREVIEW
+   8. LIVE PREVIEW
    ========================================================================== */
 function renderPreview() {
+  const frame = $el('previewFrame');
+  if (!frame) return;
+
   const c = state.colors;
   const r = state.radius;
-  const shadowCss = PROMPT_REGISTRY.shadows[state.shadow]?.css || 'none';
-  const borderCss = PROMPT_REGISTRY.borders[state.border]?.css || 'none';
-  const bg = state.darkMode ? (c.background === '#FFFFFF' ? '#0B0F19' : c.background) : c.background;
-  const surface = state.darkMode ? (c.surface === '#F9FAFB' ? '#111827' : c.surface) : c.surface;
-  const text = state.darkMode ? '#E5E7EB' : c.text;
+  const careerId = state.career;
+  const pdata = getProfileData(careerId);
+  const common = pdata.common || {};
 
-  const shell = $el('previewShell');
-  shell.style.borderRadius = r + 'px';
+  /* ----- theme custom properties ----- */
+  const dark = state.darkMode;
+  const bg      = dark ? (luminance(c.bg) > 0.5 ? '#0B0F19' : c.bg) : c.bg;
+  const surface = dark ? (luminance(c.surface) > 0.5 ? '#111827' : c.surface) : c.surface;
+  const text    = dark ? '#E5E7EB' : c.text;
+  const heading = dark ? '#F9FAFB' : c.heading;
 
-  const frame = $el('previewFrame');
-  frame.style.fontFamily = `'${state.bodyFont}', sans-serif`;
+  frame.style.setProperty('--profile-bg', bg);
+  frame.style.setProperty('--profile-surface', surface);
+  frame.style.setProperty('--profile-primary', c.primary);
+  frame.style.setProperty('--profile-secondary', c.secondary);
+  frame.style.setProperty('--profile-accent', c.accent);
+  frame.style.setProperty('--profile-heading', heading);
+  frame.style.setProperty('--profile-text', text);
+  frame.style.setProperty('--profile-border', dark ? '#1F2937' : c.border);
+  frame.style.setProperty('--profile-radius', r + 'px');
+  frame.style.setProperty('--profile-shadow', SHADOWS[state.shadow] ? SHADOWS[state.shadow].css : 'none');
+  frame.style.setProperty('--profile-border-css',
+    (BORDERS[state.border] ? BORDERS[state.border].css : '1px solid var(--profile-border)'));
+  frame.style.setProperty('--profile-heading-font', `'${state.headingFont}'`);
+  frame.style.setProperty('--profile-body-font', `'${state.bodyFont}'`);
+  frame.style.setProperty('--profile-heading-weight', state.typeWeight);
+  frame.style.setProperty('--profile-tracking', state.tracking + 'px');
 
-  const name    = $el('pName').value || 'Your Name';
-  const role    = $el('pRole').value || 'Your Role';
-  const loc     = $el('pLocation').value || '—';
-  const tagline = $el('pTagline').value || '';
-  const bio     = $el('pBio').value || '';
-  const cta     = $el('pCta').value || 'Contact';
-  const initials = name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-  const avatarR = $el('pAvatar').value.includes('Circle') ? '9999px' : r + 'px';
-  const showAvatar = $el('pAvatar').value !== 'No avatar';
-
-  const layout = state.layout;
-  const isSplit = layout === 'Split 2-Column';
-  const isMag   = layout === 'Magazine';
-  const isSidebar = layout === 'Sidebar Left';
-  const isGrid  = layout === 'Card Grid';
-  const isTimeline = layout === 'Timeline';
-
-  const visibleSections = state.sections.filter(s => s.on);
-
-  const pad = state.density.includes('Airy') ? '28px' : state.density.includes('Dense') ? '14px' : '20px';
+  const pad = state.density.includes('Airy') ? '28px' : state.density.includes('Dense') ? '14px' : '22px';
   const gap = state.density.includes('Airy') ? '22px' : state.density.includes('Dense') ? '10px' : '16px';
+  frame.style.setProperty('--pv-pad', pad);
+  frame.style.setProperty('--pv-gap', gap);
 
-  const headingStyle = `font-family:'${state.headingFont}',sans-serif;font-weight:${state.typeWeight};letter-spacing:${state.tracking}px;`;
+  $el('previewShell').style.borderRadius = r + 'px';
 
-  /* ---------- build each section card ---------- */
-  function sectionCard(sec, extraStyle='') {
-    return `
-      <div style="background:${surface};border:${borderCss};border-radius:${r}px;box-shadow:${shadowCss};padding:16px;${extraStyle}">
-        <h3 style="${headingStyle}font-size:13px;margin:0 0 10px;display:flex;align-items:center;gap:7px">
-          <span style="width:6px;height:6px;border-radius:9999px;background:${c.primary};display:inline-block"></span>${sec.label}
-        </h3>
-        <div style="height:7px;border-radius:${r}px;background:${c.accent};opacity:.35;margin-bottom:6px"></div>
-        <div style="height:7px;border-radius:${r}px;background:${c.accent};opacity:.22;width:82%;margin-bottom:6px"></div>
-        <div style="height:7px;border-radius:${r}px;background:${c.accent};opacity:.14;width:58%"></div>
-      </div>`;
+  /* ----- profile identity ----- */
+  const name = (common.name || '').trim() || 'Your Name';
+  const role = (common.role || '').trim() || 'Your Role';
+  const loc  = (common.location || '').trim() || '—';
+  const tagline = (common.tagline || '').trim();
+  const bio = (common.bio || '').trim();
+  const cta = (common.ctaLabel || '').trim() || 'Get in touch';
+  const avatarStyle = common.avatar || 'Circle photo';
+  const showAvatar = avatarStyle !== 'No avatar';
+  const initials = name.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
+  const avatarR = avatarStyle.includes('Circle') ? '9999px' : r + 'px';
+
+  const enabledSections = getSectionsForCareer(careerId).filter(s => s.on);
+
+  /* ----- helpers ----- */
+  function card(inner, extra) {
+    return `<div class="pv-card" style="${extra || ''}">${inner}</div>`;
+  }
+  function sectionTitle(t) {
+    return `<h3 class="pv-section-title">${esc(t)}</h3>`;
+  }
+  function placeholderLines() {
+    return `<div class="pv-line" style="width:100%"></div>
+            <div class="pv-line" style="width:82%"></div>
+            <div class="pv-line" style="width:58%;margin-bottom:0"></div>`;
   }
 
-  /* ---------- profile card ---------- */
-  const profileCard = `
-    <div style="background:${surface};border:${borderCss};border-radius:${r}px;box-shadow:${shadowCss};padding:20px;${isSplit?'position:sticky;top:0;':''}">
-      ${showAvatar ? `<div style="width:64px;height:64px;border-radius:${avatarR};background:${c.primary};color:#fff;display:grid;place-items:center;font-weight:800;font-size:20px;margin-bottom:14px">${initials}</div>` : ''}
-      <h1 style="${headingStyle}font-size:22px;line-height:1.15;margin:0 0 5px;color:${text}">${name}</h1>
-      <h2 style="font-size:12.5px;font-weight:600;color:${c.primary};margin:0 0 6px">${role}</h2>
-      <p style="font-size:11px;opacity:.55;margin:0 0 10px;display:flex;align-items:center;gap:5px">
-        <span style="display:inline-block;width:5px;height:5px;border-radius:9999px;background:${c.accent}"></span>${loc}
-      </p>
-      <p style="font-size:12px;line-height:1.6;opacity:.78;margin:0 0 14px">${tagline}</p>
-      <button style="background:${c.primary};color:#fff;border:none;border-radius:${Math.min(r,999)}px;padding:10px 18px;font-size:12px;font-weight:600;cursor:pointer;box-shadow:${shadowCss}">${cta}</button>
-      <div style="display:flex;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid ${state.darkMode?'#1F2937':'#E5E7EB'}">
-        ${['G','in','X','@'].map(t => `<span style="width:26px;height:26px;border-radius:8px;background:${c.accent};opacity:.55;display:grid;place-items:center;font-size:10px;font-weight:700;color:${state.darkMode?'#0B0F19':'#374151'}">${t}</span>`).join('')}
-      </div>
-    </div>`;
+  function renderSectionBody(secId, data) {
+    const schema = getSectionSchema(careerId, secId);
+    if (!schema) return '';
 
-  /* ---------- compose by layout ---------- */
+    switch (secId) {
+      case 'about': {
+        if (!data || (!data.summary && !data.years && !data.specialization)) return placeholderLines();
+        let out = '';
+        if (data.summary) out += `<p style="font-size:12px;line-height:1.7;margin:0 0 8px">${esc(data.summary)}</p>`;
+        const meta = [data.years && `${esc(data.years)} yrs experience`, data.specialization]
+          .filter(Boolean).join(' · ');
+        if (meta) out += `<p style="font-size:11px;margin:0" class="pv-muted">${meta}</p>`;
+        return out;
+      }
+
+      case 'skills': {
+        const chips = [data.primary, data.frameworks, data.tools]
+          .filter(Boolean).join(', ')
+          .split(',').map(s => s.trim()).filter(Boolean);
+        if (!chips.length && !data.categories) return placeholderLines();
+        let out = chips.map(t => `<span class="pv-chip">${esc(t)}</span>`).join('');
+        if (data.categories) {
+          out += `<p style="font-size:11px;line-height:1.6;margin:8px 0 0" class="pv-muted">${esc(data.categories).replace(/\n/g,'<br>')}</p>`;
+        }
+        return out;
+      }
+
+      case 'experience':
+      case 'education':
+      case 'projects':
+      case 'testimonials':
+      case 'services':
+      case 'certifications':
+      case 'courses':
+      case 'subjects':
+      case 'collaborations':
+      case 'contentPortfolio': {
+        const items = Array.isArray(data) ? data.filter(it => it && Object.values(it).some(v => v)) : [];
+        if (!items.length) return placeholderLines();
+        return items.map(it => {
+          const title = it.title || it.name || it.institution || it.degree || it.brand || it.quote || it.company || '(untitled)';
+          const sub = [it.role, it.company, it.issuer, it.platform, it.level, it.period, it.date, it.duration]
+            .filter(Boolean).join(' · ');
+          const desc = it.description || it.summary || it.responsibilities || it.achievements;
+          return `<div style="padding:8px 0;border-bottom:1px solid var(--profile-border)">
+            <p style="font-size:12px;font-weight:600;margin:0;color:var(--profile-heading)">${esc(title)}</p>
+            ${sub ? `<p style="font-size:10.5px;margin:2px 0 0" class="pv-muted">${esc(sub)}</p>` : ''}
+            ${desc ? `<p style="font-size:11px;line-height:1.55;margin:5px 0 0" class="pv-muted">${esc(String(desc).slice(0,140))}</p>` : ''}
+          </div>`;
+        }).join('');
+      }
+
+      case 'contact': {
+        const rows = [
+          data && data.email && `✉ ${data.email}`,
+          data && data.phone && `☎ ${data.phone}`,
+          data && data.location && `📍 ${data.location}`,
+          data && data.method && `Preferred: ${data.method}`
+        ].filter(Boolean);
+        if (!rows.length) return placeholderLines();
+        return rows.map(t => `<p style="font-size:11.5px;margin:0 0 5px">${esc(t)}</p>`).join('');
+      }
+
+      case 'social': {
+        const items = Array.isArray(data) ? data.filter(it => it && (it.platform || it.url)) : [];
+        if (!items.length) {
+          return ['G','in','X','@'].map(t => `<span class="pv-pill" style="display:inline-grid;margin-right:6px">${t}</span>`).join('');
+        }
+        return items.map(it =>
+          `<span class="pv-chip">${esc(it.platform || it.url || 'Link')}</span>`).join('');
+      }
+
+      case 'stats': {
+        const items = Array.isArray(data) ? data.filter(it => it && (it.value || it.label)) : [];
+        if (!items.length) return placeholderLines();
+        return `<div style="display:flex;flex-wrap:wrap;gap:18px">${
+          items.map(it => `<div>
+            <p class="pv-stat-value">${esc(it.value || '—')}</p>
+            <p style="font-size:10.5px;margin:3px 0 0" class="pv-muted">${esc(it.label || '')}</p>
+          </div>`).join('')
+        }</div>`;
+      }
+
+      case 'cta': {
+        if (!data || (!data.headline && !data.subline)) return placeholderLines();
+        return `
+          <p style="font-size:14px;font-weight:700;margin:0 0 5px;color:var(--profile-heading)">${esc(data.headline || '')}</p>
+          ${data.subline ? `<p style="font-size:11.5px;margin:0 0 12px" class="pv-muted">${esc(data.subline)}</p>` : ''}
+          <span class="pv-btn">${esc(data.buttonLabel || 'Get started')}</span>`;
+      }
+
+      case 'appointments': {
+        if (!data || !Object.values(data).some(Boolean)) return placeholderLines();
+        return `
+          ${data.hours ? `<p style="font-size:11.5px;margin:0 0 5px">🕒 ${esc(data.hours)}</p>` : ''}
+          ${data.location ? `<p style="font-size:11.5px;margin:0 0 5px">🏥 ${esc(data.location)}</p>` : ''}
+          ${data.phone ? `<p style="font-size:11.5px;margin:0 0 5px">☎ ${esc(data.phone)}</p>` : ''}
+          ${data.bookingUrl ? `<span class="pv-btn" style="margin-top:6px">Book appointment</span>` : ''}`;
+      }
+
+      default:
+        return placeholderLines();
+    }
+  }
+
+  const sectionsHtml = enabledSections.map(sec => {
+    const schema = getSectionSchema(careerId, sec.id);
+    if (!schema) return '';
+    const data = pdata.sections[sec.id];
+    return card(sectionTitle(schema.label) + renderSectionBody(sec.id, data));
+  }).join('');
+
+  /* ----- profile card ----- */
+  const profileCard = card(`
+    ${showAvatar ? `<div class="pv-avatar" style="width:64px;height:64px;border-radius:${avatarR};font-size:20px;margin-bottom:14px">${esc(initials)}</div>` : ''}
+    <h1 class="pv-heading" style="font-size:22px;margin:0 0 5px">${esc(name)}</h1>
+    <h2 class="pv-role" style="font-size:12.5px;margin:0 0 6px">${esc(role)}</h2>
+    <p style="font-size:11px;margin:0 0 10px" class="pv-muted">${esc(loc)}</p>
+    ${tagline ? `<p style="font-size:12px;line-height:1.6;margin:0 0 14px">${esc(tagline)}</p>` : ''}
+    ${bio ? `<p style="font-size:11px;line-height:1.6;margin:0 0 14px" class="pv-muted">${esc(bio.slice(0,180))}</p>` : ''}
+    <span class="pv-btn">${esc(cta)}</span>
+    <div style="display:flex;gap:8px;margin-top:16px;padding-top:14px;border-top:1px solid var(--profile-border)">
+      ${['G','in','X','@'].map(t => `<span class="pv-pill">${t}</span>`).join('')}
+    </div>
+  `, state.layout === 'Split 2-Column' ? 'position:sticky;top:0;' : '');
+
+  /* ----- compose by layout ----- */
   let inner = '';
 
-  if (isSidebar) {
+  if (state.layout === 'Sidebar Left') {
     inner = `
       <div style="display:grid;grid-template-columns:200px 1fr;gap:${gap};align-items:start">
-        <div style="background:${state.darkMode?'#111827':'#F3F4F6'};border-radius:${r}px;padding:14px;display:flex;flex-direction:column;gap:8px">
-          <div style="height:8px;border-radius:99px;background:${c.primary};width:70%"></div>
-          ${['About','Skills','Work','Contact'].map(l => `
-            <div style="font-size:11px;font-weight:500;padding:7px 10px;border-radius:${Math.min(r,10)}px;background:${surface};border:${borderCss};color:${text};opacity:.85">${l}</div>
-          `).join('')}
+        <div style="background:var(--profile-surface);border-radius:var(--profile-radius);padding:14px;display:flex;flex-direction:column;gap:8px">
+          <div style="height:8px;border-radius:99px;background:var(--profile-primary);width:70%"></div>
+          ${enabledSections.slice(0,5).map(s => {
+            const schema = getSectionSchema(careerId, s.id);
+            return `<div style="font-size:11px;font-weight:500;padding:7px 10px;border-radius:10px;background:var(--profile-bg);border:1px solid var(--profile-border)">${esc(schema ? schema.label : s.id)}</div>`;
+          }).join('')}
         </div>
-        <div style="display:flex;flex-direction:column;gap:${gap}">
-          ${profileCard}
-          ${visibleSections.map(s => sectionCard(s)).join('')}
-        </div>
+        <div class="pv-stack">${profileCard}${sectionsHtml}</div>
       </div>`;
-  } else if (isSplit) {
+
+  } else if (state.layout === 'Split 2-Column') {
     inner = `
       <div style="display:grid;grid-template-columns:minmax(0,280px) 1fr;gap:${gap};align-items:start">
         ${profileCard}
-        <div style="display:flex;flex-direction:column;gap:${gap}">
-          ${visibleSections.map(s => sectionCard(s)).join('')}
-        </div>
+        <div class="pv-stack">${sectionsHtml}</div>
       </div>`;
-  } else if (isMag) {
+
+  } else if (state.layout === 'Magazine') {
     inner = `
       <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:${gap};align-items:start">
-        <div style="display:flex;flex-direction:column;gap:${gap}">
-          <div style="background:${surface};border:${borderCss};border-radius:${r}px;box-shadow:${shadowCss};padding:22px">
-            ${showAvatar ? `<div style="width:56px;height:56px;border-radius:${avatarR};background:${c.primary};color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px;margin-bottom:12px">${initials}</div>` : ''}
-            <h1 style="${headingStyle}font-size:28px;line-height:1.1;margin:0 0 8px;color:${text}">${name}</h1>
-            <h2 style="font-size:13px;font-weight:600;color:${c.primary};margin:0 0 10px">${role}</h2>
-            <p style="font-size:12.5px;line-height:1.65;opacity:.75;margin:0 0 14px">${tagline}</p>
-            <button style="background:${c.primary};color:#fff;border:none;border-radius:${Math.min(r,999)}px;padding:10px 18px;font-size:12px;font-weight:600;cursor:pointer">${cta}</button>
-          </div>
-          ${visibleSections.slice(0, Math.ceil(visibleSections.length/2)).map(s => sectionCard(s)).join('')}
+        <div class="pv-stack">
+          ${card(`
+            ${showAvatar ? `<div class="pv-avatar" style="width:56px;height:56px;border-radius:${avatarR};font-size:18px;margin-bottom:12px">${esc(initials)}</div>` : ''}
+            <h1 class="pv-heading" style="font-size:28px;margin:0 0 8px">${esc(name)}</h1>
+            <h2 class="pv-role" style="font-size:13px;margin:0 0 10px">${esc(role)}</h2>
+            ${tagline ? `<p style="font-size:12.5px;line-height:1.65;margin:0 0 14px" class="pv-muted">${esc(tagline)}</p>` : ''}
+            <span class="pv-btn">${esc(cta)}</span>`)}
+          ${sectionsHtml}
         </div>
-        <div style="display:flex;flex-direction:column;gap:${gap}">
-          <div style="background:${state.darkMode?'#111827':'#F9FAFB'};border:${borderCss};border-radius:${r}px;padding:16px">
-            <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;opacity:.5;margin:0 0 8px">Bio</p>
-            <p style="font-size:11.5px;line-height:1.65;opacity:.8;margin:0">${bio}</p>
-          </div>
-          ${visibleSections.slice(Math.ceil(visibleSections.length/2)).map(s => sectionCard(s)).join('')}
+        <div class="pv-stack">
+          ${card(`
+            <p style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin:0 0 8px" class="pv-muted">Bio</p>
+            <p style="font-size:11.5px;line-height:1.65;margin:0">${esc(bio || 'Your short bio will appear here.')}</p>`)}
         </div>
       </div>`;
-  } else if (isGrid) {
+
+  } else if (state.layout === 'Card Grid') {
     inner = `
-      <div style="display:flex;flex-direction:column;gap:${gap}">
+      <div class="pv-stack">
         ${profileCard}
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:${gap}">
-          ${visibleSections.map(s => sectionCard(s)).join('')}
+          ${sectionsHtml}
         </div>
       </div>`;
-  } else if (isTimeline) {
+
+  } else if (state.layout === 'Timeline') {
     inner = `
-      <div style="display:flex;flex-direction:column;gap:${gap}">
+      <div class="pv-stack">
         ${profileCard}
         <div style="position:relative;padding-left:24px">
-          <div style="position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:${c.accent};opacity:.35"></div>
-          ${visibleSections.map(s => `
-            <div style="position:relative;margin-bottom:${gap}">
-              <span style="position:absolute;left:-24px;top:14px;width:14px;height:14px;border-radius:9999px;background:${c.primary};border:3px solid ${bg}"></span>
-              ${sectionCard(s)}
-            </div>`).join('')}
+          <div style="position:absolute;left:6px;top:6px;bottom:6px;width:2px;background:var(--profile-accent);opacity:.35"></div>
+          ${enabledSections.map(sec => {
+            const schema = getSectionSchema(careerId, sec.id);
+            if (!schema) return '';
+            return `<div style="position:relative;margin-bottom:${gap}">
+              <span style="position:absolute;left:-24px;top:14px;width:14px;height:14px;border-radius:9999px;background:var(--profile-primary);border:3px solid var(--profile-bg)"></span>
+              ${card(sectionTitle(schema.label) + renderSectionBody(sec.id, pdata.sections[sec.id]))}
+            </div>`;
+          }).join('')}
         </div>
       </div>`;
+
   } else {
     /* Hero Top (default) */
     inner = `
-      <div style="display:flex;flex-direction:column;gap:${gap}">
-        <div style="background:${surface};border:${borderCss};border-radius:${r}px;box-shadow:${shadowCss};padding:28px;text-align:center">
-          ${showAvatar ? `<div style="width:76px;height:76px;border-radius:${avatarR};background:${c.primary};color:#fff;display:grid;place-items:center;font-weight:800;font-size:24px;margin:0 auto 16px">${initials}</div>` : ''}
-          <h1 style="${headingStyle}font-size:26px;line-height:1.15;margin:0 0 6px;color:${text}">${name}</h1>
-          <h2 style="font-size:13px;font-weight:600;color:${c.primary};margin:0 0 8px">${role}</h2>
-          <p style="font-size:11px;opacity:.55;margin:0 0 12px">${loc}</p>
-          <p style="font-size:13px;line-height:1.7;opacity:.78;max-width:52ch;margin:0 auto 18px">${tagline}</p>
-          <button style="background:${c.primary};color:#fff;border:none;border-radius:${Math.min(r,999)}px;padding:11px 22px;font-size:12.5px;font-weight:600;cursor:pointer;box-shadow:${shadowCss}">${cta}</button>
-        </div>
+      <div class="pv-stack">
+        ${card(`
+          <div style="text-align:center">
+            ${showAvatar ? `<div class="pv-avatar" style="width:76px;height:76px;border-radius:${avatarR};font-size:24px;margin:0 auto 16px">${esc(initials)}</div>` : ''}
+            <h1 class="pv-heading" style="font-size:26px;margin:0 0 6px">${esc(name)}</h1>
+            <h2 class="pv-role" style="font-size:13px;margin:0 0 8px">${esc(role)}</h2>
+            <p style="font-size:11px;margin:0 0 12px" class="pv-muted">${esc(loc)}</p>
+            ${tagline ? `<p style="font-size:13px;line-height:1.7;max-width:52ch;margin:0 auto 18px">${esc(tagline)}</p>` : ''}
+            <span class="pv-btn">${esc(cta)}</span>
+          </div>`)}
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:${gap}">
-          ${visibleSections.map(s => sectionCard(s)).join('')}
+          ${sectionsHtml}
         </div>
       </div>`;
   }
 
-  frame.innerHTML = `
-    <div style="background:${bg};color:${text};border-radius:${r}px;padding:${pad};transition:all .25s ease">
-      ${inner}
-    </div>`;
+  frame.innerHTML = `<div class="pv-root">${inner}</div>`;
 }
 
 
 /* ============================================================================
-   7. PROMPT GENERATOR
+   9. PROMPT GENERATOR
    ========================================================================== */
+function sectionPromptFragment(secId, schema, data) {
+  const lines = [];
+  lines.push(`${schema.label.toUpperCase()}: ${schema.promptBase || ''}`);
+
+  if (schema.repeatable) {
+    const items = Array.isArray(data) ? data.filter(it => it && Object.values(it).some(v => v)) : [];
+    if (!items.length) {
+      lines.push(`  (No ${(schema.itemLabel || 'entry').toLowerCase()} entries supplied yet — render an empty state, do not invent content.)`);
+    } else {
+      items.forEach((item, i) => {
+        const parts = schema.fields
+          .filter(f => item[f.id] != null && String(item[f.id]).trim() !== '')
+          .map(f => `${f.label}: ${String(item[f.id]).replace(/\n/g, ' / ')}`);
+        lines.push(`  ${i + 1}. ${parts.length ? parts.join(' | ') : '(blank entry)'}`);
+      });
+    }
+  } else {
+    const d = data || {};
+    const parts = schema.fields
+      .filter(f => d[f.id] != null && String(d[f.id]).trim() !== '')
+      .map(f => `${f.label}: ${String(d[f.id]).replace(/\n/g, ' / ')}`);
+    if (!parts.length) {
+      lines.push(`  (No data supplied yet — render an empty state, do not invent content.)`);
+    } else {
+      parts.forEach(p => lines.push(`  ${p}`));
+    }
+  }
+  return lines.join('\n');
+}
+
 function generatePrompt() {
   const c = state.colors;
-  const p = PROMPT_REGISTRY.palettes[state.palette];
+  const careerId = state.career;
+  const career = getCareer(careerId);
+  const pdata = getProfileData(careerId);
+  const common = pdata.common || {};
+  const sections = getSectionsForCareer(careerId);
+  const enabled = sections.filter(s => s.on);
+  const disabled = sections.filter(s => !s.on);
+
   const L = [];
   const line = s => L.push(s);
 
@@ -2199,53 +3047,83 @@ function generatePrompt() {
   line(`STACK: Semantic HTML5, Tailwind CSS (CDN utility classes), custom CSS in a <style> block where utilities are insufficient, vanilla JavaScript, and jQuery for DOM manipulation and event delegation. No build step, no framework, no bundler.`);
   line('');
 
+  line(`--- CAREER / PROFILE TYPE ---`);
+  line(`Selected career: ${careerDisplayName()}.`);
+  if (careerId === 'other' && !state.customCareerName.trim()) {
+    line(`(The user chose "Other / Custom Career" but did not name it — treat the profile as a general professional profile.)`);
+  }
+  line(`Tailor tone, section priority and terminology to this profession.`);
+  line('');
+
   line(`--- CONTENT DATA ---`);
-  line(`Display name: "${$el('pName').value || 'Your Name'}"`);
-  line(`Role / title: "${$el('pRole').value || 'Your Role'}"`);
-  line(`Location: "${$el('pLocation').value || '—'}"`);
-  line(`Tagline: "${$el('pTagline').value || '—'}"`);
-  line(`Bio: "${$el('pBio').value || '—'}"`);
-  line(`Primary CTA label: "${$el('pCta').value || 'Contact'}"`);
-  line(`Avatar treatment: ${$el('pAvatar').value}.`);
+  line(`Display name: "${common.name || ''}"`);
+  line(`Professional title / role: "${common.role || ''}"`);
+  line(`Location: "${common.location || ''}"`);
+  line(`Tagline: "${common.tagline || ''}"`);
+  line(`Short bio: "${common.bio || ''}"`);
+  line(`Profile photo: ${common.photo ? `"${common.photo}"` : 'not supplied — use a placeholder with descriptive alt text.'}`);
+  line(`Primary CTA label: "${common.ctaLabel || 'Get in touch'}"`);
+  line(`Primary CTA destination: "${common.ctaUrl || 'mailto: (or an anchor to the contact section)'}"`);
+  line(`Avatar treatment: ${common.avatar || 'Circle photo'}.`);
+  line('');
+
+  line(`--- SECTION CONTENT (enabled sections, in required order) ---`);
+  if (!enabled.length) {
+    line(`No sections are enabled. Render only the profile header block.`);
+  } else {
+    enabled.forEach((sec, i) => {
+      const schema = getSectionSchema(careerId, sec.id);
+      if (!schema) return;
+      line(`[${i + 1}] ${sectionPromptFragment(sec.id, schema, pdata.sections[sec.id])}`);
+    });
+  }
+  line('');
+
+  line(`--- SECTION ORDER (render in exactly this order) ---`);
+  if (enabled.length) {
+    enabled.forEach((sec, i) => {
+      const schema = getSectionSchema(careerId, sec.id);
+      line(`${i + 1}. ${schema ? schema.label : sec.id}`);
+    });
+  } else {
+    line(`(no sections enabled — header only)`);
+  }
+  line('');
+
+  line(`--- DISABLED SECTIONS (must NOT appear in the output) ---`);
+  if (disabled.length) {
+    line(disabled.map(s => {
+      const schema = getSectionSchema(careerId, s.id);
+      return schema ? schema.label : s.id;
+    }).join(', '));
+    line(`Do not render these sections, do not create placeholder markup for them, and do not include their data.`);
+  } else {
+    line(`None — all available sections are enabled.`);
+  }
   line('');
 
   line(`--- DESIGN TOKENS ---`);
-  line(`Base palette preset: "${state.palette}".`);
-  if (p) line(p.prompt);
-  line(`Resolved colour tokens: primary ${c.primary}, secondary ${c.secondary}, accent ${c.accent}, background ${c.background}, surface ${c.surface}, body text ${c.text}.`);
-  line(`Contrast check — text on background: ${contrast(c.text, c.background)}:1; text on surface: ${contrast(c.text, c.surface)}:1; white on primary: ${contrast('#FFFFFF', c.primary)}:1. Adjust the text or surface colour if any pair falls below 4.5:1.`);
-  line(`Dark mode: ${state.darkMode ? 'YES — implement a dark variant using a class-based toggle on <html> plus a prefers-color-scheme fallback. Persist the choice in localStorage.' : 'NO — light theme only.'}`);
+  line(`Theme preset: "${state.theme}"${state.customColors ? ' (customised by the user — use the exact HEX values below)' : ''}.`);
+  line(`Resolved colour tokens:`);
+  COLOR_TOKENS.forEach(tok => {
+    line(`  --profile-${tok.id}: ${c[tok.id]}   (${tok.prompt})`);
+  });
+  line(`Expose these as CSS custom properties on :root and reference them everywhere instead of hard-coded colours.`);
+  line(`Contrast check — body text on background: ${contrast(c.text, c.bg)}:1; body text on surface: ${contrast(c.text, c.surface)}:1; white on primary: ${contrast('#FFFFFF', c.primary)}:1. Adjust the relevant token if any pair falls below 4.5:1.`);
+  line(`Dark mode: ${state.darkMode
+    ? 'YES — implement a dark variant using a class-based toggle on <html> plus a prefers-color-scheme fallback. Persist the choice in localStorage.'
+    : 'NO — light theme only.'}`);
   line(`Background treatment: ${state.gradient}.`);
   line(`Typography — headings: ${state.headingFont}; body: ${state.bodyFont}; scale: ${state.typeScale}; heading weight: ${state.typeWeight}; letter-spacing: ${state.tracking}px.`);
   line(`Define the type scale as CSS custom properties (--step--1 through --step-4) and apply it consistently.`);
   line(`Container width: ${state.containerWidth}. Vertical rhythm / spacing density: ${state.density}.`);
   line(`Corner radius token: ${state.radius}px (apply to cards, buttons, inputs and images consistently).`);
-  line(`Elevation: ${state.shadow}. ${PROMPT_REGISTRY.shadows[state.shadow]?.prompt || ''}`);
-  line(`Borders: ${state.border}. ${PROMPT_REGISTRY.borders[state.border]?.prompt || ''}`);
+  line(`Elevation: ${state.shadow}. ${SHADOWS[state.shadow] ? SHADOWS[state.shadow].prompt : ''}`);
+  line(`Borders: ${state.border}. ${BORDERS[state.border] ? BORDERS[state.border].prompt : ''}`);
   line('');
 
   line(`--- LAYOUT ---`);
-  line(PROMPT_REGISTRY.layouts[state.layout]?.prompt || '');
-  line('');
-
-  line(`--- PAGE SECTIONS (render in exactly this order) ---`);
-  const onSections = state.sections.filter(s => s.on);
-  if (onSections.length === 0) {
-    line(`No sections were enabled. Render only the profile header block.`);
-  } else {
-    onSections.forEach((sec, i) => line(`${i + 1}. ${sec.prompt}`));
-  }
-  line('');
-
-  line(`--- REQUIRED HTML ELEMENTS ---`);
-  if (state.tags.length === 0) {
-    line(`No specific tag requirements were selected. Use standard semantic HTML5.`);
-  } else {
-    state.tags.forEach(key => {
-      const found = Object.values(PROMPT_REGISTRY.tags).find(g => g[key]);
-      if (found) line(found[key].prompt);
-    });
-  }
+  line(LAYOUTS[state.layout] ? LAYOUTS[state.layout].prompt : '');
   line('');
 
   line(`--- RESPONSIVE BEHAVIOUR ---`);
@@ -2256,15 +3134,22 @@ function generatePrompt() {
   line('');
 
   line(`--- INTERACTION & MOTION ---`);
-  line(PROMPT_REGISTRY.motions[state.motion]?.prompt || '');
+  line(MOTIONS[state.motion] ? MOTIONS[state.motion].prompt : '');
   line(`All interactive elements require visible default, hover, focus-visible, active and disabled states.`);
   line(`Use event delegation on a stable parent rather than binding handlers to dynamically created elements.`);
   line('');
 
-  line(`--- ACCESSIBILITY ---`);
-  line(`Target: ${state.a11y}.`);
-  line(`Use one <h1>, a logical heading order with no skipped levels, landmark elements (header, nav, main, footer), visible focus rings that are never removed, and a skip-to-content link as the first focusable element.`);
-  line(`Every image needs meaningful alt text; decorative images use alt="". Every icon-only control needs an aria-label. Colour must never be the only carrier of meaning.`);
+  line(`--- ACCESSIBILITY (always required) ---`);
+  line(`Target WCAG 2.1 AA as a baseline:`);
+  line(`• One <h1>, a logical heading order with no skipped levels.`);
+  line(`• Landmark elements: <header>, <nav>, <main>, <footer>.`);
+  line(`• A skip-to-content link as the first focusable element.`);
+  line(`• Every form control has a visible, programmatically associated <label>.`);
+  line(`• Keyboard-accessible controls with visible focus rings that are never removed.`);
+  line(`• Every image needs meaningful alt text; decorative images use alt="".`);
+  line(`• Every icon-only control needs an aria-label.`);
+  line(`• Colour must never be the only carrier of meaning.`);
+  line(`• Text contrast of at least 4.5:1 for body copy and 3:1 for large text.`);
   line('');
 
   line(`--- CODE QUALITY ---`);
@@ -2272,7 +3157,7 @@ function generatePrompt() {
   line(`Reuse component classes rather than repeating long utility strings. Avoid inline styles except for genuinely dynamic values.`);
   line('');
 
-  const extra = $el('extraNotes').value.trim();
+  const extra = ($el('extraNotes') ? $el('extraNotes').value : '').trim();
   if (extra) {
     line(`--- ADDITIONAL REQUIREMENTS ---`);
     line(extra);
@@ -2280,7 +3165,7 @@ function generatePrompt() {
   }
 
   line(`--- DO NOT ---`);
-  line(PROMPT_REGISTRY.negative);
+  line(`Avoid: generic bootstrap-looking UI, unstyled browser defaults, inconsistent spacing, more than three type sizes per section, more than two font families, harsh pure-black shadows, colour-only state indicators, lorem ipsum, placeholder images without alt text, inline styles, !important, divitis, nested tables, autoplaying audio, horizontal scroll on mobile, text smaller than 14px, contrast below 4.5:1, and layout shift on load.`);
   line('');
 
   line(`--- DELIVERABLES ---`);
@@ -2295,13 +3180,13 @@ function generatePrompt() {
 
 
 /* ============================================================================
-   8. REFRESH
+   10. REFRESH
    ========================================================================== */
 function refresh() {
   renderPreview();
-  updateTagCount();
   const txt = generatePrompt();
-  $el('layoutOutput').value = txt;
+  const out = $el('layoutOutput');
+  if (out) out.value = txt;
   const stats = $el('promptStats');
   if (stats) {
     const words = txt.trim().split(/\s+/).length;
@@ -2311,49 +3196,43 @@ function refresh() {
 
 
 /* ============================================================================
-   8b. ORDER & PASSCODE — helpers
+   11. ORDER & PASSCODE HELPERS
    ========================================================================== */
-
-/* ---------- Passcode gate ---------- */
 let sidebarUnlocked = false;
 
 function setSidebarLocked(locked) {
   const $sb = $('#promptSidebar');
   if (locked) $sb.addClass('locked');
-  else        $sb.removeClass('locked');
+  else $sb.removeClass('locked');
 }
 
 function focusPasscodeInput() {
-  // Wait for the slide-in transition to settle before stealing focus
   setTimeout(() => {
     const el = document.getElementById('sidebarPasscode');
     if (el) el.focus();
   }, 180);
 }
 
-/* ---------- Order submission ---------- */
 let orderInFlight = false;
 
 function makeOrderRef() {
   const d = new Date();
   const pad = n => String(n).padStart(2, '0');
-  return `PC-${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}` +
-         `-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+  return `PC-${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}-${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
 }
 
 function makeFileStamp() {
   const d = new Date();
   const pad = n => String(n).padStart(2, '0');
-  return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}` +
-         `_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
+  return `${d.getFullYear()}${pad(d.getMonth()+1)}${pad(d.getDate())}_${pad(d.getHours())}${pad(d.getMinutes())}${pad(d.getSeconds())}`;
 }
 
 function validateTelegramConfig() {
   if (TELEGRAM_PROXY_URL) return { ok: true, viaProxy: true };
   const missing = [];
-  if (!TELEGRAM_BOT_TOKEN)      missing.push('TELEGRAM_BOT_TOKEN');
-  if (!TELEGRAM_CEO_CHAT_ID)    missing.push('TELEGRAM_CEO_CHAT_ID');
-  if (!TELEGRAM_ADMIN_CHAT_ID)  missing.push('TELEGRAM_ADMIN_CHAT_ID');
+  if (!TELEGRAM_BOT_TOKEN)     missing.push('TELEGRAM_BOT_TOKEN');
+  if (!TELEGRAM_CEO_CHAT_ID)   missing.push('TELEGRAM_CEO_CHAT_ID');
+  if (!TELEGRAM_ADMIN_CHAT_ID) missing.push('TELEGRAM_ADMIN_CHAT_ID');
   return missing.length ? { ok: false, missing } : { ok: true, viaProxy: false };
 }
 
@@ -2373,29 +3252,26 @@ async function safeJson(res) {
 }
 
 function buildOrderSummary(orderRef) {
-  const name = ($el('pName').value || '').trim() || '—';
-  const role = ($el('pRole').value || '').trim() || '—';
-  const loc  = ($el('pLocation').value || '').trim() || '—';
-  const onSections = state.sections.filter(s => s.on);
-  const sectionList = onSections.map(s => s.label).join(', ') || '—';
+  const pdata = getProfileData(state.career);
+  const common = pdata.common || {};
+  const enabled = getSectionsForCareer(state.career).filter(s => s.on);
 
   return [
     'New ProfileCraft order',
     'Ref: ' + orderRef,
     '',
-    'Customer: ' + name + ' — ' + role,
-    'Location: ' + loc,
+    'Career: ' + careerDisplayName(),
+    'Customer: ' + ((common.name || '').trim() || '—') + ' — ' + ((common.role || '').trim() || '—'),
+    'Location: ' + ((common.location || '').trim() || '—'),
     '',
-    'Palette (template): ' + state.palette,
+    'Theme: ' + state.theme + (state.customColors ? ' (custom)' : ''),
     'Layout: ' + state.layout,
     'Dark mode: ' + (state.darkMode ? 'yes' : 'no'),
     'Fonts: ' + state.headingFont + ' / ' + state.bodyFont,
     'Radius: ' + state.radius + 'px · Shadow: ' + state.shadow + ' · Motion: ' + state.motion,
     'Density: ' + state.density,
-    'A11y target: ' + state.a11y,
     '',
-    'Sections (' + onSections.length + '): ' + sectionList,
-    'HTML tags selected: ' + state.tags.length,
+    'Sections (' + enabled.length + '): ' + (enabled.map(s => getSectionLabel(state.career, s.id)).join(', ') || '—'),
     '',
     'Full developer prompt delivered as .txt to the admin chat.'
   ].join('\n');
@@ -2405,7 +3281,6 @@ async function sendOrderToTelegram(orderRef, promptText, summaryText) {
   const filename = `ProfileCraft_Order_${makeFileStamp()}.txt`;
   const blob = new Blob([promptText], { type: 'text/plain;charset=utf-8' });
 
-  /* ---- Path A: server-side relay (recommended for production) ---- */
   if (TELEGRAM_PROXY_URL) {
     const form = new FormData();
     form.append('order_ref', orderRef);
@@ -2416,11 +3291,7 @@ async function sendOrderToTelegram(orderRef, promptText, summaryText) {
     form.append('admin_chat_id', TELEGRAM_ADMIN_CHAT_ID || '');
     form.append('ceo_chat_id', TELEGRAM_CEO_CHAT_ID || '');
 
-    const res = await fetchWithTimeout(TELEGRAM_PROXY_URL, {
-      method: 'POST',
-      body: form
-    }, 30000);
-
+    const res = await fetchWithTimeout(TELEGRAM_PROXY_URL, { method: 'POST', body: form }, 30000);
     if (!res.ok) {
       const detail = await res.text().catch(() => '');
       throw new Error('Proxy responded ' + res.status + (detail ? ' — ' + detail.slice(0, 160) : ''));
@@ -2428,37 +3299,25 @@ async function sendOrderToTelegram(orderRef, promptText, summaryText) {
     return { viaProxy: true };
   }
 
-  /* ---- Path B: direct Telegram API (prototype only) ---- */
-
-  // 1) Full prompt → admin chat as a .txt document
   const docForm = new FormData();
   docForm.append('chat_id', TELEGRAM_ADMIN_CHAT_ID);
   docForm.append('document', blob, filename);
   docForm.append('caption', 'Order ' + orderRef + ' — full developer prompt');
   docForm.append('parse_mode', 'HTML');
 
-  const docRes = await fetchWithTimeout(telegramApiUrl('sendDocument'), {
-    method: 'POST',
-    body: docForm
-  }, 30000);
-
+  const docRes = await fetchWithTimeout(telegramApiUrl('sendDocument'), { method: 'POST', body: docForm }, 30000);
   const docJson = await safeJson(docRes);
   if (!docRes.ok || !docJson || docJson.ok !== true) {
     const desc = (docJson && docJson.description) ? docJson.description : ('HTTP ' + docRes.status);
     throw new Error('sendDocument failed: ' + desc);
   }
 
-  // 2) Short order summary → CEO chat
   const msgForm = new FormData();
   msgForm.append('chat_id', TELEGRAM_CEO_CHAT_ID);
   msgForm.append('text', summaryText);
   msgForm.append('disable_web_page_preview', 'true');
 
-  const msgRes = await fetchWithTimeout(telegramApiUrl('sendMessage'), {
-    method: 'POST',
-    body: msgForm
-  }, 20000);
-
+  const msgRes = await fetchWithTimeout(telegramApiUrl('sendMessage'), { method: 'POST', body: msgForm }, 20000);
   const msgJson = await safeJson(msgRes);
   if (!msgRes.ok || !msgJson || msgJson.ok !== true) {
     const desc = (msgJson && msgJson.description) ? msgJson.description : ('HTTP ' + msgRes.status);
@@ -2470,21 +3329,278 @@ async function sendOrderToTelegram(orderRef, promptText, summaryText) {
 
 
 /* ============================================================================
-   9. EVENT BINDING
+   12. EVENT BINDING
    ========================================================================== */
 $(function () {
 
-  /* ---------- 9.0 Sidebar toggle ---------- */
+  /* ---------- 12.0 Panel expand / collapse ---------- */
+  function setPanelCollapsed(name, collapsed) {
+    const panel = document.querySelector(`.panel[data-panel="${name}"]`);
+    if (!panel) return;
+    panel.classList.toggle('collapsed', collapsed);
+    const head = panel.querySelector('.panel-head');
+    if (head && head.tagName === 'BUTTON') {
+      head.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+    }
+    const body = panel.querySelector('.panel-body');
+    if (body) {
+      if (collapsed) {
+        body.style.maxHeight = body.scrollHeight + 'px';
+        requestAnimationFrame(() => { body.style.maxHeight = ''; });
+      } else {
+        body.style.maxHeight = 'none';
+      }
+    }
+  }
+
+  $(document).on('click', '.panel-head', function (e) {
+    if ($(this).hasClass('static')) return;
+    if ($(e.target).closest('.panel-body').length) return;
+    const panel = this.closest('.panel');
+    if (!panel) return;
+    const name = panel.getAttribute('data-panel');
+    const collapsed = !panel.classList.contains('collapsed');
+    setPanelCollapsed(name, collapsed);
+  });
+
+  /* ---------- 12.1 Career selection ---------- */
+  $(document).on('click', '.career-card', function () {
+    const id = $(this).data('career');
+    if (id === state.career) return;
+
+    state.career = id;
+    if (id === 'other') {
+      const custom = $el('customCareerName');
+      if (custom && state.customCareerName) custom.value = state.customCareerName;
+    }
+
+    getSectionsForCareer(id);
+    getProfileData(id);
+
+    renderCareers($el('careerSearch') ? $el('careerSearch').value : '');
+    renderSections();
+    renderProfileForm();
+    refresh();
+    toast('Career set: ' + careerDisplayName());
+  });
+
+  $('#careerSearch').on('input', function () {
+    renderCareers(this.value);
+  });
+
+  $(document).on('input', '#customCareerName', function () {
+    state.customCareerName = this.value;
+    renderCareers($el('careerSearch') ? $el('careerSearch').value : '');
+    refresh();
+  });
+
+  /* ---------- 12.2 Section toggles ---------- */
+  $(document).on('change', '.section-toggle', function (e) {
+    e.stopPropagation();
+    const id = $(this).data('section-id');
+    const sec = getSectionsForCareer(state.career).find(s => s.id === id);
+    if (sec) sec.on = this.checked;
+    renderProfileForm();
+    renderCareers($el('careerSearch') ? $el('careerSearch').value : '');
+    refresh();
+  });
+
+  /* prevent the drag handle / toggle from collapsing the card */
+  $(document).on('mousedown click', '.section-item .grip, .section-item .switch', function (e) {
+    e.stopPropagation();
+  });
+
+  /* ---------- 12.3 Dynamic profile form input ---------- */
+  $(document).on('input change', '#profileForm [data-path]', function () {
+    const path = $(this).data('path');
+    const pdata = getProfileData(state.career);
+    const isCheckbox = this.type === 'checkbox';
+    setByPath(pdata, path, isCheckbox ? this.checked : this.value);
+    refresh();
+  });
+
+  /* add / remove repeatable entries */
+  $(document).on('click', '#profileForm [data-add]', function (e) {
+    e.stopPropagation();
+    const secId = $(this).data('add');
+    const pdata = getProfileData(state.career);
+    if (!Array.isArray(pdata.sections[secId])) pdata.sections[secId] = [];
+    pdata.sections[secId].push({});
+    renderProfileForm();
+    refresh();
+  });
+
+  $(document).on('click', '#profileForm [data-remove]', function (e) {
+    e.stopPropagation();
+    const [secId, idxRaw] = String($(this).data('remove')).split(':');
+    const idx = parseInt(idxRaw, 10);
+    const pdata = getProfileData(state.career);
+    if (Array.isArray(pdata.sections[secId])) {
+      pdata.sections[secId].splice(idx, 1);
+    }
+    renderProfileForm();
+    refresh();
+  });
+
+  /* ---------- 12.4 Theme presets ---------- */
+  $(document).on('click', '.theme-card', function () {
+    const name = $(this).data('theme');
+    if (!THEMES[name]) return;
+    state.theme = name;
+    state.colors = { ...THEMES[name] };
+    state.customColors = false;
+    renderThemes();
+    renderColorTokens();
+    refresh();
+  });
+
+  /* ---------- 12.5 Custom colour tokens ---------- */
+  $(document).on('input', '.color-token', function () {
+    const tok = $(this).data('token');
+    const val = this.value;
+    state.colors[tok] = val;
+    state.customColors = true;
+    const hexInput = document.querySelector(`[data-token-hex="${tok}"]`);
+    if (hexInput) hexInput.value = val.toUpperCase();
+    renderThemes();
+    refresh();
+  });
+
+  $(document).on('input', '.hex-input', function () {
+    const tok = $(this).data('token-hex');
+    let val = this.value.trim();
+    if (val && val[0] !== '#') val = '#' + val;
+    if (!HEX_RE.test(val)) {
+      $(this).addClass('invalid');
+      return;
+    }
+    $(this).removeClass('invalid');
+    state.colors[tok] = val;
+    state.customColors = true;
+    const swatch = document.querySelector(`.color-token[data-token="${tok}"]`);
+    if (swatch) swatch.value = val;
+    renderThemes();
+    refresh();
+  });
+
+  $(document).on('blur', '.hex-input', function () {
+    const tok = $(this).data('token-hex');
+    if ($(this).hasClass('invalid')) {
+      const current = state.colors[tok] || '#000000';
+      $(this).val(current).removeClass('invalid');
+    }
+  });
+
+  $('#resetThemeBtn').on('click', function () {
+    const base = THEMES[state.theme] ? state.theme : DEFAULT_THEME;
+    state.theme = base;
+    state.colors = { ...THEMES[base] };
+    state.customColors = false;
+    renderThemes();
+    renderColorTokens();
+    refresh();
+    toast('Theme reset to ' + base);
+  });
+
+  /* ---------- 12.6 Dark mode / gradient ---------- */
+  $('#darkToggle').on('change', function () {
+    state.darkMode = this.checked;
+    refresh();
+  });
+
+  $(document).on('click', '[data-group="gradient"]', function () {
+    $('[data-group="gradient"]').removeClass('active');
+    $(this).addClass('active');
+    state.gradient = $(this).data('value');
+    refresh();
+  });
+
+  /* ---------- 12.7 Layout / shadow / border / motion ---------- */
+  $(document).on('click', '[data-layout]', function () {
+    state.layout = $(this).data('layout');
+    renderLayouts();
+    refresh();
+  });
+
+  $(document).on('click', '[data-shadow]', function () {
+    state.shadow = $(this).data('shadow');
+    renderShadows();
+    refresh();
+  });
+
+  $(document).on('click', '[data-border]', function () {
+    state.border = $(this).data('border');
+    renderBorders();
+    refresh();
+  });
+
+  $(document).on('click', '[data-motion]', function () {
+    state.motion = $(this).data('motion');
+    renderMotions();
+    refresh();
+  });
+
+  /* ---------- 12.8 Typography ---------- */
+  $('#fontHeading').on('change', function () { state.headingFont = this.value; updateTypeHint(); refresh(); });
+  $('#fontBody').on('change',    function () { state.bodyFont    = this.value; updateTypeHint(); refresh(); });
+  $('#typeScale').on('change',   function () { state.typeScale   = this.value; updateTypeHint(); refresh(); });
+  $('#typeWeight').on('change',  function () { state.typeWeight  = this.value; updateTypeHint(); refresh(); });
+
+  $('#tracking').on('input', function () {
+    state.tracking = parseFloat(this.value);
+    $('#trackingVal').text(this.value + 'px');
+    updateTypeHint();
+    refresh();
+  });
+
+  function updateTypeHint() {
+    const hint = $el('typeHint');
+    if (hint) hint.textContent = `${state.headingFont} · ${state.typeScale.replace(' base','')}`;
+  }
+
+  /* ---------- 12.9 Layout extras ---------- */
+  $('#containerWidth').on('change', function () { state.containerWidth = this.value; refresh(); });
+  $('#density').on('change',        function () { state.density       = this.value; refresh(); });
+  $('#extraNotes').on('input', refresh);
+
+  /* ---------- 12.10 Radius slider ---------- */
+  $('#radius').on('input', function () {
+    state.radius = parseInt(this.value, 10);
+    $('#radiusVal').text(state.radius + 'px');
+    updateShapeHint();
+    refresh();
+  });
+
+  /* ---------- 12.11 Preview width ---------- */
+  $('.preview-size').on('click', function () {
+    $('.preview-size').removeClass('active');
+    $(this).addClass('active');
+    const w = $(this).data('w');
+    $('#previewShell').css('width', typeof w === 'number' ? w + 'px' : w);
+  });
+
+  /* ---------- 12.12 Guided / Advanced ---------- */
+  $('#modeAdvanced').on('click', function () {
+    $('body').addClass('mode-advanced');
+    $(this).addClass('active');
+    $('#modeBeginner').removeClass('active');
+  });
+  $('#modeBeginner').on('click', function () {
+    $('body').removeClass('mode-advanced');
+    $(this).addClass('active');
+    $('#modeAdvanced').removeClass('active');
+  });
+
+  /* ---------- 12.13 Sidebar toggle ---------- */
   function openSidebar() {
     $('#promptSidebar').addClass('open').attr('aria-hidden', 'false');
     $('#promptBackdrop').removeClass('hidden').addClass('open');
     $('#promptToggleBtn').addClass('open').attr('aria-expanded', 'true');
     $('#promptToggleIcon').removeClass('fa-code').addClass('fa-times');
-    // draw attention back to the preview
     $('#previewShell').addClass('pulse');
     setTimeout(() => $('#previewShell').removeClass('pulse'), 700);
-    // If still locked, focus the passcode field so the user can type immediately
     if (!sidebarUnlocked) focusPasscodeInput();
+    refresh();
   }
   function closeSidebar() {
     $('#promptSidebar').removeClass('open').attr('aria-hidden', 'true');
@@ -2501,174 +3617,13 @@ $(function () {
   $('#promptToggleBtn').on('click', toggleSidebar);
   $('#closeSidebarBtn').on('click', closeSidebar);
   $('#promptBackdrop').on('click', closeSidebar);
+  $('#openPromptBtn').on('click', openSidebar);
 
-  // Esc closes the sidebar
   $(document).on('keydown', function (e) {
     if (e.key === 'Escape' && $('#promptSidebar').hasClass('open')) closeSidebar();
   });
 
-  /* ---------- 9.1 Preset buttons ---------- */
-  $(document).on('click', '.preset-btn', function () {
-    const key = $(this).data('preset');
-    const cfg = PRESETS[key];
-    if (!cfg) return;
-
-    applyPaletteToState(cfg.palette);
-    state.layout        = cfg.layout;
-    state.radius        = cfg.radius;
-    state.shadow        = cfg.shadow;
-    state.motion        = cfg.motion;
-    state.density       = cfg.density;
-    state.headingFont   = cfg.heading;
-    state.bodyFont      = cfg.body;
-
-    $('#fontHeading').val(cfg.heading);
-    $('#fontBody').val(cfg.body);
-    $('#density').val(cfg.density);
-    $('#radius').val(cfg.radius);
-    $('#radiusVal').text(cfg.radius + 'px');
-
-    $('.preset-btn').removeClass('active');
-    $(this).addClass('active');
-
-    renderPalettes();
-    renderColorTokens();
-    renderLayouts();
-    renderShadows();
-    renderBorders();
-    renderMotions();
-
-    toast('Preset applied: ' + key);
-    refresh();
-  });
-
-  /* ---------- 9.2 Palette swatch ---------- */
-  $(document).on('click', '.swatch', function () {
-    applyPaletteToState($(this).data('palette'));
-    renderPalettes();
-    renderColorTokens();
-    refresh();
-  });
-
-  /* ---------- 9.3 Manual colour tokens ---------- */
-  $(document).on('input', '.color-token', function () {
-    const tok = $(this).data('token');
-    const val = $(this).val();
-    state.colors[tok] = val;
-    $(`[data-token-hex="${tok}"]`).text(val);
-    refresh();
-  });
-
-  /* ---------- 9.4 Dark mode ---------- */
-  $('#darkToggle').on('change', function () {
-    state.darkMode = this.checked;
-    refresh();
-  });
-
-  /* ---------- 9.5 Gradient ---------- */
-  $(document).on('click', '[data-group="gradient"]', function () {
-    $('[data-group="gradient"]').removeClass('active');
-    $(this).addClass('active');
-    state.gradient = $(this).data('value');
-    refresh();
-  });
-
-  /* ---------- 9.6 Layout cards ---------- */
-  $(document).on('click', '[data-layout]', function () {
-    state.layout = $(this).data('layout');
-    renderLayouts();
-    refresh();
-  });
-
-  /* ---------- 9.7 Shadow ---------- */
-  $(document).on('click', '[data-shadow]', function () {
-    state.shadow = $(this).data('shadow');
-    renderShadows();
-    refresh();
-  });
-
-  /* ---------- 9.8 Border ---------- */
-  $(document).on('click', '[data-border]', function () {
-    state.border = $(this).data('border');
-    renderBorders();
-    refresh();
-  });
-
-  /* ---------- 9.9 Motion ---------- */
-  $(document).on('click', '[data-motion]', function () {
-    state.motion = $(this).data('motion');
-    renderMotions();
-    refresh();
-  });
-
-  /* ---------- 9.10 HTML tag chips ---------- */
-  $(document).on('click', '.tag-pill', function () {
-    const key = $(this).data('tag');
-    const idx = state.tags.indexOf(key);
-    if (idx > -1) state.tags.splice(idx, 1);
-    else state.tags.push(key);
-    $(this).toggleClass('active');
-    refresh();
-  });
-
-  /* ---------- 9.11 Section toggles ---------- */
-  $(document).on('change', '.section-toggle', function () {
-    const id = $(this).data('section-id');
-    const sec = state.sections.find(s => s.id === id);
-    if (sec) sec.on = this.checked;
-    refresh();
-  });
-
-  /* ---------- 9.12 Simple form inputs ---------- */
-  $('#pName, #pRole, #pLocation, #pTagline, #pBio, #pCta').on('input', refresh);
-  $('#pAvatar').on('change', refresh);
-
-  /* ---------- 9.13 Typography ---------- */
-  $('#fontHeading').on('change', function () { state.headingFont = this.value; refresh(); });
-  $('#fontBody').on('change',    function () { state.bodyFont    = this.value; refresh(); });
-  $('#typeScale').on('change',   function () { state.typeScale   = this.value; refresh(); });
-  $('#typeWeight').on('change',  function () { state.typeWeight  = this.value; refresh(); });
-
-  $('#tracking').on('input', function () {
-    state.tracking = parseFloat(this.value);
-    $('#trackingVal').text(this.value + 'px');
-    refresh();
-  });
-
-  /* ---------- 9.14 Layout extras ---------- */
-  $('#containerWidth').on('change', function () { state.containerWidth = this.value; refresh(); });
-  $('#density').on('change',        function () { state.density        = this.value; refresh(); });
-  $('#a11yLevel').on('change',      function () { state.a11y           = this.value; refresh(); });
-  $('#extraNotes').on('input', refresh);
-
-  /* ---------- 9.15 Radius slider ---------- */
-  $('#radius').on('input', function () {
-    state.radius = parseInt(this.value, 10);
-    $('#radiusVal').text(state.radius + 'px');
-    refresh();
-  });
-
-  /* ---------- 9.16 Preview width ---------- */
-  $('.preview-size').on('click', function () {
-    $('.preview-size').removeClass('active');
-    $(this).addClass('active');
-    const w = $(this).data('w');
-    $('#previewShell').css('width', typeof w === 'number' ? w + 'px' : w);
-  });
-
-  /* ---------- 9.17 Beginner / Advanced ---------- */
-  $('#modeAdvanced').on('click', function () {
-    $('body').addClass('mode-advanced');
-    $(this).addClass('active');
-    $('#modeBeginner').removeClass('active');
-  });
-  $('#modeBeginner').on('click', function () {
-    $('body').removeClass('mode-advanced');
-    $(this).addClass('active');
-    $('#modeAdvanced').removeClass('active');
-  });
-
-  /* ---------- 9.18 Generate / Copy / Download ---------- */
+  /* ---------- 12.14 Generate / Copy / Download ---------- */
   $('#generateBtn').on('click', function () {
     refresh();
     toast('Prompt regenerated');
@@ -2704,18 +3659,27 @@ $(function () {
     toast('Prompt downloaded');
   });
 
-  /* ---------- 9.19 Reset ---------- */
+  /* ---------- 12.15 Reset ---------- */
   $('#resetBtn').on('click', function () {
     if (!confirm('Reset all customisations?')) return;
 
-    applyPaletteToState('Crimson Edge');
+    state.career = 'software_developer';
+    state.customCareerName = '';
+    state.sectionsByCareer = {};
+    state.profileByCareer = {};
+
+    state.theme = DEFAULT_THEME;
+    state.colors = { ...THEMES[DEFAULT_THEME] };
+    state.customColors = false;
     state.darkMode = false;
     state.gradient = 'None';
+
     state.headingFont = 'Inter';
     state.bodyFont = 'Inter';
     state.typeScale = 'Standard 16px base';
     state.typeWeight = '700';
     state.tracking = 0;
+
     state.layout = 'Hero Top';
     state.containerWidth = 'Standard 1024px';
     state.density = 'Balanced — medium spacing';
@@ -2723,9 +3687,6 @@ $(function () {
     state.shadow = 'Soft';
     state.border = 'Hairline';
     state.motion = 'Standard';
-    state.tags = [];
-    state.a11y = 'WCAG 2.1 AA';
-    state.sections = PROMPT_REGISTRY.sections.map(s => ({ ...s }));
 
     $('#darkToggle').prop('checked', false);
     $('#fontHeading').val('Inter');
@@ -2736,20 +3697,31 @@ $(function () {
     $('#containerWidth').val('Standard 1024px');
     $('#density').val('Balanced — medium spacing');
     $('#radius').val(12); $('#radiusVal').text('12px');
-    $('#a11yLevel').val('WCAG 2.1 AA');
     $('#extraNotes').val('');
-    $('.preset-btn').removeClass('active');
+    $('#careerSearch').val('');
+    $('#customCareerName').val('');
     $('[data-group="gradient"]').removeClass('active');
+    $('[data-group="gradient"][data-value="None"]').addClass('active');
 
-    renderPalettes(); renderColorTokens(); renderLayouts();
-    renderShadows(); renderBorders(); renderMotions();
-    renderSections(); renderTags();
+    Object.keys(PANEL_DEFAULTS).forEach(name => setPanelCollapsed(name, !PANEL_DEFAULTS[name]));
+
+    renderCareers('');
+    renderSections();
+    renderProfileForm();
+    renderThemes();
+    renderColorTokens();
+    renderLayouts();
+    renderShadows();
+    renderBorders();
+    renderMotions();
+    updateTypeHint();
+    updateShapeHint();
 
     toast('Everything reset');
     refresh();
   });
 
-  /* ---------- 9.21 Sidebar passcode gate ---------- */
+  /* ---------- 12.16 Sidebar passcode ---------- */
   $(document).on('submit', '#sidebarPasscodeForm', function (e) {
     e.preventDefault();
     if (sidebarUnlocked) return;
@@ -2771,7 +3743,6 @@ $(function () {
     }
   });
 
-  // Clear any stale passcode error the next time the sidebar is opened
   $('#promptToggleBtn').on('click', function () {
     if (!sidebarUnlocked) {
       const errEl = document.getElementById('sidebarPasscodeError');
@@ -2779,9 +3750,9 @@ $(function () {
     }
   });
 
-  /* ---------- 9.22 Order submission ---------- */
+  /* ---------- 12.17 Order submission ---------- */
   $('#orderBtn').on('click', async function () {
-    if (orderInFlight) return; // duplicate-submission guard
+    if (orderInFlight) return;
 
     const cfg = validateTelegramConfig();
     if (!cfg.ok) {
@@ -2789,8 +3760,7 @@ $(function () {
       console.warn(
         '[ProfileCraft] Telegram is not configured. Missing: ' + cfg.missing.join(', ') +
         '. Fill TELEGRAM_BOT_TOKEN, TELEGRAM_CEO_CHAT_ID and TELEGRAM_ADMIN_CHAT_ID ' +
-        'for the local prototype, or set TELEGRAM_PROXY_URL to a server-side relay ' +
-        'for production. See the configuration block at the top of the script.'
+        'for the local prototype, or set TELEGRAM_PROXY_URL to a server-side relay.'
       );
       return;
     }
@@ -2804,8 +3774,7 @@ $(function () {
     orderInFlight = true;
     const $btn = $(this);
     const originalHtml = $btn.html();
-    $btn.prop('disabled', true)
-        .html('<span class="btn-spinner"></span> Sending order…');
+    $btn.prop('disabled', true).html('<span class="btn-spinner"></span> Sending order…');
 
     const orderRef = makeOrderRef();
     const summary  = buildOrderSummary(orderRef);
@@ -2815,28 +3784,56 @@ $(function () {
       toast('Order sent · ref ' + orderRef);
     } catch (err) {
       console.error('[ProfileCraft] Order submission failed:', err);
-      const msg = (err && err.message) ? err.message : 'Unknown error';
-      toast('Order failed — ' + msg);
+      toast('Order failed — ' + ((err && err.message) ? err.message : 'Unknown error'));
     } finally {
       orderInFlight = false;
       $btn.prop('disabled', false).html(originalHtml);
     }
   });
 
-  /* ---------- 9.20 Initial paint ---------- */
-  applyPaletteToState('Crimson Edge');
-  setSidebarLocked(true); // ensure the sidebar starts locked
-
-  renderPalettes();
-  renderColorTokens();
-  renderLayouts();
-  renderShadows();
-  renderBorders();
-  renderMotions();
-  renderSections();
-  renderTags();
-
+  /* ---------- 12.18 Initial paint ---------- */
+  applyInitialState();
   refresh();
+
+  function applyInitialState() {
+    setSidebarLocked(true);
+
+    Object.keys(PANEL_DEFAULTS).forEach(name => {
+      setPanelCollapsed(name, !PANEL_DEFAULTS[name]);
+    });
+    /* the first three panels should be visually expanded without inline max-height */
+    ['career', 'sections', 'profile'].forEach(name => {
+      const panel = document.querySelector(`.panel[data-panel="${name}"]`);
+      if (panel) panel.classList.remove('collapsed');
+    });
+
+    /* seed a small amount of helpful starter content for the default career */
+    const pdata = getProfileData(state.career);
+    if (!pdata.common.name) {
+      pdata.common.name = 'Alex Tanaka';
+      pdata.common.role = 'Frontend Engineer';
+      pdata.common.location = 'Yangon, MM';
+      pdata.common.tagline = 'I build clean, fast, accessible interfaces.';
+      pdata.common.bio = 'Five years shipping design systems and product UI. Comfortable owning a feature end to end.';
+      pdata.common.ctaLabel = 'Get in touch';
+      pdata.common.avatar = 'Circle photo';
+    }
+
+    renderCareers('');
+    renderSections();
+    renderProfileForm();
+    renderThemes();
+    renderColorTokens();
+    renderLayouts();
+    renderShadows();
+    renderBorders();
+    renderMotions();
+    updateTypeHint();
+    updateShapeHint();
+
+    /* gradient default selection */
+    $('[data-group="gradient"][data-value="None"]').addClass('active');
+  }
 });
 </script>
 
