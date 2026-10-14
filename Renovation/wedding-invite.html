@@ -1,0 +1,2220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wedding Website &amp; Digital Invitation | Profile Craft</title>
+<meta name="description" content="Profile Craft builds personalised wedding websites — digital invitations, venue maps, photo galleries, wedding schedules and QR guest check-in. English and Myanmar. Final scope and pricing by quotation.">
+<meta name="theme-color" content="#0F172A">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Wedding Website &amp; Digital Invitation | Profile Craft">
+<meta property="og:description" content="Invitation, venue map, photo gallery, schedule and QR guest check-in — brought together in one personalised wedding website.">
+
+<!-- Canonical: only add once a confirmed production domain + canonical strategy exists.
+<link rel="canonical" href="https://example.com/wedding-service.html">
+-->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@400;500;600;700&family=Noto+Sans+Myanmar:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --navy:#0F172A;
+  --navy-soft:#16213C;
+  --blue:#2563EB;
+  --cyan:#06B6D4;
+  --violet:#6366F1;
+
+  --ink:#0F172A;
+  --body:#475569;
+  --muted:#64748B;
+  --line:#E2E8F0;
+  --line-soft:#EEF2F7;
+
+  --white:#FFFFFF;
+  --surface:#F8FAFC;
+  --ivory:#FDFBF7;
+
+  /* wedding accents (supporting only) */
+  --champagne:#D9C29B;
+  --champagne-deep:#B99566;
+  --rose:#C08497;
+  --botanical:#7E9C86;
+
+  --radius-sm:10px;
+  --radius:16px;
+  --radius-lg:24px;
+  --radius-xl:32px;
+
+  --shadow-xs:0 1px 2px rgba(15,23,42,.05);
+  --shadow-sm:0 2px 6px rgba(15,23,42,.05), 0 8px 20px rgba(15,23,42,.05);
+  --shadow-md:0 12px 34px rgba(15,23,42,.09);
+  --shadow-lg:0 28px 70px rgba(15,23,42,.16);
+
+  --container:1180px;
+  --header-h:72px;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;}
+
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(var(--header-h) + 20px);
+  -webkit-text-size-adjust:100%;
+}
+
+body{
+  margin:0;
+  font-family:'Inter','Noto Sans Myanmar','Padauk',system-ui,-apple-system,'Segoe UI',sans-serif;
+  font-size:16px;
+  line-height:1.7;
+  color:var(--body);
+  background:var(--white);
+  -webkit-font-smoothing:antialiased;
+}
+
+html[lang="my"] body{line-height:1.95;}
+
+h1,h2,h3,h4{
+  margin:0 0 .5em;
+  color:var(--ink);
+  font-weight:700;
+  line-height:1.22;
+  letter-spacing:-.015em;
+}
+html[lang="my"] h1,
+html[lang="my"] h2,
+html[lang="my"] h3,
+html[lang="my"] h4{line-height:1.6;letter-spacing:0;}
+
+h1{font-size:clamp(2.05rem,5.2vw,3.5rem);}
+h2{font-size:clamp(1.65rem,3.4vw,2.4rem);}
+h3{font-size:clamp(1.2rem,2vw,1.5rem);}
+h4{font-size:1.05rem;}
+
+p{margin:0 0 1rem;}
+p:last-child{margin-bottom:0;}
+
+a{color:var(--blue);text-decoration:none;}
+a:hover{text-decoration:underline;}
+
+img,svg{max-width:100%;display:block;}
+
+ul,ol{margin:0;padding:0;list-style:none;}
+
+:focus-visible{
+  outline:3px solid var(--blue);
+  outline-offset:3px;
+  border-radius:6px;
+}
+
+.container{
+  width:100%;
+  max-width:var(--container);
+  margin-inline:auto;
+  padding-inline:20px;
+}
+
+.skip-link{
+  position:absolute;left:-9999px;top:0;z-index:200;
+  background:var(--navy);color:#fff;padding:12px 20px;border-radius:0 0 10px 0;
+  font-weight:600;
+}
+.skip-link:focus{left:0;}
+
+/* ============================================================
+   TYPOGRAPHY HELPERS
+   ============================================================ */
+.eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:14px;
+}
+html[lang="my"] .eyebrow{letter-spacing:.04em;text-transform:none;font-size:.85rem;}
+.eyebrow::before{
+  content:"";width:26px;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,var(--cyan),var(--violet));
+}
+.eyebrow--light{color:#9EC5FF;}
+.eyebrow--light::before{background:linear-gradient(90deg,var(--champagne),var(--rose));}
+
+.section{padding:clamp(64px,8vw,110px) 0;}
+.section--surface{background:var(--surface);}
+.section--ivory{background:var(--ivory);}
+.section--navy{background:var(--navy);color:#C7D2E4;}
+.section--navy h2,.section--navy h3,.section--navy h4{color:#fff;}
+
+.section-head{max-width:760px;margin-bottom:clamp(36px,5vw,60px);}
+.section-head--center{margin-inline:auto;text-align:center;}
+.section-head p{font-size:1.05rem;color:var(--muted);}
+.section--navy .section-head p{color:#A8B6CC;}
+
+.serif{font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;font-weight:500;}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  padding:14px 26px;border-radius:999px;border:1.5px solid transparent;
+  font-family:inherit;font-size:.95rem;font-weight:600;line-height:1.2;
+  cursor:pointer;text-decoration:none;white-space:nowrap;
+  transition:transform .18s ease, box-shadow .18s ease, background-color .18s ease, color .18s ease, border-color .18s ease;
+}
+.btn:hover{text-decoration:none;transform:translateY(-1px);}
+.btn:active{transform:translateY(0);}
+
+.btn--primary{
+  background:linear-gradient(135deg,var(--blue),var(--violet));
+  color:#fff;box-shadow:0 10px 26px rgba(37,99,235,.28);
+}
+.btn--primary:hover{box-shadow:0 14px 34px rgba(37,99,235,.36);}
+
+.btn--ghost{
+  background:rgba(255,255,255,.06);
+  border-color:rgba(255,255,255,.34);
+  color:#fff;
+}
+.btn--ghost:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.6);}
+
+.btn--outline{
+  background:transparent;border-color:var(--line);color:var(--ink);
+}
+.btn--outline:hover{border-color:var(--blue);color:var(--blue);background:#F3F7FF;}
+
+.btn--light{
+  background:#fff;color:var(--navy);
+  box-shadow:0 10px 26px rgba(0,0,0,.18);
+}
+.btn--light:hover{background:#F1F5F9;}
+
+.btn--sm{padding:10px 18px;font-size:.86rem;}
+.btn--block{width:100%;}
+
+.btn-row{display:flex;flex-wrap:wrap;gap:14px;}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.site-header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.header__inner{
+  height:var(--header-h);
+  display:flex;align-items:center;gap:20px;
+}
+.brand{
+  display:inline-flex;align-items:center;gap:10px;
+  font-weight:700;color:var(--ink);font-size:1.05rem;letter-spacing:-.02em;
+  text-decoration:none;flex-shrink:0;
+}
+.brand:hover{text-decoration:none;}
+.brand__mark{
+  width:34px;height:34px;border-radius:10px;flex-shrink:0;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,var(--blue),var(--violet));
+  color:#fff;font-size:.78rem;font-weight:700;letter-spacing:.02em;
+}
+
+.nav{
+  display:none;align-items:center;gap:4px;margin-inline:auto;
+}
+.nav a{
+  padding:8px 14px;border-radius:999px;
+  color:var(--body);font-size:.92rem;font-weight:500;text-decoration:none;
+  transition:background-color .16s ease,color .16s ease;
+}
+.nav a:hover{background:var(--surface);color:var(--ink);text-decoration:none;}
+.nav a.is-active{color:var(--blue);background:#EFF5FF;font-weight:600;}
+
+.header__actions{display:flex;align-items:center;gap:10px;margin-left:auto;}
+
+.lang-toggle{
+  display:inline-flex;padding:3px;border-radius:999px;
+  background:var(--surface);border:1px solid var(--line);
+}
+.lang-toggle button{
+  border:0;background:transparent;cursor:pointer;
+  padding:6px 13px;border-radius:999px;
+  font-family:inherit;font-size:.8rem;font-weight:600;color:var(--muted);
+  transition:background-color .16s ease,color .16s ease;
+}
+.lang-toggle button.is-active{
+  background:#fff;color:var(--blue);box-shadow:var(--shadow-xs);
+}
+
+.header__cta{display:none;}
+
+.nav-toggle{
+  display:inline-flex;flex-direction:column;justify-content:center;gap:5px;
+  width:42px;height:42px;padding:0 10px;
+  border:1px solid var(--line);border-radius:12px;
+  background:#fff;cursor:pointer;
+}
+.nav-toggle span{
+  display:block;height:2px;border-radius:2px;background:var(--ink);
+  transition:transform .2s ease,opacity .2s ease;
+}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+.nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+.mobile-nav{
+  display:none;border-top:1px solid var(--line);
+  background:#fff;padding:12px 20px 22px;
+}
+.mobile-nav.is-open{display:block;}
+.mobile-nav a{
+  display:block;padding:12px 4px;border-bottom:1px solid var(--line-soft);
+  color:var(--ink);font-weight:500;text-decoration:none;
+}
+.mobile-nav a:last-of-type{border-bottom:0;}
+.mobile-nav .btn{margin-top:16px;}
+
+@media (min-width:1000px){
+  .nav{display:flex;}
+  .header__cta{display:inline-flex;}
+  .nav-toggle{display:none;}
+  .mobile-nav{display:none !important;}
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(900px 520px at 88% -12%, rgba(99,102,241,.30), transparent 62%),
+    radial-gradient(760px 460px at 6% 108%, rgba(6,182,212,.20), transparent 60%),
+    linear-gradient(160deg,#0F172A 0%,#131F3B 48%,#1A2544 100%);
+  color:#C7D2E4;
+  padding:clamp(56px,8vw,104px) 0 clamp(64px,8vw,110px);
+}
+.hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:
+    radial-gradient(circle at 18% 24%, rgba(217,194,155,.16) 0 1.5px, transparent 2px),
+    radial-gradient(circle at 72% 68%, rgba(192,132,151,.14) 0 1.5px, transparent 2px);
+  background-size:180px 180px, 240px 240px;
+  opacity:.7;
+}
+.hero__inner{
+  position:relative;z-index:1;
+  display:grid;gap:clamp(40px,6vw,64px);align-items:center;
+}
+.hero h1{
+  color:#fff;
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-weight:500;
+  font-size:clamp(2.3rem,6vw,4rem);
+  line-height:1.1;
+  letter-spacing:-.01em;
+  margin-bottom:18px;
+}
+html[lang="my"] .hero h1{
+  font-family:'Noto Sans Myanmar','Inter',sans-serif;
+  font-weight:600;line-height:1.65;font-size:clamp(1.6rem,4vw,2.5rem);
+}
+.hero__lead{
+  font-size:clamp(1rem,1.6vw,1.12rem);
+  color:#AEBBD1;max-width:56ch;margin-bottom:30px;
+}
+.hero__chips{
+  display:flex;flex-wrap:wrap;gap:9px;margin-top:34px;
+}
+.hero__chips li{
+  padding:7px 15px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.05);
+  font-size:.82rem;font-weight:500;color:#CBD5E1;
+}
+
+@media (min-width:960px){
+  .hero__inner{grid-template-columns:1.05fr .95fr;}
+}
+
+/* ============================================================
+   DEVICE MOCKUPS
+   ============================================================ */
+.phone{
+  width:min(320px,100%);margin-inline:auto;
+  border-radius:44px;padding:11px;
+  background:linear-gradient(155deg,#2A3654,#0E1729);
+  box-shadow:var(--shadow-lg), 0 0 0 1px rgba(255,255,255,.07) inset;
+  position:relative;
+}
+.phone::before{
+  content:"";position:absolute;top:11px;left:50%;transform:translateX(-50%);
+  width:96px;height:22px;border-radius:0 0 14px 14px;background:#0E1729;z-index:3;
+}
+.phone__screen{
+  border-radius:34px;overflow:hidden;background:var(--ivory);
+  min-height:540px;padding:52px 22px 26px;
+  display:flex;flex-direction:column;align-items:center;
+  position:relative;
+}
+.phone__screen::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(280px 180px at 50% 0%, rgba(217,194,155,.22), transparent 70%),
+    radial-gradient(220px 160px at 100% 100%, rgba(126,156,134,.14), transparent 70%);
+  pointer-events:none;
+}
+
+/* Invitation card */
+.invite{
+  position:relative;z-index:1;text-align:center;width:100%;
+  padding:26px 18px;
+  border-radius:18px;
+  background:#fff;
+  border:1px solid #EFE7DA;
+  box-shadow:0 10px 28px rgba(15,23,42,.07);
+}
+.invite__kicker{
+  font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--champagne-deep);font-weight:600;margin:0 0 16px;
+}
+.invite__names{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:2rem;color:var(--navy);font-weight:500;line-height:1.2;margin:0 0 6px;
+}
+.invite__names span{color:var(--rose);font-style:italic;}
+.invite__orn{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin:14px 0;color:var(--champagne);
+}
+.invite__orn::before,
+.invite__orn::after{
+  content:"";width:38px;height:1px;background:currentColor;opacity:.55;
+}
+.invite__orn i{
+  width:6px;height:6px;border-radius:50%;background:currentColor;display:block;
+}
+.invite__line{font-size:.8rem;color:var(--muted);margin:0 0 4px;}
+.invite__line strong{color:var(--ink);font-weight:600;display:block;font-size:.86rem;}
+.invite__actions{
+  display:flex;gap:8px;justify-content:center;margin-top:18px;flex-wrap:wrap;
+}
+.invite__actions span{
+  font-size:.7rem;font-weight:600;padding:6px 12px;border-radius:999px;
+  border:1px solid var(--line);color:var(--muted);background:#fff;
+}
+.invite__actions span.is-primary{
+  background:linear-gradient(135deg,var(--blue),var(--violet));
+  color:#fff;border-color:transparent;
+}
+
+/* Sample badge */
+.sample-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  padding:5px 11px;border-radius:999px;
+  background:rgba(15,23,42,.06);color:var(--muted);
+  border:1px solid rgba(15,23,42,.08);
+  margin-bottom:14px;
+}
+html[lang="my"] .sample-badge{text-transform:none;letter-spacing:0;font-size:.72rem;}
+.sample-badge::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:var(--cyan);
+}
+.section--navy .sample-badge{
+  background:rgba(255,255,255,.08);color:#CBD5E1;border-color:rgba(255,255,255,.16);
+}
+
+/* ============================================================
+   FEATURE LAYOUT
+   ============================================================ */
+.feature{
+  display:grid;gap:clamp(32px,5vw,60px);align-items:center;
+}
+.feature + .feature{margin-top:clamp(64px,9vw,120px);}
+
+@media (min-width:920px){
+  .feature{grid-template-columns:1fr 1fr;}
+  .feature--reverse .feature__copy{order:2;}
+  .feature--reverse .feature__visual{order:1;}
+}
+
+.feature__copy h3{margin-bottom:14px;}
+.feature__copy > p{font-size:1.02rem;margin-bottom:22px;}
+
+.feature-list{display:grid;gap:11px;}
+.feature-list li{
+  position:relative;padding-left:30px;font-size:.94rem;color:var(--body);
+}
+.feature-list li::before{
+  content:"";position:absolute;left:0;top:.55em;
+  width:16px;height:16px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  opacity:.16;
+}
+.feature-list li::after{
+  content:"";position:absolute;left:5px;top:calc(.55em + 5px);
+  width:6px;height:6px;border-radius:50%;
+  background:var(--blue);
+}
+
+.callout{
+  margin-top:22px;padding:14px 18px;border-radius:var(--radius-sm);
+  background:#F1F6FF;border-left:3px solid var(--blue);
+  font-size:.86rem;color:#334155;
+}
+.callout--warn{background:#FFF8EC;border-left-color:#D9A441;}
+.callout--rose{background:#FDF3F5;border-left-color:var(--rose);}
+.callout strong{color:var(--ink);font-weight:600;}
+
+.tag-optional{
+  display:inline-block;margin-left:8px;vertical-align:middle;
+  font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 9px;border-radius:999px;
+  background:#EEF2FF;color:var(--violet);
+}
+html[lang="my"] .tag-optional{text-transform:none;letter-spacing:0;font-size:.72rem;}
+
+/* ============================================================
+   GENERIC PANEL / MOCKUP SHELL
+   ============================================================ */
+.panel{
+  background:#fff;border:1px solid var(--line);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-md);
+  overflow:hidden;
+}
+.panel__bar{
+  display:flex;align-items:center;gap:7px;
+  padding:12px 16px;border-bottom:1px solid var(--line-soft);
+  background:var(--surface);
+}
+.panel__dot{width:9px;height:9px;border-radius:50%;background:#D7DEE8;}
+.panel__title{
+  margin-left:8px;font-size:.74rem;font-weight:600;color:var(--muted);
+  letter-spacing:.04em;
+}
+.panel__body{padding:20px;}
+
+/* ============================================================
+   MAP MOCKUP
+   ============================================================ */
+.map-canvas{
+  position:relative;height:220px;
+  background:
+    linear-gradient(180deg,#EAF1F8,#F5F9FC);
+  overflow:hidden;
+}
+.map-canvas::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(148,163,184,.20) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(148,163,184,.20) 1px,transparent 1px);
+  background-size:38px 38px;
+}
+.map-canvas::after{
+  content:"";position:absolute;
+  left:-10%;top:36%;width:130%;height:16px;
+  background:rgba(148,163,184,.28);
+  transform:rotate(-8deg);
+}
+.map-pin{
+  position:absolute;left:50%;top:46%;transform:translate(-50%,-100%);
+  z-index:2;text-align:center;
+}
+.map-pin__dot{
+  width:30px;height:30px;border-radius:50% 50% 50% 0;
+  background:linear-gradient(135deg,var(--blue),var(--violet));
+  transform:rotate(-45deg);
+  box-shadow:0 8px 20px rgba(37,99,235,.36);
+  margin-inline:auto;
+}
+.map-pin__ring{
+  width:64px;height:64px;border-radius:50%;
+  border:2px solid rgba(37,99,235,.28);
+  position:absolute;left:50%;top:14px;transform:translateX(-50%);
+  animation:pulse 2.6s ease-out infinite;
+}
+@keyframes pulse{
+  0%{transform:translateX(-50%) scale(.6);opacity:.9;}
+  100%{transform:translateX(-50%) scale(1.35);opacity:0;}
+}
+.map-info{
+  padding:16px 20px;display:flex;flex-wrap:wrap;gap:14px;
+  align-items:center;justify-content:space-between;
+  border-top:1px solid var(--line-soft);
+}
+.map-info__text strong{display:block;color:var(--ink);font-size:.95rem;}
+.map-info__text span{font-size:.82rem;color:var(--muted);}
+
+/* ============================================================
+   GALLERY MOCKUP
+   ============================================================ */
+.gallery-grid{
+  display:grid;gap:10px;
+  grid-template-columns:repeat(3,1fr);
+  grid-auto-rows:1fr;
+}
+.gallery-grid > *{
+  border-radius:12px;min-height:96px;
+  position:relative;overflow:hidden;
+}
+.gallery-grid > *::after{
+  content:attr(data-label);
+  position:absolute;left:8px;bottom:6px;
+  font-size:.6rem;font-weight:600;color:#fff;
+  letter-spacing:.04em;text-shadow:0 1px 4px rgba(0,0,0,.4);
+}
+.g-1{grid-column:span 2;grid-row:span 2;background:linear-gradient(140deg,#C9B79B,#8E7A5E);}
+.g-2{background:linear-gradient(140deg,#B7C7BC,#7E9C86);}
+.g-3{background:linear-gradient(140deg,#E0C3CB,#C08497);}
+.g-4{background:linear-gradient(140deg,#BFC9DC,#7C8CA8);}
+.g-5{background:linear-gradient(140deg,#E3D6C3,#C4A97F);}
+
+/* ============================================================
+   CHECK-IN MOCKUP
+   ============================================================ */
+.checkin{
+  display:grid;gap:16px;
+}
+@media (min-width:620px){
+  .checkin{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);}
+}
+
+.scanner{
+  border-radius:var(--radius);padding:20px;
+  background:linear-gradient(160deg,#101B33,#1B2947);
+  display:flex;flex-direction:column;align-items:center;gap:14px;
+  color:#CBD5E1;
+}
+.scanner__frame{
+  position:relative;width:150px;height:150px;border-radius:14px;
+  background:rgba(255,255,255,.05);
+  display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.12);
+}
+.scanner__frame::before,
+.scanner__frame::after{
+  content:"";position:absolute;width:26px;height:26px;
+  border:3px solid var(--cyan);border-radius:4px;
+}
+.scanner__frame::before{top:-2px;left:-2px;border-right:0;border-bottom:0;}
+.scanner__frame::after{bottom:-2px;right:-2px;border-left:0;border-top:0;}
+.scanner__laser{
+  position:absolute;left:10px;right:10px;height:2px;
+  background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+  animation:scan 2.6s ease-in-out infinite;
+}
+@keyframes scan{
+  0%,100%{top:14%;opacity:.2;}
+  50%{top:84%;opacity:1;}
+}
+.qr{width:88px;height:88px;color:#E2E8F0;opacity:.9;}
+.scanner__hint{font-size:.72rem;text-align:center;color:#8FA0BC;margin:0;}
+
+.result{
+  border-radius:var(--radius);border:1px solid var(--line);
+  background:#fff;padding:18px;display:flex;flex-direction:column;gap:14px;
+}
+.result__status{
+  display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
+  padding:6px 14px;border-radius:999px;
+  font-size:.76rem;font-weight:700;
+}
+.result__status::before{
+  content:"";width:8px;height:8px;border-radius:50%;background:currentColor;
+}
+.result__status[data-state="valid"]{background:#E9F9F0;color:#137A46;}
+.result__status[data-state="invalid"]{background:#FDECEC;color:#B42318;}
+.result__status[data-state="duplicate"]{background:#FFF6E5;color:#A16207;}
+
+.result__row{display:flex;justify-content:space-between;gap:12px;font-size:.85rem;}
+.result__row dt{color:var(--muted);margin:0;}
+.result__row dd{margin:0;color:var(--ink);font-weight:600;text-align:right;}
+.result__meta{margin:0;display:grid;gap:10px;}
+
+.checkin-summary{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  margin-top:4px;
+}
+.checkin-summary div{
+  background:var(--surface);border:1px solid var(--line-soft);
+  border-radius:12px;padding:12px;text-align:center;
+}
+.checkin-summary strong{display:block;font-size:1.15rem;color:var(--ink);}
+.checkin-summary span{font-size:.68rem;color:var(--muted);}
+
+.state-switch{
+  display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;
+}
+.state-switch button{
+  font-family:inherit;font-size:.78rem;font-weight:600;
+  padding:8px 15px;border-radius:999px;cursor:pointer;
+  border:1px solid var(--line);background:#fff;color:var(--muted);
+  transition:all .16s ease;
+}
+.state-switch button:hover{border-color:var(--blue);color:var(--blue);}
+.state-switch button[aria-pressed="true"]{
+  background:var(--navy);color:#fff;border-color:var(--navy);
+}
+
+/* ============================================================
+   TIMELINE MOCKUP
+   ============================================================ */
+.timeline{display:grid;gap:0;}
+.timeline li{
+  position:relative;padding:0 0 22px 32px;
+  border-left:2px solid var(--line);
+}
+.timeline li:last-child{padding-bottom:0;border-left-color:transparent;}
+.timeline li::before{
+  content:"";position:absolute;left:-7px;top:5px;
+  width:12px;height:12px;border-radius:50%;
+  background:#fff;border:2.5px solid var(--blue);
+}
+.timeline time{
+  display:block;font-size:.74rem;font-weight:700;color:var(--blue);
+  letter-spacing:.05em;margin-bottom:2px;
+}
+.timeline strong{display:block;color:var(--ink);font-size:.95rem;}
+.timeline span{font-size:.83rem;color:var(--muted);}
+
+/* ============================================================
+   RSVP MOCKUP
+   ============================================================ */
+.rsvp-field{
+  border:1px solid var(--line);border-radius:10px;
+  padding:11px 14px;font-size:.86rem;color:var(--muted);
+  background:#fff;margin-bottom:12px;
+}
+.rsvp-field--label{
+  border:0;background:transparent;padding:0 0 6px;
+  font-size:.74rem;font-weight:600;color:var(--ink);
+}
+.rsvp-toggle{display:flex;gap:8px;margin-bottom:14px;}
+.rsvp-toggle span{
+  flex:1;text-align:center;font-size:.8rem;font-weight:600;
+  padding:10px;border-radius:10px;border:1px solid var(--line);color:var(--muted);
+}
+.rsvp-toggle span.is-on{
+  background:#EFF5FF;border-color:#BFD6FF;color:var(--blue);
+}
+
+/* ============================================================
+   SHOWCASE
+   ============================================================ */
+.showcase{
+  display:grid;gap:22px;
+}
+@media (min-width:860px){
+  .showcase{grid-template-columns:1.15fr .85fr;}
+}
+.showcase__stack{display:grid;gap:22px;}
+.showcase-card{
+  border-radius:var(--radius-lg);overflow:hidden;
+  border:1px solid var(--line);background:#fff;
+  box-shadow:var(--shadow-sm);
+}
+.showcase-card__head{
+  padding:16px 20px;border-bottom:1px solid var(--line-soft);
+  display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;
+}
+.showcase-card__head h4{margin:0;font-size:.95rem;}
+.showcase-card__head span{font-size:.74rem;color:var(--muted);}
+.showcase-card__body{padding:20px;}
+
+.private-tag{
+  font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 10px;border-radius:999px;
+  background:#F1F5F9;color:var(--muted);
+}
+html[lang="my"] .private-tag{text-transform:none;letter-spacing:0;}
+
+/* ============================================================
+   PACKAGES
+   ============================================================ */
+.packages{
+  display:grid;gap:22px;
+}
+@media (min-width:900px){
+  .packages{grid-template-columns:repeat(3,1fr);}
+}
+.pkg{
+  display:flex;flex-direction:column;
+  border-radius:var(--radius-lg);
+  border:1px solid var(--line);
+  background:#fff;
+  padding:28px 26px;
+  box-shadow:var(--shadow-xs);
+  transition:box-shadow .2s ease, transform .2s ease;
+}
+.pkg:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);}
+.pkg--featured{
+  border-color:transparent;
+  background:
+    radial-gradient(600px 300px at 100% 0%, rgba(99,102,241,.14), transparent 60%),
+    linear-gradient(160deg,#FFFFFF,#F7F9FF);
+  box-shadow:0 18px 46px rgba(15,23,42,.12), 0 0 0 1.5px rgba(37,99,235,.35);
+}
+.pkg__badge{
+  align-self:flex-start;
+  font-size:.66rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  padding:4px 11px;border-radius:999px;
+  background:linear-gradient(135deg,var(--blue),var(--violet));color:#fff;
+  margin-bottom:14px;
+}
+html[lang="my"] .pkg__badge{text-transform:none;letter-spacing:0;}
+.pkg h3{font-size:1.2rem;margin-bottom:8px;}
+.pkg__tagline{font-size:.88rem;color:var(--muted);margin-bottom:20px;min-height:44px;}
+.pkg__price{
+  padding:16px 0;border-top:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);
+  margin-bottom:20px;
+}
+.pkg__price strong{display:block;font-size:1rem;color:var(--ink);}
+.pkg__price span{font-size:.76rem;color:var(--muted);}
+.pkg__list{display:grid;gap:10px;margin-bottom:20px;flex:1;}
+.pkg__list li{
+  position:relative;padding-left:26px;font-size:.88rem;
+}
+.pkg__list li::before{
+  content:"";position:absolute;left:0;top:.42em;
+  width:15px;height:15px;border-radius:5px;
+  background:#EFF5FF;
+}
+.pkg__list li::after{
+  content:"";position:absolute;left:5px;top:calc(.42em + 4px);
+  width:5px;height:9px;
+  border-right:2px solid var(--blue);border-bottom:2px solid var(--blue);
+  transform:rotate(40deg);
+}
+.pkg__note{
+  font-size:.76rem;color:var(--muted);margin-top:14px;
+  padding-top:14px;border-top:1px dashed var(--line);
+}
+.pkg__note--tech{color:var(--violet);font-weight:600;}
+
+.pricing-note{
+  margin-top:28px;padding:20px 24px;border-radius:var(--radius);
+  background:var(--surface);border:1px solid var(--line);
+  font-size:.88rem;color:var(--body);
+}
+
+/* ============================================================
+   STEPS
+   ============================================================ */
+.steps{
+  display:grid;gap:20px;counter-reset:step;
+}
+@media (min-width:720px){.steps{grid-template-columns:repeat(2,1fr);}}
+@media (min-width:1040px){.steps{grid-template-columns:repeat(3,1fr);}}
+
+.step{
+  position:relative;padding:26px 24px 24px;
+  border-radius:var(--radius);border:1px solid var(--line);
+  background:#fff;
+  counter-increment:step;
+}
+.section--navy .step{
+  background:rgba(255,255,255,.04);
+  border-color:rgba(255,255,255,.12);
+}
+.step::before{
+  content:counter(step,decimal-leading-zero);
+  display:block;font-size:.78rem;font-weight:700;
+  color:var(--blue);letter-spacing:.08em;margin-bottom:12px;
+}
+.section--navy .step::before{color:var(--champagne);}
+.step h4{margin-bottom:8px;}
+.step p{font-size:.88rem;margin:0;}
+.section--navy .step p{color:#A8B6CC;}
+
+/* ============================================================
+   SCOPE / LIMITATIONS
+   ============================================================ */
+.scope-grid{display:grid;gap:22px;}
+@media (min-width:860px){.scope-grid{grid-template-columns:1fr 1fr;}}
+.scope-card{
+  border-radius:var(--radius-lg);padding:28px 26px;
+  border:1px solid var(--line);background:#fff;
+}
+.scope-card--dynamic{
+  background:linear-gradient(160deg,#F7F8FF,#FFFFFF);
+  border-color:#DDE3FB;
+}
+.scope-card h3{font-size:1.1rem;margin-bottom:6px;}
+.scope-card > p{font-size:.88rem;color:var(--muted);margin-bottom:18px;}
+.scope-list{display:grid;gap:12px;}
+.scope-list li{
+  position:relative;padding-left:24px;font-size:.88rem;
+}
+.scope-list li::before{
+  content:"";position:absolute;left:0;top:.55em;
+  width:8px;height:8px;border-radius:50%;background:var(--cyan);
+}
+.scope-card--dynamic .scope-list li::before{background:var(--violet);}
+
+.notice-list{display:grid;gap:14px;margin-top:34px;}
+.notice-list li{
+  display:flex;gap:14px;align-items:flex-start;
+  padding:16px 20px;border-radius:var(--radius);
+  background:#fff;border:1px solid var(--line);
+  font-size:.88rem;
+}
+.notice-list li strong{color:var(--ink);}
+.notice-icon{
+  flex-shrink:0;width:26px;height:26px;border-radius:8px;
+  display:grid;place-items:center;
+  background:#FFF8EC;color:#B98A2E;font-size:.8rem;font-weight:700;
+}
+
+/* ============================================================
+   CTA
+   ============================================================ */
+.cta{
+  position:relative;overflow:hidden;
+  border-radius:var(--radius-xl);
+  padding:clamp(40px,6vw,72px) clamp(26px,5vw,64px);
+  background:
+    radial-gradient(700px 400px at 90% 0%, rgba(99,102,241,.34), transparent 62%),
+    radial-gradient(600px 380px at 0% 100%, rgba(6,182,212,.22), transparent 60%),
+    linear-gradient(150deg,#0F172A,#16223F);
+  color:#C7D2E4;text-align:center;
+}
+.cta h2{color:#fff;}
+.cta p{max-width:60ch;margin-inline:auto;color:#AEBBD1;}
+.cta .btn-row{justify-content:center;margin-top:28px;}
+.cta__fine{
+  margin-top:22px;font-size:.78rem;color:#8FA0BC;
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer{
+  background:var(--navy);color:#94A3B8;
+  padding:clamp(48px,6vw,72px) 0 28px;
+  margin-top:clamp(64px,8vw,110px);
+}
+.footer-grid{
+  display:grid;gap:34px;
+  padding-bottom:36px;border-bottom:1px solid rgba(255,255,255,.1);
+}
+@media (min-width:760px){
+  .footer-grid{grid-template-columns:1.6fr 1fr 1fr;}
+}
+.site-footer .brand{color:#fff;margin-bottom:14px;}
+.site-footer p{font-size:.87rem;max-width:42ch;}
+.footer-col h4{
+  color:#fff;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:14px;
+}
+html[lang="my"] .footer-col h4{letter-spacing:0;text-transform:none;font-size:.9rem;}
+.footer-col ul{display:grid;gap:9px;}
+.footer-col a{color:#94A3B8;font-size:.87rem;text-decoration:none;}
+.footer-col a:hover{color:#fff;text-decoration:none;}
+.footer-bottom{
+  padding-top:22px;display:flex;flex-wrap:wrap;gap:12px;
+  justify-content:space-between;align-items:center;font-size:.8rem;
+}
+
+/* ============================================================
+   REVEAL
+   ============================================================ */
+.js [data-reveal]{
+  opacity:0;transform:translateY(18px);
+  transition:opacity .6s ease, transform .6s ease;
+}
+.js [data-reveal].is-visible{opacity:1;transform:none;}
+
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{
+    animation-duration:.001ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;
+  }
+  .js [data-reveal]{opacity:1;transform:none;}
+}
+
+/* ============================================================
+   PRINT
+   ============================================================ */
+@media print{
+  .site-header,.site-footer,.cta,.state-switch{display:none;}
+  body{color:#000;}
+}
+</style>
+</head>
+
+<body>
+
+<a class="skip-link" href="#main" data-en="Skip to main content" data-my="အဓိကအကြောင်းအရာသို့ ကျော်သွားရန်">Skip to main content</a>
+
+<!-- ============================================================
+     HEADER
+     ============================================================ -->
+<header class="site-header">
+  <div class="container header__inner">
+    <a class="brand" href="index.html" aria-label="Profile Craft — Home">
+      <span class="brand__mark" aria-hidden="true">PC</span>
+      <span>Profile Craft</span>
+    </a>
+
+    <nav class="nav" aria-label="Main navigation">
+      <a href="index.html" data-en="Home" data-my="ပင်မစာမျက်နှာ">Home</a>
+      <a href="services.html" data-en="Services" data-my="ဝန်ဆောင်မှုများ">Services</a>
+      <a href="wedding-service.html" class="is-active" aria-current="page" data-en="Wedding" data-my="မင်္ဂလာပွဲ">Wedding</a>
+      <a href="about.html" data-en="About" data-my="ကျွန်ုပ်တို့အကြောင်း">About</a>
+      <a href="contact.html" data-en="Contact" data-my="ဆက်သွယ်ရန်">Contact</a>
+    </nav>
+
+    <div class="header__actions">
+      <div class="lang-toggle" role="group" aria-label="Language / ဘာသာစကား">
+        <button type="button" data-lang-btn="en" class="is-active" aria-pressed="true">EN</button>
+        <button type="button" data-lang-btn="my" aria-pressed="false">မြန်မာ</button>
+      </div>
+
+      <a class="btn btn--primary btn--sm header__cta" href="contact.html"
+         data-en="Request a Quote" data-my="စျေးနှုန်း မေးမြန်းရန်">Request a Quote</a>
+
+      <button class="nav-toggle" type="button"
+              aria-expanded="false" aria-controls="mobile-nav"
+              aria-label="Toggle navigation menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-nav" id="mobile-nav">
+    <a href="index.html" data-en="Home" data-my="ပင်မစာမျက်နှာ">Home</a>
+    <a href="services.html" data-en="Services" data-my="ဝန်ဆောင်မှုများ">Services</a>
+    <a href="wedding-service.html" data-en="Wedding" data-my="မင်္ဂလာပွဲ">Wedding</a>
+    <a href="about.html" data-en="About" data-my="ကျွန်ုပ်တို့အကြောင်း">About</a>
+    <a href="contact.html" data-en="Contact" data-my="ဆက်သွယ်ရန်">Contact</a>
+    <a class="btn btn--primary btn--block" href="contact.html"
+       data-en="Request a Quote" data-my="စျေးနှုန်း မေးမြန်းရန်">Request a Quote</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ============================================================
+       HERO
+       ============================================================ -->
+  <section class="hero">
+    <div class="container hero__inner">
+
+      <div class="hero__copy">
+        <span class="eyebrow eyebrow--light"
+              data-en="Wedding Website &amp; Digital Invitation"
+              data-my="မင်္ဂလာပွဲ Website နှင့် Digital ဖိတ်စာ">Wedding Website &amp; Digital Invitation</span>
+
+        <h1 data-en="Your Wedding, Beautifully Connected"
+            data-my="မင်္ဂလာပွဲအတွက် Digital Invitation နှင့် Wedding Website">Your Wedding, Beautifully Connected</h1>
+
+        <p class="hero__lead"
+           data-en="More than a digital invitation. Create a personalised wedding website where guests can explore your invitation, find the venue, view your memories, and check in with a QR code."
+           data-my="ဖိတ်စာ၊ မင်္ဂလာခန်းမ Location၊ မင်္ဂလာဓာတ်ပုံများနှင့် Guest Check-in ကို Website တစ်ခုတည်းမှာ စုစည်းပေးပါ။">
+          More than a digital invitation. Create a personalised wedding website where guests can explore your invitation, find the venue, view your memories, and check in with a QR code.
+        </p>
+
+        <div class="btn-row">
+          <a class="btn btn--light" href="#features"
+             data-en="Explore Wedding Features" data-my="လုပ်ဆောင်ချက်များ ကြည့်ရန်">Explore Wedding Features</a>
+          <a class="btn btn--ghost" href="#quote"
+             data-en="Request a Wedding Website" data-my="Wedding Website စုံစမ်းရန်">Request a Wedding Website</a>
+        </div>
+
+        <ul class="hero__chips">
+          <li data-en="Digital Invitation" data-my="Digital ဖိတ်စာ">Digital Invitation</li>
+          <li data-en="Venue Map" data-my="ခန်းမ Map">Venue Map</li>
+          <li data-en="Photo Gallery" data-my="ဓာတ်ပုံ Gallery">Photo Gallery</li>
+          <li data-en="QR Check-in" data-my="QR Check-in">QR Check-in</li>
+        </ul>
+      </div>
+
+      <div class="hero__visual">
+        <div class="phone" role="img"
+             aria-label="Preview of a mobile wedding invitation showing the couple's names, date, venue and action buttons.">
+          <div class="phone__screen">
+            <span class="sample-badge" data-en="Sample preview" data-my="နမူနာ ကြည့်ရန်">Sample preview</span>
+            <div class="invite">
+              <p class="invite__kicker" data-en="Wedding Invitation" data-my="မင်္ဂလာဖိတ်စာ">Wedding Invitation</p>
+              <p class="invite__names">A <span>&amp;</span> K</p>
+              <div class="invite__orn" aria-hidden="true"><i></i></div>
+              <p class="invite__line"><strong data-en="Wedding Date &amp; Time" data-my="မင်္ဂလာပွဲ ရက်စွဲနှင့် အချိန်">Wedding Date &amp; Time</strong></p>
+              <p class="invite__line"><strong data-en="Venue Name · City" data-my="ခန်းမ အမည် · မြို့">Venue Name · City</strong></p>
+              <div class="invite__actions">
+                <span class="is-primary" data-en="View Invitation" data-my="ဖိတ်စာ ကြည့်ရန်">View Invitation</span>
+                <span data-en="Get Directions" data-my="လမ်းညွှန် ရယူရန်">Get Directions</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FEATURES
+       ============================================================ -->
+  <section class="section" id="features">
+    <div class="container">
+
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-en="Service features" data-my="ဝန်ဆောင်မှု လုပ်ဆောင်ချက်များ">Service features</span>
+        <h2 data-en="Everything a wedding website can do"
+            data-my="မင်္ဂလာပွဲ Website တစ်ခု လုပ်ဆောင်နိုင်သည့်အရာများ">Everything a wedding website can do</h2>
+        <p data-en="Each feature below is built around the information you provide. Optional functions are labelled clearly, and features that need a backend are identified so there are no surprises later."
+           data-my="အောက်ပါ လုပ်ဆောင်ချက်တစ်ခုချင်းစီကို သင်ပေးအပ်သည့် အချက်အလက်များအပေါ် အခြေခံ၍ တည်ဆောက်ပါသည်။ ရွေးချယ်နိုင်သည့် လုပ်ဆောင်ချက်များကို ရှင်းလင်းစွာ ဖော်ပြထားပြီး Backend လိုအပ်သည့် လုပ်ဆောင်ချက်များကိုလည်း ကြိုတင်ဖော်ပြထားပါသည်။">
+          Each feature below is built around the information you provide. Optional functions are labelled clearly, and features that need a backend are identified so there are no surprises later.
+        </p>
+      </div>
+
+      <!-- ---------- FEATURE A ---------- -->
+      <article class="feature" id="feature-a" data-reveal>
+        <div class="feature__copy">
+          <span class="eyebrow" data-en="Feature A" data-my="လုပ်ဆောင်ချက် A">Feature A</span>
+          <h3 data-en="Digital Wedding Invitation" data-my="Digital မင်္ဂလာဖိတ်စာ">Digital Wedding Invitation</h3>
+          <p data-en="Guests open a personalised invitation from a shareable link or QR code. The invitation is typeset elegantly and designed for mobile screens first, because that is where most guests will open it."
+             data-my="ဧည့်သည်များသည် မျှဝေထားသော Link သို့မဟုတ် QR Code မှတစ်ဆင့် ကိုယ်ပိုင်ဖိတ်စာကို ဖွင့်ကြည့်နိုင်ပါသည်။ ဧည့်သည်အများစု ဖုန်းဖြင့် ဖွင့်ကြည့်ကြသဖြင့် ဖုန်းမျက်နှာပြင်အတွက် ဦးစားပေး ဒီဇိုင်းရေးဆွဲထားပါသည်။">
+            Guests open a personalised invitation from a shareable link or QR code. The invitation is typeset elegantly and designed for mobile screens first, because that is where most guests will open it.
+          </p>
+
+          <ul class="feature-list">
+            <li data-en="Couple's names and monogram" data-my="သတို့သား၊ သတို့သမီး အမည်နှင့် Monogram">Couple's names and monogram</li>
+            <li data-en="Wedding date and time" data-my="မင်္ဂလာပွဲ ရက်စွဲနှင့် အချိန်">Wedding date and time</li>
+            <li data-en="Venue name and address" data-my="မင်္ဂလာခန်းမ အမည်နှင့် လိပ်စာ">Venue name and address</li>
+            <li data-en="Wedding programme or event schedule" data-my="မင်္ဂလာပွဲ အစီအစဉ်">Wedding programme or event schedule</li>
+            <li data-en="Personal invitation message" data-my="ကိုယ်ပိုင် ဖိတ်ကြားစာ">Personal invitation message</li>
+            <li data-en="Dress code, if provided by the couple" data-my="ဝတ်ဆင်ရမည့် ဝတ်စုံ (သတ်မှတ်ထားပါက)">Dress code, if provided by the couple</li>
+            <li data-en="Contact information for questions" data-my="မေးမြန်းရန် ဆက်သွယ်ရန် အချက်အလက်">Contact information for questions</li>
+            <li data-en="Add-to-calendar option, if supported" data-my="Add-to-calendar ရွေးချယ်မှု (ပံ့ပိုးပါက)">Add-to-calendar option, if supported</li>
+          </ul>
+        </div>
+
+        <div class="feature__visual">
+          <div class="panel" role="img" aria-label="Preview of a digital invitation card layout.">
+            <div class="panel__bar">
+              <span class="panel__dot"></span><span class="panel__dot"></span><span class="panel__dot"></span>
+              <span class="panel__title" data-en="Invitation preview" data-my="ဖိတ်စာ နမူနာ">Invitation preview</span>
+            </div>
+            <div class="panel__body" style="background:var(--ivory);">
+              <span class="sample-badge" data-en="Sample preview" data-my="နမူနာ ကြည့်ရန်">Sample preview</span>
+              <div class="invite">
+                <p class="invite__kicker" data-en="Together with our families" data-my="မိသားစုများနှင့်အတူ">Together with our families</p>
+                <p class="invite__names">A <span>&amp;</span> K</p>
+                <div class="invite__orn" aria-hidden="true"><i></i></div>
+                <p class="invite__line"><strong data-en="Wedding Date &amp; Time" data-my="မင်္ဂလာပွဲ ရက်စွဲနှင့် အချိန်">Wedding Date &amp; Time</strong></p>
+                <p class="invite__line"><strong data-en="Venue Name" data-my="ခန်းမ အမည်">Venue Name</strong></p>
+                <p class="invite__line" data-en="Venue address supplied by the couple" data-my="သတို့သား၊ သတို့သမီး ပေးအပ်သည့် လိပ်စာ">Venue address supplied by the couple</p>
+                <div class="invite__actions">
+                  <span class="is-primary" data-en="Add to calendar" data-my="Calendar ထဲ ထည့်ရန်">Add to calendar</span>
+                  <span data-en="Share" data-my="မျှဝေရန်">Share</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---------- FEATURE B ---------- -->
+      <article class="feature feature--reverse" id="feature-b" data-reveal>
+        <div class="feature__copy">
+          <span class="eyebrow" data-en="Feature B" data-my="လုပ်ဆောင်ချက် B">Feature B</span>
+          <h3 data-en="Wedding Venue Location" data-my="မင်္ဂလာခန်းမ တည်နေရာ">Wedding Venue Location</h3>
+          <p data-en="Guests should never have to search for the venue themselves. The page shows the address, an interactive map, and a one-tap directions button that opens the guest's preferred map application."
+             data-my="ဧည့်သည်များ ခန်းမတည်နေရာကို ကိုယ်တိုင် ရှာဖွေရန် မလိုအပ်ပါ။ လိပ်စာ၊ Map နှင့် တစ်ချက်နှိပ်ရုံဖြင့် ဧည့်သည် အသုံးပြုနေသည့် Map App တွင် ဖွင့်နိုင်သည့် လမ်းညွှန် ခလုတ်ကို ဖော်ပြပေးပါသည်။">
+            Guests should never have to search for the venue themselves. The page shows the address, an interactive map, and a one-tap directions button that opens the guest's preferred map application.
+          </p>
+
+          <ul class="feature-list">
+            <li data-en="Venue name and full address" data-my="ခန်းမ အမည်နှင့် လိပ်စာ အပြည့်အစုံ">Venue name and full address</li>
+            <li data-en="Embedded interactive map or map link" data-my="Map Embed သို့မဟုတ် Map Link">Embedded interactive map or map link</li>
+            <li data-en="&ldquo;Get Directions&rdquo; button" data-my="&ldquo;Get Directions&rdquo; ခလုတ်">&ldquo;Get Directions&rdquo; button</li>
+            <li data-en="Opens in a compatible map application on the guest's device" data-my="ဧည့်သည်၏ Device ရှိ သင့်လျော်သော Map App တွင် ဖွင့်နိုင်ခြင်း">Opens in a compatible map application on the guest's device</li>
+            <li data-en="Uses only the venue details supplied by the couple" data-my="သတို့သား၊ သတို့သမီး ပေးအပ်သည့် တည်နေရာ အချက်အလက်ကိုသာ အသုံးပြုခြင်း">Uses only the venue details supplied by the couple</li>
+          </ul>
+
+          <div class="callout">
+            <strong data-en="Note:" data-my="မှတ်ချက် —">Note:</strong>
+            <span data-en="We only publish the venue name and location that you provide. Profile Craft does not invent or substitute venue information."
+                  data-my="သင်ပေးအပ်သည့် ခန်းမ အမည်နှင့် တည်နေရာကိုသာ ဖော်ပြပါသည်။ Profile Craft မှ ခန်းမ အချက်အလက်များကို ဖန်တီး၍ ဖြည့်စွက်ခြင်း မပြုပါ။">
+              We only publish the venue name and location that you provide. Profile Craft does not invent or substitute venue information.
+            </span>
+          </div>
+        </div>
+
+        <div class="feature__visual">
+          <div class="panel" role="img" aria-label="Preview of a venue map panel with a directions button.">
+            <div class="panel__bar">
+              <span class="panel__dot"></span><span class="panel__dot"></span><span class="panel__dot"></span>
+              <span class="panel__title" data-en="Venue &amp; directions" data-my="ခန်းမ နှင့် လမ်းညွှန်">Venue &amp; directions</span>
+            </div>
+            <div class="map-canvas">
+              <div class="map-pin">
+                <span class="map-pin__ring" aria-hidden="true"></span>
+                <span class="map-pin__dot"></span>
+              </div>
+            </div>
+            <div class="map-info">
+              <div class="map-info__text">
+                <strong data-en="Venue Name" data-my="ခန်းမ အမည်">Venue Name</strong>
+                <span data-en="Address supplied by the couple" data-my="သတို့သား၊ သတို့သမီး ပေးအပ်သည့် လိပ်စာ">Address supplied by the couple</span>
+              </div>
+              <span class="btn btn--primary btn--sm" data-en="Get Directions" data-my="လမ်းညွှန် ရယူရန်">Get Directions</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---------- FEATURE C ---------- -->
+      <article class="feature" id="feature-c" data-reveal>
+        <div class="feature__copy">
+          <span class="eyebrow" data-en="Feature C" data-my="လုပ်ဆောင်ချက် C">Feature C</span>
+          <h3 data-en="Wedding Photo Gallery" data-my="မင်္ဂလာဓာတ်ပုံ Gallery">Wedding Photo Gallery</h3>
+          <p data-en="A dedicated gallery for pre-wedding shoots, wedding portraits and event photos, presented in a clean, responsive grid that looks good on every screen size."
+             data-my="Pre-wedding ဓာတ်ပုံများ၊ မင်္ဂလာ Portrait များနှင့် ပွဲဓာတ်ပုံများကို မျက်နှာပြင် အရွယ်အစားအားလုံးတွင် လှပစွာ ပြသနိုင်သည့် သပ်ရပ်သော Responsive Grid ဖြင့် ဖော်ပြပေးပါသည်။">
+            A dedicated gallery for pre-wedding shoots, wedding portraits and event photos, presented in a clean, responsive grid that looks good on every screen size.
+          </p>
+
+          <ul class="feature-list">
+            <li data-en="Responsive photo grid for mobile, tablet and desktop" data-my="ဖုန်း၊ Tablet နှင့် Computer အားလုံးအတွက် အဆင်ပြေသော ဓာတ်ပုံ Grid">Responsive photo grid for mobile, tablet and desktop</li>
+            <li data-en="Full-size image viewing with a lightbox" data-my="ဓာတ်ပုံအပြည့် ကြည့်ရှုနိုင်သည့် Lightbox">Full-size image viewing with a lightbox</li>
+            <li data-en="Categorised photo collections, if required" data-my="လိုအပ်ပါက အမျိုးအစားခွဲထားသော Collection များ">Categorised photo collections, if required</li>
+            <li data-en="Mobile-optimised, lazy-loaded images" data-my="ဖုန်းအတွက် Optimize လုပ်ထားပြီး Lazy-load ပြုလုပ်ထားသော ဓာတ်ပုံများ">Mobile-optimised, lazy-loaded images</li>
+          </ul>
+
+          <div class="callout callout--warn">
+            <strong data-en="Please note:" data-my="သတိပြုရန် —">Please note:</strong>
+            <span data-en="Gallery size, storage capacity, the photo upload workflow and ongoing maintenance depend on the implementation you choose. Unlimited storage or unrestricted uploads are not included by default."
+                  data-my="Gallery အရွယ်အစား၊ Storage ပမာဏ၊ ဓာတ်ပုံတင်သည့် လုပ်ငန်းစဉ်နှင့် ထိန်းသိမ်းမှုတို့သည် ရွေးချယ်သည့် အကောင်အထည်ဖော်မှုအပေါ် မူတည်ပါသည်။ အကန့်အသတ်မရှိ Storage သို့မဟုတ် အကန့်အသတ်မရှိ Upload ပြုလုပ်နိုင်ခြင်းကို ပုံမှန်အားဖြင့် မပါဝင်ပါ။">
+              Gallery size, storage capacity, the photo upload workflow and ongoing maintenance depend on the implementation you choose. Unlimited storage or unrestricted uploads are not included by default.
+            </span>
+          </div>
+        </div>
+
+        <div class="feature__visual">
+          <div class="panel" role="img" aria-label="Preview of a responsive wedding photo gallery grid.">
+            <div class="panel__bar">
+              <span class="panel__dot"></span><span class="panel__dot"></span><span class="panel__dot"></span>
+              <span class="panel__title" data-en="Gallery preview" data-my="Gallery နမူနာ">Gallery preview</span>
+            </div>
+            <div class="panel__body">
+              <span class="sample-badge" data-en="Sample preview" data-my="နမူနာ ကြည့်ရန်">Sample preview</span>
+              <div class="gallery-grid">
+                <div class="g-1" data-label="Pre-wedding"></div>
+                <div class="g-2" data-label="Portrait"></div>
+                <div class="g-3" data-label="Ceremony"></div>
+                <div class="g-4" data-label="Family"></div>
+                <div class="g-5" data-label="Reception"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FEATURE D — QR CHECK-IN (PROMINENT, NAVY)
+       ============================================================ -->
+  <section class="section section--navy" id="feature-d">
+    <div class="container">
+
+      <div class="section-head" data-reveal>
+        <span class="eyebrow eyebrow--light" data-en="Feature D · Key differentiator" data-my="လုပ်ဆောင်ချက် D · အဓိက ထူးခြားချက်">Feature D · Key differentiator</span>
+        <h2 data-en="QR Invitation &amp; Guest Check-in" data-my="QR ဖိတ်စာနှင့် ဧည့်သည် Check-in">QR Invitation &amp; Guest Check-in</h2>
+        <p data-en="This is the feature that turns an invitation into an event tool. Each guest or invitation group receives a unique code. At the door, authorised staff scan and validate it — so entry can be confirmed and duplicate entry can be detected."
+           data-my="ဖိတ်စာကို ပွဲစီမံခန့်ခွဲမှု ကိရိယာအဖြစ် ပြောင်းလဲပေးသည့် လုပ်ဆောင်ချက် ဖြစ်ပါသည်။ ဧည့်သည် သို့မဟုတ် ဖိတ်စာအုပ်စုတစ်ခုစီအတွက် သီးသန့် Code တစ်ခု ဖန်တီးပေးပြီး ပွဲဝင်ပေါက်တွင် တာဝန်ရှိသူများက Scan ဖတ်၍ စစ်ဆေးနိုင်ပါသည်။">
+          This is the feature that turns an invitation into an event tool. Each guest or invitation group receives a unique code. At the door, authorised staff scan and validate it — so entry can be confirmed and duplicate entry can be detected.
+        </p>
+      </div>
+
+      <div class="feature" style="align-items:start;">
+
+        <!-- Workflow -->
+        <div class="feature__copy" data-reveal>
+          <h3 data-en="How check-in works" data-my="Check-in လုပ်ဆောင်ပုံ">How check-in works</h3>
+          <ol class="steps" style="grid-template-columns:1fr;margin-top:22px;">
+            <li class="step">
+              <h4 data-en="Guest list supplied" data-my="ဧည့်သည်စာရင်း ပေးအပ်ခြင်း">Guest list supplied</h4>
+              <p data-en="The couple or an authorised organiser provides the guest list." data-my="သတို့သား၊ သတို့သမီး သို့မဟုတ် တာဝန်ရှိသည့် စီစဉ်သူမှ ဧည့်သည်စာရင်းကို ပေးအပ်ပါသည်။">The couple or an authorised organiser provides the guest list.</p>
+            </li>
+            <li class="step">
+              <h4 data-en="Unique codes generated" data-my="သီးသန့် Code များ ဖန်တီးခြင်း">Unique codes generated</h4>
+              <p data-en="The system generates a unique invitation code or QR code for each eligible guest or invitation group." data-my="သင့်လျော်သော ဧည့်သည် သို့မဟုတ် ဖိတ်စာအုပ်စုတစ်ခုစီအတွက် သီးသန့် ဖိတ်စာ Code သို့မဟုတ် QR Code ကို စနစ်မှ ဖန်တီးပေးပါသည်။">The system generates a unique invitation code or QR code for each eligible guest or invitation group.</p>
+            </li>
+            <li class="step">
+              <h4 data-en="Guest presents the code" data-my="ဧည့်သည် Code ပြသခြင်း">Guest presents the code</h4>
+              <p data-en="Guests present their invitation QR code at the event entrance." data-my="ပွဲဝင်ပေါက်တွင် ဧည့်သည်များက မိမိတို့၏ QR Code ကို ပြသပါသည်။">Guests present their invitation QR code at the event entrance.</p>
+            </li>
+            <li class="step">
+              <h4 data-en="Staff scans the code" data-my="တာဝန်ရှိသူမှ Scan ဖတ်ခြင်း">Staff scans the code</h4>
+              <p data-en="An authorised staff member scans the code using a compatible device." data-my="တာဝန်ရှိသူမှ သင့်လျော်သော Device ဖြင့် Code ကို Scan ဖတ်ပါသည်။">An authorised staff member scans the code using a compatible device.</p>
+            </li>
+            <li class="step">
+              <h4 data-en="Invitation validated" data-my="ဖိတ်စာ စစ်ဆေးခြင်း">Invitation validated</h4>
+              <p data-en="The check-in screen validates the invitation and shows the relevant guest or invitation status." data-my="Check-in မျက်နှာပြင်မှ ဖိတ်စာကို စစ်ဆေးပြီး သက်ဆိုင်ရာ ဧည့်သည် သို့မဟုတ် ဖိတ်စာ အခြေအနေကို ပြသပါသည်။">The check-in screen validates the invitation and shows the relevant guest or invitation status.</p>
+            </li>
+            <li class="step">
+              <h4 data-en="Status recorded" data-my="အခြေအနေ မှတ်တမ်းတင်ခြင်း">Status recorded</h4>
+              <p data-en="Once checked in, the status is recorded so accidental duplicate entry can be detected." data-my="Check-in ပြုလုပ်ပြီးပါက အခြေအနေကို မှတ်တမ်းတင်ထားသဖြင့် မတော်တဆ ထပ်မံဝင်ရောက်မှုကို သိရှိနိုင်ပါသည်။">Once checked in, the status is recorded so accidental duplicate entry can be detected.</p>
+            </li>
+          </ol>
+        </div>
+
+        <!-- Check-in UI preview -->
+        <div class="feature__visual" data-reveal>
+          <div class="panel">
+            <div class="panel__bar">
+              <span class="panel__dot"></span><span class="panel__dot"></span><span class="panel__dot"></span>
+              <span class="panel__title" data-en="Check-in interface · design preview" data-my="Check-in မျက်နှာပြင် · ဒီဇိုင်း နမူနာ">Check-in interface · design preview</span>
+            </div>
+            <div class="panel__body">
+
+              <span class="sample-badge" data-en="Design preview — sample data only" data-my="ဒီဇိုင်း နမူနာ — နမူနာ ဒေတာသာ">Design preview — sample data only</span>
+
+              <div class="checkin">
+                <!-- Scanner -->
+                <div class="scanner" aria-hidden="true">
+                  <div class="scanner__frame">
+                    <svg class="qr" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+                      <!-- finder patterns -->
+                      <rect x="0" y="0" width="28" height="28" fill="currentColor"/>
+                      <rect x="4" y="4" width="20" height="20" fill="#101B33"/>
+                      <rect x="8" y="8" width="12" height="12" fill="currentColor"/>
+                      <rect x="72" y="0" width="28" height="28" fill="currentColor"/>
+                      <rect x="76" y="4" width="20" height="20" fill="#101B33"/>
+                      <rect x="80" y="8" width="12" height="12" fill="currentColor"/>
+                      <rect x="0" y="72" width="28" height="28" fill="currentColor"/>
+                      <rect x="4" y="76" width="20" height="20" fill="#101B33"/>
+                      <rect x="8" y="80" width="12" height="12" fill="currentColor"/>
+                      <!-- data modules -->
+                      <g fill="currentColor">
+                        <rect x="32" y="32" width="4" height="4"/><rect x="40" y="32" width="4" height="4"/>
+                        <rect x="52" y="32" width="4" height="4"/><rect x="68" y="32" width="4" height="4"/>
+                        <rect x="84" y="32" width="4" height="4"/><rect x="92" y="32" width="4" height="4"/>
+                        <rect x="32" y="40" width="4" height="4"/><rect x="44" y="40" width="4" height="4"/>
+                        <rect x="60" y="40" width="4" height="4"/><rect x="72" y="40" width="4" height="4"/>
+                        <rect x="88" y="40" width="4" height="4"/>
+                        <rect x="36" y="48" width="4" height="4"/><rect x="48" y="48" width="4" height="4"/>
+                        <rect x="56" y="48" width="4" height="4"/><rect x="68" y="48" width="4" height="4"/>
+                        <rect x="80" y="48" width="4" height="4"/><rect x="96" y="48" width="4" height="4"/>
+                        <rect x="32" y="56" width="4" height="4"/><rect x="44" y="56" width="4" height="4"/>
+                        <rect x="60" y="56" width="4" height="4"/><rect x="76" y="56" width="4" height="4"/>
+                        <rect x="88" y="56" width="4" height="4"/>
+                        <rect x="40" y="64" width="4" height="4"/><rect x="52" y="64" width="4" height="4"/>
+                        <rect x="68" y="64" width="4" height="4"/><rect x="84" y="64" width="4" height="4"/>
+                        <rect x="96" y="64" width="4" height="4"/>
+                        <rect x="36" y="72" width="4" height="4"/><rect x="48" y="72" width="4" height="4"/>
+                        <rect x="60" y="72" width="4" height="4"/><rect x="76" y="72" width="4" height="4"/>
+                        <rect x="88" y="72" width="4" height="4"/>
+                        <rect x="32" y="80" width="4" height="4"/><rect x="44" y="80" width="4" height="4"/>
+                        <rect x="56" y="80" width="4" height="4"/><rect x="72" y="80" width="4" height="4"/>
+                        <rect x="84" y="80" width="4" height="4"/><rect x="96" y="80" width="4" height="4"/>
+                        <rect x="40" y="88" width="4" height="4"/><rect x="52" y="88" width="4" height="4"/>
+                        <rect x="68" y="88" width="4" height="4"/><rect x="80" y="88" width="4" height="4"/>
+                        <rect x="92" y="88" width="4" height="4"/>
+                      </g>
+                    </svg>
+                    <span class="scanner__laser" aria-hidden="true"></span>
+                  </div>
+                  <p class="scanner__hint" data-en="Decorative sample graphic — not a scannable code" data-my="အလှဆင် နမူနာ ပုံသာ — Scan ဖတ်နိုင်သော Code မဟုတ်ပါ">Decorative sample graphic — not a scannable code</p>
+                </div>
+
+                <!-- Result panel -->
+                <div class="result">
+                  <span class="result__status" id="checkin-status" data-state="valid"
+                        data-en="Valid invitation" data-my="ဖိတ်စာ မှန်ကန်ပါသည်">Valid invitation</span>
+
+                  <dl class="result__meta">
+                    <div class="result__row">
+                      <dt data-en="Guest" data-my="ဧည့်သည်">Guest</dt>
+                      <dd data-en="Sample Guest Name" data-my="နမူနာ ဧည့်သည်အမည်">Sample Guest Name</dd>
+                    </div>
+                    <div class="result__row">
+                      <dt data-en="Invitation group" data-my="ဖိတ်စာအုပ်စု">Invitation group</dt>
+                      <dd data-en="Group of 2" data-my="၂ ဦး အုပ်စု">Group of 2</dd>
+                    </div>
+                    <div class="result__row">
+                      <dt data-en="Table / section" data-my="စားပွဲ / နေရာ">Table / section</dt>
+                      <dd data-en="—" data-my="—">—</dd>
+                    </div>
+                  </dl>
+
+                  <div class="checkin-summary" aria-hidden="true">
+                    <div><strong>18</strong><span data-en="Checked in" data-my="Check-in ပြီး">Checked in</span></div>
+                    <div><strong>42</strong><span data-en="Expected" data-my="မျှော်မှန်း">Expected</span></div>
+                    <div><strong>24</strong><span data-en="Remaining" data-my="ကျန်ရှိ">Remaining</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- State preview controls -->
+              <div class="state-switch" role="group"
+                   aria-label="Preview check-in result states">
+                <button type="button" data-state-btn="valid" aria-pressed="true"
+                        data-en="Valid" data-my="မှန်ကန်">Valid</button>
+                <button type="button" data-state-btn="invalid" aria-pressed="false"
+                        data-en="Invalid" data-my="မမှန်ကန်">Invalid</button>
+                <button type="button" data-state-btn="duplicate" aria-pressed="false"
+                        data-en="Already checked in" data-my="Check-in ပြီးဖြစ်">Already checked in</button>
+              </div>
+
+              <p class="pkg__note" style="margin-top:16px;"
+                 data-en="This panel only demonstrates the intended interface states. It is not connected to a live system and does not validate anything."
+                 data-my="ဤ Panel သည် ရည်ရွယ်ထားသည့် မျက်နှာပြင် အခြေအနေများကိုသာ ပြသထားခြင်း ဖြစ်ပါသည်။ အမှန်တကယ် လည်ပတ်နေသည့် စနစ်နှင့် ချိတ်ဆက်ထားခြင်း မရှိပါ။">
+                This panel only demonstrates the intended interface states. It is not connected to a live system and does not validate anything.
+              </p>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Honest technical notice -->
+      <ul class="notice-list" data-reveal>
+        <li>
+          <span class="notice-icon" aria-hidden="true">!</span>
+          <span>
+            <strong data-en="A QR image is not a check-in system. " data-my="QR ပုံသက်သက်သည် Check-in စနစ် မဟုတ်ပါ။ ">A QR image is not a check-in system. </strong>
+            <span data-en="Generating a QR code and validating a QR code are two different capabilities. Real validation, duplicate detection and attendance recording require a working backend or managed data service."
+                  data-my="QR Code ဖန်တီးခြင်းနှင့် QR Code စစ်ဆေးခြင်းသည် မတူညီသော စွမ်းရည် နှစ်ခု ဖြစ်ပါသည်။ အမှန်တကယ် စစ်ဆေးနိုင်မှု၊ ထပ်မံဝင်ရောက်မှု ရှာဖွေနိုင်မှုနှင့် တက်ရောက်မှု မှတ်တမ်းတင်နိုင်မှုအတွက် Backend သို့မဟုတ် စီမံခန့်ခွဲသည့် Data Service လိုအပ်ပါသည်။">
+              Generating a QR code and validating a QR code are two different capabilities. Real validation, duplicate detection and attendance recording require a working backend or managed data service.
+            </span>
+          </span>
+        </li>
+        <li>
+          <span class="notice-icon" aria-hidden="true">!</span>
+          <span>
+            <strong data-en="Guest data is not public. " data-my="ဧည့်သည် ဒေတာသည် အများသိရန် မဟုတ်ပါ။ ">Guest data is not public. </strong>
+            <span data-en="Invitation identifiers are generated so they are difficult to guess, and guest information is exposed only to authorised users. A guest's name or a QR image alone is never treated as secure authentication."
+                  data-my="ဖိတ်စာ Identifier များကို ခန့်မှန်းရခက်အောင် ဖန်တီးထားပြီး ဧည့်သည် အချက်အလက်များကို တာဝန်ရှိသူများသာ ကြည့်ရှုနိုင်ပါသည်။ ဧည့်သည်အမည် သို့မဟုတ် QR ပုံသက်သက်ကို လုံခြုံသော Authentication အဖြစ် ဘယ်သောအခါမှ သတ်မှတ်ခြင်း မပြုပါ။">
+              Invitation identifiers are generated so they are difficult to guess, and guest information is exposed only to authorised users. A guest's name or a QR image alone is never treated as secure authentication.
+            </span>
+          </span>
+        </li>
+        <li>
+          <span class="notice-icon" aria-hidden="true">!</span>
+          <span>
+            <strong data-en="Status: not yet advertised as operational. " data-my="အခြေအနေ — လည်ပတ်နေပြီဟု မကြေညာသေးပါ။ ">Status: not yet advertised as operational. </strong>
+            <span data-en="QR check-in is described here as a planned capability. It is only presented as working once the validation logic, data persistence and duplicate-checking behaviour have been implemented and tested on real devices."
+                  data-my="QR Check-in ကို ဤနေရာတွင် စီစဉ်ထားသည့် စွမ်းရည်အဖြစ်သာ ဖော်ပြထားပါသည်။ စစ်ဆေးမှု Logic၊ Data သိမ်းဆည်းမှုနှင့် ထပ်မံဝင်ရောက်မှု စစ်ဆေးမှုတို့ကို အကောင်အထည်ဖော်ပြီး Device အမှန်တကယ်တွင် စမ်းသပ်ပြီးမှသာ လည်ပတ်နေပြီဟု ဖော်ပြမည် ဖြစ်ပါသည်။">
+              QR check-in is described here as a planned capability. It is only presented as working once the validation logic, data persistence and duplicate-checking behaviour have been implemented and tested on real devices.
+            </span>
+          </span>
+        </li>
+      </ul>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FEATURE E + F
+       ============================================================ -->
+  <section class="section section--surface">
+    <div class="container">
+
+      <!-- ---------- FEATURE E ---------- -->
+      <article class="feature" id="feature-e" data-reveal>
+        <div class="feature__copy">
+          <span class="eyebrow" data-en="Feature E" data-my="လုပ်ဆောင်ချက် E">Feature E</span>
+          <h3 data-en="Wedding Schedule &amp; Event Information" data-my="မင်္ဂလာပွဲ အစီအစဉ်နှင့် အချက်အလက်">Wedding Schedule &amp; Event Information</h3>
+          <p data-en="A clear timeline so guests know what happens and when. Times, notes and venue details are shown exactly as the couple provides them."
+             data-my="ဧည့်သည်များ မည်သည့်အချိန် မည်သည့်အစီအစဉ် ဖြစ်မည်ကို ရှင်းလင်းစွာ သိရှိနိုင်စေရန် အချိန်ဇယား ဖော်ပြပေးပါသည်။ အချိန်၊ မှတ်ချက်နှင့် ခန်းမ အချက်အလက်များကို သတို့သား၊ သတို့သမီး ပေးအပ်သည့်အတိုင်း ဖော်ပြပါသည်။">
+            A clear timeline so guests know what happens and when. Times, notes and venue details are shown exactly as the couple provides them.
+          </p>
+
+          <ul class="feature-list">
+            <li data-en="Ceremony" data-my="အခမ်းအနား">Ceremony</li>
+            <li data-en="Reception" data-my="ဧည့်ခံပွဲ">Reception</li>
+            <li data-en="Dinner" data-my="ညစာ">Dinner</li>
+            <li data-en="Any additional events supplied by the couple" data-my="သတို့သား၊ သတို့သမီး ပေးအပ်သည့် အခြား အစီအစဉ်များ">Any additional events supplied by the couple</li>
+          </ul>
+
+          <div class="callout">
+            <strong data-en="Note:" data-my="မှတ်ချက် —">Note:</strong>
+            <span data-en="Only the events, times and notes you provide are displayed. Nothing is added automatically."
+                  data-my="သင်ပေးအပ်သည့် အစီအစဉ်၊ အချိန်နှင့် မှတ်ချက်များကိုသာ ဖော်ပြပါသည်။ အလိုအလျောက် ထပ်ဖြည့်ခြင်း မပြုပါ။">
+              Only the events, times and notes you provide are displayed. Nothing is added automatically.
+            </span>
+          </div>
+        </div>
+
+        <div class="feature__visual">
+          <div class="panel" role="img" aria-label="Preview of a wedding day timeline.">
+            <div class="panel__bar">
+              <span class="panel__dot"></span><span class="panel__dot"></span><span class="panel__dot"></span>
+              <span class="panel__title" data-en="Schedule preview" data-my="အစီအစဉ် နမူနာ">Schedule preview</span>
+            </div>
+            <div class="panel__body">
+              <span class="sample-badge" data-en="Sample preview" data-my="နမူနာ ကြည့်ရန်">Sample preview</span>
+              <ol class="timeline">
+                <li>
+                  <time>10:00 AM</time>
+                  <strong data-en="Ceremony" data-my="အခမ်းအနား">Ceremony</strong>
+                  <span data-en="Venue detail supplied by the couple" data-my="သတို့သား၊ သတို့သမီး ပေးအပ်သည့် ခန်းမ အချက်အလက်">Venue detail supplied by the couple</span>
+                </li>
+                <li>
+                  <time>12:30 PM</time>
+                  <strong data-en="Reception" data-my="ဧည့်ခံပွဲ">Reception</strong>
+                  <span data-en="Guest arrival and greeting" data-my="ဧည့်သည် ရောက်ရှိမှုနှင့် ကြိုဆိုမှု">Guest arrival and greeting</span>
+                </li>
+                <li>
+                  <time>6:00 PM</time>
+                  <strong data-en="Dinner" data-my="ညစာ">Dinner</strong>
+                  <span data-en="Time and notes supplied by the couple" data-my="သတို့သား၊ သတို့သမီး ပေးအပ်သည့် အချိန်နှင့် မှတ်ချက်">Time and notes supplied by the couple</span>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- ---------- FEATURE F ---------- -->
+      <article class="feature feature--reverse" id="feature-f" data-reveal>
+        <div class="feature__copy">
+          <span class="eyebrow" data-en="Feature F" data-my="လုပ်ဆောင်ချက် F">Feature F</span>
+          <h3>
+            <span data-en="Guest Information &amp; RSVP" data-my="ဧည့်သည် အချက်အလက်နှင့် RSVP">Guest Information &amp; RSVP</span>
+            <span class="tag-optional" data-en="Optional" data-my="ရွေးချယ်နိုင်">Optional</span>
+          </h3>
+          <p data-en="Optional guest-response functionality, available depending on the package you choose and the implementation required. RSVP is a planning tool — it is not the same thing as event check-in."
+             data-my="သင်ရွေးချယ်သည့် Package နှင့် လိုအပ်သည့် အကောင်အထည်ဖော်မှုအပေါ် မူတည်၍ ရရှိနိုင်သော ရွေးချယ်နိုင်သည့် ဧည့်သည် ပြန်ကြားချက် လုပ်ဆောင်ချက် ဖြစ်ပါသည်။ RSVP သည် စီစဉ်ရေး ကိရိယာဖြစ်ပြီး ပွဲတက်ရောက်မှု Check-in နှင့် မတူပါ။">
+            Optional guest-response functionality, available depending on the package you choose and the implementation required. RSVP is a planning tool — it is not the same thing as event check-in.
+          </p>
+
+          <ul class="feature-list">
+            <li data-en="RSVP form" data-my="RSVP Form">RSVP form</li>
+            <li data-en="Attendance confirmation" data-my="တက်ရောက်မည် / မတက်ရောက်နိုင် အတည်ပြုခြင်း">Attendance confirmation</li>
+            <li data-en="Number of attending guests" data-my="တက်ရောက်မည့် ဧည့်အရေအတွက်">Number of attending guests</li>
+            <li data-en="Dietary or other event-related notes, if required" data-my="အစားအသောက် သို့မဟုတ် အခြား မှတ်ချက်များ (လိုအပ်ပါက)">Dietary or other event-related notes, if required</li>
+            <li data-en="Organiser view of RSVP responses" data-my="စီစဉ်သူဘက်မှ RSVP ပြန်ကြားချက်များ ကြည့်ရှုနိုင်ခြင်း">Organiser view of RSVP responses</li>
+          </ul>
+
+          <div class="callout callout--rose">
+            <strong data-en="Important distinction:" data-my="အရေးကြီး ခွဲခြားချက် —">Important distinction:</strong>
+            <span data-en="An RSVP response is not a check-in. A guest confirming online does not mean the guest has arrived at the event. If RSVP data is stored, it is protected with access restrictions and handled as personal information."
+                  data-my="RSVP ပြန်ကြားချက်သည် Check-in မဟုတ်ပါ။ Online မှ အတည်ပြုထားခြင်းသည် ပွဲသို့ ရောက်ရှိပြီးဟု မဆိုလိုပါ။ RSVP ဒေတာကို သိမ်းဆည်းပါက ကြည့်ရှုခွင့် ကန့်သတ်ချက်များဖြင့် ကာကွယ်ထားပြီး ကိုယ်ရေးကိုယ်တာ အချက်အလက်အဖြစ် စီမံပါသည်။">
+              An RSVP response is not a check-in. A guest confirming online does not mean the guest has arrived at the event. If RSVP data is stored, it is protected with access restrictions and handled as personal information.
+            </span>
+          </div>
+
+          <div class="callout callout--warn" style="margin-top:12px;">
+            <strong data-en="Backend note:" data-my="Backend မှတ်ချက် —">Backend note:</strong>
+            <span data-en="A collecting RSVP form needs somewhere to store responses. This may require a backend or a managed data service, and is not part of every package."
+                  data-my="ပြန်ကြားချက်များ လက်ခံသော RSVP Form အတွက် ဒေတာ သိမ်းဆည်းရန် နေရာ လိုအပ်ပါသည်။ ၎င်းအတွက် Backend သို့မဟုတ် စီမံခန့်ခွဲသည့် Data Service လိုအပ်နိုင်ပြီး Package တိုင်းတွင် ပါဝင်ခြင်း မရှိပါ။">
+              A collecting RSVP form needs somewhere to store responses. This may require a backend or a managed data service, and is not part of every package.
+            </span>
+          </div>
+        </div>
+
+        <div class="feature__visual">
+          <div class="panel" role="img" aria-label="Preview of an RSVP form layout.">
+            <div class="panel__bar">
+              <span class="panel__dot"></span><span class="panel__dot"></span><span class="panel__dot"></span>
+              <span class="panel__title" data-en="RSVP form preview" data-my="RSVP Form နမူနာ">RSVP form preview</span>
+            </div>
+            <div class="panel__body">
+              <span class="sample-badge" data-en="Sample preview" data-my="နမူနာ ကြည့်ရန်">Sample preview</span>
+
+              <p class="rsvp-field rsvp-field--label" data-en="Your name" data-my="သင့်အမည်">Your name</p>
+              <div class="rsvp-field" data-en="Guest name" data-my="ဧည့်သည် အမည်">Guest name</div>
+
+              <p class="rsvp-field rsvp-field--label" data-en="Will you attend?" data-my="တက်ရောက်မည်လား?">Will you attend?</p>
+              <div class="rsvp-toggle">
+                <span class="is-on" data-en="Joyfully accept" data-my="တက်ရောက်မည်">Joyfully accept</span>
+                <span data-en="Regretfully decline" data-my="မတက်ရောက်နိုင်ပါ">Regretfully decline</span>
+              </div>
+
+              <p class="rsvp-field rsvp-field--label" data-en="Number of guests" data-my="ဧည့်အရေအတွက်">Number of guests</p>
+              <div class="rsvp-field" data-en="2" data-my="၂">2</div>
+
+              <p class="rsvp-field rsvp-field--label" data-en="Notes (optional)" data-my="မှတ်ချက် (ရွေးချယ်နိုင်)">Notes (optional)</p>
+              <div class="rsvp-field" data-en="Anything the couple should know" data-my="သတို့သား၊ သတို့သမီး သိထားသင့်သည့် အချက်">Anything the couple should know</div>
+
+              <span class="btn btn--primary btn--sm btn--block" style="margin-top:6px;"
+                    data-en="Send RSVP" data-my="RSVP ပေးပို့ရန်">Send RSVP</span>
+
+              <p class="pkg__note" style="margin-top:14px;"
+                 data-en="Layout preview only. No data is submitted or stored on this page."
+                 data-my="Layout နမူနာသာ ဖြစ်ပါသည်။ ဤစာမျက်နှာတွင် ဒေတာ ပေးပို့ခြင်း သို့မဟုတ် သိမ်းဆည်းခြင်း မပြုပါ။">
+                Layout preview only. No data is submitted or stored on this page.
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       SHOWCASE
+       ============================================================ -->
+  <section class="section" id="showcase">
+    <div class="container">
+
+      <div class="section-head" data-reveal>
+        <span class="eyebrow" data-en="Feature showcase" data-my="လုပ်ဆောင်ချက် ပြသမှု">Feature showcase</span>
+        <h2 data-en="How the finished website could look"
+            data-my="ပြီးစီးသည့် Website မည်သို့ ဖြစ်နိုင်သည်">How the finished website could look</h2>
+        <p data-en="The public invitation receives the strongest visual emphasis. Organiser tools — like the check-in interface — are kept separate and clearly distinguished."
+           data-my="အများသော ဧည့်သည်များ ကြည့်ရှုသည့် ဖိတ်စာစာမျက်နှာကို အလေးပေး ဒီဇိုင်းရေးဆွဲထားပါသည်။ Check-in မျက်နှာပြင်ကဲ့သို့ စီစဉ်သူအတွက် ကိရိယာများကို သီးခြားခွဲထားပြီး ရှင်းလင်းစွာ ခွဲခြားထားပါသည်။">
+          The public invitation receives the strongest visual emphasis. Organiser tools — like the check-in interface — are kept separate and clearly distinguished.
+        </p>
+      </div>
+
+      <div class="showcase" data-reveal>
+
+        <!-- Main invitation card -->
+        <div class="showcase-card">
+          <div class="showcase-card__head">
+            <h4 data-en="Wedding invitation page" data-my="မင်္ဂလာဖိတ်စာ စာမျက်နှာ">Wedding invitation page</h4>
+            <span class="private-tag" data-en="Public" data-my="အများ ကြည့်ရန်">Public</span>
+          </div>
+          <div class="showcase-card__body" style="background:linear-gradient(160deg,#FDFBF7,#F5F1E9);">
+            <span class="sample-badge" data-en="Sample preview" data-my="နမူနာ ကြည့်ရန်">Sample preview</span>
+            <div style="display:grid;gap:18px;grid-template-columns:1fr;align-items:center;">
+              <div class="invite" style="max-width:420px;margin-inline:auto;">
+                <p class="invite__kicker" data-en="You are invited to the wedding of" data-my="မင်္ဂလာပွဲသို့ ဖိတ်ကြားအပ်ပါသည်">You are invited to the wedding of</p>
+                <p class="invite__names">A <span>&amp;</span> K</p>
+                <div class="invite__orn" aria-hidden="true"><i></i></div>
+                <p class="invite__line"><strong data-en="Wedding Date &amp; Time" data-my="မင်္ဂလာပွဲ ရက်စွဲနှင့် အချိန်">Wedding Date &amp; Time</strong></p>
+                <p class="invite__line" data-en="Venue name · address supplied by the couple" data-my="ခန်းမ အမည် · သတို့သား၊ သတို့သမီး ပေးအပ်သည့် လိပ်စာ">Venue name · address supplied by the couple</p>
+                <div class="invite__actions">
+                  <span class="is-primary" data-en="View invitation" data-my="ဖိတ်စာ ကြည့်ရန်">View invitation</span>
+                  <span data-en="Venue &amp; directions" data-my="ခန်းမ နှင့် လမ်းညွှန်">Venue &amp; directions</span>
+                  <span data-en="Gallery" data-my="ဓာတ်ပုံ Gallery">Gallery</span>
+                  <span data-en="RSVP" data-my="RSVP">RSVP</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Side stack -->
+        <div class="showcase__stack">
+
+          <div class="showcase-card">
+            <div class="showcase-card__head">
+              <h4 data-en="QR invitation card" data-my="QR ဖိတ်စာကတ်">QR invitation card</h4>
+              <span class="private-tag" data-en="Guest copy" data-my="ဧည့်သည် မိတ္တူ">Guest copy</span>
+            </div>
+            <div class="showcase-card__body" style="display:flex;gap:18px;align-items:center;">
+              <div style="width:96px;flex-shrink:0;padding:8px;border-radius:12px;background:#fff;border:1px solid var(--line);" aria-hidden="true">
+                <svg viewBox="0 0 100 100" style="width:100%;height:auto;color:var(--navy);">
+                  <rect x="0" y="0" width="28" height="28" fill="currentColor"/>
+                  <rect x="4" y="4" width="20" height="20" fill="#fff"/>
+                  <rect x="8" y="8" width="12" height="12" fill="currentColor"/>
+                  <rect x="72" y="0" width="28" height="28" fill="currentColor"/>
+                  <rect x="76" y="4" width="20" height="20" fill="#fff"/>
+                  <rect x="80" y="8" width="12" height="12" fill="currentColor"/>
+                  <rect x="0" y="72" width="28" height="28" fill="currentColor"/>
+                  <rect x="4" y="76" width="20" height="20" fill="#fff"/>
+                  <rect x="8" y="80" width="12" height="12" fill="currentColor"/>
+                  <g fill="currentColor">
+                    <rect x="34" y="34" width="6" height="6"/><rect x="46" y="34" width="6" height="6"/>
+                    <rect x="58" y="34" width="6" height="6"/><rect x="34" y="46" width="6" height="6"/>
+                    <rect x="52" y="46" width="6" height="6"/><rect x="64" y="46" width="6" height="6"/>
+                    <rect x="40" y="58" width="6" height="6"/><rect x="56" y="58" width="6" height="6"/>
+                    <rect x="70" y="58" width="6" height="6"/><rect x="34" y="70" width="6" height="6"/>
+                    <rect x="50" y="70" width="6" height="6"/><rect x="66" y="70" width="6" height="6"/>
+                    <rect x="78" y="70" width="6" height="6"/><rect x="40" y="82" width="6" height="6"/>
+                    <rect x="56" y="82" width="6" height="6"/><rect x="72" y="82" width="6" height="6"/>
+                    <rect x="88" y="82" width="6" height="6"/>
+                  </g>
+                </svg>
+              </div>
+              <div>
+                <p style="font-size:.86rem;margin-bottom:6px;color:var(--ink);font-weight:600;"
+                   data-en="One code per guest or group" data-my="ဧည့်သည် သို့မဟုတ် အုပ်စုတစ်ခုစီအတွက် Code တစ်ခု">One code per guest or group</p>
+                <p style="font-size:.82rem;color:var(--muted);margin:0;"
+                   data-en="Decorative sample graphic. A real invitation code is generated by the system and is not shown here."
+                   data-my="အလှဆင် နမူနာ ပုံသာ ဖြစ်ပါသည်။ အမှန်တကယ် ဖိတ်စာ Code ကို စနစ်မှ ဖန်တီးပေးမည်ဖြစ်ပြီး ဤနေရာတွင် မပြသပါ။">
+                  Decorative sample graphic. A real invitation code is generated by the system and is not shown here.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="showcase-card">
+            <div class="showcase-card__head">
+              <h4 data-en="Guest check-in dashboard" data-my="ဧည့်သည် Check-in Dashboard">Guest check-in dashboard</h4>
+              <span class="private-tag" data-en="Organiser only" data-my="စီစဉ်သူသာ">Organiser only</span>
+            </div>
+            <div class="showcase-card__body">
+              <span class="sample-badge" data-en="Sample preview" data-my="နမူနာ ကြည့်ရန်">Sample preview</span>
+              <div class="checkin-summary" style="grid-template-columns:repeat(3,1fr);">
+                <div><strong>18</strong><span data-en="Checked in" data-my="Check-in ပြီး">Checked in</span></div>
+                <div><strong>42</strong><span data-en="Expected" data-my="မျှော်မှန်း">Expected</span></div>
+                <div><strong>24</strong><span data-en="Remaining" data-my="ကျန်ရှိ">Remaining</span></div>
+              </div>
+              <p style="font-size:.78rem;color:var(--muted);margin-top:14px;"
+                 data-en="Figures shown are illustrative placeholders, not real event data."
+                 data-my="ဖော်ပြထားသည့် ကိန်းဂဏန်းများသည် နမူနာ ပြသမှုသာဖြစ်ပြီး အမှန်တကယ် ပွဲဒေတာ မဟုတ်ပါ။">
+                Figures shown are illustrative placeholders, not real event data.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       PACKAGES
+       ============================================================ -->
+  <section class="section section--surface" id="packages">
+    <div class="container">
+
+      <div class="section-head section-head--center" data-reveal>
+        <span class="eyebrow" data-en="Service packages" data-my="ဝန်ဆောင်မှု Package များ">Service packages</span>
+        <h2 data-en="Proposed package structures" data-my="အဆိုပြု Package ဖွဲ့စည်းပုံများ">Proposed package structures</h2>
+        <p data-en="These are proposed concepts, not final contractual inclusions. Optional functions and features requiring additional backend or database work are labelled."
+           data-my="ဤအရာများသည် အဆိုပြု အယူအဆများသာ ဖြစ်ပြီး နောက်ဆုံး စာချုပ် ပါဝင်မှု မဟုတ်ပါ။ ရွေးချယ်နိုင်သည့် လုပ်ဆောင်ချက်များနှင့် Backend သို့မဟုတ် Database လိုအပ်သည့် လုပ်ဆောင်ချက်များကို ဖော်ပြထားပါသည်။">
+          These are proposed concepts, not final contractual inclusions. Optional functions and features requiring additional backend or database work are labelled.
+        </p>
+      </div>
+
+      <!-- Rendered from configurable data in JS (see PACKAGES config below) -->
+      <div class="packages" id="packages-grid" data-reveal></div>
+
+      <noscript>
+        <p class="pricing-note">
+          Package details are loaded dynamically. Please enable JavaScript, or contact Profile Craft for the current package list.
+        </p>
+      </noscript>
+
+      <div class="pricing-note" data-reveal>
+        <strong data-en="Pricing is not published on this page." data-my="ဤစာမျက်နှာတွင် စျေးနှုန်း ဖော်ပြထားခြင်း မရှိပါ။">Pricing is not published on this page.</strong>
+        <span data-en=" Final inclusions, delivery scope and pricing depend on the approved quotation. Request a quote and we will confirm exactly what is included for your wedding."
+              data-my=" နောက်ဆုံး ပါဝင်မှု၊ ပေးအပ်မှု အတိုင်းအတာနှင့် စျေးနှုန်းတို့သည် အတည်ပြုထားသည့် Quotation အပေါ် မူတည်ပါသည်။ Quotation တောင်းခံပါက သင့်မင်္ဂလာပွဲအတွက် မည်သည့်အရာများ ပါဝင်သည်ကို အတိအကျ အတည်ပြုပေးပါမည်။">
+              Final inclusions, delivery scope and pricing depend on the approved quotation. Request a quote and we will confirm exactly what is included for your wedding.
+        </span>
+      </div>
+
+      <div class="btn-row" style="justify-content:center;margin-top:28px;">
+        <a class="btn btn--primary" href="contact.html"
+           data-en="Request a Quote" data-my="Quotation တောင်းခံရန်">Request a Quote</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       HOW IT WORKS
+       ============================================================ -->
+  <section class="section section--navy" id="process">
+    <div class="container">
+
+      <div class="section-head" data-reveal>
+        <span class="eyebrow eyebrow--light" data-en="How the service works" data-my="ဝန်ဆောင်မှု လုပ်ဆောင်ပုံ">How the service works</span>
+        <h2 data-en="From wedding details to launch" data-my="မင်္ဂလာပွဲ အချက်အလက်မှ စတင်၍ Launch အထိ">From wedding details to launch</h2>
+        <p data-en="A clear, six-step process. Projects that include QR validation, RSVP or guest-list management are given extra time for backend work, security checks and real-device testing."
+           data-my="ရှင်းလင်းသော အဆင့် ၆ ဆင့် လုပ်ငန်းစဉ် ဖြစ်ပါသည်။ QR စစ်ဆေးမှု၊ RSVP သို့မဟုတ် ဧည့်သည်စာရင်း စီမံခန့်ခွဲမှု ပါဝင်သည့် Project များအတွက် Backend အကောင်အထည်ဖော်မှု၊ လုံခြုံရေး စစ်ဆေးမှုနှင့် Device အမှန်တကယ် စမ်းသပ်မှုအတွက် အချိန် ပိုမိုပေးပါသည်။">
+          A clear, six-step process. Projects that include QR validation, RSVP or guest-list management are given extra time for backend work, security checks and real-device testing.
+        </p>
+      </div>
+
+      <ol class="steps" data-reveal>
+        <li class="step">
+          <h4 data-en="Share your wedding details" data-my="မင်္ဂလာပွဲ အချက်အလက် မျှဝေခြင်း">Share your wedding details</h4>
+          <p data-en="The couple provides names, event information, photos and venue details." data-my="သတို့သား၊ သတို့သမီးမှ အမည်၊ ပွဲအချက်အလက်၊ ဓာတ်ပုံနှင့် ခန်းမ တည်နေရာ အချက်အလက်များကို ပေးအပ်ပါသည်။">The couple provides names, event information, photos and venue details.</p>
+        </li>
+        <li class="step">
+          <h4 data-en="Choose your features" data-my="လုပ်ဆောင်ချက်များ ရွေးချယ်ခြင်း">Choose your features</h4>
+          <p data-en="Confirm the invitation design, gallery, map, RSVP or QR check-in functions you need." data-my="လိုအပ်သည့် ဖိတ်စာ ဒီဇိုင်း၊ Gallery၊ Map၊ RSVP သို့မဟုတ် QR Check-in လုပ်ဆောင်ချက်များကို အတည်ပြုပါသည်။">Confirm the invitation design, gallery, map, RSVP or QR check-in functions you need.</p>
+        </li>
+        <li class="step">
+          <h4 data-en="Design &amp; development" data-my="ဒီဇိုင်းနှင့် ဖန်တီးမှု">Design &amp; development</h4>
+          <p data-en="Profile Craft builds the agreed website and features." data-my="Profile Craft မှ သဘောတူထားသည့် Website နှင့် လုပ်ဆောင်ချက်များကို တည်ဆောက်ပါသည်။">Profile Craft builds the agreed website and features.</p>
+        </li>
+        <li class="step">
+          <h4 data-en="Review &amp; testing" data-my="စစ်ဆေးမှုနှင့် စမ်းသပ်မှု">Review &amp; testing</h4>
+          <p data-en="The couple checks the content, links, mobile layout and agreed interactive functions." data-my="သတို့သား၊ သတို့သမီးမှ အကြောင်းအရာ၊ Link များ၊ ဖုန်းမျက်နှာပြင် Layout နှင့် သဘောတူထားသည့် လုပ်ဆောင်ချက်များကို စစ်ဆေးပါသည်။">The couple checks the content, links, mobile layout and agreed interactive functions.</p>
+        </li>
+        <li class="step">
+          <h4 data-en="Payment &amp; approval" data-my="ငွေပေးချေမှုနှင့် အတည်ပြုမှု">Payment &amp; approval</h4>
+          <p data-en="Payments follow the quotation and the agreed milestone terms. The schedule is confirmed in writing before work begins." data-my="ငွေပေးချေမှုသည် Quotation နှင့် သဘောတူထားသည့် အဆင့်လိုက် သတ်မှတ်ချက်များအတိုင်း ဆောင်ရွက်ပါသည်။ အလုပ်စတင်မီ အချိန်ဇယားကို စာဖြင့် အတည်ပြုပါသည်။">Payments follow the quotation and the agreed milestone terms. The schedule is confirmed in writing before work begins.</p>
+        </li>
+        <li class="step">
+          <h4 data-en="Launch &amp; share" data-my="Launch နှင့် မျှဝေခြင်း">Launch &amp; share</h4>
+          <p data-en="Publish the website and share the invitation link or QR codes according to the agreed delivery plan." data-my="သဘောတူထားသည့် ပေးအပ်မှု အစီအစဉ်အတိုင်း Website ကို ထုတ်ပြန်ပြီး ဖိတ်စာ Link သို့မဟုတ် QR Code များကို မျှဝေပါသည်။">Publish the website and share the invitation link or QR codes according to the agreed delivery plan.</p>
+        </li>
+      </ol>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       TECHNICAL SCOPE & LIMITATIONS
+       ============================================================ -->
+  <section class="section" id="technical">
+    <div class="container">
+
+      <div class="section-head" data-reveal>
+        <span class="eyebrow" data-en="Technical scope &amp; limitations" data-my="နည်းပညာ အတိုင်းအတာနှင့် ကန့်သတ်ချက်များ">Technical scope &amp; limitations</span>
+        <h2 data-en="Not every feature needs the same kind of build"
+            data-my="လုပ်ဆောင်ချက်တိုင်း တူညီသော တည်ဆောက်မှု မလိုအပ်ပါ">Not every feature needs the same kind of build</h2>
+        <p data-en="We would rather be clear about this up front. Some features can live on a static website; others need a backend or a managed data service."
+           data-my="ဤအချက်ကို ကြိုတင်၍ ရှင်းလင်းစွာ ပြောလိုပါသည်။ လုပ်ဆောင်ချက် အချို့ကို Static Website တွင် ထားနိုင်သော်လည်း အချို့အတွက် Backend သို့မဟုတ် စီမံခန့်ခွဲသည့် Data Service လိုအပ်ပါသည်။">
+          We would rather be clear about this up front. Some features can live on a static website; others need a backend or a managed data service.
+        </p>
+      </div>
+
+      <div class="scope-grid" data-reveal>
+        <div class="scope-card">
+          <h3 data-en="Possible with a static website" data-my="Static Website ဖြင့် ဖြစ်နိုင်သည်">Possible with a static website</h3>
+          <p data-en="No server or database required for these to work." data-my="ဤအရာများ လည်ပတ်ရန် Server သို့မဟုတ် Database မလိုအပ်ပါ။">No server or database required for these to work.</p>
+          <ul class="scope-list">
+            <li data-en="A simple digital invitation page" data-my="ရိုးရှင်းသော Digital ဖိတ်စာ စာမျက်နှာ">A simple digital invitation page</li>
+            <li data-en="Static photo gallery with a lightbox" data-my="Lightbox ပါသော Static ဓာတ်ပုံ Gallery">Static photo gallery with a lightbox</li>
+            <li data-en="Venue details, map link and directions button" data-my="ခန်းမ အချက်အလက်၊ Map Link နှင့် လမ်းညွှန် ခလုတ်">Venue details, map link and directions button</li>
+            <li data-en="Wedding schedule and event information" data-my="မင်္ဂလာပွဲ အစီအစဉ်နှင့် အချက်အလက်">Wedding schedule and event information</li>
+            <li data-en="Shareable invitation link and display of a QR graphic" data-my="မျှဝေနိုင်သော ဖိတ်စာ Link နှင့် QR ပုံ ပြသခြင်း">Shareable invitation link and display of a QR graphic</li>
+          </ul>
+        </div>
+
+        <div class="scope-card scope-card--dynamic">
+          <h3 data-en="Needs a backend or managed data service" data-my="Backend သို့မဟုတ် စီမံခန့်ခွဲသည့် Data Service လိုအပ်သည်">Needs a backend or managed data service</h3>
+          <p data-en="These involve storing data or checking it against records, so extra work and testing are required." data-my="ဤအရာများတွင် ဒေတာ သိမ်းဆည်းခြင်း သို့မဟုတ် မှတ်တမ်းနှင့် နှိုင်းယှဉ် စစ်ဆေးခြင်း ပါဝင်သဖြင့် ထပ်ဆောင်း လုပ်ဆောင်မှုနှင့် စမ်းသပ်မှု လိုအပ်ပါသည်။">These involve storing data or checking it against records, so extra work and testing are required.</p>
+          <ul class="scope-list">
+            <li data-en="QR code validation (not just QR code display)" data-my="QR Code စစ်ဆေးမှု (QR ပုံ ပြသခြင်းသာ မဟုတ်ပါ)">QR code validation (not just QR code display)</li>
+            <li data-en="Unique invitation identifiers tied to a guest list" data-my="ဧည့်သည်စာရင်းနှင့် ချိတ်ဆက်ထားသော သီးသန့် ဖိတ်စာ Identifier များ">Unique invitation identifiers tied to a guest list</li>
+            <li data-en="Persistent check-in records and duplicate detection" data-my="သိမ်းဆည်းထားသော Check-in မှတ်တမ်းနှင့် ထပ်မံဝင်ရောက်မှု ရှာဖွေခြင်း">Persistent check-in records and duplicate detection</li>
+            <li data-en="RSVP forms that store and display responses" data-my="ပြန်ကြားချက်များ သိမ်းဆည်းပြီး ပြသသည့် RSVP Form များ">RSVP forms that store and display responses</li>
+            <li data-en="Guest-list administration and attendance summaries" data-my="ဧည့်သည်စာရင်း စီမံခန့်ခွဲမှုနှင့် တက်ရောက်မှု အနှစ်ချုပ်">Guest-list administration and attendance summaries</li>
+          </ul>
+        </div>
+      </div>
+
+      <ul class="notice-list" data-reveal>
+        <li>
+          <span class="notice-icon" aria-hidden="true">i</span>
+          <span>
+            <strong data-en="QR generation ≠ QR validation. " data-my="QR ဖန်တီးခြင်း ≠ QR စစ်ဆေးခြင်း။ ">QR generation ≠ QR validation. </strong>
+            <span data-en="A scanner interface on its own does not guarantee that an invitation is valid."
+                  data-my="Scan ဖတ်သည့် မျက်နှာပြင် ရှိရုံမျှဖြင့် ဖိတ်စာ မှန်ကန်သည်ဟု အာမခံနိုင်ခြင်း မရှိပါ။">
+              A scanner interface on its own does not guarantee that an invitation is valid.
+            </span>
+          </span>
+        </li>
+        <li>
+          <span class="notice-icon" aria-hidden="true">i</span>
+          <span>
+            <strong data-en="Hosting is chosen to match the features. " data-my="လုပ်ဆောင်ချက်နှင့် ကိုက်ညီသည့် Hosting ကို ရွေးချယ်ပါသည်။ ">Hosting is chosen to match the features. </strong>
+            <span data-en="A static host alone cannot provide a PHP backend or a persistent database. We select an implementation that suits the agreed feature set rather than the other way around."
+                  data-my="Static Host တစ်ခုတည်းဖြင့် PHP Backend သို့မဟုတ် အမြဲတည်ရှိသော Database ကို ပေးနိုင်ခြင်း မရှိပါ။ သဘောတူထားသည့် လုပ်ဆောင်ချက်များနှင့် ကိုက်ညီသည့် အကောင်အထည်ဖော်မှုကို ရွေးချယ်ပါသည်။">
+              A static host alone cannot provide a PHP backend or a persistent database. We select an implementation that suits the agreed feature set rather than the other way around.
+            </span>
+          </span>
+        </li>
+        <li>
+          <span class="notice-icon" aria-hidden="true">i</span>
+          <span>
+            <strong data-en="Third-party costs are separate. " data-my="ပြင်ပ ဝန်ဆောင်မှု ကုန်ကျစရိတ်များ သီးခြား ဖြစ်သည်။ ">Third-party costs are separate. </strong>
+            <span data-en="Domain registration, hosting, database services, file storage and other third-party service charges are explained separately where they apply. Profile Craft can assist with setup where agreed, but does not act as a domain registrar and does not provide unlimited infrastructure."
+                  data-my="Domain မှတ်ပုံတင်ခြင်း၊ Hosting၊ Database ဝန်ဆောင်မှု၊ ဖိုင် သိမ်းဆည်းမှုနှင့် အခြား ပြင်ပ ဝန်ဆောင်မှု ကုန်ကျစရိတ်များကို သက်ဆိုင်သည့်နေရာတွင် သီးခြား ရှင်းလင်းဖော်ပြပါသည်။ Profile Craft သည် သဘောတူပါက Setup ပြုလုပ်ရာတွင် ကူညီနိုင်သော်လည်း Domain Registrar အဖြစ် ဆောင်ရွက်ခြင်း မရှိပါ၊ အကန့်အသတ်မရှိ Infrastructure ကိုလည်း ပေးအပ်ခြင်း မရှိပါ။">
+              Domain registration, hosting, database services, file storage and other third-party service charges are explained separately where they apply. Profile Craft can assist with setup where agreed, but does not act as a domain registrar and does not provide unlimited infrastructure.
+            </span>
+          </span>
+        </li>
+        <li>
+          <span class="notice-icon" aria-hidden="true">i</span>
+          <span>
+            <strong data-en="Not every feature is in every package. " data-my="လုပ်ဆောင်ချက်တိုင်း Package တိုင်းတွင် မပါဝင်ပါ။ ">Not every feature is in every package. </strong>
+            <span data-en="Optional functions and backend-dependent features are confirmed in your quotation before development begins."
+                  data-my="ရွေးချယ်နိုင်သည့် လုပ်ဆောင်ချက်များနှင့် Backend လိုအပ်သည့် လုပ်ဆောင်ချက်များကို ဖန်တီးမှု မစတင်မီ သင့် Quotation တွင် အတည်ပြုပါသည်။">
+              Optional functions and backend-dependent features are confirmed in your quotation before development begins.
+            </span>
+          </span>
+        </li>
+      </ul>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       FINAL CTA
+       ============================================================ -->
+  <section class="section" id="quote" style="padding-top:0;">
+    <div class="container">
+      <div class="cta" data-reveal>
+        <span class="eyebrow eyebrow--light" style="justify-content:center;display:flex;"
+              data-en="Let's begin" data-my="စတင်လိုက်ရအောင်">Let's begin</span>
+        <h2 data-en="Let's build your wedding website"
+            data-my="သင့်မင်္ဂလာပွဲ Website ကို ဖန်တီးကြရအောင်">Let's build your wedding website</h2>
+        <p data-en="Tell us your wedding date, venue and the features you would like. We will confirm what is included, what is optional, and how long it will take — before any work starts."
+           data-my="သင့်မင်္ဂလာပွဲ ရက်စွဲ၊ ခန်းမနှင့် လိုချင်သည့် လုပ်ဆောင်ချက်များကို ပြောပြပါ။ အလုပ်မစတင်မီ မည်သည့်အရာ ပါဝင်သည်၊ မည်သည့်အရာ ရွေးချယ်နိုင်သည်၊ မည်မျှကြာမည်ကို အတည်ပြုပေးပါမည်။">
+          Tell us your wedding date, venue and the features you would like. We will confirm what is included, what is optional, and how long it will take — before any work starts.
+        </p>
+
+        <div class="btn-row">
+          <a class="btn btn--light" href="contact.html"
+             data-en="Request a Wedding Website" data-my="Wedding Website စုံစမ်းရန်">Request a Wedding Website</a>
+          <a class="btn btn--ghost" href="#packages"
+             data-en="Review Packages" data-my="Package များ ကြည့်ရန်">Review Packages</a>
+        </div>
+
+        <p class="cta__fine"
+           data-en="Final features, delivery scope and pricing depend on the approved quotation."
+           data-my="နောက်ဆုံး လုပ်ဆောင်ချက်များ၊ ပေးအပ်မှု အတိုင်းအတာနှင့် စျေးနှုန်းတို့သည် အတည်ပြုထားသည့် Quotation အပေါ် မူတည်ပါသည်။">
+          Final features, delivery scope and pricing depend on the approved quotation.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+
+      <div>
+        <a class="brand" href="index.html">
+          <span class="brand__mark" aria-hidden="true">PC</span>
+          <span>Profile Craft</span>
+        </a>
+        <p data-en="We design and build websites, digital profiles and business tools for people and businesses in Myanmar."
+           data-my="မြန်မာနိုင်ငံရှိ လူပုဂ္ဂိုလ်များနှင့် လုပ်ငန်းများအတွက် Website၊ Digital Profile နှင့် လုပ်ငန်းသုံး ကိရိယာများကို ဒီဇိုင်းရေးဆွဲ တည်ဆောက်ပေးပါသည်။">
+          We design and build websites, digital profiles and business tools for people and businesses in Myanmar.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-en="Services" data-my="ဝန်ဆောင်မှုများ">Services</h4>
+        <ul>
+          <li><a href="wedding-service.html" data-en="Wedding Website" data-my="မင်္ဂလာပွဲ Website">Wedding Website</a></li>
+          <li><a href="profile-service.html" data-en="Personal Profile" data-my="ကိုယ်ရေးကိုယ်တာ Profile">Personal Profile</a></li>
+          <li><a href="business-service.html" data-en="Business Website" data-my="လုပ်ငန်း Website">Business Website</a></li>
+          <li><a href="pos-service.html" data-en="POS System" data-my="POS စနစ်">POS System</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-en="Company" data-my="ကုမ္ပဏီ">Company</h4>
+        <ul>
+          <li><a href="about.html" data-en="About" data-my="ကျွန်ုပ်တို့အကြောင်း">About</a></li>
+          <li><a href="contact.html" data-en="Contact" data-my="ဆက်သွယ်ရန်">Contact</a></li>
+          <li><a href="contact.html" data-en="Request a Quote" data-my="Quotation တောင်းခံရန်">Request a Quote</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span data-en="© 2025 Profile Craft. All rights reserved." data-my="© ၂၀၂၅ Profile Craft။ မူပိုင်ခွင့် အားလုံး လက်ဝယ်ရှိသည်။">© 2025 Profile Craft. All rights reserved.</span>
+      <span data-en="Features and pricing are confirmed by quotation." data-my="လုပ်ဆောင်ချက်များနှင့် စျေးနှုန်းကို Quotation ဖြင့် အတည်ပြုပါသည်။">Features and pricing are confirmed by quotation.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  document.documentElement.classList.add('js');
+
+  /* ==========================================================
+     1. LANGUAGE TOGGLE  (data-en / data-my)
+     ========================================================== */
+  var STORAGE_KEY = 'pc-lang';
+  var currentLang = 'en';
+
+  function applyLang(lang) {
+    currentLang = (lang === 'my') ? 'my' : 'en';
+
+    document.documentElement.setAttribute('lang', currentLang);
+
+    document.querySelectorAll('[data-en]').forEach(function (el) {
+      var value = el.getAttribute('data-' + currentLang);
+      if (value !== null) {
+        el.innerHTML = value;
+      }
+    });
+
+    document.querySelectorAll('[data-en-placeholder]').forEach(function (el) {
+      var value = el.getAttribute('data-' + currentLang + '-placeholder');
+      if (value !== null) { el.setAttribute('placeholder', value); }
+    });
+
+    document.querySelectorAll('[data-en-aria-label]').forEach(function (el) {
+      var value = el.getAttribute('data-' + currentLang + '-aria-label');
+      if (value !== null) { el.setAttribute('aria-label', value); }
+    });
+
+    document.querySelectorAll('[data-lang-btn]').forEach(function (btn) {
+      var active = btn.getAttribute('data-lang-btn') === currentLang;
+      btn.classList.toggle('is-active', active);
+      btn.setAttribute('aria-pressed', active ? 'true' : 'false');
+    });
+
+    try { localStorage.setItem(STORAGE_KEY, currentLang); } catch (e) {}
+
+    renderPackages();
+  }
+
+  document.querySelectorAll('[data-lang-btn]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      applyLang(btn.getAttribute('data-lang-btn'));
+    });
+  });
+
+  /* ==========================================================
+     2. MOBILE NAV
+     ========================================================== */
+  var navToggle = document.querySelector('.nav-toggle');
+  var mobileNav = document.getElementById('mobile-nav');
+
+  if (navToggle && mobileNav) {
+    navToggle.addEventListener('click', function () {
+      var open = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', open ? 'false' : 'true');
+      mobileNav.classList.toggle('is-open', !open);
+    });
+
+    mobileNav.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navToggle.setAttribute('aria-expanded', 'false');
+        mobileNav.classList.remove('is-open');
+      });
+    });
+  }
+
+  /* ==========================================================
+     3. PACKAGE DATA
+     ----------------------------------------------------------
+     Prices are intentionally NOT published. `price` is `null`
+     so the card renders a "Request a quote" label instead.
+     To publish a price later, set price to a display string,
+     e.g.  price: { en: 'From MMK 000,000', my: 'MMK 000,000 မှစ၍' }
+     and it will render in both languages.
+     ========================================================== */
+  var PACKAGES = [
+    {
+      id: 'invitation',
+      featured: false,
+      name: { en: 'Digital Invitation', my: 'Digital ဖိတ်စာ' },
+      tagline: {
+        en: 'A personalised online invitation with everything a guest needs to know.',
+        my: 'ဧည့်သည် သိရှိရန် လိုအပ်သည့် အချက်အလက်အားလုံး ပါဝင်သော ကိုယ်ပိုင် Online ဖိတ်စာ။'
+      },
+      price: null,
+      features: [
+        { en: 'Personalised digital invitation page', my: 'ကိုယ်ပိုင် Digital ဖိတ်စာ စာမျက်နှာ' },
+        { en: "Couple's names and event details", my: 'သတို့သား၊ သတို့သမီး အမည်နှင့် ပွဲအချက်အလက်' },
+        { en: 'Wedding date and schedule', my: 'မင်္ဂလာပွဲ ရက်စွဲနှင့် အစီအစဉ်' },
+        { en: 'Venue location and directions', my: 'ခန်းမ တည်နေရာနှင့် လမ်းညွှန်' },
+        { en: 'Shareable invitation link', my: 'မျှဝေနိုင်သော ဖိတ်စာ Link' },
+        { en: 'Mobile-friendly design', my: 'ဖုန်းအတွက် အဆင်ပြေသော ဒီဇိုင်း' }
+      ],
+      note: {
+        en: 'Static website scope. No guest data is stored.',
+        my: 'Static Website အတိုင်းအတာ။ ဧည့်သည် ဒေတာ သိမ်းဆည်းခြင်း မရှိပါ။'
+      },
+      techNote: null
+    },
+    {
+      id: 'website',
+      featured: true,
+      badge: { en: 'Most requested', my: 'အများဆုံး ရွေးချယ်သည်' },
+      name: { en: 'Wedding Website', my: 'မင်္ဂလာပွဲ Website' },
+      tagline: {
+        en: 'The full wedding website, with a gallery and expanded event information.',
+        my: 'ဓာတ်ပုံ Gallery နှင့် ပိုမိုပြည့်စုံသော ပွဲအချက်အလက်များ ပါဝင်သည့် Website အပြည့်အစုံ။'
+      },
+      price: null,
+      features: [
+        { en: 'Everything in Digital Invitation', my: 'Digital ဖိတ်စာ Package ပါ အရာအားလုံး' },
+        { en: 'Wedding photo gallery', my: 'မင်္ဂလာဓာတ်ပုံ Gallery' },
+        { en: 'Expanded event information', my: 'ပိုမိုပြည့်စုံသော ပွဲအချက်အလက်' },
+        { en: 'Additional custom sections', my: 'ထပ်ဆောင်း Custom Section များ' },
+        { en: 'Optional RSVP functionality, if included in the agreed scope', my: 'သဘောတူထားသည့် Scope တွင် ပါဝင်ပါက ရွေးချယ်နိုင်သော RSVP လုပ်ဆောင်ချက်' }
+      ],
+      note: {
+        en: 'Gallery size, storage and upload workflow depend on the chosen implementation.',
+        my: 'Gallery အရွယ်အစား၊ Storage နှင့် Upload လုပ်ငန်းစဉ်သည် ရွေးချယ်သည့် အကောင်အထည်ဖော်မှုအပေါ် မူတည်ပါသည်။'
+      },
+      techNote: {
+        en: 'An RSVP form that stores responses requires additional backend or managed data work.',
+        my: 'ပြန်ကြားချက်များ သိမ်းဆည်းသည့် RSVP Form အတွက် ထပ်ဆောင်း Backend သို့မဟုတ် Data စီမံခန့်ခွဲမှု လိုအပ်ပါသည်။'
+      }
+    },
+    {
+      id: 'qr',
+      featured: false,
+      name: { en: 'Wedding Website with QR Check-in', my: 'QR Check-in ပါသော မင်္ဂလာပွဲ Website' },
+      tagline: {
+        en: 'The website plus a guest check-in workflow for the event entrance.',
+        my: 'Website အပြင် ပွဲဝင်ပေါက်တွင် အသုံးပြုနိုင်သည့် ဧည့်သည် Check-in လုပ်ငန်းစဉ်။'
+      },
+      price: null,
+      features: [
+        { en: 'Everything in the agreed Wedding Website package', my: 'သဘောတူထားသည့် Wedding Website Package ပါ အရာအားလုံး' },
+        { en: 'Unique invitation QR codes or identifiers', my: 'သီးသန့် ဖိတ်စာ QR Code သို့မဟုတ် Identifier များ' },
+        { en: 'Guest-list management', my: 'ဧည့်သည်စာရင်း စီမံခန့်ခွဲမှု' },
+        { en: 'Authorised QR scanning and validation', my: 'တာဝန်ရှိသူများအတွက် QR Scan နှင့် စစ်ဆေးမှု' },
+        { en: 'Check-in status recording', my: 'Check-in အခြေအနေ မှတ်တမ်းတင်ခြင်း' },
+        { en: 'Basic attendance summary, if included in scope', my: 'Scope တွင် ပါဝင်ပါက အခြေခံ တက်ရောက်မှု အနှစ်ချုပ်' }
+      ],
+      note: {
+        en: 'Guest information is visible only to authorised users.',
+        my: 'ဧည့်သည် အချက်အလက်များကို တာဝန်ရှိသူများသာ ကြည့်ရှုနိုင်ပါသည်။'
+      },
+      techNote: {
+        en: 'Requires backend / database work, security checks and real-device testing before it is operational.',
+        my: 'လည်ပတ်နိုင်ရန် Backend / Database အကောင်အထည်ဖော်မှု၊ လုံခြုံရေး စစ်ဆေးမှုနှင့် Device အမှန်တကယ် စမ်းသပ်မှု လိုအပ်ပါသည်။'
+      }
+    }
+  ];
+
+  var REQUEST_QUOTE = {
+    en: 'Request a quote',
+    my: 'Quotation တောင်းခံရန်'
+  };
+  var PRICE_SUB = {
+    en: 'Pricing confirmed by quotation',
+    my: 'စျေးနှုန်းကို Quotation ဖြင့် အတည်ပြုပါသည်'
+  };
+
+  function pick(obj) {
+    if (!obj) { return ''; }
+    return obj[currentLang] !== undefined ? obj[currentLang] : obj.en;
+  }
+
+  function renderPackages() {
+    var grid = document.getElementById('packages-grid');
+    if (!grid) { return; }
+
+    var html = PACKAGES.map(function (pkg) {
+      var priceText = pkg.price ? pick(pkg.price) : REQUEST_QUOTE[currentLang];
+      var priceSub = pkg.price ? '' : PRICE_SUB[currentLang];
+
+      var badge = pkg.badge
+        ? '<span class="pkg__badge">' + escapeHtml(pick(pkg.badge)) + '</span>'
+        : '';
+
+      var list = pkg.features.map(function (f) {
+        return '<li>' + escapeHtml(pick(f)) + '</li>';
+      }).join('');
+
+      var techNote = pkg.techNote
+        ? '<p class="pkg__note pkg__note--tech">' + escapeHtml(pick(pkg.techNote)) + '</p>'
+        : '';
+
+      return '' +
+        '<article class="pkg' + (pkg.featured ? ' pkg--featured' : '') + '" id="pkg-' + pkg.id + '">' +
+          badge +
+          '<h3>' + escapeHtml(pick(pkg.name)) + '</h3>' +
+          '<p class="pkg__tagline">' + escapeHtml(pick(pkg.tagline)) + '</p>' +
+          '<div class="pkg__price">' +
+            '<strong>' + escapeHtml(priceText) + '</strong>' +
+            (priceSub ? '<span>' + escapeHtml(priceSub) + '</span>' : '') +
+          '</div>' +
+          '<ul class="pkg__list">' + list + '</ul>' +
+          '<a class="btn ' + (pkg.featured ? 'btn--primary' : 'btn--outline') + ' btn--block" ' +
+             'href="contact.html?package=' + encodeURIComponent(pkg.id) + '">' +
+             escapeHtml(REQUEST_QUOTE[currentLang]) +
+          '</a>' +
+          '<p class="pkg__note">' + escapeHtml(pick(pkg.note)) + '</p>' +
+          techNote +
+        '</article>';
+    }).join('');
+
+    grid.innerHTML = html;
+  }
+
+  function escapeHtml(str) {
+    return String(str)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /* ==========================================================
+     4. CHECK-IN STATE PREVIEW
+     ----------------------------------------------------------
+     Purely a visual demonstration of the intended interface
+     states. No validation, no storage, no network requests.
+     ========================================================== */
+  var STATE_LABELS = {
+    valid:     { en: 'Valid invitation',     my: 'ဖိတ်စာ မှန်ကန်ပါသည်' },
+    invalid:   { en: 'Invalid invitation',   my: 'ဖိတ်စာ မမှန်ကန်ပါ' },
+    duplicate: { en: 'Already checked in',   my: 'Check-in ပြီးဖြစ်ပါသည်' }
+  };
+
+  var statusEl = document.getElementById('checkin-status');
+
+  document.querySelectorAll('[data-state-btn]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var state = btn.getAttribute('data-state-btn');
+
+      document.querySelectorAll('[data-state-btn]').forEach(function (b) {
+        b.setAttribute('aria-pressed', b === btn ? 'true' : 'false');
+      });
+
+      if (!statusEl) { return; }
+      statusEl.setAttribute('data-state', state);
+      statusEl.setAttribute('data-en', STATE_LABELS[state].en);
+      statusEl.setAttribute('data-my', STATE_LABELS[state].my);
+      statusEl.textContent = STATE_LABELS[state][currentLang];
+    });
+  });
+
+  /* ==========================================================
+     5. REVEAL ON SCROLL
+     ========================================================== */
+  var reduceMotion = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var revealTargets = document.querySelectorAll('[data-reveal]');
+
+  if (!reduceMotion && 'IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.06 });
+
+    revealTargets.forEach(function (el) { observer.observe(el); });
+  } else {
+    revealTargets.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  /* ==========================================================
+     6. INIT
+     ========================================================== */
+  var saved = null;
+  try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) {}
+
+  var browserLang = (navigator.language || '').toLowerCase().indexOf('my') === 0 ? 'my' : 'en';
+  applyLang(saved || browserLang);
+
+})();
+</script>
+</body>
+</html>
