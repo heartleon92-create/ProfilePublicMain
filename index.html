@@ -4,18 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ProfileCraft – Premium Profile Templates</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
-        /* ── root variables ── */
+        /* ══════════════════════════════════════════════
+           ROOT VARIABLES  (theme-able)
+           ══════════════════════════════════════════════ */
         :root {
             --basic-color: #4fbec9;
+            --basic-dark: #2b8f9b;
+            --accent-color: #6c5ce7;
+            --basic-color-soft: rgba(79, 190, 201, 0.18);
+
             --standard-color: #ff9f43;
             --premium-color: #ffd700;
+
             --text-dark: #2d3436;
             --text-light: #636e72;
             --bg-light: #f8f9fa;
+
             --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 18px 38px rgba(0, 0, 0, 0.14);
             --transition: all 0.3s ease;
         }
 
@@ -35,7 +44,9 @@
             overflow-x: hidden;
         }
 
-        /* ── header ── */
+        /* ══════════════════════════════════════════════
+           HEADER
+           ══════════════════════════════════════════════ */
         header {
             background-color: white;
             box-shadow: var(--shadow);
@@ -78,12 +89,13 @@
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
             transition: var(--transition);
+            background: #fff;
         }
 
         .search-box:focus {
             outline: none;
             border-color: var(--basic-color);
-            box-shadow: 0 0 0 2px rgba(79, 190, 201, 0.2);
+            box-shadow: 0 0 0 3px var(--basic-color-soft);
         }
 
         .search-icon {
@@ -92,6 +104,7 @@
             top: 50%;
             transform: translateY(-50%);
             color: var(--text-light);
+            pointer-events: none;
         }
 
         .header-controls {
@@ -102,6 +115,7 @@
             justify-content: flex-end;
         }
 
+        /* ── category tags ── */
         .category-tags {
             display: none;
             gap: 0.5rem;
@@ -113,7 +127,7 @@
         }
 
         .category-tag {
-            padding: 0.4rem 0.8rem;
+            padding: 0.4rem 0.9rem;
             background-color: #f1f2f6;
             border-radius: 50px;
             font-size: 0.8rem;
@@ -121,25 +135,37 @@
             cursor: pointer;
             transition: var(--transition);
             white-space: nowrap;
+            user-select: none;
         }
 
-        .category-tag:hover,
+        .category-tag:hover {
+            background-color: #e2e6ec;
+            transform: translateY(-1px);
+        }
+
         .category-tag.active {
             background-color: var(--basic-color);
             color: white;
+            box-shadow: 0 4px 12px var(--basic-color-soft);
         }
 
-        .language-switcher {
+        /* ── language + theme switchers ── */
+        .language-switcher,
+        .theme-switcher {
             position: relative;
         }
 
-        .language-btn {
+        .language-btn,
+        .theme-btn {
             background: none;
             border: none;
             background-color: #f1f2f6;
             padding: 0.5rem 0.75rem;
             border-radius: 50px;
             font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-dark);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -148,43 +174,82 @@
             white-space: nowrap;
         }
 
-        .language-btn:hover {
+        .language-btn:hover,
+        .theme-btn:hover {
             background-color: #dfe4ea;
         }
 
-        .language-options {
+        .theme-btn .fa-palette {
+            color: var(--basic-color);
+        }
+
+        .language-options,
+        .theme-options {
             position: absolute;
             top: 100%;
             right: 0;
             background: white;
-            border-radius: 8px;
-            box-shadow: var(--shadow);
+            border-radius: 14px;
+            box-shadow: var(--shadow-lg);
             padding: 0.5rem;
             margin-top: 0.5rem;
             display: none;
             flex-direction: column;
-            min-width: 120px;
+            min-width: 160px;
             z-index: 101;
+            animation: popIn 0.2s ease;
         }
 
-        .language-options.active {
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: translateY(-6px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .language-options.active,
+        .theme-options.active {
             display: flex;
         }
 
-        .language-option {
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
+        .language-option,
+        .theme-option {
+            padding: 0.55rem 0.9rem;
+            border-radius: 8px;
             cursor: pointer;
             transition: var(--transition);
             text-align: left;
             background: none;
             border: none;
             font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
         }
 
-        .language-option:hover {
+        .language-option:hover,
+        .theme-option:hover {
             background-color: #f1f2f6;
+        }
+
+        .theme-option.active {
+            background-color: #f1f2f6;
+            font-weight: 600;
+        }
+
+        .swatch {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--sw, #ccc);
+            box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(0, 0, 0, 0.08);
+            flex-shrink: 0;
         }
 
         .filter-btn {
@@ -194,6 +259,9 @@
             padding: 0.5rem 1rem;
             border-radius: 50px;
             font-weight: 500;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-dark);
             cursor: pointer;
             display: flex;
             align-items: center;
@@ -206,7 +274,9 @@
             background-color: #dfe4ea;
         }
 
-        /* ── main / grid ── */
+        /* ══════════════════════════════════════════════
+           MAIN
+           ══════════════════════════════════════════════ */
         main {
             padding: 1.5rem 1rem;
             width: 100%;
@@ -214,6 +284,228 @@
             overflow: hidden;
         }
 
+        /* ── promo slider ── */
+        .promo-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .promo-slider {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            isolation: isolate;
+        }
+
+        .promo-track {
+            display: flex;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+
+        .promo-slide {
+            flex: 0 0 100%;
+            min-width: 100%;
+            min-height: 190px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            padding: 1.75rem 2rem;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-slide::before,
+        .promo-slide::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.12);
+            pointer-events: none;
+        }
+
+        .promo-slide::before {
+            width: 280px;
+            height: 280px;
+            top: -120px;
+            right: -70px;
+        }
+
+        .promo-slide::after {
+            width: 170px;
+            height: 170px;
+            bottom: -90px;
+            left: 18%;
+            background: rgba(255, 255, 255, 0.07);
+        }
+
+        .slide-1 {
+            background: linear-gradient(135deg, var(--basic-color), var(--basic-dark));
+        }
+        .slide-2 {
+            background: linear-gradient(135deg, #f7971e, #ff4d6d);
+        }
+        .slide-3 {
+            background: linear-gradient(135deg, #8b5cf6, #4f46e5);
+        }
+        .slide-4 {
+            background: linear-gradient(135deg, #10b981, #0ea5e9);
+        }
+
+        .promo-content {
+            position: relative;
+            z-index: 2;
+            max-width: 640px;
+        }
+
+        .promo-eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(255, 255, 255, 0.22);
+            backdrop-filter: blur(6px);
+            padding: 0.3rem 0.85rem;
+            border-radius: 50px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.07em;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .promo-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 0.5rem;
+        }
+
+        .promo-text {
+            font-size: 0.95rem;
+            opacity: 0.93;
+            margin-bottom: 1.1rem;
+        }
+
+        .promo-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #fff;
+            color: var(--text-dark);
+            border: none;
+            padding: 0.7rem 1.4rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+        }
+
+        .promo-cta:hover {
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 12px 26px rgba(0, 0, 0, 0.24);
+        }
+
+        .promo-cta:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .promo-visual {
+            position: relative;
+            z-index: 2;
+            font-size: 4.5rem;
+            opacity: 0.9;
+            filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.2));
+            animation: floatY 4s ease-in-out infinite;
+        }
+
+        @keyframes floatY {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .promo-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.28);
+            backdrop-filter: blur(6px);
+            color: #fff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+            transition: var(--transition);
+            font-size: 0.85rem;
+        }
+
+        .promo-nav:hover {
+            background: rgba(255, 255, 255, 0.55);
+            color: var(--text-dark);
+        }
+
+        .promo-nav.prev {
+            left: 12px;
+        }
+        .promo-nav.next {
+            right: 12px;
+        }
+
+        .promo-dots {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.4rem;
+            z-index: 5;
+        }
+
+        .promo-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            border: none;
+            padding: 0;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .promo-dot:hover {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .promo-dot.active {
+            width: 26px;
+            border-radius: 50px;
+            background: #fff;
+        }
+
+        /* ── results info ── */
+        .results-info {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-bottom: 0.85rem;
+            font-weight: 500;
+            min-height: 1.2em;
+        }
+
+        /* ── grid ── */
         .profiles-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -221,17 +513,22 @@
             width: 100%;
         }
 
-        /* ── profile card ── */
+        /* ══════════════════════════════════════════════
+           PROFILE CARD
+           ══════════════════════════════════════════════ */
         .profile-card {
             background: white;
-            border-radius: 12px;
+            border-radius: 18px;
             overflow: hidden;
             box-shadow: var(--shadow);
-            transition: var(--transition);
+            transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1),
+                        box-shadow 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
             animation: fadeIn 0.5s ease-out forwards;
             opacity: 0;
             transform: translateY(20px);
             width: 100%;
+            position: relative;
+            will-change: transform;
         }
 
         @keyframes fadeIn {
@@ -242,8 +539,8 @@
         }
 
         .profile-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(-8px) scale(1.015);
+            box-shadow: var(--shadow-lg);
         }
 
         .card-image {
@@ -251,57 +548,151 @@
             overflow: hidden;
             position: relative;
             width: 100%;
+            background: #eef1f4;
         }
 
         .card-image img {
             width: 100%;
-            height: 150%;
+            height: 100%;
             object-fit: cover;
-            transition: var(--transition);
+            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
         .profile-card:hover .card-image img {
-            transform: scale(1.05);
+            transform: scale(1.07);
         }
 
+        /* soft bottom gradient on image */
+        .card-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.38), rgba(0, 0, 0, 0) 45%);
+            opacity: 0.75;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+
+        .profile-card:hover .card-image::after {
+            opacity: 1;
+        }
+
+        /* shine sweep */
+        .card-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -120%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(100deg,
+                    transparent,
+                    rgba(255, 255, 255, 0.35),
+                    transparent);
+            transform: skewX(-18deg);
+            transition: left 0.7s ease;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .profile-card:hover .card-image::before {
+            left: 140%;
+        }
+
+        /* ── badges ── */
         .badges {
             position: absolute;
             top: 12px;
             left: 12px;
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            align-items: flex-start;
+            gap: 0.45rem;
+            z-index: 4;
         }
 
-        .category-badge {
-            padding: 0.25rem 0.75rem;
+        .category-badge,
+        .popular-badge,
+        .new-badge,
+        .free-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.75rem;
             border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.03em;
             text-transform: uppercase;
+            backdrop-filter: blur(6px);
+            transition: background-color 0.35s ease, color 0.35s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+            white-space: nowrap;
+        }
+
+        .category-badge i,
+        .popular-badge i,
+        .new-badge i,
+        .free-badge i {
+            font-size: 0.72rem;
         }
 
         .basic-badge {
             background-color: var(--basic-color);
-            color: white;
+            color: #fff;
         }
         .standard-badge {
             background-color: var(--standard-color);
-            color: white;
+            color: #fff;
         }
         .premium-badge {
-            background-color: var(--premium-color);
-            color: var(--text-dark);
-        }
-        .popular-badge {
-            background-color: #ff6b6b;
-            color: white;
-            padding: 0.25rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            background: linear-gradient(135deg, #ffd700, #ffb300);
+            color: #4a3b00;
         }
 
+        .popular-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: #fff;
+            animation: badgePulse 2.4s ease-in-out infinite;
+        }
+
+        .new-badge {
+            background: linear-gradient(135deg, #00cec9, #00a8a8);
+            color: #fff;
+        }
+
+        .free-badge {
+            background: linear-gradient(135deg, #00b894, #019874);
+            color: #fff;
+        }
+
+        @keyframes badgePulse {
+            0%,
+            100% {
+                box-shadow: 0 4px 12px rgba(238, 90, 111, 0.35);
+            }
+            50% {
+                box-shadow: 0 4px 20px rgba(238, 90, 111, 0.75);
+            }
+        }
+
+        /* ── discount ribbon ── */
+        .discount-ribbon {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 4;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: #fff;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            box-shadow: 0 6px 16px rgba(238, 90, 111, 0.5);
+            letter-spacing: 0.02em;
+        }
+
+        /* ── card content ── */
         .card-content {
             padding: 1.25rem;
         }
@@ -310,11 +701,13 @@
             font-size: 1.25rem;
             font-weight: 700;
             margin-bottom: 0.25rem;
+            line-height: 1.3;
         }
 
         .profile-career {
             color: var(--text-light);
             margin-bottom: 1rem;
+            font-size: 0.95rem;
         }
 
         .price-container {
@@ -326,23 +719,29 @@
         }
 
         .current-price {
-            font-weight: 700;
-            font-size: 1.1rem;
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: var(--text-dark);
+            transition: color 0.35s ease;
         }
+
         .original-price {
             text-decoration: line-through;
             color: var(--text-light);
             font-size: 0.9rem;
         }
+
         .discount-badge {
             background-color: #ff6b6b;
             color: white;
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
-            font-size: 0.75rem;
-            font-weight: 600;
+            padding: 0.2rem 0.55rem;
+            border-radius: 6px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            transition: background-color 0.35s ease;
         }
 
+        /* ── actions ── */
         .card-actions {
             display: flex;
             gap: 12px;
@@ -355,6 +754,7 @@
             border: none;
             border-radius: 12px;
             font-weight: 600;
+            font-family: 'Inter', sans-serif;
             cursor: pointer;
             transition: all 0.3s ease;
             text-align: center;
@@ -375,7 +775,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
             transition: left 0.5s ease;
         }
 
@@ -385,7 +785,7 @@
 
         .cta-button:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.18);
         }
 
         .cta-button:active {
@@ -406,13 +806,13 @@
         }
 
         .buy-button {
-            background: linear-gradient(135deg, #6366F1, #8B5CF6);
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
             color: white;
             box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
         }
 
         .buy-button:hover {
-            box-shadow: 0 6px 16px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.45);
         }
 
         .buy-button::after {
@@ -426,13 +826,13 @@
         }
 
         .preview-button {
-            background: linear-gradient(135deg, #10B981, #059669);
+            background: linear-gradient(135deg, #10b981, #059669);
             color: white;
             box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
         }
 
         .preview-button:hover {
-            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.4);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.45);
         }
 
         .preview-button::before {
@@ -440,7 +840,9 @@
             font-size: 1.1em;
         }
 
-        /* ── filter modal ── */
+        /* ══════════════════════════════════════════════
+           FILTER MODAL
+           ══════════════════════════════════════════════ */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -497,6 +899,7 @@
             cursor: pointer;
             color: var(--text-light);
             transition: var(--transition);
+            line-height: 1;
         }
 
         .close-modal:hover {
@@ -504,7 +907,6 @@
             transform: rotate(90deg);
         }
 
-        /* ── purpose tabs ── */
         .purpose-tabs {
             display: flex;
             gap: 0.75rem;
@@ -522,6 +924,7 @@
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
+            color: var(--text-dark);
         }
 
         .purpose-tab:hover,
@@ -531,7 +934,6 @@
             color: white;
         }
 
-        /* ── tier filters ── */
         .filter-options {
             display: flex;
             flex-wrap: wrap;
@@ -549,6 +951,7 @@
             transition: var(--transition);
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
+            color: var(--text-dark);
         }
 
         .filter-option:hover,
@@ -596,12 +999,13 @@
             font-size: 0.95rem;
             background-color: white;
             transition: var(--transition);
+            color: var(--text-dark);
         }
 
         .career-filter select:focus {
             outline: none;
             border-color: var(--basic-color);
-            box-shadow: 0 0 0 2px rgba(79, 190, 201, 0.2);
+            box-shadow: 0 0 0 3px var(--basic-color-soft);
         }
 
         .modal-actions {
@@ -622,13 +1026,13 @@
         }
 
         .apply-filters {
-            background: linear-gradient(135deg, #4fbec9, #6c5ce7);
+            background: linear-gradient(135deg, var(--basic-color), var(--accent-color));
             color: white;
         }
 
         .apply-filters:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(79, 190, 201, 0.3);
+            box-shadow: 0 6px 16px var(--basic-color-soft);
         }
 
         .reset-filters {
@@ -640,7 +1044,7 @@
             background: #dfe4ea;
         }
 
-        /* ── no results ── */
+        /* ── no results / states ── */
         .no-results {
             grid-column: 1 / -1;
             text-align: center;
@@ -652,7 +1056,9 @@
             box-shadow: var(--shadow);
         }
 
-        /* ── myanmar font ── */
+        /* ══════════════════════════════════════════════
+           MYANMAR FONT
+           ══════════════════════════════════════════════ */
         @font-face {
             font-family: 'MyanmarFont';
             src: local('Myanmar Text'), local('Padauk'), local('Noto Sans Myanmar');
@@ -663,7 +1069,9 @@
             font-family: 'MyanmarFont', 'Inter', sans-serif;
         }
 
-        /* ── responsive ── */
+        /* ══════════════════════════════════════════════
+           RESPONSIVE
+           ══════════════════════════════════════════════ */
         @media (max-width: 767px) {
             header {
                 padding: 0.75rem;
@@ -685,11 +1093,17 @@
                 overflow-x: auto;
                 padding-bottom: 0.25rem;
                 justify-content: flex-start;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .category-tags::-webkit-scrollbar {
+                display: none;
             }
             .search-container {
                 width: 100%;
             }
-            .language-btn span {
+            .language-btn span,
+            .theme-btn span {
                 display: none;
             }
             .category-tag {
@@ -714,7 +1128,8 @@
             .current-price {
                 font-size: 1rem;
             }
-            .language-options {
+            .language-options,
+            .theme-options {
                 right: auto;
                 left: 0;
                 width: 100%;
@@ -726,6 +1141,28 @@
             .cta-button {
                 width: 100%;
                 padding: 0.75rem 1rem;
+            }
+
+            /* promo */
+            .promo-slide {
+                padding: 1.5rem 1.25rem;
+                min-height: 175px;
+            }
+            .promo-title {
+                font-size: 1.2rem;
+            }
+            .promo-text {
+                font-size: 0.85rem;
+                margin-bottom: 0.9rem;
+            }
+            .promo-visual {
+                display: none;
+            }
+            .promo-nav {
+                display: none;
+            }
+            .promo-dots {
+                bottom: 10px;
             }
         }
 
@@ -770,12 +1207,25 @@
                 gap: 0.25rem;
             }
             .language-btn,
+            .theme-btn,
             .filter-btn {
                 padding: 0.5rem;
             }
             .language-btn i:last-child,
+            .theme-btn i:last-child,
             .filter-btn i:last-child {
                 display: none;
+            }
+        }
+
+        /* ── reduced motion ── */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.001ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.001ms !important;
             }
         }
     </style>
@@ -789,7 +1239,9 @@
             </div>
             <div class="search-container">
                 <i class="fas fa-search search-icon"></i>
-                <input type="text" class="search-box" placeholder="Search profiles..." data-en-placeholder="Search profiles..." data-my-placeholder="ပရိုဖိုင်များ ရှာဖွေရန်..." />
+                <input type="text" class="search-box" placeholder="Search profiles..."
+                       data-en-placeholder="Search profiles..."
+                       data-my-placeholder="ပရိုဖိုင်များ ရှာဖွေရန်..." />
             </div>
         </div>
 
@@ -798,8 +1250,41 @@
                 <div class="category-tag active" data-category="all" data-en="All Template" data-my="အားလုံး">All Template</div>
                 <div class="category-tag" data-category="popular" data-en="Popular" data-my="လူကြိုက်များ">Popular</div>
                 <div class="category-tag" data-category="new" data-en="New" data-my="အသစ်">New</div>
+                <div class="category-tag" data-category="free" data-en="Free" data-my="အခမဲ့">Free</div>
             </div>
 
+            <!-- ── THEME PICKER ── -->
+            <div class="theme-switcher">
+                <button class="theme-btn" id="themeBtn" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-palette"></i>
+                    <span data-en="Theme" data-my="အရောင်">Theme</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div class="theme-options" id="themeOptions">
+                    <button class="theme-option" data-theme="teal">
+                        <span class="swatch" style="--sw:#4fbec9"></span>
+                        <span data-en="Teal Breeze" data-my="စိမ်းပြာရောင်">Teal Breeze</span>
+                    </button>
+                    <button class="theme-option" data-theme="royal">
+                        <span class="swatch" style="--sw:#4a6cf7"></span>
+                        <span data-en="Royal Blue" data-my="အပြာရောင်">Royal Blue</span>
+                    </button>
+                    <button class="theme-option" data-theme="emerald">
+                        <span class="swatch" style="--sw:#10b981"></span>
+                        <span data-en="Emerald Green" data-my="စိမ်းရောင်">Emerald Green</span>
+                    </button>
+                    <button class="theme-option" data-theme="sunset">
+                        <span class="swatch" style="--sw:#ff7a45"></span>
+                        <span data-en="Sunset Orange" data-my="လိမ္မော်ရောင်">Sunset Orange</span>
+                    </button>
+                    <button class="theme-option" data-theme="purple">
+                        <span class="swatch" style="--sw:#8b5cf6"></span>
+                        <span data-en="Deep Purple" data-my="ခရမ်းရောင်">Deep Purple</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- ── LANGUAGE ── -->
             <div class="language-switcher">
                 <button class="language-btn">
                     <i class="fas fa-globe"></i>
@@ -812,18 +1297,114 @@
                 </div>
             </div>
 
-            <button class="filter-btn" id="filterBtn" data-en="Filter" data-my="စစ်ထုတ်ရန်">
+            <button class="filter-btn" id="filterBtn">
                 <i class="fas fa-filter"></i>
-                <span>Filter</span>
+                <span data-en="Filter" data-my="စစ်ထုတ်ရန်">Filter</span>
             </button>
         </div>
     </header>
 
     <main>
+        <!-- ══════════ PROMO SLIDER ══════════ -->
+        <section class="promo-section" aria-label="Promotions">
+            <div class="promo-slider" id="promoSlider">
+                <div class="promo-track" id="promoTrack">
+
+                    <!-- Slide 1 — themed gradient -->
+                    <article class="promo-slide slide-1">
+                        <div class="promo-content">
+                            <span class="promo-eyebrow">
+                                <i class="fas fa-bolt"></i>
+                                <span data-en="Limited Time" data-my="အချိန်အကန့်အသတ်">Limited Time</span>
+                            </span>
+                            <h2 class="promo-title" data-en="Up to 40% OFF Premium Templates"
+                                data-my="အဆင့်မြင့် ပုံစံများ ၄၀% အထိ လျှော့စျေး">Up to 40% OFF Premium Templates</h2>
+                            <p class="promo-text"
+                               data-en="Grab our best-selling premium profile templates before the offer ends."
+                               data-my="ကမ်းလှမ်းချက် မကုန်ဆုံးမီ အကောင်းဆုံး ပုံစံများကို ရယူလိုက်ပါ။">Grab our best-selling premium profile templates before the offer ends.</p>
+                            <button class="promo-cta" data-action="tier:Premium">
+                                <span data-en="Shop Premium" data-my="အဆင့်မြင့် ဝယ်ယူရန်">Shop Premium</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        <div class="promo-visual"><i class="fas fa-crown"></i></div>
+                    </article>
+
+                    <!-- Slide 2 — dynamically filled with the best discount -->
+                    <article class="promo-slide slide-2" id="promoFeatured">
+                        <div class="promo-content">
+                            <span class="promo-eyebrow">
+                                <i class="fas fa-star"></i>
+                                <span>Featured Template</span>
+                            </span>
+                            <h2 class="promo-title">Top Pick of the Week</h2>
+                            <p class="promo-text">Hand-picked template with the biggest saving right now.</p>
+                            <button class="promo-cta" data-action="buy">
+                                <span>Buy Now</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        <div class="promo-visual"><i class="fas fa-fire"></i></div>
+                    </article>
+
+                    <!-- Slide 3 — new arrivals -->
+                    <article class="promo-slide slide-3">
+                        <div class="promo-content">
+                            <span class="promo-eyebrow">
+                                <i class="fas fa-wand-magic-sparkles"></i>
+                                <span data-en="Fresh Drop" data-my="အသစ်ထွက်">Fresh Drop</span>
+                            </span>
+                            <h2 class="promo-title" data-en="Brand New Templates Just Landed"
+                                data-my="ပုံစံအသစ်များ ရောက်ရှိလာပါပြီ">Brand New Templates Just Landed</h2>
+                            <p class="promo-text"
+                               data-en="Be the first to explore our latest modern profile designs."
+                               data-my="နောက်ဆုံးပေါ် ဒီဇိုင်းအသစ်များကို ပထမဆုံး ကြည့်ရှုလိုက်ပါ။">Be the first to explore our latest modern profile designs.</p>
+                            <button class="promo-cta" data-action="tag:new">
+                                <span data-en="See What's New" data-my="အသစ်များ ကြည့်ရန်">See What's New</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        <div class="promo-visual"><i class="fas fa-rocket"></i></div>
+                    </article>
+
+                    <!-- Slide 4 — free templates -->
+                    <article class="promo-slide slide-4">
+                        <div class="promo-content">
+                            <span class="promo-eyebrow">
+                                <i class="fas fa-gift"></i>
+                                <span data-en="Zero Cost" data-my="အခမဲ့">Zero Cost</span>
+                            </span>
+                            <h2 class="promo-title" data-en="Free Templates, No Strings Attached"
+                                data-my="အခမဲ့ ပုံစံများ — မည်သည့် ကန့်သတ်ချက်မှ မရှိ">Free Templates, No Strings Attached</h2>
+                            <p class="promo-text"
+                               data-en="Start building your professional profile with our free collection."
+                               data-my="ကျွန်ုပ်တို့၏ အခမဲ့ စုစည်းမှုဖြင့် သင့်ပရိုဖိုင်ကို စတင်တည်ဆောက်ပါ။">Start building your professional profile with our free collection.</p>
+                            <button class="promo-cta" data-action="tag:free">
+                                <span data-en="Browse Free" data-my="အခမဲ့ ကြည့်ရန်">Browse Free</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                        <div class="promo-visual"><i class="fas fa-gift"></i></div>
+                    </article>
+
+                </div>
+
+                <button class="promo-nav prev" id="promoPrev" aria-label="Previous slide">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="promo-nav next" id="promoNext" aria-label="Next slide">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="promo-dots" id="promoDots"></div>
+            </div>
+        </section>
+
+        <p class="results-info" id="resultsInfo"></p>
+
         <div class="profiles-grid" id="profilesGrid"></div>
     </main>
 
-    <!-- ─── FILTER MODAL ─── -->
+    <!-- ══════════ FILTER MODAL ══════════ -->
     <div class="modal-overlay" id="filterModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -891,15 +1472,15 @@
         </div>
     </div>
 
-   <script>
+    <script>
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     // 1.  STATE
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-    let profilesData = null; // Will hold fetched data
+    let profilesData = null;      // fetched data
     let isLoading = true;
+    let featuredProfile = null;   // best-discount profile for promo slide
 
-    // Filter state
     let selectedPurpose = 'all';
     let selectedTier = 'all';
     let selectedCareer = 'all';
@@ -907,11 +1488,22 @@
     let currentSearchQuery = '';
     let currentTagFilter = 'all';
 
+    // Theme definitions
+    const THEMES = {
+        teal:    { basic: '#4fbec9', dark: '#2b8f9b', accent: '#6c5ce7' },
+        royal:   { basic: '#4a6cf7', dark: '#2f4bd6', accent: '#7b4df7' },
+        emerald: { basic: '#10b981', dark: '#059669', accent: '#0ea5e9' },
+        sunset:  { basic: '#ff7a45', dark: '#e8590c', accent: '#ff4d6d' },
+        purple:  { basic: '#8b5cf6', dark: '#6d28d9', accent: '#d946ef' }
+    };
+    const THEME_KEY = 'profilecraft-theme';
+
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     // 2.  DOM REFS
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     const grid = document.getElementById('profilesGrid');
+    const resultsInfo = document.getElementById('resultsInfo');
     const filterBtn = document.getElementById('filterBtn');
     const modal = document.getElementById('filterModal');
     const closeModalBtn = document.getElementById('closeModal');
@@ -926,6 +1518,10 @@
     const langOptions = document.querySelector('.language-options');
     const langOpts = document.querySelectorAll('.language-option');
     const currentLangSpan = document.getElementById('current-language');
+
+    const themeBtn = document.getElementById('themeBtn');
+    const themeOptions = document.getElementById('themeOptions');
+    const themeOpts = document.querySelectorAll('.theme-option');
 
     const searchBox = document.querySelector('.search-box');
     const categoryTags = document.querySelectorAll('.category-tag');
@@ -945,14 +1541,19 @@
         }).format(amount);
     }
 
-    function getLangText(el, fallback) {
-        const key = currentLanguage === 'my' ? 'data-my' : 'data-en';
-        return el.getAttribute(key) || fallback || el.textContent;
+    function hexToRgba(hex, alpha) {
+        let h = hex.replace('#', '');
+        if (h.length === 3) h = h.split('').map(c => c + c).join('');
+        const num = parseInt(h, 16);
+        const r = (num >> 16) & 255;
+        const g = (num >> 8) & 255;
+        const b = num & 255;
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
     }
 
     function showLoadingState() {
         grid.innerHTML = `
-            <div class="no-results" style="grid-column:1/-1;text-align:center;padding:3rem 1rem;font-size:1.2rem;color:var(--text-light);background:white;border-radius:12px;box-shadow:var(--shadow);">
+            <div class="no-results" style="grid-column:1/-1;">
                 <i class="fas fa-spinner fa-spin" style="font-size:2rem;display:block;margin-bottom:1rem;color:var(--basic-color);"></i>
                 ${currentLanguage === 'my' ? 'ဒေတာများ ယူဆောင်လာနေသည်...' : 'Loading templates...'}
             </div>
@@ -961,7 +1562,7 @@
 
     function showErrorState(message) {
         grid.innerHTML = `
-            <div class="no-results" style="grid-column:1/-1;text-align:center;padding:3rem 1rem;font-size:1.2rem;color:#e74c3c;background:white;border-radius:12px;box-shadow:var(--shadow);">
+            <div class="no-results" style="grid-column:1/-1;color:#e74c3c;">
                 <i class="fas fa-exclamation-triangle" style="font-size:2rem;display:block;margin-bottom:1rem;color:#e74c3c;"></i>
                 ${message || (currentLanguage === 'my' ? 'ဒေတာများ ရယူရာတွင် အမှားအယွင်းရှိသည်။' : 'Failed to load templates.')}
                 <br><small style="font-weight:400;color:var(--text-light);">${currentLanguage === 'my' ? 'ကျေးဇူးပြု၍ စာမျက်နှာကို ပြန်လည်စတင်ပါ။' : 'Please refresh the page.'}</small>
@@ -969,12 +1570,17 @@
         `;
     }
 
+    function scrollToGrid() {
+        const y = grid.getBoundingClientRect().top + window.pageYOffset - 110;
+        window.scrollTo({ top: y < 0 ? 0 : y, behavior: 'smooth' });
+    }
+
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // 4.  FETCH DATA
+    // 4.  FETCH DATA  (+ build fast search index)
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     async function fetchProfilesData() {
-        const jsonPath = './json/product.json'; // relative to index.html
+        const jsonPath = './json/product.json';
 
         try {
             const response = await fetch(jsonPath);
@@ -989,8 +1595,19 @@
                 throw new Error('Invalid data structure: missing "profiles" array.');
             }
 
+            // Pre-compute a lowercase search haystack for O(1) lookups
+            data.profiles.forEach(p => {
+                p._search = [p.id, p.name, p.career, p.careerMy]
+                    .filter(Boolean)
+                    .join(' ')
+                    .toLowerCase();
+            });
+
             profilesData = data;
             isLoading = false;
+
+            computeFeaturedProfile();
+
             return data;
 
         } catch (error) {
@@ -1006,20 +1623,81 @@
         }
     }
 
+    function computeFeaturedProfile() {
+        if (!profilesData || !profilesData.profiles) return;
+
+        const discounted = profilesData.profiles.filter(
+            p => p.discountPrice !== null && p.discountPrice !== undefined && p.price > 0
+        );
+
+        if (!discounted.length) return;
+
+        featuredProfile = discounted.reduce((best, p) => {
+            const pct = (p.price - p.discountPrice) / p.price;
+            const bestPct = (best.price - best.discountPrice) / best.price;
+            return pct > bestPct ? p : best;
+        });
+
+        updateFeaturedSlide();
+    }
+
+    function updateFeaturedSlide() {
+        const slide = document.getElementById('promoFeatured');
+        if (!slide || !featuredProfile) return;
+
+        const p = featuredProfile;
+        const pct = Math.round((p.price - p.discountPrice) / p.price * 100);
+        const career = currentLanguage === 'my' && p.careerMy ? p.careerMy : p.career;
+
+        slide.querySelector('.promo-eyebrow span').textContent =
+            currentLanguage === 'my' ? 'ရွေးချယ်ထားသော ပုံစံ' : 'Featured Template';
+
+        slide.querySelector('.promo-title').textContent = p.name;
+
+        slide.querySelector('.promo-text').textContent = currentLanguage === 'my'
+            ? `${career} — ယခု ${pct}% လျှော့စျေး`
+            : `${career} — now ${pct}% OFF`;
+
+        const cta = slide.querySelector('.promo-cta');
+        const label = cta.querySelector('span');
+        if (label) label.textContent = currentLanguage === 'my' ? 'ယခုဝယ်ယူရန်' : 'Buy Now';
+        cta.dataset.id = p.id;
+    }
+
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     // 5.  RENDER CARDS
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     function createProfileCard(profile) {
-        const hasDiscount = profile.discountPrice !== null;
+        const hasDiscount = profile.discountPrice !== null && profile.discountPrice !== undefined;
         const careerText = currentLanguage === 'my' && profile.careerMy ? profile.careerMy : profile.career;
         const buyText = currentLanguage === 'my' ? 'ဝယ်ယူရန်' : 'Buy';
         const previewText = currentLanguage === 'my' ? 'စစ်ဆေးကြည့်ရန်' : 'Live Preview';
-        const saveText = currentLanguage === 'my' ? 'သက်သာငွေ' : 'Save';
+        const saveText = currentLanguage === 'my' ? 'သက်သာ' : 'Save';
 
         const tierLabel = currentLanguage === 'my'
             ? (profile.category === 'Basic' ? 'အခြေခံ' : profile.category === 'Standard' ? 'စံ' : 'အဆင့်မြင့်')
             : profile.category;
+
+        const discountPct = hasDiscount
+            ? Math.round((profile.price - profile.discountPrice) / profile.price * 100)
+            : 0;
+
+        // ── badges ──
+        let badgesHtml = `
+            <span class="category-badge ${profile.category.toLowerCase()}-badge">
+                <i class="fas fa-layer-group"></i>${tierLabel}
+            </span>`;
+
+        if (profile.popular) {
+            badgesHtml += `<span class="popular-badge"><i class="fas fa-fire"></i>${currentLanguage === 'my' ? 'လူကြိုက်များ' : 'Popular'}</span>`;
+        }
+        if (profile.isNew) {
+            badgesHtml += `<span class="new-badge"><i class="fas fa-bolt"></i>${currentLanguage === 'my' ? 'အသစ်' : 'New'}</span>`;
+        }
+        if (profile.isFree) {
+            badgesHtml += `<span class="free-badge"><i class="fas fa-gift"></i>${currentLanguage === 'my' ? 'အခမဲ့' : 'Free'}</span>`;
+        }
 
         return `
             <div class="profile-card"
@@ -1031,13 +1709,10 @@
                  data-new="${profile.isNew}"
                  data-free="${profile.isFree}">
                 <div class="card-image">
-                    <img src="${profile.image}" alt="${profile.name}" loading="lazy" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Crect fill=%22%23f1f2f6%22 width=%22300%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-family=%22Inter,sans-serif%22 font-size=%2216%22%3ENo Image%3C/text%3E%3C/svg%3E'">
-                    <div class="badges">
-                        <span class="category-badge ${profile.category.toLowerCase()}-badge">${tierLabel}</span>
-                        ${profile.popular ? `<span class="popular-badge">⭐ ${currentLanguage === 'my' ? 'လူကြိုက်များ' : 'Popular'}</span>` : ''}
-                        ${profile.isNew ? `<span class="popular-badge" style="background-color:#00cec9;">${currentLanguage === 'my' ? 'အသစ်' : 'New'}</span>` : ''}
-                        ${profile.isFree ? `<span class="popular-badge" style="background-color:#00b894;">${currentLanguage === 'my' ? 'အခမဲ့' : 'Free'}</span>` : ''}
-                    </div>
+                    <img src="${profile.image}" alt="${profile.name}" loading="lazy"
+                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Crect fill=%22%23f1f2f6%22 width=%22300%22 height=%22300%22/%3E%3Ctext x=%2250%25%22 y=%2250%25%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22 font-family=%22Inter,sans-serif%22 font-size=%2216%22%3ENo Image%3C/text%3E%3C/svg%3E'">
+                    <div class="badges">${badgesHtml}</div>
+                    ${hasDiscount ? `<span class="discount-ribbon">-${discountPct}%</span>` : ''}
                 </div>
                 <div class="card-content">
                     <h3 class="profile-name">${profile.id}</h3>
@@ -1046,7 +1721,7 @@
                         ${hasDiscount
                             ? `<span class="original-price">${formatCurrency(profile.price)}</span>
                                <span class="current-price">${formatCurrency(profile.discountPrice)}</span>
-                               <span class="discount-badge">${saveText} ${Math.round((profile.price - profile.discountPrice) / profile.price * 100)}%</span>`
+                               <span class="discount-badge">${saveText} ${discountPct}%</span>`
                             : `<span class="current-price">${formatCurrency(profile.price)}</span>`
                         }
                     </div>
@@ -1065,11 +1740,10 @@
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // 6.  FILTER ENGINE
+    // 6.  FILTER ENGINE  (fast, single pass)
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     function filterAndRender() {
-        // Guard: if data isn't loaded yet, show loading
         if (isLoading || !profilesData) {
             if (!isLoading && !profilesData) {
                 showErrorState(currentLanguage === 'my' ? 'ဒေတာများ မရရှိနိုင်ပါ။' : 'Data unavailable.');
@@ -1079,49 +1753,59 @@
             return;
         }
 
-        const filtered = profilesData.profiles.filter(profile => {
+        const q = currentSearchQuery.trim().toLowerCase();
+        const list = [];
+        const all = profilesData.profiles;
+
+        for (let i = 0; i < all.length; i++) {
+            const profile = all[i];
+
             // — purpose —
-            if (selectedPurpose !== 'all' && profile.purpose !== selectedPurpose) return false;
-
+            if (selectedPurpose !== 'all' && profile.purpose !== selectedPurpose) continue;
             // — tier —
-            if (selectedTier !== 'all' && profile.category !== selectedTier) return false;
-
+            if (selectedTier !== 'all' && profile.category !== selectedTier) continue;
             // — career —
-            if (selectedCareer !== 'all' && profile.career !== selectedCareer) return false;
+            if (selectedCareer !== 'all' && profile.career !== selectedCareer) continue;
+            // — quick tags —
+            if (currentTagFilter === 'popular' && !profile.popular) continue;
+            if (currentTagFilter === 'new' && !profile.isNew) continue;
+            if (currentTagFilter === 'free' && !profile.isFree) continue;
+            // — search (pre-indexed) —
+            if (q && profile._search.indexOf(q) === -1) continue;
 
-            // — tag (popular / new / free) —
-            if (currentTagFilter === 'popular' && !profile.popular) return false;
-            if (currentTagFilter === 'new' && !profile.isNew) return false;
-            if (currentTagFilter === 'free' && !profile.isFree) return false;
+            list.push(profile);
+        }
 
-            // — search —
-            if (currentSearchQuery) {
-                const q = currentSearchQuery.toLowerCase();
-                const nameMatch = profile.name.toLowerCase().includes(q);
-                const careerMatch = profile.career.toLowerCase().includes(q);
-                const careerMyMatch = profile.careerMy && profile.careerMy.toLowerCase().includes(q);
-                if (!nameMatch && !careerMatch && !careerMyMatch) return false;
+        // results counter
+        if (resultsInfo) {
+            if (list.length === 0) {
+                resultsInfo.textContent = '';
+            } else {
+                resultsInfo.textContent = currentLanguage === 'my'
+                    ? `ပုံစံ ${list.length} ခု တွေ့ရှိသည်`
+                    : `${list.length} template${list.length !== 1 ? 's' : ''} found`;
             }
+        }
 
-            return true;
-        });
-
-        grid.innerHTML = '';
-
-        if (filtered.length === 0) {
+        if (list.length === 0) {
             const msg = currentLanguage === 'my' ? 'ရလဒ်မတွေ့ပါ' : 'No results found';
             grid.innerHTML = `<div class="no-results">${msg}</div>`;
             return;
         }
 
-        filtered.forEach((profile, i) => {
-            const html = createProfileCard(profile);
-            const wrapper = document.createElement('div');
-            wrapper.innerHTML = html;
+        // Build in a fragment → single reflow
+        const fragment = document.createDocumentFragment();
+        const wrapper = document.createElement('div');
+
+        for (let i = 0; i < list.length; i++) {
+            wrapper.innerHTML = createProfileCard(list[i]);
             const card = wrapper.firstElementChild;
-            card.style.animationDelay = `${i * 0.08}s`;
-            grid.appendChild(card);
-        });
+            card.style.animationDelay = `${Math.min(i, 12) * 0.05}s`;
+            fragment.appendChild(card);
+        }
+
+        grid.innerHTML = '';
+        grid.appendChild(fragment);
 
         bindCardEvents();
     }
@@ -1132,12 +1816,10 @@
 
     function bindCardEvents() {
         document.querySelectorAll('.buy-button').forEach(btn => {
-            btn.removeEventListener('click', handleBuy);
             btn.addEventListener('click', handleBuy);
         });
 
         document.querySelectorAll('.preview-button').forEach(btn => {
-            btn.removeEventListener('click', handlePreview);
             btn.addEventListener('click', handlePreview);
         });
     }
@@ -1151,7 +1833,7 @@
             id: card.dataset.id || btn.dataset.id,
             purpose: card.dataset.purpose || btn.dataset.purpose || 'business',
             tier: card.dataset.tier || btn.dataset.tier,
-            name: btn.dataset.name || '',
+            name: btn.dataset.name || ''
         };
 
         localStorage.setItem('selected_template_info', JSON.stringify(info));
@@ -1159,15 +1841,124 @@
     }
 
     function handlePreview(e) {
+        const imgUrl = e.currentTarget.dataset.image;
+        if (imgUrl) window.open(imgUrl, '_blank');
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 8.  PROMO SLIDER
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    const promoSlider = document.getElementById('promoSlider');
+    const promoTrack = document.getElementById('promoTrack');
+    const promoDotsWrap = document.getElementById('promoDots');
+    const promoSlides = Array.from(document.querySelectorAll('.promo-slide'));
+
+    let promoIndex = 0;
+    let promoTimer = null;
+    let promoDots = [];
+    let touchStartX = 0;
+
+    function initSlider() {
+        if (!promoTrack || promoSlides.length === 0) return;
+
+        // dots
+        promoDotsWrap.innerHTML = promoSlides.map((_, i) =>
+            `<button class="promo-dot${i === 0 ? ' active' : ''}" data-index="${i}" aria-label="Slide ${i + 1}"></button>`
+        ).join('');
+
+        promoDots = Array.from(promoDotsWrap.querySelectorAll('.promo-dot'));
+        promoDots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                goToSlide(parseInt(dot.dataset.index, 10));
+                startAutoplay();
+            });
+        });
+
+        document.getElementById('promoPrev').addEventListener('click', () => {
+            goToSlide(promoIndex - 1);
+            startAutoplay();
+        });
+        document.getElementById('promoNext').addEventListener('click', () => {
+            goToSlide(promoIndex + 1);
+            startAutoplay();
+        });
+
+        // pause on hover
+        promoSlider.addEventListener('mouseenter', stopAutoplay);
+        promoSlider.addEventListener('mouseleave', startAutoplay);
+
+        // pause when tab hidden
+        document.addEventListener('visibilitychange', () => {
+            document.hidden ? stopAutoplay() : startAutoplay();
+        });
+
+        // swipe
+        promoSlider.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+            stopAutoplay();
+        }, { passive: true });
+
+        promoSlider.addEventListener('touchend', (e) => {
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            if (Math.abs(dx) > 45) {
+                dx < 0 ? goToSlide(promoIndex + 1) : goToSlide(promoIndex - 1);
+            }
+            startAutoplay();
+        }, { passive: true });
+
+        // CTA actions
+        document.querySelectorAll('.promo-cta').forEach(btn => {
+            btn.addEventListener('click', handlePromoAction);
+        });
+
+        startAutoplay();
+    }
+
+    function goToSlide(i) {
+        promoIndex = (i + promoSlides.length) % promoSlides.length;
+        promoTrack.style.transform = `translateX(-${promoIndex * 100}%)`;
+        promoDots.forEach((d, idx) => d.classList.toggle('active', idx === promoIndex));
+    }
+
+    function startAutoplay() {
+        stopAutoplay();
+        promoTimer = setInterval(() => goToSlide(promoIndex + 1), 5500);
+    }
+
+    function stopAutoplay() {
+        if (promoTimer) {
+            clearInterval(promoTimer);
+            promoTimer = null;
+        }
+    }
+
+    function handlePromoAction(e) {
         const btn = e.currentTarget;
-        const imgUrl = btn.dataset.image;
-        if (imgUrl) {
-            window.open(imgUrl, '_blank');
+        const action = btn.dataset.action;
+        if (!action) return;
+
+        if (action.startsWith('tier:')) {
+            selectedTier = action.split(':')[1];
+            syncModalUI();
+            filterAndRender();
+            scrollToGrid();
+        } else if (action.startsWith('tag:')) {
+            setTagFilter(action.split(':')[1]);
+            scrollToGrid();
+        } else if (action === 'buy' && featuredProfile) {
+            localStorage.setItem('selected_template_info', JSON.stringify({
+                id: featuredProfile.id,
+                purpose: featuredProfile.purpose || 'business',
+                tier: featuredProfile.category,
+                name: featuredProfile.name
+            }));
+            window.location.href = 'details.html';
         }
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // 8.  MODAL CONTROLS
+    // 9.  MODAL CONTROLS
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     function openModal() {
@@ -1190,7 +1981,7 @@
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // 9.  APPLY / RESET
+    // 10. APPLY / RESET
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     function applyFilters() {
@@ -1224,115 +2015,132 @@
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // 10. LANGUAGE
+    // 11. LANGUAGE
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     function setLanguage(lang) {
         currentLanguage = lang;
         currentLangSpan.textContent = lang === 'en' ? 'English' : 'Myanmar';
 
-        if (lang === 'my') {
-            document.body.classList.add('myanmar');
-        } else {
-            document.body.classList.remove('myanmar');
-        }
+        document.body.classList.toggle('myanmar', lang === 'my');
 
         // Placeholders
         document.querySelectorAll('[data-en-placeholder]').forEach(el => {
             if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                el.placeholder = el.getAttribute(`data-${lang}-placeholder`) || el.getAttribute('data-en-placeholder');
+                el.placeholder = el.getAttribute(`data-${lang}-placeholder`) ||
+                                 el.getAttribute('data-en-placeholder');
             }
         });
 
-        // Generic data-en/data-my elements (skip tabs/options handled below)
-        document.querySelectorAll('[data-en][data-my]:not(.purpose-tab):not(.filter-option)').forEach(el => {
+        // Generic translatable nodes (icons stay intact — attributes live on the <span>)
+        document.querySelectorAll('[data-en][data-my]').forEach(el => {
             const txt = el.getAttribute(`data-${lang}`);
             if (txt) el.textContent = txt;
         });
 
-        // Purpose tabs
-        purposeTabs.forEach(tab => {
-            const txt = tab.getAttribute(`data-${lang}`);
-            if (txt) tab.textContent = txt;
-        });
-
-        // Tier options
-        tierOptions.forEach(opt => {
-            const txt = opt.getAttribute(`data-${lang}`);
-            if (txt) opt.textContent = txt;
-        });
-
-        // Career options
-        careerSelect.querySelectorAll('option').forEach(opt => {
-            const txt = opt.getAttribute(`data-${lang}`);
-            if (txt) opt.textContent = txt;
-        });
-
-        // Category tags
-        categoryTags.forEach(tag => {
-            const txt = tag.getAttribute(`data-${lang}`);
-            if (txt) tag.textContent = txt;
-        });
-
-        // Filter button
-        const filterSpan = filterBtn.querySelector('span');
-        if (filterSpan) {
-            const txt = filterBtn.getAttribute(`data-${lang}`);
-            if (txt) filterSpan.textContent = txt;
-        }
+        // Dynamic promo slide
+        updateFeaturedSlide();
 
         filterAndRender();
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // 11. CATEGORY TAGS (top bar)
+    // 12. CATEGORY TAGS (top bar)
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function setTagFilter(tag) {
+        currentTagFilter = tag;
+        categoryTags.forEach(t => t.classList.toggle('active', t.dataset.category === tag));
+        filterAndRender();
+    }
 
     function initCategoryTags() {
         categoryTags.forEach(tag => {
-            tag.addEventListener('click', function() {
-                categoryTags.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                currentTagFilter = this.dataset.category || 'all';
-                filterAndRender();
+            tag.addEventListener('click', function () {
+                setTagFilter(this.dataset.category || 'all');
             });
         });
     }
 
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-    // 12. INITIALIZATION
+    // 13. THEME PICKER
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+    function applyTheme(key) {
+        const theme = THEMES[key] || THEMES.teal;
+        const root = document.documentElement.style;
+
+        root.setProperty('--basic-color', theme.basic);
+        root.setProperty('--basic-dark', theme.dark);
+        root.setProperty('--accent-color', theme.accent);
+        root.setProperty('--basic-color-soft', hexToRgba(theme.basic, 0.18));
+
+        themeOpts.forEach(opt => {
+            opt.classList.toggle('active', opt.dataset.theme === key);
+        });
+
+        try {
+            localStorage.setItem(THEME_KEY, key);
+        } catch (err) { /* storage unavailable — ignore */ }
+    }
+
+    function initTheme() {
+        let saved = 'teal';
+        try {
+            saved = localStorage.getItem(THEME_KEY) || 'teal';
+        } catch (err) { /* ignore */ }
+
+        if (!THEMES[saved]) saved = 'teal';
+        applyTheme(saved);
+
+        themeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const open = themeOptions.classList.toggle('active');
+            themeBtn.setAttribute('aria-expanded', String(open));
+            langOptions.classList.remove('active');
+        });
+
+        themeOpts.forEach(opt => {
+            opt.addEventListener('click', (e) => {
+                e.stopPropagation();
+                applyTheme(opt.dataset.theme);
+                themeOptions.classList.remove('active');
+                themeBtn.setAttribute('aria-expanded', 'false');
+            });
+        });
+    }
+
+    // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    // 14. INITIALIZATION
     // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
     async function initApp() {
-        // Show loading state immediately
         showLoadingState();
 
-        // Set up event listeners (they will work once data is loaded)
+        initSlider();
+        initTheme();
         setupEventListeners();
 
         try {
-            // Fetch data
             await fetchProfilesData();
 
-            // If fetch succeeded, render
             if (profilesData && profilesData.profiles) {
                 filterAndRender();
             } else {
                 showErrorState(currentLanguage === 'my' ? 'ဒေတာများ ဗလာဖြစ်နေသည်။' : 'Data is empty.');
             }
         } catch (error) {
-            // Error already handled in fetchProfilesData, but just in case
             if (!grid.querySelector('.no-results')) {
-                showErrorState(currentLanguage === 'my' ? 'ဒေတာများ ရယူရာတွင် အမှားအယွင်းရှိသည်။' : 'Failed to load templates.');
+                showErrorState(currentLanguage === 'my'
+                    ? 'ဒေတာများ ရယူရာတွင် အမှားအယွင်းရှိသည်။'
+                    : 'Failed to load templates.');
             }
         }
     }
 
     function setupEventListeners() {
-        // Modal open
+        // Modal
         filterBtn.addEventListener('click', openModal);
-
-        // Modal close
         closeModalBtn.addEventListener('click', closeModal);
         modal.addEventListener('click', (e) => {
             if (e.target === modal) closeModal();
@@ -1340,7 +2148,7 @@
 
         // Purpose tabs
         purposeTabs.forEach(tab => {
-            tab.addEventListener('click', function() {
+            tab.addEventListener('click', function () {
                 purposeTabs.forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
             });
@@ -1348,7 +2156,7 @@
 
         // Tier options
         tierOptions.forEach(opt => {
-            opt.addEventListener('click', function() {
+            opt.addEventListener('click', function () {
                 tierOptions.forEach(o => o.classList.remove('active'));
                 this.classList.add('active');
             });
@@ -1358,40 +2166,45 @@
         applyBtn.addEventListener('click', applyFilters);
         resetBtn.addEventListener('click', resetFilters);
 
-        // Language
+        // Language dropdown
         langBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             langOptions.classList.toggle('active');
+            themeOptions.classList.remove('active');
         });
-        document.addEventListener('click', () => langOptions.classList.remove('active'));
 
         langOpts.forEach(opt => {
-            opt.addEventListener('click', function(e) {
+            opt.addEventListener('click', function (e) {
                 e.stopPropagation();
-                const lang = this.dataset.lang;
-                setLanguage(lang);
+                setLanguage(this.dataset.lang);
                 langOptions.classList.remove('active');
             });
         });
 
-        // Search
-        searchBox.addEventListener('input', function() {
-            currentSearchQuery = this.value;
-            filterAndRender();
+        // Close dropdowns on outside click
+        document.addEventListener('click', () => {
+            langOptions.classList.remove('active');
+            themeOptions.classList.remove('active');
+            themeBtn.setAttribute('aria-expanded', 'false');
+        });
+
+        // ── Real-time search (rAF-throttled, zero lag) ──
+        let searchFrame = null;
+        searchBox.addEventListener('input', function () {
+            const value = this.value;
+            if (searchFrame) cancelAnimationFrame(searchFrame);
+            searchFrame = requestAnimationFrame(() => {
+                currentSearchQuery = value;
+                filterAndRender();
+            });
         });
 
         // Category tags
         initCategoryTags();
-
-        // Career select — apply on change (optional: you can also keep it via Apply button)
-        // We'll let Apply button handle it, but we also update state on change for consistency
-        careerSelect.addEventListener('change', function() {
-            // state will be read when Apply is clicked
-        });
     }
 
     // ─── Boot ───
     document.addEventListener('DOMContentLoaded', initApp);
-</script>
+    </script>
 </body>
 </html>
