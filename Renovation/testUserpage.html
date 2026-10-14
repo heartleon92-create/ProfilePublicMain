@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  ============================================================================
+  Khine Yin Mon — Personal Profile Page
+  ----------------------------------------------------------------------------
+  DESIGN TOKENS (Ocean Trust, light theme only)
+    --primary    #1E3A8A   deep navy   (10.36:1 on white)
+    --secondary  #0EA5E9   sky
+    --accent     #64748B   slate
+    --bg         #FFFFFF   page background
+    --surface    #F8FAFC   rail + card surfaces
+    --text       #0F172A   body text   (17.85:1 on bg / 17.06:1 on surface)
+    --muted      #475569   secondary text (7.5:1 on white)
+    --border     #E5E7EB   1px hairline borders
+    --radius     6px       cards, buttons, inputs, images
+    --shadow     0 1px 2px rgba(0,0,0,.05)   subtle elevation on cards
+  TYPE SCALE (Inter, 16px base, 700 headings, 0 letter-spacing)
+    --step--1 .875rem | --step-0 1rem | --step-1 1.125rem
+    --step-2 1.375rem | --step-3 1.75rem | --step-4 clamp(2rem → 2.5rem)
+  LAYOUT
+    Fixed left rail (240px ≥1024px, 208px 768–1023px), collapsing to a
+    hamburger drawer below 768px. Content container max-width 1024px.
+  ============================================================================
+  ASSUMPTIONS (where the brief was ambiguous)
+    1. DARK MODE — the token spec says "Dark mode: NO — light theme only", so
+       no theme toggle is rendered. (The deliverables list mentions a dark-mode
+       toggle; the explicit token instruction wins. A `prefers-color-scheme`
+       guard is deliberately NOT applied.)
+    2. RAIL BREAKPOINT — the layout section says the rail collapses below
+       768px, while the responsive section implies the full layout starts at
+       1024px. Resolution: rail is visible from 768px up (narrower, 208px),
+       drawer below 768px, full 240px rail at ≥1024px.
+    3. AVATAR — no photo asset was supplied, so an inline SVG monogram is used.
+       Because the name appears adjacent as the <h1>, the avatar is decorative
+       and carries alt="". Project thumbnails are inline SVG art with
+       descriptive alt text (no network images → no layout shift).
+    4. FORM — no backend, so the form posts to a mailto: action. JS validates
+       first, then hands off to the user's mail client.
+    5. Tailwind CDN is used for utility classes only; every component also has
+       a hand-written fallback class so the page renders correctly if the CDN
+       is blocked.
+  ============================================================================
+-->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Khine Yin Mon — Full stack Developer</title>
+  <meta name="description" content="Khine Yin Mon is a full stack developer in Yangon, Myanmar, building clean, fast, accessible interfaces.">
+  <meta name="color-scheme" content="light">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Feature flag: only hide reveal content when JS is available. -->
+  <script>document.documentElement.classList.add('js');</script>
+
+  <style>
+    /* ======================================================================
+       1. DESIGN TOKENS
+       ====================================================================== */
+    :root {
+      /* Colour */
+      --primary: #1E3A8A;
+      --primary-hover: #172E6E;
+      --primary-active: #122459;
+      --primary-tint: rgba(30, 58, 138, 0.06);
+      --primary-tint-strong: rgba(30, 58, 138, 0.12);
+      --secondary: #0EA5E9;
+      --accent: #64748B;
+      --bg: #FFFFFF;
+      --surface: #F8FAFC;
+      --text: #0F172A;
+      --muted: #475569;
+      --border: #E5E7EB;
+      --border-strong: #CBD5E1;
+      --danger: #B91C1C;
+      --danger-bg: #FEF2F2;
+      --danger-border: #FECACA;
+      --success: #15803D;
+      --success-bg: #F0FDF4;
+      --success-border: #BBF7D0;
+
+      /* Shape & elevation */
+      --radius: 6px;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+
+      /* Type scale */
+      --step--1: 0.875rem;   /* 14px */
+      --step-0: 1rem;        /* 16px */
+      --step-1: 1.125rem;    /* 18px */
+      --step-2: 1.375rem;    /* 22px */
+      --step-3: 1.75rem;     /* 28px */
+      --step-4: clamp(2rem, 1.5rem + 2vw, 2.5rem);
+
+      /* Spacing rhythm (balanced / medium) */
+      --sp-1: 0.25rem;
+      --sp-2: 0.5rem;
+      --sp-3: 0.75rem;
+      --sp-4: 1rem;
+      --sp-5: 1.5rem;
+      --sp-6: 2rem;
+      --sp-7: 3rem;
+
+      /* Layout */
+      --container: 64rem;    /* 1024px */
+      --rail-w: 15rem;       /* 240px */
+      --rail-w-md: 13rem;    /* 208px */
+      --tap: 44px;
+    }
+
+    /* ======================================================================
+       2. BASE / RESET
+       ====================================================================== */
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
+      font-size: var(--step-0);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-weight: 700;
+      letter-spacing: 0;
+      line-height: 1.25;
+      color: var(--text);
+    }
+
+    p { margin: 0; }
+
+    ul, ol { margin: 0; padding: 0; list-style: none; }
+
+    img { display: block; max-width: 100%; height: auto; }
+
+    a { color: var(--primary); text-decoration: none; }
+
+    button, input, textarea { font: inherit; color: inherit; }
+
+    /* Visible focus ring — never removed. */
+    :focus-visible {
+      outline: 2px solid var(--primary);
+      outline-offset: 2px;
+    }
+
+    /* ======================================================================
+       3. SKIP LINK
+       ====================================================================== */
+    .skip-link {
+      position: fixed;
+      top: var(--sp-2);
+      left: var(--sp-2);
+      z-index: 100;
+      padding: 0.65rem 1rem;
+      border-radius: var(--radius);
+      background-color: var(--primary);
+      color: #FFFFFF;
+      font-size: var(--step--1);
+      font-weight: 600;
+      transform: translateY(-250%);
+      transition: transform 200ms ease-out;
+    }
+    .skip-link:focus { transform: translateY(0); }
+
+    /* ======================================================================
+       4. LAYOUT SHELL
+       ====================================================================== */
+    .main {
+      padding: var(--sp-5) var(--sp-4) var(--sp-6);
+    }
+
+    .container {
+      max-width: var(--container);
+      margin-inline: auto;
+    }
+
+    .section { scroll-margin-top: 5.5rem; }
+    .section + .section { margin-top: var(--sp-7); }
+
+    .section__title { font-size: var(--step-3); }
+
+    .section__lead {
+      margin-top: var(--sp-3);
+      max-width: 65ch;
+      color: var(--muted);
+    }
+
+    .prose { max-width: 65ch; }
+    .prose p + p { margin-top: var(--sp-4); }
+    .prose p { color: var(--muted); }
+
+    .site-footer {
+      padding: var(--sp-5) var(--sp-4) var(--sp-6);
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: var(--step--1);
+    }
+
+    @media (min-width: 768px) {
+      .main {
+        margin-left: var(--rail-w-md);
+        padding: var(--sp-6) var(--sp-5) var(--sp-7);
+      }
+      .site-footer {
+        margin-left: var(--rail-w-md);
+        padding-inline: var(--sp-5);
+      }
+      .section { scroll-margin-top: var(--sp-5); }
+    }
+
+    @media (min-width: 1024px) {
+      .main {
+        margin-left: var(--rail-w);
+        padding: var(--sp-7) var(--sp-6);
+      }
+      .site-footer {
+        margin-left: var(--rail-w);
+        padding-inline: var(--sp-6);
+      }
+    }
+
+    /* ======================================================================
+       5. MOBILE TOP BAR + HAMBURGER
+       ====================================================================== */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 45;
+      display: flex;
+      align-items: center;
+      gap: var(--sp-3);
+      padding: var(--sp-3) var(--sp-4);
+      background-color: rgba(255, 255, 255, 0.94);
+      -webkit-backdrop-filter: blur(6px);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .topbar__name {
+      font-size: var(--step--1);
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .hamburger {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--tap);
+      height: var(--tap);
+      padding: 0;
+      background-color: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background-color 200ms ease-out, border-color 200ms ease-out;
+    }
+    .hamburger:hover { background-color: var(--surface); border-color: var(--border-strong); }
+    .hamburger:active { background-color: var(--primary-tint-strong); }
+
+    .hamburger__bars { display: block; width: 18px; }
+    .hamburger__bars span {
+      display: block;
+      height: 2px;
+      border-radius: 2px;
+      background-color: var(--primary);
+    }
+    .hamburger__bars span + span { margin-top: 4px; }
+
+    @media (min-width: 768px) {
+      .topbar { display: none; }
+    }
+
+    /* ======================================================================
+       6. SIDEBAR RAIL (off-canvas below 768px)
+       ====================================================================== */
+    .rail {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-6);
+      width: var(--rail-w);
+      padding: var(--sp-6) var(--sp-4);
+      overflow-y: auto;
+      background-color: var(--surface);
+      border-right: 1px solid var(--border);
+      transform: translateX(-100%);
+      transition: transform 200ms ease-out;
+    }
+
+    .rail.is-open { transform: translateX(0); }
+
+    .rail__profile { display: flex; flex-direction: column; }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background-color: var(--surface);
+    }
+
+    .avatar--hero {
+      width: 96px;
+      height: 96px;
+    }
+
+    .rail__name {
+      margin-top: var(--sp-3);
+      font-size: var(--step-1);
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .rail__meta {
+      font-size: var(--step--1);
+      color: var(--muted);
+    }
+
+    .rail__list { display: flex; flex-direction: column; gap: 2px; }
+
+    .rail__link {
+      position: relative;
+      display: flex;
+      align-items: center;
+      min-height: var(--tap);
+      padding: 0 var(--sp-3) 0 var(--sp-4);
+      border-radius: var(--radius);
+      color: var(--muted);
+      font-size: var(--step--1);
+      font-weight: 500;
+      transition: background-color 200ms ease-out, color 200ms ease-out;
+    }
+
+    .rail__link::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 3px;
+      height: 0;
+      border-radius: 2px;
+      background-color: var(--primary);
+      transform: translateY(-50%);
+      transition: height 200ms ease-out;
+    }
+
+    .rail__link:hover {
+      background-color: var(--primary-tint);
+      color: var(--primary);
+    }
+
+    .rail__link:active { background-color: var(--primary-tint-strong); }
+
+    .rail__link[aria-current="true"] {
+      background-color: var(--primary-tint);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    .rail__link[aria-current="true"]::before { height: 1.25rem; }
+
+    .rail__footer {
+      margin-top: auto;
+      font-size: var(--step--1);
+      color: var(--muted);
+    }
+
+    @media (min-width: 768px) {
+      .rail {
+        width: var(--rail-w-md);
+        transform: none;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .rail { width: var(--rail-w); }
+    }
+
+    /* ======================================================================
+       7. DRAWER BACKDROP
+       ====================================================================== */
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      background-color: rgba(15, 23, 42, 0.45);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 200ms ease-out, visibility 200ms ease-out;
+    }
+
+    .backdrop.is-open { opacity: 1; visibility: visible; }
+
+    body.nav-open { overflow: hidden; }
+
+    @media (min-width: 768px) {
+      .backdrop { display: none; }
+    }
+
+    /* ======================================================================
+       8. HERO / PROFILE
+       ====================================================================== */
+    .hero {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--sp-5);
+      margin-bottom: var(--sp-6);
+    }
+
+    .hero__name { font-size: var(--step-4); }
+
+    .hero__role {
+      margin-top: var(--sp-2);
+      font-size: var(--step-1);
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .hero__tagline {
+      margin-top: var(--sp-1);
+      max-width: 52ch;
+      color: var(--muted);
+    }
+
+    .hero__actions { margin-top: var(--sp-5); }
+
+    @media (min-width: 640px) {
+      .hero {
+        flex-direction: row;
+        align-items: center;
+        gap: var(--sp-6);
+      }
+    }
+
+    /* ======================================================================
+       9. BUTTONS
+       ====================================================================== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-2);
+      min-height: var(--tap);
+      padding: 0 var(--sp-5);
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      font-size: var(--step--1);
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 200ms ease-out, color 200ms ease-out,
+                  border-color 200ms ease-out, box-shadow 200ms ease-out;
+    }
+
+    .btn--primary {
+      background-color: var(--primary);
+      color: #FFFFFF;
+      box-shadow: var(--shadow);
+    }
+    .btn--primary:hover { background-color: var(--primary-hover); }
+    .btn--primary:active { background-color: var(--primary-active); }
+
+    .btn--ghost {
+      background-color: var(--bg);
+      color: var(--primary);
+      border-color: var(--border);
+    }
+    .btn--ghost:hover { background-color: var(--surface); border-color: var(--border-strong); }
+    .btn--ghost:active { background-color: var(--primary-tint-strong); }
+
+    .btn:disabled,
+    .btn[aria-disabled="true"] {
+      background-color: #CBD5E1;
+      color: #475569;
+      border-color: #CBD5E1;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 639px) {
+      .hero__actions .btn { width: 100%; }
+    }
+
+    /* ======================================================================
+       10. CARDS
+       ====================================================================== */
+    .card {
+      background-color: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: var(--sp-5);
+    }
+
+    .card--flush { padding: 0; overflow: hidden; }
+
+    .card__body { padding: var(--sp-5); }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--sp-4);
+    }
+
+    @media (min-width: 640px) {
+      .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    /* ======================================================================
+       11. SKILLS
+       ====================================================================== */
+    .skill-group__title {
+      font-size: var(--step-1);
+      margin-bottom: var(--sp-4);
+    }
+
+    .skill + .skill { margin-top: var(--sp-4); }
+
+    .skill__head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: var(--sp-3);
+      font-size: var(--step--1);
+    }
+
+    .skill__name { font-weight: 500; color: var(--text); }
+    .skill__level { color: var(--muted); }
+
+    .meter {
+      height: 6px;
+      margin-top: var(--sp-2);
+      border-radius: 999px;
+      background-color: #E2E8F0;
+      overflow: hidden;
+    }
+
+    .meter__fill {
+      display: block;
+      height: 100%;
+      width: 0;
+      border-radius: 999px;
+      background-color: var(--primary);
+      transition: width 400ms ease-out;
+    }
+
+    /* Proficiency buckets — width is a redundant visual cue; the text label
+       above carries the actual meaning. */
+    .skill[data-level="expert"] .meter__fill { width: 95%; }
+    .skill[data-level="advanced"] .meter__fill { width: 80%; }
+    .skill[data-level="intermediate"] .meter__fill { width: 60%; }
+
+    /* ======================================================================
+       12. EXPERIENCE
+       ====================================================================== */
+    .timeline > li + li { margin-top: var(--sp-4); }
+
+    .entry__role { font-size: var(--step-2); }
+
+    .entry__company {
+      margin-top: var(--sp-1);
+      font-size: var(--step--1);
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .entry__dates {
+      margin-top: var(--sp-1);
+      font-size: var(--step--1);
+      color: var(--muted);
+    }
+
+    .entry__desc {
+      margin-top: var(--sp-3);
+      color: var(--muted);
+    }
+
+    .bullets {
+      display: grid;
+      gap: var(--sp-2);
+      margin-top: var(--sp-3);
+    }
+
+    .bullets li {
+      position: relative;
+      padding-left: 1.25rem;
+      font-size: var(--step--1);
+      color: var(--muted);
+    }
+
+    .bullets li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.65em;
+      width: 6px;
+      height: 6px;
+      border-radius: 2px;
+      background-color: var(--secondary);
+    }
+
+    /* ======================================================================
+       13. PROJECTS
+       ====================================================================== */
+    .project__thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-bottom: 1px solid var(--border);
+      background-color: var(--bg);
+    }
+
+    .project__title { font-size: var(--step-2); }
+
+    .project__summary {
+      margin-top: var(--sp-2);
+      color: var(--muted);
+      font-size: var(--step--1);
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-2);
+      margin-top: var(--sp-4);
+    }
+
+    .tag {
+      padding: 0.2rem 0.55rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background-color: var(--bg);
+      color: var(--muted);
+      font-size: var(--step--1);
+      line-height: 1.5;
+    }
+
+    .project__link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--sp-1);
+      margin-top: var(--sp-4);
+      min-height: var(--tap);
+      font-size: var(--step--1);
+      font-weight: 600;
+      color: var(--primary);
+      border-radius: var(--radius);
+      transition: color 200ms ease-out;
+    }
+
+    .project__link:hover { color: var(--primary-hover); text-decoration: underline; }
+    .project__link:active { color: var(--primary-active); }
+
+    /* ======================================================================
+       14. CONTACT FORM
+       ====================================================================== */
+    .form {
+      display: grid;
+      gap: var(--sp-4);
+      max-width: 42rem;
+      margin-top: var(--sp-5);
+    }
+
+    .field { display: grid; gap: var(--sp-2); }
+
+    .field__label {
+      font-size: var(--step--1);
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .field__hint {
+      font-size: var(--step--1);
+      color: var(--muted);
+    }
+
+    .input,
+    .textarea {
+      width: 100%;
+      min-height: var(--tap);
+      padding: 0.7rem 0.85rem;
+      background-color: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color 200ms ease-out, background-color 200ms ease-out;
+    }
+
+    .textarea {
+      min-height: 9rem;
+      resize: vertical;
+    }
+
+    .input::placeholder,
+    .textarea::placeholder { color: #94A3B8; }
+
+    .input:hover,
+    .textarea:hover { border-color: var(--border-strong); }
+
+    .input:focus,
+    .textarea:focus { border-color: var(--secondary); }
+
+    .input:disabled,
+    .textarea:disabled {
+      background-color: var(--surface);
+      color: var(--muted);
+      cursor: not-allowed;
+    }
+
+    .field__msg {
+      font-size: var(--step--1);
+      color: var(--danger);
+    }
+    .field__msg:empty { display: none; }
+
+    .field.is-invalid .input,
+    .field.is-invalid .textarea { border-color: var(--danger); }
+
+    .field.is-valid .input,
+    .field.is-valid .textarea { border-color: var(--success); }
+
+    /* Status messages pair colour with an explicit text prefix, so colour is
+       never the only carrier of meaning. */
+    .form__status {
+      display: none;
+      padding: 0.7rem 0.9rem;
+      border-radius: var(--radius);
+      font-size: var(--step--1);
+      border: 1px solid transparent;
+    }
+
+    .form__status.is-visible { display: block; }
+
+    .form__status--error {
+      background-color: var(--danger-bg);
+      border-color: var(--danger-border);
+      color: var(--danger);
+    }
+
+    .form__status--success {
+      background-color: var(--success-bg);
+      border-color: var(--success-border);
+      color: var(--success);
+    }
+
+    /* ======================================================================
+       15. SOCIAL LINKS
+       ====================================================================== */
+    .social {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--sp-3);
+      margin-top: var(--sp-5);
+    }
+
+    .social__link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--tap);
+      height: var(--tap);
+      color: var(--primary);
+      background-color: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: background-color 200ms ease-out, color 200ms ease-out,
+                  border-color 200ms ease-out;
+    }
+
+    .social__link:hover {
+      background-color: var(--primary);
+      border-color: var(--primary);
+      color: #FFFFFF;
+    }
+
+    .social__link:active {
+      background-color: var(--primary-active);
+      border-color: var(--primary-active);
+      color: #FFFFFF;
+    }
+
+    .icon { width: 20px; height: 20px; fill: currentColor; }
+
+    /* ======================================================================
+       16. ENTRANCE MOTION
+       ====================================================================== */
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 400ms ease-out, transform 400ms ease-out;
+    }
+
+    .js .reveal.is-visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ======================================================================
+       17. REDUCED MOTION
+       ====================================================================== */
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+
+      .js .reveal,
+      .js .reveal.is-visible {
+        opacity: 1;
+        transform: none;
+      }
+
+      .reveal,
+      .rail,
+      .backdrop,
+      .rail__link,
+      .rail__link::before,
+      .meter__fill,
+      .btn,
+      .social__link,
+      .hamburger,
+      .input,
+      .textarea,
+      .skip-link,
+      .project__link {
+        transition: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ===================== MOBILE TOP BAR ===================== -->
+  <header class="topbar">
+    <button
+      class="hamburger"
+      id="menuToggle"
+      type="button"
+      aria-label="Open navigation menu"
+      aria-expanded="false"
+      aria-controls="sidebar">
+      <span class="hamburger__bars" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+    </button>
+    <span class="topbar__name">Khine Yin Mon</span>
+  </header>
+
+  <!-- ===================== SIDEBAR RAIL ===================== -->
+  <nav class="rail" id="sidebar" aria-label="Section navigation">
+    <div class="rail__profile">
+      <img
+        class="avatar"
+        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'%3E%3Crect width='160' height='160' fill='%231E3A8A'/%3E%3Ctext x='80' y='103' font-family='Inter, Arial, sans-serif' font-size='58' font-weight='700' fill='%23FFFFFF' text-anchor='middle'%3EKYM%3C/text%3E%3C/svg%3E"
+        alt=""
+        width="64"
+        height="64">
+      <p class="rail__name">Khine Yin Mon</p>
+      <p class="rail__meta">Full stack Developer</p>
+      <p class="rail__meta">Yangon, MM</p>
+    </div>
+
+    <ul class="rail__list">
+      <li><a class="rail__link" href="#about">About</a></li>
+      <li><a class="rail__link" href="#skills">Skills</a></li>
+      <li><a class="rail__link" href="#experience">Experience</a></li>
+      <li><a class="rail__link" href="#projects">Projects</a></li>
+      <li><a class="rail__link" href="#contact">Contact</a></li>
+      <li><a class="rail__link" href="#social">Elsewhere</a></li>
+    </ul>
+
+    <p class="rail__footer">Open to freelance &amp; full-time work.</p>
+  </nav>
+
+  <div class="backdrop" id="backdrop"></div>
+
+  <!-- ===================== MAIN ===================== -->
+  <main class="main" id="main">
+    <div class="container">
+
+      <!-- ---------- 1. ABOUT ---------- -->
+      <section id="about" class="section reveal" aria-labelledby="about-title">
+        <div class="hero">
+          <img
+            class="avatar avatar--hero"
+            src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 160'%3E%3Crect width='160' height='160' fill='%231E3A8A'/%3E%3Ctext x='80' y='103' font-family='Inter, Arial, sans-serif' font-size='58' font-weight='700' fill='%23FFFFFF' text-anchor='middle'%3EKYM%3C/text%3E%3C/svg%3E"
+            alt=""
+            width="96"
+            height="96">
+
+          <div class="hero__body">
+            <h1 class="hero__name">Khine Yin Mon</h1>
+            <p class="hero__role">Full stack Developer &middot; Yangon, MM</p>
+            <p class="hero__tagline">I build clean, fast, accessible interfaces.</p>
+            <div class="hero__actions">
+              <a class="btn btn--primary" href="#contact">Get in touch</a>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="section__title" id="about-title">About</h2>
+        <div class="prose">
+          <p>
+            I'm a full stack developer based in Yangon, working across the stack to ship
+            product interfaces that feel considered and load fast. Over the last two years
+            I've helped teams turn rough design files into accessible, maintainable
+            front-end systems.
+          </p>
+          <p>
+            My day-to-day is TypeScript, React and Node, paired with a strong bias toward
+            semantic HTML and measurable performance budgets. I care about the details
+            that rarely make it into a screenshot: keyboard paths, loading and empty
+            states, and error copy that actually helps.
+          </p>
+          <p>
+            2 years shipping design systems and product UI. Comfortable owning a feature
+            end to end — from the API contract through to the last focus ring.
+          </p>
+        </div>
+      </section>
+
+      <!-- ---------- 2. SKILLS ---------- -->
+      <section id="skills" class="section reveal" aria-labelledby="skills-title">
+        <h2 class="section__title" id="skills-title">Skills</h2>
+        <p class="section__lead">
+          The tools I reach for most, grouped by where they sit in the stack.
+          Levels are self-assessed and honest.
+        </p>
+
+        <div class="grid-2" style="margin-top: var(--sp-5);">
+          <!-- Frontend -->
+          <div class="card">
+            <h3 class="skill-group__title">Frontend</h3>
+            <ul>
+              <li class="skill" data-level="expert">
+                <div class="skill__head">
+                  <span class="skill__name">TypeScript &amp; React</span>
+                  <span class="skill__level">Expert</span>
+                </div>
+                <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="95"
+                     aria-label="TypeScript and React proficiency">
+                  <span class="meter__fill"></span>
+                </div>
+              </li>
+              <li class="skill" data-level="expert">
+                <div class="skill__head">
+                  <span class="skill__name">Semantic HTML &amp; CSS</span>
+                  <span class="skill__level">Expert</span>
+                </div>
+                <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="95"
+                     aria-label="Semantic HTML and CSS proficiency">
+                  <span class="meter__fill"></span>
+                </div>
+              </li>
+              <li class="skill" data-level="advanced">
+                <div class="skill__head">
+                  <span class="skill__name">Accessibility (WCAG 2.1 AA)</span>
+                  <span class="skill__level">Advanced</span>
+                </div>
+                <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80"
+                     aria-label="Accessibility proficiency">
+                  <span class="meter__fill"></span>
+                </div>
+              </li>
+              <li class="skill" data-level="advanced">
+                <div class="skill__head">
+                  <span class="skill__name">Design systems</span>
+                  <span class="skill__level">Advanced</span>
+                </div>
+                <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80"
+                     aria-label="Design systems proficiency">
+                  <span class="meter__fill"></span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Backend -->
+          <div class="card">
+            <h3 class="skill-group__title">Backend</h3>
+            <ul>
+              <li class="skill" data-level="advanced">
+                <div class="skill__head">
+                  <span class="skill__name">Node.js &amp; Express</span>
+                  <span class="skill__level">Advanced</span>
+                </div>
+                <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80"
+                     aria-label="Node.js and Express proficiency">
+                  <span class="meter__fill"></span>
+                </div>
+              </li>
+              <li class="skill" data-level="advanced">
+                <div class="skill__head">
+                  <span class="skill__name">PostgreSQL &amp; Prisma</span>
+                  <span class="skill__level">Advanced</span>
+                </div>
+                <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80"
+                     aria-label="PostgreSQL and Prisma proficiency">
+                  <span class="meter__fill"></span>
+                </div>
+              </li>
+              <li class="skill" data-level="intermediate">
+                <div class="skill__head">
+                  <span class="skill__name">REST &amp; GraphQL APIs</span>
+                  <span class="skill__level">Intermediate</span>
+                </div>
+                <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60"
+                     aria-label="REST and GraphQL API proficiency">
+                  <span class="meter__fill"></span>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Practices -->
+          <div class="card">
+            <h3 class="skill-group__title">Practices &amp; tooling</h3>
+            <ul>
+              <li class="skill" data-level="expert">
+                <div class="skill__head">
+                  <span class="skill__name">Git &amp; code review</span>
+                  <span class="skill__level">Expert</span>
+                </div>
+                <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="95"
+                     aria-label="Git and code review proficiency">
+                  <span class="meter__fill"></span>
+                </div>
+              </li>
+              <li class="skill" data-level="advanced">
+                <div class="skill__head">
+                  <span class="skill__name">Testing (Vitest, Playwright)</span>
+                  <span class="skill__level">Advanced</span>
+                </div>
+                <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="80"
+                     aria-label="Testing proficiency">
+                  <span class="meter__fill"></span>
+                </div>
+              </li>
+              <li class="skill" data-level="intermediate">
+                <div class="skill__head">
+                  <span class="skill__name">CI/CD &amp; deployment</span>
+                  <span class="skill__level">Intermediate</span>
+                </div>
+                <div class="meter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="60"
+                     aria-label="CI/CD and deployment proficiency">
+                  <span class="meter__fill"></span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------- 3. EXPERIENCE ---------- -->
+      <section id="experience" class="section reveal" aria-labelledby="experience-title">
+        <h2 class="section__title" id="experience-title">Experience</h2>
+
+        <ol class="timeline" style="margin-top: var(--sp-5);">
+          <li>
+            <article class="card">
+              <header>
+                <h3 class="entry__role">Full stack Developer</h3>
+                <p class="entry__company">Ayar Digital &middot; Yangon, MM</p>
+                <p class="entry__dates">
+                  <time datetime="2024-03">Mar 2024</time> &ndash;
+                  <time datetime="2026-10">Present</time>
+                </p>
+              </header>
+
+              <p class="entry__desc">
+                Own features end to end, from API contract through to the last focus state.
+                Part of a four-person product team building a B2B analytics platform used
+                by logistics operators across Southeast Asia.
+              </p>
+
+              <ul class="bullets">
+                <li>Rebuilt the design system in TypeScript, cutting new-screen build time from three days to under one.</li>
+                <li>Raised Lighthouse accessibility scores from 78 to 100 across the five highest-traffic routes.</li>
+                <li>Introduced Playwright smoke tests that catch roughly 90% of regressions before review.</li>
+              </ul>
+            </article>
+          </li>
+
+          <li>
+            <article class="card">
+              <header>
+                <h3 class="entry__role">Frontend Developer</h3>
+                <p class="entry__company">Thiri Labs &middot; Yangon, MM</p>
+                <p class="entry__dates">
+                  <time datetime="2023-06">Jun 2023</time> &ndash;
+                  <time datetime="2024-02">Feb 2024</time>
+                </p>
+              </header>
+
+              <p class="entry__desc">
+                Built and maintained customer-facing dashboards for a logistics product,
+                working closely with design and support to shorten the loop between a
+                reported issue and a shipped fix.
+              </p>
+
+              <ul class="bullets">
+                <li>Shipped a reusable charting layer now used across six dashboard views.</li>
+                <li>Reduced the main bundle by 38% by code-splitting routes and auditing dependencies.</li>
+                <li>Ran weekly accessibility clinics with the design team to catch issues at source.</li>
+              </ul>
+            </article>
+          </li>
+        </ol>
+      </section>
+
+      <!-- ---------- 4. PROJECTS ---------- -->
+      <section id="projects" class="section reveal" aria-labelledby="projects-title">
+        <h2 class="section__title" id="projects-title">Projects</h2>
+        <p class="section__lead">
+          A few things I've built or maintained. Each one is open source unless noted.
+        </p>
+
+        <div class="grid-2" style="margin-top: var(--sp-5);">
+
+          <article class="card card--flush">
+            <img
+              class="project__thumb"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'%3E%3Crect width='640' height='360' fill='%23EFF6FF'/%3E%3Crect x='72' y='196' width='56' height='96' rx='6' fill='%231E3A8A'/%3E%3Crect x='152' y='148' width='56' height='144' rx='6' fill='%230EA5E9'/%3E%3Crect x='232' y='108' width='56' height='184' rx='6' fill='%231E3A8A'/%3E%3Crect x='312' y='168' width='56' height='124' rx='6' fill='%230EA5E9'/%3E%3Crect x='392' y='88' width='56' height='204' rx='6' fill='%231E3A8A'/%3E%3Crect x='472' y='136' width='56' height='156' rx='6' fill='%230EA5E9'/%3E%3C/svg%3E"
+              alt="Bar chart illustration representing the Ayar Analytics dashboard"
+              width="640"
+              height="360"
+              loading="lazy">
+            <div class="card__body">
+              <h3 class="project__title">Ayar Analytics UI</h3>
+              <p class="project__summary">
+                A component-driven dashboard shell with themeable tokens and keyboard-first data tables.
+              </p>
+              <ul class="tags">
+                <li class="tag">React</li>
+                <li class="tag">TypeScript</li>
+                <li class="tag">Tailwind</li>
+              </ul>
+              <a class="project__link"
+                 href="https://github.com/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="View the Ayar Analytics UI repository on GitHub (opens in a new tab)">
+                View repository
+                <span aria-hidden="true">&nearr;</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="card card--flush">
+            <img
+              class="project__thumb"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'%3E%3Crect width='640' height='360' fill='%23F0F9FF'/%3E%3Ccircle cx='250' cy='180' r='96' fill='%231E3A8A'/%3E%3Ccircle cx='390' cy='180' r='96' fill='%230EA5E9' fill-opacity='0.75'/%3E%3C/svg%3E"
+              alt="Two overlapping circles illustrating colour contrast comparison"
+              width="640"
+              height="360"
+              loading="lazy">
+            <div class="card__body">
+              <h3 class="project__title">Palette</h3>
+              <p class="project__summary">
+                An accessible colour-contrast checker that validates design tokens against WCAG AA and AAA.
+              </p>
+              <ul class="tags">
+                <li class="tag">TypeScript</li>
+                <li class="tag">Vite</li>
+                <li class="tag">WCAG</li>
+              </ul>
+              <a class="project__link"
+                 href="https://github.com/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="View the Palette repository on GitHub (opens in a new tab)">
+                View repository
+                <span aria-hidden="true">&nearr;</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="card card--flush">
+            <img
+              class="project__thumb"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'%3E%3Crect width='640' height='360' fill='%23F8FAFC'/%3E%3Crect x='120' y='96' width='400' height='44' rx='6' fill='%23FFFFFF' stroke='%23CBD5E1'/%3E%3Crect x='120' y='160' width='400' height='44' rx='6' fill='%23FFFFFF' stroke='%23CBD5E1'/%3E%3Crect x='120' y='224' width='160' height='44' rx='6' fill='%231E3A8A'/%3E%3C/svg%3E"
+              alt="Stacked form field mockups representing the Formkit Lite library"
+              width="640"
+              height="360"
+              loading="lazy">
+            <div class="card__body">
+              <h3 class="project__title">Formkit Lite</h3>
+              <p class="project__summary">
+                Headless form validation primitives with zero dependencies and first-class ARIA wiring.
+              </p>
+              <ul class="tags">
+                <li class="tag">TypeScript</li>
+                <li class="tag">npm</li>
+                <li class="tag">Accessibility</li>
+              </ul>
+              <a class="project__link"
+                 href="https://github.com/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="View the Formkit Lite repository on GitHub (opens in a new tab)">
+                View repository
+                <span aria-hidden="true">&nearr;</span>
+              </a>
+            </div>
+          </article>
+
+          <article class="card card--flush">
+            <img
+              class="project__thumb"
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'%3E%3Crect width='640' height='360' fill='%23ECFEFF'/%3E%3Cpath d='M80 260 L200 260 L200 140 L360 140 L360 220 L560 220' fill='none' stroke='%231E3A8A' stroke-width='10' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='80' cy='260' r='18' fill='%230EA5E9'/%3E%3Ccircle cx='560' cy='220' r='18' fill='%230EA5E9'/%3E%3C/svg%3E"
+              alt="Route line diagram representing the Yangon Transit timetable app"
+              width="640"
+              height="360"
+              loading="lazy">
+            <div class="card__body">
+              <h3 class="project__title">Yangon Transit</h3>
+              <p class="project__summary">
+                A mobile-first timetable PWA that stays usable offline and on a 2G connection.
+              </p>
+              <ul class="tags">
+                <li class="tag">Node.js</li>
+                <li class="tag">PWA</li>
+                <li class="tag">PostgreSQL</li>
+              </ul>
+              <a class="project__link"
+                 href="https://github.com/"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 aria-label="View the Yangon Transit repository on GitHub (opens in a new tab)">
+                View repository
+                <span aria-hidden="true">&nearr;</span>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- ---------- 5. CONTACT ---------- -->
+      <section id="contact" class="section reveal" aria-labelledby="contact-title">
+        <h2 class="section__title" id="contact-title">Contact</h2>
+        <p class="section__lead">
+          Have a project, a role, or a question about a build? Send a note — I usually
+          reply within two working days.
+        </p>
+
+        <form
+          class="card form"
+          id="contactForm"
+          action="mailto:khine.yinmon@example.com"
+          method="post"
+          enctype="text/plain"
+          novalidate>
+
+          <div class="field">
+            <label class="field__label" for="name">Name</label>
+            <input
+              class="input"
+              id="name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              placeholder="Your name"
+              required
+              aria-describedby="name-error">
+            <p class="field__msg" id="name-error" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="email">Email</label>
+            <input
+              class="input"
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              required
+              aria-describedby="email-error">
+            <p class="field__msg" id="email-error" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="message">Message</label>
+            <p class="field__hint" id="message-hint">A sentence or two is plenty.</p>
+            <textarea
+              class="textarea"
+              id="message"
+              name="message"
+              rows="6"
+              placeholder="What are you building?"
+              required
+              aria-describedby="message-hint message-error"></textarea>
+            <p class="field__msg" id="message-error" aria-live="polite"></p>
+          </div>
+
+          <p class="form__status" id="formStatus" role="status" aria-live="polite"></p>
+
+          <div>
+            <button class="btn btn--primary" type="submit">Send message</button>
+          </div>
+        </form>
+      </section>
+
+      <!-- ---------- 6. SOCIAL LINKS ---------- -->
+      <section id="social" class="section reveal" aria-labelledby="social-title">
+        <h2 class="section__title" id="social-title">Elsewhere</h2>
+        <p class="section__lead">
+          Find me on these platforms, or send an email directly.
+        </p>
+
+        <ul class="social">
+          <li>
+            <a class="social__link"
+               href="https://github.com/"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="GitHub profile (opens in a new tab)">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-1.04-.01-1.89-2.78.62-3.37-1.21-3.37-1.21-.45-1.18-1.11-1.5-1.11-1.5-.91-.64.07-.62.07-.62 1 .07 1.53 1.05 1.53 1.05.89 1.57 2.34 1.12 2.91.85.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.3.1-2.71 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 2.5-.34c.85 0 1.71.12 2.5.34 1.91-1.33 2.75-1.05 2.75-1.05.55 1.41.2 2.45.1 2.71.64.72 1.03 1.63 1.03 2.75 0 3.93-2.35 4.79-4.58 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.28 10.28 0 0 0 22 12.25C22 6.58 17.52 2 12 2Z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a class="social__link"
+               href="https://www.linkedin.com/"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="LinkedIn profile (opens in a new tab)">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M4.98 3.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.64h.05c.53-1 1.83-2.06 3.76-2.06 4.02 0 4.76 2.5 4.76 5.76V21h-4v-5.62c0-1.34-.03-3.07-1.9-3.07-1.9 0-2.19 1.46-2.19 2.97V21h-4V9Z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a class="social__link"
+               href="https://x.com/"
+               target="_blank"
+               rel="noopener noreferrer"
+               aria-label="X profile (opens in a new tab)">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M17.53 3h3.05l-6.66 7.61L21.75 21h-6.13l-4.8-6.28L5.32 21H2.26l7.12-8.14L2.25 3h6.29l4.34 5.74L17.53 3Zm-1.07 16.16h1.69L7.62 4.75H5.8l10.66 14.41Z"/>
+              </svg>
+            </a>
+          </li>
+          <li>
+            <a class="social__link"
+               href="mailto:khine.yinmon@example.com"
+               rel="noopener noreferrer"
+               aria-label="Send an email to Khine Yin Mon">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M3 5h18a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Zm9 7.2L4.4 7H19.6L12 12.2ZM4 8.9V17h16V8.9l-7.4 5.05a1 1 0 0 1-1.2 0L4 8.9Z"/>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year">2026</span> Khine Yin Mon. Built with semantic HTML and a lot of care.</p>
+    </div>
+  </footer>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+          integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+          crossorigin="anonymous"></script>
+
+  <script>
+    /* =====================================================================
+       Application script — wrapped in an IIFE so nothing leaks to window.
+       All DOM work goes through jQuery with event delegation on stable
+       parents (the rail, the form, the document).
+       ===================================================================== */
+    (function () {
+      'use strict';
+
+      var MOBILE_QUERY = '(max-width: 767px)';
+      var REDUCED_MOTION_QUERY = '(prefers-reduced-motion: reduce)';
+
+      /* ---------------------------------------------------------------
+         Utilities
+         --------------------------------------------------------------- */
+      function prefersReducedMotion() {
+        return window.matchMedia(REDUCED_MOTION_QUERY).matches;
+      }
+
+      function isMobile() {
+        return window.matchMedia(MOBILE_QUERY).matches;
+      }
+
+      /* ---------------------------------------------------------------
+         Mobile drawer
+         --------------------------------------------------------------- */
+      function initDrawer() {
+        var $rail = $('#sidebar');
+        var $backdrop = $('#backdrop');
+        var $toggle = $('#menuToggle');
+        var $body = $('body');
+
+        if (!$rail.length || !$toggle.length) { return; }
+
+        function openDrawer() {
+          $rail.addClass('is-open');
+          $backdrop.addClass('is-open');
+          $body.addClass('nav-open');
+          $toggle.attr('aria-expanded', 'true').attr('aria-label', 'Close navigation menu');
+          $rail.find('.rail__link').first().trigger('focus');
+        }
+
+        function closeDrawer(returnFocus) {
+          $rail.removeClass('is-open');
+          $backdrop.removeClass('is-open');
+          $body.removeClass('nav-open');
+          $toggle.attr('aria-expanded', 'false').attr('aria-label', 'Open navigation menu');
+          if (returnFocus) { $toggle.trigger('focus'); }
+        }
+
+        function drawerIsOpen() {
+          return $rail.hasClass('is-open');
+        }
+
+        /* Delegated: toggle button lives in a stable parent (document). */
+        $(document).on('click', '#menuToggle', function () {
+          if (drawerIsOpen()) {
+            closeDrawer(true);
+          } else {
+            openDrawer();
+          }
+        });
+
+        $(document).on('click', '#backdrop', function () {
+          closeDrawer(true);
+        });
+
+        $(document).on('keydown', function (event) {
+          if (event.key === 'Escape' && drawerIsOpen()) {
+            closeDrawer(true);
+          }
+        });
+
+        /* Close the drawer automatically when the viewport grows past 767px. */
+        window.addEventListener('resize', function () {
+          if (!isMobile() && drawerIsOpen()) {
+            closeDrawer(false);
+          }
+        });
+      }
+
+      /* ---------------------------------------------------------------
+         Smooth anchor navigation with focus handoff
+         --------------------------------------------------------------- */
+      function initAnchorNavigation() {
+        var sections = document.querySelectorAll('main section[id]');
+
+        /* Make sections programmatically focusable for the focus handoff. */
+        Array.prototype.forEach.call(sections, function (section) {
+          section.setAttribute('tabindex', '-1');
+        });
+
+        function goToSection(hash, moveFocus) {
+          var target = document.querySelector(hash);
+          if (!target) { return; }
+
+          var headerOffset = isMobile() ? 68 : 0;
+          var top = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: top,
+            behavior: prefersReducedMotion() ? 'auto' : 'smooth'
+          });
+
+          if (window.history && window.history.pushState) {
+            window.history.pushState(null, '', hash);
+          }
+
+          if (moveFocus) {
+            target.focus({ preventScroll: true });
+          }
+        }
+
+        /* Delegated on the rail — links are static but the pattern keeps the
+           handler count at one. */
+        $(document).on('click', 'a[href^="#"]', function (event) {
+          var hash = this.getAttribute('href');
+          if (!hash || hash === '#') { return; }
+
+          var target = document.querySelector(hash);
+          if (!target) { return; }
+
+          event.preventDefault();
+
+          var $rail = $('#sidebar');
+          if (isMobile() && $rail.hasClass('is-open')) {
+            $rail.removeClass('is-open');
+            $('#backdrop').removeClass('is-open');
+            $('body').removeClass('nav-open');
+            $('#menuToggle').attr('aria-expanded', 'false').attr('aria-label', 'Open navigation menu');
+          }
+
+          goToSection(hash, true);
+        });
+      }
+
+      /* ---------------------------------------------------------------
+         Scroll spy for the rail's active state
+         --------------------------------------------------------------- */
+      function initScrollSpy() {
+        var sections = document.querySelectorAll('main section[id]');
+        if (!sections.length || !('IntersectionObserver' in window)) { return; }
+
+        var linkMap = {};
+        $('.rail__link').each(function () {
+          var href = this.getAttribute('href') || '';
+          if (href.charAt(0) === '#') {
+            linkMap[href.slice(1)] = this;
+          }
+        });
+
+        function setActive(id) {
+          $('.rail__link').removeAttr('aria-current');
+          if (linkMap[id]) {
+            $(linkMap[id]).attr('aria-current', 'true');
+          }
+        }
+
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              setActive(entry.target.id);
+            }
+          });
+        }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+        Array.prototype.forEach.call(sections, function (section) {
+          observer.observe(section);
+        });
+      }
+
+      /* ---------------------------------------------------------------
+         Section entrance (fade + rise)
+         --------------------------------------------------------------- */
+      function initReveal() {
+        var items = document.querySelectorAll('.reveal');
+        if (!items.length) { return; }
+
+        if (prefersReducedMotion() || !('IntersectionObserver' in window)) {
+          Array.prototype.forEach.call(items, function (el) {
+            el.classList.add('is-visible');
+          });
+          return;
+        }
+
+        var observer = new IntersectionObserver(function (entries, obs) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { rootMargin: '0px 0px -8% 0px', threshold: 0 });
+
+        Array.prototype.forEach.call(items, function (el) {
+          observer.observe(el);
+        });
+      }
+
+      /* ---------------------------------------------------------------
+         Contact form validation
+         --------------------------------------------------------------- */
+      var VALIDATORS = {
+        name: function (value) {
+          var v = String(value || '').trim();
+          if (!v) { return 'Please enter your name.'; }
+          if (v.length < 2) { return 'Name must be at least 2 characters.'; }
+          return '';
+        },
+        email: function (value) {
+          var v = String(value || '').trim();
+          if (!v) { return 'Please enter your email address.'; }
+          if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v)) {
+            return 'Enter a valid email address, for example name@example.com.';
+          }
+          return '';
+        },
+        message: function (value) {
+          var v = String(value || '').trim();
+          if (!v) { return 'Please enter a message.'; }
+          if (v.length < 10) { return 'Message must be at least 10 characters.'; }
+          return '';
+        }
+      };
+
+      function setFieldState($input, message) {
+        var $field = $input.closest('.field');
+        var $msg = $field.find('.field__msg');
+
+        if (message) {
+          $field.addClass('is-invalid').removeClass('is-valid');
+          $input.attr('aria-invalid', 'true');
+          $msg.text(message);
+        } else {
+          $field.removeClass('is-invalid').addClass('is-valid');
+          $input.removeAttr('aria-invalid');
+          $msg.text('');
+        }
+      }
+
+      function showFormStatus(type, text) {
+        var $status = $('#formStatus');
+        $status
+          .removeClass('form__status--error form__status--success is-visible')
+          .addClass(type === 'error' ? 'form__status--error' : 'form__status--success')
+          .text(text)
+          .addClass('is-visible');
+      }
+
+      function validateField($input) {
+        var name = $input.attr('name');
+        var validator = VALIDATORS[name];
+        if (!validator) { return true; }
+
+        var message = validator($input.val());
+        setFieldState($input, message);
+        return message === '';
+      }
+
+      function initContactForm() {
+        var $form = $('#contactForm');
+        if (!$form.length) { return; }
+
+        /* Delegated validation — one listener on the stable form parent. */
+        $form.on('input change', 'input, textarea', function () {
+          var $input = $(this);
+          if ($input.closest('.field').hasClass('is-invalid')) {
+            validateField($input);
+          }
+        });
+
+        $form.on('blur', 'input, textarea', function () {
+          validateField($(this));
+        });
+
+        $form.on('submit', function (event) {
+          event.preventDefault();
+
+          var valid = true;
+          var $firstInvalid = null;
+
+          $form.find('input, textarea').each(function () {
+            var $input = $(this);
+            if (!VALIDATORS[$input.attr('name')]) { return; }
+            if (!validateField($input)) {
+              valid = false;
+              if (!$firstInvalid) { $firstInvalid = $input; }
+            }
+          });
+
+          if (!valid) {
+            showFormStatus('error', 'Error: please fix the highlighted fields and try again.');
+            if ($firstInvalid) { $firstInvalid.trigger('focus'); }
+            return;
+          }
+
+          var name = $.trim($('#name').val());
+          var email = $.trim($('#email').val());
+          var message = $.trim($('#message').val());
+
+          var subject = encodeURIComponent('Portfolio enquiry from ' + name);
+          var body = encodeURIComponent(
+            'Name: ' + name + '\n' +
+            'Email: ' + email + '\n\n' +
+            message + '\n'
+          );
+
+          showFormStatus(
+            'success',
+            'Success: thanks, ' + name + '. Your mail client is opening with the message ready to send.'
+          );
+
+          $form[0].reset();
+          $form.find('.field').removeClass('is-valid is-invalid');
+          $form.find('input, textarea').removeAttr('aria-invalid');
+          $form.find('.field__msg').text('');
+
+          window.location.href = 'mailto:khine.yinmon@example.com?subject=' + subject + '&body=' + body;
+        });
+      }
+
+      /* ---------------------------------------------------------------
+         Footer year
+         --------------------------------------------------------------- */
+      function initYear() {
+        var el = document.getElementById('year');
+        if (el) { el.textContent = String(new Date().getFullYear()); }
+      }
+
+      /* ---------------------------------------------------------------
+         Boot
+         --------------------------------------------------------------- */
+      $(function () {
+        initDrawer();
+        initAnchorNavigation();
+        initScrollSpy();
+        initReveal();
+        initContactForm();
+        initYear();
+      });
+    })();
+  </script>
+</body>
+</html>
