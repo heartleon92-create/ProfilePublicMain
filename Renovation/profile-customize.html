@@ -5,12 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Profile Design Customizer — Select to Prompt Builder</title>
 
-<!-- ============================================================
-     TECH STACK
-     - Plain CSS3 only (no Tailwind, no Bootstrap, no frameworks)
-     - jQuery + jQuery UI for sortable sections
-     - Font Awesome for icons, Google Fonts for typography
-     ============================================================ -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+Myanmar:wght@400;600&display=swap" rel="stylesheet" />
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
@@ -30,7 +24,6 @@
   --muted:       #9CA3AF;
   --muted-2:     #6B7280;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-
   --sidebar-w: min(70vw, 1120px);
 }
 
@@ -66,10 +59,8 @@ input, select, textarea { font-family: inherit; }
 
 .sr-only {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
@@ -173,7 +164,7 @@ input, select, textarea { font-family: inherit; }
 .btn-icon:hover { background: #F9FAFB; }
 
 /* ============================================================
-   3. PAGE LAYOUT  — independent scrolling columns on desktop
+   3. PAGE LAYOUT — independently scrolling columns on desktop
    ============================================================ */
 .layout {
   display: grid;
@@ -215,7 +206,7 @@ input, select, textarea { font-family: inherit; }
 .col-left > * + * { margin-top: 16px; }
 
 /* ============================================================
-   4. PANELS  +  COLLAPSE / EXPAND
+   4. PANELS + COLLAPSE / EXPAND
    ============================================================ */
 .panel {
   background: #fff;
@@ -237,7 +228,7 @@ input, select, textarea { font-family: inherit; }
   cursor: pointer;
   font: inherit;
   color: inherit;
-  transition: background .15s ease;
+  transition: background .15s ease, border-color .25s ease;
 }
 .panel-head:hover { background: #FCFCFD; }
 .panel-head:focus-visible {
@@ -266,17 +257,18 @@ input, select, textarea { font-family: inherit; }
   transition: transform .22s ease;
   flex: none;
 }
-.panel-head .panel-hint + .panel-chevron { margin-left: 8px; }
 .panel.collapsed .panel-chevron { transform: rotate(-90deg); }
 .panel.collapsed .panel-head { border-bottom-color: transparent; }
 
+/* Panel body: transition is driven entirely by inline max-height in JS.
+   No !important, no base max-height — so the JS animation can run. */
 .panel-body {
   padding: 16px;
   overflow: hidden;
-  transition: max-height .26s ease, opacity .2s ease, padding .2s ease;
+  transition: max-height .28s ease, opacity .22s ease, padding .22s ease;
 }
 .panel.collapsed .panel-body {
-  max-height: 0 !important;
+  max-height: 0;
   opacity: 0;
   padding-top: 0;
   padding-bottom: 0;
@@ -348,7 +340,6 @@ select.input { appearance: auto; }
   margin-top: 4px;
 }
 
-/* ---------- toggle row ---------- */
 .toggle-row {
   display: flex;
   align-items: center;
@@ -370,8 +361,7 @@ select.input { appearance: auto; }
 .switch input {
   position: absolute;
   opacity: 0;
-  width: 0;
-  height: 0;
+  width: 0; height: 0;
   margin: 0;
 }
 .switch-track {
@@ -386,10 +376,8 @@ select.input { appearance: auto; }
 .switch-track::after {
   content: '';
   position: absolute;
-  top: 2px;
-  left: 2px;
-  width: 20px;
-  height: 20px;
+  top: 2px; left: 2px;
+  width: 20px; height: 20px;
   border-radius: 9999px;
   background: #fff;
   transition: transform .2s ease;
@@ -419,10 +407,7 @@ select.input { appearance: auto; }
   transition: all .18s ease;
   cursor: pointer;
 }
-.opt-card:hover {
-  border-color: var(--brand);
-  transform: translateY(-1px);
-}
+.opt-card:hover { border-color: var(--brand); transform: translateY(-1px); }
 .opt-card.active {
   border-color: var(--brand);
   box-shadow: 0 0 0 2px rgba(220, 38, 38, .15);
@@ -479,17 +464,8 @@ select.input { appearance: auto; }
   color: var(--brand);
   margin-bottom: 6px;
 }
-.career-card .career-name {
-  font-size: 12px;
-  font-weight: 600;
-  line-height: 1.25;
-}
-.career-card .career-desc {
-  font-size: 10px;
-  color: var(--muted);
-  line-height: 1.35;
-  margin-top: 2px;
-}
+.career-card .career-name { font-size: 12px; font-weight: 600; line-height: 1.25; }
+.career-card .career-desc { font-size: 10px; color: var(--muted); line-height: 1.35; margin-top: 2px; }
 .career-card.active .career-icon { color: var(--brand); }
 
 .career-custom-row { margin-top: 12px; }
@@ -675,8 +651,7 @@ select.input { appearance: auto; }
   background: #fff;
 }
 .color-token {
-  width: 34px;
-  height: 34px;
+  width: 34px; height: 34px;
   border-radius: 8px;
   border: 1px solid var(--line);
   cursor: pointer;
@@ -735,26 +710,16 @@ select.input { appearance: auto; }
 .layout-name { font-size: 12px; font-weight: 600; line-height: 1.25; }
 .layout-desc { font-size: 10px; color: var(--muted); line-height: 1.35; margin-top: 2px; }
 
-.mini-card {
-  border-radius: 8px;
-  padding: 12px 0;
-  text-align: center;
-}
+.mini-card { border-radius: 8px; padding: 12px 0; text-align: center; }
 .mini-card.mini-motion { padding: 8px 0; }
 
-.mini-label {
-  display: block;
-  font-size: 10px;
-  font-weight: 500;
-  margin-top: 8px;
-}
+.mini-label { display: block; font-size: 10px; font-weight: 500; margin-top: 8px; }
 .mini-card.mini-motion .mini-label { margin-top: 0; }
 
 .shadow-preview,
 .border-preview {
   display: block;
-  width: 28px;
-  height: 28px;
+  width: 28px; height: 28px;
   margin: 0 auto;
   border-radius: 6px;
   background: #fff;
@@ -785,11 +750,7 @@ body.mode-advanced .advanced-only { display: block; }
   font-weight: 600;
 }
 .preview-heading i { color: var(--brand); }
-.preview-heading .sub {
-  font-size: 11px;
-  font-weight: 400;
-  color: var(--muted);
-}
+.preview-heading .sub { font-size: 11px; font-weight: 400; color: var(--muted); }
 
 .preview-sizes { display: flex; gap: 4px; margin-left: auto; }
 
@@ -804,11 +765,7 @@ body.mode-advanced .advanced-only { display: block; }
   transition: all .15s ease;
 }
 .preview-size:hover { background: #F9FAFB; }
-.preview-size.active {
-  background: var(--ink);
-  color: #fff;
-  border-color: var(--ink);
-}
+.preview-size.active { background: var(--ink); color: #fff; border-color: var(--ink); }
 
 .preview-stage {
   padding: 20px;
@@ -857,7 +814,7 @@ body.mode-advanced .advanced-only { display: block; }
   text-overflow: ellipsis;
 }
 
-/* ---------- theme-driven preview surface ---------- */
+/* theme-driven preview surface */
 #previewFrame {
   --profile-bg: #FFFFFF;
   --profile-surface: #F9FAFB;
@@ -945,6 +902,7 @@ body.mode-advanced .advanced-only { display: block; }
   color: #fff;
   font-weight: 800;
 }
+.pv-photo { object-fit: cover; display: block; }
 .pv-muted { opacity: .62; }
 .pv-line {
   height: 7px;
@@ -1036,8 +994,7 @@ body.mode-advanced .advanced-only { display: block; }
 
 #promptSidebar {
   position: fixed;
-  top: 0;
-  right: 0;
+  top: 0; right: 0;
   height: 100%;
   width: var(--sidebar-w);
   background: #fff;
@@ -1181,8 +1138,7 @@ body.mode-advanced .advanced-only { display: block; }
 
 .btn-spinner {
   display: inline-block;
-  width: 12px;
-  height: 12px;
+  width: 12px; height: 12px;
   border: 2px solid currentColor;
   border-right-color: transparent;
   border-radius: 9999px;
@@ -1241,8 +1197,7 @@ body.mode-advanced .advanced-only { display: block; }
    ============================================================ */
 #promptToggleBtn {
   position: fixed;
-  top: 50%;
-  right: 0;
+  top: 50%; right: 0;
   transform: translateY(-50%);
   z-index: 80;
   background: var(--brand);
@@ -1287,7 +1242,7 @@ body.mode-advanced .advanced-only { display: block; }
 #toast.show { transform: translate(-50%, 0); opacity: 1; }
 
 /* ============================================================
-   18. MISC ANIMATION
+   18. MISC
    ============================================================ */
 .fade-in { animation: fadeIn .22s ease both; }
 @keyframes fadeIn {
@@ -1339,22 +1294,19 @@ body.mode-advanced .advanced-only { display: block; }
 </header>
 
 <!-- ============================================================
-     MAIN GRID — 2 INDEPENDENTLY SCROLLING COLUMNS
+     MAIN GRID
      ============================================================ -->
 <main class="wrap layout">
 
-  <!-- ==========================================================
-       LEFT — CUSTOMIZATION PANEL
-       ========================================================== -->
   <section class="col-left">
 
-    <!-- ---------- 1. CAREER / PROFILE TYPE ---------- -->
+    <!-- 1. CAREER / PROFILE TYPE -->
     <div class="panel" data-panel="career">
       <button class="panel-head" type="button" aria-expanded="true" aria-controls="panelCareerBody">
         <span class="dot"></span>
-        <h2 class="panel-title">Career / Profile Type</h2>
+        <span class="panel-title">Career / Profile Type</span>
         <span class="panel-hint" id="careerHint">Step 1 — choose first</span>
-        <i class="fas fa-chevron-down panel-chevron"></i>
+        <i class="fas fa-chevron-down panel-chevron" aria-hidden="true"></i>
       </button>
       <div class="panel-body" id="panelCareerBody">
         <div class="career-search-wrap">
@@ -1376,44 +1328,43 @@ body.mode-advanced .advanced-only { display: block; }
       </div>
     </div>
 
-    <!-- ---------- 2. SECTIONS ---------- -->
+    <!-- 2. SECTIONS -->
     <div class="panel" data-panel="sections">
       <button class="panel-head" type="button" aria-expanded="true" aria-controls="panelSectionsBody">
         <span class="dot"></span>
-        <h2 class="panel-title">Sections</h2>
+        <span class="panel-title">Sections</span>
         <span class="panel-hint">Drag to reorder · toggle to show</span>
-        <i class="fas fa-chevron-down panel-chevron"></i>
+        <i class="fas fa-chevron-down panel-chevron" aria-hidden="true"></i>
       </button>
       <div class="panel-body" id="panelSectionsBody" style="padding:8px">
         <ul id="sectionList" class="section-list"></ul>
       </div>
     </div>
 
-    <!-- ---------- 3. YOUR PROFILE / CAREER INFORMATION ---------- -->
+    <!-- 3. YOUR PROFILE / CAREER INFORMATION -->
     <div class="panel" data-panel="profile">
       <button class="panel-head" type="button" aria-expanded="true" aria-controls="panelProfileBody">
         <span class="dot"></span>
-        <h2 class="panel-title">Your Profile / Career Information</h2>
+        <span class="panel-title">Your Profile / Career Information</span>
         <span class="panel-hint" id="profileHint">Adapts to your career</span>
-        <i class="fas fa-chevron-down panel-chevron"></i>
+        <i class="fas fa-chevron-down panel-chevron" aria-hidden="true"></i>
       </button>
       <div class="panel-body" id="panelProfileBody">
         <div id="profileForm"></div>
       </div>
     </div>
 
-    <!-- ---------- 4. COLORS & THEME ---------- -->
+    <!-- 4. COLORS & THEME -->
     <div class="panel collapsed" data-panel="colors">
       <button class="panel-head" type="button" aria-expanded="false" aria-controls="panelColorsBody">
         <span class="dot"></span>
-        <h2 class="panel-title">Colors &amp; Theme</h2>
+        <span class="panel-title">Colors &amp; Theme</span>
         <span class="panel-badge hidden" id="customThemeBadge">Customized</span>
         <span class="panel-hint" id="themeHint">Minimal Light</span>
-        <i class="fas fa-chevron-down panel-chevron"></i>
+        <i class="fas fa-chevron-down panel-chevron" aria-hidden="true"></i>
       </button>
       <div class="panel-body" id="panelColorsBody">
         <div class="stack-4">
-
           <div>
             <p class="field-label-sm">Theme preset</p>
             <div id="themeGrid" class="theme-grid"></div>
@@ -1456,18 +1407,17 @@ body.mode-advanced .advanced-only { display: block; }
               </button>
             </div>
           </div>
-
         </div>
       </div>
     </div>
 
-    <!-- ---------- 5. TYPOGRAPHY ---------- -->
+    <!-- 5. TYPOGRAPHY -->
     <div class="panel collapsed" data-panel="type">
       <button class="panel-head" type="button" aria-expanded="false" aria-controls="panelTypeBody">
         <span class="dot"></span>
-        <h2 class="panel-title">Typography</h2>
+        <span class="panel-title">Typography</span>
         <span class="panel-hint" id="typeHint">Inter · Standard 16px</span>
-        <i class="fas fa-chevron-down panel-chevron"></i>
+        <i class="fas fa-chevron-down panel-chevron" aria-hidden="true"></i>
       </button>
       <div class="panel-body" id="panelTypeBody">
         <div class="form-grid">
@@ -1519,13 +1469,13 @@ body.mode-advanced .advanced-only { display: block; }
       </div>
     </div>
 
-    <!-- ---------- 6. LAYOUT ---------- -->
+    <!-- 6. LAYOUT -->
     <div class="panel collapsed" data-panel="layout">
       <button class="panel-head" type="button" aria-expanded="false" aria-controls="panelLayoutBody">
         <span class="dot"></span>
-        <h2 class="panel-title">Layout</h2>
+        <span class="panel-title">Layout</span>
         <span class="panel-hint" id="layoutHint">Hero Top</span>
-        <i class="fas fa-chevron-down panel-chevron"></i>
+        <i class="fas fa-chevron-down panel-chevron" aria-hidden="true"></i>
       </button>
       <div class="panel-body" id="panelLayoutBody">
         <div class="stack-4">
@@ -1553,13 +1503,13 @@ body.mode-advanced .advanced-only { display: block; }
       </div>
     </div>
 
-    <!-- ---------- 7. SHAPE & MOTION ---------- -->
+    <!-- 7. SHAPE & MOTION -->
     <div class="panel collapsed" data-panel="shape">
       <button class="panel-head" type="button" aria-expanded="false" aria-controls="panelShapeBody">
         <span class="dot"></span>
-        <h2 class="panel-title">Shape &amp; motion</h2>
+        <span class="panel-title">Shape &amp; motion</span>
         <span class="panel-hint" id="shapeHint">12px · Soft · Standard</span>
-        <i class="fas fa-chevron-down panel-chevron"></i>
+        <i class="fas fa-chevron-down panel-chevron" aria-hidden="true"></i>
       </button>
       <div class="panel-body" id="panelShapeBody">
         <div class="stack-4">
@@ -1586,13 +1536,13 @@ body.mode-advanced .advanced-only { display: block; }
       </div>
     </div>
 
-    <!-- ---------- 8. EXTRA NOTES ---------- -->
+    <!-- 8. EXTRA NOTES -->
     <div class="panel collapsed" data-panel="extra">
       <button class="panel-head" type="button" aria-expanded="false" aria-controls="panelExtraBody">
         <span class="dot"></span>
-        <h2 class="panel-title">Anything else?</h2>
+        <span class="panel-title">Anything else?</span>
         <span class="panel-hint">Optional</span>
-        <i class="fas fa-chevron-down panel-chevron"></i>
+        <i class="fas fa-chevron-down panel-chevron" aria-hidden="true"></i>
       </button>
       <div class="panel-body" id="panelExtraBody">
         <label class="field-label" for="extraNotes">Extra requirements (optional)</label>
@@ -1601,11 +1551,11 @@ body.mode-advanced .advanced-only { display: block; }
       </div>
     </div>
 
-    <!-- ---------- 9. GENERATE DEVELOPER PROMPT ---------- -->
+    <!-- 9. GENERATE -->
     <div class="panel" data-panel="generate">
       <div class="panel-head static">
         <span class="dot"></span>
-        <h2 class="panel-title">Generate Developer Prompt</h2>
+        <span class="panel-title">Generate Developer Prompt</span>
         <span class="panel-hint">Copy · download · order</span>
       </div>
       <div class="panel-body">
@@ -1617,17 +1567,14 @@ body.mode-advanced .advanced-only { display: block; }
 
   </section>
 
-  <!-- ==========================================================
-       RIGHT — LIVE PREVIEW
-       ========================================================== -->
   <section class="col-right">
     <div class="panel">
 
       <div class="panel-head wrap-head static">
-        <h2 class="preview-heading">
+        <span class="preview-heading">
           <i class="fas fa-eye"></i> Live preview
           <span class="sub">— reflects your current configuration</span>
-        </h2>
+        </span>
 
         <div class="preview-sizes">
           <button class="preview-size" data-w="375" type="button">
@@ -1695,7 +1642,6 @@ body.mode-advanced .advanced-only { display: block; }
   </div>
 
   <div class="sidebar-content">
-
     <div class="sidebar-head">
       <div class="sidebar-icon">
         <i class="fas fa-wand-magic-sparkles"></i>
@@ -1723,14 +1669,13 @@ body.mode-advanced .advanced-only { display: block; }
     </div>
 
     <div class="sidebar-body">
-      <textarea id="layoutOutput" class="prompt-output" readonly>Configure your profile on the left — the developer prompt will appear here.</textarea>
+      <textarea id="layoutOutput" class="prompt-output" readonly>Select a career to build your developer prompt.</textarea>
     </div>
 
     <div class="sidebar-foot">
       <i class="fas fa-circle-info"></i>
       <span>The prompt is assembled from your live form state — career, sections, profile data, theme tokens and layout settings.</span>
     </div>
-
   </div>
 </aside>
 
@@ -1747,35 +1692,18 @@ body.mode-advanced .advanced-only { display: block; }
 <script>
 /* ============================================================================
    PROFILE DESIGN CUSTOMIZER — CAREER-DRIVEN SELECT-TO-PROMPT BUILDER
-   ----------------------------------------------------------------------------
-   ARCHITECTURE
-   1) CONFIG              → Telegram delivery + sidebar passcode
-   2) CAREERS             → career registry (id, name, icon, defaults)
-   3) SECTION_SCHEMA      → per-section field configuration
-   4) THEMES              → 15 theme presets (colour tokens)
-   5) LAYOUTS / SHADOWS / BORDERS / MOTIONS
-   6) state               → current configuration snapshot
-   7) render*()           → build UI from configuration (data-driven)
-   8) generatePrompt()    → assemble the developer spec
-   9) bind()              → jQuery event delegation
    ========================================================================== */
 
-
-/* ============================================================================
+/* ---------------------------------------------------------------------------
    0. CONFIGURATION
-   ============================================================================
-   ⚠️  SECURITY WARNING — READ BEFORE DEPLOYING  ⚠️
-   A bot token embedded in client-side JavaScript is NOT secret. For production,
+   A bot token embedded in client-side JS is NOT secret. For production,
    deploy a server-side relay and set TELEGRAM_PROXY_URL below.
-   ========================================================================== */
-  const TELEGRAM_BOT_TOKEN = "8667705229:AAE7yXyApUypoQSxd9TIExaPn4Yk2G4BfxI";
-        const TELEGRAM_CEO_CHAT_ID = "1742022528";         // Receives Order Summary Alert
-        const TELEGRAM_ADMIN_CHAT_ID = "-1004426222447"; // Receives Full AI Prompts
-
-
+   ------------------------------------------------------------------------- */
+const TELEGRAM_BOT_TOKEN     = "";
+const TELEGRAM_CEO_CHAT_ID   = "";
+const TELEGRAM_ADMIN_CHAT_ID = "";
 const TELEGRAM_PROXY_URL     = "";
 
-/* Sidebar passcode — prototype lock only, NOT real authentication. */
 const SIDEBAR_PASSCODE = "1210";
 
 
@@ -1851,7 +1779,7 @@ const CAREERS = [
     } },
 
   { id:'doctor', name:'Doctor / Healthcare Professional', icon:'fa-user-doctor', desc:'Clinical practice & care',
-    sections:['about','skills','experience','education','certifications','appointments','contact'],
+    sections:['about','skills','experience','education','certifications','publications','appointments','contact'],
     overrides:{
       skills:{ label:'Specialty & Qualifications', fields:[
         { id:'primary', label:'Medical Specialty', type:'text', span:2, ph:'Cardiology' },
@@ -1881,20 +1809,20 @@ const CAREERS = [
     ]} } },
 
   { id:'consultant', name:'Consultant', icon:'fa-lightbulb', desc:'Advises & delivers expertise',
-    sections:['about','services','experience','testimonials','certifications','contact','social'] },
+    sections:['about','services','experience','publications','testimonials','certifications','contact','social'] },
 
   { id:'other', name:'Other / Custom Career', icon:'fa-ellipsis', desc:'Define your own path',
     sections:['about','skills','experience','projects','education','contact','social'] }
 ];
 
 function getCareer(id) {
-  return CAREERS.find(c => c.id === id) || CAREERS[CAREERS.length - 1];
+  if (!id) return null;
+  return CAREERS.find(c => c.id === id) || null;
 }
 
 
 /* ============================================================================
    2. SECTION SCHEMA
-   Each section defines its own field configuration.
    ========================================================================== */
 const SECTION_SCHEMA = {
 
@@ -2036,6 +1964,17 @@ const SECTION_SCHEMA = {
     ]
   },
 
+  publications: {
+    label:'Publications', icon:'fa-book-open-reader', repeatable:true, itemLabel:'Publication',
+    promptBase:'A list of academic or professional publications, each with a title, venue or journal, year, and an optional DOI or external link.',
+    fields: [
+      { id:'title', label:'Title', type:'text', span:2 },
+      { id:'venue', label:'Venue / Journal', type:'text' },
+      { id:'year', label:'Year', type:'text' },
+      { id:'url', label:'DOI / URL', type:'url', span:2 }
+    ]
+  },
+
   courses: {
     label:'Courses', icon:'fa-book-open', repeatable:true, itemLabel:'Course',
     promptBase:'A list of courses taught, each with a title, level, duration and enrolment link.',
@@ -2115,7 +2054,6 @@ const THEMES = {
 
 const DEFAULT_THEME = 'Minimal Light';
 
-/* colour token definitions exposed in the custom picker */
 const COLOR_TOKENS = [
   { id:'bg',        label:'Page Background',   prompt:'page background' },
   { id:'surface',   label:'Card / Surface',    prompt:'card surface background' },
@@ -2189,11 +2127,10 @@ const MOTIONS = {
    5. STATE
    ========================================================================== */
 const state = {
-  career: 'software_developer',
+  career: null,                    // explicitly unselected on first load
   customCareerName: '',
-
-  sectionsByCareer: {},   // careerId -> [{ id, on }]
-  profileByCareer: {},    // careerId -> { common:{}, sections:{} }
+  sectionsByCareer: {},
+  profileByCareer: {},
 
   theme: DEFAULT_THEME,
   colors: { ...THEMES[DEFAULT_THEME] },
@@ -2216,7 +2153,6 @@ const state = {
   motion: 'Standard'
 };
 
-/* panel open/closed registry — matches the data-panel attributes */
 const PANEL_DEFAULTS = {
   career:  true,
   sections:true,
@@ -2250,10 +2186,6 @@ function esc(s) {
   ));
 }
 
-function getByPath(obj, path) {
-  return path.split('.').reduce((o, k) => (o == null ? undefined : o[k]), obj);
-}
-
 function setByPath(obj, path, val) {
   const parts = path.split('.');
   let cur = obj;
@@ -2266,6 +2198,7 @@ function setByPath(obj, path, val) {
 }
 
 function getProfileData(careerId) {
+  if (!careerId) return { common: {}, sections: {} };
   if (!state.profileByCareer[careerId]) {
     state.profileByCareer[careerId] = { common: {}, sections: {} };
   }
@@ -2273,6 +2206,7 @@ function getProfileData(careerId) {
 }
 
 function getSectionsForCareer(careerId) {
+  if (!careerId) return [];
   if (!state.sectionsByCareer[careerId]) {
     state.sectionsByCareer[careerId] = buildDefaultSections(careerId);
   }
@@ -2281,6 +2215,7 @@ function getSectionsForCareer(careerId) {
 
 function buildDefaultSections(careerId) {
   const career = getCareer(careerId);
+  if (!career) return [];
   const defaults = career.sections || [];
   const allIds = Object.keys(SECTION_SCHEMA);
   const ordered = defaults.concat(allIds.filter(id => !defaults.includes(id)));
@@ -2291,11 +2226,9 @@ function getSectionSchema(careerId, sectionId) {
   const base = SECTION_SCHEMA[sectionId];
   if (!base) return null;
   const career = getCareer(careerId);
-  const ov = career.overrides && career.overrides[sectionId];
+  const ov = career && career.overrides && career.overrides[sectionId];
   if (!ov) return base;
-  return Object.assign({}, base, ov, {
-    fields: ov.fields || base.fields
-  });
+  return Object.assign({}, base, ov, { fields: ov.fields || base.fields });
 }
 
 function getSectionLabel(careerId, sectionId) {
@@ -2304,13 +2237,14 @@ function getSectionLabel(careerId, sectionId) {
 }
 
 function careerDisplayName() {
+  if (!state.career) return 'No career selected';
   if (state.career === 'other' && state.customCareerName.trim()) {
     return state.customCareerName.trim();
   }
-  return getCareer(state.career).name;
+  const c = getCareer(state.career);
+  return c ? c.name : 'No career selected';
 }
 
-/* --- colour helpers --- */
 function hexToRgb(hex) {
   const h = String(hex).replace('#', '').trim();
   const full = h.length === 3 ? h.split('').map(c => c + c).join('') : h;
@@ -2335,8 +2269,6 @@ const HEX_RE = /^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/;
 /* ============================================================================
    7. UI RENDERERS
    ========================================================================== */
-
-/* ---------- 7.1 career picker ---------- */
 function renderCareers(filterText) {
   const grid = $el('careerGrid');
   if (!grid) return;
@@ -2349,9 +2281,10 @@ function renderCareers(filterText) {
       const btn = document.createElement('button');
       btn.type = 'button';
       btn.setAttribute('role', 'option');
-      btn.className = 'opt-card career-card' + (state.career === c.id ? ' active' : '');
+      const isActive = state.career === c.id;
+      btn.className = 'opt-card career-card' + (isActive ? ' active' : '');
       btn.dataset.career = c.id;
-      btn.setAttribute('aria-selected', state.career === c.id ? 'true' : 'false');
+      btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
       btn.innerHTML = `
         <i class="fas ${c.icon} career-icon"></i>
         <p class="career-name">${esc(c.name)}</p>
@@ -2369,21 +2302,31 @@ function renderCareers(filterText) {
 
   const summary = $el('careerSummary');
   if (summary) {
-    const c = getCareer(state.career);
-    const onCount = getSectionsForCareer(state.career).filter(s => s.on).length;
-    summary.innerHTML = state.career === 'other'
-      ? `Custom career selected. ${onCount} sections enabled — adapt the fields below as you need.`
-      : `<strong>${esc(c.name)}</strong> — ${esc(c.desc)}. ${onCount} sections enabled by default.`;
+    if (!state.career) {
+      summary.textContent = 'No career selected yet. Pick one above to unlock its profile fields.';
+    } else {
+      const c = getCareer(state.career);
+      const onCount = getSectionsForCareer(state.career).filter(s => s.on).length;
+      if (state.career === 'other') {
+        summary.innerHTML = `Custom career selected. ${onCount} sections enabled — adapt the fields below as you need.`;
+      } else if (c) {
+        summary.innerHTML = `<strong>${esc(c.name)}</strong> — ${esc(c.desc)}. ${onCount} sections enabled by default.`;
+      }
+    }
   }
 
   const hint = $el('careerHint');
-  if (hint) hint.textContent = careerDisplayName();
+  if (hint) hint.textContent = state.career ? careerDisplayName() : 'Step 1 — choose first';
 }
 
-/* ---------- 7.2 sections list ---------- */
 function renderSections() {
   const list = $el('sectionList');
   if (!list) return;
+
+  if (!state.career) {
+    list.innerHTML = `<li class="empty-note" style="padding:14px;margin:0">Select a career above to configure its sections.</li>`;
+    return;
+  }
 
   const sections = getSectionsForCareer(state.career);
   list.innerHTML = '';
@@ -2427,7 +2370,6 @@ function renderSections() {
   }
 }
 
-/* ---------- 7.3 dynamic profile form ---------- */
 function fieldHtml(f, path, value) {
   const id = 'fld_' + path.replace(/\./g, '_').replace(/[^a-zA-Z0-9_]/g, '');
   const span = f.span === 2 ? ' span-2' : '';
@@ -2497,11 +2439,19 @@ function renderProfileForm() {
   const host = $el('profileForm');
   if (!host) return;
 
+  if (!state.career) {
+    host.innerHTML = `<p class="empty-note" style="padding:8px;margin:0">
+      Choose a career in the panel above to unlock the profile fields.
+    </p>`;
+    const hint = $el('profileHint');
+    if (hint) hint.textContent = 'Waiting for career';
+    return;
+  }
+
   const careerId = state.career;
   const pdata = getProfileData(careerId);
   const enabled = getSectionsForCareer(careerId).filter(s => s.on);
 
-  const career = getCareer(careerId);
   const nameLabel = 'Display Name';
   const roleLabel = careerId === 'doctor' ? 'Specialty / Title'
                   : careerId === 'teacher' ? 'Position / Subject Area'
@@ -2581,7 +2531,6 @@ function renderProfileForm() {
   if (hint) hint.textContent = `${enabled.length} section${enabled.length === 1 ? '' : 's'} active`;
 }
 
-/* ---------- 7.4 theme picker ---------- */
 function renderThemes() {
   const grid = $el('themeGrid');
   if (!grid) return;
@@ -2634,7 +2583,6 @@ function renderColorTokens() {
   });
 }
 
-/* ---------- 7.5 layouts / shadows / borders / motions ---------- */
 function renderLayouts() {
   const grid = $el('layoutGrid');
   if (!grid) return;
@@ -2717,13 +2665,26 @@ function renderPreview() {
   const frame = $el('previewFrame');
   if (!frame) return;
 
+  /* ----- unselected-career short-circuit ----- */
+  if (!state.career) {
+    frame.innerHTML = `<div class="pv-root" style="padding:56px 24px;text-align:center">
+      <i class="fas fa-user-tie" style="font-size:28px;color:#9CA3AF;margin-bottom:14px;display:block"></i>
+      <p style="font-size:13px;color:#6B7280;margin:0 0 4px;font-weight:600">
+        Select a career to see the live preview.
+      </p>
+      <p style="font-size:11.5px;color:#9CA3AF;margin:0">
+        Pick a career from the panel on the left to unlock its profile fields.
+      </p>
+    </div>`;
+    return;
+  }
+
   const c = state.colors;
   const r = state.radius;
   const careerId = state.career;
   const pdata = getProfileData(careerId);
   const common = pdata.common || {};
 
-  /* ----- theme custom properties ----- */
   const dark = state.darkMode;
   const bg      = dark ? (luminance(c.bg) > 0.5 ? '#0B0F19' : c.bg) : c.bg;
   const surface = dark ? (luminance(c.surface) > 0.5 ? '#111827' : c.surface) : c.surface;
@@ -2763,12 +2724,28 @@ function renderPreview() {
   const cta = (common.ctaLabel || '').trim() || 'Get in touch';
   const avatarStyle = common.avatar || 'Circle photo';
   const showAvatar = avatarStyle !== 'No avatar';
+  const photoUrl = (common.photo || '').trim();
   const initials = name.split(/\s+/).map(w => w[0]).join('').slice(0, 2).toUpperCase();
   const avatarR = avatarStyle.includes('Circle') ? '9999px' : r + 'px';
+  const avatarBorder = avatarStyle === 'Square with border'
+    ? '2px solid var(--profile-border)'
+    : '0';
+
+  /* shared avatar renderer: photo if supplied, otherwise initials monogram */
+  function avatarHtml(size, wrapStyle) {
+    if (!showAvatar) return '';
+    const base = `width:${size}px;height:${size}px;border-radius:${avatarR};`
+               + `border:${avatarBorder};${wrapStyle || ''}`;
+    if (photoUrl) {
+      return `<img src="${esc(photoUrl)}" alt="${esc(name)}"
+        class="pv-photo" style="${base}" />`;
+    }
+    const fontSize = Math.round(size * 0.34);
+    return `<div class="pv-avatar" style="${base}font-size:${fontSize}px">${esc(initials)}</div>`;
+  }
 
   const enabledSections = getSectionsForCareer(careerId).filter(s => s.on);
 
-  /* ----- helpers ----- */
   function card(inner, extra) {
     return `<div class="pv-card" style="${extra || ''}">${inner}</div>`;
   }
@@ -2797,13 +2774,15 @@ function renderPreview() {
       }
 
       case 'skills': {
-        const chips = [data.primary, data.frameworks, data.tools]
+        /* ---- CRITICAL FIX: guard the only unguarded data dereference ---- */
+        const d = data || {};
+        const chips = [d.primary, d.frameworks, d.tools]
           .filter(Boolean).join(', ')
           .split(',').map(s => s.trim()).filter(Boolean);
-        if (!chips.length && !data.categories) return placeholderLines();
+        if (!chips.length && !d.categories) return placeholderLines();
         let out = chips.map(t => `<span class="pv-chip">${esc(t)}</span>`).join('');
-        if (data.categories) {
-          out += `<p style="font-size:11px;line-height:1.6;margin:8px 0 0" class="pv-muted">${esc(data.categories).replace(/\n/g,'<br>')}</p>`;
+        if (d.categories) {
+          out += `<p style="font-size:11px;line-height:1.6;margin:8px 0 0" class="pv-muted">${esc(d.categories).replace(/\n/g,'<br>')}</p>`;
         }
         return out;
       }
@@ -2814,6 +2793,7 @@ function renderPreview() {
       case 'testimonials':
       case 'services':
       case 'certifications':
+      case 'publications':
       case 'courses':
       case 'subjects':
       case 'collaborations':
@@ -2822,7 +2802,7 @@ function renderPreview() {
         if (!items.length) return placeholderLines();
         return items.map(it => {
           const title = it.title || it.name || it.institution || it.degree || it.brand || it.quote || it.company || '(untitled)';
-          const sub = [it.role, it.company, it.issuer, it.platform, it.level, it.period, it.date, it.duration]
+          const sub = [it.role, it.company, it.issuer, it.platform, it.level, it.period, it.date, it.year, it.duration, it.venue]
             .filter(Boolean).join(' · ');
           const desc = it.description || it.summary || it.responsibilities || it.achievements;
           return `<div style="padding:8px 0;border-bottom:1px solid var(--profile-border)">
@@ -2893,9 +2873,9 @@ function renderPreview() {
     return card(sectionTitle(schema.label) + renderSectionBody(sec.id, data));
   }).join('');
 
-  /* ----- profile card ----- */
+  /* ----- profile card (used by Split, Card Grid) ----- */
   const profileCard = card(`
-    ${showAvatar ? `<div class="pv-avatar" style="width:64px;height:64px;border-radius:${avatarR};font-size:20px;margin-bottom:14px">${esc(initials)}</div>` : ''}
+    ${avatarHtml(64, 'margin-bottom:14px')}
     <h1 class="pv-heading" style="font-size:22px;margin:0 0 5px">${esc(name)}</h1>
     <h2 class="pv-role" style="font-size:12.5px;margin:0 0 6px">${esc(role)}</h2>
     <p style="font-size:11px;margin:0 0 10px" class="pv-muted">${esc(loc)}</p>
@@ -2935,7 +2915,7 @@ function renderPreview() {
       <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:${gap};align-items:start">
         <div class="pv-stack">
           ${card(`
-            ${showAvatar ? `<div class="pv-avatar" style="width:56px;height:56px;border-radius:${avatarR};font-size:18px;margin-bottom:12px">${esc(initials)}</div>` : ''}
+            ${avatarHtml(56, 'margin-bottom:12px')}
             <h1 class="pv-heading" style="font-size:28px;margin:0 0 8px">${esc(name)}</h1>
             <h2 class="pv-role" style="font-size:13px;margin:0 0 10px">${esc(role)}</h2>
             ${tagline ? `<p style="font-size:12.5px;line-height:1.65;margin:0 0 14px" class="pv-muted">${esc(tagline)}</p>` : ''}
@@ -2981,7 +2961,7 @@ function renderPreview() {
       <div class="pv-stack">
         ${card(`
           <div style="text-align:center">
-            ${showAvatar ? `<div class="pv-avatar" style="width:76px;height:76px;border-radius:${avatarR};font-size:24px;margin:0 auto 16px">${esc(initials)}</div>` : ''}
+            ${avatarHtml(76, 'margin:0 auto 16px')}
             <h1 class="pv-heading" style="font-size:26px;margin:0 0 6px">${esc(name)}</h1>
             <h2 class="pv-role" style="font-size:13px;margin:0 0 8px">${esc(role)}</h2>
             <p style="font-size:11px;margin:0 0 12px" class="pv-muted">${esc(loc)}</p>
@@ -3032,9 +3012,31 @@ function sectionPromptFragment(secId, schema, data) {
 }
 
 function generatePrompt() {
+  /* ----- unselected-career short-circuit ----- */
+  if (!state.career) {
+    return [
+      'ROLE: You are a senior front-end engineer and UI designer.',
+      'TASK: Build a production-ready personal profile page.',
+      '',
+      'STATUS: No career / profile type has been selected in the customizer yet.',
+      'Ask the user to choose a career from the "Career / Profile Type" panel,',
+      'then regenerate this developer prompt.',
+      '',
+      '--- DESIGN TOKENS (theme is independent of career) ---',
+      `Theme preset: "${state.theme}".`,
+      COLOR_TOKENS.map(tok => `  --profile-${tok.id}: ${state.colors[tok.id]}`).join('\n'),
+      `Layout preset: "${state.layout}". Container: ${state.containerWidth}. Density: ${state.density}.`,
+      `Radius: ${state.radius}px · Shadow: ${state.shadow} · Border: ${state.border} · Motion: ${state.motion}.`,
+      `Fonts: ${state.headingFont} / ${state.bodyFont} · Scale: ${state.typeScale} · Heading weight: ${state.typeWeight} · Tracking: ${state.tracking}px.`,
+      `Dark mode variant: ${state.darkMode ? 'yes' : 'no'}. Gradient: ${state.gradient}.`,
+      '',
+      '--- NEXT STEP ---',
+      'Once a career is selected the full content prompt will be assembled here.'
+    ].join('\n');
+  }
+
   const c = state.colors;
   const careerId = state.career;
-  const career = getCareer(careerId);
   const pdata = getProfileData(careerId);
   const common = pdata.common || {};
   const sections = getSectionsForCareer(careerId);
@@ -3191,7 +3193,7 @@ function refresh() {
   if (out) out.value = txt;
   const stats = $el('promptStats');
   if (stats) {
-    const words = txt.trim().split(/\s+/).length;
+    const words = txt.trim().split(/\s+/).filter(Boolean).length;
     stats.textContent = `${txt.length} chars · ${words} words`;
   }
 }
@@ -3335,32 +3337,49 @@ async function sendOrderToTelegram(orderRef, promptText, summaryText) {
    ========================================================================== */
 $(function () {
 
-  /* ---------- 12.0 Panel expand / collapse ---------- */
+  /* ---------- 12.0 Panel expand / collapse ----------
+     Animates between the element's natural scrollHeight and 0.
+     No !important in CSS means the inline max-height can drive the transition. */
   function setPanelCollapsed(name, collapsed) {
     const panel = document.querySelector(`.panel[data-panel="${name}"]`);
     if (!panel) return;
-    panel.classList.toggle('collapsed', collapsed);
+    const body = panel.querySelector('.panel-body');
     const head = panel.querySelector('.panel-head');
+    const isCollapsed = panel.classList.contains('collapsed');
+
+    if (collapsed && !isCollapsed) {
+      if (body) {
+        body.style.maxHeight = body.scrollHeight + 'px';
+        void body.offsetHeight;               // force reflow so the pin is registered
+        panel.classList.add('collapsed');
+        body.style.maxHeight = '0px';
+        setTimeout(() => { body.style.maxHeight = ''; }, 320);
+      } else {
+        panel.classList.add('collapsed');
+      }
+    } else if (!collapsed && isCollapsed) {
+      if (body) {
+        body.style.maxHeight = '0px';
+        void body.offsetHeight;
+        panel.classList.remove('collapsed');
+        body.style.maxHeight = body.scrollHeight + 'px';
+        setTimeout(() => { body.style.maxHeight = ''; }, 320);
+      } else {
+        panel.classList.remove('collapsed');
+      }
+    }
+
     if (head && head.tagName === 'BUTTON') {
       head.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
-    }
-    const body = panel.querySelector('.panel-body');
-    if (body) {
-      if (collapsed) {
-        body.style.maxHeight = body.scrollHeight + 'px';
-        requestAnimationFrame(() => { body.style.maxHeight = ''; });
-      } else {
-        body.style.maxHeight = 'none';
-      }
     }
   }
 
   $(document).on('click', '.panel-head', function (e) {
     if ($(this).hasClass('static')) return;
-    if ($(e.target).closest('.panel-body').length) return;
     const panel = this.closest('.panel');
     if (!panel) return;
     const name = panel.getAttribute('data-panel');
+    if (!name) return;
     const collapsed = !panel.classList.contains('collapsed');
     setPanelCollapsed(name, collapsed);
   });
@@ -3397,8 +3416,8 @@ $(function () {
   });
 
   /* ---------- 12.2 Section toggles ---------- */
-  $(document).on('change', '.section-toggle', function (e) {
-    e.stopPropagation();
+  $(document).on('change', '.section-toggle', function () {
+    if (!state.career) return;
     const id = $(this).data('section-id');
     const sec = getSectionsForCareer(state.career).find(s => s.id === id);
     if (sec) sec.on = this.checked;
@@ -3407,13 +3426,9 @@ $(function () {
     refresh();
   });
 
-  /* prevent the drag handle / toggle from collapsing the card */
-  $(document).on('mousedown click', '.section-item .grip, .section-item .switch', function (e) {
-    e.stopPropagation();
-  });
-
   /* ---------- 12.3 Dynamic profile form input ---------- */
   $(document).on('input change', '#profileForm [data-path]', function () {
+    if (!state.career) return;
     const path = $(this).data('path');
     const pdata = getProfileData(state.career);
     const isCheckbox = this.type === 'checkbox';
@@ -3421,9 +3436,9 @@ $(function () {
     refresh();
   });
 
-  /* add / remove repeatable entries */
   $(document).on('click', '#profileForm [data-add]', function (e) {
-    e.stopPropagation();
+    e.preventDefault();
+    if (!state.career) return;
     const secId = $(this).data('add');
     const pdata = getProfileData(state.career);
     if (!Array.isArray(pdata.sections[secId])) pdata.sections[secId] = [];
@@ -3433,7 +3448,8 @@ $(function () {
   });
 
   $(document).on('click', '#profileForm [data-remove]', function (e) {
-    e.stopPropagation();
+    e.preventDefault();
+    if (!state.career) return;
     const [secId, idxRaw] = String($(this).data('remove')).split(':');
     const idx = parseInt(idxRaw, 10);
     const pdata = getProfileData(state.career);
@@ -3665,7 +3681,7 @@ $(function () {
   $('#resetBtn').on('click', function () {
     if (!confirm('Reset all customisations?')) return;
 
-    state.career = 'software_developer';
+    state.career = null;                  // back to unselected
     state.customCareerName = '';
     state.sectionsByCareer = {};
     state.profileByCareer = {};
@@ -3800,26 +3816,26 @@ $(function () {
   function applyInitialState() {
     setSidebarLocked(true);
 
+    /* Sync internal state to whatever is already marked in the HTML.
+       The panels that were pre-marked .collapsed in the markup stay collapsed;
+       we only need to add the class for any that don't match PANEL_DEFAULTS. */
     Object.keys(PANEL_DEFAULTS).forEach(name => {
-      setPanelCollapsed(name, !PANEL_DEFAULTS[name]);
-    });
-    /* the first three panels should be visually expanded without inline max-height */
-    ['career', 'sections', 'profile'].forEach(name => {
       const panel = document.querySelector(`.panel[data-panel="${name}"]`);
-      if (panel) panel.classList.remove('collapsed');
+      if (!panel) return;
+      const shouldCollapse = !PANEL_DEFAULTS[name];
+      const isCollapsed = panel.classList.contains('collapsed');
+      if (shouldCollapse !== isCollapsed) {
+        panel.classList.toggle('collapsed', shouldCollapse);
+        const head = panel.querySelector('.panel-head');
+        if (head && head.tagName === 'BUTTON') {
+          head.setAttribute('aria-expanded', shouldCollapse ? 'false' : 'true');
+        }
+      }
     });
 
-    /* seed a small amount of helpful starter content for the default career */
-    const pdata = getProfileData(state.career);
-    if (!pdata.common.name) {
-      pdata.common.name = 'Alex Tanaka';
-      pdata.common.role = 'Frontend Engineer';
-      pdata.common.location = 'Yangon, MM';
-      pdata.common.tagline = 'I build clean, fast, accessible interfaces.';
-      pdata.common.bio = 'Five years shipping design systems and product UI. Comfortable owning a feature end to end.';
-      pdata.common.ctaLabel = 'Get in touch';
-      pdata.common.avatar = 'Circle photo';
-    }
+    /* NOTE: demo profile data is intentionally NOT injected here.
+       The app starts with state.career === null so no career is
+       auto-selected and no fabricated data is shown. */
 
     renderCareers('');
     renderSections();
@@ -3833,7 +3849,6 @@ $(function () {
     updateTypeHint();
     updateShapeHint();
 
-    /* gradient default selection */
     $('[data-group="gradient"][data-value="None"]').addClass('active');
   }
 });
