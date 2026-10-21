@@ -1,0 +1,2571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Portfolio Builder — Admin</title>
+<style>
+/* ==========================================================================
+   1. Design tokens
+   ========================================================================== */
+:root{
+  --bg:#f6f7fb;
+  --surface:#ffffff;
+  --surface-2:#f9fafb;
+  --surface-3:#f2f4f7;
+  --border:#e4e7ec;
+  --border-strong:#d0d5dd;
+  --text:#101828;
+  --text-2:#475467;
+  --text-3:#667085;
+  --accent:#4f46e5;
+  --accent-2:#4338ca;
+  --accent-soft:#eef2ff;
+  --success:#067647; --success-soft:#ecfdf3; --success-border:#abefc6;
+  --warn:#b54708;    --warn-soft:#fffaeb;    --warn-border:#fedf89;
+  --danger:#b42318;  --danger-soft:#fef3f2;  --danger-border:#fda29b;
+  --radius:10px; --radius-lg:14px;
+  --shadow-sm:0 1px 2px rgba(16,24,40,.05);
+  --shadow-md:0 6px 18px rgba(16,24,40,.10);
+  --shadow-lg:0 18px 48px rgba(16,24,40,.18);
+  --sidebar-w:258px;
+  --sidebar-w-collapsed:74px;
+  --header-h:60px;
+}
+
+/* ==========================================================================
+   2. Base
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:14px;line-height:1.5;
+  background:var(--bg);color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+body.modal-open{overflow:hidden}
+h1,h2,h3,h4,p{margin:0}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:6px}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.muted{color:var(--text-2)}
+.small{font-size:12.5px}
+.tiny{font-size:11.5px}
+.icon{width:18px;height:18px;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.row{display:flex;align-items:center;gap:10px}
+.row.between{justify-content:space-between}
+.row.wrap{flex-wrap:wrap}
+.gap-sm{gap:8px}
+.stack{display:flex;flex-direction:column;gap:16px}
+.stack-sm{display:flex;flex-direction:column;gap:10px}
+
+/* ==========================================================================
+   3. App shell
+   ========================================================================== */
+.app{display:flex;min-height:100vh;align-items:flex-start}
+
+/* --- Sidebar --- */
+.sidebar{
+  width:var(--sidebar-w);flex:0 0 auto;
+  position:sticky;top:0;height:100vh;
+  display:flex;flex-direction:column;
+  background:var(--surface);
+  border-right:1px solid var(--border);
+  transition:width .18s ease;
+  z-index:40;
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  height:var(--header-h);padding:0 16px;flex:0 0 auto;
+  border-bottom:1px solid var(--border);
+}
+.brand-mark{
+  width:30px;height:30px;border-radius:9px;flex:0 0 auto;
+  background:linear-gradient(135deg,var(--accent),#6d5ef0);
+  color:#fff;font-weight:700;font-size:12px;letter-spacing:.02em;
+  display:grid;place-items:center;
+}
+.brand-text{font-weight:650;font-size:14.5px;letter-spacing:-.01em;white-space:nowrap}
+.nav{flex:1 1 auto;overflow-y:auto;padding:12px 10px;display:flex;flex-direction:column;gap:2px}
+.nav-group-label{
+  font-size:11px;font-weight:650;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--text-3);padding:10px 12px 6px;white-space:nowrap;
+}
+.nav-item{
+  display:flex;align-items:center;gap:11px;
+  padding:9px 12px;border:0;border-radius:9px;background:transparent;
+  color:var(--text-2);font-size:13.5px;font-weight:550;text-align:left;
+  cursor:pointer;width:100%;white-space:nowrap;
+  transition:background .12s,color .12s;
+}
+.nav-item:hover{background:var(--surface-3);color:var(--text)}
+.nav-item.active{background:var(--accent-soft);color:var(--accent-2);font-weight:650}
+.nav-item.active .icon{stroke-width:2}
+.nav-item .label{overflow:hidden;text-overflow:ellipsis}
+.sidebar-foot{flex:0 0 auto;padding:10px;border-top:1px solid var(--border)}
+.account{display:flex;align-items:center;gap:10px;padding:8px;border-radius:10px}
+.account:hover{background:var(--surface-3)}
+.avatar{
+  width:32px;height:32px;border-radius:50%;flex:0 0 auto;
+  background:var(--accent-soft);color:var(--accent-2);
+  display:grid;place-items:center;font-size:12px;font-weight:700;
+  border:1px solid #dfe3ff;
+}
+.account-info{display:flex;flex-direction:column;min-width:0;flex:1 1 auto}
+.account-name{font-size:13px;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.account-handle{font-size:11.5px;color:var(--text-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Collapsed sidebar (desktop) */
+body.collapsed .sidebar{width:var(--sidebar-w-collapsed)}
+body.collapsed .brand-text,
+body.collapsed .nav-item .label,
+body.collapsed .nav-group-label,
+body.collapsed .account-info,
+body.collapsed .account .icon-btn{display:none}
+body.collapsed .brand{justify-content:center;padding:0}
+body.collapsed .nav-item{justify-content:center;padding:10px}
+body.collapsed .account{justify-content:center;padding:6px}
+
+/* --- Main --- */
+.main{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;min-height:100vh}
+.header{
+  position:sticky;top:0;z-index:30;
+  height:var(--header-h);flex:0 0 auto;
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  padding:0 20px;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(160%) blur(8px);
+  border-bottom:1px solid var(--border);
+}
+.header-left,.header-right{display:flex;align-items:center;gap:10px;min-width:0}
+.breadcrumb{display:flex;align-items:center;gap:7px;font-size:13px;color:var(--text-3);min-width:0}
+.breadcrumb .sep{color:var(--border-strong)}
+.breadcrumb strong{color:var(--text);font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.icon-btn{
+  display:inline-grid;place-items:center;width:34px;height:34px;
+  border:1px solid transparent;border-radius:8px;background:transparent;
+  color:var(--text-2);cursor:pointer;flex:0 0 auto;
+}
+.icon-btn:hover{background:var(--surface-3);color:var(--text)}
+.select-sm{padding:6px 8px;font-size:12.5px;width:auto;border-radius:8px}
+.user-chip{
+  display:flex;align-items:center;gap:8px;padding:4px 8px 4px 4px;
+  border:1px solid var(--border);border-radius:999px;background:#fff;cursor:pointer;
+}
+.user-chip:hover{background:var(--surface-2)}
+.user-chip .avatar{width:26px;height:26px;font-size:11px}
+.user-chip .uname{font-size:13px;font-weight:600;white-space:nowrap}
+.dropdown{position:relative}
+.dropdown-menu{
+  position:absolute;right:0;top:calc(100% + 8px);min-width:210px;
+  background:#fff;border:1px solid var(--border);border-radius:12px;
+  box-shadow:var(--shadow-md);padding:6px;z-index:50;
+}
+.dropdown-menu[hidden]{display:none}
+.dropdown-item{
+  display:flex;align-items:center;gap:9px;width:100%;
+  padding:9px 10px;border:0;border-radius:8px;background:transparent;
+  font-size:13.5px;color:var(--text-2);cursor:pointer;text-align:left;
+}
+.dropdown-item:hover{background:var(--surface-3);color:var(--text)}
+.dropdown-sep{height:1px;background:var(--border);margin:6px 4px}
+.dropdown-head{padding:8px 10px 6px}
+.dropdown-head .n{font-size:13px;font-weight:650}
+.dropdown-head .h{font-size:12px;color:var(--text-3)}
+
+/* Notice banner */
+.notice{
+  display:flex;align-items:center;gap:10px;
+  margin:16px 24px 0;padding:10px 14px;
+  background:var(--accent-soft);border:1px solid #dfe3ff;border-radius:var(--radius);
+  font-size:13px;color:var(--accent-2);
+}
+.notice .icon{flex:0 0 auto}
+.notice .grow{flex:1 1 auto}
+
+/* Content */
+.content{
+  flex:1 1 auto;width:100%;max-width:1480px;margin:0 auto;
+  padding:24px;outline:none;
+  animation:fade .18s ease;
+}
+@keyframes fade{from{opacity:.35;transform:translateY(4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms !important;transition-duration:.001ms !important}
+}
+
+/* ==========================================================================
+   4. Layout helpers
+   ========================================================================== */
+.page-head{margin-bottom:20px}
+.page-head h1{font-size:20px;font-weight:680;letter-spacing:-.02em}
+.page-head p{color:var(--text-2);font-size:13.5px;margin-top:4px;max-width:70ch}
+.page-grid{display:grid;grid-template-columns:minmax(0,1fr) 386px;gap:20px;align-items:start}
+.page-grid.wide{grid-template-columns:minmax(0,1fr)}
+@media (max-width:1240px){.page-grid{grid-template-columns:minmax(0,1fr)}}
+.sticky-col{position:sticky;top:calc(var(--header-h) + 20px)}
+@media (max-width:1240px){.sticky-col{position:static}}
+
+/* ==========================================================================
+   5. Components
+   ========================================================================== */
+.card{
+  background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius-lg);box-shadow:var(--shadow-sm);
+  padding:18px;
+}
+.card-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+.card-head h3{font-size:14.5px;font-weight:660;letter-spacing:-.01em}
+.card-head p{font-size:12.5px;color:var(--text-3);margin-top:3px;max-width:62ch}
+.card-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:9px 14px;border-radius:9px;border:1px solid transparent;
+  font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap;
+  background:#fff;color:var(--text);transition:background .12s,border-color .12s,box-shadow .12s;
+}
+.btn .icon{width:16px;height:16px}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn-primary{background:var(--accent);border-color:var(--accent);color:#fff;box-shadow:var(--shadow-sm)}
+.btn-primary:hover:not(:disabled){background:var(--accent-2);border-color:var(--accent-2)}
+.btn-secondary{border-color:var(--border-strong);color:var(--text)}
+.btn-secondary:hover:not(:disabled){background:var(--surface-2)}
+.btn-ghost{border-color:transparent;background:transparent;color:var(--text-2)}
+.btn-ghost:hover:not(:disabled){background:var(--surface-3);color:var(--text)}
+.btn-danger{border-color:var(--danger-border);color:var(--danger);background:#fff}
+.btn-danger:hover:not(:disabled){background:var(--danger-soft)}
+.btn-sm{padding:6px 10px;font-size:12.5px;border-radius:8px}
+.btn-sm .icon{width:14px;height:14px}
+.btn-block{width:100%}
+
+.badge{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:2px 8px;border-radius:999px;font-size:11.5px;font-weight:640;
+  border:1px solid transparent;white-space:nowrap;
+}
+.badge-neutral{background:var(--surface-3);color:var(--text-2);border-color:var(--border)}
+.badge-accent{background:var(--accent-soft);color:var(--accent-2);border-color:#dfe3ff}
+.badge-success{background:var(--success-soft);color:var(--success);border-color:var(--success-border)}
+.badge-warn{background:var(--warn-soft);color:var(--warn);border-color:var(--warn-border)}
+.badge-danger{background:var(--danger-soft);color:var(--danger);border-color:var(--danger-border)}
+
+.status-dot{width:8px;height:8px;border-radius:50%;flex:0 0 auto;display:inline-block}
+.status-dot.live{background:#12b76a;box-shadow:0 0 0 3px rgba(18,183,106,.16)}
+.status-dot.draft{background:#f79009;box-shadow:0 0 0 3px rgba(247,144,9,.16)}
+
+/* Forms */
+.field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.field > label,.field > .label{font-size:12.5px;font-weight:640;color:var(--text-2)}
+.input,.select,.textarea{
+  width:100%;padding:9px 12px;border:1px solid var(--border-strong);
+  border-radius:9px;background:#fff;color:var(--text);
+  font:inherit;font-size:13.5px;
+  transition:border-color .12s,box-shadow .12s;
+}
+.textarea{resize:vertical;min-height:80px}
+.input:focus,.select:focus,.textarea:focus{
+  outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,70,229,.14);
+}
+.input[aria-invalid="true"],.textarea[aria-invalid="true"]{border-color:var(--danger)}
+.hint{font-size:11.5px;color:var(--text-3)}
+.field-error{font-size:11.5px;color:var(--danger);font-weight:600}
+.field-error[hidden]{display:none}
+.form-grid{display:grid;gap:0 16px}
+.form-grid.two{grid-template-columns:1fr 1fr}
+@media (max-width:700px){.form-grid.two{grid-template-columns:1fr}}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;padding-top:6px;border-top:1px solid var(--border);margin-top:6px}
+
+/* Switch */
+.switch{position:relative;display:inline-flex;width:38px;height:22px;flex:0 0 auto;cursor:pointer}
+.switch input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer;z-index:1}
+.switch .track{position:absolute;inset:0;background:#d0d5dd;border-radius:999px;transition:background .15s}
+.switch .track::after{
+  content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;
+  background:#fff;box-shadow:0 1px 2px rgba(16,24,40,.25);transition:transform .15s;
+}
+.switch input:checked + .track{background:var(--accent)}
+.switch input:checked + .track::after{transform:translateX(16px)}
+.switch input:disabled + .track{opacity:.45;cursor:not-allowed}
+.switch input:focus-visible + .track{outline:2px solid var(--accent);outline-offset:2px}
+
+/* Segmented control */
+.segmented{display:inline-flex;padding:3px;gap:2px;background:var(--surface-3);border-radius:9px;border:1px solid var(--border)}
+.segmented button{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 10px;border:0;border-radius:7px;background:transparent;
+  font-size:12.5px;font-weight:600;color:var(--text-2);cursor:pointer;
+}
+.segmented button .icon{width:15px;height:15px}
+.segmented button.active{background:#fff;color:var(--text);box-shadow:var(--shadow-sm)}
+
+/* Tabs */
+.tabs{display:flex;gap:4px;overflow-x:auto;border-bottom:1px solid var(--border);margin-bottom:18px;padding-bottom:0}
+.tab{
+  padding:9px 14px;border:0;background:transparent;cursor:pointer;
+  font-size:13.5px;font-weight:600;color:var(--text-3);white-space:nowrap;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+}
+.tab:hover{color:var(--text)}
+.tab.active{color:var(--accent-2);border-bottom-color:var(--accent)}
+
+/* Stat cards */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(178px,1fr));gap:14px}
+.stat-card{
+  display:flex;flex-direction:column;gap:4px;text-align:left;
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);
+  padding:16px;cursor:pointer;box-shadow:var(--shadow-sm);
+  transition:border-color .12s,box-shadow .12s,transform .12s;
+}
+.stat-card:hover{border-color:#c7cdfb;box-shadow:var(--shadow-md)}
+.stat-icon{
+  width:32px;height:32px;border-radius:9px;display:grid;place-items:center;
+  background:var(--accent-soft);color:var(--accent-2);margin-bottom:6px;
+}
+.stat-label{font-size:12.5px;color:var(--text-3);font-weight:600}
+.stat-value{font-size:17px;font-weight:680;letter-spacing:-.02em;word-break:break-word}
+.stat-hint{font-size:11.5px;color:var(--text-3)}
+
+/* Hero */
+.hero{
+  display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+  background:linear-gradient(180deg,#f7f8ff,#ffffff);
+  border:1px solid #e6e8fb;border-radius:var(--radius-lg);padding:20px;
+}
+.hero h2{font-size:17px;font-weight:680;letter-spacing:-.02em}
+.hero p{font-size:13px;color:var(--text-2);margin-top:4px;max-width:60ch}
+.eyebrow{font-size:11.5px;font-weight:680;text-transform:uppercase;letter-spacing:.07em;color:var(--accent-2);margin-bottom:6px}
+.hero-actions{display:flex;gap:9px;flex-wrap:wrap}
+
+/* Publication row */
+.pub-row{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.pub-status{display:flex;align-items:center;gap:12px;min-width:0}
+.pub-status .icon-wrap{
+  width:38px;height:38px;border-radius:10px;display:grid;place-items:center;
+  background:var(--success-soft);color:var(--success);flex:0 0 auto;
+}
+.domain-link{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;word-break:break-all}
+.domain-link .icon{width:14px;height:14px}
+
+/* Checklist */
+.checklist{display:flex;flex-direction:column;gap:2px;margin-top:4px}
+.check-item{display:flex;align-items:center;gap:12px;padding:9px 4px;border-radius:8px}
+.check-item:hover{background:var(--surface-2)}
+.check-item .cb{
+  width:20px;height:20px;border-radius:6px;flex:0 0 auto;display:grid;place-items:center;
+  border:1.5px solid var(--border-strong);background:#fff;color:transparent;
+}
+.check-item.done .cb{background:var(--success);border-color:var(--success);color:#fff}
+.check-item .cb .icon{width:13px;height:13px;stroke-width:2.6}
+.check-item .txt{flex:1 1 auto;font-size:13.5px;min-width:0}
+.check-item.done .txt{color:var(--text-3);text-decoration:line-through;text-decoration-color:#cbd2dd}
+.progress{height:7px;border-radius:999px;background:var(--surface-3);overflow:hidden;margin:10px 0 6px}
+.progress > span{display:block;height:100%;background:var(--accent);border-radius:999px;transition:width .3s ease}
+
+/* Section list (Builder) */
+.section-list{display:flex;flex-direction:column;gap:8px}
+.section-row{
+  display:flex;align-items:center;gap:12px;
+  padding:11px 12px;border:1px solid var(--border);border-radius:11px;background:#fff;
+  transition:border-color .12s,box-shadow .12s,opacity .12s;
+}
+.section-row:hover{border-color:var(--border-strong);box-shadow:var(--shadow-sm)}
+.section-row.dragging{opacity:.45;border-style:dashed}
+.section-row.drop-target{border-color:var(--accent);background:var(--accent-soft)}
+.drag-handle{
+  display:grid;place-items:center;width:24px;height:28px;flex:0 0 auto;
+  border:0;border-radius:6px;background:transparent;color:var(--text-3);cursor:grab;
+}
+.drag-handle:hover{background:var(--surface-3);color:var(--text-2)}
+.drag-handle:disabled{opacity:.35;cursor:not-allowed}
+.section-main{flex:1 1 auto;min-width:0}
+.section-title{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:640}
+.section-sub{font-size:11.5px;color:var(--text-3);margin-top:1px}
+.section-row .row-actions{display:flex;align-items:center;gap:8px;flex:0 0 auto}
+
+/* Site preview canvas */
+.preview-panel .preview-frame{
+  border:1px solid var(--border);border-radius:12px;overflow:hidden;background:var(--surface-3);
+  padding:10px;
+}
+.preview-panel .preview-frame.desktop .site{width:100%}
+.preview-panel .preview-frame.mobile{display:flex;justify-content:center}
+.preview-panel .preview-frame.mobile .site{width:250px}
+.site{
+  --pv-bg:#fff;--pv-card:#f8fafc;--pv-text:#111827;--pv-muted:#6b7280;--pv-accent:#4f46e5;
+  --pv-font:inherit;
+  background:var(--pv-bg);color:var(--pv-text);font-family:var(--pv-font);
+  border-radius:10px;overflow:hidden;font-size:11px;border:1px solid rgba(16,24,40,.07);
+}
+.site-nav{display:flex;align-items:center;justify-content:space-between;padding:9px 11px;border-bottom:1px solid rgba(16,24,40,.08)}
+.site-logo{width:20px;height:20px;border-radius:6px;background:var(--pv-accent);color:#fff;display:grid;place-items:center;font-size:9px;font-weight:700}
+.site-links{display:flex;gap:8px;color:var(--pv-muted);font-size:9px}
+.site-hero{padding:16px 12px 14px}
+.site-hero h4{margin:0 0 5px;font-size:15px;letter-spacing:-.02em}
+.site-hero p{margin:0 0 9px;color:var(--pv-muted);font-size:9.5px;line-height:1.55}
+.site-cta{display:inline-block;background:var(--pv-accent);color:#fff;padding:5px 10px;border-radius:6px;font-size:9px;font-weight:650}
+.site-block{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-top:1px solid rgba(16,24,40,.07);font-size:9.5px}
+.site-block .dotline{flex:1 1 auto;height:4px;border-radius:3px;background:var(--pv-card);margin-left:12px;max-width:120px}
+.site-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:10px 12px;border-top:1px solid rgba(16,24,40,.07)}
+.site-tile{height:44px;border-radius:7px;background:var(--pv-card);border:1px solid rgba(16,24,40,.06)}
+.site-foot{padding:9px 12px;border-top:1px solid rgba(16,24,40,.07);color:var(--pv-muted);font-size:8.5px;text-align:center}
+
+/* Theme cards */
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:16px}
+.theme-card{
+  border:1px solid var(--border);border-radius:var(--radius-lg);background:#fff;
+  overflow:hidden;box-shadow:var(--shadow-sm);display:flex;flex-direction:column;
+  transition:border-color .12s,box-shadow .12s;
+}
+.theme-card:hover{box-shadow:var(--shadow-md)}
+.theme-card.selected{border-color:var(--accent);box-shadow:0 0 0 3px rgba(79,70,229,.12)}
+.theme-preview{height:126px;padding:12px;display:flex;flex-direction:column;gap:6px;border-bottom:1px solid var(--border)}
+.theme-preview .tp-bar{display:flex;align-items:center;justify-content:space-between}
+.theme-preview .tp-logo{width:16px;height:16px;border-radius:5px}
+.theme-preview .tp-lines{display:flex;gap:5px}
+.theme-preview .tp-lines i{display:block;width:16px;height:3px;border-radius:2px;opacity:.5}
+.theme-preview .tp-title{height:9px;width:62%;border-radius:3px;margin-top:6px}
+.theme-preview .tp-text{height:4px;width:88%;border-radius:2px;opacity:.55}
+.theme-preview .tp-text.short{width:64%}
+.theme-preview .tp-cta{width:44px;height:14px;border-radius:5px;margin-top:auto}
+.theme-body{padding:14px;display:flex;flex-direction:column;gap:9px;flex:1 1 auto}
+.swatches{display:flex;gap:6px}
+.swatch{width:22px;height:22px;border-radius:6px;border:1px solid rgba(16,24,40,.1)}
+.theme-body .btn{margin-top:auto}
+
+/* Media library */
+.media-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:14px}
+.media-card{
+  border:1px solid var(--border);border-radius:12px;background:#fff;overflow:hidden;
+  cursor:pointer;text-align:left;padding:0;box-shadow:var(--shadow-sm);
+  transition:border-color .12s,box-shadow .12s,transform .12s;
+}
+.media-card:hover{border-color:#c7cdfb;box-shadow:var(--shadow-md);transform:translateY(-1px)}
+.media-thumb{aspect-ratio:4/3;width:100%;object-fit:cover;display:block;background:var(--surface-3)}
+.media-meta{padding:9px 11px}
+.media-name{font-size:12.5px;font-weight:640;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.media-sub{font-size:11px;color:var(--text-3);margin-top:1px}
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.toolbar .search{position:relative;flex:1 1 220px;min-width:160px}
+.toolbar .search .icon{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-3);width:16px;height:16px}
+.toolbar .search .input{padding-left:33px}
+
+/* Empty / loading states */
+.empty-state{
+  display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;
+  padding:48px 20px;border:1px dashed var(--border-strong);border-radius:var(--radius-lg);
+  background:var(--surface-2);color:var(--text-2);
+}
+.empty-state .icon{width:30px;height:30px;color:var(--text-3)}
+.empty-state h3{font-size:14px;font-weight:660;color:var(--text)}
+.empty-state p{font-size:12.5px;max-width:44ch}
+.spinner{
+  width:14px;height:14px;border-radius:50%;flex:0 0 auto;
+  border:2px solid currentColor;border-right-color:transparent;
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.skeleton{
+  background:linear-gradient(90deg,var(--surface-3) 25%,#eef0f4 37%,var(--surface-3) 63%);
+  background-size:400% 100%;animation:shimmer 1.3s ease infinite;border-radius:8px;
+}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+
+/* Tables */
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;-webkit-overflow-scrolling:touch}
+table{width:100%;border-collapse:collapse;font-size:13px;min-width:640px}
+thead th{
+  text-align:left;padding:10px 14px;background:var(--surface-2);
+  font-size:11.5px;font-weight:650;text-transform:uppercase;letter-spacing:.04em;
+  color:var(--text-3);border-bottom:1px solid var(--border);white-space:nowrap;
+}
+tbody td{padding:11px 14px;border-bottom:1px solid var(--border);color:var(--text-2);white-space:nowrap}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--surface-2)}
+td .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:12px;color:var(--text)}
+
+/* Breakdown lists */
+.breakdown{display:flex;flex-direction:column;gap:11px}
+.bd-row{display:flex;flex-direction:column;gap:5px}
+.bd-top{display:flex;justify-content:space-between;gap:10px;font-size:12.5px}
+.bd-top .n{color:var(--text-2);font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bd-top .v{color:var(--text-3);font-variant-numeric:tabular-nums}
+.bd-bar{height:6px;border-radius:999px;background:var(--surface-3);overflow:hidden}
+.bd-bar > span{display:block;height:100%;background:var(--accent);border-radius:999px}
+
+/* Chart */
+.chart-wrap{border:1px solid var(--border);border-radius:12px;padding:12px;background:#fff}
+.chart-legend{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:6px;font-size:12px;color:var(--text-2)}
+.chart-legend .k{display:inline-flex;align-items:center;gap:6px}
+.chart-legend .sw{width:10px;height:10px;border-radius:3px}
+svg.chart{display:block;width:100%;height:auto}
+.chart-axis{font-size:10px;fill:#98a2b3;font-family:inherit}
+
+/* Timeline */
+.timeline{list-style:none;margin:0;padding:0;position:relative}
+.timeline::before{
+  content:"";position:absolute;left:17px;top:8px;bottom:8px;width:2px;background:var(--border);
+}
+.tl-item{position:relative;display:flex;gap:14px;padding:0 0 18px}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{
+  position:relative;z-index:1;width:36px;height:36px;flex:0 0 auto;border-radius:50%;
+  display:grid;place-items:center;background:#fff;border:1px solid var(--border);
+  color:var(--text-2);
+}
+.tl-dot.t-publish{background:var(--success-soft);border-color:var(--success-border);color:var(--success)}
+.tl-dot.t-content{background:var(--accent-soft);border-color:#dfe3ff;color:var(--accent-2)}
+.tl-dot.t-theme{background:#f4f3ff;border-color:#e0defb;color:#6941c6}
+.tl-dot.t-visibility{background:var(--warn-soft);border-color:var(--warn-border);color:var(--warn)}
+.tl-body{flex:1 1 auto;min-width:0;background:#fff;border:1px solid var(--border);border-radius:12px;padding:12px 14px}
+.tl-body h4{font-size:13.5px;font-weight:650}
+.tl-body p{font-size:12.5px;color:var(--text-2);margin-top:2px}
+.tl-foot{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap}
+
+/* Guide */
+.guide-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(268px,1fr));gap:14px}
+.guide-card{
+  border:1px solid var(--border);border-radius:12px;background:#fff;padding:16px;
+  display:flex;flex-direction:column;gap:8px;box-shadow:var(--shadow-sm);
+}
+.guide-card h4{font-size:13.5px;font-weight:660}
+.guide-card p{font-size:12.5px;color:var(--text-2);flex:1 1 auto}
+.accordion{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}
+.acc-item + .acc-item{border-top:1px solid var(--border)}
+.acc-btn{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;
+  padding:13px 16px;border:0;background:transparent;cursor:pointer;text-align:left;
+  font-size:13.5px;font-weight:640;color:var(--text);
+}
+.acc-btn:hover{background:var(--surface-2)}
+.acc-btn .icon{transition:transform .15s;color:var(--text-3)}
+.acc-btn[aria-expanded="true"] .icon{transform:rotate(180deg)}
+.acc-panel{padding:0 16px 14px;font-size:13px;color:var(--text-2);display:none}
+.acc-panel.open{display:block}
+.acc-panel ol,.acc-panel ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px}
+
+/* Modal */
+.modal-root{position:fixed;inset:0;z-index:100;display:none}
+.modal-root.open{display:block}
+.modal-backdrop{
+  position:absolute;inset:0;background:rgba(16,24,40,.5);
+  display:flex;align-items:center;justify-content:center;padding:18px;
+  animation:fade .14s ease;
+}
+.modal{
+  position:relative;background:#fff;border-radius:16px;box-shadow:var(--shadow-lg);
+  width:100%;max-width:540px;max-height:88vh;display:flex;flex-direction:column;
+  animation:pop .16s ease;
+}
+@keyframes pop{from{opacity:0;transform:translateY(8px) scale(.99)}to{opacity:1;transform:none}}
+.modal.lg{max-width:760px}
+.modal.sm{max-width:420px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;border-bottom:1px solid var(--border)}
+.modal-head h3{font-size:15px;font-weight:670}
+.modal-body{padding:18px;overflow-y:auto}
+.modal-foot{display:flex;justify-content:flex-end;gap:10px;padding:14px 18px;border-top:1px solid var(--border);flex-wrap:wrap}
+
+/* Toasts */
+.toast-root{position:fixed;right:18px;bottom:18px;z-index:200;display:flex;flex-direction:column;gap:9px;max-width:min(360px,calc(100vw - 36px))}
+.toast{
+  display:flex;align-items:flex-start;gap:10px;
+  background:#fff;border:1px solid var(--border);border-left:3px solid var(--accent);
+  border-radius:11px;padding:11px 13px;box-shadow:var(--shadow-md);
+  font-size:13px;animation:slideIn .18s ease;
+}
+@keyframes slideIn{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+.toast.success{border-left-color:var(--success)}
+.toast.warn{border-left-color:#f79009}
+.toast.error{border-left-color:var(--danger)}
+.toast .icon{width:17px;height:17px;margin-top:1px;flex:0 0 auto}
+.toast.success .icon{color:var(--success)}
+.toast.error .icon{color:var(--danger)}
+.toast.warn .icon{color:#f79009}
+.toast .grow{flex:1 1 auto;color:var(--text-2)}
+
+/* Scrim for mobile drawer */
+.scrim{display:none;position:fixed;inset:0;background:rgba(16,24,40,.45);z-index:39}
+
+/* ==========================================================================
+   6. Responsive
+   ========================================================================== */
+@media (max-width:960px){
+  .sidebar{
+    position:fixed;left:0;top:0;transform:translateX(-100%);
+    transition:transform .2s ease;width:282px;box-shadow:var(--shadow-lg);
+  }
+  body.nav-open .sidebar{transform:none}
+  body.nav-open .scrim{display:block}
+  body.collapsed .sidebar{width:282px}
+  body.collapsed .brand-text,
+  body.collapsed .nav-item .label,
+  body.collapsed .nav-group-label,
+  body.collapsed .account-info,
+  body.collapsed .account .icon-btn{display:revert}
+  body.collapsed .brand{justify-content:flex-start;padding:0 16px}
+  body.collapsed .nav-item{justify-content:flex-start;padding:9px 12px}
+  body.collapsed .account{justify-content:flex-start;padding:8px}
+  .content{padding:16px}
+  .notice{margin:12px 16px 0}
+  .header{padding:0 14px}
+  .user-chip .uname{display:none}
+}
+@media (max-width:640px){
+  .page-head h1{font-size:18px}
+  .card{padding:15px}
+  .stat-grid{grid-template-columns:1fr 1fr}
+  .modal{max-height:92vh}
+  .modal-foot{justify-content:stretch}
+  .modal-foot .btn{flex:1 1 auto}
+}
+@media (max-width:420px){
+  .stat-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ============================ APP SHELL ============================ -->
+<div class="app">
+  <div class="scrim" data-action="close-nav"></div>
+
+  <aside class="sidebar" id="sidebar" aria-label="Primary navigation">
+    <div class="brand">
+      <span class="brand-mark" aria-hidden="true">PB</span>
+      <span class="brand-text">Portfolio Builder</span>
+    </div>
+    <nav class="nav" id="nav"></nav>
+    <div class="sidebar-foot">
+      <div class="account">
+        <span class="avatar" aria-hidden="true">AM</span>
+        <div class="account-info">
+          <span class="account-name">Aung Myo</span>
+          <span class="account-handle">@aungmyo</span>
+        </div>
+        <button class="icon-btn" data-action="logout" aria-label="Log out" title="Log out">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <header class="header">
+      <div class="header-left">
+        <button class="icon-btn" id="navBtn" data-action="toggle-nav" aria-label="Toggle navigation" aria-expanded="false" aria-controls="sidebar">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h18"/></svg>
+        </button>
+        <nav class="breadcrumb" id="breadcrumb" aria-label="Breadcrumb"></nav>
+      </div>
+      <div class="header-right">
+        <label class="sr-only" for="langSelect">Interface language</label>
+        <select id="langSelect" class="select select-sm" aria-label="Interface language">
+          <option value="en">EN</option>
+          <option value="my">မြန်မာ</option>
+        </select>
+        <button class="icon-btn" data-action="notifications" aria-label="Notifications" title="Notifications">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 8-3 8h18s-3-1-3-8"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+        </button>
+        <div class="dropdown">
+          <button class="user-chip" data-action="toggle-user-menu" aria-haspopup="true" aria-expanded="false" id="userChip">
+            <span class="avatar" aria-hidden="true">AM</span>
+            <span class="uname">Aung Myo</span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="dropdown-menu" id="userMenu" hidden>
+            <div class="dropdown-head">
+              <div class="n">Aung Myo</div>
+              <div class="h">aung.myo@example.com</div>
+            </div>
+            <div class="dropdown-sep"></div>
+            <button class="dropdown-item" data-action="goto" data-page="settings">Account settings</button>
+            <button class="dropdown-item" data-action="goto" data-page="preview">View my site</button>
+            <button class="dropdown-item" data-action="goto" data-page="guide">Help &amp; guide</button>
+            <div class="dropdown-sep"></div>
+            <button class="dropdown-item" data-action="logout">Log out</button>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div id="noticeSlot"></div>
+    <main class="content" id="content" tabindex="-1"></main>
+  </div>
+</div>
+
+<div class="modal-root" id="modalRoot" aria-live="polite"></div>
+<div class="toast-root" id="toastRoot" aria-live="polite" aria-atomic="false"></div>
+
+<script>
+/* ==========================================================================
+   1. ICONS
+   ========================================================================== */
+const ICONS = {
+  grid:'<rect x="3" y="3" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="3" width="7.5" height="7.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="7.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="7.5" rx="2"/>',
+  layers:'<path d="M12 3 3 8l9 5 9-5-9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 16 9 5 9-5"/>',
+  palette:'<path d="M12 21a9 9 0 1 1 9-9c0 2-1.6 3-3.2 3H16a2 2 0 0 0-1.1 3.7A1.9 1.9 0 0 1 12 21Z"/><circle cx="7.8" cy="12.2" r="1"/><circle cx="9.8" cy="8.2" r="1"/><circle cx="14.2" cy="7.8" r="1"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.7 2.5 15.3 0 18-2.5-2.7-2.5-15.3 0-18Z"/>',
+  image:'<rect x="3" y="4" width="18" height="16" rx="2.5"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="m4 17.5 5-5 4 4 3-3 4 4"/>',
+  chart:'<path d="M3 21h18"/><rect x="5" y="12" width="3.6" height="7" rx="1.2"/><rect x="10.4" y="7" width="3.6" height="12" rx="1.2"/><rect x="15.8" y="10" width="3.6" height="9" rx="1.2"/>',
+  clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/>',
+  eye:'<path d="M2 12s3.6-6.6 10-6.6S22 12 22 12s-3.6 6.6-10 6.6S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/>',
+  book:'<path d="M4 4.6A2.6 2.6 0 0 1 6.6 2H20v16H6.6A2.6 2.6 0 0 0 4 20.6V4.6Z"/><path d="M4 20.6A2.6 2.6 0 0 1 6.6 18H20v4H6.6A2.6 2.6 0 0 1 4 20.6Z"/><path d="M8.5 7h7"/>',
+  settings:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.03 1.56V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.7 1.7 0 0 0 4.6 15a1.7 1.7 0 0 0-1.56-1.03H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.66 8.9a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H9.1a1.7 1.7 0 0 0 1.03-1.56V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1.03 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87v.08a1.7 1.7 0 0 0 1.56 1.03H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1.03Z"/>',
+  logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/>',
+  grip:'<path d="M9 6h.01M15 6h.01M9 12h.01M15 12h.01M9 18h.01M15 18h.01"/>',
+  monitor:'<rect x="2" y="4" width="20" height="13" rx="2.4"/><path d="M8 21h8"/><path d="M12 17v4"/>',
+  tablet:'<rect x="5" y="2" width="14" height="20" rx="2.4"/><path d="M12 18h.01"/>',
+  phone:'<rect x="7" y="2" width="10" height="20" rx="2.4"/><path d="M12 18h.01"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/>',
+  upload:'<path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M4 16v2.5A2.5 2.5 0 0 0 6.5 21h11a2.5 2.5 0 0 0 2.5-2.5V16"/>',
+  copy:'<rect x="9" y="9" width="11.5" height="11.5" rx="2.4"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  external:'<path d="M14 4h6v6"/><path d="M20 4 10.5 13.5"/><path d="M19 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h5"/>',
+  check:'<path d="m4.5 12.5 5 5L20 6.5"/>',
+  x:'<path d="M6 6l12 12"/><path d="M18 6 6 18"/>',
+  plus:'<path d="M12 5v14"/><path d="M5 12h14"/>',
+  edit:'<path d="M12 20h9"/><path d="M16.6 3.6a2.1 2.1 0 0 1 3 3L7.4 18.8 3.4 20l1.2-4L16.6 3.6Z"/>',
+  trash:'<path d="M3 6h18"/><path d="M8 6V4.5A1.5 1.5 0 0 1 9.5 3h5A1.5 1.5 0 0 1 16 4.5V6"/><path d="M6 6v13a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 11v5.5"/><path d="M12 7.8h.01"/>',
+  warning:'<path d="M12 3.2 2.6 20.2h18.8L12 3.2Z"/><path d="M12 9.5v4.6"/><path d="M12 17.4h.01"/>',
+  restore:'<path d="M3.2 12a8.8 8.8 0 1 0 2.9-6.5"/><path d="M3 4.5v5h5"/>',
+  chevronDown:'<path d="m6 9.5 6 6 6-6"/>',
+  lock:'<rect x="4.5" y="10" width="15" height="10.5" rx="2.4"/><path d="M8 10V7.4a4 4 0 0 1 8 0V10"/>',
+  filter:'<path d="M3 5.5h18"/><path d="M6.5 12h11"/><path d="M10.5 18.5h3"/>',
+  sort:'<path d="M7 4.5v15"/><path d="m3.6 8 3.4-3.5L10.4 8"/><path d="M17 19.5v-15"/><path d="m13.6 16 3.4 3.5 3.4-3.5"/>',
+  bulb:'<path d="M9.2 18h5.6"/><path d="M10 21h4"/><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.4.9 1 .9 1.7V16h5.2v-.4c0-.7.3-1.3.9-1.7A6 6 0 0 0 12 3Z"/>',
+  sliders:'<path d="M4 6h10"/><path d="M18 6h2"/><circle cx="16" cy="6" r="2"/><path d="M4 12h4"/><path d="M12 12h8"/><circle cx="10" cy="12" r="2"/><path d="M4 18h10"/><path d="M18 18h2"/><circle cx="16" cy="18" r="2"/>'
+};
+function icon(name, cls){
+  return '<svg class="icon' + (cls ? ' ' + cls : '') + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + (ICONS[name] || '') + '</svg>';
+}
+
+/* ==========================================================================
+   2. MOCK DATA  (separated from UI components)
+   ========================================================================== */
+const DATA = {
+  user:{ name:'Aung Myo', handle:'@aungmyo', email:'aung.myo@example.com', initials:'AM' },
+
+  site:{
+    subdomain:'aungmyo.portfoliobuilder.app',
+    status:'published',
+    publishedAt:'2 hours ago',
+    title:'Aung Myo — Product Designer',
+    description:'Portfolio of Aung Myo, a product designer crafting calm, useful interfaces for fintech and health products.',
+    socialImage:'social-card-1200x630.png'
+  },
+
+  setup:[
+    { id:'theme',    label:'Choose a theme',                 done:true  },
+    { id:'cover',    label:'Add a cover and profile photo',  done:true  },
+    { id:'sections', label:'Fill in your portfolio sections',done:true  },
+    { id:'domain',   label:'Review your domain address',     done:true  },
+    { id:'seo',      label:'Add SEO and social details',     done:false },
+    { id:'publish',  label:'Publish your site',              done:true  }
+  ],
+
+  sections:[
+    { id:'header',       name:'Header',       layout:'Fixed navigation bar', visible:true,  locked:true  },
+    { id:'cover',        name:'Cover',        layout:'Full-width hero',      visible:true,  locked:false },
+    { id:'about',        name:'About',        layout:'Text + portrait',      visible:true,  locked:false },
+    { id:'services',     name:'Services',     layout:'3-column grid',        visible:true,  locked:false },
+    { id:'skills',       name:'Skills',       layout:'Progress bars',        visible:true,  locked:false },
+    { id:'works',        name:'Works',        layout:'Masonry grid',         visible:true,  locked:false },
+    { id:'gallery',      name:'Gallery',      layout:'4-column grid',        visible:false, locked:false },
+    { id:'clients',      name:'Clients',      layout:'Logo strip',           visible:true,  locked:false },
+    { id:'testimonials', name:'Testimonials', layout:'Quote carousel',       visible:true,  locked:false }
+  ],
+
+  themes:[
+    { id:'classic-light', name:'Classic Light', font:'Inter · Sans-serif',
+      palette:['#ffffff','#f1f3f7','#4f46e5','#111827'],
+      vars:{ bg:'#ffffff', card:'#f1f3f7', text:'#111827', muted:'#6b7280', accent:'#4f46e5' } },
+    { id:'midnight', name:'Midnight', font:'Sora · Sans-serif',
+      palette:['#0f172a','#1e293b','#60a5fa','#e2e8f0'],
+      vars:{ bg:'#0f172a', card:'#1e293b', text:'#e2e8f0', muted:'#94a3b8', accent:'#60a5fa' } },
+    { id:'warm-sand', name:'Warm Sand', font:'Georgia · Serif',
+      palette:['#fdf8f3','#f3e8db','#c2703a','#3f3128'],
+      vars:{ bg:'#fdf8f3', card:'#f3e8db', text:'#3f3128', muted:'#8a7561', accent:'#c2703a' } },
+    { id:'forest', name:'Forest', font:'Inter · Sans-serif',
+      palette:['#f2f7f3','#e0ece4','#2f7d55','#1c3a2b'],
+      vars:{ bg:'#f2f7f3', card:'#e0ece4', text:'#1c3a2b', muted:'#5b7a68', accent:'#2f7d55' } },
+    { id:'mono-ink', name:'Mono Ink', font:'Courier · Monospace',
+      palette:['#ffffff','#f2f2f3','#18181b','#71717a'],
+      vars:{ bg:'#ffffff', card:'#f2f2f3', text:'#18181b', muted:'#71717a', accent:'#18181b' } },
+    { id:'ocean', name:'Ocean', font:'Inter · Sans-serif',
+      palette:['#f2f8fc','#dfeef8','#0e7bb5','#0d2b3e'],
+      vars:{ bg:'#f2f8fc', card:'#dfeef8', text:'#0d2b3e', muted:'#4f7189', accent:'#0e7bb5' } }
+  ],
+
+  images:[
+    { id:'img1', name:'cover-hero.jpg',        format:'JPG', w:1920, h:1080, size:'842 KB', c1:'#6366f1', c2:'#a5b4fc' },
+    { id:'img2', name:'portrait-studio.jpg',   format:'JPG', w:1200, h:1500, size:'512 KB', c1:'#0ea5e9', c2:'#7dd3fc' },
+    { id:'img3', name:'case-ledger-01.png',    format:'PNG', w:1600, h:1000, size:'1.2 MB', c1:'#10b981', c2:'#6ee7b7' },
+    { id:'img4', name:'case-ledger-02.png',    format:'PNG', w:1600, h:1000, size:'980 KB', c1:'#f59e0b', c2:'#fcd34d' },
+    { id:'img5', name:'workspace-desk.jpg',    format:'JPG', w:2400, h:1350, size:'1.6 MB', c1:'#ef4444', c2:'#fca5a5' },
+    { id:'img6', name:'client-logos.svg',      format:'SVG', w:800,  h:200,  size:'24 KB',  c1:'#8b5cf6', c2:'#c4b5fd' },
+    { id:'img7', name:'team-offsite.jpg',      format:'JPG', w:1800, h:1200, size:'1.1 MB', c1:'#14b8a6', c2:'#5eead4' },
+    { id:'img8', name:'wireframe-set.png',     format:'PNG', w:1400, h:900,  size:'640 KB', c1:'#64748b', c2:'#cbd5e1' },
+    { id:'img9', name:'conference-talk.jpg',   format:'JPG', w:2000, h:1333, size:'1.4 MB', c1:'#db2777', c2:'#f9a8d4' }
+  ],
+
+  history:[
+    { id:1, type:'publish',    title:'Website published',              desc:'Published 4 changes to aungmyo.portfoliobuilder.app.', time:'Today, 09:42',      when:'today' },
+    { id:2, type:'content',    title:'Cover section updated',          desc:'Changed the headline and replaced the hero image.',   time:'Today, 09:38',      when:'today' },
+    { id:3, type:'theme',      title:'Theme changed to Classic Light', desc:'Previous theme: Ocean.',                              time:'Yesterday, 17:12',  when:'week'  },
+    { id:4, type:'visibility', title:'Gallery section hidden',         desc:'The Gallery section was removed from the public site.',time:'Yesterday, 15:03', when:'week'  },
+    { id:5, type:'content',    title:'Works section updated',          desc:'Added the “Ledger Dashboard” case study card.',        time:'2 days ago, 11:20', when:'week'  },
+    { id:6, type:'publish',    title:'Website published',              desc:'Published 7 changes to aungmyo.portfoliobuilder.app.', time:'3 days ago, 18:05', when:'week'  },
+    { id:7, type:'content',    title:'About section updated',          desc:'Rewrote the biography paragraph.',                    time:'5 days ago, 10:11', when:'week'  },
+    { id:8, type:'theme',      title:'Custom accent colour applied',   desc:'Accent colour set to #4f46e5.',                        time:'8 days ago, 14:47', when:'month' },
+    { id:9, type:'visibility', title:'Clients section shown',          desc:'The Clients section is now visible on the site.',      time:'12 days ago, 09:02',when:'month' },
+    { id:10,type:'publish',    title:'Website published',              desc:'Initial publication of the portfolio website.',        time:'21 days ago, 16:30',when:'month' }
+  ],
+
+  breakdowns:{
+    referrals:[
+      { n:'Direct', v:412 }, { n:'Google', v:326 }, { n:'LinkedIn', v:188 },
+      { n:'Dribbble', v:96 }, { n:'Twitter / X', v:54 }
+    ],
+    countries:[
+      { n:'Myanmar', v:398 }, { n:'United States', v:214 }, { n:'Singapore', v:132 },
+      { n:'United Kingdom', v:87 }, { n:'Japan', v:61 }
+    ],
+    devices:[
+      { n:'Desktop', v:602 }, { n:'Mobile', v:318 }, { n:'Tablet', v:76 }
+    ],
+    browsers:[
+      { n:'Chrome', v:534 }, { n:'Safari', v:246 }, { n:'Edge', v:112 },
+      { n:'Firefox', v:78 }, { n:'Others', v:26 }
+    ],
+    os:[
+      { n:'macOS', v:342 }, { n:'Windows', v:268 }, { n:'iOS', v:196 },
+      { n:'Android', v:148 }, { n:'Linux', v:42 }
+    ]
+  },
+
+  visits:[
+    { time:'Today, 10:42', ip:'203.81.72.14',   country:'Myanmar',        ref:'linkedin.com',  browser:'Chrome',  device:'Desktop' },
+    { time:'Today, 10:31', ip:'66.249.66.102',  country:'United States',  ref:'google.com',    browser:'Chrome',  device:'Mobile'  },
+    { time:'Today, 10:17', ip:'118.200.44.9',   country:'Singapore',      ref:'Direct',        browser:'Safari',  device:'Mobile'  },
+    { time:'Today, 09:58', ip:'81.2.69.142',    country:'United Kingdom', ref:'dribbble.com',  browser:'Safari',  device:'Desktop' },
+    { time:'Today, 09:44', ip:'126.72.18.203',  country:'Japan',          ref:'twitter.com',   browser:'Chrome',  device:'Mobile'  },
+    { time:'Yesterday, 21:12', ip:'203.81.72.88', country:'Myanmar',      ref:'Direct',        browser:'Edge',    device:'Desktop' },
+    { time:'Yesterday, 19:36', ip:'45.33.12.201', country:'United States',ref:'google.com',    browser:'Firefox', device:'Desktop' },
+    { time:'Yesterday, 16:02', ip:'118.200.44.77',country:'Singapore',    ref:'linkedin.com',  browser:'Chrome',  device:'Tablet'  }
+  ],
+
+  faqs:[
+    { q:'Do I need a custom domain to publish my portfolio?',
+      a:'No. Every portfolio is published on an assigned Portfolio Builder subdomain. Custom domains are on the product roadmap and are not part of this prototype.' },
+    { q:'Can I change my subdomain address later?',
+      a:'The assigned address is permanent for the lifetime of the site. Review it carefully before you share it publicly.' },
+    { q:'How long do changes take to appear on my live site?',
+      a:'In this prototype nothing is actually published. In production, changes propagate within a few minutes of pressing “Publish Changes”.' },
+    { q:'Is the visitor analytics data real?',
+      a:'No. Every number on the Visitors / Analytics page is demonstration data used to show the layout and hierarchy of the interface.' },
+    { q:'Can I restore a previous version of my site?',
+      a:'History entries and the Restore action are prototype controls only. They do not perform real version restoration yet.' }
+  ]
+};
+
+/* Deterministic analytics series (30 days) */
+function seededRandom(seed){
+  let s = seed;
+  return function(){ s = (s * 1664525 + 1013904223) % 4294967296; return s / 4294967296; };
+}
+const ANALYTICS_DAYS = (function(){
+  const rand = seededRandom(20250401);
+  const out = [];
+  const today = new Date();
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(today.getTime() - i * 86400000);
+    const base = 34 + (29 - i) * 1.35;
+    const views = Math.round(base + rand() * 26);
+    const visitors = Math.round(views * (0.56 + rand() * 0.14));
+    out.push({ date:d, views, visitors });
+  }
+  return out;
+})();
+
+/* ==========================================================================
+   3. STATE
+   ========================================================================== */
+const state = {
+  page:'dashboard',
+  collapsed:false,
+  navOpen:false,
+  lang:'en',
+  noticeVisible:true,
+  themeId:'classic-light',
+  custom:{ accent:'', bg:'', font:'' },
+  sections: DATA.sections.map(s => Object.assign({}, s)),
+  setup: DATA.setup.map(s => Object.assign({}, s)),
+  previewDevice:'desktop',
+  builderDevice:'desktop',
+  images: DATA.images.slice(),
+  imageQuery:'',
+  imageFormat:'all',
+  imageSort:'name',
+  analyticsRange:'30',
+  historyType:'all',
+  historyDate:'all',
+  historyOpenId:null,
+  guideQuery:'',
+  openFaq:null,
+  openGuide:null,
+  settingsTab:'general'
+};
+let suppressHash = false;
+
+/* ==========================================================================
+   4. UTILITIES
+   ========================================================================== */
+function esc(v){
+  return String(v).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function fmtNum(n){ return Number(n).toLocaleString('en-US'); }
+function fmtDate(d){
+  return d.toLocaleDateString('en-US', { month:'short', day:'numeric' });
+}
+function greeting(){
+  const h = new Date().getHours();
+  return h < 12 ? 'Good morning' : (h < 18 ? 'Good afternoon' : 'Good evening');
+}
+function badge(text, kind){
+  return '<span class="badge badge-' + (kind || 'neutral') + '">' + esc(text) + '</span>';
+}
+function btn(label, opts){
+  opts = opts || {};
+  const variant = opts.variant || 'secondary';
+  const attrs = [];
+  if (opts.action) attrs.push('data-action="' + opts.action + '"');
+  if (opts.page) attrs.push('data-page="' + opts.page + '"');
+  if (opts.id) attrs.push('data-id="' + opts.id + '"');
+  if (opts.tab) attrs.push('data-tab="' + opts.tab + '"');
+  if (opts.extra) attrs.push(opts.extra);
+  if (opts.ariaLabel) attrs.push('aria-label="' + opts.ariaLabel + '"');
+  const cls = 'btn btn-' + variant + (opts.size === 'sm' ? ' btn-sm' : '') + (opts.block ? ' btn-block' : '');
+  return '<button type="button" class="' + cls + '" ' + attrs.join(' ') + '>' +
+    (opts.iconName ? icon(opts.iconName) : '') +
+    (label ? '<span>' + esc(label) + '</span>' : '') +
+    '</button>';
+}
+function cardHead(title, desc, right){
+  return '<div class="card-head"><div><h3>' + esc(title) + '</h3>' +
+    (desc ? '<p>' + desc + '</p>' : '') + '</div>' +
+    (right ? '<div class="card-actions">' + right + '</div>' : '') + '</div>';
+}
+function pageHead(title, desc){
+  return '<div class="page-head"><h1>' + esc(title) + '</h1>' +
+    (desc ? '<p>' + esc(desc) + '</p>' : '') + '</div>';
+}
+
+/* --- Toasts --- */
+function toast(message, kind){
+  const root = document.getElementById('toastRoot');
+  const el = document.createElement('div');
+  el.className = 'toast ' + (kind || '');
+  const ic = kind === 'success' ? 'check' : kind === 'error' ? 'warning' : kind === 'warn' ? 'warning' : 'info';
+  el.innerHTML = icon(ic) + '<div class="grow">' + esc(message) + '</div>';
+  root.appendChild(el);
+  setTimeout(function(){
+    el.style.opacity = '0';
+    el.style.transform = 'translateX(12px)';
+    el.style.transition = 'opacity .2s, transform .2s';
+    setTimeout(function(){ el.remove(); }, 220);
+  }, 3200);
+}
+
+/* --- Modal --- */
+let pendingConfirm = null;
+function openModal(opts){
+  const root = document.getElementById('modalRoot');
+  root.innerHTML =
+    '<div class="modal-backdrop" data-action="close-modal">' +
+      '<div class="modal ' + (opts.size || '') + '" role="dialog" aria-modal="true" aria-label="' + esc(opts.title) + '">' +
+        '<div class="modal-head"><h3>' + esc(opts.title) + '</h3>' +
+          '<button class="icon-btn" data-action="close-modal" aria-label="Close dialog">' + icon('x') + '</button>' +
+        '</div>' +
+        '<div class="modal-body">' + opts.body + '</div>' +
+        (opts.footer ? '<div class="modal-foot">' + opts.footer + '</div>' : '') +
+      '</div>' +
+    '</div>';
+  root.classList.add('open');
+  document.body.classList.add('modal-open');
+  const focusable = root.querySelector('input, select, textarea, button:not([data-action="close-modal"])');
+  if (focusable) focusable.focus();
+}
+function closeModal(){
+  const root = document.getElementById('modalRoot');
+  root.classList.remove('open');
+  root.innerHTML = '';
+  document.body.classList.remove('modal-open');
+  pendingConfirm = null;
+}
+function confirmDialog(opts){
+  pendingConfirm = opts.onConfirm;
+  openModal({
+    title: opts.title,
+    size:'sm',
+    body:'<p style="font-size:13.5px;color:var(--text-2);line-height:1.6">' + esc(opts.message) + '</p>',
+    footer: btn('Cancel', { action:'close-modal' }) +
+            btn(opts.confirmLabel || 'Confirm', { variant:'danger', action:'confirm-accept' })
+  });
+}
+
+/* --- Clipboard --- */
+function copyText(text){
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(
+      function(){ toast('Link copied to clipboard.', 'success'); },
+      function(){ toast('Copy failed — select the link manually.', 'error'); }
+    );
+  } else {
+    toast('Clipboard API unavailable in this browser.', 'warn');
+  }
+}
+
+/* ==========================================================================
+   5. THEME HELPERS + SITE PREVIEW
+   ========================================================================== */
+function currentTheme(){
+  return DATA.themes.filter(function(t){ return t.id === state.themeId; })[0] || DATA.themes[0];
+}
+function themeVars(theme){
+  const v = Object.assign({}, theme.vars);
+  if (state.custom.accent) v.accent = state.custom.accent;
+  if (state.custom.bg) v.bg = state.custom.bg;
+  const font = state.custom.font || (
+    theme.id === 'warm-sand' ? 'Georgia, "Times New Roman", serif' :
+    theme.id === 'mono-ink' ? '"Courier New", ui-monospace, monospace' : ''
+  );
+  return '--pv-bg:' + v.bg + ';--pv-card:' + v.card + ';--pv-text:' + v.text +
+         ';--pv-muted:' + v.muted + ';--pv-accent:' + v.accent +
+         ';--pv-font:' + (font || 'inherit') + ';';
+}
+function visibleSections(){
+  return state.sections.filter(function(s){ return s.visible && s.id !== 'header'; });
+}
+function sitePreviewHTML(big){
+  const theme = currentTheme();
+  const list = visibleSections();
+  const blocks = list.map(function(s){
+    return '<div class="site-block"><span>' + esc(s.name) + '</span><span class="dotline"></span></div>';
+  }).join('');
+  const grid = big
+    ? '<div class="site-grid"><div class="site-tile"></div><div class="site-tile"></div><div class="site-tile"></div><div class="site-tile"></div></div>'
+    : '';
+  return '<div class="site" style="' + themeVars(theme) + '">' +
+      '<div class="site-nav"><span class="site-logo">AM</span>' +
+        '<span class="site-links"><span>Work</span><span>About</span><span>Contact</span></span></div>' +
+      '<div class="site-hero"><h4>' + esc(DATA.site.title.split('—')[0].trim()) + '</h4>' +
+        '<p>Product designer crafting calm, useful interfaces for fintech and health products.</p>' +
+        '<span class="site-cta">View work</span></div>' +
+      blocks + grid +
+      '<div class="site-foot">© 2025 Aung Myo · Built with Portfolio Builder</div>' +
+    '</div>';
+}
+function previewPanel(opts){
+  opts = opts || {};
+  const device = opts.device || state.previewDevice;
+  const setAction = opts.setAction || 'preview-device';
+  const controls =
+    '<div class="segmented" role="group" aria-label="Preview viewport">' +
+      '<button type="button" class="' + (device === 'desktop' ? 'active' : '') + '" data-action="' + setAction + '" data-device="desktop" aria-pressed="' + (device === 'desktop') + '">' + icon('monitor') + 'Desktop</button>' +
+      '<button type="button" class="' + (device === 'mobile' ? 'active' : '') + '" data-action="' + setAction + '" data-device="mobile" aria-pressed="' + (device === 'mobile') + '">' + icon('phone') + 'Mobile</button>' +
+    '</div>';
+  return '<section class="card preview-panel">' +
+      cardHead('Live preview', 'Reflects your selected theme and visible sections.', controls) +
+      '<div class="preview-frame ' + device + '">' + sitePreviewHTML(false) + '</div>' +
+      '<p class="hint" style="margin-top:10px">Prototype preview — not a real rendered website.</p>' +
+    '</section>';
+}
+
+/* ==========================================================================
+   6. NAVIGATION
+   ========================================================================== */
+const NAV = [
+  { id:'dashboard', label:'Dashboard',           icon:'grid'     },
+  { id:'builder',   label:'Builder',             icon:'layers'   },
+  { id:'theme',     label:'Theme',               icon:'palette'  },
+  { id:'domain',    label:'Domain Address',      icon:'globe'    },
+  { id:'images',    label:'Images',              icon:'image'    },
+  { id:'analytics', label:'Visitors / Analytics',icon:'chart'    },
+  { id:'history',   label:'History',             icon:'clock'    },
+  { id:'preview',   label:'Preview',             icon:'eye'      },
+  { id:'guide',     label:'Guide / Tutorial',    icon:'book'     },
+  { id:'settings',  label:'Settings',            icon:'settings' }
+];
+
+const PAGES = {
+  dashboard:{ title:'Dashboard',           desc:'A quick overview of your portfolio website and its latest activity.' },
+  builder:  { title:'Builder',             desc:'Manage the sections of your portfolio. Reorder them by dragging, toggle visibility, and edit content.' },
+  theme:    { title:'Theme',               desc:'Choose a visual theme for your portfolio and fine-tune colours and typography.' },
+  domain:   { title:'Domain Address',      desc:'Your site’s permanent address and publication status.' },
+  images:   { title:'Images',              desc:'Upload and manage the images used across your portfolio.' },
+  analytics:{ title:'Visitors / Analytics',desc:'Understand how visitors find and browse your portfolio.' },
+  history:  { title:'History',             desc:'A chronological record of changes made to your website.' },
+  preview:  { title:'Preview',             desc:'Review your draft website across desktop, tablet and mobile viewports.' },
+  guide:    { title:'Guide / Tutorial',    desc:'Step-by-step help to get the most out of Portfolio Builder.' },
+  settings: { title:'Settings',            desc:'Manage website configuration, account details and system preferences.' }
+};
+
+function renderNav(){
+  const nav = document.getElementById('nav');
+  nav.innerHTML = NAV.map(function(item){
+    const active = state.page === item.id;
+    return '<button type="button" class="nav-item' + (active ? ' active' : '') + '"' +
+      ' data-action="goto" data-page="' + item.id + '"' +
+      ' aria-current="' + (active ? 'page' : 'false') + '" title="' + esc(item.label) + '">' +
+      icon(item.icon) + '<span class="label">' + esc(item.label) + '</span></button>';
+  }).join('');
+}
+
+function renderHeader(){
+  const page = PAGES[state.page];
+  document.getElementById('breadcrumb').innerHTML =
+    '<span>Portfolio Builder</span><span class="sep">/</span><strong>' + esc(page.title) + '</strong>';
+  document.title = page.title + ' — Portfolio Builder';
+
+  const slot = document.getElementById('noticeSlot');
+  if (state.noticeVisible) {
+    slot.innerHTML =
+      '<div class="notice" role="status">' + icon('info') +
+        '<span class="grow">Demo environment — all content, analytics and history data on these pages are sample data. No real publishing occurs.</span>' +
+        '<button class="icon-btn" data-action="dismiss-notice" aria-label="Dismiss notice">' + icon('x') + '</button>' +
+      '</div>';
+  } else {
+    slot.innerHTML = '';
+  }
+}
+
+function navigate(page){
+  if (!PAGES[page]) page = 'dashboard';
+  state.page = page;
+  const target = '#/' + page;
+  if (location.hash !== target) {
+    suppressHash = true;
+    location.hash = target;
+  }
+  render();
+  window.scrollTo({ top:0, behavior:'auto' });
+  if (state.navOpen) { state.navOpen = false; document.body.classList.remove('nav-open'); }
+}
+
+/* ==========================================================================
+   7. PAGE RENDERERS
+   ========================================================================== */
+
+/* ---------- 7.1 Dashboard ---------- */
+function renderDashboard(){
+  const site = DATA.site;
+  const doneCount = state.setup.filter(function(i){ return i.done; }).length;
+  const pct = Math.round(doneCount / state.setup.length * 100);
+  const activeSections = state.sections.filter(function(s){ return s.visible; }).length;
+  const theme = currentTheme();
+  const total30 = ANALYTICS_DAYS.reduce(function(a, d){ return a + d.views; }, 0);
+  const seoDescLen = site.description.length;
+
+  const stats = [
+    { label:'Active Sections',  value: activeSections + ' of ' + state.sections.length, hint:'Manage sections', iconName:'layers',  page:'builder'   },
+    { label:'Current Theme',    value: theme.name, hint:'Change theme',     iconName:'palette', page:'theme'     },
+    { label:'Domain Address',   value: site.subdomain.split('.')[0], hint:'…portfoliobuilder.app', iconName:'globe', page:'domain' },
+    { label:'Visitor Analytics',value: fmtNum(total30), hint:'Page views · last 30 days', iconName:'chart', page:'analytics' }
+  ].map(function(s){
+    return '<button type="button" class="stat-card" data-action="goto" data-page="' + s.page + '">' +
+      '<span class="stat-icon">' + icon(s.iconName) + '</span>' +
+      '<span class="stat-label">' + esc(s.label) + '</span>' +
+      '<span class="stat-value">' + esc(s.value) + '</span>' +
+      '<span class="stat-hint">' + esc(s.hint) + '</span></button>';
+  }).join('');
+
+  return pageHead(PAGES.dashboard.title, PAGES.dashboard.desc) +
+  '<div class="page-grid">' +
+    '<div class="stack">' +
+
+      /* Welcome banner */
+      '<section class="hero">' +
+        '<div class="hero-text">' +
+          '<p class="eyebrow">' + greeting() + '</p>' +
+          '<h2>Welcome back, ' + esc(DATA.user.name) + '</h2>' +
+          '<p>Your portfolio is live and up to date. Review your setup checklist, refine your metadata, and publish any pending changes.</p>' +
+        '</div>' +
+        '<div class="hero-actions">' +
+          btn('Preview site', { action:'goto', page:'preview', iconName:'eye' }) +
+          btn('Copy site link', { action:'copy-link', iconName:'copy' }) +
+        '</div>' +
+      '</section>' +
+
+      /* Publication status */
+      '<section class="card">' +
+        '<div class="pub-row">' +
+          '<div class="pub-status">' +
+            '<span class="icon-wrap">' + icon('globe') + '</span>' +
+            '<div>' +
+              '<div class="row gap-sm" style="gap:8px">' +
+                '<strong style="font-size:13.5px">' + (site.status === 'published' ? 'Site is published' : 'Site is unpublished') + '</strong>' +
+                badge(site.status === 'published' ? 'Live' : 'Draft', site.status === 'published' ? 'success' : 'warn') +
+              '</div>' +
+              '<p class="muted small" style="margin-top:2px">Last published ' + esc(site.publishedAt) + ' · ' +
+                '<a href="#" class="domain-link" data-action="open-site">' + esc(site.subdomain) + icon('external') + '</a>' +
+              '</p>' +
+            '</div>' +
+          '</div>' +
+          '<div class="row gap-sm wrap">' +
+            btn('Preview', { action:'goto', page:'preview', iconName:'eye' }) +
+            btn('Unpublish', { action:'unpublish', variant:'danger' }) +
+            btn('Publish Changes', { action:'publish', variant:'primary', iconName:'upload' }) +
+          '</div>' +
+        '</div>' +
+      '</section>' +
+
+      /* Setup checklist */
+      '<section class="card">' +
+        cardHead('Setup progress', 'Complete these steps to get the most out of your portfolio.',
+          '<span class="badge badge-accent">' + doneCount + ' of ' + state.setup.length + ' complete</span>') +
+        '<div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" aria-label="Setup progress">' +
+          '<span style="width:' + pct + '%"></span></div>' +
+        '<p class="hint">' + pct + '% complete</p>' +
+        '<div class="checklist">' +
+          state.setup.map(function(item){
+            return '<div class="check-item ' + (item.done ? 'done' : '') + '">' +
+              '<label class="switch" style="width:auto;height:auto">' +
+                '<input type="checkbox" data-action="toggle-setup" data-id="' + item.id + '"' + (item.done ? ' checked' : '') +
+                ' aria-label="Mark “' + esc(item.label) + '” as complete">' +
+                '<span class="cb">' + icon('check') + '</span>' +
+              '</label>' +
+              '<span class="txt">' + esc(item.label) + '</span>' +
+              (item.done ? badge('Done', 'success') : badge('To do', 'neutral')) +
+            '</div>';
+          }).join('') +
+        '</div>' +
+      '</section>' +
+
+      /* Overview cards */
+      '<div class="stat-grid">' + stats + '</div>' +
+
+      /* SEO form */
+      '<section class="card">' +
+        cardHead('SEO metadata', 'Control how your site appears in search results and social shares.') +
+        '<form data-form="seo" novalidate>' +
+          '<div class="field">' +
+            '<label for="seoTitle">Site title</label>' +
+            '<input id="seoTitle" name="title" class="input" value="' + esc(site.title) + '" data-required>' +
+            '<p class="field-error" id="err-seoTitle" hidden>Site title is required.</p>' +
+          '</div>' +
+          '<div class="field">' +
+            '<label for="seoDesc">Meta description</label>' +
+            '<textarea id="seoDesc" name="description" class="textarea" rows="3" maxlength="160" data-counter="seoCount">' + esc(site.description) + '</textarea>' +
+            '<p class="hint"><span id="seoCount">' + seoDescLen + '</span>/160 characters</p>' +
+          '</div>' +
+          '<div class="field">' +
+            '<span class="label">Social sharing image</span>' +
+            '<div class="row" style="gap:12px;flex-wrap:wrap">' +
+              '<div style="width:104px;height:64px;border-radius:9px;border:1px solid var(--border);background:var(--accent-soft);display:grid;place-items:center;color:var(--accent-2)">' + icon('image') + '</div>' +
+              '<div class="stack-sm" style="gap:6px">' +
+                '<span class="small" style="font-weight:600">' + esc(site.socialImage) + '</span>' +
+                '<span class="hint">Recommended 1200 × 630 px · JPG or PNG</span>' +
+                btn('Replace image', { action:'replace-social', size:'sm', iconName:'upload' }) +
+              '</div>' +
+            '</div>' +
+          '</div>' +
+          '<div class="form-actions">' +
+            btn('Save changes', { action:'save-seo', variant:'primary' }) +
+            btn('Cancel', { action:'reset-seo' }) +
+          '</div>' +
+        '</form>' +
+      '</section>' +
+
+    '</div>' +
+    '<aside class="stack sticky-col">' + previewPanel({}) + '</aside>' +
+  '</div>';
+}
+
+/* ---------- 7.2 Builder ---------- */
+function sectionRow(s){
+  return '<div class="section-row" data-id="' + s.id + '"' + (s.locked ? '' : ' draggable="true"') + '>' +
+      '<button type="button" class="drag-handle" ' + (s.locked ? 'disabled' : '') +
+        ' aria-label="Reorder ' + esc(s.name) + '" title="' + (s.locked ? 'Header section is locked' : 'Drag to reorder') + '">' +
+        icon('grip') + '</button>' +
+      '<div class="section-main">' +
+        '<div class="section-title">' + esc(s.name) +
+          (s.locked ? badge('Locked', 'neutral') : '') + '</div>' +
+        '<div class="section-sub">' + esc(s.layout) + '</div>' +
+      '</div>' +
+      badge(s.visible ? 'Visible' : 'Hidden', s.visible ? 'success' : 'neutral') +
+      '<label class="switch"><input type="checkbox" data-action="toggle-section" data-id="' + s.id + '"' +
+        (s.visible ? ' checked' : '') + (s.locked ? ' disabled' : '') +
+        ' aria-label="Toggle visibility of ' + esc(s.name) + '"><span class="track"></span></label>' +
+      btn('Edit', { action:'edit-section', id:s.id, size:'sm', iconName:'edit' }) +
+    '</div>';
+}
+function renderBuilder(){
+  return pageHead(PAGES.builder.title, PAGES.builder.desc) +
+  '<div class="page-grid">' +
+    '<div class="stack">' +
+      '<section class="card">' +
+        cardHead('Sections', 'Drag the handle to reorder. Use the toggle to show or hide a section on your public site.',
+          '<span class="badge badge-neutral">' + state.sections.length + ' sections</span>') +
+        '<div class="section-list" id="sectionList">' +
+          state.sections.map(sectionRow).join('') +
+        '</div>' +
+        '<p class="hint" style="margin-top:12px">The Header section is locked and always rendered first.</p>' +
+      '</section>' +
+      '<section class="card">' +
+        cardHead('Add a section', 'Extra sections will be available in a later release.') +
+        '<div class="row wrap" style="gap:10px">' +
+          btn('Contact form', { action:'not-implemented', size:'sm', iconName:'plus' }) +
+          btn('Pricing table', { action:'not-implemented', size:'sm', iconName:'plus' }) +
+          btn('Blog feed', { action:'not-implemented', size:'sm', iconName:'plus' }) +
+        '</div>' +
+      '</section>' +
+    '</div>' +
+    '<aside class="stack sticky-col">' +
+      previewPanel({ device: state.builderDevice, setAction:'builder-device' }) +
+      '<section class="card">' +
+        cardHead('Quick actions') +
+        '<div class="stack-sm">' +
+          btn('Open full preview', { action:'goto', page:'preview', iconName:'eye', block:true }) +
+          btn('Change theme', { action:'goto', page:'theme', iconName:'palette', block:true }) +
+          btn('Publish changes', { action:'publish', variant:'primary', iconName:'upload', block:true }) +
+        '</div>' +
+      '</section>' +
+    '</aside>' +
+  '</div>';
+}
+
+/* ---------- 7.3 Theme ---------- */
+function themePreviewMarkup(t){
+  const v = t.vars;
+  return '<div class="theme-preview" style="background:' + v.bg + '">' +
+      '<div class="tp-bar"><span class="tp-logo" style="background:' + v.accent + '"></span>' +
+        '<span class="tp-lines"><i style="background:' + v.muted + '"></i><i style="background:' + v.muted + '"></i><i style="background:' + v.muted + '"></i></span></div>' +
+      '<span class="tp-title" style="background:' + v.text + '"></span>' +
+      '<span class="tp-text" style="background:' + v.muted + '"></span>' +
+      '<span class="tp-text short" style="background:' + v.muted + '"></span>' +
+      '<span class="tp-cta" style="background:' + v.accent + '"></span>' +
+    '</div>';
+}
+function renderTheme(){
+  const cards = DATA.themes.map(function(t){
+    const selected = t.id === state.themeId;
+    return '<article class="theme-card ' + (selected ? 'selected' : '') + '">' +
+        themePreviewMarkup(t) +
+        '<div class="theme-body">' +
+          '<div class="row between">' +
+            '<h3 style="font-size:13.5px;font-weight:660">' + esc(t.name) + '</h3>' +
+            (selected ? badge('Selected', 'accent') : '') +
+          '</div>' +
+          '<p class="hint">' + esc(t.font) + '</p>' +
+          '<div class="swatches" aria-label="Colour palette">' +
+            t.palette.map(function(c){ return '<span class="swatch" style="background:' + c + '" title="' + c + '"></span>'; }).join('') +
+          '</div>' +
+          btn(selected ? 'Current theme' : 'Select theme', {
+            action: selected ? '' : 'select-theme',
+            id: t.id,
+            variant: selected ? 'secondary' : 'primary',
+            block: true,
+            extra: selected ? 'disabled aria-disabled="true"' : ''
+          }) +
+        '</div>' +
+      '</article>';
+  }).join('');
+
+  return pageHead(PAGES.theme.title, PAGES.theme.desc) +
+  '<div class="stack">' +
+    '<div class="theme-grid">' + cards + '</div>' +
+
+    '<section class="card">' +
+      cardHead('Customize theme', 'Fine-tune the accent colour, background and typography of your selected theme.',
+        btn('Reset customization', { action:'reset-custom', size:'sm' })) +
+      '<div class="form-grid two">' +
+        '<div class="field">' +
+          '<label for="customAccent">Accent colour</label>' +
+          '<div class="row" style="gap:10px">' +
+            '<input type="color" id="customAccent" class="input" style="width:52px;padding:3px;height:38px;flex:0 0 auto" value="' + (state.custom.accent || currentTheme().vars.accent) + '" data-action="custom-color" data-key="accent" aria-label="Accent colour">' +
+            '<input class="input" value="' + (state.custom.accent || currentTheme().vars.accent) + '" readonly aria-label="Accent colour value">' +
+          '</div>' +
+        '</div>' +
+        '<div class="field">' +
+          '<label for="customBg">Background colour</label>' +
+          '<div class="row" style="gap:10px">' +
+            '<input type="color" id="customBg" class="input" style="width:52px;padding:3px;height:38px;flex:0 0 auto" value="' + (state.custom.bg || currentTheme().vars.bg) + '" data-action="custom-color" data-key="bg" aria-label="Background colour">' +
+            '<input class="input" value="' + (state.custom.bg || currentTheme().vars.bg) + '" readonly aria-label="Background colour value">' +
+          '</div>' +
+        '</div>' +
+        '<div class="field">' +
+          '<label for="customFont">Typography</label>' +
+          '<select id="customFont" class="select" data-action="custom-font">' +
+            '<option value=""' + (state.custom.font === '' ? ' selected' : '') + '>Theme default</option>' +
+            '<option value="Inter, sans-serif"' + (state.custom.font === 'Inter, sans-serif' ? ' selected' : '') + '>Inter — Sans-serif</option>' +
+            '<option value="Georgia, serif"' + (state.custom.font === 'Georgia, serif' ? ' selected' : '') + '>Georgia — Serif</option>' +
+            '<option value="&quot;Courier New&quot;, monospace"' + (state.custom.font === '"Courier New", monospace' ? ' selected' : '') + '>Courier New — Monospace</option>' +
+          '</select>' +
+        '</div>' +
+        '<div class="field">' +
+          '<span class="label">Preview</span>' +
+          '<div style="border:1px solid var(--border);border-radius:12px;padding:10px;background:var(--surface-3)">' +
+            sitePreviewHTML(false) +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="form-actions">' +
+        btn('Apply to preview', { action:'apply-custom', variant:'primary' }) +
+        btn('Cancel', { action:'reset-custom' }) +
+      '</div>' +
+    '</section>' +
+  '</div>';
+}
+
+/* ---------- 7.4 Domain ---------- */
+function renderDomain(){
+  const site = DATA.site;
+  const doneCount = state.setup.filter(function(i){ return i.done; }).length;
+  const pct = Math.round(doneCount / state.setup.length * 100);
+
+  return pageHead(PAGES.domain.title, PAGES.domain.desc) +
+  '<div class="page-grid">' +
+    '<div class="stack">' +
+
+      '<section class="card">' +
+        cardHead('Your address', 'This is the address visitors use to reach your portfolio.') +
+        '<div style="border:1px solid var(--border);border-radius:12px;padding:16px;background:var(--surface-2)">' +
+          '<div class="row between wrap" style="gap:12px">' +
+            '<div style="min-width:0">' +
+              '<div class="row gap-sm" style="gap:8px;margin-bottom:4px">' +
+                '<span class="status-dot live"></span>' +
+                '<strong style="font-size:14px">' + esc(site.subdomain) + '</strong>' +
+                badge(site.status === 'published' ? 'Live / Published' : 'Draft', site.status === 'published' ? 'success' : 'warn') +
+              '</div>' +
+              '<p class="hint">Assigned subdomain · Permanent address</p>' +
+            '</div>' +
+            '<div class="row gap-sm wrap">' +
+              btn('Copy link', { action:'copy-link', iconName:'copy', size:'sm' }) +
+              btn('Open my site', { action:'open-site', iconName:'external', variant:'primary', size:'sm' }) +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+        '<p class="hint" style="margin-top:10px">' + icon('info') + ' The address is read-only in this prototype.</p>' +
+      '</section>' +
+
+      '<section class="card">' +
+        cardHead('Domain information') +
+        '<div class="table-wrap">' +
+          '<table><tbody>' +
+            '<tr><td style="width:40%;color:var(--text-3)">Address type</td><td>Assigned subdomain</td></tr>' +
+            '<tr><td style="color:var(--text-3)">Full address</td><td class="mono">' + esc(site.subdomain) + '</td></tr>' +
+            '<tr><td style="color:var(--text-3)">Status</td><td>' + badge(site.status === 'published' ? 'Live' : 'Draft', site.status === 'published' ? 'success' : 'warn') + '</td></tr>' +
+            '<tr><td style="color:var(--text-3)">Assigned on</td><td>12 April 2025</td></tr>' +
+            '<tr><td style="color:var(--text-3)">SSL certificate</td><td>' + badge('Active', 'success') + '</td></tr>' +
+            '<tr><td style="color:var(--text-3)">Custom domain</td><td>' + badge('Not available yet', 'neutral') + '</td></tr>' +
+          '</tbody></table>' +
+        '</div>' +
+      '</section>' +
+
+      '<section class="card">' +
+        cardHead('Good to know') +
+        '<div class="stack-sm">' +
+          '<div class="row" style="align-items:flex-start;gap:10px">' + icon('info') +
+            '<p class="small muted" style="margin:0"><strong style="color:var(--text)">Address propagation.</strong> Changes to your published content can take a few minutes to appear worldwide while cached copies expire. This prototype does not perform real publishing.</p></div>' +
+          '<div class="row" style="align-items:flex-start;gap:10px">' + icon('lock') +
+            '<p class="small muted" style="margin:0"><strong style="color:var(--text)">Permanent address.</strong> Your assigned subdomain cannot be changed after it has been shared. Review it carefully before publishing.</p></div>' +
+          '<div class="row" style="align-items:flex-start;gap:10px">' + icon('globe') +
+            '<p class="small muted" style="margin:0"><strong style="color:var(--text)">Custom domains.</strong> Connecting your own domain is a planned feature and is not part of this UI prototype.</p></div>' +
+        '</div>' +
+      '</section>' +
+
+    '</div>' +
+    '<aside class="stack sticky-col">' +
+      '<section class="card">' +
+        cardHead('Setup progress', doneCount + ' of ' + state.setup.length + ' steps complete') +
+        '<div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' + pct + '" aria-label="Setup progress"><span style="width:' + pct + '%"></span></div>' +
+        '<p class="hint">' + pct + '% complete</p>' +
+        '<div class="stack-sm" style="margin-top:14px">' +
+          btn('Choose a theme', { action:'goto', page:'theme', iconName:'palette', block:true }) +
+          btn('Edit sections', { action:'goto', page:'builder', iconName:'layers', block:true }) +
+          btn('Publish changes', { action:'publish', variant:'primary', iconName:'upload', block:true }) +
+        '</div>' +
+      '</section>' +
+      '<section class="card">' +
+        cardHead('Site preview') +
+        '<div style="border:1px solid var(--border);border-radius:12px;padding:8px;background:var(--surface-3)">' +
+          sitePreviewHTML(false) +
+        '</div>' +
+      '</section>' +
+    '</aside>' +
+  '</div>';
+}
+
+/* ---------- 7.5 Images ---------- */
+function thumbURI(img){
+  const svg = '<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300" viewBox="0 0 400 300">' +
+    '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">' +
+    '<stop offset="0" stop-color="' + img.c1 + '"/><stop offset="1" stop-color="' + img.c2 + '"/></linearGradient></defs>' +
+    '<rect width="400" height="300" fill="url(#g)"/>' +
+    '<circle cx="118" cy="112" r="56" fill="rgba(255,255,255,0.22)"/>' +
+    '<rect x="182" y="150" width="150" height="13" rx="6.5" fill="rgba(255,255,255,0.38)"/>' +
+    '<rect x="182" y="178" width="98" height="11" rx="5.5" fill="rgba(255,255,255,0.24)"/>' +
+    '<rect x="24" y="236" width="352" height="40" rx="10" fill="rgba(255,255,255,0.14)"/>' +
+    '</svg>';
+  return 'data:image/svg+xml;utf8,' + encodeURIComponent(svg);
+}
+function filteredImages(){
+  const q = state.imageQuery.trim().toLowerCase();
+  let list = state.images.filter(function(img){
+    const matchQ = !q || img.name.toLowerCase().indexOf(q) !== -1;
+    const matchF = state.imageFormat === 'all' || img.format === state.imageFormat;
+    return matchQ && matchF;
+  });
+  list = list.slice().sort(function(a, b){
+    if (state.imageSort === 'name') return a.name.localeCompare(b.name);
+    if (state.imageSort === 'format') return a.format.localeCompare(b.format) || a.name.localeCompare(b.name);
+    return b.w - a.w;
+  });
+  return list;
+}
+function mediaGridHTML(){
+  const list = filteredImages();
+  if (!list.length) {
+    return '<div class="empty-state">' + icon('image') +
+      '<h3>No images found</h3>' +
+      '<p>Try a different search term or clear the format filter to see all of your uploaded images.</p>' +
+      btn('Clear filters', { action:'clear-image-filters', size:'sm' }) +
+      '</div>';
+  }
+  return '<div class="media-grid">' + list.map(function(img){
+    return '<button type="button" class="media-card" data-action="open-image" data-id="' + img.id + '">' +
+        '<img class="media-thumb" src="' + thumbURI(img) + '" alt="" loading="lazy">' +
+        '<div class="media-meta">' +
+          '<div class="media-name">' + esc(img.name) + '</div>' +
+          '<div class="media-sub">' + img.format + ' · ' + img.w + '×' + img.h + ' · ' + esc(img.size) + '</div>' +
+        '</div>' +
+      '</button>';
+  }).join('') + '</div>';
+}
+function renderImages(){
+  const formats = ['all','JPG','PNG','SVG'];
+  return pageHead(PAGES.images.title, PAGES.images.desc) +
+  '<section class="card">' +
+    '<div class="toolbar">' +
+      '<div class="search">' + icon('search') +
+        '<input type="search" class="input" id="imageSearch" placeholder="Search images by filename…" value="' + esc(state.imageQuery) + '" data-action="image-search" aria-label="Search images">' +
+      '</div>' +
+      '<label class="sr-only" for="imageFormat">Filter by format</label>' +
+      '<select class="select" id="imageFormat" style="width:auto" data-action="image-format">' +
+        formats.map(function(f){
+          return '<option value="' + f + '"' + (state.imageFormat === f ? ' selected' : '') + '>' +
+            (f === 'all' ? 'All formats' : f) + '</option>';
+        }).join('') +
+      '</select>' +
+      '<label class="sr-only" for="imageSort">Sort images</label>' +
+      '<select class="select" id="imageSort" style="width:auto" data-action="image-sort">' +
+        '<option value="name"' + (state.imageSort === 'name' ? ' selected' : '') + '>Sort: Name</option>' +
+        '<option value="format"' + (state.imageSort === 'format' ? ' selected' : '') + '>Sort: Format</option>' +
+        '<option value="size"' + (state.imageSort === 'size' ? ' selected' : '') + '>Sort: Dimensions</option>' +
+      '</select>' +
+      '<div class="row" style="margin-left:auto">' +
+        btn('Upload image', { action:'upload-image', variant:'primary', iconName:'upload' }) +
+      '</div>' +
+    '</div>' +
+    '<p class="hint" style="margin-bottom:14px">' + filteredImages().length + ' of ' + state.images.length + ' images · Sample library for prototype purposes.</p>' +
+    '<div id="mediaGrid">' + mediaGridHTML() + '</div>' +
+  '</section>' +
+  '<input type="file" id="fileInput" accept="image/*" multiple hidden>';
+}
+
+/* ---------- 7.6 Analytics ---------- */
+function chartSVG(days){
+  const w = 760, h = 250;
+  const pad = { l: 44, r: 16, t: 16, b: 30 };
+  const max = Math.max.apply(null, days.map(function(d){ return d.views; }));
+  const top = Math.max(10, Math.ceil(max / 10) * 10);
+  const stepX = (w - pad.l - pad.r) / (days.length - 1);
+  function X(i){ return pad.l + i * stepX; }
+  function Y(v){ return h - pad.b - (v / top) * (h - pad.t - pad.b); }
+
+  function path(key){
+    return days.map(function(d, i){
+      return (i ? 'L' : 'M') + X(i).toFixed(1) + ',' + Y(d[key]).toFixed(1);
+    }).join(' ');
+  }
+  const areaPath = path('views') + ' L' + X(days.length - 1).toFixed(1) + ',' + (h - pad.b) +
+                   ' L' + pad.l + ',' + (h - pad.b) + ' Z';
+
+  let grid = '';
+  [0, 0.25, 0.5, 0.75, 1].forEach(function(f){
+    const y = h - pad.b - f * (h - pad.t - pad.b);
+    grid += '<line x1="' + pad.l + '" y1="' + y + '" x2="' + (w - pad.r) + '" y2="' + y + '" stroke="#eef0f4" stroke-width="1"/>' +
+            '<text x="' + (pad.l - 8) + '" y="' + (y + 4) + '" text-anchor="end" class="chart-axis">' + Math.round(top * f) + '</text>';
+  });
+
+  let xLabels = '';
+  days.forEach(function(d, i){
+    if (i % 5 === 0 || i === days.length - 1) {
+      xLabels += '<text x="' + X(i) + '" y="' + (h - 8) + '" text-anchor="middle" class="chart-axis">' + fmtDate(d.date) + '</text>';
+    }
+  });
+
+  const dots = days.map(function(d, i){
+    return '<circle cx="' + X(i) + '" cy="' + Y(d.views) + '" r="2.6" fill="#4f46e5" opacity="0">' +
+             '<title>' + fmtDate(d.date) + ' — ' + d.views + ' views, ' + d.visitors + ' visitors</title>' +
+           '</circle>';
+  }).join('');
+
+  return '<svg class="chart" viewBox="0 0 ' + w + ' ' + h + '" role="img" aria-label="Page views and unique visitors over the selected period">' +
+      '<defs><linearGradient id="areaFill" x1="0" y1="0" x2="0" y2="1">' +
+        '<stop offset="0" stop-color="#4f46e5" stop-opacity="0.18"/>' +
+        '<stop offset="1" stop-color="#4f46e5" stop-opacity="0"/>' +
+      '</linearGradient></defs>' +
+      grid +
+      '<path d="' + areaPath + '" fill="url(#areaFill)"/>' +
+      '<path d="' + path('views') + '" fill="none" stroke="#4f46e5" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>' +
+      '<path d="' + path('visitors') + '" fill="none" stroke="#12b76a" stroke-width="2" stroke-dasharray="5 4" stroke-linejoin="round" stroke-linecap="round"/>' +
+      dots + xLabels +
+    '</svg>';
+}
+function breakdownCard(title, items){
+  const total = items.reduce(function(a, b){ return a + b.v; }, 0) || 1;
+  return '<section class="card">' +
+      cardHead(title) +
+      '<div class="breakdown">' + items.map(function(it){
+        const pct = Math.round(it.v / total * 100);
+        return '<div class="bd-row">' +
+            '<div class="bd-top"><span class="n">' + esc(it.n) + '</span><span class="v">' + fmtNum(it.v) + ' · ' + pct + '%</span></div>' +
+            '<div class="bd-bar"><span style="width:' + pct + '%"></span></div>' +
+          '</div>';
+      }).join('') + '</div>' +
+    '</section>';
+}
+function renderAnalytics(){
+  const ranges = { today: 1, week: 7, month: 30 };
+  const count = ranges[state.analyticsRange] || 30;
+  const slice = ANALYTICS_DAYS.slice(-count);
+  const sum = function(key){ return slice.reduce(function(a, d){ return a + d[key]; }, 0); };
+
+  const cards = [
+    { label:'Today',        views: ANALYTICS_DAYS[ANALYTICS_DAYS.length - 1].views,
+                            visitors: ANALYTICS_DAYS[ANALYTICS_DAYS.length - 1].visitors },
+    { label:'Last 7 days',  views: sum('views') && ANALYTICS_DAYS.slice(-7).reduce(function(a,d){return a+d.views;},0),
+                            visitors: ANALYTICS_DAYS.slice(-7).reduce(function(a,d){return a+d.visitors;},0) },
+    { label:'Last 30 days', views: ANALYTICS_DAYS.reduce(function(a,d){return a+d.views;},0),
+                            visitors: ANALYTICS_DAYS.reduce(function(a,d){return a+d.visitors;},0) }
+  ].map(function(c){
+    return '<section class="card">' +
+        '<p class="stat-label">' + esc(c.label) + '</p>' +
+        '<p class="stat-value" style="margin:6px 0 2px">' + fmtNum(c.views) + '</p>' +
+        '<p class="hint">page views</p>' +
+        '<div style="height:1px;background:var(--border);margin:12px 0"></div>' +
+        '<p style="font-size:15px;font-weight:660">' + fmtNum(c.visitors) + '</p>' +
+        '<p class="hint">unique visitors</p>' +
+      '</section>';
+  }).join('');
+
+  const rows = DATA.visits.map(function(v){
+    return '<tr>' +
+        '<td>' + esc(v.time) + '</td>' +
+        '<td class="mono">' + esc(v.ip) + '</td>' +
+        '<td>' + esc(v.country) + '</td>' +
+        '<td>' + esc(v.ref) + '</td>' +
+        '<td>' + esc(v.browser) + '</td>' +
+        '<td>' + esc(v.device) + '</td>' +
+      '</tr>';
+  }).join('');
+
+  return pageHead(PAGES.analytics.title, PAGES.analytics.desc) +
+  '<div class="notice" style="margin:0 0 18px" role="status">' + icon('info') +
+    '<span class="grow">All analytics on this page are demonstration data. No real tracking is performed in this prototype.</span></div>' +
+
+  '<div class="stat-grid" style="margin-bottom:18px">' + cards + '</div>' +
+
+  '<section class="card" style="margin-bottom:18px">' +
+    cardHead('Traffic overview', 'Page views and unique visitors over the selected period.',
+      '<label class="sr-only" for="rangeSelect">Date range</label>' +
+      '<select class="select" id="rangeSelect" style="width:auto" data-action="analytics-range">' +
+        '<option value="today"' + (state.analyticsRange === 'today' ? ' selected' : '') + '>Today</option>' +
+        '<option value="week"'  + (state.analyticsRange === 'week'  ? ' selected' : '') + '>Last 7 days</option>' +
+        '<option value="month"' + (state.analyticsRange === 'month' ? ' selected' : '') + '>Last 30 days</option>' +
+      '</select>') +
+    '<div class="chart-legend">' +
+      '<span class="k"><span class="sw" style="background:#4f46e5"></span>Page views</span>' +
+      '<span class="k"><span class="sw" style="background:#12b76a"></span>Unique visitors</span>' +
+    '</div>' +
+    '<div class="chart-wrap">' + chartSVG(slice) + '</div>' +
+  '</section>' +
+
+  '<div class="stat-grid" style="margin-bottom:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))">' +
+    breakdownCard('Referral sources', DATA.breakdowns.referrals) +
+    breakdownCard('Countries', DATA.breakdowns.countries) +
+    breakdownCard('Devices', DATA.breakdowns.devices) +
+    breakdownCard('Browsers', DATA.breakdowns.browsers) +
+    breakdownCard('Operating systems', DATA.breakdowns.os) +
+  '</div>' +
+
+  '<section class="card">' +
+    cardHead('Recent visits', 'The most recent sessions recorded on your site.') +
+    '<div class="table-wrap"><table>' +
+      '<thead><tr><th scope="col">Time</th><th scope="col">IP address</th><th scope="col">Country</th>' +
+      '<th scope="col">Referrer</th><th scope="col">Browser</th><th scope="col">Device</th></tr></thead>' +
+      '<tbody>' + rows + '</tbody>' +
+    '</table></div>' +
+    '<p class="hint" style="margin-top:10px">Scroll horizontally on small screens to see all columns.</p>' +
+  '</section>';
+}
+
+/* ---------- 7.7 History ---------- */
+function historyFiltered(){
+  return DATA.history.filter(function(h){
+    const typeOk = state.historyType === 'all' || h.type === state.historyType;
+    const dateOk = state.historyDate === 'all' || h.when === state.historyDate;
+    return typeOk && dateOk;
+  });
+}
+function renderHistory(){
+  const items = historyFiltered();
+  const iconFor = { publish:'upload', content:'edit', theme:'palette', visibility:'eye' };
+
+  const timeline = items.length
+    ? '<ol class="timeline">' + items.map(function(h){
+        return '<li class="tl-item">' +
+            '<span class="tl-dot t-' + h.type + '">' + icon(iconFor[h.type] || 'clock') + '</span>' +
+            '<div class="tl-body">' +
+              '<div class="row between wrap" style="gap:8px">' +
+                '<h4>' + esc(h.title) + '</h4>' +
+                '<span class="tiny muted">' + esc(h.time) + '</span>' +
+              '</div>' +
+              '<p>' + esc(h.desc) + '</p>' +
+              '<div class="tl-foot">' +
+                badge(h.type === 'publish' ? 'Publication' : h.type === 'content' ? 'Content edit' : h.type === 'theme' ? 'Theme' : 'Visibility',
+                      h.type === 'publish' ? 'success' : h.type === 'visibility' ? 'warn' : 'accent') +
+                btn('View details', { action:'history-details', id:h.id, size:'sm' }) +
+                btn('Restore version', { action:'history-restore', id:h.id, size:'sm', iconName:'restore' }) +
+              '</div>' +
+            '</div>' +
+          '</li>';
+      }).join('') + '</ol>'
+    : '<div class="empty-state">' + icon('clock') +
+        '<h3>No activity matches these filters</h3><p>Try widening the event type or date range.</p>' +
+        btn('Clear filters', { action:'clear-history-filters', size:'sm' }) + '</div>';
+
+  return pageHead(PAGES.history.title, PAGES.history.desc) +
+  '<section class="card">' +
+    '<div class="toolbar">' +
+      '<label class="sr-only" for="historyType">Filter by event type</label>' +
+      '<select class="select" id="historyType" style="width:auto" data-action="history-type">' +
+        '<option value="all"'        + (state.historyType === 'all' ? ' selected' : '') + '>All event types</option>' +
+        '<option value="content"'    + (state.historyType === 'content' ? ' selected' : '') + '>Content edits</option>' +
+        '<option value="theme"'      + (state.historyType === 'theme' ? ' selected' : '') + '>Theme changes</option>' +
+        '<option value="visibility"' + (state.historyType === 'visibility' ? ' selected' : '') + '>Visibility changes</option>' +
+        '<option value="publish"'    + (state.historyType === 'publish' ? ' selected' : '') + '>Publications</option>' +
+      '</select>' +
+      '<label class="sr-only" for="historyDate">Filter by date</label>' +
+      '<select class="select" id="historyDate" style="width:auto" data-action="history-date">' +
+        '<option value="all"'   + (state.historyDate === 'all' ? ' selected' : '') + '>All dates</option>' +
+        '<option value="today"' + (state.historyDate === 'today' ? ' selected' : '') + '>Today</option>' +
+        '<option value="week"'  + (state.historyDate === 'week' ? ' selected' : '') + '>Last 7 days</option>' +
+        '<option value="month"' + (state.historyDate === 'month' ? ' selected' : '') + '>Last 30 days</option>' +
+      '</select>' +
+      '<span class="badge badge-neutral" style="margin-left:auto">' + items.length + ' events</span>' +
+    '</div>' +
+    timeline +
+    '<p class="hint" style="margin-top:14px">Restore and details actions are prototype controls — no version is actually restored.</p>' +
+  '</section>';
+}
+
+/* ---------- 7.8 Preview ---------- */
+function renderPreview(){
+  const device = state.previewDevice;
+  const widths = { desktop:'100%', tablet:'768px', mobile:'390px' };
+  const width = widths[device] || '100%';
+
+  return pageHead(PAGES.preview.title, PAGES.preview.desc) +
+  '<section class="card">' +
+    '<div class="toolbar" style="margin-bottom:16px">' +
+      '<div class="segmented" role="group" aria-label="Preview viewport">' +
+        ['desktop','tablet','mobile'].map(function(d){
+          return '<button type="button" class="' + (device === d ? 'active' : '') + '" data-action="preview-device" data-device="' + d + '" aria-pressed="' + (device === d) + '">' +
+            icon(d === 'desktop' ? 'monitor' : d === 'tablet' ? 'tablet' : 'phone') +
+            d.charAt(0).toUpperCase() + d.slice(1) + '</button>';
+        }).join('') +
+      '</div>' +
+      badge('Draft preview', 'warn') +
+      '<div class="row gap-sm" style="margin-left:auto">' +
+        btn('Open in new tab', { action:'open-site', iconName:'external', size:'sm' }) +
+        btn('Return to builder', { action:'goto', page:'builder', iconName:'layers', variant:'primary', size:'sm' }) +
+      '</div>' +
+    '</div>' +
+    '<div style="background:var(--surface-3);border:1px solid var(--border);border-radius:12px;padding:18px;display:flex;justify-content:center;overflow:hidden">' +
+      '<div style="width:' + width + ';max-width:100%;transition:width .2s ease">' + sitePreviewHTML(true) + '</div>' +
+    '</div>' +
+    '<p class="hint" style="margin-top:12px">' + icon('info') + ' This canvas shows a representative draft of your portfolio — it is not a live website.</p>' +
+  '</section>';
+}
+
+/* ---------- 7.9 Guide ---------- */
+const GUIDES = [
+  { id:'g1', title:'Getting started', desc:'Set up your portfolio from scratch in under ten minutes.', steps:['Open the Dashboard and review your setup checklist.','Choose a theme that matches your personal brand.','Edit the Cover section to add your name, role and headline.','Fill in About, Services and Works with real content.','Preview your site, then press Publish Changes.'] },
+  { id:'g2', title:'Editing the Cover', desc:'Make a strong first impression with a clear headline.', steps:['Open Builder and press Edit on the Cover section.','Write a one-line headline describing what you do.','Upload a portrait or abstract cover image.','Keep supporting text under 160 characters.','Save and preview the result.'] },
+  { id:'g3', title:'Managing portfolio sections', desc:'Reorder, hide and edit every section of your site.', steps:['Drag the handle on the left of a section to reorder it.','Use the toggle to hide a section without deleting it.','The Header section is locked and always appears first.','Press Edit to open the section editor.','Changes appear in the live preview immediately.'] },
+  { id:'g4', title:'Choosing a theme', desc:'Pick a visual style and fine-tune colours and fonts.', steps:['Open the Theme page.','Compare the six built-in themes.','Press Select theme on the one you want.','Use Customize to adjust the accent colour and typography.','Publish changes to apply the theme to your live site.'] },
+  { id:'g5', title:'Uploading images', desc:'Add and manage images across your portfolio.', steps:['Open the Images page.','Press Upload image and select files from your device.','Use search, format filters and sorting to find an image.','Click a thumbnail to preview its details.','Copy the file name to reference it in your content.'] },
+  { id:'g6', title:'Configuring your domain address', desc:'Understand your assigned address and its status.', steps:['Open the Domain Address page.','Review your permanent subdomain.','Press Copy link to share it.','Check that the status badge reads Live.','Note that custom domains are not available yet.'] },
+  { id:'g7', title:'Publishing changes', desc:'Push your latest edits to the public site.', steps:['Finish editing sections in the Builder.','Open Preview and review all three viewports.','Return to the Dashboard.','Press Publish Changes.','Confirm the status badge reads Live.'] },
+  { id:'g8', title:'Understanding analytics', desc:'Read your visitor data with confidence.', steps:['Open Visitors / Analytics.','Choose Today, 7 days or 30 days.','Compare page views with unique visitors.','Review referral sources to see what drives traffic.','Use the Recent visits table for session-level detail.'] }
+];
+function guideCard(g){
+  const open = state.openGuide === g.id;
+  return '<div class="guide-card">' +
+      '<div class="row between">' +
+        '<h4>' + esc(g.title) + '</h4>' +
+        (open ? badge('Open', 'accent') : badge(g.steps.length + ' steps', 'neutral')) +
+      '</div>' +
+      '<p>' + esc(g.desc) + '</p>' +
+      (open ? '<ol class="small" style="margin:0;padding-left:18px;color:var(--text-2);display:flex;flex-direction:column;gap:5px">' +
+        g.steps.map(function(s){ return '<li>' + esc(s) + '</li>'; }).join('') + '</ol>' : '') +
+      btn(open ? 'Hide steps' : 'View steps', { action:'toggle-guide', id:g.id, size:'sm', block:true }) +
+    '</div>';
+}
+function renderGuide(){
+  const q = state.guideQuery.trim().toLowerCase();
+  const guides = GUIDES.filter(function(g){
+    return !q || g.title.toLowerCase().indexOf(q) !== -1 || g.desc.toLowerCase().indexOf(q) !== -1;
+  });
+  const faqs = DATA.faqs.filter(function(f){
+    return !q || f.q.toLowerCase().indexOf(q) !== -1 || f.a.toLowerCase().indexOf(q) !== -1;
+  });
+
+  return pageHead(PAGES.guide.title, PAGES.guide.desc) +
+  '<div class="stack">' +
+
+    '<section class="card">' +
+      '<div class="toolbar" style="margin-bottom:0">' +
+        '<div class="search" style="flex:1 1 320px">' + icon('search') +
+          '<input type="search" class="input" id="guideSearch" placeholder="Search guides and frequently asked questions…" value="' + esc(state.guideQuery) + '" data-action="guide-search" aria-label="Search help articles">' +
+        '</div>' +
+        btn('Clear', { action:'clear-guide-search', size:'sm' }) +
+      '</div>' +
+    '</section>' +
+
+    '<section class="card">' +
+      cardHead('Onboarding progress', 'Complete the core tutorials to get your portfolio production-ready.') +
+      '<div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="62" aria-label="Tutorial progress"><span style="width:62%"></span></div>' +
+      '<p class="hint">5 of 8 tutorials reviewed</p>' +
+    '</section>' +
+
+    '<section class="card">' +
+      cardHead('Step-by-step guides', guides.length + ' guides match your search.') +
+      (guides.length
+        ? '<div class="guide-grid">' + guides.map(guideCard).join('') + '</div>'
+        : '<div class="empty-state">' + icon('book') + '<h3>No guides found</h3><p>Try a different search term such as “theme” or “publish”.</p></div>') +
+    '</section>' +
+
+    '<section class="card">' +
+      cardHead('Frequently asked questions') +
+      '<div class="accordion">' + faqs.map(function(f, i){
+        const key = 'faq' + i;
+        const open = state.openFaq === key;
+        return '<div class="acc-item">' +
+            '<button type="button" class="acc-btn" data-action="toggle-faq" data-key="' + key + '" aria-expanded="' + open + '">' +
+              '<span>' + esc(f.q) + '</span>' + icon('chevronDown') +
+            '</button>' +
+            '<div class="acc-panel ' + (open ? 'open' : '') + '">' + esc(f.a) + '</div>' +
+          '</div>';
+      }).join('') + '</div>' +
+    '</section>' +
+
+  '</div>';
+}
+
+/* ---------- 7.10 Settings ---------- */
+const SETTINGS_TABS = [
+  ['general','General'],
+  ['website','Website Information'],
+  ['seo','SEO & Social Sharing'],
+  ['language','Language'],
+  ['account','Account'],
+  ['system','System Preferences']
+];
+function field(id, label, value, opts){
+  opts = opts || {};
+  const tag = opts.textarea ? 'textarea' : 'input';
+  const input = opts.textarea
+    ? '<textarea id="' + id + '" class="textarea" rows="3"' + (opts.maxlength ? ' maxlength="' + opts.maxlength + '"' : '') + '>' + esc(value) + '</textarea>'
+    : '<input id="' + id + '" class="input" type="' + (opts.type || 'text') + '" value="' + esc(value) + '"' + (opts.required ? ' data-required' : '') + '>';
+  return '<div class="field"><label for="' + id + '">' + esc(label) + '</label>' + input +
+    (opts.hint ? '<p class="hint">' + esc(opts.hint) + '</p>' : '') +
+    (opts.required ? '<p class="field-error" id="err-' + id + '" hidden>' + esc(label) + ' is required.</p>' : '') +
+    '</div>';
+}
+function toggleField(id, label, checked, desc){
+  return '<div class="check-item" style="border-bottom:1px solid var(--border);border-radius:0">' +
+      '<label class="switch"><input type="checkbox" id="' + id + '"' + (checked ? ' checked' : '') + ' aria-label="' + esc(label) + '"><span class="track"></span></label>' +
+      '<div class="txt" style="text-decoration:none">' +
+        '<div style="font-weight:620;font-size:13px">' + esc(label) + '</div>' +
+        (desc ? '<div class="hint">' + esc(desc) + '</div>' : '') +
+      '</div>' +
+    '</div>';
+}
+function settingsPanel(){
+  switch (state.settingsTab) {
+    case 'website':
+      return '<form data-form="settings" novalidate>' +
+        field('setTitle', 'Site title', DATA.site.title, { required:true, hint:'Appears in the browser tab and search results.' }) +
+        field('setTagline', 'Tagline', 'Product designer · Yangon, Myanmar') +
+        field('setDescription', 'Site description', DATA.site.description, { textarea:true, maxlength:200, hint:'Used for your meta description when SEO fields are empty.' }) +
+        field('setEmail', 'Contact email', DATA.user.email, { type:'email' }) +
+        field('setLocation', 'Location', 'Yangon, Myanmar') +
+        '<div class="form-actions">' +
+          btn('Save changes', { action:'save-settings', variant:'primary' }) +
+          btn('Reset', { action:'reset-settings', variant:'danger' }) +
+        '</div></form>';
+
+    case 'seo':
+      return '<form data-form="settings" novalidate>' +
+        field('seoMetaTitle', 'Meta title', DATA.site.title, { maxlength:60, hint:'Up to 60 characters.' }) +
+        field('seoMetaDescription', 'Meta description', DATA.site.description, { textarea:true, maxlength:160, hint:'Up to 160 characters.' }) +
+        field('seoKeywords', 'Keywords', 'product design, ui, ux, portfolio') +
+        field('seoTwitter', 'Twitter / X handle', '@aungmyo') +
+        '<div class="field"><span class="label">Social sharing image</span>' +
+          '<div class="row" style="gap:12px;flex-wrap:wrap">' +
+            '<div style="width:104px;height:64px;border-radius:9px;border:1px solid var(--border);background:var(--accent-soft);display:grid;place-items:center;color:var(--accent-2)">' + icon('image') + '</div>' +
+            '<div class="stack-sm" style="gap:6px">' +
+              '<span class="small" style="font-weight:600">' + esc(DATA.site.socialImage) + '</span>' +
+              '<span class="hint">1200 × 630 px recommended</span>' +
+              btn('Replace image', { action:'replace-social', size:'sm', iconName:'upload' }) +
+            '</div></div></div>' +
+        '<div class="form-actions">' +
+          btn('Save changes', { action:'save-settings', variant:'primary' }) +
+          btn('Reset', { action:'reset-settings', variant:'danger' }) +
+        '</div></form>';
+
+    case 'language':
+      return '<form data-form="settings">' +
+        '<div class="field"><label for="setSiteLang">Default site language</label>' +
+          '<select id="setSiteLang" class="select">' +
+            '<option value="en" selected>English</option><option value="my">Burmese (မြန်မာ)</option>' +
+          '</select><p class="hint">The language used for your public website.</p></div>' +
+        '<div class="field"><label for="setAdminLang">Admin interface language</label>' +
+          '<select id="setAdminLang" class="select">' +
+            '<option value="en" selected>English</option><option value="my">Burmese (မြန်မာ)</option>' +
+          '</select></div>' +
+        '<div class="field"><label for="setFallbackLang">Fallback language</label>' +
+          '<select id="setFallbackLang" class="select">' +
+            '<option value="en" selected>English</option><option value="my">Burmese (မြန်မာ)</option>' +
+          '</select><p class="hint">Shown when a translation is missing.</p></div>' +
+        '<div class="form-actions">' +
+          btn('Save changes', { action:'save-settings', variant:'primary' }) +
+          btn('Reset', { action:'reset-settings', variant:'danger' }) +
+        '</div></form>';
+
+    case 'account':
+      return '<form data-form="settings" novalidate>' +
+        field('accName', 'Full name', DATA.user.name, { required:true }) +
+        field('accHandle', 'Account handle', DATA.user.handle, { hint:'Your handle is visible on your public profile.' }) +
+        field('accEmail', 'Email address', DATA.user.email, { type:'email', required:true }) +
+        '<div class="field"><label for="accPassword">Password</label>' +
+          '<input id="accPassword" class="input" type="password" value="••••••••••" disabled>' +
+          '<p class="hint">Password changes are not available in this UI prototype.</p></div>' +
+        '<div class="form-actions">' +
+          btn('Save changes', { action:'save-settings', variant:'primary' }) +
+          btn('Reset', { action:'reset-settings', variant:'danger' }) +
+        '</div></form>';
+
+    case 'system':
+      return '<form data-form="settings">' +
+        toggleField('sysEmail', 'Email notifications', true, 'Receive an email when your site is published.') +
+        toggleField('sysDigest', 'Weekly analytics digest', false, 'A summary of your site traffic every Monday.') +
+        toggleField('sysAutosave', 'Autosave drafts', true, 'Automatically save changes while editing sections.') +
+        toggleField('sysMotion', 'Reduce motion', false, 'Minimise interface animations.') +
+        '<div class="form-actions" style="margin-top:16px">' +
+          btn('Save changes', { action:'save-settings', variant:'primary' }) +
+          btn('Reset', { action:'reset-settings', variant:'danger' }) +
+        '</div></form>';
+
+    default:
+      return '<form data-form="settings">' +
+        toggleField('genVisible', 'Site visibility', true, 'When disabled, your site shows a private notice to visitors.') +
+        toggleField('genBadge', '“Made with Portfolio Builder” badge', true, 'Display a small badge in the site footer.') +
+        '<div class="field" style="margin-top:16px"><label for="genTimezone">Time zone</label>' +
+          '<select id="genTimezone" class="select"><option>Asia/Yangon (GMT+6:30)</option><option>Asia/Singapore (GMT+8)</option><option>UTC</option></select></div>' +
+        '<div class="field"><label for="genDateFormat">Date format</label>' +
+          '<select id="genDateFormat" class="select"><option>12 May 2025</option><option>May 12, 2025</option><option>2025-05-12</option></select></div>' +
+        '<div class="form-actions">' +
+          btn('Save changes', { action:'save-settings', variant:'primary' }) +
+          btn('Reset', { action:'reset-settings', variant:'danger' }) +
+        '</div></form>';
+  }
+}
+function renderSettings(){
+  return pageHead(PAGES.settings.title, PAGES.settings.desc) +
+  '<div class="tabs" role="tablist">' + SETTINGS_TABS.map(function(t){
+    const active = state.settingsTab === t[0];
+    return '<button type="button" class="tab ' + (active ? 'active' : '') + '" role="tab" aria-selected="' + active +
+      '" data-action="settings-tab" data-tab="' + t[0] + '">' + esc(t[1]) + '</button>';
+  }).join('') + '</div>' +
+  '<section class="card">' +
+    cardHead(SETTINGS_TABS.filter(function(t){ return t[0] === state.settingsTab; })[0][1],
+             'Changes are saved to this prototype only and are not persisted.') +
+    settingsPanel() +
+  '</section>';
+}
+
+/* ==========================================================================
+   8. RENDER PIPELINE
+   ========================================================================== */
+const RENDERERS = {
+  dashboard: renderDashboard,
+  builder: renderBuilder,
+  theme: renderTheme,
+  domain: renderDomain,
+  images: renderImages,
+  analytics: renderAnalytics,
+  history: renderHistory,
+  preview: renderPreview,
+  guide: renderGuide,
+  settings: renderSettings
+};
+
+function render(){
+  renderNav();
+  renderHeader();
+  const content = document.getElementById('content');
+  content.innerHTML = (RENDERERS[state.page] || renderDashboard)();
+  afterRender();
+}
+
+function afterRender(){
+  /* character counter */
+  document.querySelectorAll('[data-counter]').forEach(function(el){
+    const target = document.getElementById(el.dataset.counter);
+    if (target) target.textContent = el.value.length;
+  });
+  /* builder drag & drop */
+  if (state.page === 'builder') initDrag();
+  /* keep search focus after re-render */
+  if (state.page === 'images' && state.imageQuery) {
+    const s = document.getElementById('imageSearch');
+    if (s) { s.focus(); s.setSelectionRange(s.value.length, s.value.length); }
+  }
+  if (state.page === 'guide' && state.guideQuery) {
+    const s = document.getElementById('guideSearch');
+    if (s) { s.focus(); s.setSelectionRange(s.value.length, s.value.length); }
+  }
+}
+
+/* ---------- Drag & drop reordering (Builder) ---------- */
+function initDrag(){
+  const list = document.getElementById('sectionList');
+  if (!list) return;
+  let dragId = null;
+
+  list.querySelectorAll('.section-row').forEach(function(row){
+    row.addEventListener('dragstart', function(e){
+      if (row.getAttribute('draggable') !== 'true') { e.preventDefault(); return; }
+      dragId = row.dataset.id;
+      row.classList.add('dragging');
+      if (e.dataTransfer) {
+        e.dataTransfer.effectAllowed = 'move';
+        try { e.dataTransfer.setData('text/plain', dragId); } catch (err) {}
+      }
+    });
+    row.addEventListener('dragend', function(){
+      row.classList.remove('dragging');
+      list.querySelectorAll('.section-row').forEach(function(r){ r.classList.remove('drop-target'); });
+      dragId = null;
+    });
+    row.addEventListener('dragover', function(e){
+      if (!dragId) return;
+      e.preventDefault();
+      if (row.dataset.id === dragId) return;
+      row.classList.add('drop-target');
+    });
+    row.addEventListener('dragleave', function(){ row.classList.remove('drop-target'); });
+    row.addEventListener('drop', function(e){
+      e.preventDefault();
+      row.classList.remove('drop-target');
+      if (!dragId || row.dataset.id === dragId) return;
+      const ids = Array.prototype.map.call(list.querySelectorAll('.section-row'), function(r){ return r.dataset.id; });
+      const from = ids.indexOf(dragId);
+      const to = ids.indexOf(row.dataset.id);
+      if (from < 0 || to < 0) return;
+      const moved = state.sections.splice(from, 1)[0];
+      state.sections.splice(to, 0, moved);
+      render();
+      toast('Section reordered (prototype).', 'success');
+    });
+  });
+}
+
+/* ==========================================================================
+   9. EVENT DELEGATION
+   ========================================================================== */
+document.addEventListener('click', function(e){
+  const target = e.target.closest('[data-action]');
+  if (!target) {
+    /* close user menu when clicking elsewhere */
+    const menu = document.getElementById('userMenu');
+    if (menu && !menu.hidden && !e.target.closest('.dropdown')) {
+      menu.hidden = true;
+      document.getElementById('userChip').setAttribute('aria-expanded', 'false');
+    }
+    return;
+  }
+  const action = target.dataset.action;
+
+  switch (action) {
+    /* ---- shell ---- */
+    case 'toggle-nav': {
+      if (window.matchMedia('(max-width: 960px)').matches) {
+        state.navOpen = !state.navOpen;
+        document.body.classList.toggle('nav-open', state.navOpen);
+        document.getElementById('navBtn').setAttribute('aria-expanded', String(state.navOpen));
+      } else {
+        state.collapsed = !state.collapsed;
+        document.body.classList.toggle('collapsed', state.collapsed);
+      }
+      break;
+    }
+    case 'close-nav':
+      state.navOpen = false;
+      document.body.classList.remove('nav-open');
+      document.getElementById('navBtn').setAttribute('aria-expanded', 'false');
+      break;
+
+    case 'goto':
+      e.preventDefault();
+      navigate(target.dataset.page);
+      break;
+
+    case 'dismiss-notice':
+      state.noticeVisible = false;
+      renderHeader();
+      break;
+
+    case 'toggle-user-menu': {
+      const menu = document.getElementById('userMenu');
+      menu.hidden = !menu.hidden;
+      target.setAttribute('aria-expanded', String(!menu.hidden));
+      break;
+    }
+    case 'logout':
+      toast('Logout is not implemented in this UI prototype.', 'warn');
+      break;
+    case 'notifications':
+      toast('You have no new notifications (prototype).', 'info');
+      break;
+
+    /* ---- modal ---- */
+    case 'close-modal':
+      if (e.target.closest('.modal') && !e.target.closest('[data-action="close-modal"]')) return;
+      closeModal();
+      break;
+
+    case 'confirm-accept': {
+      const fn = pendingConfirm;
+      closeModal();
+      if (typeof fn === 'function') fn();
+      break;
+    }
+
+    /* ---- dashboard / publishing ---- */
+    case 'publish': {
+      const b = target;
+      b.disabled = true;
+      b.innerHTML = '<span class="spinner"></span><span>Publishing…</span>';
+      setTimeout(function(){
+        DATA.site.status = 'published';
+        DATA.site.publishedAt = 'just now';
+        toast('Changes published successfully (prototype only).', 'success');
+        render();
+      }, 950);
+      break;
+    }
+    case 'unpublish':
+      confirmDialog({
+        title:'Unpublish website?',
+        message:'Your site will stop being publicly accessible. You can publish it again at any time.',
+        confirmLabel:'Unpublish',
+        onConfirm:function(){
+          DATA.site.status = 'draft';
+          toast('Website unpublished (prototype only).', 'warn');
+          render();
+        }
+      });
+      break;
+    case 'open-site':
+      e.preventDefault();
+      toast('Opening the site in a new tab is not available in this prototype.', 'info');
+      break;
+    case 'copy-link':
+      e.preventDefault();
+      copyText('https://' + DATA.site.subdomain);
+      break;
+    case 'replace-social':
+      toast('Image replacement is not wired to storage in this prototype.', 'info');
+      break;
+    case 'reset-seo':
+      e.preventDefault();
+      render();
+      toast('Form reset to saved values.', 'info');
+      break;
+    case 'save-seo': {
+      e.preventDefault();
+      const form = target.closest('form');
+      const titleEl = form.querySelector('#seoTitle');
+      const errEl = form.querySelector('#err-seoTitle');
+      if (!titleEl.value.trim()) {
+        titleEl.setAttribute('aria-invalid', 'true');
+        errEl.hidden = false;
+        titleEl.focus();
+        toast('Please fix the highlighted field.', 'error');
+        return;
+      }
+      titleEl.removeAttribute('aria-invalid');
+      errEl.hidden = true;
+      DATA.site.title = titleEl.value.trim();
+      DATA.site.description = form.querySelector('#seoDesc').value.trim();
+      toast('SEO metadata saved (prototype).', 'success');
+      break;
+    }
+
+    /* ---- builder ---- */
+    case 'edit-section': {
+      const s = state.sections.filter(function(x){ return x.id === target.dataset.id; })[0];
+      if (!s) return;
+      openModal({
+        title:'Edit — ' + s.name,
+        size:'lg',
+        body:
+          '<div class="field"><label for="edSectionName">Section name</label>' +
+            '<input id="edSectionName" class="input" value="' + esc(s.name) + '"' + (s.locked ? ' disabled' : '') + '></div>' +
+          '<div class="field"><label for="edSectionLayout">Layout</label>' +
+            '<select id="edSectionLayout" class="select">' +
+              ['Full-width hero','Text + portrait','3-column grid','Progress bars','Masonry grid','4-column grid','Logo strip','Quote carousel','Fixed navigation bar']
+                .map(function(l){ return '<option' + (l === s.layout ? ' selected' : '') + '>' + esc(l) + '</option>'; }).join('') +
+            '</select></div>' +
+          '<div class="field"><label for="edSectionText">Content</label>' +
+            '<textarea id="edSectionText" class="textarea" rows="4" placeholder="Section content…">' +
+              'Sample content for the ' + esc(s.name) + ' section.' +
+            '</textarea>' +
+            '<p class="hint">Content editing is illustrative — nothing is persisted in this prototype.</p></div>',
+        footer: btn('Cancel', { action:'close-modal' }) +
+                btn('Save section', { action:'close-modal', variant:'primary' })
+      });
+      break;
+    }
+    case 'not-implemented':
+      toast('This section type is not available in the prototype.', 'info');
+      break;
+
+    /* ---- theme ---- */
+    case 'select-theme': {
+      state.themeId = target.dataset.id;
+      render();
+      const t = currentTheme();
+      toast('“' + t.name + '” theme selected (prototype).', 'success');
+      break;
+    }
+    case 'apply-custom':
+      toast('Customizations applied to the preview.', 'success');
+      render();
+      break;
+    case 'reset-custom':
+      state.custom = { accent:'', bg:'', font:'' };
+      render();
+      toast('Customizations reset.', 'info');
+      break;
+
+    /* ---- images ---- */
+    case 'upload-image': {
+      const input = document.getElementById('fileInput');
+      if (input) input.click();
+      break;
+    }
+    case 'open-image': {
+      const img = state.images.filter(function(i){ return i.id === target.dataset.id; })[0];
+      if (!img) return;
+      openModal({
+        title: img.name,
+        size:'lg',
+        body:
+          '<img src="' + (img.dataUrl || thumbURI(img)) + '" alt="Preview of ' + esc(img.name) + '" style="width:100%;border-radius:12px;border:1px solid var(--border);display:block">' +
+          '<div class="table-wrap" style="margin-top:16px"><table><tbody>' +
+            '<tr><td style="color:var(--text-3);width:38%">Filename</td><td class="mono">' + esc(img.name) + '</td></tr>' +
+            '<tr><td style="color:var(--text-3)">Format</td><td>' + esc(img.format) + '</td></tr>' +
+            '<tr><td style="color:var(--text-3)">Dimensions</td><td>' + img.w + ' × ' + img.h + ' px</td></tr>' +
+            '<tr><td style="color:var(--text-3)">File size</td><td>' + esc(img.size) + '</td></tr>' +
+            '<tr><td style="color:var(--text-3)">Uploaded</td><td>2 days ago</td></tr>' +
+          '</tbody></table></div>',
+        footer: btn('Close', { action:'close-modal' }) +
+                btn('Copy filename', { action:'copy-filename', id:img.id, variant:'primary', iconName:'copy' })
+      });
+      break;
+    }
+    case 'copy-filename': {
+      const img = state.images.filter(function(i){ return i.id === target.dataset.id; })[0];
+      if (img) copyText(img.name);
+      break;
+    }
+    case 'clear-image-filters':
+      state.imageQuery = '';
+      state.imageFormat = 'all';
+      render();
+      break;
+
+    /* ---- analytics ---- */
+    /* handled by change event */
+
+    /* ---- history ---- */
+    case 'history-details': {
+      const h = DATA.history.filter(function(x){ return x.id === Number(target.dataset.id); })[0];
+      if (!h) return;
+      openModal({
+        title:'Event details',
+        body:
+          '<div class="table-wrap"><table><tbody>' +
+            '<tr><td style="color:var(--text-3);width:34%">Event</td><td>' + esc(h.title) + '</td></tr>' +
+            '<tr><td style="color:var(--text-3)">Description</td><td>' + esc(h.desc) + '</td></tr>' +
+            '<tr><td style="color:var(--text-3)">Type</td><td>' + esc(h.type) + '</td></tr>' +
+            '<tr><td style="color:var(--text-3)">Timestamp</td><td>' + esc(h.time) + '</td></tr>' +
+            '<tr><td style="color:var(--text-3)">Reference</td><td class="mono">evt_' + h.id + '_' + h.type + '</td></tr>' +
+          '</tbody></table></div>' +
+          '<p class="hint" style="margin-top:12px">Details are illustrative sample data.</p>',
+        footer: btn('Close', { action:'close-modal' })
+      });
+      break;
+    }
+    case 'history-restore': {
+      const h = DATA.history.filter(function(x){ return x.id === Number(target.dataset.id); })[0];
+      if (!h) return;
+      confirmDialog({
+        title:'Restore this version?',
+        message:'Restoring “' + h.title + '” would replace your current content with the version saved at ' + h.time + '. This prototype does not perform real restoration.',
+        confirmLabel:'Restore version',
+        onConfirm:function(){ toast('Version restore is a prototype action only.', 'warn'); }
+      });
+      break;
+    }
+    case 'clear-history-filters':
+      state.historyType = 'all';
+      state.historyDate = 'all';
+      render();
+      break;
+
+    /* ---- guide ---- */
+    case 'toggle-guide':
+      state.openGuide = state.openGuide === target.dataset.id ? null : target.dataset.id;
+      render();
+      break;
+    case 'toggle-faq':
+      state.openFaq = state.openFaq === target.dataset.key ? null : target.dataset.key;
+      render();
+      break;
+    case 'clear-guide-search':
+      state.guideQuery = '';
+      render();
+      break;
+
+    /* ---- settings ---- */
+    case 'settings-tab':
+      state.settingsTab = target.dataset.tab;
+      render();
+      break;
+    case 'save-settings': {
+      e.preventDefault();
+      const form = target.closest('form');
+      let valid = true;
+      form.querySelectorAll('[data-required]').forEach(function(input){
+        const err = form.querySelector('#err-' + input.id);
+        if (!input.value.trim()) {
+          valid = false;
+          input.setAttribute('aria-invalid', 'true');
+          if (err) err.hidden = false;
+        } else {
+          input.removeAttribute('aria-invalid');
+          if (err) err.hidden = true;
+        }
+      });
+      if (!valid) { toast('Please fix the highlighted fields.', 'error'); return; }
+      toast('Settings saved (prototype only — not persisted).', 'success');
+      break;
+    }
+    case 'reset-settings':
+      e.preventDefault();
+      confirmDialog({
+        title:'Reset this section?',
+        message:'Any unsaved changes in this settings group will be discarded.',
+        confirmLabel:'Reset',
+        onConfirm:function(){ render(); toast('Settings reset to saved values.', 'info'); }
+      });
+      break;
+
+    default:
+      break;
+  }
+});
+
+/* ---------- change events ---------- */
+document.addEventListener('change', function(e){
+  const el = e.target.closest('[data-action]');
+  if (!el) return;
+  const action = el.dataset.action;
+
+  switch (action) {
+    case 'toggle-setup': {
+      const item = state.setup.filter(function(i){ return i.id === el.dataset.id; })[0];
+      if (item) item.done = el.checked;
+      render();
+      break;
+    }
+    case 'toggle-section': {
+      const s = state.sections.filter(function(i){ return i.id === el.dataset.id; })[0];
+      if (s) {
+        s.visible = el.checked;
+        render();
+        toast('“' + s.name + '” is now ' + (s.visible ? 'visible' : 'hidden') + '.', 'success');
+      }
+      break;
+    }
+    case 'image-format':
+      state.imageFormat = el.value;
+      document.getElementById('mediaGrid').innerHTML = mediaGridHTML();
+      break;
+    case 'image-sort':
+      state.imageSort = el.value;
+      document.getElementById('mediaGrid').innerHTML = mediaGridHTML();
+      break;
+    case 'analytics-range':
+      state.analyticsRange = el.value;
+      render();
+      break;
+    case 'history-type':
+      state.historyType = el.value;
+      render();
+      break;
+    case 'history-date':
+      state.historyDate = el.value;
+      render();
+      break;
+    case 'custom-color':
+      state.custom[el.dataset.key] = el.value;
+      render();
+      break;
+    case 'custom-font':
+      state.custom.font = el.value;
+      render();
+      break;
+    case 'lang-select':
+      state.lang = el.value;
+      toast(el.value === 'my' ? 'Burmese interface is not translated in this prototype.' : 'Language switched to English (prototype).', 'info');
+      break;
+    default:
+      break;
+  }
+});
+
+/* ---------- input events ---------- */
+document.addEventListener('input', function(e){
+  const el = e.target;
+
+  /* live character counters */
+  if (el.dataset && el.dataset.counter) {
+    const t = document.getElementById(el.dataset.counter);
+    if (t) t.textContent = el.value.length;
+  }
+
+  if (el.id === 'imageSearch') {
+    state.imageQuery = el.value;
+    const grid = document.getElementById('mediaGrid');
+    if (grid) grid.innerHTML = mediaGridHTML();
+    return;
+  }
+  if (el.id === 'guideSearch') {
+    state.guideQuery = el.value;
+    render();
+    return;
+  }
+
+  /* live custom colour preview */
+  if (el.dataset && el.dataset.action === 'custom-color') {
+    state.custom[el.dataset.key] = el.value;
+    const previews = document.querySelectorAll('.theme-preview, .site');
+    previews.forEach(function(node){ /* live re-render handled on change */ });
+  }
+});
+
+/* ---------- file upload (Images) ---------- */
+document.addEventListener('change', function(e){
+  if (e.target.id !== 'fileInput') return;
+  const files = Array.prototype.slice.call(e.target.files || []);
+  if (!files.length) return;
+  files.forEach(function(file, idx){
+    const reader = new FileReader();
+    reader.onload = function(ev){
+      state.images.unshift({
+        id: 'upload-' + Date.now() + '-' + idx,
+        name: file.name,
+        format: (file.name.split('.').pop() || 'IMG').toUpperCase(),
+        w: 1600, h: 1200,
+        size: (file.size / 1024).toFixed(0) + ' KB',
+        c1: '#6366f1', c2: '#c7d2fe',
+        dataUrl: ev.target.result
+      });
+      if (document.getElementById('mediaGrid')) {
+        document.getElementById('mediaGrid').innerHTML = mediaGridHTML();
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+  toast(files.length + ' image' + (files.length > 1 ? 's' : '') + ' added to the prototype library.', 'success');
+  e.target.value = '';
+});
+
+/* ---------- keyboard ---------- */
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') {
+    const root = document.getElementById('modalRoot');
+    if (root.classList.contains('open')) { closeModal(); return; }
+    if (state.navOpen) {
+      state.navOpen = false;
+      document.body.classList.remove('nav-open');
+      document.getElementById('navBtn').setAttribute('aria-expanded', 'false');
+    }
+  }
+});
+
+/* ---------- language switcher ---------- */
+document.getElementById('langSelect').addEventListener('change', function(e){
+  state.lang = e.target.value;
+  toast(e.target.value === 'my'
+    ? 'Burmese interface is not translated in this prototype.'
+    : 'Language switched to English (prototype).', 'info');
+});
+
+/* ---------- hash routing ---------- */
+window.addEventListener('hashchange', function(){
+  if (suppressHash) { suppressHash = false; return; }
+  const p = (location.hash || '').replace(/^#\//, '');
+  if (PAGES[p] && p !== state.page) {
+    state.page = p;
+    render();
+    window.scrollTo({ top:0 });
+  }
+});
+
+/* ==========================================================================
+   10. BOOT
+   ========================================================================== */
+(function init(){
+  const initial = (location.hash || '').replace(/^#\//, '');
+  state.page = PAGES[initial] ? initial : 'dashboard';
+  if (!location.hash) {
+    suppressHash = true;
+    location.hash = '#/' + state.page;
+  }
+  render();
+})();
+</script>
+</body>
+</html>

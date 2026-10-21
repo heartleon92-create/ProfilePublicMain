@@ -1,0 +1,1846 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Profile Craft — Reusable Sidebar</title>
+
+<!--
+  ============================================================
+  PROFILE CRAFT · REUSABLE SIDEBAR COMPONENT (sidebar.html)
+  ============================================================
+
+  Contains three pieces (extracted by the loader):
+
+    1. #pb-sidebar-styles      → component CSS
+    2. [data-pb-sidebar-root]  → sidebar fragment
+    3. #pb-sidebar-script      → component JS
+
+  ------------------------------------------------------------
+  WHAT CHANGED IN THIS REVISION
+  ------------------------------------------------------------
+  • Desktop collapse/expand button now uses modern panel-left
+    SVG icons (panel-left-close / panel-left-open). No `<<` / `>>`
+    text characters. Icon swaps via button[data-state].
+  • Button is 38px square with a subtle hover background and
+    smooth icon cross-fade. aria-expanded and aria-label are
+    kept in sync by setCollapsed().
+  • Mobile behavior is unchanged and remains separate: the
+    parent-page hamburger opens the drawer, the drawer's own X
+    closes it, overlay + Escape + scroll-lock preserved.
+
+  ------------------------------------------------------------
+  INTEGRATION EXAMPLE (paste into every module page)
+  ------------------------------------------------------------
+
+    <!-- 1. Mobile hamburger button in YOUR page header -->
+    <button
+      type="button"
+      class="pb-mobile-toggle"
+      data-pb-action="open-mobile"
+      aria-controls="pb-sidebar"
+      aria-expanded="false"
+      aria-label="Open navigation">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M4 6h16"></path>
+        <path d="M4 12h16"></path>
+        <path d="M4 18h16"></path>
+      </svg>
+    </button>
+
+    <!-- 2. Sidebar mount point -->
+    <div id="sidebar-mount"></div>
+
+    <!-- 3. Loader -->
+    <script>
+      (async function mountSidebar(activePage) {
+        var mount = document.getElementById('sidebar-mount');
+        try {
+          var res = await fetch('sidebar.html', { credentials: 'same-origin' });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          var html = await res.text();
+          var doc  = new DOMParser().parseFromString(html, 'text/html');
+
+          if (!document.getElementById('pb-sidebar-styles')) {
+            var style = doc.getElementById('pb-sidebar-styles');
+            if (style) document.head.appendChild(document.importNode(style, true));
+          }
+          var fragment = doc.querySelector('[data-pb-sidebar-root]');
+          if (!fragment) throw new Error('Sidebar fragment not found');
+          if (!document.querySelector('[data-pb-sidebar-root]')) {
+            mount.appendChild(document.importNode(fragment, true));
+          }
+          var source = doc.getElementById('pb-sidebar-script');
+          if (source && !document.getElementById('pb-sidebar-script-runtime')) {
+            var runtime = document.createElement('script');
+            runtime.id = 'pb-sidebar-script-runtime';
+            runtime.textContent = source.textContent;
+            document.body.appendChild(runtime);
+          }
+          if (window.PBSidebar) {
+            window.PBSidebar.init();
+            window.PBSidebar.setActive(activePage);
+          }
+        } catch (err) {
+          console.error('[sidebar] failed to load:', err);
+          if (mount) {
+            mount.innerHTML =
+              '<p style="padding:16px;font:13px system-ui;color:#b42318">' +
+              'Navigation could not be loaded. Please refresh the page.</p>';
+          }
+        }
+      })(document.body.dataset.page || 'dashboard');
+    </script>
+    <!-----
+  ------------------------------------------------------------
+  MOBILE TOGGLE INTEGRATION (REQUIRED for mobile open/close)
+  ------------------------------------------------------------
+    • class="pb-mobile-toggle"      → styled by this component
+    • data-pb-action="open-mobile"  → wired automatically
+    • aria-controls="pb-sidebar"    → matches sidebar id
+    • aria-expanded="false"         → updated automatically
+
+    Close triggers (anywhere):
+      <button data-pb-action="close-mobile">Close</button>
+
+    Programmatic:
+      window.PBSidebar.open();
+      window.PBSidebar.close();
+
+  ------------------------------------------------------------
+  OTHER NOTES
+  ------------------------------------------------------------
+    • Offset page content:
+          body { padding-inline-start: var(--pb-w); }
+          html.pb-sidebar-collapsed body {
+            padding-inline-start: var(--pb-w-collapsed);
+          }
+          @media (max-width: 1023px) { body { padding-inline-start: 0; } }
+
+    • Language:
+          window.PBSidebar.getLanguage();
+          window.PBSidebar.setLanguage("en");
+          document.addEventListener('pb:languagechange', fn);
+
+    • Active page:
+          window.PBSidebar.setActive('analytics');
+          // or <body data-page="analytics"> / window.PB_ACTIVE_PAGE
+
+    • Logo (image only — never text):
+          /img/logoCrop.png (expanded + compact)
+      Override at runtime:
+          window.PBSidebar.setLogos(fullSrc, compactSrc);
+      Or before script runs:
+          window.PB_SIDEBAR_CONFIG = {
+            logo: '/img/logoCrop.png',
+            logoCompact: '/img/logoCrop.png'
+          };
+
+    • Brand product name:
+          "Profile Craft Studio" is rendered next to the logo. It
+          is hidden when the sidebar is collapsed (desktop) and
+          always visible in the mobile drawer.
+  ============================================================
+-->
+
+<style id="pb-sidebar-styles">
+/* ============================================================
+   1. DESIGN TOKENS
+   ============================================================ */
+:root {
+  --pb-white: #ffffff;
+  --pb-bg: #f6f9fe;
+  --pb-primary: #2563eb;
+  --pb-primary-strong: #1d4ed8;
+  --pb-primary-soft: #eef5ff;
+  --pb-primary-soft-strong: #dbeafe;
+  --pb-sky: #7dd3fc;
+  --pb-light-blue: #93c5fd;
+  --pb-text: #0f1e35;
+  --pb-text-2: #4b5f7a;
+  --pb-nav-text: #263449;
+  --pb-nav-text-hover: #1d4ed8;
+  --pb-brand-text: #172033;
+  --pb-muted: #7b8ca4;
+  --pb-border: #e6ecf5;
+  --pb-border-strong: #d8e2ef;
+  --pb-danger: #b42318;
+
+  --pb-radius-xs: 7px;
+  --pb-radius-sm: 9px;
+  --pb-radius: 12px;
+  --pb-radius-lg: 14px;
+
+  --pb-shadow-xs: 0 1px 2px rgba(15, 30, 53, .05);
+  --pb-shadow-sm: 0 2px 8px -2px rgba(15, 30, 53, .08);
+  --pb-shadow-md: 0 12px 28px -12px rgba(15, 30, 53, .22), 0 2px 6px -2px rgba(15, 30, 53, .06);
+
+  --pb-w: 282px;
+  --pb-w-collapsed: 88px;
+  --pb-ease: cubic-bezier(.4, 0, .2, 1);
+
+  --pb-z-toggle: 1001;
+  --pb-z-drawer: 1000;
+  --pb-z-overlay: 990;
+
+  --pb-font: "Myanmar Text", "Noto Sans Myanmar", "Myanmar Sangam MN",
+             "Padauk", "Pyidaungsu", -apple-system, BlinkMacSystemFont,
+             "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* ============================================================
+   2. SCOPED BASE
+   ============================================================ */
+.pb-sidebar,
+.pb-sidebar *,
+.pb-sidebar *::before,
+.pb-sidebar *::after,
+.pb-sidebar-overlay,
+.pb-tooltip,
+.pb-mobile-toggle {
+  box-sizing: border-box;
+}
+
+.pb-sidebar-fragment { display: contents; }
+
+html, body { margin: 0; padding: 0; }
+
+body.pb-standalone {
+  min-height: 100vh;
+  background: var(--pb-bg);
+}
+
+/* ============================================================
+   3. MOBILE TOGGLE BUTTON (in the PARENT page)
+   ============================================================ */
+.pb-mobile-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--pb-border);
+  border-radius: var(--pb-radius-sm);
+  background: var(--pb-white);
+  color: var(--pb-nav-text);
+  cursor: pointer;
+  z-index: var(--pb-z-toggle);
+  transition: background-color .18s var(--pb-ease),
+              border-color .18s var(--pb-ease),
+              color .18s var(--pb-ease);
+}
+.pb-mobile-toggle:focus-visible {
+  outline: 2px solid var(--pb-primary);
+  outline-offset: 2px;
+}
+@media (hover: hover) {
+  .pb-mobile-toggle:hover {
+    background: var(--pb-primary-soft);
+    border-color: var(--pb-primary-soft-strong);
+    color: var(--pb-primary-strong);
+  }
+}
+@media (max-width: 767.98px) {
+  .pb-mobile-toggle { display: inline-flex; }
+}
+
+/* ============================================================
+   4. SIDEBAR SHELL
+   ============================================================ */
+.pb-sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  height: 100dvh;
+  width: var(--pb-w);
+  z-index: var(--pb-z-drawer);
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background: var(--pb-white);
+  border-right: 1px solid var(--pb-border);
+  color: var(--pb-text);
+  font-family: var(--pb-font);
+  font-size: 14px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  transition: width .28s var(--pb-ease), transform .3s var(--pb-ease);
+}
+
+.pb-sidebar-fragment.is-collapsed .pb-sidebar {
+  width: var(--pb-w-collapsed);
+}
+
+.pb-sidebar__head {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 14px 12px 10px;
+  position: relative;
+  z-index: 3;
+}
+
+/* ---------- Brand (logo + product name + actions) ---------- */
+.pb-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 44px;
+  min-width: 0;
+}
+
+.pb-brand__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  flex: 1 1 auto;
+  padding: 4px 6px;
+  margin-left: -6px;
+  border-radius: var(--pb-radius-xs);
+  text-decoration: none;
+  color: inherit;
+  transition: background-color .18s var(--pb-ease);
+}
+
+.pb-brand__link:focus-visible {
+  outline: 2px solid var(--pb-primary);
+  outline-offset: 2px;
+}
+
+/* Expanded logo */
+.pb-brand__logo {
+  display: block;
+  width: auto;
+  max-width: 190px;
+  height: 42px;
+  object-fit: contain;
+  object-position: left center;
+  flex: 0 0 auto;
+  font-size: 0;
+  color: transparent;
+}
+
+/* Compact logo (collapsed desktop only) */
+.pb-brand__logo--compact {
+  display: none;
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Product name beside the logo */
+.pb-brand__product-name {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  font-family: var(--pb-font);
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--pb-brand-text);
+  letter-spacing: -0.005em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Logo failure handling — no broken images, no text-as-logo */
+.pb-brand--logo-missing .pb-brand__logo { visibility: hidden; }
+.pb-brand--compact-missing .pb-brand__logo--compact { display: none !important; }
+.pb-brand--compact-missing .pb-brand__logo {
+  max-width: 60px;
+  height: 40px;
+  object-position: center;
+}
+
+.pb-brand__actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 0 0 auto;
+}
+
+/* ============================================================
+   4a. ICON BUTTONS (base)
+   ============================================================ */
+.pb-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--pb-radius-sm);
+  background: transparent;
+  color: var(--pb-text-2);
+  cursor: pointer;
+  transition: background-color .18s var(--pb-ease),
+              color .18s var(--pb-ease),
+              border-color .18s var(--pb-ease),
+              transform .16s var(--pb-ease),
+              box-shadow .18s var(--pb-ease);
+}
+
+.pb-icon-btn:active { transform: scale(.94); }
+
+.pb-icon-btn:focus-visible {
+  outline: 2px solid var(--pb-primary);
+  outline-offset: 1px;
+}
+
+.pb-icon-btn svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+/* ============================================================
+   4b. DESKTOP COLLAPSE / EXPAND BUTTON (panel toggle)
+   ============================================================
+   Two SVGs are in the button; CSS shows exactly one based on
+   button[data-state]. Icon swap uses opacity + scale only (no
+   layout shift). Button is 38px square.
+   ============================================================ */
+.pb-brand__collapse {
+  position: relative;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--pb-radius-sm);
+  color: #475569;
+  background: transparent;
+}
+
+.pb-brand__collapse .pb-icon-panel {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: scale(.85);
+  transition: opacity .18s var(--pb-ease),
+              transform .18s var(--pb-ease);
+  pointer-events: none;
+}
+
+.pb-brand__collapse .pb-icon-panel svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+
+/* Expanded → show "close" (collapse to the left).
+   Collapsed → show "open"  (expand to the right).
+   The root class .pb-sidebar-fragment.is-collapsed is the single
+   source of truth, so the icon cannot desync from the sidebar
+   width regardless of how the class is toggled. The optional
+   button[data-state] attribute is kept for tooling but no longer
+   drives visibility. */
+
+/* Default (expanded): show close icon. */
+.pb-brand__collapse .pb-icon-panel--close {
+  opacity: 1;
+  transform: scale(1);
+}
+.pb-brand__collapse .pb-icon-panel--open {
+  opacity: 0;
+  transform: scale(.85);
+}
+
+/* Collapsed: swap to open icon. */
+.pb-sidebar-fragment.is-collapsed .pb-brand__collapse .pb-icon-panel--close {
+  opacity: 0;
+  transform: scale(.85);
+}
+.pb-sidebar-fragment.is-collapsed .pb-brand__collapse .pb-icon-panel--open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+
+@media (hover: hover) {
+  .pb-brand__collapse:hover {
+    background: var(--pb-primary-soft);
+    color: var(--pb-primary-strong);
+    border-color: var(--pb-primary-soft-strong);
+  }
+}
+
+.pb-brand__close { display: none; }
+
+/* ============================================================
+   5. DROPDOWN MENUS
+   ============================================================ */
+.pb-dropdown { position: relative; }
+
+.pb-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  right: 0;
+  z-index: 90;
+  padding: 6px;
+  background: var(--pb-white);
+  border: 1px solid var(--pb-border);
+  border-radius: var(--pb-radius);
+  box-shadow: var(--pb-shadow-md);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px) scale(.98);
+  transform-origin: top left;
+  transition: opacity .16s var(--pb-ease), transform .16s var(--pb-ease),
+              visibility .16s var(--pb-ease);
+}
+
+.pb-dropdown.is-open > .pb-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+.pb-dropdown--up .pb-menu {
+  top: auto;
+  bottom: calc(100% + 8px);
+  transform: translateY(6px) scale(.98);
+  transform-origin: bottom left;
+}
+
+.pb-menu__item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  padding: 8px 9px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--pb-text-2);
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .14s var(--pb-ease), color .14s var(--pb-ease);
+}
+
+.pb-menu__item:focus-visible {
+  outline: 2px solid var(--pb-primary);
+  outline-offset: -2px;
+}
+.pb-menu__item--danger { color: var(--pb-danger); }
+.pb-menu__item svg { width: 16px; height: 16px; }
+
+.pb-menu__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: 0 0 auto;
+  color: inherit;
+}
+
+.pb-menu__text {
+  flex: 1 1 auto;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pb-menu__hint {
+  margin-left: auto;
+  padding: 2px 7px;
+  border: 1px solid var(--pb-border);
+  border-radius: 999px;
+  background: var(--pb-bg);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--pb-muted);
+  white-space: nowrap;
+}
+
+.pb-menu__sep {
+  height: 1px;
+  margin: 5px 4px;
+  background: var(--pb-border);
+}
+
+/* ============================================================
+   6. NAVIGATION
+   ============================================================ */
+.pb-sidebar__scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 4px 12px 14px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--pb-border-strong) transparent;
+}
+
+.pb-sidebar__scroll::-webkit-scrollbar { width: 6px; }
+.pb-sidebar__scroll::-webkit-scrollbar-track { background: transparent; }
+.pb-sidebar__scroll::-webkit-scrollbar-thumb {
+  background: var(--pb-border-strong);
+  border-radius: 999px;
+}
+
+.pb-nav__group-title {
+  margin: 12px 0 6px;
+  padding: 0 10px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #64748b;
+  white-space: nowrap;
+}
+
+.pb-nav__group-title--spaced { margin-top: 20px; }
+
+.pb-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  width: 100%;
+}
+
+.pb-nav__list > li { display: block; min-width: 0; }
+
+.pb-nav__item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  padding: 10px 10px;
+  border-radius: var(--pb-radius-sm);
+  text-decoration: none;
+  color: var(--pb-nav-text);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.45;
+  white-space: nowrap;
+  transition: background-color .2s var(--pb-ease),
+              color .2s var(--pb-ease),
+              box-shadow .2s var(--pb-ease);
+}
+
+.pb-nav__item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 3px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--pb-primary);
+  opacity: 0;
+  transform: translateY(-50%) scaleY(.3);
+  transition: opacity .22s var(--pb-ease), transform .28s var(--pb-ease);
+}
+
+.pb-nav__item:focus-visible {
+  outline: 2px solid var(--pb-primary);
+  outline-offset: -2px;
+}
+
+@media (hover: hover) {
+  .pb-nav__item:hover {
+    background: linear-gradient(90deg, var(--pb-primary-soft) 0%, #f4f9ff 100%);
+    color: var(--pb-nav-text-hover);
+    box-shadow: inset 0 0 0 1px rgba(37, 99, 235, .06);
+  }
+  .pb-nav__item:hover::before {
+    opacity: .6;
+    transform: translateY(-50%) scaleY(1);
+  }
+  .pb-nav__item:hover .pb-nav__icon { color: var(--pb-primary); }
+}
+
+.pb-nav__item.is-active {
+  background: var(--pb-primary-soft);
+  color: var(--pb-primary-strong);
+  font-weight: 600;
+}
+.pb-nav__item.is-active::before {
+  opacity: 1;
+  transform: translateY(-50%) scaleY(1);
+}
+.pb-nav__item.is-active .pb-nav__icon { color: var(--pb-primary); }
+
+.pb-nav__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  color: #64748b;
+  transition: color .2s var(--pb-ease);
+}
+
+.pb-nav__icon svg { width: 18px; height: 18px; display: block; }
+
+.pb-nav__label {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================================================
+   7. FOOTER — PROFILE
+   ============================================================ */
+.pb-sidebar__foot {
+  flex: 0 0 auto;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 12px 14px;
+  border-top: 1px solid var(--pb-border);
+  position: relative;
+  z-index: 3;
+  background: var(--pb-white);
+}
+
+.pb-user__trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  min-width: 0;
+  padding: 7px 8px;
+  border: 1px solid transparent;
+  border-radius: var(--pb-radius);
+  background: transparent;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color .22s var(--pb-ease),
+              border-color .22s var(--pb-ease),
+              box-shadow .22s var(--pb-ease);
+}
+
+.pb-user__trigger:focus-visible {
+  outline: 2px solid var(--pb-primary);
+  outline-offset: 2px;
+}
+
+.pb-user.pb-dropdown.is-open .pb-user__trigger {
+  background: var(--pb-primary-soft);
+  border-color: var(--pb-border);
+}
+
+@media (hover: hover) {
+  .pb-user__trigger:hover {
+    background: linear-gradient(90deg, var(--pb-primary-soft) 0%, #f4f9ff 100%);
+    border-color: var(--pb-border);
+  }
+  .pb-user__trigger:hover .pb-avatar {
+    box-shadow: 0 2px 8px -2px rgba(37, 99, 235, .45);
+  }
+  .pb-user__trigger:hover .pb-user__chevron { color: var(--pb-primary); }
+}
+
+.pb-avatar {
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--pb-primary);
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  transition: box-shadow .22s var(--pb-ease), background-color .22s var(--pb-ease);
+}
+
+.pb-user__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.pb-user__name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--pb-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pb-user__role {
+  font-size: 10.5px;
+  color: var(--pb-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pb-user__chevron {
+  display: inline-flex;
+  flex: 0 0 auto;
+  color: var(--pb-muted);
+  transition: transform .2s var(--pb-ease), color .16s var(--pb-ease);
+}
+.pb-user__chevron svg { width: 15px; height: 15px; }
+.pb-dropdown.is-open .pb-user__chevron {
+  transform: rotate(180deg);
+  color: var(--pb-primary);
+}
+
+/* ============================================================
+   8. OVERLAY + TOOLTIP
+   ============================================================ */
+.pb-sidebar-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--pb-z-overlay);
+  background: rgba(15, 30, 53, .45);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .25s var(--pb-ease), visibility .25s var(--pb-ease);
+}
+
+.pb-sidebar-fragment.is-mobile-open .pb-sidebar-overlay {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.pb-tooltip {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 200;
+  padding: 5px 9px;
+  border-radius: var(--pb-radius-xs);
+  background: #0f1e35;
+  color: #ffffff;
+  font-family: var(--pb-font);
+  font-size: 11.5px;
+  font-weight: 500;
+  line-height: 1.35;
+  white-space: nowrap;
+  box-shadow: var(--pb-shadow-md);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-2px);
+  transition: opacity .14s var(--pb-ease), transform .14s var(--pb-ease);
+}
+.pb-tooltip.is-visible { opacity: 1; transform: none; }
+
+/* ============================================================
+   9. COLLAPSED STATE (desktop ≥1024px only)
+   ============================================================ */
+.pb-sidebar-fragment.is-collapsed .pb-brand__logo { display: none; }
+.pb-sidebar-fragment.is-collapsed .pb-brand__logo--compact { display: block; }
+
+.pb-sidebar-fragment.is-collapsed .pb-brand__product-name { display: none; }
+
+.pb-sidebar-fragment.is-collapsed .pb-brand__link {
+  justify-content: center;
+  gap: 0;
+  padding: 4px;
+  margin-left: 0;
+  flex: 0 0 auto;
+}
+
+.pb-sidebar-fragment.is-collapsed .pb-brand--compact-missing .pb-brand__logo {
+  display: block;
+}
+
+.pb-sidebar-fragment.is-collapsed .pb-nav__label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pb-sidebar-fragment.is-collapsed .pb-nav__item {
+  justify-content: center;
+  padding: 10px 0;
+  gap: 0;
+}
+
+.pb-sidebar-fragment.is-collapsed .pb-nav__item::before { display: none; }
+
+.pb-sidebar-fragment.is-collapsed .pb-nav__group-title {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.pb-sidebar-fragment.is-collapsed .pb-nav__group-title--spaced {
+  position: static;
+  width: auto;
+  height: 1px;
+  margin: 12px 6px;
+  padding: 0;
+  overflow: visible;
+  clip-path: none;
+  background: var(--pb-border);
+}
+
+.pb-sidebar-fragment.is-collapsed .pb-user__meta,
+.pb-sidebar-fragment.is-collapsed .pb-user__chevron {
+  display: none;
+}
+
+.pb-sidebar-fragment.is-collapsed .pb-user__trigger {
+  justify-content: center;
+  padding: 6px 0;
+}
+
+.pb-sidebar-fragment.is-collapsed .pb-user .pb-menu {
+  top: auto;
+  bottom: 0;
+  left: calc(100% + 10px);
+  right: auto;
+  width: 244px;
+  transform-origin: bottom left;
+}
+
+/* ============================================================
+   10. RESPONSIVE
+   ============================================================ */
+
+/* -------- Desktop ≥1024px -------- */
+@media (min-width: 1024px) {
+  .pb-sidebar-overlay { display: none; }
+  .pb-brand__close { display: none !important; }
+  .pb-sidebar { transform: none !important; }
+  .pb-mobile-toggle { display: none !important; }
+}
+
+/* -------- Tablet 768–1023px -------- */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .pb-sidebar {
+    width: min(280px, 34vw);
+    transform: translateX(0);
+  }
+  .pb-sidebar-fragment.is-collapsed .pb-sidebar {
+    width: min(280px, 34vw);
+  }
+  .pb-brand__collapse { display: none; }
+  .pb-brand__close { display: none !important; }
+  .pb-nav__item { padding: 9px 9px; font-size: 13.5px; }
+  .pb-nav__icon { width: 20px; height: 20px; flex-basis: 20px; }
+  .pb-brand__logo { max-width: 150px; height: 36px; }
+  .pb-brand__product-name { font-size: 14px; }
+  .pb-mobile-toggle { display: none !important; }
+}
+
+/* -------- Mobile <768px: off-canvas drawer -------- */
+@media (max-width: 767.98px) {
+  .pb-sidebar {
+    width: min(300px, 86vw);
+    transform: translateX(-100%);
+    box-shadow: var(--pb-shadow-md);
+  }
+  .pb-sidebar-fragment.is-mobile-open .pb-sidebar {
+    transform: translateX(0);
+  }
+  .pb-sidebar-fragment.is-collapsed .pb-sidebar {
+    width: min(300px, 86vw);
+  }
+
+  .pb-brand__collapse { display: none; }
+  .pb-brand__close { display: inline-flex; }
+
+  html.pb-sidebar-mobile-open,
+  html.pb-sidebar-mobile-open body {
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .pb-sidebar-fragment.is-collapsed .pb-brand__logo { display: block; }
+  .pb-sidebar-fragment.is-collapsed .pb-brand__logo--compact { display: none; }
+  .pb-sidebar-fragment.is-collapsed .pb-brand__product-name {
+    display: block;
+    font-size: 15px;
+  }
+  .pb-sidebar-fragment.is-collapsed .pb-brand__link {
+    justify-content: flex-start;
+    gap: 10px;
+    padding: 4px 6px;
+    margin-left: -6px;
+    flex: 1 1 auto;
+  }
+
+  .pb-sidebar-fragment.is-collapsed .pb-nav__label {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    clip: auto;
+    clip-path: none;
+    white-space: normal;
+  }
+  .pb-sidebar-fragment.is-collapsed .pb-nav__item {
+    justify-content: flex-start;
+    padding: 11px 10px;
+    gap: 12px;
+  }
+  .pb-sidebar-fragment.is-collapsed .pb-nav__item::before {
+    display: block;
+  }
+  .pb-sidebar-fragment.is-collapsed .pb-nav__group-title {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 12px 0 6px;
+    overflow: visible;
+    clip-path: none;
+  }
+  .pb-sidebar-fragment.is-collapsed .pb-user__meta,
+  .pb-sidebar-fragment.is-collapsed .pb-user__chevron {
+    display: flex;
+  }
+  .pb-sidebar-fragment.is-collapsed .pb-user__trigger {
+    justify-content: flex-start;
+    padding: 7px 8px;
+  }
+  .pb-sidebar-fragment.is-collapsed .pb-user .pb-menu {
+    top: auto;
+    bottom: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    width: auto;
+    transform-origin: bottom left;
+  }
+
+  .pb-nav__item { padding: 11px 10px; font-size: 14px; }
+}
+
+/* ============================================================
+   11. REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .pb-sidebar,
+  .pb-sidebar *,
+  .pb-sidebar-overlay,
+  .pb-tooltip,
+  .pb-mobile-toggle {
+    transition-duration: .01ms !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+</style>
+</head>
+
+<body class="pb-standalone">
+
+<!-- ============================================================
+     REUSABLE FRAGMENT
+     ============================================================ -->
+<div class="pb-sidebar-fragment" data-pb-sidebar-root>
+
+  <div class="pb-sidebar-overlay" data-pb-action="close-mobile" aria-hidden="true"></div>
+
+  <aside class="pb-sidebar" id="pb-sidebar" aria-label="Main navigation" data-i18n-aria="nav.main">
+
+    <!-- ---------- Brand: image logo + product name + actions ---------- -->
+    <div class="pb-sidebar__head">
+
+      <div class="pb-brand" data-pb-brand>
+
+        <a class="pb-brand__link" href="dashboard.html"
+           data-i18n-aria="brand.home" aria-label="Profile Craft home">
+
+          <img
+            class="pb-brand__logo"
+            data-pb-logo-full
+            src="/img/logoCrop.png"
+            alt="Profile Craft"
+            decoding="async"
+            width="190"
+            height="42"
+          >
+          <img
+            class="pb-brand__logo pb-brand__logo--compact"
+            data-pb-logo-compact
+            src="/img/logoCrop.png"
+            alt="Profile Craft"
+            decoding="async"
+            width="40"
+            height="40"
+          >
+          <span class="pb-brand__product-name">Profile Craft Studio</span>
+        </a>
+
+        <div class="pb-brand__actions">
+
+          <!-- Desktop-only: modern panel toggle (panel-left-close / panel-left-open).
+               Two inline SVGs; CSS swaps which one is visible via data-state. -->
+          <!-- <button class="pb-icon-btn pb-brand__collapse" type="button"
+                  data-pb-action="toggle-collapse"
+                  data-state="expanded"
+                  aria-expanded="true"
+                  aria-controls="pb-sidebar"
+                  aria-label="Collapse sidebar"
+                  data-i18n-aria="actions.collapse"> -->
+            <!-- panel-left-close -->
+            <span class="pb-icon-panel pb-icon-panel--close" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <path d="M9 4v16" />
+                <path d="M16 9l-3 3 3 3" />
+              </svg>
+            </span>
+            <!-- panel-left-open -->
+            <span class="pb-icon-panel pb-icon-panel--open" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                   stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <path d="M9 4v16" />
+                <path d="M14 9l3 3-3 3" />
+              </svg>
+            </span>
+          </button>
+
+          <!-- Mobile-only close button (X) inside the drawer -->
+          <button class="pb-icon-btn pb-brand__close" type="button"
+                  data-pb-action="close-mobile"
+                  aria-label="Close navigation" data-i18n-aria="actions.closeMenu">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M18 6L6 18" /><path d="M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ---------- Navigation ---------- -->
+    <div class="pb-sidebar__scroll">
+      <nav class="pb-nav" aria-label="Main">
+
+        <p class="pb-nav__group-title" data-i18n="nav.group.workspace">Workspace</p>
+
+        <ul class="pb-nav__list">
+          <li>
+            <a class="pb-nav__item is-active" href="dashboard.html"
+               data-page="dashboard" aria-current="page">
+              <span class="pb-nav__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="7" height="9" rx="1.6" />
+                  <rect x="14" y="3" width="7" height="5" rx="1.6" />
+                  <rect x="14" y="12" width="7" height="9" rx="1.6" />
+                  <rect x="3" y="16" width="7" height="5" rx="1.6" />
+                </svg>
+              </span>
+              <span class="pb-nav__label" data-i18n="nav.dashboard">Dashboard</span>
+            </a>
+          </li>
+          <li>
+            <a class="pb-nav__item" href="website-builder.html" data-page="builder">
+              <span class="pb-nav__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <path d="M3 9h18" /><path d="M9 21V9" />
+                </svg>
+              </span>
+              <span class="pb-nav__label" data-i18n="nav.builder">Website Builder</span>
+            </a>
+          </li>
+                <li>
+  <a class="pb-nav__item" href="function-center.html" data-page="function-center">
+    <span class="pb-nav__icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="m18 16 4-4-4-4" />
+        <path d="m6 8-4 4 4 4" />
+        <path d="m14.5 4-5 16" />
+      </svg>
+    </span>
+    <span class="pb-nav__label" data-i18n="nav.center">Function Center</span>
+  </a>
+</li>
+          <li>
+            <a class="pb-nav__item" href="design-studio.html" data-page="design">
+              <span class="pb-nav__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9.06 11.9l8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" />
+                  <path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z" />
+                </svg>
+              </span>
+              <span class="pb-nav__label" data-i18n="nav.design">Design Studio</span>
+            </a>
+          </li>
+
+           <li>
+            <a class="pb-nav__item" href="theme-studio.html" data-page="theme">
+              <span class="pb-nav__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M9.06 11.9l8.07-8.06a2.85 2.85 0 1 1 4.03 4.03l-8.06 8.08" />
+                  <path d="M7.07 14.94c-1.66 0-3 1.35-3 3.02 0 1.33-2.5 1.52-2 2.02 1.08 1.1 2.49 2.02 4 2.02 2.2 0 4-1.8 4-4.04a3.01 3.01 0 0 0-3-3.02z" />
+                </svg>
+              </span>
+              <span class="pb-nav__label" data-i18n="nav.design">Theme Studio</span>
+            </a>
+          </li>
+          <li>
+            <a class="pb-nav__item" href="domain-publishing.html" data-page="domain">
+              <span class="pb-nav__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M3 12h18" />
+                  <path d="M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z" />
+                </svg>
+              </span>
+              <span class="pb-nav__label" data-i18n="nav.domain">Domain &amp; Publishing</span>
+            </a>
+          </li>
+          <li>
+            <a class="pb-nav__item" href="media-library.html" data-page="media">
+              <span class="pb-nav__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="16" rx="2" />
+                  <circle cx="8.5" cy="9.5" r="1.5" />
+                  <path d="M21 16l-5-5-9 9" />
+                </svg>
+              </span>
+              <span class="pb-nav__label" data-i18n="nav.media">Media Library</span>
+            </a>
+          </li>
+          <li>
+            <a class="pb-nav__item" href="analytics.html" data-page="analytics">
+              <span class="pb-nav__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 20V11" /><path d="M10 20V4" />
+                  <path d="M16 20v-6" /><path d="M22 20H2" />
+                </svg>
+              </span>
+              <span class="pb-nav__label" data-i18n="nav.analytics">Analytics</span>
+            </a>
+          </li>
+          <li>
+            <a class="pb-nav__item" href="version-history.html" data-page="versions">
+              <span class="pb-nav__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 12a9 9 0 1 0 3-6.7" />
+                  <path d="M3 4v5h5" /><path d="M12 8v4l3 2" />
+                </svg>
+              </span>
+              <span class="pb-nav__label" data-i18n="nav.versions">Version History</span>
+            </a>
+          </li>
+          <li>
+            <a class="pb-nav__item" href="website-preview.html" data-page="preview">
+              <span class="pb-nav__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z" />
+                  <circle cx="12" cy="12" r="2.6" />
+                </svg>
+              </span>
+              <span class="pb-nav__label" data-i18n="nav.preview">Website Preview</span>
+            </a>
+          </li>
+        </ul>
+
+        <p class="pb-nav__group-title pb-nav__group-title--spaced" data-i18n="nav.group.support">Support</p>
+
+        <ul class="pb-nav__list">
+          <li>
+            <a class="pb-nav__item" href="help-center.html" data-page="help">
+              <span class="pb-nav__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M9.2 9.2a3 3 0 0 1 5.8 1c0 2-3 2.4-3 4" />
+                  <circle cx="12" cy="17.4" r=".9" fill="currentColor" stroke="none" />
+                </svg>
+              </span>
+              <span class="pb-nav__label" data-i18n="nav.help">Help Center</span>
+            </a>
+          </li>
+          <li>
+            <a class="pb-nav__item" href="settings.html" data-page="settings">
+              <span class="pb-nav__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                     stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M4 6h8" /><path d="M17 6h3" /><circle cx="14.5" cy="6" r="2" />
+                  <path d="M4 12h3" /><path d="M12 12h8" /><circle cx="9.5" cy="12" r="2" />
+                  <path d="M4 18h8" /><path d="M17 18h3" /><circle cx="14.5" cy="18" r="2" />
+                </svg>
+              </span>
+              <span class="pb-nav__label" data-i18n="nav.settings">Settings</span>
+            </a>
+          </li>
+        </ul>
+
+      </nav>
+    </div>
+
+    <!-- ---------- Footer — profile ---------- -->
+    <div class="pb-sidebar__foot">
+
+      <div class="pb-user pb-dropdown pb-dropdown--up">
+        <button class="pb-user__trigger" type="button"
+                data-pb-action="toggle-menu"
+                aria-haspopup="menu" aria-expanded="false"
+                aria-label="Account menu" data-i18n-aria="user.menu">
+          <span class="pb-avatar" aria-hidden="true">AL</span>
+          <span class="pb-user__meta">
+            <span class="pb-user__name" data-i18n="user.name">Alex Lee</span>
+            <span class="pb-user__role" data-i18n="user.role">Administrator</span>
+          </span>
+          <span class="pb-user__chevron" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </span>
+        </button>
+
+        <div class="pb-menu" role="menu" aria-label="Account menu" data-i18n-aria="user.menu">
+          <button class="pb-menu__item" type="button" role="menuitem">
+            <span class="pb-menu__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 21c0-4 3.6-6 8-6s8 2 8 6" />
+              </svg>
+            </span>
+            <span class="pb-menu__text" data-i18n="user.profile">Your profile</span>
+          </button>
+
+          <button class="pb-menu__item" type="button" role="menuitem">
+            <span class="pb-menu__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 6h8" /><path d="M17 6h3" /><circle cx="14.5" cy="6" r="2" />
+                <path d="M4 12h3" /><path d="M12 12h8" /><circle cx="9.5" cy="12" r="2" />
+                <path d="M4 18h8" /><path d="M17 18h3" /><circle cx="14.5" cy="18" r="2" />
+              </svg>
+            </span>
+            <span class="pb-menu__text" data-i18n="nav.settings">Settings</span>
+          </button>
+
+          <div class="pb-menu__sep" role="separator"></div>
+
+          <button class="pb-menu__item pb-menu__item--danger" type="button" role="menuitem">
+            <span class="pb-menu__icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"
+                   stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                <path d="M16 17l5-5-5-5" />
+                <path d="M21 12H9" />
+              </svg>
+            </span>
+            <span class="pb-menu__text" data-i18n="user.logout">Log out</span>
+            <span class="pb-menu__hint" data-i18n="user.logoutHint">Demo only</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+  </aside>
+</div>
+
+<!-- ============================================================
+     COMPONENT SCRIPT
+     ============================================================ -->
+
+<script id="pb-sidebar-script">
+(function () {
+  'use strict';
+
+  /* ---------- Re-execution guard -------------------------------- */
+  if (window.PBSidebar && window.PBSidebar.__installed) {
+    window.PBSidebar.init();
+    return;
+  }
+
+  /* ---------- Configuration ------------------------------------- */
+  var PB_CONFIG = Object.assign({
+    logo:        '/img/logoCrop.png',
+    logoCompact: '/img/logoCrop.png'
+  }, window.PB_SIDEBAR_CONFIG || {});
+
+  function dict(lang) { return I18N[lang] || I18N[DEFAULT_LANG]; }
+  function t(lang, key) {
+    var d = dict(lang);
+    return Object.prototype.hasOwnProperty.call(d, key) ? d[key] : null;
+  }
+
+  /* ---------- Storage helpers ----------------------------------- */
+  function readStoredLang() {
+    try {
+      var v = window.localStorage.getItem(LANG_KEY);
+      if (v && LANGS.indexOf(v) !== -1) return v;
+    } catch (err) {}
+    return DEFAULT_LANG;
+  }
+  function storeLang(lang) {
+    try { window.localStorage.setItem(LANG_KEY, lang); } catch (err) {}
+  }
+
+  /* ---------- Tooltip ------------------------------------------- */
+  var tooltipEl = null;
+  function getTooltip() {
+    if (!tooltipEl) {
+      tooltipEl = document.createElement('div');
+      tooltipEl.className = 'pb-tooltip';
+      tooltipEl.setAttribute('role', 'tooltip');
+      document.body.appendChild(tooltipEl);
+    }
+    return tooltipEl;
+  }
+  function hideTooltip() {
+    if (tooltipEl) tooltipEl.classList.remove('is-visible');
+  }
+  function showTooltip(item) {
+    var root = item.closest('[data-pb-sidebar-root]');
+    if (!root || !root.classList.contains('is-collapsed')) return;
+    if (window.matchMedia('(max-width: 1023px)').matches) return;
+
+    var labelEl = item.querySelector('.pb-nav__label');
+    var text = labelEl ? labelEl.textContent.trim() : '';
+    if (!text) return;
+
+    var tip = getTooltip();
+    tip.textContent = text;
+    tip.classList.add('is-visible');
+
+    var rect = item.getBoundingClientRect();
+    var box = tip.getBoundingClientRect();
+    var top = rect.top + rect.height / 2 - box.height / 2;
+    var left = rect.right + 12;
+
+    if (left + box.width > window.innerWidth - 8) left = rect.left - box.width - 12;
+    if (top < 8) top = 8;
+    if (top + box.height > window.innerHeight - 8) top = window.innerHeight - box.height - 8;
+
+    tip.style.top = Math.round(top) + 'px';
+    tip.style.left = Math.round(left) + 'px';
+  }
+
+  /* ---------- Display language ---------------------------------- */
+  function applyLanguage(root, lang) {
+    if (LANGS.indexOf(lang) === -1) lang = DEFAULT_LANG;
+
+    root.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var value = t(lang, el.getAttribute('data-i18n'));
+      if (value !== null) el.textContent = value;
+    });
+    root.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      var value = t(lang, el.getAttribute('data-i18n-aria'));
+      if (value !== null) el.setAttribute('aria-label', value);
+    });
+
+    var sidebar = root.querySelector('.pb-sidebar');
+    if (sidebar) {
+      sidebar.setAttribute('lang', lang);
+      sidebar.setAttribute('data-lang', lang);
+    }
+    document.documentElement.setAttribute('lang', lang);
+    hideTooltip();
+
+    document.dispatchEvent(new CustomEvent('pb:languagechange', {
+      detail: { lang: lang }
+    }));
+  }
+
+  function changeLanguage(root, lang) {
+    if (LANGS.indexOf(lang) === -1) return;
+    root.__pbState.lang = lang;
+    storeLang(lang);
+    applyLanguage(root, lang);
+  }
+
+  /* ---------- Menus --------------------------------------------- */
+  function closeMenus(root) {
+    root.querySelectorAll('.pb-dropdown.is-open').forEach(function (dd) {
+      dd.classList.remove('is-open');
+      var trigger = dd.querySelector('[aria-haspopup="menu"]');
+      if (trigger) trigger.setAttribute('aria-expanded', 'false');
+    });
+  }
+  function toggleMenu(root, trigger) {
+    var dropdown = trigger.closest('.pb-dropdown');
+    if (!dropdown) return;
+    var willOpen = !dropdown.classList.contains('is-open');
+    closeMenus(root);
+    hideTooltip();
+    if (willOpen) {
+      dropdown.classList.add('is-open');
+      trigger.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  /* ---------- Collapse / mobile --------------------------------- */
+  function setCollapsed(root, collapsed) {
+    root.classList.toggle('is-collapsed', collapsed);
+    document.documentElement.classList.toggle('pb-sidebar-collapsed', collapsed);
+
+    var btn = root.querySelector('[data-pb-action="toggle-collapse"]');
+    if (btn) {
+      var key = collapsed ? 'actions.expand' : 'actions.collapse';
+      btn.setAttribute('aria-expanded', String(!collapsed));
+      btn.setAttribute('data-i18n-aria', key);
+      btn.setAttribute('data-state', collapsed ? 'collapsed' : 'expanded');
+      var label = t(root.__pbState.lang, key);
+      if (label !== null) btn.setAttribute('aria-label', label);
+    }
+
+    if (collapsed) {
+      closeMenus(root);
+      hideTooltip();
+    }
+  }
+
+  var focusableSelector =
+    'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+  function setMobileOpen(root, open) {
+    root.classList.toggle('is-mobile-open', open);
+    document.documentElement.classList.toggle('pb-sidebar-mobile-open', open);
+
+    var overlay = root.querySelector('.pb-sidebar-overlay');
+    if (overlay) overlay.setAttribute('aria-hidden', open ? 'false' : 'true');
+
+    document.querySelectorAll('[data-pb-action="open-mobile"]').forEach(function (btn) {
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    var sidebar = root.querySelector('.pb-sidebar');
+
+    if (open) {
+      if (sidebar) {
+        root.__pbLastFocus = document.activeElement;
+        sidebar.setAttribute('tabindex', '-1');
+        try { sidebar.focus({ preventScroll: true }); } catch (err) { sidebar.focus(); }
+      }
+    } else {
+      closeMenus(root);
+      hideTooltip();
+      if (sidebar) sidebar.removeAttribute('tabindex');
+      var returnFocus = root.__pbLastFocus;
+      root.__pbLastFocus = null;
+      if (returnFocus && typeof returnFocus.focus === 'function') {
+        try { returnFocus.focus({ preventScroll: true }); } catch (err) {}
+      }
+    }
+  }
+
+  /* ---------- Active page --------------------------------------- */
+  function setActivePage(root, page) {
+    if (!root || !page) return;
+    root.querySelectorAll('.pb-nav__item[data-page]').forEach(function (item) {
+      var on = item.getAttribute('data-page') === page;
+      item.classList.toggle('is-active', on);
+      if (on) item.setAttribute('aria-current', 'page');
+      else item.removeAttribute('aria-current');
+    });
+  }
+
+  /* ---------- Logo ---------------------------------------------- */
+  function applyLogo(root) {
+    var brand = root.querySelector('[data-pb-brand]');
+    if (!brand) return;
+
+    var full = brand.querySelector('[data-pb-logo-full]');
+    var compact = brand.querySelector('[data-pb-logo-compact]');
+
+    brand.classList.remove('pb-brand--logo-missing', 'pb-brand--compact-missing');
+
+    if (full) {
+      full.setAttribute('src', PB_CONFIG.logo);
+      full.addEventListener('error', function () {
+        brand.classList.add('pb-brand--logo-missing');
+      });
+    }
+    if (compact) {
+      compact.setAttribute('src', PB_CONFIG.logoCompact);
+      if (compact.complete && compact.naturalWidth === 0) {
+        brand.classList.add('pb-brand--compact-missing');
+      }
+      compact.addEventListener('error', function () {
+        brand.classList.add('pb-brand--compact-missing');
+      });
+      compact.addEventListener('load', function () {
+        brand.classList.remove('pb-brand--compact-missing');
+      });
+    }
+  }
+
+  /* ---------- Global listeners (bound once) --------------------- */
+  function bindGlobals() {
+    if (window.__pbSidebarBound) return;
+    window.__pbSidebarBound = true;
+
+    document.addEventListener('click', function (event) {
+      var target = event.target;
+      if (!target || typeof target.closest !== 'function') return;
+
+      var actionEl = target.closest('[data-pb-action]');
+      if (actionEl) {
+        var root = actionEl.closest('[data-pb-sidebar-root]') ||
+                   document.querySelector('[data-pb-sidebar-root]');
+        if (root) {
+          var action = actionEl.getAttribute('data-pb-action');
+          if (action === 'toggle-collapse') {
+            if (window.matchMedia('(min-width: 1024px)').matches) {
+              setCollapsed(root, !root.classList.contains('is-collapsed'));
+            }
+          } else if (action === 'toggle-menu') {
+            toggleMenu(root, actionEl);
+          } else if (action === 'open-mobile') {
+            setMobileOpen(root, true);
+          } else if (action === 'close-mobile') {
+            setMobileOpen(root, false);
+          }
+        }
+        return;
+      }
+
+      var menuItem = target.closest('.pb-menu__item');
+      if (menuItem) {
+        var menuRoot = menuItem.closest('[data-pb-sidebar-root]');
+        if (menuRoot) closeMenus(menuRoot);
+        return;
+      }
+
+      var navItem = target.closest('.pb-nav__item');
+      if (navItem) {
+        var navRoot = navItem.closest('[data-pb-sidebar-root]');
+        if (navRoot && navRoot.classList.contains('is-mobile-open')) {
+          setMobileOpen(navRoot, false);
+        }
+        return;
+      }
+
+      document.querySelectorAll('[data-pb-sidebar-root]').forEach(function (r) {
+        if (!target.closest('.pb-dropdown')) closeMenus(r);
+      });
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key !== 'Escape' && event.key !== 'Esc') return;
+      var root = document.querySelector('[data-pb-sidebar-root]');
+      if (!root) return;
+
+      var openMenu = root.querySelector('.pb-dropdown.is-open');
+      if (openMenu) {
+        var trigger = openMenu.querySelector('[aria-haspopup="menu"]');
+        closeMenus(root);
+        if (trigger) trigger.focus();
+        return;
+      }
+
+      if (root.classList.contains('is-mobile-open')) {
+        setMobileOpen(root, false);
+        var opener = document.querySelector('[data-pb-action="open-mobile"]');
+        if (opener) opener.focus();
+        return;
+      }
+
+      hideTooltip();
+    });
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key !== 'Tab') return;
+      var root = document.querySelector('[data-pb-sidebar-root]');
+      if (!root || !root.classList.contains('is-mobile-open')) return;
+
+      var focusables = root.querySelectorAll(focusableSelector);
+      if (!focusables.length) return;
+      var first = focusables[0];
+      var last = focusables[focusables.length - 1];
+
+      if (event.shiftKey) {
+        if (document.activeElement === first) { event.preventDefault(); last.focus(); }
+      } else {
+        if (document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+    });
+
+    window.addEventListener('resize', function () {
+      var root = document.querySelector('[data-pb-sidebar-root]');
+      if (!root) return;
+      var isDesktop = window.matchMedia('(min-width: 1024px)').matches;
+      if (isDesktop) {
+        if (root.classList.contains('is-mobile-open')) setMobileOpen(root, false);
+      } else if (root.classList.contains('is-collapsed')) {
+        setCollapsed(root, false);
+      }
+    });
+
+    window.addEventListener('scroll', hideTooltip, true);
+  }
+
+  /* ---------- Per-root init ------------------------------------- */
+  function initSidebar(root) {
+    if (!root || root.__pbReady) return;
+    root.__pbReady = true;
+
+    root.__pbState = { lang: readStoredLang() };
+
+    applyLogo(root);
+    applyLanguage(root, root.__pbState.lang);
+
+    root.querySelectorAll('.pb-nav__item').forEach(function (item) {
+      item.addEventListener('mouseenter', function () { showTooltip(item); });
+      item.addEventListener('mouseleave', hideTooltip);
+      item.addEventListener('focus', function () { showTooltip(item); });
+      item.addEventListener('blur', hideTooltip);
+    });
+
+    if (!window.matchMedia('(min-width: 1024px)').matches) {
+      setCollapsed(root, false);
+    }
+
+    /* Resolve the active page:
+       1) window.PB_ACTIVE_PAGE (set by the parent page before init)
+       2) <body data-page="...">
+       3) root data-active-page
+       4) fallback: derive from the current URL filename
+    */
+    var page = window.PB_ACTIVE_PAGE ||
+               (document.body && document.body.dataset ? document.body.dataset.page : null) ||
+               root.getAttribute('data-active-page') ||
+               pageFromUrl();
+
+    if (page) setActivePage(root, page);
+  }
+
+  /* Match /foo/bar.html against data-page values (dashboard, builder, ...).
+     Returns null when no confident match is found. */
+  function pageFromUrl() {
+    try {
+      var file = (location.pathname.split('/').pop() || '').toLowerCase();
+      file = file.replace(/\.html?$/, '');
+      var map = {
+        'dashboard': 'dashboard',
+        'website-builder': 'builder',
+        'builder': 'builder',
+        'function-center': 'function-center',
+        'design-studio': 'design',
+        'domain-publishing': 'domain',
+        'media-library': 'media',
+        'analytics': 'analytics',
+        'version-history': 'versions',
+        'website-preview': 'preview',
+        'help-center': 'help',
+        'settings': 'settings'
+      };
+      return map[file] || null;
+    } catch (e) { return null; }
+  }
+
+  function init(root) {
+    var roots = root ? [root]
+      : Array.prototype.slice.call(document.querySelectorAll('[data-pb-sidebar-root]'));
+    roots.forEach(initSidebar);
+  }
+
+  /* ---------- Public API ---------------------------------------- */
+  window.PBSidebar = {
+    __installed: true,
+    init: init,
+
+    setActive: function (page) {
+      if (!page) return;
+      document.querySelectorAll('[data-pb-sidebar-root]').forEach(function (root) {
+        setActivePage(root, page);
+      });
+    },
+
+    getLanguage: function () {
+      var root = document.querySelector('[data-pb-sidebar-root]');
+      return root && root.__pbState ? root.__pbState.lang : readStoredLang();
+    },
+
+    setLanguage: function (lang) {
+      document.querySelectorAll('[data-pb-sidebar-root]').forEach(function (root) {
+        changeLanguage(root, lang);
+      });
+    },
+
+    setCollapsed: function (collapsed) {
+      if (!window.matchMedia('(min-width: 1024px)').matches) return;
+      document.querySelectorAll('[data-pb-sidebar-root]').forEach(function (root) {
+        setCollapsed(root, !!collapsed);
+      });
+    },
+
+    open: function () {
+      var root = document.querySelector('[data-pb-sidebar-root]');
+      if (root) setMobileOpen(root, true);
+    },
+    close: function () {
+      var root = document.querySelector('[data-pb-sidebar-root]');
+      if (root) setMobileOpen(root, false);
+    },
+    openMobile: function () { this.open(); },
+    closeMobile: function () { this.close(); },
+
+    setLogos: function (fullSrc, compactSrc) {
+      if (typeof fullSrc === 'string' && fullSrc) PB_CONFIG.logo = fullSrc;
+      if (typeof compactSrc === 'string') PB_CONFIG.logoCompact = compactSrc;
+      document.querySelectorAll('[data-pb-sidebar-root]').forEach(function (root) {
+        applyLogo(root);
+      });
+    },
+
+    translate: t
+  };
+
+  bindGlobals();
+  init();
+})();
+</script>
+</body>
+</html>

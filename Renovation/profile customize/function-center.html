@@ -1,0 +1,1783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Function Center — Profile Craft Studio</title>
+
+<style>
+/* ============================================================
+   PROFILE CRAFT STUDIO · FUNCTION CENTER
+   Coordinated saturated palette. Every accent has the same
+   visual weight as blue: base / deep / bright / gradient / RGBA.
+   Scoped with .fc-* prefixes.
+   ============================================================ */
+
+:root{
+  /* ---------- BLUE · primary ---------- */
+  --fc-blue-base:#1749E8;
+  --fc-blue-deep:#0F3ACB;
+  --fc-blue-bright:#65A2FF;
+  --fc-blue-grad:linear-gradient(120deg, #1749E8 0%, #3979F5 55%, #65A2FF 100%);
+  --fc-blue-grad-hover:linear-gradient(120deg, #0F3ACB 0%, #2B62E0 55%, #5B93F2 100%);
+  --fc-blue-tint:rgba(23,73,232,0.16);
+  --fc-blue-tint-strong:rgba(23,73,232,0.30);
+  --fc-blue-border:rgba(23,73,232,0.34);
+  --fc-blue-ink:#0B2A8A;
+
+  /* ---------- EMERALD · success ---------- */
+  --fc-green-base:#059669;
+  --fc-green-deep:#047857;
+  --fc-green-tint:rgba(5,150,105,0.14);
+  --fc-green-border:rgba(5,150,105,0.32);
+  --fc-green-ink:#043D2B;
+
+  /* ---------- VIOLET · advanced ---------- */
+  --fc-violet-base:#7C3AED;
+  --fc-violet-deep:#6D28D9;
+  --fc-violet-grad:linear-gradient(120deg, #7C3AED 0%, #8B5CF6 55%, #A78BFA 100%);
+  --fc-violet-grad-hover:linear-gradient(120deg, #6D28D9 0%, #7C3AED 55%, #8B5CF6 100%);
+  --fc-violet-tint:rgba(124,58,237,0.14);
+  --fc-violet-border:rgba(124,58,237,0.32);
+  --fc-violet-ink:#3A1B85;
+
+  /* ---------- ORANGE · warning ---------- */
+  --fc-amber-base:#EA580C;
+  --fc-amber-grad:linear-gradient(120deg, #EA580C 0%, #F97316 55%, #FB923C 100%);
+  --fc-amber-tint:rgba(234,88,12,0.14);
+  --fc-amber-border:rgba(234,88,12,0.32);
+  --fc-amber-ink:#6B2A06;
+
+  /* ---------- TEAL · integration ---------- */
+  --fc-teal-base:#0D9488;
+  --fc-teal-deep:#0F766E;
+  --fc-teal-grad:linear-gradient(120deg, #0D9488 0%, #14B8A6 55%, #2DD4BF 100%);
+  --fc-teal-grad-hover:linear-gradient(120deg, #0F766E 0%, #0D9488 55%, #14B8A6 100%);
+  --fc-teal-tint:rgba(13,148,136,0.14);
+  --fc-teal-border:rgba(13,148,136,0.32);
+  --fc-teal-ink:#043B37;
+
+  /* ---------- NEUTRAL ---------- */
+  --fc-neutral-tint:rgba(71,85,105,0.10);
+  --fc-neutral-border:rgba(71,85,105,0.28);
+  --fc-neutral-ink:#2D394A;
+
+  /* ---------- Text ---------- */
+  --fc-text:#0F1B3D;
+  --fc-text-2:#344A6E;
+  --fc-muted:#5C6E8C;
+
+  /* ---------- Surfaces ---------- */
+  --fc-bg:#EDF2FC;
+  --fc-surface:#FFFFFF;
+  --fc-glass:rgba(255,255,255,0.86);
+
+  /* ---------- Borders / hairlines ---------- */
+  --fc-border:rgba(23,73,232,0.20);
+  --fc-border-strong:rgba(23,73,232,0.42);
+  --fc-hairline:rgba(23,73,232,0.12);
+
+  /* ---------- Radii ---------- */
+  --fc-r-xs:4px;
+  --fc-r-sm:6px;
+  --fc-r:8px;
+  --fc-r-lg:10px;
+
+  /* ---------- Shadows ---------- */
+  --fc-shadow-sm:0 1px 2px rgba(11,26,74,0.06), 0 2px 6px rgba(11,26,74,0.05);
+  --fc-shadow:0 4px 14px rgba(11,26,74,0.10), 0 1px 3px rgba(11,26,74,0.06);
+  --fc-shadow-lg:0 22px 48px -22px rgba(11,26,74,0.34), 0 4px 12px -4px rgba(11,26,74,0.12);
+  --fc-shadow-blue:0 8px 22px -10px rgba(23,73,232,0.55);
+
+  --fc-sidebar-w:282px;
+  --fc-sidebar-w-collapsed:88px;
+  --fc-ease:cubic-bezier(.4,0,.2,1);
+
+  --fc-font:"Myanmar Text","Noto Sans Myanmar","Padauk","Pyidaungsu",
+            -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+            "Helvetica Neue",Arial,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+
+body{
+  font-family:var(--fc-font);
+  font-size:14px;
+  line-height:1.55;
+  color:var(--fc-text);
+  background:
+    radial-gradient(1100px 520px at 8% -10%, rgba(23,73,232,0.22), transparent 60%),
+    radial-gradient(900px 480px at 100% -6%, rgba(101,162,255,0.22), transparent 62%),
+    linear-gradient(180deg, #EDF2FC 0%, #E1EAFB 100%);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+
+#sidebar-container{display:contents;}
+
+/* ============================================================
+   SHELL — sticky host
+   ============================================================ */
+.fc-shell{
+  min-height:100vh;
+  padding-inline-start:var(--fc-sidebar-w);
+  transition:padding-inline-start .28s var(--fc-ease);
+  display:flex;
+  flex-direction:column;
+}
+html.pb-sidebar-collapsed .fc-shell{padding-inline-start:var(--fc-sidebar-w-collapsed);}
+@media (max-width:1023px){
+  .fc-shell,
+  html.pb-sidebar-collapsed .fc-shell{padding-inline-start:0;}
+}
+
+/* ============================================================
+   HEADER — sticky, glass on scroll
+   ============================================================ */
+.fc-header{
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:12px 20px;
+  background:linear-gradient(
+    115deg,
+    rgba(23,73,232,0.98) 0%,
+    rgba(57,121,245,0.96) 55%,
+    rgba(101,162,255,0.94) 100%
+  );
+  color:#FFFFFF;
+  border-bottom:1px solid rgba(255,255,255,0.18);
+  box-shadow:0 1px 0 rgba(255,255,255,0.06) inset;
+  transition:
+    background 240ms var(--fc-ease),
+    backdrop-filter 240ms var(--fc-ease),
+    -webkit-backdrop-filter 240ms var(--fc-ease),
+    box-shadow 240ms var(--fc-ease),
+    border-color 240ms var(--fc-ease);
+  -webkit-backdrop-filter:saturate(140%) blur(6px);
+          backdrop-filter:saturate(140%) blur(6px);
+}
+.fc-header.is-scrolled{
+  background:linear-gradient(
+    115deg,
+    rgba(23,73,232,0.84) 0%,
+    rgba(57,121,245,0.80) 55%,
+    rgba(101,162,255,0.76) 100%
+  );
+  -webkit-backdrop-filter:saturate(165%) blur(14px);
+          backdrop-filter:saturate(165%) blur(14px);
+  border-bottom-color:rgba(255,255,255,0.30);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.06) inset,
+    0 8px 22px -12px rgba(11,26,74,0.28);
+}
+.fc-header::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(700px 220px at 90% -20%, rgba(255,255,255,0.16), transparent 65%),
+    radial-gradient(500px 180px at 0% 120%, rgba(255,255,255,0.10), transparent 60%);
+  opacity:.85;
+}
+.fc-header > *{position:relative;z-index:1;}
+.fc-header__mobile{display:none;}
+@media (max-width:767.98px){ .fc-header__mobile{display:inline-flex;} }
+
+.fc-header__title{
+  display:flex;flex-direction:column;min-width:0;gap:2px;
+}
+.fc-crumbs{
+  display:flex;align-items:center;gap:6px;
+  font-size:11.5px;color:rgba(255,255,255,0.78);
+  line-height:1.2;
+}
+.fc-crumbs svg{width:12px;height:12px;color:rgba(255,255,255,0.62);}
+.fc-crumbs strong{color:#FFFFFF;font-weight:700;}
+.fc-h1{
+  margin:0;
+  font-size:17px;font-weight:800;letter-spacing:-.01em;
+  color:#FFFFFF;line-height:1.2;
+}
+.fc-subtitle{
+  margin:0;font-size:12px;color:rgba(255,255,255,0.82);
+  max-width:64ch;line-height:1.4;
+  display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden;
+}
+.fc-header__spacer{flex:1 1 auto;}
+
+/* Cart / cost pill in the header */
+.fc-cart{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:7px 12px;border-radius:999px;
+  background:rgba(255,255,255,0.18);
+  border:1px solid rgba(255,255,255,0.30);
+  color:#FFFFFF;font-size:12.5px;font-weight:700;
+  white-space:nowrap;
+}
+.fc-cart svg{width:14px;height:14px;}
+.fc-cart strong{font-weight:800;}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.fc-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:8px 14px;
+  border-radius:var(--fc-r-sm);
+  border:1px solid transparent;
+  font-family:inherit;font-size:13px;font-weight:600;line-height:1.2;
+  cursor:pointer;white-space:nowrap;text-decoration:none;
+  transition:background-color .22s var(--fc-ease),
+             color .22s var(--fc-ease),
+             border-color .22s var(--fc-ease),
+             box-shadow .22s var(--fc-ease),
+             transform .16s var(--fc-ease);
+}
+.fc-btn:active{transform:translateY(1px);}
+.fc-btn:focus-visible{outline:2px solid var(--fc-blue-base);outline-offset:2px;}
+.fc-btn svg{width:16px;height:16px;flex:0 0 auto;}
+.fc-btn[disabled]{opacity:.55;cursor:not-allowed;transform:none;}
+
+.fc-btn--primary{
+  background:var(--fc-blue-grad);
+  color:#FFFFFF;
+  border-color:var(--fc-blue-deep);
+  box-shadow:var(--fc-shadow-blue);
+}
+.fc-btn--primary:hover:not([disabled]){
+  background:var(--fc-blue-grad-hover);
+  box-shadow:0 12px 28px -12px rgba(23,73,232,0.7);
+}
+
+.fc-btn--ghost{
+  background:var(--fc-surface);
+  color:var(--fc-text);
+  border-color:var(--fc-border);
+}
+.fc-btn--ghost:hover:not([disabled]){
+  background:var(--fc-blue-tint);
+  border-color:var(--fc-border-strong);
+  color:var(--fc-blue-base);
+}
+.fc-btn--sm{padding:6px 10px;font-size:12px;border-radius:var(--fc-r-sm);}
+.fc-btn--icon{width:34px;height:34px;padding:0;justify-content:center;}
+
+.fc-header .fc-btn--ghost{
+  background:rgba(255,255,255,0.14);
+  color:#FFFFFF;
+  border-color:rgba(255,255,255,0.24);
+}
+.fc-header .fc-btn--ghost:hover:not([disabled]){
+  background:rgba(255,255,255,0.24);
+  border-color:rgba(255,255,255,0.44);
+  color:#FFFFFF;
+}
+
+/* ============================================================
+   MAIN
+   ============================================================ */
+.fc-main{
+  flex:1 1 auto;
+  padding:22px;
+  max-width:1480px;
+  width:100%;
+  margin:0 auto;
+  display:flex;flex-direction:column;gap:18px;
+}
+@media (max-width:767.98px){ .fc-main{padding:14px;gap:14px;} }
+
+/* ============================================================
+   TOOLBAR — search + view
+   ============================================================ */
+.fc-toolbar{
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+}
+.fc-search{
+  position:relative;
+  display:flex;align-items:center;
+  flex:1 1 380px;min-width:0;height:48px;
+  padding:0 12px 0 44px;
+  border:1px solid var(--fc-border);border-radius:var(--fc-r);
+  background:var(--fc-surface);
+  box-shadow:0 1px 0 rgba(255,255,255,0.8) inset, var(--fc-shadow-sm);
+  transition:border-color .22s var(--fc-ease),
+             box-shadow .22s var(--fc-ease),
+             background-color .22s var(--fc-ease);
+}
+.fc-search:focus-within{
+  border-color:var(--fc-blue-base);
+  background:#FFFFFF;
+  box-shadow:0 0 0 4px var(--fc-blue-tint), var(--fc-shadow-sm);
+}
+.fc-search__icon{
+  position:absolute;left:14px;top:50%;transform:translateY(-50%);
+  width:18px;height:18px;color:var(--fc-blue-base);
+  pointer-events:none;
+}
+.fc-search input{
+  width:100%;height:100%;padding:0;
+  border:0;background:transparent;
+  font-family:inherit;font-size:14px;color:var(--fc-text);
+  outline:none;
+}
+.fc-search input::placeholder{color:var(--fc-muted);}
+.fc-search__clear{
+  display:none;
+  width:26px;height:26px;flex:0 0 auto;margin-inline-start:8px;
+  border:1px solid var(--fc-border);border-radius:var(--fc-r-xs);
+  background:#FFFFFF;color:var(--fc-text-2);cursor:pointer;
+  align-items:center;justify-content:center;
+}
+.fc-search__clear:hover{
+  background:var(--fc-blue-tint);
+  border-color:var(--fc-border-strong);
+  color:var(--fc-blue-base);
+}
+.fc-search__clear:focus-visible{outline:2px solid var(--fc-blue-base);outline-offset:2px;}
+.fc-search__clear svg{width:13px;height:13px;}
+.fc-search.has-value .fc-search__clear{display:inline-flex;}
+
+.fc-view{
+  display:inline-flex;align-items:center;gap:2px;
+  padding:3px;
+  border:1px solid var(--fc-border);border-radius:var(--fc-r);
+  background:var(--fc-surface);
+  height:48px;
+}
+.fc-view button{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  height:100%;padding:0 14px;
+  border:0;border-radius:var(--fc-r-sm);
+  background:transparent;color:var(--fc-text-2);
+  font-family:inherit;font-size:13px;font-weight:600;
+  cursor:pointer;
+  transition:background-color .22s var(--fc-ease),
+             color .22s var(--fc-ease),
+             box-shadow .22s var(--fc-ease);
+}
+.fc-view button svg{width:15px;height:15px;}
+.fc-view button:hover{color:var(--fc-blue-base);background:var(--fc-blue-tint);}
+.fc-view button:focus-visible{outline:2px solid var(--fc-blue-base);outline-offset:1px;}
+.fc-view button[aria-pressed="true"]{
+  background:var(--fc-blue-grad);color:#FFFFFF;
+  box-shadow:var(--fc-shadow-blue);
+}
+.fc-view button[aria-pressed="true"]:hover{background:var(--fc-blue-grad-hover);color:#FFFFFF;}
+@media (max-width:600px){
+  .fc-search{flex:1 1 100%;}
+  .fc-view{width:100%;justify-content:stretch;}
+  .fc-view button{flex:1 1 0;}
+}
+
+/* ============================================================
+   CATEGORIES
+   ============================================================ */
+.fc-categories{
+  display:flex;align-items:center;gap:10px;
+  padding:12px;
+  border:1px solid var(--fc-border);border-radius:var(--fc-r-lg);
+  background:var(--fc-glass);
+  box-shadow:var(--fc-shadow-sm);
+  overflow-x:auto;
+  scrollbar-width:thin;
+  scrollbar-color:var(--fc-border-strong) transparent;
+}
+.fc-categories::-webkit-scrollbar{height:6px;}
+.fc-categories::-webkit-scrollbar-thumb{background:var(--fc-border-strong);border-radius:999px;}
+.fc-categories__label{
+  flex:0 0 auto;
+  font-size:11px;font-weight:800;color:var(--fc-muted);
+  letter-spacing:.08em;text-transform:uppercase;
+  padding-inline-end:10px;
+  border-inline-end:1px solid var(--fc-hairline);
+  margin-inline-end:4px;
+}
+.fc-cat{
+  display:inline-flex;align-items:center;gap:10px;
+  padding:9px 14px;border-radius:var(--fc-r);
+  border:1px solid transparent;
+  font-family:inherit;font-size:13px;font-weight:600;
+  cursor:pointer;white-space:nowrap;flex:0 0 auto;
+  transition:background-color .22s var(--fc-ease),
+             border-color .22s var(--fc-ease),
+             color .22s var(--fc-ease),
+             box-shadow .22s var(--fc-ease),
+             transform .2s var(--fc-ease);
+}
+.fc-cat:focus-visible{outline:2px solid var(--fc-blue-base);outline-offset:2px;}
+.fc-cat__icon{
+  display:grid;place-items:center;
+  width:24px;height:24px;flex:0 0 auto;
+  border-radius:var(--fc-r-xs);border:1px solid transparent;
+}
+.fc-cat__icon svg{width:14px;height:14px;}
+.fc-cat__name{white-space:nowrap;}
+.fc-cat__count{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:20px;height:18px;padding:0 6px;
+  border-radius:999px;font-size:10.5px;font-weight:800;
+  border:1px solid transparent;
+}
+
+.fc-cat[data-cat="all"]{
+  background:var(--fc-blue-tint);border-color:var(--fc-blue-border);color:var(--fc-blue-ink);
+}
+.fc-cat[data-cat="all"] .fc-cat__icon,
+.fc-cat[data-cat="all"] .fc-cat__count{
+  background:rgba(23,73,232,0.22);color:var(--fc-blue-ink);border-color:var(--fc-blue-border);
+}
+.fc-cat[data-cat="business"],
+.fc-cat[data-cat="interactive"]{
+  background:var(--fc-violet-tint);border-color:var(--fc-violet-border);color:var(--fc-violet-ink);
+}
+.fc-cat[data-cat="business"] .fc-cat__icon,
+.fc-cat[data-cat="business"] .fc-cat__count,
+.fc-cat[data-cat="interactive"] .fc-cat__icon,
+.fc-cat[data-cat="interactive"] .fc-cat__count{
+  background:rgba(124,58,237,0.20);color:var(--fc-violet-ink);border-color:var(--fc-violet-border);
+}
+.fc-cat[data-cat="communication"],
+.fc-cat[data-cat="data"]{
+  background:var(--fc-teal-tint);border-color:var(--fc-teal-border);color:var(--fc-teal-ink);
+}
+.fc-cat[data-cat="communication"] .fc-cat__icon,
+.fc-cat[data-cat="communication"] .fc-cat__count,
+.fc-cat[data-cat="data"] .fc-cat__icon,
+.fc-cat[data-cat="data"] .fc-cat__count{
+  background:rgba(13,148,136,0.22);color:var(--fc-teal-ink);border-color:var(--fc-teal-border);
+}
+
+@media (hover:hover){
+  .fc-cat:hover{transform:translateY(-1px);color:#FFFFFF;box-shadow:var(--fc-shadow-sm);}
+  .fc-cat:hover .fc-cat__icon,
+  .fc-cat:hover .fc-cat__count{
+    background:rgba(255,255,255,0.24);color:#FFFFFF;border-color:rgba(255,255,255,0.34);
+  }
+  .fc-cat[data-cat="all"]:hover{background:var(--fc-blue-grad);border-color:var(--fc-blue-deep);}
+  .fc-cat[data-cat="business"]:hover,
+  .fc-cat[data-cat="interactive"]:hover{background:var(--fc-violet-grad);border-color:var(--fc-violet-deep);}
+  .fc-cat[data-cat="communication"]:hover,
+  .fc-cat[data-cat="data"]:hover{background:var(--fc-teal-grad);border-color:var(--fc-teal-deep);}
+}
+
+.fc-cat[aria-pressed="true"]{color:#FFFFFF;font-weight:800;}
+.fc-cat[aria-pressed="true"] .fc-cat__icon,
+.fc-cat[aria-pressed="true"] .fc-cat__count{
+  background:rgba(255,255,255,0.24);color:#FFFFFF;border-color:rgba(255,255,255,0.34);
+}
+.fc-cat[data-cat="all"][aria-pressed="true"]{
+  background:var(--fc-blue-grad);border-color:var(--fc-blue-deep);box-shadow:var(--fc-shadow-blue);
+}
+.fc-cat[data-cat="business"][aria-pressed="true"],
+.fc-cat[data-cat="interactive"][aria-pressed="true"]{
+  background:var(--fc-violet-grad);border-color:var(--fc-violet-deep);box-shadow:var(--fc-shadow-violet);
+}
+.fc-cat[data-cat="communication"][aria-pressed="true"],
+.fc-cat[data-cat="data"][aria-pressed="true"]{
+  background:var(--fc-teal-grad);border-color:var(--fc-teal-deep);box-shadow:var(--fc-shadow-teal);
+}
+.fc-cat[data-cat="all"][aria-pressed="true"]:hover{background:var(--fc-blue-grad-hover);}
+.fc-cat[data-cat="business"][aria-pressed="true"]:hover,
+.fc-cat[data-cat="interactive"][aria-pressed="true"]:hover{background:var(--fc-violet-grad-hover);}
+.fc-cat[data-cat="communication"][aria-pressed="true"]:hover,
+.fc-cat[data-cat="data"][aria-pressed="true"]:hover{background:var(--fc-teal-grad-hover);}
+
+@media (max-width:600px){
+  .fc-categories__label{display:none;}
+  .fc-categories{padding:8px;}
+  .fc-cat{padding:7px 10px;font-size:12px;gap:8px;}
+  .fc-cat__icon{width:20px;height:20px;}
+}
+
+/* ============================================================
+   CATALOG
+   ============================================================ */
+.fc-catalog{display:grid;gap:12px;}
+.fc-catalog[data-view="grid"]{
+  grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+}
+.fc-catalog[data-view="list"]{
+  grid-template-columns:1fr;
+}
+
+/* ---------- GRID CARD ---------- */
+.fc-card{
+  position:relative;
+  display:flex;flex-direction:column;gap:10px;
+  padding:16px;
+  border:1px solid var(--fc-border);border-radius:var(--fc-r-lg);
+  background:var(--fc-surface);
+  box-shadow:var(--fc-shadow-sm);
+  transition:transform .22s var(--fc-ease),
+             box-shadow .22s var(--fc-ease),
+             border-color .22s var(--fc-ease),
+             background-color .22s var(--fc-ease);
+}
+@media (hover:hover){
+  .fc-card:hover{transform:translateY(-2px);box-shadow:var(--fc-shadow);}
+  .fc-card[data-category="business"]:hover,
+  .fc-card[data-category="interactive"]:hover{
+    border-color:var(--fc-violet-base);
+    background:linear-gradient(180deg, #FFFFFF, var(--fc-violet-tint));
+  }
+  .fc-card[data-category="communication"]:hover,
+  .fc-card[data-category="data"]:hover{
+    border-color:var(--fc-teal-base);
+    background:linear-gradient(180deg, #FFFFFF, var(--fc-teal-tint));
+  }
+}
+
+.fc-card__head{display:flex;align-items:flex-start;gap:12px;min-width:0;}
+.fc-card__icon{
+  display:grid;place-items:center;
+  width:42px;height:42px;flex:0 0 auto;
+  border-radius:var(--fc-r-sm);border:1px solid transparent;
+  transition:filter .22s var(--fc-ease), transform .22s var(--fc-ease),
+             background-color .22s var(--fc-ease), color .22s var(--fc-ease);
+}
+.fc-card__icon svg{width:20px;height:20px;}
+.fc-card[data-category="business"] .fc-card__icon,
+.fc-card[data-category="interactive"] .fc-card__icon{
+  background:var(--fc-violet-tint);color:var(--fc-violet-base);border-color:var(--fc-violet-border);
+}
+.fc-card[data-category="communication"] .fc-card__icon,
+.fc-card[data-category="data"] .fc-card__icon{
+  background:var(--fc-teal-tint);color:var(--fc-teal-base);border-color:var(--fc-teal-border);
+}
+.fc-card[data-category="business"]:hover .fc-card__icon,
+.fc-card[data-category="interactive"]:hover .fc-card__icon{
+  background:var(--fc-violet-grad);color:#FFFFFF;border-color:var(--fc-violet-deep);
+}
+.fc-card[data-category="communication"]:hover .fc-card__icon,
+.fc-card[data-category="data"]:hover .fc-card__icon{
+  background:var(--fc-teal-grad);color:#FFFFFF;border-color:var(--fc-teal-deep);
+}
+
+.fc-card__meta{min-width:0;flex:1 1 auto;}
+.fc-card__name{
+  margin:0;font-size:14px;font-weight:800;color:var(--fc-text);
+  letter-spacing:-.005em;
+}
+.fc-card__category{
+  display:inline-block;margin-top:2px;
+  font-size:10.5px;font-weight:800;
+  color:var(--fc-blue-base);text-transform:uppercase;letter-spacing:.06em;
+}
+.fc-card[data-category="business"] .fc-card__category,
+.fc-card[data-category="interactive"] .fc-card__category{color:var(--fc-violet-base);}
+.fc-card[data-category="communication"] .fc-card__category,
+.fc-card[data-category="data"] .fc-card__category{color:var(--fc-teal-base);}
+
+.fc-card__desc{
+  margin:0;font-size:12.5px;color:var(--fc-text-2);line-height:1.55;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;
+}
+.fc-card__price{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:800;color:var(--fc-blue-base);
+}
+.fc-card__price small{
+  font-size:10.5px;font-weight:700;color:var(--fc-muted);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+
+.fc-card__pills{display:flex;flex-wrap:wrap;gap:6px;}
+.fc-card__foot{
+  display:flex;align-items:center;gap:6px;flex-wrap:wrap;
+  margin-top:auto;padding-top:10px;
+  border-top:1px solid var(--fc-hairline);
+}
+
+/* ---------- LIST ROW ---------- */
+.fc-row{
+  position:relative;
+  display:grid;
+  grid-template-columns:42px minmax(0,1.6fr) minmax(0,2fr) auto;
+  gap:16px;align-items:center;
+  padding:14px 18px;
+  border:1px solid var(--fc-border);border-radius:var(--fc-r-lg);
+  background:var(--fc-surface);box-shadow:var(--fc-shadow-sm);
+  transition:box-shadow .22s var(--fc-ease),
+             border-color .22s var(--fc-ease),
+             transform .22s var(--fc-ease),
+             background-color .22s var(--fc-ease);
+}
+@media (hover:hover){
+  .fc-row:hover{transform:translateY(-1px);box-shadow:var(--fc-shadow);}
+  .fc-row[data-category="business"]:hover,
+  .fc-row[data-category="interactive"]:hover{
+    border-color:var(--fc-violet-base);
+    background:linear-gradient(90deg, #FFFFFF, var(--fc-violet-tint));
+  }
+  .fc-row[data-category="communication"]:hover,
+  .fc-row[data-category="data"]:hover{
+    border-color:var(--fc-teal-base);
+    background:linear-gradient(90deg, #FFFFFF, var(--fc-teal-tint));
+  }
+}
+
+.fc-row__icon{
+  display:grid;place-items:center;
+  width:42px;height:42px;flex:0 0 auto;border-radius:var(--fc-r-sm);
+  border:1px solid transparent;
+}
+.fc-row__icon svg{width:20px;height:20px;}
+.fc-row[data-category="business"] .fc-row__icon,
+.fc-row[data-category="interactive"] .fc-row__icon{
+  background:var(--fc-violet-tint);color:var(--fc-violet-base);border-color:var(--fc-violet-border);
+}
+.fc-row[data-category="communication"] .fc-row__icon,
+.fc-row[data-category="data"] .fc-row__icon{
+  background:var(--fc-teal-tint);color:var(--fc-teal-base);border-color:var(--fc-teal-border);
+}
+
+.fc-row__main{min-width:0;}
+.fc-row__name{
+  margin:0;font-size:13.5px;font-weight:800;color:var(--fc-text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.fc-row__category{
+  display:inline-block;margin-top:1px;
+  font-size:10.5px;font-weight:800;
+  color:var(--fc-blue-base);text-transform:uppercase;letter-spacing:.06em;
+}
+.fc-row[data-category="business"] .fc-row__category,
+.fc-row[data-category="interactive"] .fc-row__category{color:var(--fc-violet-base);}
+.fc-row[data-category="communication"] .fc-row__category,
+.fc-row[data-category="data"] .fc-row__category{color:var(--fc-teal-base);}
+
+.fc-row__desc{
+  min-width:0;font-size:12.5px;color:var(--fc-text-2);line-height:1.55;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+.fc-row__side{
+  display:flex;flex-direction:column;align-items:flex-end;gap:8px;flex:0 0 auto;
+}
+.fc-row__pills{display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end;}
+.fc-row__actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;}
+
+@media (max-width:900px){
+  .fc-row{
+    grid-template-columns:42px minmax(0,1fr);
+    grid-template-areas:
+      "icon main"
+      "desc desc"
+      "side side";
+    gap:10px 12px;
+  }
+  .fc-row__icon{grid-area:icon;}
+  .fc-row__main{grid-area:main;}
+  .fc-row__desc{grid-area:desc;}
+  .fc-row__side{grid-area:side;align-items:flex-start;flex-direction:row;justify-content:space-between;flex-wrap:wrap;}
+  .fc-row__pills{justify-content:flex-start;}
+  .fc-row__actions{justify-content:flex-start;}
+}
+
+/* ============================================================
+   STATUS PILLS — fixed vertical alignment
+   ============================================================ */
+.fc-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  padding:0 9px;
+  height:22px;
+  border-radius:var(--fc-r-xs);
+  font-size:10.5px;
+  font-weight:800;
+  line-height:1;
+  letter-spacing:.03em;
+  border:1px solid transparent;
+  white-space:nowrap;
+  text-transform:uppercase;
+  vertical-align:middle;
+}
+.fc-pill::before{
+  content:"";
+  display:inline-block;
+  width:6px;height:6px;border-radius:50%;
+  background:currentColor;
+  margin:0;
+  flex:0 0 6px;
+  /* keep dot vertically centered with the text */
+  position:relative;
+  top:0;
+}
+
+.fc-pill--installed{
+  background:var(--fc-blue-tint);
+  color:var(--fc-blue-ink);
+  border-color:var(--fc-blue-border);
+}
+.fc-pill--uninstalled,
+.fc-pill--disabled,
+.fc-pill--unknown{
+  background:var(--fc-neutral-tint);
+  color:var(--fc-neutral-ink);
+  border-color:var(--fc-neutral-border);
+}
+.fc-pill--enabled,
+.fc-pill--connected{
+  background:var(--fc-green-tint);
+  color:var(--fc-green-ink);
+  border-color:var(--fc-green-border);
+}
+.fc-pill--not-connected,
+.fc-pill--needs-config,
+.fc-pill--attention{
+  background:var(--fc-amber-tint);
+  color:var(--fc-amber-ink);
+  border-color:var(--fc-amber-border);
+}
+
+/* ---------- EMPTY ---------- */
+.fc-empty{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:48px 20px;color:var(--fc-text-2);text-align:center;
+  border:1px dashed var(--fc-border-strong);border-radius:var(--fc-r-lg);
+  background:linear-gradient(180deg, #FFFFFF, var(--fc-blue-tint));
+}
+.fc-empty svg{width:28px;height:28px;color:var(--fc-blue-base);opacity:.85;}
+.fc-empty strong{color:var(--fc-text);font-size:13px;font-weight:800;}
+.fc-empty p{margin:0;font-size:12px;max-width:340px;line-height:1.6;}
+
+/* ============================================================
+   MODAL — Details
+   ============================================================ */
+.fc-modal{
+  position:fixed;inset:0;z-index:300;
+  display:none;
+  align-items:center;justify-content:center;
+  padding:20px;
+}
+.fc-modal.is-open{display:flex;}
+.fc-modal__scrim{
+  position:absolute;inset:0;
+  background:rgba(15,27,61,0.55);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+  animation:fc-fade-in .2s var(--fc-ease);
+}
+.fc-modal__panel{
+  position:relative;
+  width:min(640px, 96vw);
+  max-height:min(88vh, 900px);
+  background:var(--fc-surface);
+  border-radius:var(--fc-r-lg);
+  box-shadow:var(--fc-shadow-lg);
+  display:flex;flex-direction:column;min-height:0;
+  overflow:hidden;
+  animation:fc-modal-in .22s var(--fc-ease);
+}
+@keyframes fc-modal-in{
+  from{opacity:0;transform:translateY(8px) scale(.985);}
+}
+@keyframes fc-fade-in{from{opacity:0;}}
+
+.fc-modal__head{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:16px 18px;
+  background:var(--fc-blue-grad);
+  color:#FFFFFF;
+  border-bottom:1px solid rgba(255,255,255,0.16);
+}
+.fc-modal__head-icon{
+  display:grid;place-items:center;
+  width:42px;height:42px;flex:0 0 auto;border-radius:var(--fc-r-sm);
+  background:rgba(255,255,255,0.22);color:#FFFFFF;
+  border:1px solid rgba(255,255,255,0.34);
+}
+.fc-modal__head-icon svg{width:20px;height:20px;}
+.fc-modal__title-block{min-width:0;flex:1 1 auto;}
+.fc-modal__title{margin:0;font-size:16px;font-weight:800;color:#FFFFFF;}
+.fc-modal__cat{
+  display:inline-block;margin-top:2px;
+  font-size:10.5px;font-weight:800;
+  color:rgba(255,255,255,0.82);text-transform:uppercase;letter-spacing:.06em;
+}
+.fc-modal__close{
+  flex:0 0 auto;
+  width:34px;height:34px;
+  border-radius:var(--fc-r-sm);
+  background:rgba(255,255,255,0.16);
+  color:#FFFFFF;
+  border:1px solid rgba(255,255,255,0.28);
+  cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;
+  transition:background-color .18s var(--fc-ease), border-color .18s var(--fc-ease);
+}
+.fc-modal__close:hover{background:rgba(255,255,255,0.26);border-color:rgba(255,255,255,0.48);}
+.fc-modal__close:focus-visible{outline:2px solid #FFFFFF;outline-offset:2px;}
+.fc-modal__close svg{width:16px;height:16px;}
+
+.fc-modal__body{
+  flex:1 1 auto;min-height:0;overflow:auto;
+  padding:18px;
+  display:flex;flex-direction:column;gap:14px;
+}
+
+/* Optional image area inside the modal — hidden when not provided */
+.fc-modal__img{
+  width:100%;
+  border-radius:var(--fc-r);
+  overflow:hidden;
+  border:1px solid var(--fc-border);
+  background:var(--fc-blue-tint);
+}
+.fc-modal__img img{
+  display:block;width:100%;height:auto;
+}
+
+.fc-modal__price{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 12px;border-radius:var(--fc-r-sm);
+  background:var(--fc-blue-tint);
+  border:1px solid var(--fc-blue-border);
+  color:var(--fc-blue-ink);
+  font-size:12.5px;font-weight:800;
+}
+.fc-modal__price small{
+  font-size:10.5px;font-weight:700;color:var(--fc-muted);
+  text-transform:uppercase;letter-spacing:.06em;
+}
+
+.fc-modal__section{display:flex;flex-direction:column;gap:3px;}
+.fc-modal__label{
+  font-size:10.5px;font-weight:800;color:var(--fc-blue-base);
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.fc-modal__text{
+  margin:0;font-size:13px;color:var(--fc-text-2);line-height:1.6;
+}
+
+.fc-modal__foot{
+  border-top:1px solid var(--fc-hairline);
+  padding:12px 18px;
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  background:var(--fc-surface);
+}
+
+/* ============================================================
+   TOASTS
+   ============================================================ */
+.fc-toasts{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  z-index:500;display:flex;flex-direction:column;gap:8px;align-items:center;
+  pointer-events:none;
+}
+.fc-toast{
+  pointer-events:auto;padding:11px 16px;border-radius:var(--fc-r-sm);
+  background:var(--fc-blue-grad);
+  color:#fff;font-size:12.5px;font-weight:600;
+  border:1px solid rgba(255,255,255,0.18);
+  box-shadow:var(--fc-shadow-lg);
+  display:inline-flex;align-items:center;gap:8px;
+  animation:fc-toast-in .24s var(--fc-ease);
+}
+@keyframes fc-toast-in{from{opacity:0;transform:translateY(8px);}}
+.fc-toast--ok{background:var(--fc-green-grad);}
+.fc-toast--warn{background:var(--fc-amber-grad);}
+.fc-toast--err{background:var(--fc-danger-grad);}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    transition-duration:.01ms !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<aside id="sidebar-container" aria-label="Sidebar"></aside>
+
+<div class="fc-shell">
+
+  <header class="fc-header" role="banner">
+    <button class="fc-btn fc-btn--ghost fc-btn--icon fc-header__mobile" type="button"
+            data-pb-action="open-mobile" aria-controls="pb-sidebar"
+            aria-expanded="false" aria-label="Open navigation">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" aria-hidden="true">
+        <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
+      </svg>
+    </button>
+
+    <div class="fc-header__title">
+      <div class="fc-crumbs">
+        <span>Profile Craft Studio</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+        <strong>Function Center</strong>
+      </div>
+      <h1 class="fc-h1">Function Center</h1>
+      <p class="fc-subtitle">
+        Add extra features to your website. Click "Details" for a plain-English explanation.
+      </p>
+    </div>
+
+    <div class="fc-header__spacer"></div>
+
+    <span class="fc-cart" aria-live="polite" title="Total cost of installed functions (demo)">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+        <path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/>
+      </svg>
+      <span id="fc-cart-count">Installed: 0</span>
+      <span aria-hidden="true">·</span>
+      <span id="fc-cart-total">Total: $0</span>
+    </span>
+
+    <a class="fc-btn fc-btn--ghost fc-btn--sm" href="builder.html" aria-label="Back to Website Builder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+      Back to Builder
+    </a>
+  </header>
+
+  <main class="fc-main" role="main">
+
+    <section class="fc-toolbar" aria-label="Search and view controls">
+      <div class="fc-search" id="fc-search-wrap" role="search">
+        <svg class="fc-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>
+        </svg>
+        <input type="search" id="fc-search"
+               placeholder="Search functions by name or description…"
+               aria-label="Search functions by name or description" autocomplete="off" />
+        <button class="fc-search__clear" type="button" id="fc-search-clear"
+                aria-label="Clear search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6L6 18"/><path d="M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="fc-view" role="group" aria-label="Catalog view">
+        <button type="button" data-view="grid" aria-pressed="true" aria-label="Grid view">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          Grid
+        </button>
+        <button type="button" data-view="list" aria-pressed="false" aria-label="List view">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
+          </svg>
+          List
+        </button>
+      </div>
+    </section>
+
+    <nav class="fc-categories" id="fc-categories" aria-label="Function categories">
+      <span class="fc-categories__label">Categories</span>
+    </nav>
+
+    <section class="fc-catalog" id="fc-catalog" data-view="grid" aria-live="polite"></section>
+
+    <div class="fc-empty" id="fc-empty" hidden>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>
+      </svg>
+      <strong>No functions match</strong>
+      <p>Try a different category, or clear the search to see all available functions.</p>
+    </div>
+
+  </main>
+</div>
+
+<!-- ============================================================
+     DETAILS MODAL — populated dynamically per function
+     ============================================================ -->
+<div class="fc-modal" id="fc-modal" role="dialog" aria-modal="true"
+     aria-labelledby="fc-modal-title" aria-hidden="true">
+  <div class="fc-modal__scrim" data-close-modal></div>
+
+  <div class="fc-modal__panel">
+    <header class="fc-modal__head">
+      <div class="fc-modal__head-icon" id="fc-modal-icon" aria-hidden="true"></div>
+      <div class="fc-modal__title-block">
+        <h3 class="fc-modal__title" id="fc-modal-title">Function</h3>
+        <span class="fc-modal__cat" id="fc-modal-cat">Category</span>
+      </div>
+      <button type="button" class="fc-modal__close" data-close-modal aria-label="Close details">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6L6 18"/><path d="M6 6l12 12"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="fc-modal__body" id="fc-modal-body"></div>
+
+    <footer class="fc-modal__foot" id="fc-modal-foot"></footer>
+  </div>
+</div>
+
+<div class="fc-toasts" id="fc-toasts" aria-live="polite"></div>
+
+<!-- SIDEBAR LOADER -->
+<script>
+(function () {
+  function mount() {
+    fetch('sidebar.html', { credentials: 'same-origin' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.text();
+      })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        if (!document.getElementById('pb-sidebar-styles')) {
+          var s = doc.getElementById('pb-sidebar-styles');
+          if (s) document.head.appendChild(document.importNode(s, true));
+        }
+        var fragment = doc.querySelector('[data-pb-sidebar-root]');
+        if (!fragment) return;
+        if (!document.querySelector('[data-pb-sidebar-root]')) {
+          document.getElementById('sidebar-container')
+            .appendChild(document.importNode(fragment, true));
+        }
+        var src = doc.getElementById('pb-sidebar-script');
+        if (src && !document.getElementById('pb-sidebar-script-runtime')) {
+          var runtime = document.createElement('script');
+          runtime.id = 'pb-sidebar-script-runtime';
+          runtime.textContent = src.textContent;
+          document.body.appendChild(runtime);
+        }
+        if (window.PBSidebar) {
+          window.PBSidebar.init();
+          try { window.PBSidebar.setActive('function-center'); } catch (e) {}
+        }
+      })
+      .catch(function (err) {
+        console.warn('[functionCenter] sidebar load failed:', err);
+        var m = document.getElementById('sidebar-container');
+        if (m) {
+          m.innerHTML =
+            '<p style="padding:12px 18px;font:12px system-ui;color:#b42318;' +
+            'border:1px solid #f7d2cc;background:#fdecec;border-radius:6px;margin:12px">' +
+            'Sidebar could not be loaded. Serve this page from a local server ' +
+            '(not file://) and refresh.</p>';
+        }
+      });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mount);
+  } else { mount(); }
+})();
+</script>
+
+<!-- STICKY HEADER SCROLL STATE -->
+<script>
+(function () {
+  var header = document.querySelector('.fc-header');
+  if (!header) return;
+
+  var THRESHOLD = 16;
+  var isScrolled = false;
+  var ticking = false;
+
+  function readTop() {
+    return window.scrollY || window.pageYOffset || document.documentElement.scrollTop || 0;
+  }
+  function apply(scrolled) {
+    if (scrolled === isScrolled) return;
+    isScrolled = scrolled;
+    header.classList.toggle('is-scrolled', scrolled);
+  }
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    window.requestAnimationFrame(function () {
+      ticking = false;
+      apply(readTop() > THRESHOLD);
+    });
+  }
+  function init() { apply(readTop() > THRESHOLD); }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init, { once: true });
+  } else { init(); }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('pagehide', function () {
+    window.removeEventListener('scroll', onScroll);
+  });
+})();
+</script>
+
+<!-- FUNCTION CENTER LOGIC -->
+<script>
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------
+     CATALOG — same ids / categories / icons as before.
+     New per function:
+       - `price`   → demo currency value used in the total
+       - `details` → plain-English explanation shown in the modal
+                     (optional `image` renders when present)
+     ------------------------------------------------------------ */
+  var CATALOG = [
+    { id: 'booking-system', name: 'Booking System', category: 'business',
+      price: 9,
+      desc: 'Lets visitors book a time with you straight from your website.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M3 11h18"/><path d="M8 15h2"/></svg>',
+      details: {
+        what: 'Adds a small booking tool to your site where visitors can pick a day and time that suits them.',
+        why: 'You stop juggling messages and phone calls — bookings come to you in one place.',
+        see: 'Visitors see a calendar with your open slots and a short form to confirm the appointment.',
+        setup: 'Install the function, then choose your time zone and how long each appointment should last.',
+        need: 'An email address to receive booking confirmations, and a general idea of when you are available.',
+        limits: 'Requests and schedules are managed inside the Booking System itself, not on this page.'
+      }
+    },
+    { id: 'schedule-manager', name: 'Schedule Manager', category: 'business',
+      price: 4,
+      desc: 'Set the hours you are available so other functions know when to offer slots.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>',
+      details: {
+        what: 'Lets you set your normal working hours so other functions (like Booking System) show the right times.',
+        why: 'You fill in your hours once, and every function that needs them can find them.',
+        see: 'Visitors do not see this function directly — it quietly supports the others.',
+        setup: 'Install it and set the start and end of your working day.',
+        need: 'Just your normal working hours.',
+        limits: 'This function only provides the hours to other functions.'
+      }
+    },
+    { id: 'order-request', name: 'Order Request', category: 'business',
+      price: 6,
+      desc: 'Let visitors send you an order or price request without leaving the page.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M3 12h18"/><path d="M3 18h10"/></svg>',
+      details: {
+        what: 'Adds a simple form where visitors can describe what they want and send it to you.',
+        why: 'Visitors who are interested but not ready to buy can still reach you easily.',
+        see: 'Visitors see a small form with a message box and a send button.',
+        setup: 'Install it and enter the email address where you want to receive requests.',
+        need: 'An email address for receiving orders.',
+        limits: 'Orders are sent as messages — no payment is taken on the website.'
+      }
+    },
+
+    { id: 'dynamic-calculator', name: 'Dynamic Calculator', category: 'interactive',
+      price: 8,
+      desc: 'Give visitors a small tool to estimate prices or fees on your site.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 7h8"/><path d="M8 12h.01"/><path d="M12 12h.01"/><path d="M16 12h.01"/><path d="M8 16h.01"/><path d="M12 16h.01"/><path d="M16 16h.01"/></svg>',
+      details: {
+        what: 'Adds an interactive calculator where visitors enter a few details and see an instant estimate.',
+        why: 'Visitors get a clear idea of cost without contacting you first.',
+        see: 'Visitors see a set of fields and a live total that updates as they type.',
+        setup: 'Install it, choose the currency, and describe the pricing rules in the notes field.',
+        need: 'Your currency and a clear idea of how you want to price your work.',
+        limits: 'The calculator shows estimates only — no real invoices are created.'
+      }
+    },
+    { id: 'interactive-gallery', name: 'Interactive Gallery', category: 'interactive',
+      price: 5,
+      desc: 'Show your images in a gallery that visitors can filter and browse.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 16l-5-5-9 9"/></svg>',
+      details: {
+        what: 'Turns your gallery section into an interactive photo gallery, so visitors can look through images.',
+        why: 'A gallery that visitors can explore keeps them on your site for longer.',
+        see: 'Visitors see your images in a tidy grid they can filter by category.',
+        setup: 'Install it, then add the images you want to show through the gallery section.',
+        need: 'Images already uploaded to your site.',
+        limits: 'The images are the ones used by the Gallery section.'
+      }
+    },
+    { id: 'custom-buttons', name: 'Custom Interactive Buttons', category: 'interactive',
+      price: 3,
+      desc: 'Add small buttons that open a contact form, scroll to a section, or open a link.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="8" rx="4"/><path d="M8 12h4"/></svg>',
+      details: {
+        what: 'Lets you put one or two extra buttons on your homepage that do something useful when clicked.',
+        why: 'A clear button helps visitors take the next step, like getting in touch.',
+        see: 'Visitors see a button with your chosen label at the top of your site.',
+        setup: 'Install it, then choose the button label and what it should do.',
+        need: 'A short idea of what visitors should do after clicking.',
+        limits: 'Only one primary action per button.'
+      }
+    },
+
+    { id: 'super-contact', name: 'Super Contact', category: 'communication',
+      price: 7,
+      desc: 'Adds a floating contact button so visitors can reach you easily.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+      details: {
+        what: 'Places a small button in the corner of your website that stays visible as visitors scroll.',
+        why: 'Visitors can contact you from any page without searching for an email address.',
+        see: 'Visitors see a small round button with a message icon. Clicking it opens a simple form.',
+        setup: 'Install it and enter the email address where messages should arrive.',
+        need: 'An email address to receive messages.',
+        limits: 'Messages are sent to the email you provide.'
+      }
+    },
+    { id: 'inquiry-form', name: 'Inquiry Form', category: 'communication',
+      price: 5,
+      desc: 'Adds a short enquiry form so visitors can ask you about a project.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>',
+      details: {
+        what: 'Places a small form on your website where visitors can describe what they need and send it to you.',
+        why: 'A structured form makes it easier to reply and keep track of enquiries.',
+        see: 'Visitors see a short form with their name, email, and a message box.',
+        setup: 'Install it, then enter the email address where enquiries should arrive.',
+        need: 'An email address for receiving enquiries.',
+        limits: 'Enquiries are sent as messages — no bookings are created automatically.'
+      }
+    },
+    { id: 'social-links', name: 'Social Contact Links', category: 'communication',
+      price: 2,
+      desc: 'Show consistent links to your social accounts in the top of your site.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v3"/><path d="M12 18v3"/><path d="M3 12h3"/><path d="M18 12h3"/></svg>',
+      details: {
+        what: 'Adds small icons or links to your social accounts in the header of your website.',
+        why: 'Visitors can follow or contact you on the platform they already use.',
+        see: 'Visitors see your social links next to your site name.',
+        setup: 'Install it and paste the web address of each social account you want to show.',
+        need: 'The links to your social profiles.',
+        limits: 'Only the links you provide are shown.'
+      }
+    },
+
+    { id: 'cloud-data-binding', name: 'Cloud Data Binding', category: 'data',
+      price: 12,
+      desc: 'Pull live information from another service into a section of your website.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16a4 4 0 0 1 0-8 6 6 0 0 1 11.5-1A4 4 0 1 1 18 16z"/></svg>',
+      details: {
+        what: 'Lets a section of your website show content that comes from another service — for example a list of projects or products.',
+        why: 'Your website stays up to date without copying information by hand.',
+        see: 'Visitors see the section filled with the latest information from your chosen source.',
+        setup: 'Install it, then enter the web address of the data source and how often it should refresh.',
+        need: 'A data source from another service that you have permission to use.',
+        limits: 'Passwords and secret keys are entered in the Profile Craft service, never on this page.'
+      }
+    },
+    { id: 'data-connection', name: 'Data Connection', category: 'data',
+      price: 10,
+      desc: 'Save the details of where your website content should come from.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>',
+      details: {
+        what: 'Stores the address of a general data source so other functions (like Cloud Data Binding) can use it.',
+        why: 'You enter the source once, and other functions use it.',
+        see: 'Visitors do not see this function. It quietly connects other functions to your data.',
+        setup: 'Install it and choose where your data should come from.',
+        need: 'The service or file where your website content lives.',
+        limits: 'Only the connection details are stored — nothing is sent anywhere.'
+      }
+    },
+    { id: 'external-integration', name: 'External Integration', category: 'data',
+      price: 15,
+      desc: 'Connect your website to a tool you already use, like an automation service.',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M10 14L20 4"/><path d="M20 14v6H4V4h6"/></svg>',
+      details: {
+        what: 'Lets your website talk to another service you already use — for example to send new enquiries somewhere.',
+        why: 'You can keep using your favourite tools without copying information between them.',
+        see: 'Visitors do not see this function. It works quietly behind the scenes.',
+        setup: 'Install it and choose the service you want to connect to.',
+        need: 'An account with the service you want to connect to.',
+        limits: 'Sign-in details are entered in the Profile Craft service, never on this page.'
+      }
+    }
+  ];
+
+  var CATEGORY_META = {
+    all:           { label: 'All Functions',       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>' },
+    business:      { label: 'Business',            icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></svg>' },
+    interactive:   { label: 'Interactive',         icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg>' },
+    communication: { label: 'Communication',       icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>' },
+    data:          { label: 'Data & Integration',  icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.7 3.6 3 8 3s8-1.3 8-3V6"/><path d="M4 12v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg>' }
+  };
+
+  var CATEGORY_LABEL = {
+    business: 'Business Functions',
+    interactive: 'Interactive Functions',
+    communication: 'Communication',
+    data: 'Data & Integration'
+  };
+
+  /* ---------- In-memory only state (no persistence) ---------- */
+  var state = {
+    installed: [],         // array of installed function ids
+    filterCategory: 'all',
+    search: '',
+    view: 'grid'
+  };
+
+  function $(id){ return document.getElementById(id); }
+  function esc(s){
+    return String(s == null ? '' : s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+  function isInstalled(id){ return state.installed.indexOf(id) !== -1; }
+  function findFn(id){ return CATALOG.find(function (f) { return f.id === id; }); }
+  function totalPrice(){
+    return state.installed.reduce(function (sum, id) {
+      var fn = findFn(id);
+      return sum + (fn && typeof fn.price === 'number' ? fn.price : 0);
+    }, 0);
+  }
+
+  function toast(msg, kind) {
+    var root = $('fc-toasts');
+    if (!root) return;
+    var el = document.createElement('div');
+    el.className = 'fc-toast' + (kind ? ' fc-toast--' + kind : '');
+    el.setAttribute('role', 'status');
+    el.textContent = msg;
+    root.appendChild(el);
+    setTimeout(function () {
+      el.style.transition = 'opacity .25s ease, transform .25s ease';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(8px)';
+      setTimeout(function () { el.remove(); }, 260);
+    }, 2400);
+  }
+
+  function matchesSearch(fn) {
+    if (!state.search) return true;
+    var hay = (fn.name + ' ' + fn.desc + ' ' + fn.category).toLowerCase();
+    return hay.indexOf(state.search.toLowerCase()) !== -1;
+  }
+  function matchesCategory(fn) {
+    return state.filterCategory === 'all' || fn.category === state.filterCategory;
+  }
+  function visibleFunctions() {
+    return CATALOG.filter(function (fn) { return matchesSearch(fn) && matchesCategory(fn); });
+  }
+  function categoryCount(cat) {
+    return CATALOG.filter(function (fn) {
+      if (cat !== 'all' && fn.category !== cat) return false;
+      return matchesSearch(fn);
+    }).length;
+  }
+
+  function renderCart() {
+    var c = $('fc-cart-count');
+    var t = $('fc-cart-total');
+    if (c) c.textContent = 'Installed: ' + state.installed.length;
+    if (t) t.textContent = 'Total: $' + totalPrice();
+  }
+
+  function renderCategories() {
+    var nav = $('fc-categories');
+    if (!nav) return;
+    nav.querySelectorAll('.fc-cat').forEach(function (n) { n.remove(); });
+
+    Object.keys(CATEGORY_META).forEach(function (key) {
+      var meta = CATEGORY_META[key];
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'fc-cat';
+      btn.setAttribute('data-cat', key);
+      btn.setAttribute('aria-pressed', String(state.filterCategory === key));
+      btn.innerHTML =
+        '<span class="fc-cat__icon" aria-hidden="true">' + meta.icon + '</span>' +
+        '<span class="fc-cat__name">' + esc(meta.label) + '</span>' +
+        '<span class="fc-cat__count" aria-hidden="true">' + categoryCount(key) + '</span>';
+      btn.addEventListener('click', function () {
+        state.filterCategory = key;
+        renderCategories();
+        renderCatalog();
+      });
+      nav.appendChild(btn);
+    });
+  }
+
+  function pill(kind, text) {
+    var el = document.createElement('span');
+    el.className = 'fc-pill fc-pill--' + kind;
+    el.textContent = text;
+    return el;
+  }
+
+  function makePills(fn) {
+    var installed = isInstalled(fn.id);
+    var wrap = document.createElement('div');
+    wrap.className = 'fc-card__pills';
+    wrap.appendChild(pill(
+      installed ? 'installed' : 'uninstalled',
+      installed ? 'Installed' : 'Not installed'
+    ));
+    // Only show "Health not verified" if installed — no fabricated enabled/connected state.
+    if (installed) {
+      wrap.appendChild(pill('unknown', 'Health not verified'));
+    }
+    return wrap;
+  }
+
+  function makeActions(fn) {
+    var installed = isInstalled(fn.id);
+    var wrap = document.createElement('div');
+
+    var details = document.createElement('button');
+    details.type = 'button';
+    details.className = 'fc-btn fc-btn--ghost fc-btn--sm';
+    details.setAttribute('data-action', 'details');
+    details.setAttribute('aria-haspopup', 'dialog');
+    details.textContent = 'Details';
+    wrap.appendChild(details);
+
+    if (!installed) {
+      var install = document.createElement('button');
+      install.type = 'button';
+      install.className = 'fc-btn fc-btn--primary fc-btn--sm';
+      install.setAttribute('data-action', 'install');
+      install.textContent = 'Install';
+      wrap.appendChild(install);
+    } else {
+      var installedBtn = document.createElement('button');
+      installedBtn.type = 'button';
+      installedBtn.className = 'fc-btn fc-btn--ghost fc-btn--sm';
+      installedBtn.disabled = true;
+      installedBtn.textContent = 'Installed';
+      wrap.appendChild(installedBtn);
+    }
+    return wrap;
+  }
+
+  function renderCard(fn) {
+    var card = document.createElement('article');
+    card.className = 'fc-card';
+    card.setAttribute('data-category', fn.category);
+    card.setAttribute('data-id', fn.id);
+
+    var head = document.createElement('div');
+    head.className = 'fc-card__head';
+    var icon = document.createElement('div');
+    icon.className = 'fc-card__icon';
+    icon.innerHTML = fn.icon || '';
+    head.appendChild(icon);
+
+    var meta = document.createElement('div');
+    meta.className = 'fc-card__meta';
+    var name = document.createElement('h3');
+    name.className = 'fc-card__name';
+    name.textContent = fn.name;
+    meta.appendChild(name);
+    var cat = document.createElement('span');
+    cat.className = 'fc-card__category';
+    cat.textContent = CATEGORY_LABEL[fn.category] || fn.category;
+    meta.appendChild(cat);
+    head.appendChild(meta);
+    card.appendChild(head);
+
+    var desc = document.createElement('p');
+    desc.className = 'fc-card__desc';
+    desc.textContent = fn.desc;
+    card.appendChild(desc);
+
+    var price = document.createElement('div');
+    price.className = 'fc-card__price';
+    price.innerHTML = '$' + fn.price + ' <small>one-time</small>';
+    card.appendChild(price);
+
+    card.appendChild(makePills(fn));
+
+    var foot = document.createElement('div');
+    foot.className = 'fc-card__foot';
+    var actions = makeActions(fn);
+    while (actions.firstChild) foot.appendChild(actions.firstChild);
+    card.appendChild(foot);
+
+    return card;
+  }
+
+  function renderRow(fn) {
+    var row = document.createElement('article');
+    row.className = 'fc-row';
+    row.setAttribute('data-category', fn.category);
+    row.setAttribute('data-id', fn.id);
+
+    var icon = document.createElement('div');
+    icon.className = 'fc-row__icon';
+    icon.innerHTML = fn.icon || '';
+    row.appendChild(icon);
+
+    var main = document.createElement('div');
+    main.className = 'fc-row__main';
+    var name = document.createElement('h3');
+    name.className = 'fc-row__name';
+    name.textContent = fn.name;
+    main.appendChild(name);
+    var cat = document.createElement('span');
+    cat.className = 'fc-row__category';
+    cat.textContent = CATEGORY_LABEL[fn.category] || fn.category;
+    main.appendChild(cat);
+    row.appendChild(main);
+
+    var desc = document.createElement('div');
+    desc.className = 'fc-row__desc';
+    desc.textContent = fn.desc + ' · $' + fn.price;
+    row.appendChild(desc);
+
+    var side = document.createElement('div');
+    side.className = 'fc-row__side';
+
+    var pillsWrap = document.createElement('div');
+    pillsWrap.className = 'fc-row__pills';
+    var src = makePills(fn);
+    while (src.firstChild) pillsWrap.appendChild(src.firstChild);
+    side.appendChild(pillsWrap);
+
+    var actions = makeActions(fn);
+    var actWrap = document.createElement('div');
+    actWrap.className = 'fc-row__actions';
+    while (actions.firstChild) actWrap.appendChild(actions.firstChild);
+    side.appendChild(actWrap);
+    row.appendChild(side);
+    return row;
+  }
+
+  function renderCatalog() {
+    var catalog = $('fc-catalog');
+    var empty = $('fc-empty');
+    if (!catalog) return;
+    catalog.setAttribute('data-view', state.view);
+    var visible = visibleFunctions();
+    catalog.innerHTML = '';
+    if (!visible.length) { if (empty) empty.hidden = false; return; }
+    if (empty) empty.hidden = true;
+    if (state.view === 'list') {
+      visible.forEach(function (fn) { catalog.appendChild(renderRow(fn)); });
+    } else {
+      visible.forEach(function (fn) { catalog.appendChild(renderCard(fn)); });
+    }
+  }
+
+  /* ---------- Install flow ---------- */
+  function install(fn) {
+    if (isInstalled(fn.id)) return;
+    state.installed.push(fn.id);
+    renderCatalog();
+    renderCategories();
+    renderCart();
+    // Alert the customer to complete payment (demo — no real transaction).
+    window.alert(
+      'Added to your order: ' + fn.name + ' ($' + fn.price + ').\n\n' +
+      'Your total is now $' + totalPrice() + '.\n\n' +
+      'Please complete your payment to activate this function.'
+    );
+  }
+
+  /* ---------- Details modal ---------- */
+  var lastFocused = null;
+
+  function openDetailsModal(fn) {
+    var modal = $('fc-modal');
+    if (!modal) return;
+    lastFocused = document.activeElement;
+
+    $('fc-modal-title').textContent = fn.name;
+    $('fc-modal-cat').textContent = CATEGORY_LABEL[fn.category] || fn.category;
+    $('fc-modal-icon').innerHTML = fn.icon || '';
+
+    var body = $('fc-modal-body');
+    var html = '';
+
+    // Optional image — only renders when a per-function image is provided.
+    if (fn.details && fn.details.image) {
+      html += '<div class="fc-modal__img">' +
+        '<img src="' + esc(fn.details.image) + '" alt="' + esc(fn.name) + ' preview">' +
+      '</div>';
+    }
+
+    html += '<div class="fc-modal__price">' +
+      '$' + fn.price + ' <small>one-time</small>' +
+    '</div>';
+
+    var sections = [
+      { label: 'What it does',        text: fn.details.what  },
+      { label: 'Why it helps',        text: fn.details.why   },
+      { label: 'What visitors see',   text: fn.details.see   },
+      { label: 'How to set it up',    text: fn.details.setup },
+      { label: 'What you need',       text: fn.details.need  },
+      { label: 'Limitations',         text: fn.details.limits}
+    ].filter(function (s) { return s.text; });
+
+    sections.forEach(function (s) {
+      html += '<div class="fc-modal__section">' +
+        '<span class="fc-modal__label">' + esc(s.label) + '</span>' +
+        '<p class="fc-modal__text">' + esc(s.text) + '</p>' +
+      '</div>';
+    });
+
+    body.innerHTML = html;
+
+    // Footer: install (if not yet), or just a Close button.
+    var foot = $('fc-modal-foot');
+    foot.innerHTML = '';
+
+    var closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.className = 'fc-btn fc-btn--ghost fc-btn--sm';
+    closeBtn.textContent = 'Close';
+    closeBtn.setAttribute('data-close-modal', '');
+    foot.appendChild(closeBtn);
+
+    var sp = document.createElement('div');
+    sp.style.flex = '1 1 auto';
+    foot.appendChild(sp);
+
+    if (!isInstalled(fn.id)) {
+      var inst = document.createElement('button');
+      inst.type = 'button';
+      inst.className = 'fc-btn fc-btn--primary fc-btn--sm';
+      inst.textContent = 'Install';
+      inst.setAttribute('data-action', 'install');
+      inst.setAttribute('data-id', fn.id);
+      foot.appendChild(inst);
+    }
+
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    var closeEl = modal.querySelector('.fc-modal__close');
+    if (closeEl) closeEl.focus();
+  }
+
+  function closeDetailsModal() {
+    var modal = $('fc-modal');
+    if (!modal) return;
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    if (lastFocused && typeof lastFocused.focus === 'function') {
+      try { lastFocused.focus(); } catch (e) {}
+    }
+    lastFocused = null;
+  }
+
+  /* ---------- Events ---------- */
+  function onCatalogClick(e) {
+    var host = e.target.closest('[data-id]');
+    if (!host) return;
+    var id = host.getAttribute('data-id');
+    var fn = findFn(id);
+    if (!fn) return;
+
+    if (e.target.closest('[data-action="install"]')) {
+      install(fn);
+      return;
+    }
+    if (e.target.closest('[data-action="details"]')) {
+      openDetailsModal(fn);
+      return;
+    }
+  }
+
+  function onModalClick(e) {
+    if (e.target.closest('[data-close-modal]')) {
+      closeDetailsModal();
+      return;
+    }
+    var installBtn = e.target.closest('[data-action="install"]');
+    if (installBtn) {
+      var id = installBtn.getAttribute('data-id');
+      var fn = findFn(id);
+      if (fn) {
+        install(fn);
+        closeDetailsModal();
+      }
+    }
+  }
+
+  function setupView() {
+    document.querySelectorAll('[data-view]').forEach(function (btn) {
+      if (btn.classList.contains('fc-catalog')) return;
+      btn.addEventListener('click', function () {
+        var v = btn.getAttribute('data-view');
+        if (v !== 'grid' && v !== 'list') return;
+        state.view = v;
+        document.querySelectorAll('[data-view]').forEach(function (b) {
+          if (b.classList.contains('fc-catalog')) return;
+          b.setAttribute('aria-pressed', String(b === btn));
+        });
+        renderCatalog();
+      });
+    });
+  }
+
+  function setupSearch() {
+    var input = $('fc-search');
+    var wrap = $('fc-search-wrap');
+    var clear = $('fc-search-clear');
+    if (!input) return;
+    function updateWrap(){ if (wrap) wrap.classList.toggle('has-value', input.value.length > 0); }
+    input.addEventListener('input', function () {
+      state.search = input.value;
+      updateWrap();
+      renderCategories();
+      renderCatalog();
+    });
+    if (clear) {
+      clear.addEventListener('click', function () {
+        input.value = '';
+        state.search = '';
+        updateWrap();
+        renderCategories();
+        renderCatalog();
+        input.focus();
+      });
+    }
+  }
+
+  function boot() {
+    renderCategories();
+    renderCatalog();
+    renderCart();
+
+    var catalog = $('fc-catalog');
+    if (catalog) catalog.addEventListener('click', onCatalogClick);
+
+    var modal = $('fc-modal');
+    if (modal) {
+      modal.addEventListener('click', onModalClick);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal && modal.classList.contains('is-open')) {
+        closeDetailsModal();
+      }
+    });
+
+    setupView();
+    setupSearch();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+
+</body>
+</html>
