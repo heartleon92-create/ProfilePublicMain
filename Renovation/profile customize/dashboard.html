@@ -1,0 +1,2532 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Dashboard — Profile Craft Studio</title>
+
+<style>
+  /* ============================================================
+   PROFILE CRAFT STUDIO · DASHBOARD
+   Premium RGBA Glassmorphism — CSS only
+   Scoped with .pc-* prefixes. Preserves all existing selectors.
+   ============================================================ */
+
+:root{
+  /* Surfaces & tints */
+  --pc-bg:#F3F6FC;
+  --pc-bg-grad-1:rgba(225,237,255,.72);
+  --pc-bg-grad-2:rgba(243,246,252,.9);
+
+  --pc-glass:rgba(255,255,255,.76);
+  --pc-glass-hi:rgba(255,255,255,.90);
+  --pc-glass-soft:rgba(225,237,255,.58);
+  --pc-glass-tint-blue:rgba(224,236,255,.55);
+  --pc-glass-tint-indigo:rgba(230,232,255,.55);
+  --pc-glass-tint-cyan:rgba(220,242,255,.55);
+  --pc-glass-tint-amber:rgba(255,244,222,.65);
+
+  /* Border & line */
+  --pc-border:rgba(148,177,230,.24);
+  --pc-border-strong:rgba(118,150,215,.38);
+  --pc-border-soft:rgba(148,177,230,.16);
+  --pc-hairline:rgba(148,177,230,.18);
+
+  /* Text */
+  --pc-text:#17233D;
+  --pc-text-2:#3E4E6E;
+  --pc-muted:#71819F;
+
+  /* Brand accents */
+  --pc-primary:#315EFB;
+  --pc-primary-hover:#2447D6;
+  --pc-primary-ink:#1B3AA8;
+  --pc-primary-soft:rgba(49,94,251,.10);
+  --pc-primary-soft-2:rgba(49,94,251,.16);
+  --pc-sky:#63B8FF;
+  --pc-indigo:#5B62E8;
+  --pc-cyan:#3FB7E0;
+
+  /* Semantic */
+  --pc-success:#0E8F55;
+  --pc-success-soft:rgba(14,143,85,.10);
+  --pc-warn:#B5751A;
+  --pc-warn-soft:rgba(181,117,26,.12);
+  --pc-danger:#B9372A;
+  --pc-danger-soft:rgba(185,55,42,.10);
+
+  /* Ring / progress */
+  --pc-ring-track:rgba(148,177,230,.22);
+
+  /* Radii */
+  --pc-r-xs:7px; --pc-r-sm:10px; --pc-r:12px; --pc-r-lg:16px; --pc-r-xl:22px;
+
+  /* Shadows */
+  --pc-shadow-sm:0 4px 14px rgba(41,72,135,.06), 0 1px 2px rgba(41,72,135,.05);
+  --pc-shadow:0 8px 24px rgba(41,72,135,.07), 0 2px 6px rgba(41,72,135,.05);
+  --pc-shadow-hover:0 14px 34px rgba(41,72,135,.12), 0 4px 10px rgba(41,72,135,.08);
+  --pc-shadow-lg:0 26px 52px -28px rgba(41,72,135,.32), 0 6px 14px -6px rgba(41,72,135,.10);
+
+  /* Layout */
+  --pc-sidebar-w:282px;
+  --pc-sidebar-w-collapsed:88px;
+  --pc-ease:cubic-bezier(.4,0,.2,1);
+
+  /* Font */
+  --pc-font:"Myanmar Text","Noto Sans Myanmar","Padauk","Pyidaungsu",
+            -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+            "Helvetica Neue",Arial,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+
+body{
+  font-family:var(--pc-font);
+  font-size:14px;
+  line-height:1.55;
+  color:var(--pc-text);
+  background:
+    radial-gradient(1200px 600px at 12% -8%, rgba(99,184,255,.16), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(91,98,232,.14), transparent 65%),
+    linear-gradient(180deg, var(--pc-bg) 0%, #EEF3FB 100%);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+
+#sidebar-container{display:contents;}
+
+/* ============================================================
+   SHELL
+   ============================================================ */
+.pc-shell{
+  min-height:100vh;
+  padding-inline-start:var(--pc-sidebar-w);
+  transition:padding-inline-start .28s var(--pc-ease);
+  display:flex;
+  flex-direction:column;
+}
+html.pb-sidebar-collapsed .pc-shell{padding-inline-start:var(--pc-sidebar-w-collapsed);}
+@media (max-width:1023px){
+  .pc-shell,
+  html.pb-sidebar-collapsed .pc-shell{padding-inline-start:0;}
+}
+
+/* ============================================================
+   TOP BAR (glass)
+   ============================================================ */
+.pc-topbar{
+  position:sticky;top:0;z-index:60;
+  display:flex;align-items:center;gap:12px;
+  padding:12px 22px;
+  background:linear-gradient(180deg, rgba(255,255,255,.88) 0%, rgba(255,255,255,.72) 100%);
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--pc-hairline);
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 6px 20px -12px rgba(41,72,135,.16);
+}
+.pc-topbar__mobile{display:none;}
+@media (max-width:767.98px){ .pc-topbar__mobile{display:inline-flex;} }
+
+.pc-crumbs{
+  display:flex;align-items:center;gap:6px;
+  font-size:12.5px;color:var(--pc-muted);
+}
+.pc-crumbs svg{width:14px;height:14px;color:var(--pc-muted);}
+.pc-crumbs strong{color:var(--pc-text);font-weight:700;}
+
+.pc-topbar__spacer{flex:1 1 auto;}
+
+/* Shared button base */
+.pc-icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:38px;height:38px;
+  border:1px solid var(--pc-border);
+  border-radius:var(--pc-r-sm);
+  background:linear-gradient(180deg, var(--pc-glass-hi), var(--pc-glass));
+  color:var(--pc-text-2);
+  cursor:pointer;position:relative;
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 2px 6px -4px rgba(41,72,135,.18);
+  transition:background-color .2s var(--pc-ease),
+             border-color .2s var(--pc-ease),
+             color .2s var(--pc-ease),
+             box-shadow .2s var(--pc-ease),
+             transform .18s var(--pc-ease);
+}
+.pc-icon-btn:hover{
+  background:linear-gradient(180deg, #FFFFFF, rgba(232,241,255,.9));
+  border-color:var(--pc-border-strong);
+  color:var(--pc-primary-ink);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset, 0 6px 14px -8px rgba(49,94,251,.35);
+}
+.pc-icon-btn:focus-visible{outline:2px solid var(--pc-primary);outline-offset:2px;}
+.pc-icon-btn svg{width:18px;height:18px;}
+.pc-icon-btn[aria-expanded="true"]{
+  background:var(--pc-primary-soft);
+  border-color:rgba(49,94,251,.28);
+  color:var(--pc-primary-ink);
+}
+
+.pc-dot{
+  position:absolute;top:8px;right:9px;width:7px;height:7px;border-radius:50%;
+  background:var(--pc-danger);box-shadow:0 0 0 2px #fff;
+  display:none;
+}
+.pc-dot.is-visible{display:block;}
+
+/* Language dropdown -------------------------------------------- */
+.pc-lang{position:relative;}
+.pc-lang__trigger{
+  display:inline-flex;align-items:center;gap:6px;
+  height:38px;padding:0 10px;
+  border:1px solid var(--pc-border);
+  border-radius:var(--pc-r-sm);
+  background:linear-gradient(180deg, var(--pc-glass-hi), var(--pc-glass));
+  color:var(--pc-text);
+  cursor:pointer;
+  font-family:inherit;font-size:12.5px;font-weight:600;
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 2px 6px -4px rgba(41,72,135,.18);
+  transition:background-color .2s var(--pc-ease),
+             border-color .2s var(--pc-ease),
+             color .2s var(--pc-ease),
+             box-shadow .2s var(--pc-ease);
+}
+.pc-lang__trigger:hover{
+  background:linear-gradient(180deg, #FFFFFF, rgba(232,241,255,.9));
+  border-color:var(--pc-border-strong);
+  color:var(--pc-primary-ink);
+}
+.pc-lang__trigger:focus-visible{outline:2px solid var(--pc-primary);outline-offset:2px;}
+.pc-lang__trigger svg{width:16px;height:16px;color:var(--pc-text-2);flex:0 0 auto;}
+.pc-lang__trigger .pc-lang__chev{width:12px;height:12px;color:var(--pc-muted);transition:transform .2s var(--pc-ease);}
+.pc-lang[data-open="true"] .pc-lang__chev{transform:rotate(180deg);}
+
+.pc-lang__menu{
+  position:absolute;
+  top:calc(100% + 6px);
+  right:0;
+  min-width:170px;
+  margin:0;padding:6px;
+  list-style:none;
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(250,252,255,.94));
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border:1px solid var(--pc-border);
+  border-radius:var(--pc-r);
+  box-shadow:var(--pc-shadow-lg);
+  z-index:80;
+}
+.pc-lang__menu[hidden]{display:none;}
+.pc-lang__menu li{margin:0;}
+.pc-lang__menu button{
+  display:flex;align-items:center;width:100%;
+  padding:8px 10px;
+  border:0;border-radius:var(--pc-r-xs);
+  background:transparent;color:var(--pc-text);
+  font-family:inherit;font-size:13px;font-weight:500;text-align:left;
+  cursor:pointer;
+  transition:background-color .18s var(--pc-ease), color .18s var(--pc-ease);
+}
+.pc-lang__menu button:hover,
+.pc-lang__menu button:focus-visible{
+  background:var(--pc-primary-soft);color:var(--pc-primary-ink);outline:none;
+}
+.pc-lang__menu button[aria-selected="true"]{
+  background:var(--pc-primary-soft);
+  color:var(--pc-primary-ink);
+  font-weight:700;
+}
+.pc-lang__menu button[aria-selected="true"]::after{
+  content:"✓";margin-inline-start:auto;font-size:12px;
+}
+
+/* Notifications dropdown ---------------------------------------- */
+.pc-notif{position:relative;}
+.pc-notif__panel{
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  width:min(340px, calc(100vw - 32px));
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,251,255,.94));
+  backdrop-filter:saturate(180%) blur(16px);
+  -webkit-backdrop-filter:saturate(180%) blur(16px);
+  border:1px solid var(--pc-border);
+  border-radius:var(--pc-r-lg);
+  box-shadow:var(--pc-shadow-lg);
+  z-index:80;
+  overflow:hidden;
+}
+.pc-notif__panel[hidden]{display:none;}
+.pc-notif__head{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 14px;
+  border-bottom:1px solid var(--pc-hairline);
+  background:linear-gradient(180deg, rgba(255,255,255,.6), transparent);
+}
+.pc-notif__title{font-size:13px;font-weight:800;margin:0;color:var(--pc-text);}
+.pc-notif__count{
+  margin-inline-start:auto;
+  font-size:11px;font-weight:700;
+  color:var(--pc-muted);
+}
+.pc-notif__list{
+  list-style:none;margin:0;padding:6px;
+  max-height:320px;overflow:auto;
+}
+.pc-notif__item{
+  display:flex;gap:10px;padding:10px;
+  border-radius:var(--pc-r);
+  transition:background-color .18s var(--pc-ease);
+}
+.pc-notif__item:hover{background:var(--pc-glass-soft);}
+.pc-notif__dot{
+  width:8px;height:8px;border-radius:50%;flex:0 0 auto;margin-top:6px;
+  background:var(--pc-primary);
+  box-shadow:0 0 0 3px var(--pc-primary-soft);
+}
+.pc-notif__item[data-unread="false"] .pc-notif__dot{
+  background:var(--pc-muted);
+  box-shadow:0 0 0 3px rgba(113,129,159,.12);
+}
+.pc-notif__body{min-width:0;flex:1 1 auto;}
+.pc-notif__item-title{font-size:12.5px;font-weight:700;color:var(--pc-text);}
+.pc-notif__item-desc{font-size:12px;color:var(--pc-text-2);margin:2px 0 0;}
+.pc-notif__item-time{font-size:11px;color:var(--pc-muted);margin-top:2px;}
+.pc-notif__empty{
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  padding:26px 14px;color:var(--pc-muted);text-align:center;
+}
+.pc-notif__empty svg{width:24px;height:24px;opacity:.7;}
+.pc-notif__empty strong{color:var(--pc-text);font-size:13px;font-weight:700;}
+.pc-notif__empty p{margin:0;font-size:12px;}
+
+/* User chip */
+.pc-user{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:4px 10px 4px 4px;
+  border:1px solid var(--pc-border);
+  border-radius:999px;
+  background:linear-gradient(180deg, var(--pc-glass-hi), var(--pc-glass));
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 2px 6px -4px rgba(41,72,135,.18);
+}
+.pc-user__avatar{
+  display:grid;place-items:center;
+  width:30px;height:30px;border-radius:50%;
+  background:linear-gradient(145deg,#8EC5FF,#63B8FF);
+  color:#0b2c53;font-size:11px;font-weight:800;
+  box-shadow:0 2px 6px -2px rgba(41,72,135,.35);
+}
+.pc-user__name{
+  font-size:12.5px;font-weight:600;
+  max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+  color:var(--pc-text);
+}
+@media (max-width:719.98px){ .pc-user__name{display:none;} }
+
+/* ============================================================
+   MAIN GRID
+   ============================================================ */
+.pc-main{
+  flex:1 1 auto;
+  padding:22px;
+  display:grid;
+  gap:18px;
+  grid-template-columns:minmax(0,1fr) 340px;
+  align-items:start;
+  max-width:1480px;
+  width:100%;
+  margin:0 auto;
+}
+@media (max-width:1199.98px){ .pc-main{grid-template-columns:minmax(0,1fr);} }
+@media (max-width:767.98px){ .pc-main{padding:14px;gap:12px;} }
+
+.pc-col{display:flex;flex-direction:column;gap:18px;min-width:0;}
+
+/* ============================================================
+   CARD SHELL — Glass surface
+   ============================================================ */
+.pc-card{
+  position:relative;
+  background:linear-gradient(180deg, var(--pc-glass-hi) 0%, var(--pc-glass) 100%);
+  border:1px solid var(--pc-border);
+  border-radius:var(--pc-r-lg);
+  box-shadow:var(--pc-shadow-sm);
+  overflow:hidden;
+  backdrop-filter:saturate(160%) blur(14px);
+  -webkit-backdrop-filter:saturate(160%) blur(14px);
+  transition:box-shadow .22s var(--pc-ease), border-color .22s var(--pc-ease), transform .22s var(--pc-ease);
+}
+.pc-card::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  border-radius:inherit;
+  background:linear-gradient(180deg, rgba(255,255,255,.55), rgba(255,255,255,0) 45%);
+  opacity:.7;
+  z-index:0;
+}
+.pc-card > *{position:relative;z-index:1;}
+
+.pc-card__head{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:16px 18px;
+  border-bottom:1px solid var(--pc-hairline);
+  background:linear-gradient(180deg, rgba(255,255,255,.45), transparent);
+}
+.pc-card__title{
+  margin:0;font-size:14px;font-weight:800;letter-spacing:-.005em;
+  color:var(--pc-text);
+}
+.pc-card__sub{margin:2px 0 0;font-size:12px;color:var(--pc-muted);}
+.pc-card__actions{margin-inline-start:auto;display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+.pc-card__body{padding:16px 18px;}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.pc-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  padding:9px 14px;
+  border-radius:var(--pc-r-sm);
+  border:1px solid transparent;
+  font-family:inherit;font-size:13px;font-weight:600;line-height:1.2;
+  cursor:pointer;white-space:nowrap;
+  transition:background-color .2s var(--pc-ease),
+             color .2s var(--pc-ease),
+             border-color .2s var(--pc-ease),
+             box-shadow .2s var(--pc-ease),
+             transform .14s var(--pc-ease);
+}
+.pc-btn:active{transform:translateY(1px);}
+.pc-btn:focus-visible{outline:2px solid var(--pc-primary);outline-offset:2px;}
+.pc-btn svg{width:16px;height:16px;}
+.pc-btn--primary{
+  background:linear-gradient(180deg, #4B72FF 0%, var(--pc-primary) 100%);
+  color:#fff;
+  box-shadow:0 1px 0 rgba(255,255,255,.35) inset, 0 6px 16px -8px rgba(49,94,251,.6);
+}
+.pc-btn--primary:hover{
+  background:linear-gradient(180deg, #3F66FF 0%, var(--pc-primary-hover) 100%);
+  box-shadow:0 1px 0 rgba(255,255,255,.35) inset, 0 10px 22px -10px rgba(49,94,251,.7);
+}
+.pc-btn--ghost{
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,251,255,.9));
+  color:var(--pc-text);
+  border-color:var(--pc-border);
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 2px 6px -4px rgba(41,72,135,.18);
+}
+.pc-btn--ghost:hover{
+  background:linear-gradient(180deg, #FFFFFF, rgba(232,241,255,.9));
+  border-color:var(--pc-border-strong);
+  color:var(--pc-primary-ink);
+}
+.pc-btn--danger-ghost{
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,246,245,.9));
+  color:var(--pc-danger);
+  border-color:rgba(185,55,42,.28);
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 2px 6px -4px rgba(185,55,42,.18);
+}
+.pc-btn--danger-ghost:hover{
+  background:linear-gradient(180deg, #FFF6F5, var(--pc-danger-soft));
+  border-color:rgba(185,55,42,.45);
+}
+.pc-btn--sm{padding:7px 11px;font-size:12px;border-radius:8px;}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.pc-hero{
+  position:relative;
+  padding:26px 26px 24px;
+  border-radius:var(--pc-r-xl);
+  border:1px solid var(--pc-border);
+  background:
+    radial-gradient(900px 280px at 90% -20%, rgba(99,184,255,.22), transparent 62%),
+    radial-gradient(600px 200px at 0% 110%, rgba(91,98,232,.14), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.92) 0%, rgba(243,248,255,.78) 100%);
+  box-shadow:var(--pc-shadow), 0 1px 0 rgba(255,255,255,.9) inset;
+  backdrop-filter:saturate(160%) blur(12px);
+  -webkit-backdrop-filter:saturate(160%) blur(12px);
+  overflow:hidden;
+}
+.pc-hero::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(49,94,251,.055) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(49,94,251,.055) 1px,transparent 1px);
+  background-size:26px 26px;
+  mask-image:radial-gradient(620px 300px at 92% 0%, black, transparent 72%);
+  -webkit-mask-image:radial-gradient(620px 300px at 92% 0%, black, transparent 72%);
+  opacity:.5;
+}
+.pc-hero > *{position:relative;z-index:1;}
+
+.pc-hero__title{
+  margin:8px 0 8px;
+  font-size:22px;font-weight:800;letter-spacing:-.02em;
+  color:var(--pc-text);
+  line-height:1.25;
+}
+.pc-hero__title span{
+  color:var(--pc-primary);
+}
+.pc-hero__text{
+  margin:0;
+  font-size:13.5px;line-height:1.7;color:var(--pc-text-2);
+  max-width:64ch;
+}
+.pc-hero__actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:18px;}
+@media (max-width:600px){
+  .pc-hero__actions .pc-btn{flex:1 1 100%;}
+}
+.pc-kicker{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 11px;border-radius:999px;
+  background:linear-gradient(180deg, rgba(255,255,255,.8), var(--pc-primary-soft));
+  color:var(--pc-primary-ink);
+  border:1px solid rgba(49,94,251,.2);
+  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+}
+.pc-kicker::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:currentColor;
+  box-shadow:0 0 0 3px var(--pc-primary-soft);
+}
+
+/* ============================================================
+   WEBSITE STATUS CARD
+   ============================================================ */
+.pc-status__top{
+  display:flex;align-items:flex-start;gap:16px;flex-wrap:wrap;
+}
+.pc-status__info{min-width:0;flex:1 1 auto;}
+.pc-status__url{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:8px;
+  font-size:13px;font-weight:600;color:var(--pc-primary);
+  text-decoration:none;max-width:100%;
+  transition:color .18s var(--pc-ease);
+}
+.pc-status__url span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.pc-status__url svg{width:14px;height:14px;flex:0 0 auto;}
+.pc-status__url:hover{color:var(--pc-primary-hover);text-decoration:underline;}
+
+.pc-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 11px;border-radius:999px;
+  font-size:11.5px;font-weight:700;letter-spacing:.01em;white-space:nowrap;
+  border:1px solid transparent;
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset;
+}
+.pc-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;}
+.pc-badge--success{background:var(--pc-success-soft);color:var(--pc-success);border-color:rgba(14,143,85,.22);}
+.pc-badge--warn{background:var(--pc-warn-soft);color:var(--pc-warn);border-color:rgba(181,117,26,.24);}
+.pc-badge--danger{background:var(--pc-danger-soft);color:var(--pc-danger);border-color:rgba(185,55,42,.22);}
+.pc-badge--muted{background:rgba(148,177,230,.14);color:var(--pc-text-2);border-color:var(--pc-border);}
+
+.pc-status__meta{
+  margin-top:12px;font-size:12.5px;color:var(--pc-text-2);
+}
+.pc-status__meta-label{color:var(--pc-muted);}
+.pc-status__meta strong{color:var(--pc-text);font-weight:700;}
+
+.pc-status__actions{
+  display:flex;gap:8px;flex-wrap:wrap;
+  margin-top:16px;padding-top:14px;
+  border-top:1px solid var(--pc-hairline);
+}
+@media (max-width:600px){
+  .pc-status__actions{flex-direction:column;align-items:stretch;}
+  .pc-status__actions .pc-btn{width:100%;}
+}
+
+/* ============================================================
+   NEXT STEPS
+   ============================================================ */
+.pc-setup__head{
+  display:flex;align-items:flex-start;justify-content:space-between;
+  gap:16px;flex-wrap:wrap;
+}
+.pc-setup__progress{
+  display:flex;align-items:baseline;gap:8px;font-size:12.5px;color:var(--pc-text-2);
+}
+.pc-setup__count{font-weight:700;color:var(--pc-text);}
+.pc-setup__pct{
+  font-weight:800;color:var(--pc-primary);font-size:14px;
+  padding:2px 8px;border-radius:999px;
+  background:var(--pc-primary-soft);
+}
+
+.pc-progress{
+  height:9px;margin:16px 0 18px;
+  border-radius:999px;
+  background:rgba(148,177,230,.18);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset;
+  overflow:hidden;
+}
+.pc-progress__bar{
+  height:100%;width:0;border-radius:inherit;
+  background:linear-gradient(90deg,var(--pc-sky),var(--pc-primary));
+  box-shadow:0 1px 0 rgba(255,255,255,.4) inset;
+  transition:width .8s var(--pc-ease);
+}
+
+.pc-steps{
+  list-style:none;margin:0;padding:0;
+  display:grid;gap:8px;
+}
+.pc-step{
+  display:flex;align-items:center;gap:12px;
+  padding:12px;
+  border:1px solid transparent;
+  border-radius:var(--pc-r);
+  transition:background-color .22s var(--pc-ease),
+             border-color .22s var(--pc-ease),
+             box-shadow .22s var(--pc-ease);
+}
+.pc-step.is-active{
+  background:linear-gradient(180deg, rgba(255,255,255,.7), var(--pc-primary-soft));
+  border-color:rgba(49,94,251,.22);
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+}
+@media (hover:hover){
+  .pc-step:hover{background:rgba(255,255,255,.55);border-color:var(--pc-border);}
+  .pc-step.is-active:hover{background:linear-gradient(180deg, #fff, rgba(49,94,251,.14));border-color:rgba(49,94,251,.3);}
+}
+.pc-step__icon{
+  display:grid;place-items:center;
+  width:30px;height:30px;flex:0 0 auto;border-radius:50%;
+  border:1.5px solid var(--pc-border-strong);
+  color:var(--pc-muted);
+  background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(243,248,255,.8));
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset;
+}
+.pc-step__icon svg{width:15px;height:15px;}
+.pc-step.is-done .pc-step__icon{
+  background:linear-gradient(180deg, #14A062, var(--pc-success));
+  border-color:var(--pc-success);
+  color:#fff;
+  box-shadow:0 6px 14px -8px rgba(14,143,85,.7);
+}
+.pc-step.is-active .pc-step__icon{
+  background:linear-gradient(180deg, #4B72FF, var(--pc-primary));
+  border-color:var(--pc-primary);
+  color:#fff;
+  box-shadow:0 6px 14px -8px rgba(49,94,251,.7);
+}
+.pc-step__body{flex:1 1 auto;min-width:0;}
+.pc-step__title{font-size:13.5px;font-weight:700;color:var(--pc-text);}
+.pc-step__title small{
+  display:block;font-size:11.5px;font-weight:500;color:var(--pc-muted);
+  margin-top:2px;
+}
+.pc-step.is-done .pc-step__title{color:var(--pc-text-2);}
+.pc-step__action{
+  flex:0 0 auto;
+  display:inline-flex;align-items:center;gap:4px;
+  height:30px;padding:0 10px;
+  border:1px solid var(--pc-border);border-radius:var(--pc-r-xs);
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,251,255,.9));
+  color:var(--pc-text-2);
+  font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+  transition:background-color .18s var(--pc-ease), color .18s var(--pc-ease),
+             border-color .18s var(--pc-ease), box-shadow .18s var(--pc-ease);
+}
+.pc-step__action:hover{
+  background:linear-gradient(180deg, #fff, rgba(232,241,255,.9));
+  border-color:var(--pc-border-strong);
+  color:var(--pc-primary-ink);
+}
+.pc-step__action:focus-visible{outline:2px solid var(--pc-primary);outline-offset:2px;}
+@media (max-width:600px){
+  .pc-step{flex-wrap:wrap;}
+  .pc-step__action{margin-left:42px;}
+}
+
+/* ============================================================
+   OVERVIEW METRICS — premium glass cards
+   ============================================================ */
+.pc-metrics{
+  display:grid;gap:14px;
+  grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+}
+
+.pc-metric{
+  display:flex;flex-direction:column;gap:12px;
+  min-height:172px;
+  padding:18px;
+  background:linear-gradient(180deg, rgba(255,255,255,.9) 0%, rgba(246,250,255,.7) 100%);
+  border:1px solid var(--pc-border);
+  border-radius:var(--pc-r-lg);
+  box-shadow:var(--pc-shadow-sm);
+  backdrop-filter:saturate(160%) blur(12px);
+  -webkit-backdrop-filter:saturate(160%) blur(12px);
+  overflow:hidden;
+  transition:transform .24s var(--pc-ease),
+             box-shadow .24s var(--pc-ease),
+             border-color .24s var(--pc-ease);
+}
+.pc-metric::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(320px 180px at 100% 0%, rgba(99,184,255,.18), transparent 60%);
+  opacity:.75;
+}
+.pc-metric > *{position:relative;z-index:1;}
+
+@media (hover:hover){
+  .pc-metric:hover{
+    transform:translateY(-3px);
+    box-shadow:var(--pc-shadow-hover);
+    border-color:var(--pc-border-strong);
+  }
+  .pc-metric:hover .pc-metric__icon{
+    transform:scale(1.04);
+    filter:brightness(1.05);
+  }
+  .pc-metric:hover .pc-metric__action{
+    color:var(--pc-primary-hover);
+    gap:6px;
+  }
+}
+
+/* Tinted variants per card */
+.pc-metric[data-metric="sections"],
+.pc-metric[data-metric="content"]{
+  background:
+    radial-gradient(320px 180px at 100% 0%, rgba(99,184,255,.20), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.94) 0%, var(--pc-glass-tint-blue) 100%);
+}
+.pc-metric[data-metric="theme"],
+.pc-metric[data-metric="functions"]{
+  background:
+    radial-gradient(320px 180px at 100% 0%, rgba(91,98,232,.18), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.94) 0%, var(--pc-glass-tint-indigo) 100%);
+}
+.pc-metric[data-metric="domain"],
+.pc-metric[data-metric="security"]{
+  background:
+    radial-gradient(320px 180px at 100% 0%, rgba(63,183,224,.20), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.94) 0%, var(--pc-glass-tint-cyan) 100%);
+}
+.pc-metric[data-metric="analytics"],
+.pc-metric[data-metric="activity"]{
+  background:
+    radial-gradient(320px 180px at 100% 0%, rgba(99,184,255,.16), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,.94) 0%, rgba(228,243,255,.6) 100%);
+}
+
+.pc-metric__icon{
+  display:grid;place-items:center;
+  width:40px;height:40px;border-radius:12px;
+  background:linear-gradient(145deg, rgba(255,255,255,.9), rgba(232,241,255,.8));
+  color:var(--pc-primary);
+  border:1px solid rgba(49,94,251,.18);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset, 0 6px 14px -10px rgba(49,94,251,.5);
+  transition:transform .22s var(--pc-ease), filter .22s var(--pc-ease);
+}
+.pc-metric__icon svg{width:20px;height:20px;}
+
+.pc-metric[data-metric="theme"] .pc-metric__icon,
+.pc-metric[data-metric="functions"] .pc-metric__icon{
+  background:linear-gradient(145deg, rgba(255,255,255,.9), rgba(230,232,255,.8));
+  color:var(--pc-indigo);
+  border-color:rgba(91,98,232,.2);
+}
+.pc-metric[data-metric="domain"] .pc-metric__icon,
+.pc-metric[data-metric="security"] .pc-metric__icon{
+  background:linear-gradient(145deg, rgba(255,255,255,.9), rgba(220,242,255,.8));
+  color:var(--pc-cyan);
+  border-color:rgba(63,183,224,.22);
+}
+
+.pc-metric__body{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1 1 auto;}
+.pc-metric__label{
+  font-size:11.5px;font-weight:700;color:var(--pc-muted);
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.pc-metric__value{
+  font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.15;
+  color:var(--pc-text);
+}
+.pc-metric__value small{
+  font-size:12px;font-weight:600;color:var(--pc-muted);
+  letter-spacing:0;margin-inline-start:4px;
+}
+.pc-metric__value--sm{
+  font-size:15px;font-weight:700;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.pc-metric__hint{
+  font-size:11.5px;color:var(--pc-muted);line-height:1.5;
+}
+
+.pc-metric__stats{
+  display:flex;flex-wrap:wrap;gap:8px 16px;
+  font-size:12px;color:var(--pc-text-2);
+}
+.pc-metric__stats > span{
+  display:inline-flex;align-items:baseline;gap:4px;
+}
+.pc-metric__stats b{
+  color:var(--pc-text);font-weight:800;font-size:13.5px;
+}
+.pc-metric__stats b.is-warning{color:var(--pc-warn);}
+.pc-metric__stats b.is-danger{color:var(--pc-danger);}
+
+.pc-metric__action{
+  display:inline-flex;align-items:center;gap:5px;align-self:flex-start;
+  margin-top:auto;padding:4px 0;
+  border:0;background:transparent;
+  color:var(--pc-primary);font-size:12.5px;font-weight:700;cursor:pointer;
+  transition:color .2s var(--pc-ease), gap .2s var(--pc-ease);
+}
+.pc-metric__action svg{width:14px;height:14px;transition:transform .2s var(--pc-ease);}
+.pc-metric__action:hover svg{transform:translateX(2px);}
+.pc-metric__action:focus-visible{outline:2px solid var(--pc-primary);outline-offset:4px;border-radius:4px;}
+
+/* ============================================================
+   FUNCTION OVERVIEW — premium glass panel
+   ============================================================ */
+.pc-fn-grid{
+  display:grid;gap:12px;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  padding:18px 18px 8px;
+}
+.pc-fn-tile{
+  padding:14px 16px;
+  border:1px solid var(--pc-border);
+  border-radius:var(--pc-r);
+  background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(246,250,255,.7));
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset;
+  display:flex;flex-direction:column;gap:6px;
+  transition:background-color .2s var(--pc-ease),
+             border-color .2s var(--pc-ease),
+             box-shadow .2s var(--pc-ease),
+             transform .2s var(--pc-ease);
+}
+@media (hover:hover){
+  .pc-fn-tile:hover{
+    border-color:var(--pc-border-strong);
+    box-shadow:0 1px 0 rgba(255,255,255,.9) inset, 0 8px 18px -12px rgba(41,72,135,.28);
+    transform:translateY(-1px);
+  }
+}
+.pc-fn-tile:nth-child(1){
+  background:linear-gradient(180deg, rgba(255,255,255,.94), var(--pc-glass-tint-blue));
+}
+.pc-fn-tile:nth-child(2){
+  background:linear-gradient(180deg, rgba(255,255,255,.94), rgba(220,242,255,.6));
+}
+.pc-fn-tile:nth-child(3){
+  background:linear-gradient(180deg, rgba(255,255,255,.94), var(--pc-glass-tint-indigo));
+}
+.pc-fn-tile:nth-child(4){
+  background:linear-gradient(180deg, rgba(255,255,255,.94), var(--pc-glass-tint-amber));
+}
+
+.pc-fn-tile__label{
+  font-size:11.5px;font-weight:700;color:var(--pc-muted);
+  letter-spacing:.06em;text-transform:uppercase;
+}
+.pc-fn-tile__value{
+  font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.1;
+  color:var(--pc-text);
+}
+.pc-fn-tile__value--unknown{
+  font-size:14px;font-weight:700;
+  color:var(--pc-warn);
+  letter-spacing:0;
+  display:inline-flex;align-items:center;gap:6px;
+}
+.pc-fn-tile__value--unknown::before{
+  content:"";width:8px;height:8px;border-radius:50%;
+  background:var(--pc-warn);
+  box-shadow:0 0 0 3px var(--pc-warn-soft);
+}
+.pc-fn-tile__hint{font-size:11.5px;color:var(--pc-muted);line-height:1.5;}
+
+.pc-fn-foot{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:8px 18px 18px;
+  border-top:1px solid var(--pc-hairline);
+  margin-top:12px;
+  padding-top:16px;
+}
+
+/* ============================================================
+   SEO / SOCIAL (preserved behavior, refined glass)
+   ============================================================ */
+.pc-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;}
+.pc-field:last-child{margin-bottom:0;}
+.pc-field__label{
+  display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+  font-size:12.5px;font-weight:700;color:var(--pc-text);
+}
+.pc-field__count{font-size:11px;font-weight:500;color:var(--pc-muted);}
+.pc-field__input,
+.pc-field__textarea{
+  width:100%;height:40px;padding:0 12px;
+  border:1px solid var(--pc-border);border-radius:var(--pc-r-sm);
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,251,255,.9));
+  color:var(--pc-text);
+  font-family:inherit;font-size:13.5px;
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+  transition:border-color .18s var(--pc-ease), box-shadow .18s var(--pc-ease), background-color .18s var(--pc-ease);
+}
+.pc-field__textarea{height:auto;min-height:88px;padding:10px 12px;line-height:1.55;resize:vertical;}
+.pc-field__input:hover,
+.pc-field__textarea:hover{border-color:var(--pc-border-strong);}
+.pc-field__input:focus,
+.pc-field__textarea:focus{
+  outline:none;border-color:var(--pc-primary);
+  box-shadow:0 0 0 3px rgba(49,94,251,.16);
+  background:#fff;
+}
+.pc-field__help{margin:0;font-size:11.5px;color:var(--pc-text-2);}
+
+.pc-image-picker{
+  display:flex;align-items:center;gap:12px;padding:12px;
+  border:1px dashed var(--pc-border-strong);border-radius:var(--pc-r);
+  background:linear-gradient(180deg, rgba(255,255,255,.7), rgba(246,250,255,.6));
+}
+.pc-image-picker__thumb{
+  display:grid;place-items:center;width:64px;height:48px;flex:0 0 auto;
+  border-radius:var(--pc-r-xs);
+  background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(232,241,255,.7));
+  color:var(--pc-muted);overflow:hidden;
+  border:1px solid var(--pc-border-soft);
+}
+.pc-image-picker__thumb svg{width:22px;height:22px;}
+.pc-image-picker__thumb img{width:100%;height:100%;object-fit:cover;}
+.pc-image-picker__actions{display:flex;gap:8px;flex-wrap:wrap;}
+
+.pc-social-preview{
+  display:flex;gap:12px;margin-top:18px;padding:12px;
+  border:1px solid var(--pc-border);border-radius:var(--pc-r);
+  background:linear-gradient(180deg, rgba(255,255,255,.8), rgba(246,250,255,.7));
+}
+.pc-social-preview__img{
+  display:grid;place-items:center;width:96px;height:72px;flex:0 0 auto;
+  border-radius:var(--pc-r-xs);
+  background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(232,241,255,.7));
+  color:var(--pc-muted);overflow:hidden;
+  border:1px solid var(--pc-border-soft);
+}
+.pc-social-preview__img svg{width:24px;height:24px;}
+.pc-social-preview__img img{width:100%;height:100%;object-fit:cover;}
+.pc-social-preview__body{min-width:0;display:flex;flex-direction:column;gap:2px;}
+.pc-social-preview__domain{
+  font-size:11px;color:var(--pc-muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.pc-social-preview__title{
+  font-size:13.5px;font-weight:800;color:var(--pc-text);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.pc-social-preview__desc{
+  margin:0;font-size:12px;line-height:1.5;color:var(--pc-text-2);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+}
+
+.pc-form-foot{
+  display:flex;align-items:center;gap:12px;margin-top:8px;flex-wrap:wrap;
+}
+
+/* ============================================================
+   PREVIEW PANEL (glass, preserves behavior)
+   ============================================================ */
+.pc-preview-wrap{
+  position:fixed;inset:0;z-index:200;
+  pointer-events:none;display:flex;justify-content:flex-end;
+}
+.pc-preview-wrap.is-open{pointer-events:auto;}
+.pc-preview__scrim{
+  position:absolute;inset:0;
+  background:rgba(21,35,61,.4);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+  opacity:0;transition:opacity .28s var(--pc-ease);
+}
+.pc-preview-wrap.is-open .pc-preview__scrim{opacity:1;}
+.pc-preview{
+  position:relative;width:min(760px,92vw);height:100%;
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(246,250,255,.94));
+  border-inline-start:1px solid var(--pc-border);
+  box-shadow:var(--pc-shadow-lg);
+  backdrop-filter:saturate(180%) blur(18px);
+  -webkit-backdrop-filter:saturate(180%) blur(18px);
+  transform:translateX(100%);
+  transition:transform .32s var(--pc-ease);
+  display:flex;flex-direction:column;min-height:0;
+}
+.pc-preview-wrap.is-open .pc-preview{transform:translateX(0);}
+.pc-preview-wrap.is-fullscreen .pc-preview{width:100%;border-inline-start:0;}
+
+.pc-preview__head{
+  display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  padding:12px 16px;
+  border-bottom:1px solid var(--pc-hairline);
+  background:linear-gradient(180deg, rgba(255,255,255,.6), transparent);
+}
+.pc-preview__title{margin:0;font-size:14px;font-weight:800;color:var(--pc-text);}
+.pc-preview__actions{margin-inline-start:auto;display:flex;gap:6px;}
+
+.pc-seg{
+  display:inline-flex;padding:3px;gap:2px;
+  border:1px solid var(--pc-border);border-radius:999px;
+  background:linear-gradient(180deg, rgba(255,255,255,.85), rgba(246,250,255,.7));
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+}
+.pc-seg button{
+  border:0;background:transparent;
+  padding:5px 10px;border-radius:999px;
+  font-family:inherit;font-size:11.5px;font-weight:700;color:var(--pc-text-2);
+  cursor:pointer;display:inline-flex;align-items:center;gap:5px;
+  transition:color .18s var(--pc-ease), background-color .18s var(--pc-ease);
+}
+.pc-seg button svg{width:13px;height:13px;}
+.pc-seg button[aria-pressed="true"]{
+  background:linear-gradient(180deg, #fff, rgba(232,241,255,.9));
+  color:var(--pc-primary-ink);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset, 0 4px 10px -6px rgba(49,94,251,.35);
+}
+.pc-seg button:focus-visible{outline:2px solid var(--pc-primary);outline-offset:1px;}
+
+.pc-preview__stage{
+  flex:1 1 auto;min-height:0;overflow:auto;
+  padding:18px;display:grid;place-items:center;
+  background:
+    radial-gradient(600px 320px at 50% -20%, rgba(99,184,255,.14), transparent 65%),
+    linear-gradient(180deg, #F7FAFF 0%, #EEF3FB 100%);
+}
+.pc-device{
+  width:100%;max-width:100%;
+  aspect-ratio:16/10;
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(246,250,255,.94));
+  border:1px solid var(--pc-border);border-radius:var(--pc-r);
+  box-shadow:var(--pc-shadow);
+  display:grid;place-items:center;
+  color:var(--pc-muted);font-size:13px;text-align:center;
+  padding:20px;
+  transition:max-width .28s var(--pc-ease), aspect-ratio .28s var(--pc-ease);
+  overflow:hidden;
+}
+.pc-device[data-vp="tablet"]{max-width:420px;aspect-ratio:3/4;}
+.pc-device[data-vp="mobile"]{max-width:300px;aspect-ratio:9/19.5;}
+
+.pc-device__state{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:320px;}
+.pc-device__state svg{width:26px;height:26px;opacity:.7;color:var(--pc-primary);}
+.pc-device__state strong{color:var(--pc-text);font-weight:800;}
+.pc-device__state p{margin:0;font-size:12px;}
+
+.pc-preview__foot{
+  border-top:1px solid var(--pc-hairline);
+  padding:10px 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  font-size:12px;color:var(--pc-muted);
+}
+
+/* ============================================================
+   READINESS
+   ============================================================ */
+.pc-readiness{
+  display:grid;grid-template-columns:148px minmax(0,1fr);gap:18px;
+  align-items:center;padding:4px 18px 18px;
+}
+@media (max-width:479.98px){ .pc-readiness{grid-template-columns:1fr;} }
+
+.pc-ring{position:relative;width:148px;height:148px;justify-self:center;}
+.pc-ring svg{transform:rotate(-90deg);display:block;width:100%;height:100%;}
+.pc-ring__track{stroke:var(--pc-ring-track);}
+.pc-ring__value{stroke:url(#pc-ring-grad);transition:stroke-dashoffset .6s var(--pc-ease);stroke-linecap:round;}
+.pc-ring__center{
+  position:absolute;inset:0;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:2px;
+}
+.pc-ring__score{font-size:30px;font-weight:800;letter-spacing:-.02em;line-height:1;color:var(--pc-text);}
+.pc-ring__score--unknown{font-size:16px;font-weight:700;color:var(--pc-muted);font-style:italic;letter-spacing:0;}
+.pc-ring__label{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--pc-muted);}
+
+.pc-cats{display:flex;flex-direction:column;gap:10px;min-width:0;}
+.pc-cat{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:8px;align-items:center;}
+.pc-cat__row{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:4px;}
+.pc-cat__name{font-size:12.5px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--pc-text);}
+.pc-cat__meta{font-size:11px;font-weight:600;color:var(--pc-muted);white-space:nowrap;}
+.pc-cat__bar{height:6px;border-radius:999px;background:rgba(148,177,230,.2);overflow:hidden;
+  box-shadow:0 1px 0 rgba(255,255,255,.7) inset;}
+.pc-cat__fill{
+  height:100%;width:0;border-radius:inherit;
+  background:linear-gradient(90deg,var(--pc-sky),var(--pc-primary));
+  transition:width .6s var(--pc-ease);
+}
+.pc-cat__score{font-size:12.5px;font-weight:800;text-align:right;color:var(--pc-text);}
+.pc-cat__score--unknown{color:var(--pc-muted);font-weight:600;font-style:italic;}
+
+.pc-note{
+  display:flex;align-items:flex-start;gap:8px;
+  padding:10px 12px;margin:0 18px 16px;
+  border:1px dashed var(--pc-border-strong);border-radius:var(--pc-r);
+  background:linear-gradient(180deg, rgba(255,255,255,.7), rgba(246,250,255,.6));
+  font-size:11.5px;color:var(--pc-text-2);line-height:1.6;
+}
+.pc-note svg{width:14px;height:14px;flex:0 0 auto;margin-top:2px;color:var(--pc-warn);}
+
+.pc-issues{
+  list-style:none;margin:0;padding:0 18px 18px;
+  display:flex;flex-direction:column;gap:8px;
+}
+.pc-issue{
+  display:flex;gap:10px;padding:10px 12px;align-items:flex-start;
+  border:1px solid var(--pc-border);border-radius:var(--pc-r);
+  background:linear-gradient(180deg, rgba(255,255,255,.85), rgba(246,250,255,.7));
+  transition:border-color .18s var(--pc-ease), background-color .18s var(--pc-ease);
+}
+.pc-issue__icon{
+  flex:0 0 22px;width:22px;height:22px;border-radius:50%;
+  display:grid;place-items:center;
+  background:var(--pc-primary-soft);color:var(--pc-primary-ink);
+}
+.pc-issue__icon svg{width:13px;height:13px;}
+.pc-issue--warn .pc-issue__icon{background:var(--pc-warn-soft);color:var(--pc-warn);}
+.pc-issue--block .pc-issue__icon{background:var(--pc-danger-soft);color:var(--pc-danger);}
+.pc-issue__body{min-width:0;}
+.pc-issue__title{font-size:12.5px;font-weight:700;color:var(--pc-text);}
+.pc-issue__desc{font-size:12px;color:var(--pc-text-2);margin-top:2px;}
+.pc-issue__owner{
+  display:inline-block;margin-top:6px;
+  font-size:10.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  padding:3px 7px;border-radius:999px;
+  background:var(--pc-primary-soft);color:var(--pc-primary-ink);
+}
+.pc-issue__owner--you{background:var(--pc-primary-soft);color:var(--pc-primary-ink);}
+.pc-issue__owner--us{background:var(--pc-warn-soft);color:var(--pc-warn);}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.pc-toasts{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  z-index:500;display:flex;flex-direction:column;gap:8px;align-items:center;
+  pointer-events:none;
+}
+.pc-toast{
+  pointer-events:auto;padding:11px 16px;border-radius:var(--pc-r);
+  background:linear-gradient(180deg, #1B2A4A, #0F1B33);
+  color:#fff;font-size:12.5px;font-weight:600;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:var(--pc-shadow-lg), 0 1px 0 rgba(255,255,255,.15) inset;
+  display:inline-flex;align-items:center;gap:8px;
+  animation:pc-toast-in .24s var(--pc-ease);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+}
+@keyframes pc-toast-in{from{opacity:0;transform:translateY(8px);}}
+.pc-toast--ok{background:linear-gradient(180deg,#1A7A48,#0F5132);}
+.pc-toast--warn{background:linear-gradient(180deg,#92600F,#7A4D0F);}
+.pc-toast--err{background:linear-gradient(180deg,#8F2626,#7F1D1D);}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    transition-duration:.01ms !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    scroll-behavior:auto !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<aside id="sidebar-container" aria-label="Sidebar"></aside>
+
+<div class="pc-shell">
+
+  <!-- =========================================================
+       TOP BAR
+       ========================================================= -->
+  <header class="pc-topbar" role="banner">
+
+    <button class="pc-icon-btn pc-topbar__mobile" type="button"
+            data-pb-action="open-mobile" aria-controls="pb-sidebar"
+            aria-expanded="false" aria-label="Open navigation">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" aria-hidden="true">
+        <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
+      </svg>
+    </button>
+
+    <nav class="pc-crumbs" aria-label="Breadcrumb">
+      <span>Profile Craft Studio</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+      <strong>Dashboard</strong>
+    </nav>
+
+    <div class="pc-topbar__spacer"></div>
+
+    <!-- Language selector (custom dropdown, working) -->
+    <div class="pc-lang" id="pc-lang" data-open="false">
+      <button class="pc-lang__trigger" type="button" id="pc-lang-trigger"
+              aria-haspopup="listbox" aria-expanded="false"
+              aria-controls="pc-lang-menu" aria-label="Language selector">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/><path d="M3 12h18"/>
+          <path d="M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/>
+        </svg>
+        <span id="pc-lang-current">မြန်မာ</span>
+        <svg class="pc-lang__chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+             stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 9l6 6 6-6"/>
+        </svg>
+      </button>
+      <ul class="pc-lang__menu" id="pc-lang-menu" role="listbox" aria-label="Languages" hidden>
+        <li><button type="button" role="option" data-lang="my" aria-selected="true">မြန်မာ</button></li>
+        <li><button type="button" role="option" data-lang="en" aria-selected="false">English</button></li>
+      </ul>
+    </div>
+
+    <!-- Notifications -->
+    <div class="pc-notif" id="pc-notif">
+      <button class="pc-icon-btn" type="button" id="pc-notif-btn"
+              aria-haspopup="dialog" aria-expanded="false"
+              aria-controls="pc-notif-panel" aria-label="Notifications">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/>
+          <path d="M13.7 21a2 2 0 0 1-3.4 0"/>
+        </svg>
+        <span class="pc-dot" id="pc-notif-dot" aria-hidden="true"></span>
+      </button>
+      <div class="pc-notif__panel" id="pc-notif-panel" role="dialog" aria-label="Notifications" hidden>
+        <div class="pc-notif__head">
+          <h3 class="pc-notif__title">Notifications</h3>
+          <span class="pc-notif__count" id="pc-notif-count">0 unread</span>
+        </div>
+        <ul class="pc-notif__list" id="pc-notif-list"></ul>
+      </div>
+    </div>
+
+  </header>
+
+  <!-- =========================================================
+       MAIN GRID
+       ========================================================= -->
+  <main class="pc-main" role="main">
+
+    <!-- ============ LEFT COLUMN ============ -->
+    <section class="pc-col">
+
+      <!-- HERO -->
+      <article class="pc-hero" aria-labelledby="pc-hero-title">
+        <span class="pc-kicker">Website workspace</span>
+        <h1 class="pc-hero__title" id="pc-hero-title">
+          Welcome back, <span>Studio</span>
+        </h1>
+        <p class="pc-hero__text">
+          Manage your website content, check readiness, preview changes, and publish — all
+          from a single workspace. Everything here is a UI demonstration; connect your
+          real publishing workflow when you're ready.
+        </p>
+        <div class="pc-hero__actions">
+          <a class="pc-btn pc-btn--primary" href="builder.html">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/>
+            </svg>
+            Continue editing
+          </a>
+          <button class="pc-btn pc-btn--ghost" type="button" data-open-preview>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/>
+              <circle cx="12" cy="12" r="2.6"/>
+            </svg>
+            Live preview
+          </button>
+        </div>
+      </article>
+
+      <!-- WEBSITE STATUS -->
+      <article class="pc-card" aria-labelledby="pc-status-title">
+        <header class="pc-card__head">
+          <div>
+            <h2 class="pc-card__title" id="pc-status-title">Website Status</h2>
+            <p class="pc-card__sub">Publication state for your Profile Craft Studio website.</p>
+          </div>
+          <div class="pc-card__actions">
+            <span class="pc-badge pc-badge--success">Published</span>
+          </div>
+        </header>
+        <div class="pc-card__body">
+          <div class="pc-status__top">
+            <div class="pc-status__info">
+              <a class="pc-status__url" href="#" onclick="return false;" aria-label="Open website (placeholder)">
+                <span>atz.capital-knowledge.com</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <path d="M15 3h6v6"/><path d="M10 14L21 3"/>
+                </svg>
+              </a>
+              <p class="pc-status__meta">
+                <span class="pc-status__meta-label">Last published:</span>
+                <strong>17 Oct 2026, 16:24</strong>
+              </p>
+            </div>
+          </div>
+          <div class="pc-status__actions">
+            <button class="pc-btn pc-btn--ghost pc-btn--sm" type="button" data-open-preview>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/>
+                <circle cx="12" cy="12" r="2.6"/>
+              </svg>
+              Preview
+            </button>
+            <button class="pc-btn pc-btn--danger-ghost pc-btn--sm" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M18 6L6 18"/><path d="M6 6l12 12"/>
+              </svg>
+              Unpublish
+            </button>
+            <button class="pc-btn pc-btn--primary pc-btn--sm" type="button">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/>
+              </svg>
+              Publish Changes
+            </button>
+          </div>
+        </div>
+      </article>
+        <!-- OVERVIEW CARDS (four, per spec) -->
+      <section class="pc-metrics" aria-label="Quick overview">
+
+        <!-- Website Content -->
+        <article class="pc-card pc-metric">
+          <div class="pc-metric__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="9" rx="1.6"/>
+              <rect x="14" y="3" width="7" height="5" rx="1.6"/>
+              <rect x="14" y="12" width="7" height="9" rx="1.6"/>
+              <rect x="3" y="16" width="7" height="5" rx="1.6"/>
+            </svg>
+          </div>
+          <div class="pc-metric__body">
+            <span class="pc-metric__label">Website Content</span>
+            <div class="pc-metric__stats">
+              <span><b id="pc-content-active">—</b> active</span>
+              <span><b id="pc-content-incomplete">—</b> incomplete</span>
+            </div>
+            <span class="pc-metric__hint">
+              Last update: <span id="pc-content-last">Not recorded</span>
+            </span>
+          </div>
+          <a class="pc-metric__action" href="builder.html">
+            Open Content Editor
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </a>
+        </article>
+
+        <!-- Functions -->
+        <article class="pc-card pc-metric">
+          <div class="pc-metric__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/>
+            </svg>
+          </div>
+          <div class="pc-metric__body">
+            <span class="pc-metric__label">Functions</span>
+            <div class="pc-metric__stats">
+              <span><b id="pc-fn-installed">—</b> installed</span>
+              <span><b id="pc-fn-connected">—</b> connected</span>
+              <span><b id="pc-fn-attention">—</b> need attention</span>
+            </div>
+          </div>
+          <a class="pc-metric__action" href="function-center.html">
+            Open Function Center
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </a>
+        </article>
+
+        <!-- Domain & Security -->
+        <article class="pc-card pc-metric">
+          <div class="pc-metric__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="M3 12h18"/>
+              <path d="M12 3c2.5 2.5 3.8 5.7 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.7-3.8-9S9.5 5.5 12 3z"/>
+            </svg>
+          </div>
+          <div class="pc-metric__body">
+            <span class="pc-metric__label">Domain &amp; Security</span>
+            <div class="pc-metric__stats">
+              <span>Domain: <b id="pc-domain-status">—</b></span>
+              <span>HTTPS: <b id="pc-https-status">—</b></span>
+              <span>Deploy: <b id="pc-deploy-status">—</b></span>
+            </div>
+          </div>
+          <a class="pc-metric__action" href="domain-publishing.html">
+            Open Domain Settings
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </a>
+        </article>
+
+        <!-- Website Activity -->
+        <article class="pc-card pc-metric">
+          <div class="pc-metric__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M4 20V11"/><path d="M10 20V4"/><path d="M16 20v-6"/><path d="M22 20H2"/>
+            </svg>
+          </div>
+          <div class="pc-metric__body">
+            <span class="pc-metric__label">Website Activity</span>
+            <div id="pc-activity-body">
+              <div class="pc-metric__stats">
+                <span>Visitors: <b id="pc-visitors">—</b></span>
+                <span>Page views: <b id="pc-pageviews">—</b></span>
+              </div>
+              <span class="pc-metric__hint">Last activity: <span id="pc-last-activity">Not connected</span></span>
+            </div>
+          </div>
+          <a class="pc-metric__action" href="analytics.html">
+            View Analytics
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 18l6-6-6-6"/>
+            </svg>
+          </a>
+        </article>
+      </section>
+
+      <!-- NEXT STEPS -->
+      <article class="pc-card" aria-labelledby="pc-setup-title">
+        <header class="pc-card__head">
+          <div>
+            <h2 class="pc-card__title" id="pc-setup-title">Next Steps</h2>
+            <p class="pc-card__sub">Complete these steps to launch your portfolio. Share Site is optional.</p>
+          </div>
+          <div class="pc-card__actions">
+            <div class="pc-setup__progress" aria-hidden="true">
+              <span class="pc-setup__count">3 / 5 required</span>
+              <span class="pc-setup__pct">60%</span>
+            </div>
+          </div>
+        </header>
+        <div class="pc-card__body">
+
+          <div class="pc-progress" role="progressbar"
+               aria-valuemin="0" aria-valuemax="100" aria-valuenow="60"
+               aria-label="Setup progress: 60% (3 of 5 required steps)">
+            <div class="pc-progress__bar" style="width:60%"></div>
+          </div>
+
+          <ul class="pc-steps" role="list">
+            <li class="pc-step is-done">
+              <span class="pc-step__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                     stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              </span>
+              <div class="pc-step__body">
+                <div class="pc-step__title">Claim Domain <small>သင့်လိပ်စာ ယူပါ</small></div>
+              </div>
+              <button class="pc-step__action" type="button">Manage</button>
+            </li>
+
+            <li class="pc-step is-done">
+              <span class="pc-step__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                     stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              </span>
+              <div class="pc-step__body">
+                <div class="pc-step__title">Select Theme <small>Theme ရွေးပါ</small></div>
+              </div>
+              <button class="pc-step__action" type="button">View themes</button>
+            </li>
+
+            <li class="pc-step is-active">
+              <span class="pc-step__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+                     stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/></svg>
+              </span>
+              <div class="pc-step__body">
+                <div class="pc-step__title">Customize Cover Section <small>Cover ကို ရေးပါ</small></div>
+              </div>
+              <button class="pc-step__action" type="button">Edit cover</button>
+            </li>
+
+            <li class="pc-step">
+              <span class="pc-step__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"/></svg>
+              </span>
+              <div class="pc-step__body">
+                <div class="pc-step__title">About Section <small>သင့်အကြောင်း ပြောပြပါ</small></div>
+              </div>
+              <button class="pc-step__action" type="button">Edit about</button>
+            </li>
+
+            <li class="pc-step is-done">
+              <span class="pc-step__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
+                     stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+              </span>
+              <div class="pc-step__body">
+                <div class="pc-step__title">Publish Site <small>ထုတ်ဝေပါ</small></div>
+              </div>
+              <button class="pc-step__action" type="button">Re-publish</button>
+            </li>
+
+            <li class="pc-step">
+              <span class="pc-step__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                     stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="6"/></svg>
+              </span>
+              <div class="pc-step__body">
+                <div class="pc-step__title">Share Site <small>မျှဝေပါ · Optional</small></div>
+              </div>
+              <button class="pc-step__action" type="button">Share website</button>
+            </li>
+          </ul>
+        </div>
+      </article>
+         <!-- FUNCTION OVERVIEW -->
+      <article class="pc-card" aria-labelledby="pc-fn-title">
+        <header class="pc-card__head">
+          <div>
+            <h2 class="pc-card__title" id="pc-fn-title">Function Overview</h2>
+            <p class="pc-card__sub">
+              Same data source as the Functions card. Operational status is only shown when verifiable.
+            </p>
+          </div>
+        </header>
+        <div class="pc-fn-grid">
+          <div class="pc-fn-tile">
+            <span class="pc-fn-tile__label">Installed</span>
+            <span class="pc-fn-tile__value" id="pc-fno-installed">—</span>
+            <span class="pc-fn-tile__hint">Functions added to this site</span>
+          </div>
+          <div class="pc-fn-tile">
+            <span class="pc-fn-tile__label">Connected</span>
+            <span class="pc-fn-tile__value" id="pc-fno-connected">—</span>
+            <span class="pc-fn-tile__hint">Configured with required credentials</span>
+          </div>
+          <div class="pc-fn-tile">
+            <span class="pc-fn-tile__label">Operational</span>
+            <span class="pc-fn-tile__value" id="pc-fno-operational">—</span>
+            <span class="pc-fn-tile__hint">Verified healthy</span>
+          </div>
+          <div class="pc-fn-tile">
+            <span class="pc-fn-tile__label">Needs Attention</span>
+            <span class="pc-fn-tile__value" id="pc-fno-attention">—</span>
+            <span class="pc-fn-tile__hint">Errors or missing config</span>
+          </div>
+        </div>
+        <div class="pc-fn-foot">
+          <a class="pc-btn pc-btn--ghost pc-btn--sm" href="function-center.html">
+            Manage functions
+          </a>
+          <span class="pc-metric__hint" id="pc-fn-source-note">
+            Operational status is not verified until the function is connected.
+          </span>
+        </div>
+      </article>
+
+    
+
+   
+
+    </section>
+
+    <!-- ============ RIGHT COLUMN ============ -->
+    <aside class="pc-col" aria-label="Readiness and settings">
+
+      <!-- WEBSITE READINESS (four categories) -->
+      <article class="pc-card" aria-labelledby="pc-ready-title">
+        <header class="pc-card__head">
+          <div>
+            <h2 class="pc-card__title" id="pc-ready-title">Website Readiness</h2>
+            <p class="pc-card__sub" id="pc-ready-sub">
+              Calculated from available checks. Unknown checks are not counted as passed.
+            </p>
+          </div>
+        </header>
+
+        <div class="pc-readiness">
+          <div class="pc-ring" aria-hidden="true">
+            <svg viewBox="0 0 120 120">
+              <defs>
+                <linearGradient id="pc-ring-grad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#5b8def"/>
+                  <stop offset="100%" stop-color="#3355e0"/>
+                </linearGradient>
+              </defs>
+              <circle cx="60" cy="60" r="52" fill="none" stroke-width="12" class="pc-ring__track"/>
+              <circle cx="60" cy="60" r="52" fill="none" stroke-width="12"
+                      class="pc-ring__value" id="pc-ring-value"
+                      stroke-dasharray="326.7" stroke-dashoffset="326.7"/>
+            </svg>
+            <div class="pc-ring__center">
+              <span class="pc-ring__score" id="pc-ring-score">—</span>
+              <span class="pc-ring__label" id="pc-ring-label">of 100</span>
+            </div>
+          </div>
+
+          <div class="pc-cats" id="pc-cats">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+
+        <ul class="pc-issues" id="pc-issues">
+          <!-- Rendered by JS -->
+        </ul>
+
+        <div class="pc-note" id="pc-ready-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/>
+          </svg>
+          <span id="pc-ready-note-text">
+            Readiness is separate from publication status. If insufficient checks have run,
+            the score will show "Not Yet Evaluated".
+          </span>
+        </div>
+      </article>
+
+      <!-- SEO -->
+      <article class="pc-card" aria-labelledby="pc-seo-title">
+        <header class="pc-card__head">
+          <div>
+            <h2 class="pc-card__title" id="pc-seo-title">SEO &amp; Social Sharing</h2>
+            <p class="pc-card__sub">Local edits only — not saved to a backend.</p>
+          </div>
+        </header>
+
+        <div class="pc-card__body">
+          <form id="pc-seo-form" novalidate>
+            <div class="pc-field">
+              <label class="pc-field__label" for="pc-seo-title-input">
+                <span>Website Title</span>
+                <span class="pc-field__count"><span id="pc-seo-title-count">0</span>/60</span>
+              </label>
+              <input class="pc-field__input" id="pc-seo-title-input" type="text" maxlength="60"
+                     placeholder="My Portfolio" />
+            </div>
+
+            <div class="pc-field">
+              <label class="pc-field__label" for="pc-seo-desc-input">
+                <span>Meta Description</span>
+                <span class="pc-field__count"><span id="pc-seo-desc-count">0</span>/160</span>
+              </label>
+              <textarea class="pc-field__textarea" id="pc-seo-desc-input" maxlength="160"
+                        placeholder="A short description of your portfolio."></textarea>
+              <p class="pc-field__help">Shown in search results and social shares.</p>
+            </div>
+
+            <div class="pc-field">
+              <span class="pc-field__label">Social Sharing Image</span>
+              <div class="pc-image-picker">
+                <div class="pc-image-picker__thumb" id="pc-seo-thumb">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"
+                       stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="16" rx="2"/>
+                    <circle cx="8.5" cy="9.5" r="1.5"/>
+                    <path d="M21 16l-5-5-9 9"/>
+                  </svg>
+                </div>
+                <div class="pc-image-picker__actions">
+                  <button class="pc-btn pc-btn--ghost pc-btn--sm" type="button" data-action="upload-image">
+                    Upload Image
+                  </button>
+                  <button class="pc-btn pc-btn--ghost pc-btn--sm" type="button" data-action="choose-image">
+                    Choose from Media
+                  </button>
+                  <input type="file" id="pc-seo-file" accept="image/*" hidden />
+                </div>
+              </div>
+            </div>
+
+            <div class="pc-form-foot">
+              <button class="pc-btn pc-btn--primary pc-btn--sm" type="submit">
+                Save Changes
+              </button>
+              <span class="pc-metric__hint" id="pc-seo-status"></span>
+            </div>
+          </form>
+
+          <div class="pc-social-preview" aria-label="Social link preview (placeholder)">
+            <div class="pc-social-preview__img" id="pc-social-img">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"
+                   stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <rect x="3" y="4" width="18" height="16" rx="2"/>
+                <circle cx="8.5" cy="9.5" r="1.5"/>
+                <path d="M21 16l-5-5-9 9"/>
+              </svg>
+            </div>
+            <div class="pc-social-preview__body">
+              <span class="pc-social-preview__domain">atz.capital-knowledge.com</span>
+              <strong class="pc-social-preview__title" id="pc-social-title">My Portfolio</strong>
+              <p class="pc-social-preview__desc" id="pc-social-desc">
+                A short description of your portfolio.
+              </p>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </aside>
+  </main>
+</div>
+
+<!-- ============================================================
+     PREVIEW PANEL
+     ============================================================ -->
+<div class="pc-preview-wrap" id="pc-preview-wrap" aria-hidden="true">
+  <div class="pc-preview__scrim" data-close-preview></div>
+
+  <section class="pc-preview" role="dialog" aria-modal="true"
+           aria-labelledby="pc-preview-title">
+    <header class="pc-preview__head">
+      <h3 class="pc-preview__title" id="pc-preview-title">Live Preview</h3>
+
+      <div class="pc-seg" role="group" aria-label="Version">
+        <button type="button" data-preview-version="draft" aria-pressed="true">Draft</button>
+        <button type="button" data-preview-version="published" aria-pressed="false">Published</button>
+      </div>
+
+      <div class="pc-seg" role="group" aria-label="Viewport">
+        <button type="button" data-preview-viewport="desktop" aria-pressed="true" aria-label="Desktop">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8"/>
+          </svg>
+        </button>
+        <button type="button" data-preview-viewport="tablet" aria-pressed="false" aria-label="Tablet">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="5" y="3" width="14" height="18" rx="2"/><path d="M11 18h2"/>
+          </svg>
+        </button>
+        <button type="button" data-preview-viewport="mobile" aria-pressed="false" aria-label="Mobile">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="pc-preview__actions">
+        <button class="pc-icon-btn" type="button" id="pc-preview-fullscreen"
+                aria-label="Toggle full screen">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M4 9V4h5"/><path d="M20 9V4h-5"/>
+            <path d="M4 15v5h5"/><path d="M20 15v5h-5"/>
+          </svg>
+        </button>
+        <button class="pc-icon-btn" type="button" data-close-preview aria-label="Close preview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M18 6L6 18"/><path d="M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="pc-preview__stage">
+      <div class="pc-device" id="pc-preview-device" data-vp="desktop">
+        <div class="pc-device__state" id="pc-preview-device-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+               stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="16" rx="2"/>
+            <path d="M3 10h18"/><path d="M7 6.5h.01"/>
+          </svg>
+          <strong>Preview placeholder</strong>
+          <p>Connect a real preview URL or iframe to render your website here.</p>
+        </div>
+      </div>
+    </div>
+
+    <footer class="pc-preview__foot">
+      <span>Development placeholder — no live website is being rendered.</span>
+    </footer>
+  </section>
+</div>
+
+<!-- ============================================================
+     TOASTS
+     ============================================================ -->
+<div class="pc-toasts" id="pc-toasts" aria-live="polite"></div>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+
+<!-- 1. Sidebar loader -->
+<script>
+(function () {
+  function mount() {
+    fetch('sidebar.html', { credentials: 'same-origin' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.text();
+      })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        if (!document.getElementById('pb-sidebar-styles')) {
+          var s = doc.getElementById('pb-sidebar-styles');
+          if (s) document.head.appendChild(document.importNode(s, true));
+        }
+        var fragment = doc.querySelector('[data-pb-sidebar-root]');
+        if (!fragment) return;
+        if (!document.querySelector('[data-pb-sidebar-root]')) {
+          document.getElementById('sidebar-container')
+            .appendChild(document.importNode(fragment, true));
+        }
+        var src = doc.getElementById('pb-sidebar-script');
+        if (src && !document.getElementById('pb-sidebar-script-runtime')) {
+          var runtime = document.createElement('script');
+          runtime.id = 'pb-sidebar-script-runtime';
+          runtime.textContent = src.textContent;
+          document.body.appendChild(runtime);
+        }
+        if (window.PBSidebar) {
+          window.PBSidebar.init();
+          window.PBSidebar.setActive('dashboard');
+        }
+      })
+      .catch(function (err) {
+        console.warn('[dashboard] sidebar load failed:', err);
+        var m = document.getElementById('sidebar-container');
+        if (m) {
+          m.innerHTML =
+            '<p style="padding:12px 18px;font:12px system-ui;color:#b42318;' +
+            'border:1px solid #f7d2cc;background:#fdecec;border-radius:8px;margin:12px">' +
+            'Sidebar could not be loaded. Serve this page from a local server ' +
+            '(not file://) and refresh.</p>';
+        }
+      });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mount);
+  } else { mount(); }
+})();
+</script>
+
+<!-- 2. Dashboard state, readiness, functions, overview cards -->
+<script>
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------
+     STATE
+     ------------------------------------------------------------
+     Single source of truth for the dashboard. Replace `fixture`
+     values with real API responses when integrating a backend.
+     Every field has an explicit "unknown / not_connected" state so
+     no metric is fabricated.
+     ------------------------------------------------------------ */
+  var state = {
+    content: {
+      activeSections: 5,
+      incompleteSections: 2,
+      lastUpdate: null, // null => "Not recorded"
+      source: 'fixture'
+    },
+    functions: {
+      installed: 3,
+      connected: 2,
+      operational: null, // null => unverified
+      attention: 1,
+      source: 'fixture'
+    },
+    domain: {
+      domainStatus: 'connected',
+      httpsStatus: 'unverified',
+      deployStatus: 'published',
+      source: 'fixture'
+    },
+    activity: {
+      connected: false,   // analytics not connected
+      visitors: null,
+      pageViews: null,
+      lastActivity: null,
+      source: 'not_connected'
+    },
+    notifications: {
+      unread: 0,
+      items: [] // real notifications only; no fakes
+    },
+    readiness: {
+      available: true, // set false to show "Not Yet Evaluated"
+      categories: {
+        content: {
+          weight: 30,
+          checks: [
+            { id: 'req_sections', pass: true,  label: 'All required sections present',      owner: 'customer' },
+            { id: 'bio',          pass: true,  label: 'Bio / About text completed',          owner: 'customer' },
+            { id: 'projects',     pass: true,  label: 'At least one project added',          owner: 'customer' },
+            { id: 'hero_image',   pass: false, label: 'Hero image uploaded',                 owner: 'customer' },
+            { id: 'contact',      pass: null,  label: 'Contact section configured',          owner: 'customer' }
+          ]
+        },
+        seo: {
+          weight: 20,
+          checks: [
+            { id: 'seo_title', pass: false, label: 'Page title configured',                  owner: 'customer' },
+            { id: 'seo_desc',  pass: false, label: 'Meta description configured',            owner: 'customer' },
+            { id: 'seo_og',    pass: null,  label: 'Social sharing image configured',        owner: 'customer' }
+          ]
+        },
+        publishing: {
+          weight: 25,
+          checks: [
+            { id: 'draft_saved', pass: true,  label: 'Current draft is saved',               owner: 'customer' },
+            { id: 'no_errors',   pass: true,  label: 'No blocking publish errors',            owner: 'customer' },
+            { id: 'domain_ok',   pass: true,  label: 'Domain configuration valid',            owner: 'customer' }
+          ]
+        },
+        functionHealth: {
+          weight: 25,
+          checks: [
+            { id: 'fn_connected', pass: true,  label: 'Connected functions responding',      owner: 'customer' },
+            { id: 'fn_attn',      pass: false, label: 'No functions requiring attention',     owner: 'customer' },
+            { id: 'fn_uptime',    pass: null,  label: 'Service uptime verified',              owner: 'profilecraft' }
+          ]
+        }
+      },
+      source: 'fixture'
+    }
+  };
+
+  /* ------------------------------------------------------------
+     Small helpers
+     ------------------------------------------------------------ */
+  function $(id) { return document.getElementById(id); }
+  function setText(id, value) { var el = $(id); if (el) el.textContent = value; }
+  function setHTML(id, html) { var el = $(id); if (el) el.innerHTML = html; }
+
+  function fmtRelative(iso) {
+    if (!iso) return null;
+    var then = new Date(iso).getTime();
+    if (!isFinite(then)) return null;
+    var diff = Date.now() - then;
+    var abs = Math.abs(diff);
+    var min = 60000, hour = 60 * min, day = 24 * hour;
+    if (abs < hour) return Math.round(diff / min) + 'm ago';
+    if (abs < day) return Math.round(diff / hour) + 'h ago';
+    if (abs < 30 * day) return Math.round(diff / day) + 'd ago';
+    return new Date(iso).toLocaleDateString();
+  }
+
+  var toastRoot = $('pc-toasts');
+  function toast(msg, kind) {
+    if (!toastRoot) return;
+    var el = document.createElement('div');
+    el.className = 'pc-toast' + (kind ? ' pc-toast--' + kind : '');
+    el.setAttribute('role', 'status');
+    el.textContent = msg;
+    toastRoot.appendChild(el);
+    setTimeout(function () {
+      el.style.transition = 'opacity .25s ease, transform .25s ease';
+      el.style.opacity = '0'; el.style.transform = 'translateY(6px)';
+      setTimeout(function () { el.remove(); }, 260);
+    }, 2200);
+  }
+
+  /* ------------------------------------------------------------
+     OVERVIEW CARDS
+     ------------------------------------------------------------ */
+  function renderOverview() {
+    // Website Content
+    setText('pc-content-active', state.content.activeSections != null ? state.content.activeSections : '—');
+    setText('pc-content-incomplete', state.content.incompleteSections != null ? state.content.incompleteSections : '—');
+    setText('pc-content-last', state.content.lastUpdate
+      ? fmtRelative(state.content.lastUpdate)
+      : 'Not recorded');
+
+    // Functions
+    setText('pc-fn-installed', state.functions.installed != null ? state.functions.installed : '—');
+    setText('pc-fn-connected', state.functions.connected != null ? state.functions.connected : '—');
+    setText('pc-fn-attention', state.functions.attention != null ? state.functions.attention : '—');
+
+    // Domain & Security
+    setText('pc-domain-status',
+      state.domain.domainStatus === 'connected' ? 'Connected'
+      : state.domain.domainStatus === 'not_connected' ? 'Not connected'
+      : 'Unknown');
+    setText('pc-https-status',
+      state.domain.httpsStatus === 'verified' ? 'Verified'
+      : state.domain.httpsStatus === 'unverified' ? 'Not verified'
+      : 'Unknown');
+    setText('pc-deploy-status',
+      state.domain.deployStatus === 'published' ? 'Published'
+      : state.domain.deployStatus === 'draft' ? 'Draft'
+      : 'Unknown');
+
+    // Activity
+    var activityBody = $('pc-activity-body');
+    if (activityBody) {
+      if (state.activity.connected) {
+        activityBody.innerHTML =
+          '<div class="pc-metric__stats">' +
+            '<span>Visitors: <b id="pc-visitors">' + (state.activity.visitors != null ? state.activity.visitors : '—') + '</b></span>' +
+            '<span>Page views: <b id="pc-pageviews">' + (state.activity.pageViews != null ? state.activity.pageViews : '—') + '</b></span>' +
+          '</div>' +
+          '<span class="pc-metric__hint">Last activity: ' +
+            (state.activity.lastActivity ? fmtRelative(state.activity.lastActivity) : '—') +
+          '</span>';
+      } else {
+        activityBody.innerHTML =
+          '<span class="pc-metric__hint" style="font-style:italic;color:var(--pc-warn)">' +
+            'Analytics Not Connected — connect your analytics provider to see visitors and page views.' +
+          '</span>';
+      }
+    }
+  }
+
+  /* ------------------------------------------------------------
+     FUNCTION OVERVIEW
+     ------------------------------------------------------------ */
+  function renderFunctionOverview() {
+    setText('pc-fno-installed', state.functions.installed != null ? state.functions.installed : '—');
+    setText('pc-fno-connected', state.functions.connected != null ? state.functions.connected : '—');
+
+    var opEl = $('pc-fno-operational');
+    if (opEl) {
+      if (state.functions.operational == null) {
+        opEl.textContent = 'Unknown';
+        opEl.className = 'pc-fn-tile__value pc-fn-tile__value--unknown';
+      } else {
+        opEl.textContent = state.functions.operational;
+        opEl.className = 'pc-fn-tile__value';
+      }
+    }
+    setText('pc-fno-attention', state.functions.attention != null ? state.functions.attention : '—');
+
+    var note = $('pc-fn-source-note');
+    if (note) {
+      note.textContent = state.functions.operational == null
+        ? 'Operational status is not verified until the function is connected and reporting health.'
+        : 'All values derive from Function Center.';
+    }
+  }
+
+  /* ------------------------------------------------------------
+     WEBSITE READINESS
+     ------------------------------------------------------------ */
+  function computeReadiness(r) {
+    if (!r.available) return null;
+
+    var keys = ['content', 'seo', 'publishing', 'functionHealth'];
+    var result = { total: 0, totalMax: 0, unknown: 0, cats: [] };
+
+    keys.forEach(function (key) {
+      var cat = r.categories[key];
+      if (!cat) return;
+
+      var known = cat.checks.filter(function (c) { return c.pass === true || c.pass === false; });
+      var passed = cat.checks.filter(function (c) { return c.pass === true; }).length;
+      var unknown = cat.checks.length - known.length;
+      var ratio = known.length ? passed / known.length : null;
+      var score = ratio == null ? null : Math.round(ratio * cat.weight);
+
+      result.cats.push({
+        key: key,
+        weight: cat.weight,
+        passed: passed,
+        total: cat.checks.length,
+        unknown: unknown,
+        score: score
+      });
+
+      result.totalMax += cat.weight;
+      result.total += score || 0;
+      result.unknown += unknown;
+    });
+
+    if (result.totalMax > 0 && result.totalMax !== 100) {
+      result.total = Math.round((result.total / result.totalMax) * 100);
+    }
+    return result;
+  }
+
+  var CAT_LABEL = {
+    content: 'Content Completeness',
+    seo: 'SEO Setup',
+    publishing: 'Publishing Readiness',
+    functionHealth: 'Function Health'
+  };
+
+  function renderReadiness() {
+    var r = computeReadiness(state.readiness);
+    var scoreEl = $('pc-ring-score');
+    var labelEl = $('pc-ring-label');
+    var ringValue = $('pc-ring-value');
+    var catsEl = $('pc-cats');
+    var issuesEl = $('pc-issues');
+    var noteEl = $('pc-ready-note-text');
+    var subEl = $('pc-ready-sub');
+
+    if (!r) {
+      // Not Yet Evaluated
+      if (scoreEl) {
+        scoreEl.textContent = 'Not Yet';
+        scoreEl.className = 'pc-ring__score pc-ring__score--unknown';
+      }
+      if (labelEl) labelEl.textContent = 'Evaluated';
+      if (ringValue) ringValue.setAttribute('stroke-dashoffset', '326.7');
+      if (catsEl) catsEl.innerHTML = '';
+      if (subEl) subEl.textContent = 'No checks have been run yet.';
+      if (issuesEl) {
+        issuesEl.innerHTML =
+          '<li class="pc-issue pc-issue--warn">' +
+            '<span class="pc-issue__icon">!</span>' +
+            '<div class="pc-issue__body">' +
+              '<div class="pc-issue__title">Not Yet Evaluated</div>' +
+              '<div class="pc-issue__desc">Publish or open the builder once to trigger a readiness check.</div>' +
+            '</div>' +
+          '</li>';
+      }
+      if (noteEl) noteEl.textContent = 'Readiness requires at least one completed check.';
+      return;
+    }
+
+    if (scoreEl) {
+      scoreEl.textContent = String(r.total);
+      scoreEl.className = 'pc-ring__score';
+    }
+    if (labelEl) labelEl.textContent = 'of 100';
+    if (subEl) subEl.textContent =
+      'Calculated from available checks. Unknown checks are not counted as passed.';
+
+    if (ringValue) {
+      var circ = 2 * Math.PI * 52;
+      var offset = circ * (1 - r.total / 100);
+      ringValue.setAttribute('stroke-dasharray', circ.toFixed(1));
+      ringValue.setAttribute('stroke-dashoffset', offset.toFixed(1));
+    }
+
+    if (catsEl) {
+      catsEl.innerHTML = '';
+      r.cats.forEach(function (c) {
+        var row = document.createElement('div');
+        row.className = 'pc-cat';
+
+        var left = document.createElement('div');
+        var head = document.createElement('div');
+        head.className = 'pc-cat__row';
+
+        var name = document.createElement('span');
+        name.className = 'pc-cat__name';
+        name.textContent = CAT_LABEL[c.key] || c.key;
+        head.appendChild(name);
+
+        var meta = document.createElement('span');
+        meta.className = 'pc-cat__meta';
+        meta.textContent = c.total
+          ? (c.passed + '/' + c.total + (c.unknown ? ' · ' + c.unknown + ' unknown' : ''))
+          : 'No checks';
+        head.appendChild(meta);
+
+        left.appendChild(head);
+
+        var bar = document.createElement('div');
+        bar.className = 'pc-cat__bar';
+        var fill = document.createElement('div');
+        fill.className = 'pc-cat__fill';
+        if (c.score == null) fill.style.width = '0%';
+        else fill.style.width = (c.score / c.weight * 100).toFixed(1) + '%';
+        bar.appendChild(fill);
+        left.appendChild(bar);
+        row.appendChild(left);
+
+        var scoreEl2 = document.createElement('div');
+        if (c.score == null) {
+          scoreEl2.className = 'pc-cat__score pc-cat__score--unknown';
+          scoreEl2.textContent = '—';
+        } else {
+          scoreEl2.className = 'pc-cat__score';
+          scoreEl2.textContent = c.score + '/' + c.weight;
+        }
+        row.appendChild(scoreEl2);
+        catsEl.appendChild(row);
+      });
+    }
+
+    if (issuesEl) {
+      issuesEl.innerHTML = '';
+      var issues = [];
+      Object.keys(state.readiness.categories).forEach(function (key) {
+        var cat = state.readiness.categories[key];
+        cat.checks.forEach(function (chk) {
+          if (chk.pass === false) {
+            issues.push({ cat: key, chk: chk });
+          }
+        });
+      });
+
+      if (!issues.length) {
+        issuesEl.innerHTML =
+          '<li class="pc-issue">' +
+            '<span class="pc-issue__icon">✓</span>' +
+            '<div class="pc-issue__body">' +
+              '<div class="pc-issue__title">No blocking issues</div>' +
+              '<div class="pc-issue__desc">All verified checks are passing.</div>' +
+            '</div>' +
+          '</li>';
+      } else {
+        issues.slice(0, 5).forEach(function (i) {
+          var li = document.createElement('li');
+          var kind = i.chk.owner === 'profilecraft' ? 'pc-issue--warn' : 'pc-issue--block';
+          li.className = 'pc-issue ' + kind;
+          var ownerLabel = i.chk.owner === 'profilecraft'
+            ? 'Profile Craft'
+            : 'You';
+          var ownerClass = i.chk.owner === 'profilecraft'
+            ? 'pc-issue__owner pc-issue__owner--us'
+            : 'pc-issue__owner pc-issue__owner--you';
+          li.innerHTML =
+            '<span class="pc-issue__icon">!</span>' +
+            '<div class="pc-issue__body">' +
+              '<div class="pc-issue__title">' + i.chk.label + '</div>' +
+              '<div class="pc-issue__desc">' + CAT_LABEL[i.cat] + '</div>' +
+              '<span class="' + ownerClass + '">Needs: ' + ownerLabel + '</span>' +
+            '</div>';
+          issuesEl.appendChild(li);
+        });
+      }
+    }
+
+    if (noteEl) {
+      noteEl.textContent =
+        'Readiness is separate from publication status. Unknown checks (' + r.unknown +
+        ') are not counted as passed.';
+    }
+  }
+
+  /* ------------------------------------------------------------
+     LANGUAGE SELECTOR (working custom dropdown)
+     ------------------------------------------------------------ */
+  function setupLanguage() {
+    var wrap = $('pc-lang');
+    var trigger = $('pc-lang-trigger');
+    var menu = $('pc-lang-menu');
+    var current = $('pc-lang-current');
+    if (!wrap || !trigger || !menu) return;
+
+    function close() {
+      wrap.setAttribute('data-open', 'false');
+      trigger.setAttribute('aria-expanded', 'false');
+      menu.hidden = true;
+    }
+    function open() {
+      wrap.setAttribute('data-open', 'true');
+      trigger.setAttribute('aria-expanded', 'true');
+      menu.hidden = false;
+      var first = menu.querySelector('button');
+      if (first) first.focus();
+    }
+    function toggle() {
+      if (menu.hidden) open(); else close();
+    }
+
+    trigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      toggle();
+    });
+
+    menu.addEventListener('click', function (e) {
+      var btn = e.target.closest('button[data-lang]');
+      if (!btn) return;
+      e.stopPropagation();
+      var lang = btn.getAttribute('data-lang');
+      current.textContent = btn.textContent;
+      menu.querySelectorAll('button[data-lang]').forEach(function (b) {
+        b.setAttribute('aria-selected', String(b === btn));
+      });
+      close();
+      trigger.focus();
+      // No translation logic — UI-only per spec.
+      toast('Language: ' + btn.textContent + ' (UI only)', 'ok');
+    });
+
+    // Keyboard navigation inside menu
+    menu.addEventListener('keydown', function (e) {
+      var items = Array.prototype.slice.call(menu.querySelectorAll('button[data-lang]'));
+      var idx = items.indexOf(document.activeElement);
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        items[(idx + 1) % items.length].focus();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        items[(idx - 1 + items.length) % items.length].focus();
+      } else if (e.key === 'Home') {
+        e.preventDefault(); items[0].focus();
+      } else if (e.key === 'End') {
+        e.preventDefault(); items[items.length - 1].focus();
+      } else if (e.key === 'Escape') {
+        e.preventDefault(); close(); trigger.focus();
+      }
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!wrap.contains(e.target)) close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !menu.hidden) {
+        close(); trigger.focus();
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------
+     NOTIFICATIONS
+     ------------------------------------------------------------ */
+  function setupNotifications() {
+    var wrap = $('pc-notif');
+    var btn = $('pc-notif-btn');
+    var panel = $('pc-notif-panel');
+    var list = $('pc-notif-list');
+    var countEl = $('pc-notif-count');
+    var dot = $('pc-notif-dot');
+    if (!wrap || !btn || !panel) return;
+
+    function render() {
+      var items = state.notifications.items || [];
+      var unread = items.filter(function (i) { return i.unread; }).length;
+      state.notifications.unread = unread;
+
+      if (countEl) countEl.textContent = unread + ' unread';
+      if (dot) dot.classList.toggle('is-visible', unread > 0);
+
+      if (!items.length) {
+        list.innerHTML =
+          '<li class="pc-notif__empty">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+                'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+              '<circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/>' +
+            '</svg>' +
+            '<strong>You\'re all caught up</strong>' +
+            '<p>There are no notifications right now.</p>' +
+          '</li>';
+        return;
+      }
+
+      list.innerHTML = '';
+      items.forEach(function (n) {
+        var li = document.createElement('li');
+        li.className = 'pc-notif__item';
+        li.setAttribute('data-unread', String(!!n.unread));
+        li.innerHTML =
+          '<span class="pc-notif__dot" aria-hidden="true"></span>' +
+          '<div class="pc-notif__body">' +
+            '<div class="pc-notif__item-title">' + (n.title || 'Notification') + '</div>' +
+            (n.desc ? '<div class="pc-notif__item-desc">' + n.desc + '</div>' : '') +
+            (n.time ? '<div class="pc-notif__item-time">' + n.time + '</div>' : '') +
+          '</div>';
+        list.appendChild(li);
+      });
+    }
+
+    function open() {
+      btn.setAttribute('aria-expanded', 'true');
+      panel.hidden = false;
+      render();
+    }
+    function close() {
+      btn.setAttribute('aria-expanded', 'false');
+      panel.hidden = true;
+    }
+    function toggle() {
+      if (panel.hidden) open(); else close();
+    }
+
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      toggle();
+    });
+
+    panel.addEventListener('click', function (e) {
+      // Panel clicks should not close it via outside-click handler
+      e.stopPropagation();
+    });
+
+    document.addEventListener('click', function (e) {
+      if (!wrap.contains(e.target)) close();
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !panel.hidden) {
+        close(); btn.focus();
+      }
+    });
+
+    render();
+  }
+
+  /* ------------------------------------------------------------
+     PREVIEW PANEL (unchanged behavior)
+     ------------------------------------------------------------ */
+  function setupPreview() {
+    var wrap = $('pc-preview-wrap');
+    var device = $('pc-preview-device');
+    var version = 'draft';
+    var viewport = 'desktop';
+
+    function openPreview() {
+      if (!wrap) return;
+      wrap.classList.add('is-open');
+      wrap.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePreview() {
+      if (!wrap) return;
+      wrap.classList.remove('is-open', 'is-fullscreen');
+      wrap.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      if (!t || typeof t.closest !== 'function') return;
+
+      if (t.closest('[data-open-preview]')) {
+        e.preventDefault(); openPreview(); return;
+      }
+      if (t.closest('[data-close-preview]')) {
+        e.preventDefault(); closePreview(); return;
+      }
+
+      var v = t.closest('[data-preview-version]');
+      if (v) {
+        version = v.getAttribute('data-preview-version');
+        document.querySelectorAll('[data-preview-version]').forEach(function (b) {
+          b.setAttribute('aria-pressed', String(b === v));
+        });
+        return;
+      }
+
+      var p = t.closest('[data-preview-viewport]');
+      if (p) {
+        viewport = p.getAttribute('data-preview-viewport');
+        document.querySelectorAll('[data-preview-viewport]').forEach(function (b) {
+          b.setAttribute('aria-pressed', String(b === p));
+        });
+        if (device) device.setAttribute('data-vp', viewport);
+        return;
+      }
+
+      if (t.closest('#pc-preview-fullscreen')) {
+        if (wrap) wrap.classList.toggle('is-fullscreen');
+        return;
+      }
+
+      if (t.closest('[data-action="upload-image"]') ||
+          t.closest('[data-action="choose-image"]')) {
+        var f = $('pc-seo-file');
+        if (f) f.click();
+        return;
+      }
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && wrap && wrap.classList.contains('is-open')) {
+        closePreview();
+      }
+    });
+  }
+
+  /* ------------------------------------------------------------
+     SEO FORM (unchanged behavior + working save feedback)
+     ------------------------------------------------------------ */
+  function setupSEO() {
+    var titleIn = $('pc-seo-title-input');
+    var descIn  = $('pc-seo-desc-input');
+    var tCount  = $('pc-seo-title-count');
+    var dCount  = $('pc-seo-desc-count');
+    var sTitle  = $('pc-social-title');
+    var sDesc   = $('pc-social-desc');
+    var sImg    = $('pc-social-img');
+    var thumb   = $('pc-seo-thumb');
+    var status  = $('pc-seo-status');
+
+    function sync() {
+      if (!titleIn || !descIn) return;
+      if (tCount) tCount.textContent = titleIn.value.length;
+      if (dCount) dCount.textContent = descIn.value.length;
+      if (sTitle) sTitle.textContent = titleIn.value || 'My Portfolio';
+      if (sDesc)  sDesc.textContent  = descIn.value  || 'A short description of your portfolio.';
+    }
+    if (titleIn) titleIn.addEventListener('input', sync);
+    if (descIn)  descIn.addEventListener('input', sync);
+    sync();
+
+    var fileInput = $('pc-seo-file');
+    if (fileInput) {
+      fileInput.addEventListener('change', function () {
+        var file = fileInput.files && fileInput.files[0];
+        if (!file) return;
+        var url = URL.createObjectURL(file);
+        if (sImg)  sImg.innerHTML = '<img alt="" src="' + url + '">';
+        if (thumb) thumb.innerHTML = '<img alt="" src="' + url + '">';
+      });
+    }
+
+    var form = $('pc-seo-form');
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (status) {
+          status.textContent = 'Saved (local demo — no backend).';
+          status.style.color = '#0f9d58';
+        }
+        toast('Saved locally — this is a UI demo, nothing was persisted.', 'ok');
+      });
+    }
+  }
+
+  /* ------------------------------------------------------------
+     BOOT
+     ------------------------------------------------------------ */
+  function boot() {
+    renderOverview();
+    renderFunctionOverview();
+    renderReadiness();
+    setupLanguage();
+    setupNotifications();
+    setupPreview();
+    setupSEO();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+
+</body>
+</html>

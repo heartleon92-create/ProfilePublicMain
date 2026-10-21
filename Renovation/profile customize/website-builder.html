@@ -1,0 +1,1978 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Website Builder — Profile Craft Studio</title>
+
+<style>
+/* ============================================================
+   PROFILE CRAFT STUDIO · WEBSITE BUILDER
+   Scoped with .bd-* prefixes so nothing leaks into the sidebar.
+   ============================================================ */
+
+:root{
+  --bd-bg:#F3F6FC;
+  --bd-glass:rgba(255,255,255,.78);
+  --bd-glass-hi:rgba(255,255,255,.92);
+  --bd-glass-soft:rgba(225,237,255,.58);
+  --bd-border:rgba(148,177,230,.24);
+  --bd-border-strong:rgba(118,150,215,.38);
+  --bd-hairline:rgba(148,177,230,.18);
+
+  --bd-text:#17233D;
+  --bd-text-2:#3E4E6E;
+  --bd-muted:#71819F;
+
+  --bd-primary:#315EFB;
+  --bd-primary-hover:#2447D6;
+  --bd-primary-ink:#1B3AA8;
+  --bd-primary-soft:rgba(49,94,251,.10);
+  --bd-primary-soft-2:rgba(49,94,251,.18);
+  --bd-sky:#63B8FF;
+
+  --bd-success:#0E8F55;
+  --bd-success-soft:rgba(14,143,85,.12);
+  --bd-warn:#B5751A;
+  --bd-warn-soft:rgba(181,117,26,.14);
+  --bd-danger:#B9372A;
+  --bd-danger-soft:rgba(185,55,42,.10);
+
+  --bd-r-xs:7px; --bd-r-sm:10px; --bd-r:12px; --bd-r-lg:16px; --bd-r-xl:22px;
+
+  --bd-shadow-sm:0 4px 14px rgba(41,72,135,.06), 0 1px 2px rgba(41,72,135,.05);
+  --bd-shadow:0 8px 24px rgba(41,72,135,.07), 0 2px 6px rgba(41,72,135,.05);
+  --bd-shadow-lg:0 26px 52px -28px rgba(41,72,135,.32), 0 6px 14px -6px rgba(41,72,135,.10);
+
+  --bd-sidebar-w:282px;
+  --bd-sidebar-w-collapsed:88px;
+  --bd-ease:cubic-bezier(.4,0,.2,1);
+
+  --bd-font:"Myanmar Text","Noto Sans Myanmar","Padauk","Pyidaungsu",
+            -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+            "Helvetica Neue",Arial,sans-serif;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+html{-webkit-text-size-adjust:100%;}
+
+body{
+  font-family:var(--bd-font);
+  font-size:14px;
+  line-height:1.55;
+  color:var(--bd-text);
+  background:
+    radial-gradient(1200px 600px at 12% -8%, rgba(99,184,255,.16), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(91,98,232,.14), transparent 65%),
+    linear-gradient(180deg, var(--bd-bg) 0%, #EEF3FB 100%);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+
+#sidebar-container{display:contents;}
+
+/* ============================================================
+   SHELL
+   ============================================================ */
+.bd-shell{
+  min-height:100vh;
+  padding-inline-start:var(--bd-sidebar-w);
+  transition:padding-inline-start .28s var(--bd-ease);
+  display:flex;
+  flex-direction:column;
+}
+html.pb-sidebar-collapsed .bd-shell{padding-inline-start:var(--bd-sidebar-w-collapsed);}
+@media (max-width:1023px){
+  .bd-shell,
+  html.pb-sidebar-collapsed .bd-shell{padding-inline-start:0;}
+}
+
+/* ============================================================
+   TOOLBAR
+   ============================================================ */
+.bd-toolbar{
+  position:sticky;top:0;z-index:60;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:12px 22px;
+  background:linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.72));
+  backdrop-filter:saturate(180%) blur(14px);
+  -webkit-backdrop-filter:saturate(180%) blur(14px);
+  border-bottom:1px solid var(--bd-hairline);
+  box-shadow:0 1px 0 rgba(255,255,255,.6) inset, 0 6px 20px -12px rgba(41,72,135,.16);
+}
+.bd-toolbar__mobile{display:none;}
+@media (max-width:767.98px){ .bd-toolbar__mobile{display:inline-flex;} }
+
+.bd-toolbar__title{display:flex;flex-direction:column;min-width:0;}
+.bd-toolbar__crumbs{
+  display:flex;align-items:center;gap:6px;
+  font-size:12px;color:var(--bd-muted);margin-bottom:2px;
+}
+.bd-toolbar__crumbs svg{width:13px;height:13px;color:var(--bd-muted);}
+.bd-toolbar__crumbs strong{color:var(--bd-text);font-weight:700;}
+.bd-toolbar__h1{
+  margin:0;font-size:16px;font-weight:800;letter-spacing:-.01em;
+  color:var(--bd-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+.bd-toolbar__spacer{flex:1 1 auto;}
+
+/* Status pill */
+.bd-status{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:5px 11px;border-radius:999px;
+  font-size:11.5px;font-weight:700;
+  background:rgba(148,177,230,.14);
+  border:1px solid var(--bd-border);
+  color:var(--bd-muted);
+  white-space:nowrap;
+}
+.bd-status::before{
+  content:"";width:7px;height:7px;border-radius:50%;background:currentColor;
+}
+.bd-status.is-dirty{
+  background:var(--bd-warn-soft);border-color:rgba(181,117,26,.24);
+  color:var(--bd-warn);
+}
+.bd-status.is-saved{
+  background:var(--bd-success-soft);border-color:rgba(14,143,85,.22);
+  color:var(--bd-success);
+}
+
+/* Buttons */
+.bd-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:9px 14px;border-radius:var(--bd-r-sm);
+  border:1px solid transparent;
+  font-family:inherit;font-size:13px;font-weight:600;line-height:1.2;
+  cursor:pointer;white-space:nowrap;
+  transition:background-color .18s var(--bd-ease),
+             color .18s var(--bd-ease),
+             border-color .18s var(--bd-ease),
+             box-shadow .18s var(--bd-ease),
+             transform .12s var(--bd-ease);
+}
+.bd-btn:active{transform:translateY(1px);}
+.bd-btn:focus-visible{outline:2px solid var(--bd-primary);outline-offset:2px;}
+.bd-btn svg{width:16px;height:16px;flex:0 0 auto;}
+
+.bd-btn--primary{
+  background:linear-gradient(180deg, #4B72FF 0%, var(--bd-primary) 100%);
+  color:#fff;
+  box-shadow:0 1px 0 rgba(255,255,255,.35) inset, 0 6px 16px -8px rgba(49,94,251,.6);
+}
+.bd-btn--primary:hover{
+  background:linear-gradient(180deg, #3F66FF, var(--bd-primary-hover));
+  box-shadow:0 1px 0 rgba(255,255,255,.35) inset, 0 10px 22px -10px rgba(49,94,251,.7);
+}
+.bd-btn--ghost{
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,251,255,.9));
+  color:var(--bd-text);border-color:var(--bd-border);
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 2px 6px -4px rgba(41,72,135,.18);
+}
+.bd-btn--ghost:hover{
+  background:linear-gradient(180deg, #fff, rgba(232,241,255,.9));
+  border-color:var(--bd-border-strong);color:var(--bd-primary-ink);
+}
+.bd-btn--sm{padding:7px 11px;font-size:12px;border-radius:8px;}
+
+/* Icon button */
+.bd-icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:36px;height:36px;
+  border:1px solid var(--bd-border);border-radius:var(--bd-r-sm);
+  background:linear-gradient(180deg, var(--bd-glass-hi), var(--bd-glass));
+  color:var(--bd-text-2);cursor:pointer;position:relative;
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset, 0 2px 6px -4px rgba(41,72,135,.18);
+  transition:background-color .18s var(--bd-ease),
+             border-color .18s var(--bd-ease),
+             color .18s var(--bd-ease),
+             box-shadow .18s var(--bd-ease);
+}
+.bd-icon-btn:hover{
+  background:linear-gradient(180deg,#fff, rgba(232,241,255,.9));
+  border-color:var(--bd-border-strong);color:var(--bd-primary-ink);
+}
+.bd-icon-btn:focus-visible{outline:2px solid var(--bd-primary);outline-offset:2px;}
+.bd-icon-btn svg{width:17px;height:17px;}
+
+/* Link-styled action (Function Center) */
+.bd-link{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:8px 12px;border-radius:var(--bd-r-sm);
+  border:1px solid var(--bd-border);
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,251,255,.9));
+  color:var(--bd-primary-ink);
+  font-size:12.5px;font-weight:700;text-decoration:none;
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+  transition:background-color .18s var(--bd-ease),
+             border-color .18s var(--bd-ease),
+             box-shadow .18s var(--bd-ease),
+             gap .18s var(--bd-ease);
+  white-space:nowrap;
+}
+.bd-link:hover{
+  background:linear-gradient(180deg,#fff, var(--bd-primary-soft));
+  border-color:var(--bd-primary-soft-2);
+  gap:8px;
+}
+.bd-link:focus-visible{outline:2px solid var(--bd-primary);outline-offset:2px;}
+.bd-link svg{width:15px;height:15px;flex:0 0 auto;}
+
+/* ============================================================
+   MAIN — 2-pane workspace
+   ============================================================ */
+.bd-main{
+  flex:1 1 auto;
+  padding:20px;
+  display:grid;
+  gap:16px;
+  grid-template-columns:minmax(280px, 380px) minmax(0, 1fr);
+  align-items:start;
+  max-width:1560px;
+  width:100%;
+  margin:0 auto;
+}
+@media (max-width:1023.98px){
+  .bd-main{grid-template-columns:minmax(260px, 320px) minmax(0, 1fr);}
+}
+@media (max-width:820px){
+  .bd-main{grid-template-columns:minmax(0,1fr); padding:14px; gap:12px;}
+}
+
+/* ============================================================
+   PANE (glass card)
+   ============================================================ */
+.bd-pane{
+  position:relative;
+  background:linear-gradient(180deg, var(--bd-glass-hi) 0%, var(--bd-glass) 100%);
+  border:1px solid var(--bd-border);
+  border-radius:var(--bd-r-lg);
+  box-shadow:var(--bd-shadow-sm);
+  backdrop-filter:saturate(160%) blur(14px);
+  -webkit-backdrop-filter:saturate(160%) blur(14px);
+  display:flex;flex-direction:column;
+  min-height:0;
+  overflow:hidden;
+}
+.bd-pane__head{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:14px 16px;
+  border-bottom:1px solid var(--bd-hairline);
+  background:linear-gradient(180deg, rgba(255,255,255,.45), transparent);
+}
+.bd-pane__title{
+  margin:0;font-size:13px;font-weight:800;letter-spacing:-.005em;
+  color:var(--bd-text);
+}
+.bd-pane__sub{
+  margin:2px 0 0;font-size:11.5px;color:var(--bd-muted);
+  line-height:1.5;
+}
+.bd-pane__body{padding:14px 16px;}
+.bd-pane__body--flush{padding:0;}
+
+/* ============================================================
+   SECTION MANAGER
+   ============================================================ */
+.bd-manager{
+  display:flex;flex-direction:column;
+  max-height:calc(100vh - 200px);
+}
+@media (max-width:820px){ .bd-manager{max-height:none;} }
+
+.bd-sections{
+  list-style:none;margin:0;padding:8px;
+  display:flex;flex-direction:column;gap:8px;
+  overflow-y:auto;
+  scrollbar-width:thin;
+  scrollbar-color:var(--bd-border-strong) transparent;
+}
+.bd-sections::-webkit-scrollbar{width:6px;}
+.bd-sections::-webkit-scrollbar-thumb{
+  background:var(--bd-border-strong);border-radius:999px;
+}
+
+.bd-sec{
+  position:relative;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:10px;
+  align-items:center;
+  padding:10px 12px;
+  border:1px solid var(--bd-border);
+  border-radius:var(--bd-r);
+  background:linear-gradient(180deg, rgba(255,255,255,.85), rgba(246,250,255,.65));
+  box-shadow:0 1px 0 rgba(255,255,255,.85) inset;
+  transition:border-color .18s var(--bd-ease),
+             background-color .18s var(--bd-ease),
+             box-shadow .18s var(--bd-ease),
+             transform .18s var(--bd-ease);
+}
+.bd-sec:hover{
+  border-color:var(--bd-border-strong);
+  box-shadow:0 1px 0 rgba(255,255,255,.85) inset, 0 6px 14px -10px rgba(41,72,135,.28);
+}
+.bd-sec.is-selected{
+  border-color:var(--bd-primary-soft-2);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.9), var(--bd-primary-soft));
+  box-shadow:0 1px 0 rgba(255,255,255,.85) inset, 0 6px 14px -10px rgba(49,94,251,.35);
+}
+.bd-sec.is-dragging{opacity:.55;}
+.bd-sec.is-drop-target{
+  border-color:var(--bd-primary);
+  background:rgba(49,94,251,.06);
+}
+.bd-sec.is-hidden{
+  background:
+    repeating-linear-gradient(135deg, rgba(148,177,230,.06) 0 8px, rgba(148,177,230,.02) 8px 16px),
+    linear-gradient(180deg, rgba(255,255,255,.7), rgba(246,250,255,.6));
+}
+.bd-sec.is-hidden .bd-sec__name,
+.bd-sec.is-hidden .bd-sec__layout{
+  color:var(--bd-muted);
+}
+
+/* Drag handle */
+.bd-sec__handle{
+  display:grid;place-items:center;
+  width:26px;height:34px;flex:0 0 auto;
+  border:0;background:transparent;
+  color:var(--bd-muted);
+  cursor:grab;
+  border-radius:var(--bd-r-xs);
+  transition:color .18s var(--bd-ease), background-color .18s var(--bd-ease);
+}
+.bd-sec__handle:hover{color:var(--bd-primary-ink);background:var(--bd-primary-soft);}
+.bd-sec__handle:focus-visible{outline:2px solid var(--bd-primary);outline-offset:1px;}
+.bd-sec__handle:active{cursor:grabbing;}
+.bd-sec__handle[disabled]{opacity:.35;cursor:not-allowed;}
+.bd-sec__handle svg{width:14px;height:14px;}
+
+/* Body */
+.bd-sec__body{min-width:0;}
+.bd-sec__row{
+  display:flex;align-items:center;gap:6px;min-width:0;
+}
+.bd-sec__name{
+  font-size:13px;font-weight:700;color:var(--bd-text);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.bd-sec__lock{
+  display:inline-flex;align-items:center;
+  color:var(--bd-muted);flex:0 0 auto;
+}
+.bd-sec__lock svg{width:12px;height:12px;}
+.bd-sec__layout{
+  display:block;font-size:11.5px;color:var(--bd-muted);
+  margin-top:1px;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+
+/* Actions column */
+.bd-sec__actions{
+  display:flex;align-items:center;gap:4px;flex:0 0 auto;
+}
+
+.bd-sec__edit{
+  display:inline-flex;align-items:center;gap:4px;
+  height:28px;padding:0 9px;
+  border:1px solid var(--bd-border);
+  border-radius:var(--bd-r-xs);
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,251,255,.9));
+  color:var(--bd-text-2);
+  font-family:inherit;font-size:11.5px;font-weight:600;
+  cursor:pointer;
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+  transition:background-color .18s var(--bd-ease),
+             border-color .18s var(--bd-ease),
+             color .18s var(--bd-ease);
+}
+.bd-sec__edit:hover{
+  background:linear-gradient(180deg, #fff, var(--bd-primary-soft));
+  border-color:var(--bd-primary-soft-2);color:var(--bd-primary-ink);
+}
+.bd-sec__edit:focus-visible{outline:2px solid var(--bd-primary);outline-offset:1px;}
+
+/* Visibility toggle */
+.bd-toggle{
+  position:relative;
+  display:inline-flex;align-items:center;justify-content:center;
+  width:32px;height:22px;flex:0 0 auto;
+  border:1px solid var(--bd-border);
+  border-radius:999px;
+  background:rgba(148,177,230,.18);
+  cursor:pointer;
+  transition:background-color .2s var(--bd-ease), border-color .2s var(--bd-ease);
+}
+.bd-toggle::after{
+  content:"";position:absolute;
+  top:2px;left:2px;width:16px;height:16px;border-radius:50%;
+  background:#fff;box-shadow:0 1px 3px rgba(41,72,135,.25);
+  transition:left .22s var(--bd-ease), background-color .2s var(--bd-ease);
+}
+.bd-toggle[aria-pressed="true"]{
+  background:linear-gradient(180deg, #4B72FF, var(--bd-primary));
+  border-color:var(--bd-primary);
+}
+.bd-toggle[aria-pressed="true"]::after{
+  left:12px;
+}
+.bd-toggle:focus-visible{outline:2px solid var(--bd-primary);outline-offset:2px;}
+.bd-toggle[disabled]{opacity:.45;cursor:not-allowed;}
+.bd-toggle svg{display:none;}
+
+/* Manager footer */
+.bd-manager__foot{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:10px 14px;
+  border-top:1px solid var(--bd-hairline);
+  background:linear-gradient(180deg, transparent, rgba(255,255,255,.5));
+  font-size:11.5px;color:var(--bd-muted);
+}
+
+/* ============================================================
+   PREVIEW
+   ============================================================ */
+.bd-preview{
+  display:flex;flex-direction:column;
+  min-height:0;
+}
+.bd-preview__head{
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  padding:12px 16px;
+  border-bottom:1px solid var(--bd-hairline);
+  background:linear-gradient(180deg, rgba(255,255,255,.45), transparent);
+}
+.bd-preview__head .bd-pane__title{font-size:13px;}
+
+.bd-seg{
+  display:inline-flex;padding:3px;gap:2px;
+  border:1px solid var(--bd-border);border-radius:999px;
+  background:linear-gradient(180deg, rgba(255,255,255,.85), rgba(246,250,255,.7));
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+  margin-inline-start:auto;
+}
+.bd-seg button{
+  border:0;background:transparent;
+  padding:5px 12px;border-radius:999px;
+  font-family:inherit;font-size:11.5px;font-weight:700;
+  color:var(--bd-text-2);
+  cursor:pointer;display:inline-flex;align-items:center;gap:5px;
+  transition:color .18s var(--bd-ease), background-color .18s var(--bd-ease);
+}
+.bd-seg button svg{width:13px;height:13px;}
+.bd-seg button[aria-pressed="true"]{
+  background:linear-gradient(180deg, #fff, rgba(232,241,255,.9));
+  color:var(--bd-primary-ink);
+  box-shadow:0 1px 0 rgba(255,255,255,.9) inset, 0 4px 10px -6px rgba(49,94,251,.35);
+}
+.bd-seg button:focus-visible{outline:2px solid var(--bd-primary);outline-offset:1px;}
+
+.bd-preview__stage{
+  flex:1 1 auto;
+  min-height:0;
+  padding:22px;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(600px 320px at 50% -20%, rgba(99,184,255,.14), transparent 65%),
+    linear-gradient(180deg, #F7FAFF 0%, #EEF3FB 100%);
+  overflow:auto;
+}
+
+.bd-canvas{
+  width:100%;
+  max-width:100%;
+  min-height:420px;
+  background:#ffffff;
+  border:1px solid var(--bd-border);
+  border-radius:var(--bd-r);
+  box-shadow:var(--bd-shadow);
+  overflow:hidden;
+  transition:max-width .3s var(--bd-ease), width .3s var(--bd-ease);
+  font-family:var(--bd-font);
+}
+.bd-canvas[data-vp="mobile"]{
+  max-width:390px;
+  width:390px;
+}
+@media (max-width:520px){
+  .bd-canvas[data-vp="mobile"]{width:100%;max-width:100%;}
+}
+
+/* Canvas hint */
+.bd-preview__hint{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 14px;
+  border-top:1px solid var(--bd-hairline);
+  background:linear-gradient(180deg, transparent, rgba(255,255,255,.6));
+  font-size:11.5px;color:var(--bd-muted);
+}
+.bd-preview__hint svg{width:14px;height:14px;flex:0 0 auto;color:var(--bd-primary);}
+
+/* ============================================================
+   PREVIEW — rendered section styles
+   ============================================================ */
+.bd-sv{
+  position:relative;
+  padding:28px 26px;
+  cursor:pointer;
+  transition:outline-color .18s var(--bd-ease), background-color .18s var(--bd-ease);
+  outline:1px solid transparent;
+  outline-offset:-1px;
+}
+.bd-sv:hover{outline-color:rgba(49,94,251,.28);}
+.bd-sv.is-selected{
+  outline:2px solid var(--bd-primary);
+  outline-offset:-2px;
+}
+.bd-sv + .bd-sv{border-top:1px dashed var(--bd-hairline);}
+
+/* Visual styles */
+.bd-sv--header{
+  display:flex;justify-content:center;align-items:center;gap:20px;
+  padding:16px 22px;
+  background:#ffffff;
+  border-bottom:1px solid #eef2f9;
+  font-size:12.5px;
+}
+.bd-sv--header .bd-sv__brand{
+  font-weight:800;letter-spacing:.05em;color:#0f172a;
+}
+.bd-sv--header .bd-sv__nav{
+  display:flex;gap:16px;color:#64748b;
+}
+.bd-sv--header .bd-sv__cta{
+  padding:5px 12px;border-radius:999px;background:#315EFB;color:#fff;
+  font-weight:700;font-size:11px;
+}
+
+.bd-sv--cover{
+  text-align:center;
+  background:linear-gradient(135deg,#0f172a 0%,#1d4ed8 100%);
+  color:#fff;
+  padding:56px 26px;
+}
+.bd-sv--cover .bd-sv__eyebrow{
+  font-size:10px;letter-spacing:.22em;color:rgba(255,255,255,.72);
+  text-transform:uppercase;
+}
+.bd-sv--cover h2{
+  margin:8px 0 6px;font-size:26px;font-weight:800;letter-spacing:-.01em;
+}
+.bd-sv--cover p{margin:0;color:rgba(255,255,255,.82);font-size:13px;}
+
+.bd-sv--about{
+  display:grid;grid-template-columns:1fr 160px;gap:20px;align-items:center;
+}
+.bd-sv--about h3{margin:0 0 8px;font-size:18px;color:#0f172a;}
+.bd-sv--about p{margin:0;color:#475569;font-size:12.5px;line-height:1.7;}
+.bd-sv--about .bd-sv__photo{
+  width:100%;aspect-ratio:1/1;border-radius:14px;
+  background:linear-gradient(135deg,#63B8FF,#315EFB);
+  display:grid;place-items:center;color:#fff;font-weight:800;font-size:22px;
+}
+
+.bd-sv--services h3,
+.bd-sv--skills h3,
+.bd-sv--works h3,
+.bd-sv--gallery h3,
+.bd-sv--clients h3,
+.bd-sv--testimonials h3{
+  margin:0 0 14px;font-size:15px;color:#0f172a;text-align:center;
+}
+.bd-sv--services .bd-sv__grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+}
+.bd-sv--services .bd-sv__card{
+  padding:14px;border-radius:12px;
+  background:linear-gradient(180deg,#fff,#f3f8ff);
+  border:1px solid #e5e9f2;text-align:center;
+  font-size:12px;color:#475569;
+}
+.bd-sv--services .bd-sv__card strong{display:block;color:#0f172a;margin-bottom:3px;}
+
+.bd-sv--skills .bd-sv__tags{
+  display:flex;flex-wrap:wrap;gap:6px;justify-content:center;
+}
+.bd-sv--skills .bd-sv__tag{
+  padding:5px 12px;border-radius:999px;
+  background:#eef3ff;color:#1e3a8a;font-size:11.5px;font-weight:600;
+}
+
+.bd-sv--works .bd-sv__grid{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:10px;
+}
+.bd-sv--works .bd-sv__card{
+  aspect-ratio:16/10;border-radius:10px;
+  background:linear-gradient(135deg,#eef3ff,#dbeafe);
+  display:grid;place-items:center;color:#315EFB;font-size:11px;font-weight:700;
+}
+
+.bd-sv--gallery .bd-sv__grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+}
+.bd-sv--gallery .bd-sv__thumb{
+  aspect-ratio:1/1;border-radius:8px;
+  background:linear-gradient(135deg,#e0f2fe,#bae6fd);
+}
+
+.bd-sv--clients .bd-sv__grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:8px;
+}
+.bd-sv--clients .bd-sv__logo{
+  aspect-ratio:2/1;border-radius:8px;
+  background:rgba(255,255,255,.7);
+  border:1px solid #e5e9f2;
+  display:grid;place-items:center;color:#64748b;font-size:11px;font-weight:700;
+}
+
+.bd-sv--testimonials .bd-sv__list{
+  display:grid;gap:10px;
+}
+.bd-sv--testimonials .bd-sv__quote{
+  padding:14px;border-radius:12px;
+  background:#f8fafc;border:1px solid #e5e9f2;
+  font-size:12.5px;color:#475569;font-style:italic;
+}
+.bd-sv--testimonials .bd-sv__who{
+  display:block;margin-top:6px;font-style:normal;font-weight:700;color:#0f172a;font-size:11.5px;
+}
+
+/* Empty / loading states */
+.bd-empty{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  padding:48px 20px;color:var(--bd-muted);text-align:center;
+}
+.bd-empty svg{width:28px;height:28px;color:var(--bd-primary);opacity:.7;}
+.bd-empty strong{color:var(--bd-text);font-size:13px;font-weight:700;}
+.bd-empty p{margin:0;font-size:12px;max-width:320px;}
+
+/* ============================================================
+   EDITOR DRAWER
+   ============================================================ */
+.bd-drawer{
+  position:fixed;inset:0;z-index:200;
+  pointer-events:none;display:flex;justify-content:flex-end;
+}
+.bd-drawer.is-open{pointer-events:auto;}
+.bd-drawer__scrim{
+  position:absolute;inset:0;
+  background:rgba(21,35,61,.4);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+  opacity:0;transition:opacity .25s var(--bd-ease);
+}
+.bd-drawer.is-open .bd-drawer__scrim{opacity:1;}
+.bd-drawer__panel{
+  position:relative;
+  width:min(440px,92vw);height:100%;
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(246,250,255,.94));
+  border-inline-start:1px solid var(--bd-border);
+  box-shadow:var(--bd-shadow-lg);
+  backdrop-filter:saturate(180%) blur(18px);
+  -webkit-backdrop-filter:saturate(180%) blur(18px);
+  transform:translateX(100%);
+  transition:transform .3s var(--bd-ease);
+  display:flex;flex-direction:column;min-height:0;
+}
+.bd-drawer.is-open .bd-drawer__panel{transform:translateX(0);}
+.bd-drawer__head{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 16px;
+  border-bottom:1px solid var(--bd-hairline);
+  background:linear-gradient(180deg, rgba(255,255,255,.6), transparent);
+}
+.bd-drawer__title{
+  margin:0;font-size:14px;font-weight:800;color:var(--bd-text);
+}
+.bd-drawer__sub{margin:2px 0 0;font-size:11.5px;color:var(--bd-muted);}
+.bd-drawer__body{
+  flex:1 1 auto;min-height:0;overflow:auto;
+  padding:16px;
+  display:flex;flex-direction:column;gap:14px;
+}
+.bd-drawer__foot{
+  border-top:1px solid var(--bd-hairline);
+  padding:12px 16px;
+  display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+  background:linear-gradient(180deg, transparent, rgba(255,255,255,.6));
+}
+
+/* Form */
+.bd-field{display:flex;flex-direction:column;gap:6px;}
+.bd-field__label{
+  display:flex;justify-content:space-between;align-items:baseline;gap:8px;
+  font-size:12px;font-weight:700;color:var(--bd-text);
+}
+.bd-field__hint{font-size:11px;color:var(--bd-muted);font-weight:500;}
+.bd-field__input,
+.bd-field__textarea{
+  width:100%;height:38px;padding:0 12px;
+  border:1px solid var(--bd-border);border-radius:var(--bd-r-sm);
+  background:linear-gradient(180deg, rgba(255,255,255,.98), rgba(248,251,255,.9));
+  color:var(--bd-text);
+  font-family:inherit;font-size:13.5px;
+  box-shadow:0 1px 0 rgba(255,255,255,.8) inset;
+  transition:border-color .18s var(--bd-ease), box-shadow .18s var(--bd-ease);
+}
+.bd-field__textarea{
+  height:auto;min-height:88px;padding:10px 12px;line-height:1.55;resize:vertical;
+}
+.bd-field__input:focus,
+.bd-field__textarea:focus{
+  outline:none;border-color:var(--bd-primary);
+  box-shadow:0 0 0 3px rgba(49,94,251,.16);
+}
+.bd-field__note{
+  font-size:11.5px;color:var(--bd-muted);line-height:1.5;
+}
+
+/* Repeater (skills / works / gallery / services / testimonials) */
+.bd-repeat{
+  display:flex;flex-direction:column;gap:8px;
+}
+.bd-repeat__row{
+  display:flex;gap:6px;align-items:flex-start;
+  padding:8px;border:1px solid var(--bd-border);
+  border-radius:var(--bd-r);
+  background:linear-gradient(180deg, rgba(255,255,255,.85), rgba(246,250,255,.6));
+}
+.bd-repeat__row .bd-field{flex:1 1 auto;}
+.bd-repeat__row .bd-field__input{height:34px;}
+.bd-repeat__del{
+  flex:0 0 auto;
+  width:32px;height:34px;border:1px solid var(--bd-border);
+  border-radius:var(--bd-r-xs);
+  background:#fff;color:var(--bd-danger);cursor:pointer;
+  display:grid;place-items:center;
+  transition:background-color .16s var(--bd-ease), border-color .16s var(--bd-ease);
+}
+.bd-repeat__del:hover{background:var(--bd-danger-soft);border-color:rgba(185,55,42,.35);}
+.bd-repeat__del:focus-visible{outline:2px solid var(--bd-danger);outline-offset:1px;}
+.bd-repeat__del svg{width:14px;height:14px;}
+.bd-repeat__add{
+  align-self:flex-start;
+  display:inline-flex;align-items:center;gap:5px;
+  padding:6px 10px;border:1px dashed var(--bd-border-strong);
+  border-radius:var(--bd-r-sm);
+  background:transparent;color:var(--bd-primary-ink);
+  font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;
+  transition:background-color .16s var(--bd-ease), border-color .16s var(--bd-ease);
+}
+.bd-repeat__add:hover{background:var(--bd-primary-soft);border-color:var(--bd-primary-soft-2);}
+.bd-repeat__add:focus-visible{outline:2px solid var(--bd-primary);outline-offset:2px;}
+.bd-repeat__add svg{width:14px;height:14px;}
+
+/* ============================================================
+   TOAST
+   ============================================================ */
+.bd-toasts{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  z-index:500;display:flex;flex-direction:column;gap:8px;align-items:center;
+  pointer-events:none;
+}
+.bd-toast{
+  pointer-events:auto;padding:11px 16px;border-radius:var(--bd-r);
+  background:linear-gradient(180deg, #1B2A4A, #0F1B33);
+  color:#fff;font-size:12.5px;font-weight:600;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:var(--bd-shadow-lg), 0 1px 0 rgba(255,255,255,.15) inset;
+  display:inline-flex;align-items:center;gap:8px;
+  animation:bd-toast-in .24s var(--bd-ease);
+}
+@keyframes bd-toast-in{from{opacity:0;transform:translateY(8px);}}
+.bd-toast--ok{background:linear-gradient(180deg,#1A7A48,#0F5132);}
+.bd-toast--warn{background:linear-gradient(180deg,#92600F,#7A4D0F);}
+.bd-toast--err{background:linear-gradient(180deg,#8F2626,#7F1D1D);}
+
+/* ============================================================
+   RESPONSIVE — mobile pane switch
+   ============================================================ */
+.bd-mobile-tabs{
+  display:none;
+  gap:4px;
+  padding:6px;
+  border:1px solid var(--bd-border);
+  border-radius:999px;
+  background:linear-gradient(180deg, rgba(255,255,255,.9), rgba(246,250,255,.7));
+  width:fit-content;
+  margin:0 auto 12px;
+}
+.bd-mobile-tabs button{
+  border:0;background:transparent;
+  padding:6px 14px;border-radius:999px;
+  font-family:inherit;font-size:12px;font-weight:700;color:var(--bd-text-2);
+  cursor:pointer;
+}
+.bd-mobile-tabs button[aria-pressed="true"]{
+  background:linear-gradient(180deg,#fff, var(--bd-primary-soft));
+  color:var(--bd-primary-ink);
+}
+.bd-mobile-tabs button:focus-visible{outline:2px solid var(--bd-primary);outline-offset:1px;}
+
+@media (max-width:820px){
+  .bd-mobile-tabs{display:flex;}
+  .bd-pane[data-pane="manager"].is-hidden-mobile,
+  .bd-pane[data-pane="preview"].is-hidden-mobile{display:none;}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    transition-duration:.01ms !important;
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<aside id="sidebar-container" aria-label="Sidebar"></aside>
+
+<div class="bd-shell">
+
+  <!-- =========================================================
+       TOOLBAR
+       ========================================================= -->
+  <header class="bd-toolbar" role="banner">
+
+    <button class="bd-icon-btn bd-toolbar__mobile" type="button"
+            data-pb-action="open-mobile" aria-controls="pb-sidebar"
+            aria-expanded="false" aria-label="Open navigation">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" aria-hidden="true">
+        <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
+      </svg>
+    </button>
+
+    <div class="bd-toolbar__title">
+      <div class="bd-toolbar__crumbs">
+        <span>Profile Craft Studio</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M9 18l6-6-6-6"/>
+        </svg>
+        <strong>Website Builder</strong>
+      </div>
+      <h1 class="bd-toolbar__h1">Website Builder</h1>
+    </div>
+
+    <div class="bd-toolbar__spacer"></div>
+
+    <span class="bd-status" id="bd-status">No changes yet</span>
+
+    <a class="bd-link" href="functionCenter.html" aria-label="Open Function Center">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 2v3"/><path d="M12 19v3"/>
+        <path d="M2 12h3"/><path d="M19 12h3"/>
+        <circle cx="12" cy="12" r="4"/>
+      </svg>
+      <span>Function Center</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M7 17L17 7"/><path d="M9 7h8v8"/>
+      </svg>
+    </a>
+
+    <button class="bd-btn bd-btn--primary" type="button" id="bd-save">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+        <path d="M17 21v-8H7v8"/><path d="M7 3v5h8"/>
+      </svg>
+      Save Draft
+    </button>
+
+  </header>
+
+  <!-- =========================================================
+       MOBILE PANE SWITCH
+       ========================================================= -->
+  <div class="bd-mobile-tabs" role="tablist" aria-label="Builder panes">
+    <button type="button" role="tab" data-tab="manager" aria-pressed="true">Sections</button>
+    <button type="button" role="tab" data-tab="preview" aria-pressed="false">Preview</button>
+  </div>
+
+  <!-- =========================================================
+       MAIN
+       ========================================================= -->
+  <main class="bd-main" role="main">
+
+    <!-- ---------- Section Manager ---------- -->
+    <section class="bd-pane bd-manager" data-pane="manager" aria-labelledby="bd-manager-title">
+      <header class="bd-pane__head">
+        <div>
+          <h2 class="bd-pane__title" id="bd-manager-title">Sections</h2>
+          <p class="bd-pane__sub">Drag to reorder. Toggle visibility. Click <strong>ပြင်ရန်</strong> to edit.</p>
+        </div>
+      </header>
+
+      <ul class="bd-sections" id="bd-sections" aria-label="Website sections"></ul>
+
+      <div class="bd-manager__foot">
+        <span id="bd-manager-summary">—</span>
+      </div>
+    </section>
+
+    <!-- ---------- Live Preview ---------- -->
+    <section class="bd-pane bd-preview" data-pane="preview" aria-labelledby="bd-preview-title">
+      <header class="bd-preview__head">
+        <h2 class="bd-pane__title" id="bd-preview-title">Live Preview</h2>
+
+        <div class="bd-seg" role="group" aria-label="Preview viewport">
+          <button type="button" data-vp="desktop" aria-pressed="true" aria-label="Desktop preview">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8"/>
+            </svg>
+            Desktop
+          </button>
+          <button type="button" data-vp="mobile" aria-pressed="false" aria-label="Mobile preview">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/>
+            </svg>
+            Mobile
+          </button>
+        </div>
+      </header>
+
+      <div class="bd-preview__stage">
+        <div class="bd-canvas" id="bd-canvas" data-vp="desktop"></div>
+      </div>
+
+      <div class="bd-preview__hint">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="9"/><path d="M12 8v4"/><path d="M12 16h.01"/>
+        </svg>
+        <span>Click any section in the preview to edit it. Hidden sections are not rendered.</span>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- ============================================================
+     EDITOR DRAWER
+     ============================================================ -->
+<div class="bd-drawer" id="bd-drawer" aria-hidden="true">
+  <div class="bd-drawer__scrim" data-close-drawer></div>
+
+  <section class="bd-drawer__panel" role="dialog" aria-modal="true"
+           aria-labelledby="bd-drawer-title">
+    <header class="bd-drawer__head">
+      <div style="min-width:0;flex:1 1 auto">
+        <h3 class="bd-drawer__title" id="bd-drawer-title">Edit section</h3>
+        <p class="bd-drawer__sub" id="bd-drawer-sub">—</p>
+      </div>
+      <button class="bd-icon-btn" type="button" data-close-drawer aria-label="Close editor">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 6L6 18"/><path d="M6 6l12 12"/>
+        </svg>
+      </button>
+    </header>
+
+    <div class="bd-drawer__body" id="bd-drawer-body">
+      <!-- Rendered by JS -->
+    </div>
+
+    <footer class="bd-drawer__foot">
+      <button class="bd-btn bd-btn--ghost bd-btn--sm" type="button" data-close-drawer>
+        Cancel
+      </button>
+      <button class="bd-btn bd-btn--primary bd-btn--sm" type="button" id="bd-drawer-save">
+        Save changes
+      </button>
+      <span class="bd-field__note" id="bd-drawer-note">Local edit — not persisted to a server.</span>
+    </footer>
+  </section>
+</div>
+
+<!-- ============================================================
+     TOASTS
+     ============================================================ -->
+<div class="bd-toasts" id="bd-toasts" aria-live="polite"></div>
+
+<!-- ============================================================
+     SIDEBAR LOADER (matches Dashboard pattern)
+     ============================================================ -->
+<script>
+(function () {
+  function mount() {
+    fetch('sidebar.html', { credentials: 'same-origin' })
+      .then(function (r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.text();
+      })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        if (!document.getElementById('pb-sidebar-styles')) {
+          var s = doc.getElementById('pb-sidebar-styles');
+          if (s) document.head.appendChild(document.importNode(s, true));
+        }
+        var fragment = doc.querySelector('[data-pb-sidebar-root]');
+        if (!fragment) return;
+        if (!document.querySelector('[data-pb-sidebar-root]')) {
+          document.getElementById('sidebar-container')
+            .appendChild(document.importNode(fragment, true));
+        }
+        var src = doc.getElementById('pb-sidebar-script');
+        if (src && !document.getElementById('pb-sidebar-script-runtime')) {
+          var runtime = document.createElement('script');
+          runtime.id = 'pb-sidebar-script-runtime';
+          runtime.textContent = src.textContent;
+          document.body.appendChild(runtime);
+        }
+        if (window.PBSidebar) {
+          window.PBSidebar.init();
+          window.PBSidebar.setActive('builder');
+        }
+      })
+      .catch(function (err) {
+        console.warn('[builder] sidebar load failed:', err);
+        var m = document.getElementById('sidebar-container');
+        if (m) {
+          m.innerHTML =
+            '<p style="padding:12px 18px;font:12px system-ui;color:#b42318;' +
+            'border:1px solid #f7d2cc;background:#fdecec;border-radius:8px;margin:12px">' +
+            'Sidebar could not be loaded. Serve this page from a local server ' +
+            '(not file://) and refresh.</p>';
+        }
+      });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', mount);
+  } else { mount(); }
+})();
+</script>
+
+<!-- ============================================================
+     BUILDER LOGIC
+     ============================================================ -->
+<script>
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------
+     STORAGE KEY — clearly local only.
+     ------------------------------------------------------------ */
+  var STORAGE_KEY = 'pb.builder.draft';
+
+  /* ------------------------------------------------------------
+     DEFAULT DATA — matches the prompt's table exactly.
+     Only used when localStorage has no draft for this key.
+     ------------------------------------------------------------ */
+  var DEFAULT_SECTIONS = [
+    { id: 'header',       name: 'Header',       layout: 'Centered',          visible: true,  locked: true,  data: {} },
+    { id: 'cover',        name: 'Cover',        layout: 'Centered',          visible: true,  locked: false, data: {
+        eyebrow: 'PORTFOLIO', title: 'Aung Thant Zin', subtitle: 'Product Designer based in Yangon'
+      } },
+    { id: 'about',        name: 'About',        layout: 'Text and photo',    visible: true,  locked: false, data: {
+        heading: 'About me',
+        body: 'I design calm, functional interfaces for portfolio-driven teams. Every section on this page is editable from the manager on the left.'
+      } },
+    { id: 'services',     name: 'Services',     layout: '3D icon cards',     visible: false, locked: false, data: {
+        heading: 'Services',
+        items: [
+          { title: 'Design systems',  text: 'Reusable UI building blocks' },
+          { title: 'Product design',  text: 'End-to-end design partnership' },
+          { title: 'Prototyping',     text: 'High-fidelity interactive flows' }
+        ]
+      } },
+    { id: 'skills',       name: 'Skills',       layout: 'Tags',              visible: true,  locked: false, data: {
+        heading: 'Skills',
+        items: ['UI design', 'Design systems', 'Prototyping', 'User research', 'Figma']
+      } },
+    { id: 'works',        name: 'Works',        layout: 'Card grid',         visible: true,  locked: false, data: {
+        heading: 'Selected work',
+        items: [
+          { title: 'Portfolio v3' },
+          { title: 'Fintech app' },
+          { title: 'Brand refresh' },
+          { title: 'Editorial site' }
+        ]
+      } },
+    { id: 'gallery',      name: 'Gallery',      layout: 'Tilt grid',         visible: true,  locked: false, data: {
+        heading: 'Gallery',
+        count: 6
+      } },
+    { id: 'clients',      name: 'Clients',      layout: 'Glass logo grid',   visible: false, locked: false, data: {
+        heading: 'Clients',
+        items: ['Northwind', 'Acme', 'Lumina', 'Strata']
+      } },
+    { id: 'testimonials', name: 'Testimonials', layout: 'Stacked quotes',    visible: true,  locked: false, data: {
+        heading: 'Testimonials',
+        items: [
+          { quote: 'A clear step up from our previous portfolio.', who: '— Client A' },
+          { quote: 'Easy to edit, easy to publish.',              who: '— Client B' }
+        ]
+      } }
+  ];
+
+  /* ------------------------------------------------------------
+     STATE
+     ------------------------------------------------------------ */
+  var state = {
+    sections: [],
+    selectedId: null,
+    viewport: 'desktop',
+    saving: false,
+    dirty: false
+  };
+
+  /* ------------------------------------------------------------
+     HELPERS
+     ------------------------------------------------------------ */
+  function $(id){ return document.getElementById(id); }
+  function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
+
+  function loadDraft() {
+    try {
+      var raw = window.localStorage.getItem(STORAGE_KEY);
+      if (!raw) return null;
+      var parsed = JSON.parse(raw);
+      if (!parsed || !Array.isArray(parsed.sections)) return null;
+      return parsed;
+    } catch (e) { return null; }
+  }
+
+  function saveDraft() {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        savedAt: new Date().toISOString(),
+        sections: state.sections
+      }));
+      return true;
+    } catch (e) { return false; }
+  }
+
+  function toast(msg, kind) {
+    var root = $('bd-toasts');
+    if (!root) return;
+    var el = document.createElement('div');
+    el.className = 'bd-toast' + (kind ? ' bd-toast--' + kind : '');
+    el.setAttribute('role', 'status');
+    el.textContent = msg;
+    root.appendChild(el);
+    setTimeout(function () {
+      el.style.transition = 'opacity .25s ease, transform .25s ease';
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(8px)';
+      setTimeout(function () { el.remove(); }, 260);
+    }, 2400);
+  }
+
+  function updateStatus() {
+    var status = $('bd-status');
+    if (!status) return;
+    if (state.saving) {
+      status.className = 'bd-status';
+      status.textContent = 'Saving…';
+      return;
+    }
+    if (state.dirty) {
+      status.className = 'bd-status is-dirty';
+      status.textContent = 'Unsaved changes';
+      return;
+    }
+    var draft = loadDraft();
+    if (draft && draft.savedAt) {
+      var d = new Date(draft.savedAt);
+      var hh = String(d.getHours()).padStart(2, '0');
+      var mm = String(d.getMinutes()).padStart(2, '0');
+      status.className = 'bd-status is-saved';
+      status.textContent = 'Saved locally · ' + hh + ':' + mm;
+    } else {
+      status.className = 'bd-status';
+      status.textContent = 'No changes yet';
+    }
+  }
+
+  /* ------------------------------------------------------------
+     RENDER — MANAGER
+     ------------------------------------------------------------ */
+  function renderManager() {
+    var list = $('bd-sections');
+    if (!list) return;
+    list.innerHTML = '';
+
+    state.sections.forEach(function (sec, index) {
+      var li = document.createElement('li');
+      li.className = 'bd-sec';
+      li.setAttribute('data-id', sec.id);
+      if (sec.id === state.selectedId) li.classList.add('is-selected');
+      if (!sec.visible) li.classList.add('is-hidden');
+      li.setAttribute('draggable', sec.locked ? 'false' : 'true');
+
+      // Handle
+      var handle = document.createElement('button');
+      handle.type = 'button';
+      handle.className = 'bd-sec__handle';
+      handle.setAttribute('data-handle', '');
+      handle.setAttribute('aria-label', 'Reorder ' + sec.name);
+      if (sec.locked) handle.disabled = true;
+      handle.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+        'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+        '<circle cx="9" cy="6" r="1"/><circle cx="15" cy="6" r="1"/>' +
+        '<circle cx="9" cy="12" r="1"/><circle cx="15" cy="12" r="1"/>' +
+        '<circle cx="9" cy="18" r="1"/><circle cx="15" cy="18" r="1"/>' +
+        '</svg>';
+      li.appendChild(handle);
+
+      // Body
+      var body = document.createElement('div');
+      body.className = 'bd-sec__body';
+      var row = document.createElement('div');
+      row.className = 'bd-sec__row';
+      var name = document.createElement('span');
+      name.className = 'bd-sec__name';
+      name.textContent = sec.name;
+      row.appendChild(name);
+      if (sec.locked) {
+        var lock = document.createElement('span');
+        lock.className = 'bd-sec__lock';
+        lock.setAttribute('aria-label', 'Locked section');
+        lock.innerHTML =
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+          'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          '<rect x="5" y="11" width="14" height="10" rx="2"/>' +
+          '<path d="M8 11V7a4 4 0 1 1 8 0v4"/>' +
+          '</svg>';
+        row.appendChild(lock);
+      }
+      body.appendChild(row);
+      var layout = document.createElement('span');
+      layout.className = 'bd-sec__layout';
+      layout.textContent = sec.layout;
+      body.appendChild(layout);
+      li.appendChild(body);
+
+      // Actions
+      var actions = document.createElement('div');
+      actions.className = 'bd-sec__actions';
+
+      var edit = document.createElement('button');
+      edit.type = 'button';
+      edit.className = 'bd-sec__edit';
+      edit.setAttribute('data-action', 'edit');
+      edit.textContent = 'ပြင်ရန်';
+      actions.appendChild(edit);
+
+      var toggle = document.createElement('button');
+      toggle.type = 'button';
+      toggle.className = 'bd-toggle';
+      toggle.setAttribute('data-action', 'toggle');
+      toggle.setAttribute('role', 'switch');
+      toggle.setAttribute('aria-pressed', String(!!sec.visible));
+      toggle.setAttribute('aria-label',
+        (sec.visible ? 'Hide ' : 'Show ') + sec.name);
+      if (sec.locked) {
+        toggle.disabled = true;
+        toggle.title = 'Header section is required';
+      }
+      actions.appendChild(toggle);
+
+      li.appendChild(actions);
+      list.appendChild(li);
+    });
+
+    var summary = $('bd-manager-summary');
+    if (summary) {
+      var visible = state.sections.filter(function (s) { return s.visible; }).length;
+      summary.textContent = visible + ' of ' + state.sections.length +
+        ' sections visible · ' + state.sections.length + ' total';
+    }
+  }
+
+  /* ------------------------------------------------------------
+     RENDER — PREVIEW
+     ------------------------------------------------------------ */
+  function renderPreview() {
+    var canvas = $('bd-canvas');
+    if (!canvas) return;
+    canvas.setAttribute('data-vp', state.viewport);
+    canvas.innerHTML = '';
+
+    var visible = state.sections.filter(function (s) { return s.visible; });
+    if (!visible.length) {
+      var empty = document.createElement('div');
+      empty.className = 'bd-empty';
+      empty.innerHTML =
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" ' +
+        'stroke-linecap="round" stroke-linejoin="round">' +
+        '<rect x="3" y="4" width="18" height="16" rx="2"/>' +
+        '<path d="M3 10h18"/><path d="M7 6.5h.01"/>' +
+        '</svg>' +
+        '<strong>Nothing to preview</strong>' +
+        '<p>All sections are hidden. Enable at least one section from the manager.</p>';
+      canvas.appendChild(empty);
+      return;
+    }
+
+    visible.forEach(function (sec) {
+      var el = document.createElement('div');
+      el.className = 'bd-sv bd-sv--' + sec.id;
+      el.setAttribute('data-id', sec.id);
+      if (sec.id === state.selectedId) el.classList.add('is-selected');
+      el.innerHTML = sectionHTML(sec);
+      canvas.appendChild(el);
+    });
+  }
+
+  function esc(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function sectionHTML(sec) {
+    var d = sec.data || {};
+    switch (sec.id) {
+      case 'header':
+        return '' +
+          '<div class="bd-sv__brand">PROFILE CRAFT</div>' +
+          '<div class="bd-sv__nav"><span>About</span><span>Works</span><span>Contact</span></div>' +
+          '<span class="bd-sv__cta">Hire me</span>';
+
+      case 'cover':
+        return '' +
+          '<div class="bd-sv__eyebrow">' + esc(d.eyebrow || 'PORTFOLIO') + '</div>' +
+          '<h2>' + esc(d.title || 'Your name') + '</h2>' +
+          '<p>' + esc(d.subtitle || '') + '</p>';
+
+      case 'about':
+        return '' +
+          '<div>' +
+            '<h3>' + esc(d.heading || 'About') + '</h3>' +
+            '<p>' + esc(d.body || '') + '</p>' +
+          '</div>' +
+          '<div class="bd-sv__photo">AT</div>';
+
+      case 'services': {
+        var items = Array.isArray(d.items) ? d.items : [];
+        var grid = items.map(function (it) {
+          return '<div class="bd-sv__card"><strong>' + esc(it.title || '') + '</strong>' +
+                 esc(it.text || '') + '</div>';
+        }).join('');
+        return '<h3>' + esc(d.heading || 'Services') + '</h3>' +
+               '<div class="bd-sv__grid">' + grid + '</div>';
+      }
+
+      case 'skills': {
+        var tags = (Array.isArray(d.items) ? d.items : []).map(function (s) {
+          return '<span class="bd-sv__tag">' + esc(s) + '</span>';
+        }).join('');
+        return '<h3>' + esc(d.heading || 'Skills') + '</h3>' +
+               '<div class="bd-sv__tags">' + tags + '</div>';
+      }
+
+      case 'works': {
+        var works = (Array.isArray(d.items) ? d.items : []).map(function (it) {
+          return '<div class="bd-sv__card">' + esc(it.title || 'Untitled') + '</div>';
+        }).join('');
+        return '<h3>' + esc(d.heading || 'Selected work') + '</h3>' +
+               '<div class="bd-sv__grid">' + works + '</div>';
+      }
+
+      case 'gallery': {
+        var n = Math.max(1, Math.min(12, Number(d.count) || 6));
+        var thumbs = '';
+        for (var i = 0; i < n; i++) thumbs += '<div class="bd-sv__thumb"></div>';
+        return '<h3>' + esc(d.heading || 'Gallery') + '</h3>' +
+               '<div class="bd-sv__grid">' + thumbs + '</div>';
+      }
+
+      case 'clients': {
+        var logos = (Array.isArray(d.items) ? d.items : []).map(function (c) {
+          return '<div class="bd-sv__logo">' + esc(c) + '</div>';
+        }).join('');
+        return '<h3>' + esc(d.heading || 'Clients') + '</h3>' +
+               '<div class="bd-sv__grid">' + logos + '</div>';
+      }
+
+      case 'testimonials': {
+        var quotes = (Array.isArray(d.items) ? d.items : []).map(function (it) {
+          return '<div class="bd-sv__quote">' + esc(it.quote || '') +
+                 '<span class="bd-sv__who">' + esc(it.who || '') + '</span></div>';
+        }).join('');
+        return '<h3>' + esc(d.heading || 'Testimonials') + '</h3>' +
+               '<div class="bd-sv__list">' + quotes + '</div>';
+      }
+
+      default:
+        return '<h3>' + esc(sec.name) + '</h3><p>' + esc(sec.layout) + '</p>';
+    }
+  }
+
+  function renderAll() {
+    renderManager();
+    renderPreview();
+    updateStatus();
+  }
+
+  /* ------------------------------------------------------------
+     DRAG AND DROP (native HTML5)
+     ------------------------------------------------------------ */
+  var dragSourceId = null;
+  var dropTargetId = null;
+
+  function setupDrag() {
+    var list = $('bd-sections');
+    if (!list) return;
+
+    list.addEventListener('dragstart', function (e) {
+      var li = e.target.closest('.bd-sec');
+      if (!li) return;
+      var sec = state.sections.find(function (s) { return s.id === li.getAttribute('data-id'); });
+      if (!sec || sec.locked) {
+        e.preventDefault();
+        return;
+      }
+      dragSourceId = sec.id;
+      li.classList.add('is-dragging');
+      try {
+        e.dataTransfer.setData('text/plain', sec.id);
+        e.dataTransfer.effectAllowed = 'move';
+      } catch (err) { /* ignore */ }
+    });
+
+    list.addEventListener('dragover', function (e) {
+      var li = e.target.closest('.bd-sec');
+      if (!li || !dragSourceId) return;
+      var targetId = li.getAttribute('data-id');
+      var targetSec = state.sections.find(function (s) { return s.id === targetId; });
+      if (!targetSec) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      if (dropTargetId && dropTargetId !== targetId) {
+        var prev = list.querySelector('[data-id="' + dropTargetId + '"]');
+        if (prev) prev.classList.remove('is-drop-target');
+      }
+      dropTargetId = targetId;
+      li.classList.add('is-drop-target');
+    });
+
+    list.addEventListener('dragleave', function (e) {
+      var li = e.target.closest('.bd-sec');
+      if (li && dropTargetId === li.getAttribute('data-id')) {
+        li.classList.remove('is-drop-target');
+      }
+    });
+
+    list.addEventListener('drop', function (e) {
+      e.preventDefault();
+      var li = e.target.closest('.bd-sec');
+      if (!li || !dragSourceId) return;
+      var targetId = li.getAttribute('data-id');
+      moveSection(dragSourceId, targetId);
+      clearDragState();
+    });
+
+    list.addEventListener('dragend', function () {
+      clearDragState();
+    });
+
+    // Keyboard alternative: on focused handle, ↑/↓ reorder
+    list.addEventListener('keydown', function (e) {
+      var handle = e.target.closest('[data-handle]');
+      if (!handle || handle.disabled) return;
+      var li = handle.closest('.bd-sec');
+      var id = li && li.getAttribute('data-id');
+      if (!id) return;
+      if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+        e.preventDefault();
+        var idx = state.sections.findIndex(function (s) { return s.id === id; });
+        if (idx < 0) return;
+        var targetIdx = e.key === 'ArrowUp' ? idx - 1 : idx + 1;
+        if (targetIdx < 0 || targetIdx >= state.sections.length) return;
+        if (state.sections[targetIdx].locked) return;
+        var tmp = state.sections[idx];
+        state.sections[idx] = state.sections[targetIdx];
+        state.sections[targetIdx] = tmp;
+        state.dirty = true;
+        renderAll();
+        // Re-focus the moved handle
+        var newHandle = list.querySelector('[data-id="' + id + '"] [data-handle]');
+        if (newHandle) newHandle.focus();
+      }
+    });
+  }
+
+  function clearDragState() {
+    document.querySelectorAll('.bd-sec.is-dragging, .bd-sec.is-drop-target').forEach(function (el) {
+      el.classList.remove('is-dragging', 'is-drop-target');
+    });
+    dragSourceId = null;
+    dropTargetId = null;
+  }
+
+  function moveSection(fromId, toId) {
+    if (fromId === toId) return;
+    var fromIdx = state.sections.findIndex(function (s) { return s.id === fromId; });
+    var toIdx   = state.sections.findIndex(function (s) { return s.id === toId; });
+    if (fromIdx < 0 || toIdx < 0) return;
+    if (state.sections[fromIdx].locked) return;
+    // Prevent moving above the locked header (index 0 usually)
+    var lockedTop = state.sections.findIndex(function (s) { return s.locked; });
+    if (lockedTop >= 0 && toIdx <= lockedTop && fromIdx > lockedTop) {
+      // Clamp: cannot be placed above locked header
+      toIdx = lockedTop + 1;
+    }
+    var moved = state.sections.splice(fromIdx, 1)[0];
+    state.sections.splice(toIdx, 0, moved);
+    state.dirty = true;
+    renderAll();
+  }
+
+  /* ------------------------------------------------------------
+     SECTION ACTIONS (edit / toggle)
+     ------------------------------------------------------------ */
+  function onManagerClick(e) {
+    var editBtn = e.target.closest('[data-action="edit"]');
+    if (editBtn) {
+      var li = editBtn.closest('.bd-sec');
+      if (li) openEditor(li.getAttribute('data-id'));
+      return;
+    }
+    var toggleBtn = e.target.closest('[data-action="toggle"]');
+    if (toggleBtn) {
+      var li2 = toggleBtn.closest('.bd-sec');
+      if (!li2) return;
+      var id = li2.getAttribute('data-id');
+      var sec = state.sections.find(function (s) { return s.id === id; });
+      if (!sec || sec.locked) return;
+      sec.visible = !sec.visible;
+      state.dirty = true;
+      renderAll();
+      return;
+    }
+  }
+
+  /* ------------------------------------------------------------
+     PREVIEW SELECTION
+     ------------------------------------------------------------ */
+  function onPreviewClick(e) {
+    var sv = e.target.closest('.bd-sv');
+    if (!sv) return;
+    var id = sv.getAttribute('data-id');
+    if (!id) return;
+    state.selectedId = id;
+    renderAll();
+    openEditor(id);
+  }
+
+  /* ------------------------------------------------------------
+     EDITOR DRAWER
+     ------------------------------------------------------------ */
+  var currentEditingId = null;
+
+  function openEditor(id) {
+    var sec = state.sections.find(function (s) { return s.id === id; });
+    if (!sec) return;
+    currentEditingId = id;
+    state.selectedId = id;
+
+    var drawer = $('bd-drawer');
+    var title = $('bd-drawer-title');
+    var sub = $('bd-drawer-sub');
+    var body = $('bd-drawer-body');
+
+    if (title) title.textContent = 'Edit ' + sec.name;
+    if (sub) sub.textContent = sec.layout + (sec.locked ? ' · Locked' : '');
+    if (body) body.innerHTML = editorFieldsHTML(sec);
+
+    if (drawer) {
+      drawer.classList.add('is-open');
+      drawer.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(function () {
+        var first = body && body.querySelector('input, textarea, button');
+        if (first) first.focus();
+      }, 200);
+    }
+    renderManager(); // update selection highlight
+  }
+
+  function closeEditor() {
+    var drawer = $('bd-drawer');
+    if (!drawer) return;
+    drawer.classList.remove('is-open');
+    drawer.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+    currentEditingId = null;
+  }
+
+  /* Editor fields per section type */
+  function editorFieldsHTML(sec) {
+    var d = sec.data || {};
+    var fields = [];
+
+    function fieldText(key, label, value, hint) {
+      return '' +
+        '<div class="bd-field">' +
+          '<label class="bd-field__label" for="bd-f-' + key + '">' + esc(label) + '</label>' +
+          '<input class="bd-field__input" id="bd-f-' + key + '" data-field="' + key + '" ' +
+                 'type="text" value="' + esc(value || '') + '">' +
+          (hint ? '<span class="bd-field__note">' + esc(hint) + '</span>' : '') +
+        '</div>';
+    }
+    function fieldArea(key, label, value, hint) {
+      return '' +
+        '<div class="bd-field">' +
+          '<label class="bd-field__label" for="bd-f-' + key + '">' + esc(label) + '</label>' +
+          '<textarea class="bd-field__textarea" id="bd-f-' + key + '" data-field="' + key + '">' +
+            esc(value || '') +
+          '</textarea>' +
+          (hint ? '<span class="bd-field__note">' + esc(hint) + '</span>' : '') +
+        '</div>';
+    }
+    function fieldRepeat(key, label, items, subfields, note) {
+      var rows = (items || []).map(function (row, i) {
+        var inner = subfields.map(function (sf) {
+          var val = row && row[sf.key] != null ? row[sf.key] : '';
+          return '<input class="bd-field__input" data-repeat-key="' + key + '" ' +
+                 'data-row="' + i + '" data-sub="' + sf.key + '" ' +
+                 'type="text" placeholder="' + esc(sf.placeholder || '') + '" ' +
+                 'value="' + esc(val) + '">';
+        }).join('');
+        return '' +
+          '<div class="bd-repeat__row">' +
+            '<div class="bd-field" style="flex:1 1 auto">' + inner + '</div>' +
+            '<button type="button" class="bd-repeat__del" data-remove="' + key + '" ' +
+                    'data-row="' + i + '" aria-label="Remove item">' +
+              '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+              'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+              '<path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>' +
+            '</button>' +
+          '</div>';
+      }).join('');
+      return '' +
+        '<div class="bd-field">' +
+          '<span class="bd-field__label">' + esc(label) +
+            '<span class="bd-field__hint">' + (items ? items.length : 0) + ' item(s)</span>' +
+          '</span>' +
+          '<div class="bd-repeat" data-repeat="' + key + '">' + rows + '</div>' +
+          '<button type="button" class="bd-repeat__add" data-add="' + key + '">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+            'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+            '<path d="M12 5v14"/><path d="M5 12h14"/></svg>' +
+            'Add item' +
+          '</button>' +
+          (note ? '<span class="bd-field__note">' + esc(note) + '</span>' : '') +
+        '</div>';
+    }
+
+    if (sec.locked) {
+      fields.push('<div class="bd-field__note">' +
+        'The Header section is required and cannot be hidden or reordered. ' +
+        'Content editing is disabled because the project does not expose a Header editor.' +
+      '</div>');
+      return fields.join('');
+    }
+
+    switch (sec.id) {
+      case 'cover':
+        fields.push(fieldText('eyebrow', 'Eyebrow', d.eyebrow));
+        fields.push(fieldText('title', 'Title', d.title));
+        fields.push(fieldText('subtitle', 'Subtitle', d.subtitle));
+        break;
+
+      case 'about':
+        fields.push(fieldText('heading', 'Heading', d.heading));
+        fields.push(fieldArea('body', 'Body text', d.body));
+        break;
+
+      case 'services':
+        fields.push(fieldText('heading', 'Heading', d.heading));
+        fields.push(fieldRepeat('items', 'Services', d.items, [
+          { key: 'title', placeholder: 'Title' },
+          { key: 'text',  placeholder: 'Short description' }
+        ]));
+        break;
+
+      case 'skills':
+        fields.push(fieldText('heading', 'Heading', d.heading));
+        fields.push(fieldRepeat(
+          'tags',
+          'Skill tags',
+          (d.items || []).map(function (v) { return { tag: v }; }),
+          [{ key: 'tag', placeholder: 'Skill name' }]
+        ));
+        break;
+
+      case 'works':
+        fields.push(fieldText('heading', 'Heading', d.heading));
+        fields.push(fieldRepeat('items', 'Projects', d.items, [
+          { key: 'title', placeholder: 'Project title' }
+        ]));
+        break;
+
+      case 'gallery':
+        fields.push(fieldText('heading', 'Heading', d.heading));
+        fields.push(fieldText('count', 'Number of items (1–12)', String(d.count || 6),
+          'Placeholder thumbnails are shown until images are uploaded.'));
+        break;
+
+      case 'clients':
+        fields.push(fieldText('heading', 'Heading', d.heading));
+        fields.push(fieldRepeat(
+          'logos',
+          'Client names',
+          (d.items || []).map(function (v) { return { name: v }; }),
+          [{ key: 'name', placeholder: 'Client name' }]
+        ));
+        break;
+
+      case 'testimonials':
+        fields.push(fieldText('heading', 'Heading', d.heading));
+        fields.push(fieldRepeat('items', 'Testimonials', d.items, [
+          { key: 'quote', placeholder: 'Quote' },
+          { key: 'who',   placeholder: '— Attributor' }
+        ]));
+        break;
+
+      default:
+        fields.push('<div class="bd-field__note">This section has no editable fields yet.</div>');
+    }
+
+    return fields.join('');
+  }
+
+  function collectEditorData(sec) {
+    var body = $('bd-drawer-body');
+    if (!body) return sec.data;
+    var next = deepClone(sec.data || {});
+
+    // Simple fields
+    body.querySelectorAll('[data-field]').forEach(function (el) {
+      var key = el.getAttribute('data-field');
+      if (sec.id === 'gallery' && key === 'count') {
+        var n = parseInt(el.value, 10);
+        next.count = isNaN(n) ? next.count : Math.max(1, Math.min(12, n));
+      } else {
+        next[key] = el.value;
+      }
+    });
+
+    // Repeaters — rebuild each from DOM
+    body.querySelectorAll('[data-repeat]').forEach(function (wrap) {
+      var key = wrap.getAttribute('data-repeat');
+      var rows = wrap.querySelectorAll('.bd-repeat__row');
+      var items = [];
+
+      if (sec.id === 'skills') {
+        rows.forEach(function (row) {
+          var input = row.querySelector('[data-sub="tag"]');
+          if (input && input.value.trim()) items.push(input.value.trim());
+        });
+        next.items = items;
+      } else if (sec.id === 'clients') {
+        rows.forEach(function (row) {
+          var input = row.querySelector('[data-sub="name"]');
+          if (input && input.value.trim()) items.push(input.value.trim());
+        });
+        next.items = items;
+      } else {
+        rows.forEach(function (row) {
+          var obj = {};
+          row.querySelectorAll('[data-sub]').forEach(function (inp) {
+            obj[inp.getAttribute('data-sub')] = inp.value;
+          });
+          items.push(obj);
+        });
+        next.items = items;
+      }
+    });
+
+    return next;
+  }
+
+  function saveEditor() {
+    if (!currentEditingId) return;
+    var sec = state.sections.find(function (s) { return s.id === currentEditingId; });
+    if (!sec) return;
+    if (sec.locked) { closeEditor(); return; }
+    sec.data = collectEditorData(sec);
+    state.dirty = true;
+    renderAll();
+    closeEditor();
+    toast('Section updated · unsaved changes', 'warn');
+  }
+
+  /* Add / remove repeat row handlers */
+  function onEditorClick(e) {
+    var addBtn = e.target.closest('[data-add]');
+    if (addBtn) {
+      var key = addBtn.getAttribute('data-add');
+      var wrap = addBtn.parentElement.querySelector('[data-repeat="' + key + '"]');
+      if (!wrap) return;
+      var sec = state.sections.find(function (s) { return s.id === currentEditingId; });
+      if (!sec) return;
+      var kind = sec.id;
+      var row = document.createElement('div');
+      row.className = 'bd-repeat__row';
+      var subfields = kind === 'skills' ? ['tag']
+                    : kind === 'clients' ? ['name']
+                    : kind === 'works' ? ['title']
+                    : kind === 'services' ? ['title', 'text']
+                    : kind === 'testimonials' ? ['quote', 'who']
+                    : ['value'];
+      var inner = subfields.map(function (sf, i) {
+        return '<input class="bd-field__input" data-repeat-key="' + key + '" ' +
+               'data-row="' + (wrap.children.length) + '" data-sub="' + sf + '" type="text" ' +
+               'placeholder="' + sf + '">';
+      }).join('');
+      row.innerHTML =
+        '<div class="bd-field" style="flex:1 1 auto">' + inner + '</div>' +
+        '<button type="button" class="bd-repeat__del" aria-label="Remove item">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" ' +
+          'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+          '<path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>' +
+        '</button>';
+      wrap.appendChild(row);
+      var first = row.querySelector('input');
+      if (first) first.focus();
+      return;
+    }
+
+    var delBtn = e.target.closest('[data-remove], .bd-repeat__del');
+    if (delBtn) {
+      var row = delBtn.closest('.bd-repeat__row');
+      if (row) row.remove();
+      return;
+    }
+  }
+
+  /* ------------------------------------------------------------
+     VIEWPORT SEGMENTED CONTROL
+     ------------------------------------------------------------ */
+  function setupViewportToggle() {
+    document.querySelectorAll('[data-vp]').forEach(function (btn) {
+      if (btn.classList.contains('bd-canvas')) return;
+      btn.addEventListener('click', function () {
+        var vp = btn.getAttribute('data-vp');
+        state.viewport = vp;
+        document.querySelectorAll('[data-vp]').forEach(function (b) {
+          if (b.classList.contains('bd-canvas')) return;
+          b.setAttribute('aria-pressed', String(b === btn));
+        });
+        renderPreview();
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------
+     MOBILE PANE SWITCH
+     ------------------------------------------------------------ */
+  function setupMobileTabs() {
+    var tabs = document.querySelectorAll('.bd-mobile-tabs [data-tab]');
+    tabs.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var tab = btn.getAttribute('data-tab');
+        tabs.forEach(function (b) {
+          b.setAttribute('aria-pressed', String(b === btn));
+        });
+        document.querySelectorAll('.bd-pane[data-pane]').forEach(function (pane) {
+          var isActive = pane.getAttribute('data-pane') === tab;
+          pane.classList.toggle('is-hidden-mobile', !isActive);
+        });
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------
+     SAVE DRAFT
+     ------------------------------------------------------------ */
+  function setupSave() {
+    var btn = $('bd-save');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      if (state.saving) return;
+      state.saving = true;
+      updateStatus();
+      // Simulate the visual feedback of a save — but the actual write
+      // below is real (localStorage). No server is contacted.
+      setTimeout(function () {
+        var ok = saveDraft();
+        state.saving = false;
+        if (ok) {
+          state.dirty = false;
+          updateStatus();
+          toast('Draft saved locally (browser storage).', 'ok');
+        } else {
+          updateStatus();
+          toast('Could not save the draft in this browser.', 'err');
+        }
+      }, 220);
+    });
+  }
+
+  /* ------------------------------------------------------------
+     BOOT
+     ------------------------------------------------------------ */
+  function boot() {
+    // Load saved draft, else defaults
+    var draft = loadDraft();
+    state.sections = draft && draft.sections ? draft.sections : deepClone(DEFAULT_SECTIONS);
+
+    // Sanity: always keep header locked + visible
+    state.sections.forEach(function (s) {
+      if (s.id === 'header') { s.locked = true; s.visible = true; }
+    });
+
+    // Prevent orphan state on a fresh clone
+    state.selectedId = null;
+    state.viewport = 'desktop';
+
+    // Render
+    renderAll();
+    setupDrag();
+    setupViewportToggle();
+    setupMobileTabs();
+    setupSave();
+
+    // Wire up manager and preview clicks
+    var list = $('bd-sections');
+    if (list) list.addEventListener('click', onManagerClick);
+
+    var canvas = $('bd-canvas');
+    if (canvas) canvas.addEventListener('click', onPreviewClick);
+
+    // Drawer handlers
+    document.addEventListener('click', function (e) {
+      if (e.target.closest('[data-close-drawer]')) {
+        e.preventDefault();
+        closeEditor();
+        return;
+      }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && $('bd-drawer').classList.contains('is-open')) {
+        closeEditor();
+      }
+    });
+    var body = $('bd-drawer-body');
+    if (body) body.addEventListener('click', onEditorClick);
+    var saveEdit = $('bd-drawer-save');
+    if (saveEdit) saveEdit.addEventListener('click', saveEditor);
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', boot);
+  } else {
+    boot();
+  }
+})();
+</script>
+
+</body>
+</html>

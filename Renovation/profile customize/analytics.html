@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Visitors — Profile Craft Studio</title>
+
+<style>
+/* ============================================================
+   DESIGN TOKENS (shared with Theme Studio / Subdomain)
+   ============================================================ */
+:root{
+  --bg:#F1F5F9;
+  --surface:#FFFFFF;
+  --surface-2:#F8FAFC;
+  --text:#0F172A;
+  --text-2:#475569;
+  --muted:#64748B;
+  --border:#E2E8F0;
+  --border-strong:#CBD5E1;
+  --hairline:#F1F5F9;
+
+  --primary:#4F46E5;
+  --primary-deep:#4338CA;
+  --primary-tint:rgba(79,70,229,0.08);
+  --primary-border:rgba(79,70,229,0.24);
+
+  --success:#059669;
+  --success-tint:rgba(5,150,105,0.10);
+  --success-border:rgba(5,150,105,0.30);
+  --warn:#B45309;
+  --warn-tint:rgba(180,83,9,0.10);
+  --danger:#B91C1C;
+  --danger-tint:rgba(185,28,28,0.10);
+
+  /* analytics accents */
+  --chart-views:#059669;
+  --chart-unique:#2563EB;
+
+  --r-sm:6px;
+  --r:8px;
+  --r-lg:10px;
+
+  --shadow-sm:0 1px 2px rgba(15,23,42,0.04), 0 1px 3px rgba(15,23,42,0.04);
+  --shadow:0 4px 12px -2px rgba(15,23,42,0.06), 0 2px 4px -2px rgba(15,23,42,0.04);
+  --shadow-lg:0 12px 28px -8px rgba(15,23,42,0.18);
+
+  --sidebar-w:282px;
+  --sidebar-w-c:88px;
+  --ease:cubic-bezier(.4,0,.2,1);
+
+  --font:"Myanmar Text","Noto Sans Myanmar","Padauk","Pyidaungsu",
+         -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,
+         "Helvetica Neue",Arial,sans-serif;
+  --mono:"SF Mono",Monaco,"Cascadia Code","Roboto Mono",Consolas,monospace;
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:var(--font);
+  font-size:14px;line-height:1.55;color:var(--text);
+  background:
+    radial-gradient(1200px 600px at 0% 0%, rgba(79,70,229,0.04), transparent 60%),
+    linear-gradient(180deg,#F8FAFC 0%,#F1F5F9 100%);
+  background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+#sidebar-container{display:contents;}
+
+/* ============================================================ SHELL */
+.va-shell{
+  min-height:100vh;
+  padding-inline-start:var(--sidebar-w);
+  transition:padding-inline-start .28s var(--ease);
+  display:flex;flex-direction:column;
+}
+html.pb-sidebar-collapsed .va-shell{padding-inline-start:var(--sidebar-w-c);}
+@media (max-width:1023px){
+  .va-shell, html.pb-sidebar-collapsed .va-shell{padding-inline-start:0;}
+}
+
+/* ============================================================ HEADER */
+.va-header{
+  position:sticky;top:0;z-index:40;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:12px 22px;
+  background:rgba(255,255,255,0.92);
+  backdrop-filter:saturate(160%) blur(12px);
+  -webkit-backdrop-filter:saturate(160%) blur(12px);
+  border-bottom:1px solid var(--border);
+}
+.va-header__mobile{display:none;}
+@media (max-width:767.98px){ .va-header__mobile{display:inline-flex;} }
+
+.va-header__title{display:flex;flex-direction:column;min-width:0;gap:2px;}
+.va-crumbs{
+  display:flex;align-items:center;gap:6px;
+  font-size:11.5px;color:var(--muted);line-height:1.2;
+}
+.va-crumbs strong{color:var(--text);font-weight:600;}
+.va-h1{margin:0;font-size:19px;font-weight:700;letter-spacing:-.015em;color:var(--text);line-height:1.2;}
+.va-subtitle{margin:0;font-size:12.5px;color:var(--muted);max-width:78ch;line-height:1.4;}
+.va-header__spacer{flex:1 1 auto;}
+.va-header__tools{display:flex;align-items:center;gap:6px;flex-wrap:wrap;}
+
+/* ============================================================ BUTTONS */
+.ts-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:8px 12px;border-radius:var(--r-sm);
+  border:1px solid transparent;
+  font-family:inherit;font-size:12.5px;font-weight:600;line-height:1.2;
+  cursor:pointer;white-space:nowrap;text-decoration:none;
+  transition:background-color .18s var(--ease),color .18s var(--ease),
+             border-color .18s var(--ease),box-shadow .18s var(--ease),
+             transform .12s var(--ease);
+}
+.ts-btn:active{transform:translateY(1px);}
+.ts-btn:focus-visible{outline:2px solid var(--primary);outline-offset:2px;}
+.ts-btn svg{width:15px;height:15px;flex:0 0 auto;}
+.ts-btn[disabled]{opacity:.4;cursor:not-allowed;transform:none;}
+.ts-btn--primary{
+  background:var(--primary);color:#FFF;border-color:var(--primary);
+  box-shadow:0 1px 2px rgba(79,70,229,.35),0 4px 12px -4px rgba(79,70,229,.4);
+}
+.ts-btn--primary:hover:not([disabled]){background:var(--primary-deep);border-color:var(--primary-deep);}
+.ts-btn--ghost{background:var(--surface);color:var(--text);border-color:var(--border);}
+.ts-btn--ghost:hover:not([disabled]){background:var(--surface-2);border-color:var(--border-strong);}
+.ts-btn--icon{width:34px;height:34px;padding:0;justify-content:center;}
+.ts-btn--sm{padding:6px 10px;font-size:11.5px;}
+
+/* ============================================================ MAIN */
+.va-main{
+  flex:1 1 auto;padding:20px;
+  max-width:1320px;width:100%;margin:0 auto;
+  display:flex;flex-direction:column;gap:16px;
+}
+@media (max-width:767.98px){ .va-main{padding:14px;gap:14px;} }
+
+/* ============================================================ SAMPLE BANNER */
+.va-banner{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:11px 14px;
+  border:1px solid var(--primary-border);
+  background:var(--primary-tint);
+  border-radius:var(--r-sm);
+  font-size:12.5px;color:var(--text-2);line-height:1.5;
+}
+.va-banner svg{width:16px;height:16px;flex:0 0 auto;color:var(--primary);margin-top:2px;}
+.va-banner strong{color:var(--primary-deep);font-weight:700;}
+
+/* ============================================================ CARDS */
+.va-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);
+  overflow:hidden;
+  display:flex;flex-direction:column;
+}
+.va-card__head{
+  display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap;
+  padding:14px 18px;
+  border-bottom:1px solid var(--border);
+  background:linear-gradient(180deg,#FFFFFF 0%, #FCFDFF 100%);
+}
+.va-card__head > div:first-child{min-width:0;flex:1 1 auto;}
+.va-card__title{
+  margin:0;font-size:15px;font-weight:700;letter-spacing:-.01em;color:var(--text);
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+}
+.va-card__title svg{width:16px;height:16px;color:var(--muted);flex:0 0 auto;}
+.va-card__desc{margin:2px 0 0;font-size:12.5px;color:var(--muted);line-height:1.45;}
+.va-card__body{padding:16px 18px;display:flex;flex-direction:column;gap:14px;}
+.va-card__body--flush{padding:0;}
+
+.sample-pill{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;border-radius:999px;
+  background:var(--warn-tint);color:var(--warn);
+  border:1px solid rgba(180,83,9,.28);
+  font-size:10px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+}
+.sample-pill::before{
+  content:"";width:5px;height:5px;border-radius:50%;background:currentColor;
+}
+/* ============================================================ KPI CARDS */
+.va-kpis{
+  display:grid;
+  grid-template-columns:repeat(3, minmax(0, 1fr));
+  gap:14px;
+}
+@media (max-width:900px){ .va-kpis{grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));} }
+@media (max-width:520px){ .va-kpis{grid-template-columns:1fr;} }
+
+.va-kpi{
+  --accent:var(--primary);
+  --accent-tint:var(--primary-tint);
+  --accent-deep:var(--primary-deep);
+
+  position:relative;overflow:hidden;
+  isolation:isolate;
+  padding:16px 18px 14px;
+  display:flex;flex-direction:column;gap:12px;
+  background:
+    linear-gradient(180deg,#FFFFFF 0%, #FCFDFF 100%);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  box-shadow:
+    0 1px 2px rgba(15,23,42,0.04),
+    0 1px 3px rgba(15,23,42,0.04);
+  transition:
+    transform .22s var(--ease),
+    border-color .22s var(--ease),
+    box-shadow .22s var(--ease);
+}
+/* Soft radial wash that appears on hover */
+.va-kpi::after{
+  content:"";position:absolute;inset:0;z-index:-1;
+  background:
+    radial-gradient(120% 80% at 100% 0%,
+      color-mix(in srgb, var(--accent) 8%, transparent) 0%,
+      transparent 55%);
+  opacity:0;
+  transition:opacity .28s var(--ease);
+  pointer-events:none;
+}
+/* Left accent bar */
+.va-kpi::before{
+  content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+  background:linear-gradient(180deg, var(--accent) 0%, var(--accent-deep) 100%);
+  border-radius:3px 0 0 3px;
+  transition:width .22s var(--ease);
+}
+
+/* Accent variants per card */
+.va-kpi:nth-child(1){ --accent:var(--primary); --accent-tint:var(--primary-tint); --accent-deep:var(--primary-deep); }
+.va-kpi:nth-child(2){ --accent:var(--chart-views); --accent-tint:var(--success-tint); --accent-deep:#047857; }
+.va-kpi:nth-child(3){ --accent:var(--chart-unique); --accent-tint:rgba(37,99,235,.10); --accent-deep:#1D4ED8; }
+
+.va-kpi:hover{
+  transform:translateY(-2px);
+  border-color:color-mix(in srgb, var(--accent) 30%, var(--border));
+  box-shadow:
+    0 1px 2px rgba(15,23,42,0.04),
+    0 8px 22px -8px color-mix(in srgb, var(--accent) 35%, transparent),
+    0 4px 10px -4px rgba(15,23,42,0.06);
+}
+.va-kpi:hover::before{width:4px;}
+.va-kpi:hover::after{opacity:1;}
+.va-kpi:focus-within{
+  outline:2px solid color-mix(in srgb, var(--accent) 55%, transparent);
+  outline-offset:2px;
+}
+
+.va-kpi__head{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+}
+.va-kpi__period{
+  font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);
+  transition:color .22s var(--ease);
+}
+.va-kpi:hover .va-kpi__period{color:var(--text-2);}
+
+.va-kpi__icon{
+  width:26px;height:26px;border-radius:7px;
+  display:grid;place-items:center;
+  background:var(--accent-tint);color:var(--accent-deep);
+  flex:0 0 auto;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb, var(--accent) 18%, transparent);
+  transition:
+    transform .22s var(--ease),
+    box-shadow .22s var(--ease),
+    background-color .22s var(--ease);
+}
+.va-kpi:hover .va-kpi__icon{
+  transform:scale(1.08) rotate(-4deg);
+  background:color-mix(in srgb, var(--accent) 16%, var(--surface));
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--accent) 28%, transparent),
+    0 4px 10px -4px color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.va-kpi__icon svg{width:14px;height:14px;}
+
+.va-kpi__stats{
+  display:grid;grid-template-columns:1fr 1fr;gap:12px;
+  position:relative;
+}
+/* Thin divider between the two stats */
+.va-kpi__stats::after{
+  content:"";position:absolute;top:6px;bottom:6px;left:50%;
+  width:1px;background:linear-gradient(180deg,
+    transparent 0%,
+    var(--hairline) 20%,
+    var(--hairline) 80%,
+    transparent 100%);
+  transform:translateX(-.5px);
+  pointer-events:none;
+}
+.va-kpi__stat{display:flex;flex-direction:column;gap:2px;min-width:0;}
+
+.va-kpi__number{
+  font-size:30px;font-weight:800;line-height:1;
+  letter-spacing:-.025em;
+  color:var(--text);
+  font-variant-numeric:tabular-nums;
+  transition:color .22s var(--ease), transform .22s var(--ease);
+}
+.va-kpi:hover .va-kpi__number{transform:translateY(-1px);}
+
+/* Highlight the "hero" stat for cards 2 & 3 */
+.va-kpi:nth-child(2) .va-kpi__number.va-kpi__number--views{color:var(--chart-views);}
+.va-kpi:nth-child(3) .va-kpi__number.va-kpi__number--unique{color:var(--chart-unique);}
+
+.va-kpi__label{
+  font-size:11px;font-weight:600;color:var(--muted);line-height:1.35;
+  transition:color .22s var(--ease);
+}
+.va-kpi:hover .va-kpi__label{color:var(--text-2);}
+
+.va-kpi__note{
+  margin:0;
+  padding-top:9px;
+  border-top:1px solid var(--hairline);
+  font-size:11px;font-weight:500;
+  color:var(--muted);line-height:1.4;
+  letter-spacing:.005em;
+  display:flex;align-items:center;gap:6px;
+}
+.va-kpi__note::before{
+  content:"";width:5px;height:5px;border-radius:50%;
+  background:color-mix(in srgb, var(--accent) 70%, transparent);
+  flex:0 0 auto;
+  box-shadow:0 0 0 2px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion:reduce){
+  .va-kpi,
+  .va-kpi *,
+  .va-kpi::before,
+  .va-kpi::after{
+    transition-duration:.01ms !important;
+    animation-duration:.01ms !important;
+  }
+  .va-kpi:hover{transform:none;}
+  .va-kpi:hover .va-kpi__icon{transform:none;}
+  .va-kpi:hover .va-kpi__number{transform:none;}
+}
+/* ============================================================ CHART */
+.va-chart-host{
+  position:relative;
+  width:100%;
+  padding:4px 0 0;
+}
+.va-chart{
+  display:block;
+  width:100%;
+  height:auto;
+  max-height:340px;
+  overflow:visible;
+}
+.va-chart-hit{cursor:pointer;fill:transparent;}
+.va-chart-hit:hover{fill:rgba(37,99,235,.04);}
+
+.va-legend{
+  display:flex;gap:14px;flex-wrap:wrap;align-items:center;
+  padding-top:2px;
+}
+.va-legend__item{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:11.5px;font-weight:600;color:var(--text-2);
+}
+.va-legend__bar{
+  width:10px;height:10px;border-radius:2px;
+  background:var(--chart-views);
+}
+.va-legend__line{
+  width:14px;height:2px;border-radius:2px;
+  background:var(--chart-unique);position:relative;
+}
+.va-legend__line::after{
+  content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:6px;height:6px;border-radius:50%;
+  background:var(--chart-unique);border:1.5px solid #FFF;
+  box-shadow:0 0 0 1px var(--chart-unique);
+}
+
+.va-chart-tip{
+  position:absolute;z-index:5;pointer-events:none;
+  background:#0F172A;color:#FFF;
+  padding:7px 10px;border-radius:var(--r-sm);
+  font-size:11.5px;line-height:1.45;
+  box-shadow:var(--shadow-lg);
+  max-width:220px;
+  animation:va-tip-in .12s var(--ease);
+}
+.va-chart-tip[hidden]{display:none;}
+.va-tip__date{
+  font-weight:700;margin-bottom:3px;color:#E2E8F0;
+  font-size:11px;letter-spacing:.01em;
+}
+.va-tip__row{
+  display:flex;align-items:center;gap:6px;
+  color:#CBD5E1;
+}
+.va-tip__row strong{color:#FFF;margin-left:auto;font-variant-numeric:tabular-nums;}
+.va-tip__dot{
+  width:7px;height:7px;border-radius:2px;flex:0 0 auto;
+}
+.va-tip__dot--views{background:var(--chart-views);}
+.va-tip__dot--unique{background:var(--chart-unique);border-radius:50%;}
+@keyframes va-tip-in{from{opacity:0;transform:translateY(3px);}}
+
+/* ============================================================ BREAKDOWNS */
+.va-breakdowns{
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+  gap:12px;
+}
+@media (max-width:520px){ .va-breakdowns{grid-template-columns:1fr;} }
+
+.va-widget{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-lg);
+  box-shadow:var(--shadow-sm);
+  padding:14px 16px;
+  display:flex;flex-direction:column;gap:10px;
+  transition:border-color .18s var(--ease), box-shadow .18s var(--ease);
+}
+.va-widget:hover{border-color:var(--border-strong);box-shadow:var(--shadow);}
+.va-widget__head{display:flex;align-items:center;gap:8px;}
+.va-widget__icon{
+  width:24px;height:24px;border-radius:6px;
+  display:grid;place-items:center;
+  background:var(--surface-2);color:var(--text-2);
+  flex:0 0 auto;border:1px solid var(--border);
+}
+.va-widget__icon svg{width:13px;height:13px;}
+.va-widget__title{
+  margin:0;font-size:12.5px;font-weight:700;color:var(--text);
+  letter-spacing:-.005em;
+}
+
+.va-rows{display:flex;flex-direction:column;gap:9px;}
+.va-row{display:flex;flex-direction:column;gap:4px;}
+.va-row__top{
+  display:flex;align-items:baseline;justify-content:space-between;gap:8px;
+  font-size:12px;
+}
+.va-row__label{
+  color:var(--text-2);font-weight:500;
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.va-row__value{
+  color:var(--text);font-weight:700;
+  font-variant-numeric:tabular-nums;flex:0 0 auto;
+}
+.va-row__bar{
+  height:5px;border-radius:999px;
+  background:var(--surface-2);
+  overflow:hidden;
+}
+.va-row__fill{
+  height:100%;border-radius:999px;
+  background:var(--primary);
+  transition:width .45s var(--ease);
+  width:0%;
+}
+.va-row__fill--views{background:var(--chart-views);}
+.va-row__fill--unique{background:var(--chart-unique);}
+.va-row__fill--muted{background:var(--border-strong);}
+
+.va-widget__empty{
+  padding:10px 0;text-align:center;
+  font-size:11.5px;color:var(--muted);
+}
+
+/* ============================================================ VISITS TABLE */
+.va-table-wrap{
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.va-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:12.5px;
+  min-width:760px;
+}
+.va-table th,
+.va-table td{
+  padding:10px 14px;
+  text-align:left;
+  border-bottom:1px solid var(--border);
+  vertical-align:middle;
+  white-space:nowrap;
+}
+.va-table thead th{
+  position:sticky;top:0;
+  background:var(--surface-2);
+  font-size:10.5px;
+  font-weight:800;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--muted);
+  border-bottom:1px solid var(--border);
+  padding-top:9px;padding-bottom:9px;
+}
+.va-table tbody tr:hover{background:var(--surface-2);}
+.va-table tbody tr:last-child td{border-bottom:0;}
+.va-table td.va-cell-time{
+  font-variant-numeric:tabular-nums;
+  color:var(--text);
+  font-weight:500;
+}
+.va-table td.va-cell-ip{
+  font-family:var(--mono);
+  font-size:12px;
+  color:var(--text-2);
+}
+.va-cell-combo{
+  display:inline-flex;align-items:center;gap:6px;
+  white-space:nowrap;
+}
+.va-combo-sep{color:var(--muted);}
+.va-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  padding:2px 8px;border-radius:999px;
+  font-size:11px;font-weight:700;
+  background:var(--surface-2);color:var(--text-2);
+  border:1px solid var(--border);
+}
+.va-badge--desktop{background:rgba(37,99,235,.08);color:#1D4ED8;border-color:rgba(37,99,235,.2);}
+.va-badge--mobile{background:rgba(5,150,105,.08);color:var(--success);border-color:var(--success-border);}
+
+.va-table__foot{
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:11px 16px;
+  border-top:1px solid var(--border);
+  background:var(--surface-2);
+  font-size:11.5px;color:var(--muted);
+}
+.va-table__foot strong{color:var(--text);font-weight:700;}
+
+/* Empty / loading states for table */
+.va-table__state{
+  padding:36px 20px;
+  text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+}
+.va-table__state svg{width:26px;height:26px;color:var(--muted);}
+.va-table__state p{margin:0;font-size:12.5px;color:var(--muted);}
+
+/* Skeleton rows (loading) */
+.sk-row{
+  display:grid;
+  grid-template-columns:1.4fr 1.2fr 1fr 1fr 1.2fr 1fr;
+  gap:14px;
+  padding:11px 16px;
+  border-bottom:1px solid var(--border);
+}
+.sk{
+  height:11px;border-radius:3px;
+  background:linear-gradient(90deg,var(--border) 0%, var(--hairline) 50%, var(--border) 100%);
+  background-size:200% 100%;
+  animation:sk-shimmer 1.4s linear infinite;
+}
+.sk:nth-child(1){width:85%;}
+.sk:nth-child(2){width:70%;}
+.sk:nth-child(3){width:60%;}
+.sk:nth-child(4){width:80%;}
+.sk:nth-child(5){width:75%;}
+.sk:nth-child(6){width:55%;}
+@keyframes sk-shimmer{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+
+/* ============================================================ TOASTS */
+.va-toasts{
+  position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+  z-index:500;display:flex;flex-direction:column;gap:8px;align-items:center;
+  pointer-events:none;
+}
+.va-toast{
+  pointer-events:auto;padding:9px 14px;border-radius:var(--r-sm);
+  background:#0F172A;color:#FFF;font-size:12.5px;font-weight:600;
+  box-shadow:var(--shadow-lg);
+  display:inline-flex;align-items:center;gap:8px;
+  animation:va-toast-in .22s var(--ease);
+  max-width:92vw;
+}
+.va-toast--ok{background:var(--success);}
+.va-toast--err{background:var(--danger);}
+.va-toast--info{background:var(--primary-deep);}
+@keyframes va-toast-in{from{opacity:0;transform:translateY(8px);}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    transition-duration:.01ms !important;
+    animation-duration:.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<aside id="sidebar-container" aria-label="Sidebar"></aside>
+
+<div class="va-shell">
+
+  <!-- ============================================================ HEADER -->
+  <header class="va-header" role="banner">
+    <button class="ts-btn ts-btn--ghost ts-btn--icon va-header__mobile" type="button"
+            data-pb-action="open-mobile" aria-controls="pb-sidebar"
+            aria-expanded="false" aria-label="Open navigation">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" aria-hidden="true">
+        <path d="M4 6h16"/><path d="M4 12h16"/><path d="M4 18h16"/>
+      </svg>
+    </button>
+
+    <div class="va-header__title">
+      <div class="va-crumbs">
+        <span>Profile Craft Studio</span>
+        <span aria-hidden="true">›</span>
+        <strong>Visitors</strong>
+      </div>
+      <h1 class="va-h1">Visitors</h1>
+      <p class="va-subtitle">
+        Who opens your published site. Robots, link previews and your draft preview are not counted.
+      </p>
+    </div>
+
+    <div class="va-header__spacer"></div>
+
+    <div class="va-header__tools">
+      <button class="ts-btn ts-btn--ghost ts-btn--sm" type="button" id="btn-refresh"
+              aria-label="Refresh analytics data">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M21 12a9 9 0 1 1-3-6.7"/><path d="M21 3v6h-6"/>
+        </svg>
+        Refresh
+      </button>
+      <button class="ts-btn ts-btn--primary ts-btn--sm" type="button" id="btn-open-site"
+              aria-label="Open your published portfolio">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+          <path d="M15 3h6v6"/><path d="M10 14 21 3"/>
+        </svg>
+        Open site
+      </button>
+    </div>
+  </header>
+
+  <main class="va-main">
+
+    <!-- ============================================================ SAMPLE BANNER -->
+    <div class="va-banner" role="status" id="va-banner">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+           stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><path d="M12 8v4"/><path d="M12 16h.01"/>
+      </svg>
+      <div>
+        <strong>Sample data.</strong>
+        No analytics backend is connected yet. The figures below come from a fixed
+        30-day sample window (<strong>Sep 18 – Oct 17, 2026</strong>) so the dashboard can be
+        reviewed end-to-end. Your real visitor data will populate this view once tracking is enabled.
+        Until then, treat <em>Today</em> as the last day of the sample window.
+      </div>
+    </div>
+
+    <!-- ============================================================ KPI CARDS -->
+    <section class="va-kpis" aria-label="Traffic summary">
+      <article class="va-kpi">
+        <div class="va-kpi__head">
+          <span class="va-kpi__period">Today</span>
+          <span class="va-kpi__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>
+            </svg>
+          </span>
+        </div>
+        <div class="va-kpi__stats">
+          <div class="va-kpi__stat">
+            <span class="va-kpi__number va-kpi__number--views" id="kpi-today-views">0</span>
+            <span class="va-kpi__label">Page views</span>
+          </div>
+          <div class="va-kpi__stat">
+            <span class="va-kpi__number" id="kpi-today-unique">0</span>
+            <span class="va-kpi__label">Unique visitors</span>
+          </div>
+        </div>
+        <p class="va-kpi__note" id="kpi-today-note">Sample · Oct 17, 2026</p>
+      </article>
+
+      <article class="va-kpi">
+        <div class="va-kpi__head">
+          <span class="va-kpi__period">Last 7 days</span>
+          <span class="va-kpi__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="16" rx="2"/>
+              <path d="M3 10h18"/><path d="M8 2v4"/><path d="M16 2v4"/>
+            </svg>
+          </span>
+        </div>
+        <div class="va-kpi__stats">
+          <div class="va-kpi__stat">
+            <span class="va-kpi__number va-kpi__number--views" id="kpi-7-views">0</span>
+            <span class="va-kpi__label">Page views</span>
+          </div>
+          <div class="va-kpi__stat">
+            <span class="va-kpi__number" id="kpi-7-unique">0</span>
+            <span class="va-kpi__label">Unique visitors</span>
+          </div>
+        </div>
+        <p class="va-kpi__note" id="kpi-7-note">Sample · Oct 11 – Oct 17, 2026</p>
+      </article>
+
+      <article class="va-kpi">
+        <div class="va-kpi__head">
+          <span class="va-kpi__period">Last 30 days</span>
+          <span class="va-kpi__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 4-4"/>
+            </svg>
+          </span>
+        </div>
+        <div class="va-kpi__stats">
+          <div class="va-kpi__stat">
+            <span class="va-kpi__number va-kpi__number--views" id="kpi-30-views">0</span>
+            <span class="va-kpi__label">Page views</span>
+          </div>
+          <div class="va-kpi__stat">
+            <span class="va-kpi__number va-kpi__number--unique" id="kpi-30-unique">0</span>
+            <span class="va-kpi__label">Unique visitors</span>
+          </div>
+        </div>
+        <p class="va-kpi__note" id="kpi-30-note">Sample · Sep 18 – Oct 17, 2026</p>
+      </article>
+    </section>
+
+    <!-- ============================================================ TRAFFIC CHART -->
+    <section class="va-card" aria-labelledby="chart-title">
+      <div class="va-card__head">
+        <div>
+          <h2 class="va-card__title" id="chart-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 3v18h18"/><path d="m7 14 4-4 4 4 4-4"/>
+            </svg>
+            Views and unique visitors, last 30 days
+            <span class="sample-pill" aria-label="Sample data">Sample</span>
+          </h2>
+          <p class="va-card__desc">
+            Daily traffic across the reporting period. Green bars show page views; the blue line shows unique visitors.
+          </p>
+        </div>
+        <div class="va-legend" aria-label="Chart legend">
+          <span class="va-legend__item"><span class="va-legend__bar" aria-hidden="true"></span>Page views</span>
+          <span class="va-legend__item"><span class="va-legend__line" aria-hidden="true"></span>Unique visitors</span>
+        </div>
+      </div>
+      <div class="va-card__body va-card__body--flush">
+        <div class="va-chart-host" id="va-chart-host">
+          <svg class="va-chart" id="va-chart" viewBox="0 0 800 300"
+               preserveAspectRatio="xMidYMid meet"
+               role="img"
+               aria-labelledby="chart-svg-title chart-svg-desc"></svg>
+          <div class="va-chart-tip" id="va-chart-tip" hidden role="tooltip"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ BREAKDOWNS -->
+    <section class="va-breakdowns" aria-label="Traffic breakdowns">
+
+      <article class="va-widget" data-widget="referrer">
+        <div class="va-widget__head">
+          <span class="va-widget__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/>
+              <path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/>
+            </svg>
+          </span>
+          <h3 class="va-widget__title">Where they came from</h3>
+        </div>
+        <div class="va-rows" id="wd-referrer"></div>
+      </article>
+
+      <article class="va-widget" data-widget="countries">
+        <div class="va-widget__head">
+          <span class="va-widget__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/><path d="M2 12h20"/>
+              <path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>
+            </svg>
+          </span>
+          <h3 class="va-widget__title">Countries</h3>
+        </div>
+        <div class="va-rows" id="wd-countries"></div>
+      </article>
+
+      <article class="va-widget" data-widget="devices">
+        <div class="va-widget__head">
+          <span class="va-widget__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="4" width="20" height="14" rx="2"/>
+              <path d="M8 22h8"/><path d="M12 18v4"/>
+            </svg>
+          </span>
+          <h3 class="va-widget__title">Devices</h3>
+        </div>
+        <div class="va-rows" id="wd-devices"></div>
+      </article>
+
+      <article class="va-widget" data-widget="browsers">
+        <div class="va-widget__head">
+          <span class="va-widget__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"/>
+              <path d="M2 12h20"/><path d="M12 2a15 15 0 0 1 0 20 15 15 0 0 1 0-20z"/>
+            </svg>
+          </span>
+          <h3 class="va-widget__title">Browsers</h3>
+        </div>
+        <div class="va-rows" id="wd-browsers"></div>
+      </article>
+
+      <article class="va-widget" data-widget="systems">
+        <div class="va-widget__head">
+          <span class="va-widget__icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="12" rx="2"/>
+              <path d="M8 20h8"/><path d="M12 16v4"/>
+            </svg>
+          </span>
+          <h3 class="va-widget__title">Systems</h3>
+        </div>
+        <div class="va-rows" id="wd-systems"></div>
+      </article>
+
+    </section>
+
+    <!-- ============================================================ RECENT VISITS -->
+    <section class="va-card" aria-labelledby="visits-title">
+      <div class="va-card__head">
+        <div>
+          <h2 class="va-card__title" id="visits-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <path d="M14 2v6h6"/>
+              <path d="M8 13h8"/><path d="M8 17h5"/>
+            </svg>
+            Recent visits
+            <span class="sample-pill" aria-label="Sample data">Sample</span>
+          </h2>
+          <p class="va-card__desc">
+            Individual recorded visits to your published portfolio. Times are shown in your local timezone.
+          </p>
+        </div>
+      </div>
+      <div id="va-table-body">
+        <!-- Table, loading state, empty state, or error state injected here -->
+      </div>
+      <footer class="va-table__foot" id="va-table-foot" hidden>
+        <span id="va-table-count"><strong>0</strong> total</span>
+        <span style="font-size:11px;color:var(--muted);">Sample data — not real visitor records</span>
+      </footer>
+    </section>
+
+  </main>
+</div>
+
+<div class="va-toasts" id="va-toasts" aria-live="polite"></div>
+
+<!-- ============================================================ SIDEBAR LOADER -->
+<script>
+(function () {
+  function mount() {
+    fetch('sidebar.html', { credentials: 'same-origin' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        if (!document.getElementById('pb-sidebar-styles')) {
+          var s = doc.getElementById('pb-sidebar-styles');
+          if (s) document.head.appendChild(document.importNode(s, true));
+        }
+        var frag = doc.querySelector('[data-pb-sidebar-root]');
+        if (frag && !document.querySelector('[data-pb-sidebar-root]')) {
+          document.getElementById('sidebar-container').appendChild(document.importNode(frag, true));
+        }
+        var src = doc.getElementById('pb-sidebar-script');
+        if (src && !document.getElementById('pb-sidebar-script-runtime')) {
+          var rt = document.createElement('script');
+          rt.id = 'pb-sidebar-script-runtime';
+          rt.textContent = src.textContent;
+          document.body.appendChild(rt);
+        }
+        if (window.PBSidebar) {
+          window.PBSidebar.init();
+          try { window.PBSidebar.setActive('visitors'); } catch (e) {}
+        }
+      })
+      .catch(function (err) {
+        console.warn('[visitors] sidebar load failed:', err);
+        var m = document.getElementById('sidebar-container');
+        if (m) m.innerHTML =
+          '<p style="padding:12px 18px;font:12px system-ui;color:#b42318;' +
+          'border:1px solid #fecaca;background:#fef2f2;border-radius:6px;margin:12px">' +
+          'Sidebar could not be loaded. Serve this page from a local server (not file://) and refresh.</p>';
+      });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', mount);
+  else mount();
+})();
+</script>
+
+<!-- ============================================================ VISITORS PAGE LOGIC -->
+<script>
+(function () {
+  'use strict';
+
+  /* ------------------------------------------------------------------
+     CONFIG — override via window.PB_ANALYTICS / window.PB_SUPPORT
+     before this script runs. In production, replace the SAMPLE_DATA
+     block with API calls to your backend.
+     ------------------------------------------------------------------ */
+  var CONFIG = {
+    routes: Object.assign({
+      dashboard: 'dashboard.html'
+    }, window.PB_ROUTES || {}),
+    baseDomain: (window.PB_SUPPORT && window.PB_SUPPORT.baseDomain) || 'capital-knowledge.com',
+    /* Set to true only once a real analytics backend is wired up. */
+    backendConnected: !!(window.PB_ANALYTICS && window.PB_ANALYTICS.connected),
+    api: (window.PB_ANALYTICS && window.PB_ANALYTICS.endpoints) || null
+  };
+
+  /* ==================================================================
+     SAMPLE DATA — fixed, deterministic, clearly labeled in the UI.
+     Do NOT replace this with Math.random().
+     Reference window: Sep 18 – Oct 17, 2026 (30 days).
+     Totals: 8 page views, 6 unique visitors. Zero activity Sep 20 – Oct 11.
+     ================================================================== */
+  var SAMPLE_WINDOW_END = new Date(2026, 9, 17);           /* Oct 17, 2026 */
+  var SAMPLE_WINDOW_START = new Date(2026, 8, 18);         /* Sep 18, 2026 */
+
+  var SAMPLE_DAILY = (function () {
+    var out = [];
+    for (var i = 0; i < 30; i++) {
+      var d = new Date(SAMPLE_WINDOW_START);
+      d.setDate(d.getDate() + i);
+      var views = 0, unique = 0;
+      /* Oct 16 (index 28): 5 views / 4 unique. Oct 17 (index 29): 3 views / 2 unique. */
+      if (i === 28) { views = 5; unique = 4; }
+      if (i === 29) { views = 3; unique = 2; }
+      out.push({ date: d, views: views, unique: unique });
+    }
+    return out;
+  })();
+
+  /* Breakdowns — must sum to 8 visits in the 30-day window. */
+  var SAMPLE_BREAKDOWNS = {
+    referrer: [
+      { label: 'Direct or unknown', value: 8 }
+    ],
+    countries: [
+      { label: 'Thailand',        value: 5 },
+      { label: 'Myanmar (Burma)', value: 3 }
+    ],
+    devices: [
+      { label: 'Desktop', value: 4 },
+      { label: 'Mobile',  value: 4 }
+    ],
+    browsers: [
+      { label: 'Chrome', value: 7 },
+      { label: 'Safari', value: 1 }
+    ],
+    systems: [
+      { label: 'iOS',     value: 4 },
+      { label: 'Windows', value: 3 },
+      { label: 'Linux',   value: 1 }
+    ]
+  };
+
+  /* Individual visits — must reconcile with the breakdowns above. */
+  var SAMPLE_VISITS = [
+    { id: 'v1',  time: new Date(2026, 9, 17, 16, 21), ip: '210.14.107.180', country: 'Myanmar (Burma)', from: 'Direct or unknown', browser: 'Chrome', os: 'Windows', device: 'Desktop' },
+    { id: 'v2',  time: new Date(2026, 9, 17, 16, 18), ip: '2405:9800:• • •:••••', country: 'Thailand',        from: 'Direct or unknown', browser: 'Chrome', os: 'iOS',     device: 'Mobile'  },
+    { id: 'v3',  time: new Date(2026, 9, 17, 16, 8),  ip: '210.14.107.180', country: 'Myanmar (Burma)', from: 'Direct or unknown', browser: 'Chrome', os: 'Windows', device: 'Desktop' },
+    { id: 'v4',  time: new Date(2026, 9, 16, 15, 42), ip: '203.144.87.201', country: 'Thailand',        from: 'Direct or unknown', browser: 'Chrome', os: 'Linux',   device: 'Desktop' },
+    { id: 'v5',  time: new Date(2026, 9, 16, 15, 38), ip: '210.14.107.181', country: 'Myanmar (Burma)', from: 'Direct or unknown', browser: 'Chrome', os: 'Windows', device: 'Desktop' },
+    { id: 'v6',  time: new Date(2026, 9, 16, 15, 31), ip: '172.58.43.112',  country: 'Thailand',        from: 'Direct or unknown', browser: 'Safari', os: 'iOS',     device: 'Mobile'  },
+    { id: 'v7',  time: new Date(2026, 9, 16, 15, 22), ip: '184.22.19.44',   country: 'Thailand',        from: 'Direct or unknown', browser: 'Chrome', os: 'iOS',     device: 'Mobile'  },
+    { id: 'v8',  time: new Date(2026, 9, 16, 15, 10), ip: '184.22.19.44',   country: 'Thailand',        from: 'Direct or unknown', browser: 'Chrome', os: 'iOS',     device: 'Mobile'  }
+  ];
+
+  /* ==================================================================
+     UTILITIES
+     ================================================================== */
+  function $(id) { return document.getElementById(id); }
+
+  function escapeHTML(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function formatDateTime(d) {
+    if (!d) return '—';
+    try {
+      return d.toLocaleString(undefined, {
+        month: 'short', day: 'numeric', year: 'numeric',
+        hour: 'numeric', minute: '2-digit'
+      });
+    } catch (e) { return '—'; }
+  }
+  function formatDateShort(d) {
+    if (!d) return '—';
+    try {
+      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+    } catch (e) { return '—'; }
+  }
+  function formatDateLong(d) {
+    if (!d) return '—';
+    try {
+      return d.toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' });
+    } catch (e) { return '—'; }
+  }
+
+  function toast(msg, kind) {
+    var host = $('va-toasts');
+    if (!host) return;
+    var el = document.createElement('div');
+    el.className = 'va-toast' + (kind ? ' va-toast--' + kind : '');
+    el.textContent = msg;
+    host.appendChild(el);
+    setTimeout(function () {
+      el.style.opacity = '0';
+      el.style.transition = 'opacity .2s ease';
+      setTimeout(function () { el.remove(); }, 220);
+    }, 2400);
+  }
+
+  /* ==================================================================
+     KPI AGGREGATION — computed from the sample daily data.
+     In production, replace with server-side aggregation values.
+     ================================================================== */
+  function computeKPIs(daily) {
+    var lastIdx = daily.length - 1;
+    var today = daily[lastIdx] || { views: 0, unique: 0, date: new Date() };
+
+    /* Last 7 days: indices length-7 .. length-1 */
+    var sevenStart = Math.max(0, daily.length - 7);
+    var seven = daily.slice(sevenStart);
+    var sevenViews = seven.reduce(function (s, d) { return s + d.views; }, 0);
+    var sevenUnique = seven.reduce(function (s, d) { return s + d.unique; }, 0);
+
+    /* 30 days */
+    var all = daily;
+    var allViews = all.reduce(function (s, d) { return s + d.views; }, 0);
+    var allUnique = all.reduce(function (s, d) { return s + d.unique; }, 0);
+
+    return {
+      today: { views: today.views, unique: today.unique, date: today.date },
+      last7: { views: sevenViews, unique: sevenUnique, start: daily[sevenStart] && daily[sevenStart].date, end: today.date },
+      last30: { views: allViews, unique: allUnique, start: daily[0] && daily[0].date, end: today.date }
+    };
+  }
+
+  function renderKPIs(kpis) {
+    var t = kpis.today, s = kpis.last7, a = kpis.last30;
+    var el;
+
+    el = $('kpi-today-views');  if (el) el.textContent = String(t.views);
+    el = $('kpi-today-unique'); if (el) el.textContent = String(t.unique);
+    el = $('kpi-today-note');   if (el) el.textContent = 'Sample · ' + formatDateLong(t.date);
+
+    el = $('kpi-7-views');  if (el) el.textContent = String(s.views);
+    el = $('kpi-7-unique'); if (el) el.textContent = String(s.unique);
+    el = $('kpi-7-note');   if (el) el.textContent = 'Sample · ' + formatDateShort(s.start) + ' – ' + formatDateLong(s.end);
+
+    el = $('kpi-30-views');  if (el) el.textContent = String(a.views);
+    el = $('kpi-30-unique'); if (el) el.textContent = String(a.unique);
+    el = $('kpi-30-note');   if (el) el.textContent = 'Sample · ' + formatDateShort(a.start) + ' – ' + formatDateLong(a.end);
+  }
+
+  /* ==================================================================
+     CHART — SVG based, no external library.
+     ================================================================== */
+  var CHART = {
+    W: 800, H: 300,
+    PAD_L: 44, PAD_R: 20, PAD_T: 20, PAD_B: 44
+  };
+
+  function renderChart(daily) {
+    var svg = $('va-chart');
+    if (!svg) return;
+
+    var W = CHART.W, H = CHART.H;
+    var padL = CHART.PAD_L, padR = CHART.PAD_R, padT = CHART.PAD_T, padB = CHART.PAD_B;
+    var plotW = W - padL - padR;
+    var plotH = H - padT - padB;
+
+    /* Y-axis: 0..yMax with steps of 2. */
+    var maxVal = 1;
+    for (var i = 0; i < daily.length; i++) {
+      maxVal = Math.max(maxVal, daily[i].views, daily[i].unique);
+    }
+    var yMax = Math.max(4, Math.ceil(maxVal / 2) * 2);
+    var yTicks = [];
+    for (var t = 0; t <= yMax; t += 2) yTicks.push(t);
+
+    var slotW = plotW / daily.length;
+    var barW = Math.max(6, Math.min(20, slotW * 0.62));
+
+    function xAt(idx) { return padL + idx * slotW + slotW / 2; }
+    function yAt(v)   { return padT + plotH - (v / yMax) * plotH; }
+
+    var parts = [];
+
+    /* Title + description for screen readers */
+    parts.push('<title id="chart-svg-title">Views and unique visitors, last 30 days</title>');
+    parts.push('<desc id="chart-svg-desc">' +
+      'Sample data from Sep 18 to Oct 17, 2026. ' +
+      'Total page views: ' + daily.reduce(function(s,d){return s+d.views;},0) + '. ' +
+      'Total unique visitors: ' + daily.reduce(function(s,d){return s+d.unique;},0) + '. ' +
+      'Traffic activity occurs on Oct 16 and Oct 17 only.' +
+      '</desc>');
+
+    /* Horizontal grid + y-axis labels */
+    yTicks.forEach(function (v) {
+      var y = yAt(v);
+      parts.push('<line x1="' + padL + '" y1="' + y + '" x2="' + (W - padR) + '" y2="' + y +
+        '" stroke="#E2E8F0" stroke-width="1" />');
+      parts.push('<text x="' + (padL - 8) + '" y="' + (y + 3.5) + '" text-anchor="end" ' +
+        'font-size="10" font-weight="600" fill="#64748B" font-family="inherit">' + v + '</text>');
+    });
+
+    /* X-axis baseline */
+    parts.push('<line x1="' + padL + '" y1="' + yAt(0) + '" x2="' + (W - padR) + '" y2="' + yAt(0) +
+      '" stroke="#CBD5E1" stroke-width="1" />');
+
+    /* Bars (page views) */
+    daily.forEach(function (d, idx) {
+      if (d.views <= 0) return;
+      var x = xAt(idx) - barW / 2;
+      var y = yAt(d.views);
+      var h = yAt(0) - y;
+      parts.push('<rect x="' + x + '" y="' + y + '" width="' + barW + '" height="' + h +
+        '" fill="#059669" rx="2" />');
+    });
+
+    /* Line (unique visitors) */
+    var lineD = daily.map(function (d, idx) {
+      return (idx === 0 ? 'M' : 'L') + xAt(idx).toFixed(2) + ',' + yAt(d.unique).toFixed(2);
+    }).join(' ');
+    parts.push('<path d="' + lineD + '" fill="none" stroke="#2563EB" stroke-width="2" ' +
+      'stroke-linejoin="round" stroke-linecap="round" />');
+
+    /* Dots where unique > 0 */
+    daily.forEach(function (d, idx) {
+      if (d.unique <= 0) return;
+      parts.push('<circle cx="' + xAt(idx) + '" cy="' + yAt(d.unique) +
+        '" r="3.5" fill="#2563EB" stroke="#FFFFFF" stroke-width="1.5" />');
+    });
+
+    /* X-axis labels — every ~5 days plus first/last */
+    var labelIdxs = [0, 5, 10, 15, 20, 25, daily.length - 1];
+    var seen = {};
+    labelIdxs.forEach(function (idx) {
+      if (seen[idx]) return;
+      seen[idx] = true;
+      if (idx >= daily.length) return;
+      parts.push('<text x="' + xAt(idx) + '" y="' + (H - padB + 18) + '" ' +
+        'text-anchor="middle" font-size="10" font-weight="600" fill="#64748B" ' +
+        'font-family="inherit">' + formatDateShort(daily[idx].date) + '</text>');
+    });
+
+    /* Hit areas for tooltip */
+    daily.forEach(function (d, idx) {
+      var x = padL + idx * slotW;
+      parts.push('<rect x="' + x + '" y="' + padT + '" width="' + slotW + '" height="' + plotH +
+        '" class="va-chart-hit" data-idx="' + idx + '" />');
+    });
+
+    svg.innerHTML = parts.join('');
+
+    /* Tooltip wiring */
+    var host = $('va-chart-host');
+    var tip = $('va-chart-tip');
+    if (!host || !tip) return;
+
+    function showTip(evt, d) {
+      tip.innerHTML =
+        '<div class="va-tip__date">' + formatDateLong(d.date) + '</div>' +
+        '<div class="va-tip__row"><span class="va-tip__dot va-tip__dot--views"></span>' +
+          'Page views<strong>' + d.views + '</strong></div>' +
+        '<div class="va-tip__row"><span class="va-tip__dot va-tip__dot--unique"></span>' +
+          'Unique visitors<strong>' + d.unique + '</strong></div>';
+      tip.hidden = false;
+      moveTip(evt);
+    }
+    function moveTip(evt) {
+      var hostRect = host.getBoundingClientRect();
+      var x = evt.clientX - hostRect.left;
+      var y = evt.clientY - hostRect.top;
+      var tipW = tip.offsetWidth || 160;
+      var left = x + 12;
+      if (left + tipW + 12 > hostRect.width) left = x - tipW - 12;
+      if (left < 0) left = 4;
+      tip.style.left = left + 'px';
+      tip.style.top = Math.max(4, y - 12) + 'px';
+    }
+    function hideTip() { tip.hidden = true; }
+
+    svg.querySelectorAll('.va-chart-hit').forEach(function (rect) {
+      var idx = parseInt(rect.getAttribute('data-idx'), 10);
+      rect.addEventListener('mouseenter', function (e) { showTip(e, daily[idx]); });
+      rect.addEventListener('mousemove', moveTip);
+      rect.addEventListener('mouseleave', hideTip);
+    });
+  }
+
+  /* ==================================================================
+     BREAKDOWN WIDGETS
+     ================================================================== */
+  function renderRows(hostId, items, total, fillClass) {
+    var host = $(hostId);
+    if (!host) return;
+    host.innerHTML = '';
+
+    if (!items || !items.length) {
+      host.innerHTML = '<div class="va-widget__empty">No data for this period.</div>';
+      return;
+    }
+
+    items.forEach(function (item) {
+      var pct = total ? Math.round((item.value / total) * 100) : 0;
+
+      var row = document.createElement('div');
+      row.className = 'va-row';
+
+      var top = document.createElement('div');
+      top.className = 'va-row__top';
+      top.innerHTML =
+        '<span class="va-row__label" title="' + escapeHTML(item.label) + '">' +
+          escapeHTML(item.label) +
+        '</span>' +
+        '<span class="va-row__value">' + item.value +
+          ' <span style="font-weight:500;color:var(--muted);">visit' +
+          (item.value === 1 ? '' : 's') + '</span>' +
+        '</span>';
+
+      var bar = document.createElement('div');
+      bar.className = 'va-row__bar';
+      bar.setAttribute('role', 'progressbar');
+      bar.setAttribute('aria-valuemin', '0');
+      bar.setAttribute('aria-valuemax', '100');
+      bar.setAttribute('aria-valuenow', String(pct));
+      bar.setAttribute('aria-label', item.label + ': ' + item.value + ' of ' + total + ' visits');
+
+      var fill = document.createElement('div');
+      fill.className = 'va-row__fill' + (fillClass ? ' ' + fillClass : '');
+      fill.style.width = '0%';
+
+      bar.appendChild(fill);
+      row.appendChild(top);
+      row.appendChild(bar);
+      host.appendChild(row);
+
+      /* Animate on next frame */
+      requestAnimationFrame(function () {
+        fill.style.width = pct + '%';
+      });
+    });
+  }
+
+  function renderBreakdowns(data) {
+    var total =
+      data.referrer.reduce(function (s, i) { return s + i.value; }, 0) ||
+      data.countries.reduce(function (s, i) { return s + i.value; }, 0);
+
+    renderRows('wd-referrer',  data.referrer,  total);
+    renderRows('wd-countries', data.countries, total);
+    renderRows('wd-devices',   data.devices,   total);
+    renderRows('wd-browsers',  data.browsers,  total);
+    renderRows('wd-systems',   data.systems,   total);
+  }
+
+  /* ==================================================================
+     RECENT VISITS TABLE
+     ================================================================== */
+  function renderVisitsTable(visits) {
+    var body = $('va-table-body');
+    var foot = $('va-table-foot');
+    var countEl = $('va-table-count');
+    if (!body) return;
+
+    /* Loading state (brief) */
+    body.innerHTML =
+      '<div class="va-table-wrap">' +
+        '<div class="sk-row"><div class="sk"></div><div class="sk"></div><div class="sk"></div>' +
+        '<div class="sk"></div><div class="sk"></div><div class="sk"></div></div>'.repeat(3) +
+      '</div>';
+    if (foot) foot.hidden = true;
+
+    /* Simulated load so the loading state is real, not decorative */
+    setTimeout(function () {
+      if (!visits || !visits.length) {
+        body.innerHTML =
+          '<div class="va-table__state">' +
+            '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" ' +
+                 'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' +
+              '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>' +
+              '<path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/>' +
+            '</svg>' +
+            '<p><strong style="color:var(--text);">No visits recorded yet.</strong></p>' +
+            '<p>Visits to your published portfolio will appear here.</p>' +
+          '</div>';
+        if (foot) foot.hidden = true;
+        return;
+      }
+
+      var rows = visits.map(function (v) {
+        return (
+          '<tr>' +
+            '<td class="va-cell-time">' + escapeHTML(formatDateTime(v.time)) + '</td>' +
+            '<td class="va-cell-ip" title="' + escapeHTML(v.ip) + '">' + escapeHTML(v.ip) + '</td>' +
+            '<td>' + escapeHTML(v.country || 'Unknown') + '</td>' +
+            '<td>' + escapeHTML(v.from || 'Direct or unknown') + '</td>' +
+            '<td>' +
+              '<span class="va-cell-combo">' +
+                '<span>' + escapeHTML(v.browser || 'Unknown') + '</span>' +
+                '<span class="va-combo-sep">·</span>' +
+                '<span>' + escapeHTML(v.os || 'Unknown') + '</span>' +
+              '</span>' +
+            '</td>' +
+            '<td>' +
+              '<span class="va-badge va-badge--' + (v.device === 'Desktop' ? 'desktop' : 'mobile') + '">' +
+                escapeHTML(v.device || 'Unknown') +
+              '</span>' +
+            '</td>' +
+          '</tr>'
+        );
+      }).join('');
+
+      body.innerHTML =
+        '<div class="va-table-wrap">' +
+          '<table class="va-table">' +
+            '<thead>' +
+              '<tr>' +
+                '<th scope="col">Time</th>' +
+                '<th scope="col">IP address</th>' +
+                '<th scope="col">Country</th>' +
+                '<th scope="col">From</th>' +
+                '<th scope="col">Browser</th>' +
+                '<th scope="col">Device</th>' +
+              '</tr>' +
+            '</thead>' +
+            '<tbody>' + rows + '</tbody>' +
+          '</table>' +
+        '</div>';
+
+      if (foot) foot.hidden = false;
+      if (countEl) {
+        countEl.innerHTML = '<strong>' + visits.length + '</strong> total';
+      }
+    }, 280);
+  }
+
+  /* ==================================================================
+     BOOT
+     ================================================================== */
+  function loadData() {
+    /*
+     * In production, replace this block with:
+     *   Promise.all([
+     *     fetch(CONFIG.api.kpis).then(r => r.json()),
+     *     fetch(CONFIG.api.daily).then(r => r.json()),
+     *     fetch(CONFIG.api.breakdowns).then(r => r.json()),
+     *     fetch(CONFIG.api.visits + '?limit=25').then(r => r.json())
+     *   ])
+     * and pass the results into the render functions below.
+     */
+    return {
+      daily: SAMPLE_DAILY,
+      breakdowns: SAMPLE_BREAKDOWNS,
+      visits: SAMPLE_VISITS
+    };
+  }
+
+  function init() {
+    var data = loadData();
+
+    var kpis = computeKPIs(data.daily);
+    renderKPIs(kpis);
+    renderChart(data.daily);
+    renderBreakdowns(data.breakdowns);
+    renderVisitsTable(data.visits);
+
+    /* Header actions */
+    var refreshBtn = $('btn-refresh');
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', function () {
+        toast('Refreshed (sample data)', 'info');
+        init();
+      });
+    }
+
+    var openBtn = $('btn-open-site');
+    if (openBtn) {
+      openBtn.addEventListener('click', function () {
+        var label = '';
+        try { label = (localStorage.getItem('pb.project.subdomain') || '').replace(/"/g, ''); }
+        catch (e) {}
+        var published = false;
+        try { published = localStorage.getItem('pb.project.subdomain.published') === 'true'; }
+        catch (e) {}
+
+        if (!label) {
+          toast('Claim your portfolio address first.', 'err');
+          return;
+        }
+        if (!published) {
+          toast('Portfolio is not published yet.', 'err');
+          return;
+        }
+        window.open('https://' + label + '.' + CONFIG.baseDomain, '_blank', 'noopener,noreferrer');
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  /* Public surface for future integration */
+  window.PBVisitors = {
+    refresh: init,
+    renderKPIs: renderKPIs,
+    renderChart: renderChart,
+    renderBreakdowns: renderBreakdowns,
+    renderVisitsTable: renderVisitsTable
+  };
+})();
+</script>
+
+</body>
+</html>
